@@ -12,4 +12,6 @@
 
 ## 검증 및 반영
 
-문서 UTF-8·상대 링크·fence 및 구조화 예제, 변경 diff를 검사한다. 이번 변경은 git push로 반영하고 원격 main SHA와 로컬 HEAD의 일치를 확인한 후 완료를 보고한다. 실제 ROM·Windows 실행 검증은 이번 작업에 포함하지 않는다.
+문서 UTF-8·상대 링크·fence 및 JSON/Python 예제 구문·변경 diff 검사를 통과했다. 이전 명세·검사 자료가 변경되지 않았음을 확인했다.
+
+초기 push는 현재 checkout의 인증 설정 부재로 실패했다. 사용자가 인증한 이전 작업 폴더의 저장소별 credential helper와 credential.useHttpPath 설정을 적용한 후, 실제 git push로 f52f3b8 → b02622a의 main 반영에 성공했다. 인증값은 출력하거나 저장소에 추가하지 않았다. 완료 기록 반영 뒤 원격 main SHA와 로컬 HEAD를 최종 대조한다. 실제 ROM·Windows 실행 검증은 이번 작업에 포함하지 않는다.

@@ -11,7 +11,7 @@
 실행 코드 및 개발 의존성 없음. 실제 ROM 전체 추출과 Windows 실행·성능 검증은 미완료.
 
 ## 진행 중
-문서 변경 검증과 실제 git push. 최종 원격 반영 결과는 해당 작업 로그의 검증 절차와 git log/원격 HEAD로 확인한다.
+문서 검증 및 실제 git push 완료. 보완 커밋 b02622a가 main에 반영됐다. 다음 작업은 1차 개발 실행 명세 확정이다.
 
 ## 다음 작업 / 재개 지점
 1. docs/research/00_RESEARCH_STATE.md와 IMPLEMENTATION_HANDOFF.md를 먼저 읽는다.
