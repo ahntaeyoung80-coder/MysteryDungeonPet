@@ -2,6 +2,8 @@
 
 작성 기준: 2026-10-13 KST. 제품 코드 개발 없이 작성한 기술 결정·연결 계약·검증 기준이다. 후속 Codex는 아래 결정과 원본 소스 목록으로 단계별 명세를 작성하고, 실행이 필요한 gate를 별도 검증 작업으로 배치한다. 전체 조사 완료를 보고하려면 ROM/Windows 검증과 GitHub 반영 상태를 확인해야 한다.
 
+현재 실행 순서·범위·단계별 완료 판정은 [DEVELOPMENT_PIPELINE.md](../DEVELOPMENT_PIPELINE.md)를 따른다. 이 인수인계는 상세 계약과 조사 근거를 제공한다. A의 대표 샘플 검증과 G1/G2의 전체 지원 검증은 구분한다.
+
 ## 1. 확정 기술 결정
 
 | 영역 | 최종안 | 가져오는 코드·데이터 | 최소 신규 구현 |
@@ -105,7 +107,7 @@ runtime의 배열/파일 읽기는 byte size·count·offset를 검증한다. 어
 | 정적 CRT/OS DLL | build/package | release exe 크기/배포DLL 실측;추정0.2~2MB는 성공 기준 아님 |
 | resource lifetime | WindowHost/WIC/GDI |100회asset switch/drag/DPI/lock 후 handle 증가·누수 없음 |
 
-CPU는 한 코어 기준과 전체 논리 코어 정규화 기준을 모두 보고한다. RAM은 working set/private bytes/peak를 별도 기록한다. 요구 잠정목표는 CPU평균1% 이하,RAM30,000,000bytes 이하이며 어떤 기준을 acceptance로 채택했는지 명세에 고정한다. 이 조사에서는 성능값을 실제 측정하지 않았다.
+CPU는 한 코어 기준과 전체 논리 코어 정규화 기준을 모두 보고한다. RAM은 working set/private bytes/peak를 별도 기록한다. 요구 잠정목표는 CPU평균1% 이하,RAM30,000,000bytes 이하이다. 현재 판정 기준은 DEVELOPMENT_PIPELINE.md §9에 고정한다(한 코어 CPU, 정상 시나리오 working set/private bytes 최대; transient peak 별도 보고). 이 조사에서는 성능값을 실제 측정하지 않았다.
 
 ## 7. 검증 현황과 개발 전 gate
 
@@ -159,4 +161,4 @@ A의 구현 순서:
 
 보고서·검사 자료·이전 명세는 main에 이전 완료했다. 이번 보완 직전 확인한 main은 f52f3b8이다. 현재 저장 상태는 00_RESEARCH_STATE.md와 git log로 확인한다. 최초 조사 ZIP과 checks/package_validation.json의 해시는 수정 전 보고서의 기록이며 최신 문서 해시가 아니다. 과거 ZIP·검사 기록을 현재 문서에 맞추어 덮어쓰지 않는다.
 
-다음 Codex는 먼저 00_RESEARCH_STATE와 이 인수인계를 읽고 미완료 gate를 선택한다. 이미 확인된 파일/함수/테이블을 처음부터 다시 조사하지 말고 고정 링크와 각 phase 보고서의 해당 항목을 참조한다. 원본 ROM과 Windows 실행 환경이 있을 때 필요한 검증을 수행한 후 개발 명세의 완료 조건을 확정한다.
+다음 Codex는 루트 AGENTS.md와 PROJECT_STATE.md를 읽고 DEVELOPMENT_PIPELINE.md의 현재 실행 단계부터 진행한다. 이 인수인계와 phase 보고서는 필요한 부분만 참조한다. ROM/Windows 자원이 없으면 가능한 독립 구현을 진행하고 해당 gate는 pending으로 남긴다. 이미 확인된 파일·함수·테이블의 전체 조사를 반복하지 않는다.

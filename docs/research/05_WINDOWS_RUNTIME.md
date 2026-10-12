@@ -90,6 +90,8 @@ SHGetKnownFolderPath(FOLDERID_LocalAppData)로 사용자 쓰기 가능한 앱 �
 
 ## 7. 예산 계산과 실측 계획
 
+개발 단계별 측정·최종 판정은 [DEVELOPMENT_PIPELINE.md](../DEVELOPMENT_PIPELINE.md) §7·§9를 따른다. A는 기준선을 확보하고, 최종 C는 한 코어 기준 평균 CPU와 정상 시나리오 working set/private bytes 최대를 사용한다. 최초 로드·캐시 miss의 transient peak도 별도 보고한다.
+
 200×200×4 DIB 1장은160,000bytes, 2장은320,000bytes≈0.305MiB라는 계산값이다. 작은 surface가 전체 프로세스 RAM30MB를 보장하지는 않는다. 1024×1024 RGBA atlas1개는4MiB이며 sprite cache·WIC 임시 buffer·OS DLL·GDI object를 함께 측정해야 한다. decode cache8MB는 초기 설계 예산이고 실측 뒤 조정한다.
 
 | 항목 | 목표 / 평가 방법 | 현재 결과 |

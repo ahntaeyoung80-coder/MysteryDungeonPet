@@ -5,6 +5,7 @@
 
 현재는 기술 조사와 개발 전 문서 보완 단계이며 제품 코드는 아직 없다. 작업 재개 시 [PROJECT_STATE.md](PROJECT_STATE.md)를 먼저 읽는다.
 
+- [Codex 개발 파이프라인·1차 실행 명세](docs/DEVELOPMENT_PIPELINE.md)
 - [구현 인수인계](docs/research/IMPLEMENTATION_HANDOFF.md)
 - [조사 상태](docs/research/00_RESEARCH_STATE.md)
 - [설계 결정](docs/DECISIONS.md)
