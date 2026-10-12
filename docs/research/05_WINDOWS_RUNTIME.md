@@ -45,6 +45,12 @@ UpdateLayeredWindow는 전체 surface를 갱신하므로 창은 작은 크기를
 
 공식 근거: [UpdateLayeredWindow](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-updatelayeredwindow), [BLENDFUNCTION](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-blendfunction), [SetLayeredWindowAttributes](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setlayeredwindowattributes), [Layered windows](https://learn.microsoft.com/en-us/windows/win32/winmsg/window-features), [DPI](https://learn.microsoft.com/en-us/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows).
 
+### 좌표와 표시 영역 계약
+
+논리 타일 좌표는 길 찾기·충돌·배치에 사용한다. 타일/애니메이션을 장면 픽셀 좌표로 변환한 뒤 카메라 원점을 빼고 정수 배율을 적용해 DIB 좌표로 투영한다. Windows 화면 좌표는 창 드래그·모니터·DPI 처리에만 사용한다. 원본 방 배치나 atlas crop 원점을 Windows 창 위치와 혼용하지 않는다.
+
+던전은 100~200px 창 내부에서 표시하며, 현재 펫을 따라가는 카메라의 표시 영역과 교차하는 타일·스프라이트·효과만 합성한다. 전체 던전 크기로 DIB를 만들지 않는다. 맵 가장자리에서는 표시 영역을 맵 안으로 제한하고, 맵보다 표시 영역이 크면 남는 영역을 투명하게 처리한다. 카메라 이동은 탐험 상태와 RNG를 변경하지 않는다. 소스와 목적 사각형을 각각 이미지·DIB 경계로 clip한 뒤 픽셀을 접근한다. 창 밖의 논리 좌표가 곧 버퍼 오프셋이 되어서는 안 된다.
+
 ## 4. 활성 프로그램·입력 유휴 감지
 
 | 기능 | API·입출력 | 호출 방식·오류 처리 | 비용·연결 |

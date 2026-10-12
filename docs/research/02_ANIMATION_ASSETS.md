@@ -103,6 +103,8 @@ sheets.py의 DRAW_CENTER_X=0, DRAW_CENTER_Y=-4이므로 셀 기준점은 (width/
 
 전수 감사는 tracker/XML 메타데이터부터 수행하고, 필요한 동작의 PNG만 가져온다. 전체 SpriteCollab PNG를 먼저 내려받을 필요는 없다. 품종별 audit 행에는 ROM mdIndex/spriteIndex,collabPath,동작,Index,CopyOf,행/열,ticks,markerValidity,credit,status,fallbackReason을 기록한다.
 
+개발 순서: A-1에서 대표 포켓몬 1~2종의 필수 원작 동작을 atlas/manifest/support report로 출력하고, A-2에서는 같은 계약으로 렌더러를 독립 준비한다. 공개 테스트 PNG나 최소 샘플을 쓸 때 출처·테스트 상태를 표시한다. A-3에서는 사용자 ROM에서 추출한 실제 자산의 픽셀·anchor·방향·tick과 Windows 성능을 통합 확인한다. A-2의 테스트 자산 재생만으로 원작 자산 지원 또는 Phase A 완료를 보고하지 않는다.
+
 ## 6. 원작 타이밍으로 재생하는 연결
 
 tick 정수를 그대로 저장하고 런타임의 tickHz를 별도 파라미터로 둔다. elapsed를 누적 tick 경계로 찾아 해당 프레임을 재생한다. 프레임 duration마다 다음 변경 시각을 예약하고 같은 프레임 동안 다시 그리지 않는다. 유한 동작은 마지막 tick 종료 시 완료 이벤트를 한 번 발생시키며, 수면 등 루프 동작의 종료는 생활 상태 머신이 결정한다.

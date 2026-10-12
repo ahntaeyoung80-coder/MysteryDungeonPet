@@ -128,7 +128,7 @@ G01P07A/c00a0201.ssb는 배경211,SetAnimation76 → 63 → WaitAnimation → Wa
 
 ### 던전 클리어·포즈
 
-Pose/WAN17을 원작 클리어 동작으로 채택한다. script code26/46/66의 WAN17 매핑은 실제 테이블에서 확인했다. 조사한 S01P02A/conquest.ssb/return.ssb에서는 Pose 자체를 확정하지 못했으므로 해당 파일을 포즈 재생 명령의 증거로 인용하지 않는다. 원작 클리어 장면의 정확한 카메라·효과·지연 조합은 후속 확인 항목이다.
+Pose/WAN17을 원작 클리어 동작으로 사용한다. script code26/46/66의 WAN17 매핑은 실제 테이블에서 확인했다. 포즈 선택은 확정된 요구사항이다. 클리어 장면의 부가 효과·카메라·지연 조합은 포즈 선택과 분리하여 구현 시 확인한다.
 
 경량 흐름: 마지막층 계단 도달 → 원본 Pose17 → 확인된 클리어 효과/배경 → 유한 포즈 종료 → ReturnHome → Eat 또는 Sleep. 원본 동작은 유지하고 원작 전투/보상/스토리 VM은 도입하지 않는다.
 
@@ -149,5 +149,7 @@ pret의 nitrofs_files.txt는 한 줄에 많은 경로를 담고 있어 전체를
 새 EventPlayer의 cue 타입은 SetClip,SetDirection,SetPosition,ShowEffect,WaitTicks,WaitClip,ConsumeItem,Transition으로 제한하는 안을 채택한다. 이것은 신규 인터페이스 제안이며 기존 저장소에 구현된 클래스가 아니다. cue에는 sourceScript,routine,opcodeOffset,rawArguments,resolvedClip,confirmedResource,onceKey를 남긴다.
 
 생활 상태는 Explore/ReturnHome/Eat/Sleep/Wake/Ready를 사용하고 이벤트는 이를 일시적으로 점유한다. 렌더는 현재 clip·배경·효과만 받는다. Wait는 busy loop가 아니라 다음 deadline 예약으로 처리한다. 장면 좌표는 원본에서 한 번 정규화하고 100~200px 창에 맞춰 crop/정수 배율을 적용한다. 충돌·경로는 화면 좌표와 분리한다.
+
+좌표 변환·경계 clipping은 [05_WINDOWS_RUNTIME.md](05_WINDOWS_RUNTIME.md)의 공통 계약을 따른다. 생활 장면은 정규화한 장면 원점을 사용하며, 던전 카메라 상태를 생활 cue의 원본 배치 좌표에 적용하지 않는다.
 
 검증 필요: 공식 SSB/SSA 파서 실행과 decompile, 원본 clip/효과 접점 픽셀 QA, 원작 wall time과 tick/speed 비교, effect ID 실제 슬롯, 발견/인사/클리어 장면의 세부 cue. 코드·테이블·일부 원작 장면 근거는 확보했으나 모든 생활 디테일이 자동 추출 검증된 상태는 아니다.

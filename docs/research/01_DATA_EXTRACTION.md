@@ -143,6 +143,8 @@ pack = FileType.DUNGEON_BIN.deserialize(
 
 자동으로 전체 정의·층·표를 순회할 수 있는 공개 파서 경로는 확보했다. 그러나 모든 ROM 판본·특수층·폼을 끝까지 추출할 수 있다는 실행 검증은 하지 못했다. 실패 항목을 건너뛰고 성공으로 표시하지 말고 별도 errors.json에 원본 키와 실패 원인을 저장한다.
 
+층 인덱스 회귀 검사에는 start_after가 0이 아닌 일반 던전의 첫층·끝층을 포함한다. 배열 직접 접근은 groupFloor=start_after+localFloor를 한 번 계산하고, get_mappa_floor 경로는 그룹 기준 floor_id를 사용한다. 두 경로의 결과가 같고 모든 참조가 배열 범위 안인지 검사한다. groupFloor는 실제 원본 그룹 참조이며 UI 전용 값으로 바꾸지 않는다.
+
 ## 8. 후속 검증과 인수인계
 
 1. 동일 ROM으로 GUI의 던전 층·출현표와 추출 결과 대조: 일반 던전 첫/끝층, start_after가 있는 그룹, 0xB4/0xBE/0xBF 도장.

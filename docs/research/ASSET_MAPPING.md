@@ -113,9 +113,15 @@ Straight RGBA PNG atlas를 WIC가 PBGRA로 디코드하면 renderer는 premultip
 | 수면 공간 | G01P07C/m02a0113.ssb:level212,76,62,Wait90/120 | MAP_BG/g01p07c.* | 전체 story cue는 제외 |
 | 인사/기쁨 | Nod22/Hop10+방향 | 친구 몸체 clip | 구체적인 원작 인사 SSB 미고정;신규 cue로 명시 |
 | 발견/획득 | overlay29 pickup API 선언+원본 item icon | dungeon item atlas | 특정 원작 발견 효과/clip 전체 미확정 |
-| 클리어 | WAN17/Pose와script26/46/66 | 선택 원본 클리어 자산 | 조사한 conquest/return에서 포즈 호출은 미확인;카메라/효과 상세 미고정 |
+| 클리어 | WAN17/Pose와script26/46/66 | 선택 원본 클리어 자산 | 원작 Pose17 사용 확정;부가 카메라/효과 상세는 별도 |
 
 S01P02A/conquest.ssb/return.ssb는 귀환 문맥 자료이며 Pose 호출의 근거가 아니다. 원작 Pose17을 사용하는 개발 기준은 확정되어 있다. 원작 tick/효과 재현 검증과 이 기준을 혼동하지 않는다.
+
+### 화면·배치 계약 보완
+
+Renderer 입력에는 cameraOriginScenePx, viewportSizePx, integerScale을 명시한다. 논리 tile→장면 pixel→DIB 변환과 Windows 창 위치는 별개다. frame crop/anchor는 같은 장면 원점으로 합성하고 경계 clipping은 [05_WINDOWS_RUNTIME.md](05_WINDOWS_RUNTIME.md)를 따른다.
+
+SpawnSampler는 가용 타일에서 비복원 추출하며 spawnBudget 및 가용 수를 넘지 않는다. guaranteed 원본 목록은 보존하고 초과 요청은 미배치 사유로 남긴다. 상세 종료·검사 기준은 [04_DUNGEON_AI.md](04_DUNGEON_AI.md)를 따른다.
 
 ## 7. 패키지와 지원 감사
 

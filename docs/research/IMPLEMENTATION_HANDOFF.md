@@ -67,16 +67,18 @@ runtime의 배열/파일 읽기는 byte size·count·offset를 검증한다. 어
 | Catalogue.getFloor(FloorKey) | key → immutable FloorProfile | 시작 시 compact data 로드,층 전환 조회 | Generator/Sampler의 유일한 원본 분포 공급 |
 | AssetStore.acquire(assetKey) | key → atlas/metadata handle | cache miss decode,LRU 제한,reference 관리 | WIC/PBGRA;Animator/Renderer |
 | WorldGenerator.generate(seed,profile,policy) | RNG/선택 프로필 → WorldGrid | 층 진입 시1회 | geometry 검사 실패 시 제한 재생성 |
-| SpawnSampler.populate(world,weights,RNG,budget) | 원본 분포+새 개수 정책 → instances | 층 진입/명시 spawn 사건 | entity IDs/점유와inventory 연결 |
+| SpawnSampler.populate(world,weights,RNG,budget) | 원본 분포+새 개수 정책 → instances,미배치 사유 | 층 진입/명시 spawn 사건 | 가용 타일 비복원 추출,예산·후보 수 제한,소진 시 종료 |
 | Navigator.plan(grid,start,goal,occupancy) | tile→path 또는 unreachable | goal/gridVersion/blocked next tile 때만 | Explorer가 캐시 경로 사용 |
 | Explorer.nextGoal(world,inventory,life,now) | 현재상태 → goal/action | tile 도착·목표 소실·bounded deadline | 아이템/친구/frontier/계단/귀가 |
 | Animator.start/advance(clip,direction,mode,monotonicTime) | clip→currentFrame,markers,finished,nextDeadline | frame 경계와 필요 이동 update | EventPlayer와RenderSnapshot |
 | EventPlayer.advance(cue,eventState,now) | cue→clip/effect/consume/finished/deadline | 유한장면/Wait,once transaction | Lifecycle가 이벤트 점유 관리 |
 | Lifecycle.update(context,eventResult,utcNow) | 활동/배고픔/수면→Explore/ReturnHome/Eat/Sleep/Wake/Ready | 사건·생활 deadline | Explorer 정지/재개·EventPlayer |
 | ActivityMonitor.snapshot | OS hook/messages/idle→activity enum | foreground event,session/power,저빈도 idle | Life 및 render pause |
-| Renderer.compose(snapshot) | layers/frames→PBGRA surface,changed | changed 때만 UpdateLayeredWindow | 작은 DIB cache 재사용 |
+| Renderer.compose(snapshot) | layers/frames,camera/viewport→PBGRA surface,changed | changed 때만 UpdateLayeredWindow | 표시 영역만 합성,경계 clip,작은 DIB 재사용 |
 | WindowHost.dispatch | UI message→drag/DPI/activity/nextWake | message+waitable timer | OS handles RAII,focus 정책 |
 | StateStore.save/load | versioned snapshot↔local file | 변화 debounce,suspend/exit save | Inventory once/event/RNG 복원 |
+
+공통 좌표 계약은 [05_WINDOWS_RUNTIME.md](05_WINDOWS_RUNTIME.md)의 좌표·표시 영역 절을 따른다. 던전 이동은 창 내부 카메라로 표시하고 Windows 창 위치는 드래그로 별도 제어한다. 배치 종료 조건과 초과 guaranteed 처리는 [04_DUNGEON_AI.md](04_DUNGEON_AI.md)를 따른다.
 
 기본은 UI thread 하나로 시작한다. 파일 decode가 눈에 띄게 막히면 worker1개를 추가하고 immutable decoded buffer만 전달한다. worker가 HDC/window를 소유하게 만들지 않는다. 실제 측정 없이 thread pool·GPU device·복잡한 VM을 선행 도입하지 않는다.
 
@@ -112,10 +114,10 @@ CPU는 한 코어 기준과 전체 논리 코어 정규화 기준을 모두 보�
 | G1 원작 전체 데이터 | 실제 파서·정규화 규칙 확인 | 사용자 ROM import/전체순회/참조·도장 검증,원본hash 불변 | errors와resume point 기록;unsupported 판본을 지원으로 표기하지 않음 |
 | G2 원작 동작 | 2종 XML,8PNG 구조·전체 디코드 확인 | ROM3WAN merge/export,픽셀/alpha/marker/8방향,전체support 감사 | exact/fallback/missing 분리;종별수동프레임편집 대신데이터규칙 |
 | G3 이벤트 | 공개8SSB+1SSA 독립 구조 검사,table84entries | 공식 decompile/cue 추출,원작tick wall time,효과642/643/624 및계단graphic | 해결 전 unresolved;효과를 임의원작자산으로지정하지 않음 |
-| G4 경량 지도 | Python10,000seeds 통과 | native port연결성,spawn통계,blocker/once/층전환 저장 | 제한retry/귀가,무한loop 오류 |
+| G4 경량 지도 | Python10,000seeds 통과 | native 연결성,spawn 통계,후보0·초과·guaranteed·중복·종료 검사,blocker/once/저장 | 배치 소진은 종료·사유 기록;지도 실패는 제한retry/귀가 |
 | G5 Windows | WIC/Win32 source·API 조건 확인 | 최소창/alpha/drag/DPI/idle/lock/suspend/state 검증 | 실제release harness결과로대안D2D 여부결정 |
 | G6 예산 | DIB/grid payload 계산,캐시전략 |15분scenario CPU/WS/private/peak+설치총bytes | 파일/캐시/빈도 최적화;목표 충족 전 완료 주장 금지 |
-| G7 원격 보존 | 사용자 요청으로MD/ZIP 전달 | 사용자가같은GitHub repo에업로드 후tree/commit 확인 | 마지막저장커밋 미기록상태로 유지 |
+| G7 원격 보존 | 보고서9개·검사9개·이전명세를main에반영하고원격대조 완료 | 이번 수정은git push 후원격HEAD·파일tree 일치 확인 | push 실패 시완료로표기하지않고미반영커밋 보존 |
 
 문서의 고정 GitHub 코드 경로 86개는 해당 커밋의 tree 또는 실제 파일 응답으로 존재를 확인했다. 이는 모든 함수의 실행·성능 검증을 뜻하지 않는다.
 
@@ -130,6 +132,14 @@ CPU는 한 코어 기준과 전체 논리 코어 정규화 기준을 모두 보�
 범위: 고정 오프라인 환경, 사용자 ROM 판본 검사와 소수 던전/포켓몬 추출, 필수 Walk/Idle/Eat/Sleep/Wake/Pose, 원본 tick/anchor QA, Windows 200px layered 창과 drag/DPI/metric harness. 작은 selected pack을 먼저 만든다.
 
 완료 기준: G1/G2 대표 샘플 통과, 원본 이미지 구분과 누락 상태 명시, 창 투명/상단/focus/drag/DPI 검증, 반복 자원 누수 검사, 성능 baseline과 설치 bytes 기록. 별도 Run은 미확인으로 남기고 fallback을 표시한다. 전체 종/폼은 지원 감사 목록으로 관리한다.
+
+A의 구현 순서:
+
+1. **A-1 자산 준비:** 고정 오프라인 Extractor/Packer로 대표 1~2종의 필수 동작과 선택 catalogue/atlas/manifest를 만든다. 원본 출처·누락을 기록한다.
+2. **A-2 렌더러 준비:** A-1과 독립적으로 Win32/WIC/DIB 및 Animator를 같은 데이터 계약으로 준비한다. 명시된 테스트 자산으로 투명도·경계 clipping·DPI·타이머를 검증할 수 있다.
+3. **A-3 통합 검증:** A-1/A-2 결과를 연결해 실제 원작 자산으로 필수 동작·anchor·방향·tick과 Windows 기준선을 확인한다. 이 단계가 통과해야 A 완료다.
+
+전체 종·폼 변환 완료를 A-2 착수 조건으로 두지 않는다. ROM 또는 Windows가 없으면 가능한 독립 작업을 수행하고 해당 통합 gate는 미완료로 남긴다.
 
 ### 개발 단계 B — 우호적 자율 탐험
 
@@ -147,6 +157,6 @@ CPU는 한 코어 기준과 전체 논리 코어 정규화 기준을 모두 보�
 
 현재 전달물은 docs/research/의 요구된 9개 MD이며 ZIP에 같은 폴더 구조로 포함한다. 제품 소스, ROM, 외부 저장소 소스, 게임 이미지, 임시 검사 데이터는 ZIP에 포함하지 않는다. 기존 ahntaeyoung80-coder/MysteryDungeonPet 저장소 루트에 docs 폴더를 추가하면 된다. 새 저장소는 필요 없다.
 
-이 작업에서는 원격 commit/push가 완료되지 않았다. 앞선 세션에서 마지막으로 확인한 main SHA는 f64b2ee9d170d3bf025c198ce860208f72294584이며 이번 문서의 저장 커밋이 아니다. 업로드 뒤 실제 커밋 SHA를 00_RESEARCH_STATE.md에 기록하고 원격 파일 내용을 확인한다. 업로드 방식 변경은 사용자의 최신 지시에 따른다.
+보고서·검사 자료·이전 명세는 main에 이전 완료했다. 이번 보완 직전 확인한 main은 f52f3b8이다. 현재 저장 상태는 00_RESEARCH_STATE.md와 git log로 확인한다. 최초 조사 ZIP과 checks/package_validation.json의 해시는 수정 전 보고서의 기록이며 최신 문서 해시가 아니다. 과거 ZIP·검사 기록을 현재 문서에 맞추어 덮어쓰지 않는다.
 
 다음 Codex는 먼저 00_RESEARCH_STATE와 이 인수인계를 읽고 미완료 gate를 선택한다. 이미 확인된 파일/함수/테이블을 처음부터 다시 조사하지 말고 고정 링크와 각 phase 보고서의 해당 항목을 참조한다. 원본 ROM과 Windows 실행 환경이 있을 때 필요한 검증을 수행한 후 개발 명세의 완료 조건을 확정한다.

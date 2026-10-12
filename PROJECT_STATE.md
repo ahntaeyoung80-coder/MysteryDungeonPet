@@ -1,27 +1,27 @@
 # 현재 상태
 
 ## 현재 단계
-기술 조사 보고서 9개 확보 및 저장소 이전. 제품 구현 착수 전.
+기술 조사·자료 이전·구현 전 문서 보완 완료. 제품 구현 착수 전.
 
 ## 현재 구현 상태
-GitHub 저장소: https://github.com/ahntaeyoung80-coder/MysteryDungeonPet
-조사 보고서: docs/research/ (첨부 ZIP의 9개 Markdown 이전 완료; 기술 본문 8개는 원문 유지, 00_RESEARCH_STATE.md는 원격 반영 상태로 갱신).
-이전 검사 자료 9개: docs/research/checks/. 이전 개발 명세 원본: docs/archive/2026-10-12-desktop-pet-original-spec.txt (현재 기준과 구분).
+저장소: https://github.com/ahntaeyoung80-coder/MysteryDungeonPet
+보고서 9개: docs/research/. 조사 검사 자료 9개: docs/research/checks/.
+이전 개발 명세 원본: docs/archive/ (후속 결정 이전 자료).
+좌표·표시 영역, 배치 종료 보장, A-1/A-2/A-3 순서 및 층 인덱스 검사 기준을 관련 문서에 반영했다. 작업 규칙·소개·결정 문서의 손실된 한글을 현재 확정된 내용으로 재작성했다.
 실행 코드 및 개발 의존성 없음. 실제 ROM 전체 추출과 Windows 실행·성능 검증은 미완료.
 
 ## 진행 중
-기존 보고서 이전 및 로컬/원격 내용 대조 완료. 중복 파일 추가 없이 조사 상태표만 최신화. 검토에서 합의한 보완 사항은 기술 보고서 원문에 아직 반영하지 않음.
+문서 변경 검증과 실제 git push. 최종 원격 반영 결과는 해당 작업 로그의 검증 절차와 git log/원격 HEAD로 확인한다.
 
 ## 다음 작업 / 재개 지점
 1. docs/research/00_RESEARCH_STATE.md와 IMPLEMENTATION_HANDOFF.md를 먼저 읽는다.
-2. 개발 명세에 좌표·표시 영역 분리, 가용 타일 기반 비복원 배치 및 종료 보장, 자산 준비·렌더러 준비·실제 자산 통합 검증 순서를 반영한다.
-3. 1차 개발 실행 명세를 확정한 뒤 구현한다.
+2. 합의된 보완을 기준으로 1차 개발 실행 명세를 확정한다.
+3. A-1 자산 준비와 A-2 렌더러 준비를 수행하고 A-3 실제 원작 자산 통합 검증으로 완료를 판정한다.
 
 ## 알려진 문제
-이전 세션의 GitHub DNS 오류와 달리 이번 세션에서 git ls-remote와 clone은 성공함.
-Codex 클라우드 프로젝트의 UI 연결 설정 자체는 별도로 검증하지 않음.
-기존 AGENTS.md, README.md, docs/DECISIONS.md에 대체 문자로 손실된 한글이 있음. 이번 이전에서는 해당 파일을 변경하지 않음.
-실행 코드가 없어 빌드·런타임 테스트 미실시. 문서상의 테스트 결과를 이번 세션에서 재실행한 것으로 취급하지 않는다.
+ROM 전체 추출·전체 종/폼 지원·Windows 성능은 검증 대기다. 원작 Pose17 사용은 확정되어 있다.
+조사 ZIP 및 checks/package_validation.json은 수정 전 자료의 기록이다. 최신 보고서 해시나 새 실행 결과로 취급하지 않는다.
+Codex 클라우드 프로젝트의 UI 연결 설정 자체는 별도로 검증하지 않았다.
 
 ## 관련 결정
 docs/DECISIONS.md
