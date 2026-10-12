@@ -1,0 +1,56 @@
+{
+  "scope": "actual pinned calculate_relative_weights function body isolated via AST; no GTK initialization, no ROM",
+  "passed": 5,
+  "cases": [
+    {
+      "input": [],
+      "output": []
+    },
+    {
+      "input": [
+        0,
+        0
+      ],
+      "output": [
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        100,
+        0,
+        300,
+        1000
+      ],
+      "output": [
+        1,
+        0,
+        2,
+        7
+      ]
+    },
+    {
+      "input": [
+        0,
+        100,
+        100,
+        400
+      ],
+      "output": [
+        0,
+        1,
+        0,
+        3
+      ]
+    },
+    {
+      "input": [
+        50
+      ],
+      "output": [
+        1
+      ]
+    }
+  ]
+}

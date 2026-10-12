@@ -1,0 +1,163 @@
+{
+  "scope": "public PNG complete Pillow decode and XML dimension/duration checks; no ROM match or offset marker QA",
+  "passed": 8,
+  "results": [
+    {
+      "name": "Walk",
+      "size": [
+        128,
+        320
+      ],
+      "cell": [
+        32,
+        40
+      ],
+      "cols": 4,
+      "rows": 8,
+      "ticks": [
+        8,
+        10,
+        8,
+        10
+      ],
+      "decodedRgbaBytes": 163840
+    },
+    {
+      "name": "Idle",
+      "size": [
+        240,
+        448
+      ],
+      "cell": [
+        40,
+        56
+      ],
+      "cols": 6,
+      "rows": 8,
+      "ticks": [
+        40,
+        2,
+        3,
+        3,
+        3,
+        2
+      ],
+      "decodedRgbaBytes": 430080
+    },
+    {
+      "name": "Sleep",
+      "size": [
+        64,
+        40
+      ],
+      "cell": [
+        32,
+        40
+      ],
+      "cols": 2,
+      "rows": 1,
+      "ticks": [
+        30,
+        35
+      ],
+      "decodedRgbaBytes": 10240
+    },
+    {
+      "name": "EventSleep",
+      "size": [
+        48,
+        256
+      ],
+      "cell": [
+        24,
+        32
+      ],
+      "cols": 2,
+      "rows": 8,
+      "ticks": [
+        30,
+        35
+      ],
+      "decodedRgbaBytes": 49152
+    },
+    {
+      "name": "Wake",
+      "size": [
+        200,
+        320
+      ],
+      "cell": [
+        40,
+        40
+      ],
+      "cols": 5,
+      "rows": 8,
+      "ticks": [
+        8,
+        6,
+        4,
+        14,
+        10
+      ],
+      "decodedRgbaBytes": 256000
+    },
+    {
+      "name": "Eat",
+      "size": [
+        96,
+        48
+      ],
+      "cell": [
+        24,
+        48
+      ],
+      "cols": 4,
+      "rows": 1,
+      "ticks": [
+        6,
+        8,
+        6,
+        8
+      ],
+      "decodedRgbaBytes": 18432
+    },
+    {
+      "name": "Pose",
+      "size": [
+        96,
+        320
+      ],
+      "cell": [
+        32,
+        40
+      ],
+      "cols": 3,
+      "rows": 8,
+      "ticks": [
+        12,
+        2,
+        8
+      ],
+      "decodedRgbaBytes": 122880
+    },
+    {
+      "name": "Nod",
+      "size": [
+        96,
+        384
+      ],
+      "cell": [
+        32,
+        48
+      ],
+      "cols": 3,
+      "rows": 8,
+      "ticks": [
+        6,
+        8,
+        6
+      ],
+      "decodedRgbaBytes": 147456
+    }
+  ]
+}

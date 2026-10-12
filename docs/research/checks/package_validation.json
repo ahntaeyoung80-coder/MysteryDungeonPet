@@ -1,0 +1,63 @@
+{
+  "documentChecks": {
+    "mdFiles": 9,
+    "pinnedPaths": 86,
+    "relativeLinks": 9,
+    "pythonBlocks": 2,
+    "jsonBlocks": 1,
+    "tableRows": 395
+  },
+  "files": [
+    {
+      "name": "00_RESEARCH_STATE.md",
+      "bytes": 1663,
+      "sha256": "f6898c825945d93185a09ee52445b95890eb172b4afbbf4d320fafb4e1b19839"
+    },
+    {
+      "name": "01_DATA_EXTRACTION.md",
+      "bytes": 22878,
+      "sha256": "c373d6e039a7266e83e29dc5cb6a9a20b0387b98aa1dcea82cc5ac9f22ad6775"
+    },
+    {
+      "name": "02_ANIMATION_ASSETS.md",
+      "bytes": 15231,
+      "sha256": "677a1b20b0dac84eaef9fa35a34753c4f0ef1f88f0d22f6efc0136aeb09113ed"
+    },
+    {
+      "name": "03_EVENT_BEHAVIOR.md",
+      "bytes": 19815,
+      "sha256": "04a93c19345bfce6b4611a1a85b23166f3c4be5195a8e9d273bf8c5f9b4f69c2"
+    },
+    {
+      "name": "04_DUNGEON_AI.md",
+      "bytes": 15439,
+      "sha256": "6b97ac2df95345c516a2f0e37286203fe33cf7ec45f5b1eb582c58a593547757"
+    },
+    {
+      "name": "05_WINDOWS_RUNTIME.md",
+      "bytes": 17153,
+      "sha256": "e00e647b8206a2f9bae13a64d6c912e9b7177faffd5aaeb1b4a7c59a472c2f18"
+    },
+    {
+      "name": "SOURCE_RESEARCH.md",
+      "bytes": 17312,
+      "sha256": "dd01c91b7de57d7d6702c1b971451925f20146fcb237d9458c3eacef06dc1db1"
+    },
+    {
+      "name": "ASSET_MAPPING.md",
+      "bytes": 13368,
+      "sha256": "8e373d881cf922d75192c29be24829b8e23b8ca1c9cbd8630ab8937c42403b25"
+    },
+    {
+      "name": "IMPLEMENTATION_HANDOFF.md",
+      "bytes": 17062,
+      "sha256": "4e0550919b5bbe63f6f25a61b0b848ed0069e2584b01570cbda0c3c3fe257098"
+    }
+  ],
+  "archive": {
+    "path": "/workspace/scratch/8d2e980747a2/deliverables/Adaptive_Desktop_Pet_Research_MD.zip",
+    "bytes": 60767,
+    "sha256": "061ff51b9db5a3f16c73a7c96613afcc5c115e9904baea064b17f97901b7286d",
+    "members": 9
+  }
+}

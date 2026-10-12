@@ -6,6 +6,7 @@
 ## 현재 구현 상태
 GitHub 저장소: https://github.com/ahntaeyoung80-coder/MysteryDungeonPet
 조사 보고서 원문: docs/research/ (첨부 ZIP의 9개 Markdown 파일 그대로 이전).
+이전 검사 자료 9개: docs/research/checks/. 이전 개발 명세 원본: docs/archive/2026-10-12-desktop-pet-original-spec.txt (현재 기준과 구분).
 실행 코드 및 개발 의존성 없음. 실제 ROM 전체 추출과 Windows 실행·성능 검증은 미완료.
 
 ## 진행 중
