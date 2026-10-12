@@ -5,12 +5,12 @@
 
 ## 현재 구현 상태
 GitHub 저장소: https://github.com/ahntaeyoung80-coder/MysteryDungeonPet
-조사 보고서 원문: docs/research/ (첨부 ZIP의 9개 Markdown 파일 그대로 이전).
+조사 보고서: docs/research/ (첨부 ZIP의 9개 Markdown 이전 완료; 기술 본문 8개는 원문 유지, 00_RESEARCH_STATE.md는 원격 반영 상태로 갱신).
 이전 검사 자료 9개: docs/research/checks/. 이전 개발 명세 원본: docs/archive/2026-10-12-desktop-pet-original-spec.txt (현재 기준과 구분).
 실행 코드 및 개발 의존성 없음. 실제 ROM 전체 추출과 Windows 실행·성능 검증은 미완료.
 
 ## 진행 중
-이번 작업 범위는 기존 보고서 이전. 검토에서 합의한 보완 사항은 원문에 아직 반영하지 않음.
+기존 보고서 이전 및 로컬/원격 내용 대조 완료. 중복 파일 추가 없이 조사 상태표만 최신화. 검토에서 합의한 보완 사항은 기술 보고서 원문에 아직 반영하지 않음.
 
 ## 다음 작업 / 재개 지점
 1. docs/research/00_RESEARCH_STATE.md와 IMPLEMENTATION_HANDOFF.md를 먼저 읽는다.
