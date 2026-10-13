@@ -13,5 +13,7 @@
     "hearts": 3,
     "oran": 0,
     "gameplayTransactions": 24
-  }
+  },
+  "combatProcessKillRestore": "pass",
+  "baselineAndRestoredCombatResultMatch": true
 }

@@ -219,11 +219,16 @@ class App {
         if (!p && explorer_) exploreDeadline_ = now + 350000;
         // Hidden window keeps its last submitted pixels; do not resubmit them on restore.
     }
-    void startClip(int64_t now) {
+    int64_t restoredClipStart(int64_t now) const {
+        if (!explorer_) return now;
+        const auto started = explorer_->state().gameplay.phaseStartedMs, utc = utcMs();
+        return now - static_cast<int64_t>(std::min<uint64_t>(utc > started ? utc-started : 0, 5000))*1000;
+    }
+    void startClip(int64_t now, bool restoring = false) {
         frame_ = 0; nextFrameDeadline_.reset();
         if (options_.scenario == L"empty") animator_.stop();
         else {
-            animator_.start(assets_.package, clip_, direction_, loop_, now);
+            animator_.start(assets_.package, clip_, direction_, loop_, restoring && !loop_ ? restoredClipStart(now) : now);
             if (paused_) animator_.pause(now);
         }
         dirty_ = true;
@@ -650,7 +655,8 @@ public:
             const auto& g = explorer_->state().gameplay;
             if (g.life == LifePhase::Combat) {
                 enemyClip_ = g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? 33 : 7;
-                enemyAnimator_.start(enemyAssets_->package, enemyClip_, 0, enemyClip_ == 7, nowUs());
+                const auto now = nowUs();
+                enemyAnimator_.start(enemyAssets_->package, enemyClip_, 0, enemyClip_ == 7, enemyClip_ == 7 ? now : restoredClipStart(now));
             }
             auto marker = [](Surface& s, uint8_t blue, uint8_t green, uint8_t red) {
                 for (size_t offset = 0; offset < s.pixels.size(); offset += 4) {
@@ -700,7 +706,7 @@ public:
         tray_ = Shell_NotifyIconW(NIM_ADD, &icon) != 0;
         winCheck(tray_, "tray icon (required to restore hidden window)");
         log("start assetKey=" + assets_.package.assetKey + " atlasSha256=" + assets_.package.pngSha256 + " testTimingHz=" + std::to_string(assets_.package.tickHz));
-        startClip(nowUs());
+        startClip(nowUs(), true);
         if (explorer_) exploreDeadline_ = nowUs() + 350000;
         synchronizePause(nowUs());
         MSG initial{};
