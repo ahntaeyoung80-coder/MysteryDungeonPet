@@ -1,0 +1,433 @@
+{
+  "dateKST": "2026-10-13",
+  "reviewType": "submitted_existing_records_only",
+  "evidence": {
+    "uploadedFileName": "MysteryDungeonPet.zip",
+    "uploadedSHA256": "60523b0bd33a4ebdef3020cd291d82de451b46f8f6f2411f6572e4805a98153e",
+    "measurementStartKST": "2026-10-13T14:17:07.2576873+09:00",
+    "os": {
+      "Caption": "Microsoft Windows 11 Pro",
+      "Version": "10.0.26200",
+      "BuildNumber": "26200"
+    },
+    "cpu": {
+      "Name": "13th Gen Intel(R) Core(TM) i9-13900KF",
+      "NumberOfCores": 24,
+      "NumberOfLogicalProcessors": 32
+    },
+    "binarySHA256": "b0ed6953de87b3666990d9a3cf33fa49ce5e73bd95c00ae1598a400a94dbf45b",
+    "installedBytesReported": 441383,
+    "wic": {
+      "status": "pass",
+      "decodeCount": 1,
+      "cacheReuse": "pass",
+      "PBGRA": "pass",
+      "assetKey": "test:synthetic:a2-v1"
+    },
+    "rawArchiveCommitted": false
+  },
+  "scenarios": {
+    "empty": {
+      "warmup_seconds": 60,
+      "duration_seconds": 90.0226,
+      "measured_seconds_after_warmup": 29.366099999999996,
+      "cpu_one_core_average_percent": 0.26603596585859324,
+      "cpu_one_core_p95_percent": 3.07723,
+      "cpu_one_core_max_percent": 3.12061,
+      "working_set_max_bytes_after_warmup": 14086144.0,
+      "private_max_bytes_after_warmup": 2371584.0,
+      "peak_working_set_bytes_including_startup": 14135296.0,
+      "decode_count": 1.0,
+      "render_submissions": 1.0,
+      "switch_count": 0.0,
+      "process_handles_first_last": [
+        188.0,
+        185.0
+      ],
+      "gdi_objects_first_last": [
+        2.0,
+        2.0
+      ],
+      "observed_paused_interval_submission_deltas": [],
+      "submissions_while_paused": 0.0,
+      "sampleCount": 90,
+      "csvSHA256": "3e0b0392ae02cf712c30ce6bacfded628c89b221ef6db5e5f1bd329265f792e8",
+      "actualPhysicalSize": [
+        200
+      ],
+      "integerScale": [
+        3
+      ],
+      "gdiCountRange": [
+        2,
+        2
+      ],
+      "dpiBeforeExit": [
+        96
+      ],
+      "positionBeforeExit": [
+        [
+          1766,
+          726
+        ]
+      ],
+      "lastRecordedWindow": {
+        "window_x": 0,
+        "window_y": 0,
+        "dpi": 0
+      }
+    },
+    "hide": {
+      "warmup_seconds": 60,
+      "duration_seconds": 90.0242,
+      "measured_seconds_after_warmup": 29.35949999999999,
+      "cpu_one_core_average_percent": 0.0,
+      "cpu_one_core_p95_percent": 0.0,
+      "cpu_one_core_max_percent": 0.0,
+      "working_set_max_bytes_after_warmup": 14266368.0,
+      "private_max_bytes_after_warmup": 2539520.0,
+      "peak_working_set_bytes_including_startup": 14266368.0,
+      "decode_count": 1.0,
+      "render_submissions": 1.0,
+      "switch_count": 0.0,
+      "process_handles_first_last": [
+        188.0,
+        185.0
+      ],
+      "gdi_objects_first_last": [
+        2.0,
+        2.0
+      ],
+      "observed_paused_interval_submission_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "submissions_while_paused": 0.0,
+      "sampleCount": 90,
+      "csvSHA256": "aa607bb3df35fb30c8160041555ce381e0877707a58d8a3b84532725527aa930",
+      "actualPhysicalSize": [
+        200
+      ],
+      "integerScale": [
+        3
+      ],
+      "gdiCountRange": [
+        2,
+        2
+      ],
+      "dpiBeforeExit": [
+        96
+      ],
+      "positionBeforeExit": [
+        [
+          1766,
+          726
+        ]
+      ],
+      "lastRecordedWindow": {
+        "window_x": 0,
+        "window_y": 0,
+        "dpi": 0
+      }
+    },
+    "idle": {
+      "warmup_seconds": 60,
+      "duration_seconds": 90.0215,
+      "measured_seconds_after_warmup": 29.346400000000003,
+      "cpu_one_core_average_percent": 0.0,
+      "cpu_one_core_p95_percent": 0.0,
+      "cpu_one_core_max_percent": 0.0,
+      "working_set_max_bytes_after_warmup": 14270464.0,
+      "private_max_bytes_after_warmup": 2531328.0,
+      "peak_working_set_bytes_including_startup": 14270464.0,
+      "decode_count": 1.0,
+      "render_submissions": 1.0,
+      "switch_count": 0.0,
+      "process_handles_first_last": [
+        188.0,
+        185.0
+      ],
+      "gdi_objects_first_last": [
+        2.0,
+        2.0
+      ],
+      "observed_paused_interval_submission_deltas": [],
+      "submissions_while_paused": 0.0,
+      "sampleCount": 90,
+      "csvSHA256": "339e1079deb9b2ec8daa3b9a6d40f6ed6261da609829b6f676283f9d7b5d3da8",
+      "actualPhysicalSize": [
+        200
+      ],
+      "integerScale": [
+        3
+      ],
+      "gdiCountRange": [
+        2,
+        2
+      ],
+      "dpiBeforeExit": [
+        96
+      ],
+      "positionBeforeExit": [
+        [
+          1766,
+          726
+        ]
+      ],
+      "lastRecordedWindow": {
+        "window_x": 0,
+        "window_y": 0,
+        "dpi": 0
+      }
+    },
+    "switch": {
+      "warmup_seconds": 60,
+      "duration_seconds": 165.029,
+      "measured_seconds_after_warmup": 104.4169,
+      "cpu_one_core_average_percent": 0.2244566938972527,
+      "cpu_one_core_p95_percent": 1.5472,
+      "cpu_one_core_max_percent": 3.12472,
+      "working_set_max_bytes_after_warmup": 14213120.0,
+      "private_max_bytes_after_warmup": 2543616.0,
+      "peak_working_set_bytes_including_startup": 14225408.0,
+      "decode_count": 1.0,
+      "render_submissions": 725.0,
+      "switch_count": 100.0,
+      "process_handles_first_last": [
+        188.0,
+        183.0
+      ],
+      "gdi_objects_first_last": [
+        2.0,
+        2.0
+      ],
+      "observed_paused_interval_submission_deltas": [],
+      "submissions_while_paused": 0.0,
+      "sampleCount": 164,
+      "csvSHA256": "f7fb068d8e4e930e5ea14cc943a5b1ffd3ccd8f5c85ccb79617e4731cbae9d4f",
+      "actualPhysicalSize": [
+        200
+      ],
+      "integerScale": [
+        3
+      ],
+      "gdiCountRange": [
+        2,
+        2
+      ],
+      "dpiBeforeExit": [
+        96
+      ],
+      "positionBeforeExit": [
+        [
+          1766,
+          726
+        ]
+      ],
+      "lastRecordedWindow": {
+        "window_x": 0,
+        "window_y": 0,
+        "dpi": 0
+      }
+    },
+    "walk": {
+      "warmup_seconds": 60,
+      "duration_seconds": 90.0242,
+      "measured_seconds_after_warmup": 29.403499999999994,
+      "cpu_one_core_average_percent": 0.15941391609842379,
+      "cpu_one_core_p95_percent": 1.54718,
+      "cpu_one_core_max_percent": 3.12483,
+      "working_set_max_bytes_after_warmup": 14258176.0,
+      "private_max_bytes_after_warmup": 2461696.0,
+      "peak_working_set_bytes_including_startup": 14258176.0,
+      "decode_count": 1.0,
+      "render_submissions": 623.0,
+      "switch_count": 0.0,
+      "process_handles_first_last": [
+        188.0,
+        185.0
+      ],
+      "gdi_objects_first_last": [
+        2.0,
+        2.0
+      ],
+      "observed_paused_interval_submission_deltas": [],
+      "submissions_while_paused": 0.0,
+      "sampleCount": 90,
+      "csvSHA256": "2745e58e3975c030dfb3adfdbef707d5dad2bf9ddde587f829cae5e4ed354319",
+      "actualPhysicalSize": [
+        200
+      ],
+      "integerScale": [
+        3
+      ],
+      "gdiCountRange": [
+        2,
+        2
+      ],
+      "dpiBeforeExit": [
+        96
+      ],
+      "positionBeforeExit": [
+        [
+          1766,
+          726
+        ]
+      ],
+      "lastRecordedWindow": {
+        "window_x": 0,
+        "window_y": 0,
+        "dpi": 0
+      }
+    }
+  },
+  "userReported": {
+    "alwaysOnTop": "works",
+    "drag": "works",
+    "hide": "works",
+    "WindowsIssues": "none_reported",
+    "directionAppearance": "same circle and moving pixel; color changes difficult to distinguish"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "status": "confirmed_observability_gap",
+      "detail": "CSV/events omit animation ID, direction, frame and scene coordinates; 100 switches alone do not prove eight-direction playback or movement."
+    },
+    {
+      "id": "R2",
+      "status": "confirmed_measurement_error",
+      "detail": "All final CSV rows report DPI0 and position0,0 after window destruction; preceding rows consistently report DPI96 and position1766,726. Not an actual observed window jump."
+    },
+    {
+      "id": "R3",
+      "status": "confirmed_baseline_contamination",
+      "detail": "empty.csv accumulates623 markers matching walk.csv. The empty scenario still runs the Animator and its deadlines; it is not a pure empty-window CPU baseline."
+    },
+    {
+      "id": "R4",
+      "status": "test_asset_limitation",
+      "detail": "Synthetic v1 intentionally varies color by direction/frame, shares circular geometry across clips, and renders at a fixed scene position. Visual ambiguity does not establish a broken direction resolver."
+    }
+  ],
+  "requirements": {
+    "physicalWindowSizePx": [
+      200,
+      200
+    ],
+    "cameraCutsOrControlsRequired": false,
+    "implementationStatus": "requested_for_A3_not_implemented_in_this_review"
+  },
+  "decisions": {
+    "proceedTo": "A3 integration verification",
+    "additionalManualTestingRequested": false,
+    "additionalTestRequiredBeforeA3Entry": false,
+    "newRuntimeExecutionForThisReview": false,
+    "codeAndAssetChanges": "started changes reverted at user direction; source unchanged",
+    "A3StartWork": [
+      "log animation ID/direction/frame/scene position",
+      "sample before window destruction",
+      "disable animation for empty baseline",
+      "fix physical window200x200 and remove camera controls"
+    ],
+    "automaticChecksAfterChanges": [
+      "last valid position/DPI preserved",
+      "logged playback fields match Animator state"
+    ],
+    "ACompletion": "not_declared",
+    "unobserved": [
+      "actual session lock/unlock",
+      "actual display off/on",
+      "actual suspend/resume",
+      "DPI/monitor change",
+      "original asset timing/appearance"
+    ]
+  }
+}

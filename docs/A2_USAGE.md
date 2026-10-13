@@ -1,5 +1,7 @@
 # A-2 구현·빌드·검증
 
+최신 사용자 점검과 재개 판정은 [A-2 사용자 실행 기록 점검](logs/2026-10-13-a2-user-review.md)을 따른다. 추가 수동 테스트 없이 기존 Windows11 측정을 재사용해 A-3에 진입하고, 로그/기준선 오류와200px 고정·카메라 메뉴 제거는 A-3 시작 작업으로 처리한다. 이번 저장에서 제품 코드는 수정하지 않았다.
+
 C++17/Win32/WIC 기반 시험 런타임이다. A-1의 대표 원작 준비 완료 판정은 유지하며, A-2의 실제 Windows UI·전원·성능 완료 판정은 대기 상태다. 최신 원격 A-1 구현 `4d6ed6b`를 받아 기존 Extractor/Packer를 재사용했다.
 
 ## 실행 범위
@@ -79,7 +81,7 @@ cmake --install build/mingw --prefix build/package-mingw
 
 현재 cloud 환경의 toolchain은 저장소 밖 `/workspace/toolchain`에 Debian13 패키지를 SHA-256 확인 후 사용자 권한으로 해제했다. cmake4.4.4/ninja1.13.2, GNU14.2/MinGW14-posix 사용. 해당 설치 경로는 제품 의존성이 아니다. Linux 크로스 빌드는 Windows 실행 증거가 아니다.
 
-`.github/workflows/a2.yml`은 Linux sanitizer/A-1 연결과 Windows MSVC Release/core/native WIC/8개 오류 패키지를 검사한다. CI의 headless WIC 통과와 실제 데스크톱/잠금/절전 검증을 구분한다. 실제 Windows Server2025/MSVC19.51 Release/core/WIC/8개 오류 검사 pass(run38339188747). 결과는 로그와 `docs/validation/2026-10-13-a2-windows-ci.txt`에 기록했다. 사용자 desktop 사건·성능은 pending이다.
+`.github/workflows/a2.yml`은 Linux sanitizer/A-1 연결과 Windows MSVC Release/core/native WIC/8개 오류 패키지를 검사한다. CI의 headless WIC 통과와 실제 데스크톱/잠금/절전 검증을 구분한다. 실제 Windows Server2025/MSVC19.51 Release/core/WIC/8개 오류 검사 pass(run38339188747). 결과는 로그와 `docs/validation/2026-10-13-a2-windows-ci.txt`에 기록했다. 이후 제출된 사용자 Windows11 성능·Hide·전환 기록은 별도 사용자 점검 JSON에 보존했다. 명시 증거가 없는 OS 사건은 미검증이다.
 
 ## 완료 판정과 재개
 
