@@ -1,5 +1,7 @@
 # B-1 탐험 종료·최소 전투 작업 현황
 
+최신 길드 요구 보완: 주인공 방 취침·길드 식당12명 공동 식사를 연결했다. 식사는8초 유한 scene, Sleep은침상의EventSleep13이며 두 개체 Wake 완료를 기다린다. 현재 실행·검증은 [GUILD_LIFE_SCENE.md](GUILD_LIFE_SCENE.md)를 함께 따른다.
+
 기준: 2026-10-13 사용자 최신 요구. 실제 제품 코드는 origin/work의3cbb95b에서 발견했다. 구현 위치는 `src/core/gameplay.cpp`, `src/core/exploration.cpp`, `src/core/state_store.cpp`, `src/windows/main.cpp`이며 별도 워크트리·브랜치는 PROJECT_STATE.md에 기록한다.
 
 ## 완료 항목

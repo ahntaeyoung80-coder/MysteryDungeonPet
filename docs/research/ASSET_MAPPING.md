@@ -4,6 +4,8 @@
 
 최신 실행 범위: `assets/original/gameplay/provenance.json`이 MD1/MD4 전투·생활 clip 및 G01P06B/G01P07A 집 map의 실제 선택 추출·crop/hash를 기록한다. 원본 ROM 전체/종별 지원 판정과 구분한다. 이번 최소 전투에서는 m_attack의 Attack/Hurt/Faint를 사용하며 아래 과거의 전투 제외 문구를 덮어쓴다. 오랭열매70 사용은 text-only이며 별도 clip을 연결하지 않는다.
 
+길드 생활 최신 연결: `gameplay/guild/provenance.json`과 MDGS1 cue가 식당12개개체·object107, 원본 개별동작·침상위치를 기록한다. 식당crop(180,112), 침실crop(92,56); 주인공Right2/동료Left6. NPC10명의MDindex/spriteIndex와原WAN검사를 완료했고 effect642/643/624는별도graphic미연결이다. 자세한표는 [GUILD_LIFE_SCENE.md](../GUILD_LIFE_SCENE.md)를 따른다.
+
 ## 1. 서로 다른 ID 체계
 
 | ID 공간 | 원본 위치 | 의미·정규화 키 | 금지할 연결 |

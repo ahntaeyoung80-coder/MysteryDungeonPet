@@ -13,3 +13,10 @@ SSB strict 파서는 원본의 unknown byte144에서 실패했다. 대사 수정
 Linux4CTests pass(17.48s), Python23tests pass, Windows MinGW compile/link pass. 길드원10명 모두 실제frame 변화·식당13layers·침실2명·정확한 좌표/방향, 기존12개생활/전투 시나리오·12,031복원을 검사했다. 단일Eat clip 완료로 공동식사를 조기 종료하지 않는 검사도 추가했다. Windows 실행 결과는 후속 기록에 추가한다.
 
 미리보기는 실제 MDPA를 native inspector로 읽어 만든 `local/guild-preview/guild-dining.gif`, `player-room-sleep.gif`다. 원작 공동 식사 효과·음악·대사·Turn2Direction의 전체 재현, 실제Windows11·장기 성능은 pending이다.
+
+## Windows 실행과 최종 반영
+
+- 구현b21cf29를 기존 fix/b1-life-combat/PR1에 push했다. Windows CI38399667063 core/windows 모두success. Linux ASan/UBSan 최신gameplay 검사81.91s pass.
+- 실제GUI: GuildDining characters12/object1→식사8177.284ms→PlayerRoom characters2→Wake→partner wake finished→Ready→day2 Explore. 귀가→식사1522.529ms. native4CTests와 기존전투GUI도pass. event/result로그와summary를validation에보존했다.
+- 24초실행최대working set19,218,432bytes/private7,737,344bytes,texturedecode15회,viewport200px. 선택MSVC설치1,699,073bytes(ROM제외). 장기성능·Windows11판정은pending이다.
+- 최신실행ZIP local/Guild-life-windows.zip을준비했다. 원작식사effect·음악·대사·Turn2Direction전체재현은미완료로명시했다.

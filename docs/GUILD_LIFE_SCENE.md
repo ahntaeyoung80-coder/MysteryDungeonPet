@@ -37,7 +37,7 @@
 - [x] 직접 원본 WAN→merged→atlas 대조516개 atlas/996개 원본 frame, 원본 불변.
 - [x] 길드원10명 전부 frame 변화·침상 위치와 방향, 기존12개 시나리오·저장복원 검사.
 - [x] Linux4CTests·Python23tests·Windows 크로스 빌드.
-- [ ] 최신 Windows CI의 길드 cast·침상·기상 실행 로그 수집(진행 중).
+- [x] Windows CI38399667063 core/windows success. 실제GUI 식당12명·침실2명·동료Wake 완료→Ready→day2 Explore 확인. 귀가1522.529ms·식사8177.284ms.
 - [ ] Eating642/EatingSlow643/AppleOnHead624의 별도 effect graphic·음악·대사·Turn2Direction 보간 완전 재현.
 - [ ] 실제 Windows11·잠금/절전·장기 성능.
 
