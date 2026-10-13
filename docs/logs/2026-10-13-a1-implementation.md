@@ -104,3 +104,9 @@ git status --short
 Windows 실제 Release 실행/잠금/절전/성능 접근은 아직 없고 사용자에게 최초 묶음 요청한 상태다. Linux/크로스빌드 결과만으로 A-2/A-3 통과를 선언하지 않는다.
 
 환경이 교체돼 로컬 원본이 없어졌을 때만 첨부를 다시 받는다: ZIP `file_000000008198820b8705eddfd45e54b3`, z01 `file_0000000046a8820b8c966d70382897e2`. 두 조각은 각각 32MiB 미만이다. 기존 환경에서는 재다운로드/ZIP 결합/ROM 식별을 반복하지 않는다.
+
+## 11:11 KST 원격 반영 확인
+
+- A-1 실제 ROM 검증 구현 커밋 `9a57eb7f2945cd312bf2df3d2cc26d6f8c9d7e38`을 `origin/work`에 push 성공.
+- `git ls-remote origin refs/heads/work` SHA와 로컬 HEAD 일치, `git status --short` clean, `git ls-files local` 비어 있음 확인. ROM·추출 게임 자산 미커밋.
+- 다음 작업: A-2.1 C++ 빌드/공유 패키지 소비 형식. 이전 분석/추출을 재시작하지 않는다.

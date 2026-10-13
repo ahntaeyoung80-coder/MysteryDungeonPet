@@ -25,4 +25,4 @@ A-1 대표 실제 ROM 데이터·자산 준비 검증 완료. **A-1 부분 완�
 
 ## 기록
 `docs/A1_IMPLEMENTATION_HANDOFF.md`, `docs/A1_USAGE.md`, `docs/logs/2026-10-13-a1-implementation.md`, `docs/validation/2026-10-13-a1-summary.json`.
-원본 ROM·게임 자산·생성 catalogue/atlas는 local/에만 저장, Git 제외. 기존 연구 checks/ZIP 보존. 분석 전 체크포인트4db2628 push/SHA 일치 확인. 최신 commit/push 결과는 작업 로그 참조.
+원본 ROM·게임 자산·생성 catalogue/atlas는 local/에만 저장, Git 제외. 기존 연구 checks/ZIP 보존. 분석 전 체크포인트4db2628 push/SHA 일치 확인. A-1 실제 검증 구현9a57eb7 push/원격 SHA 일치·작업 트리 clean 확인. 이 원격 반영 기록도 별도 문서 커밋으로 동기화한다.
