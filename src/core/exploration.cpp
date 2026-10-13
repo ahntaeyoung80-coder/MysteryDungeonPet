@@ -57,6 +57,24 @@ std::uint64_t Rng::bounded(std::uint64_t bound) {
 bool World::walkable(int tile) const {
     return tile >= 0 && tile < kTiles && terrain[static_cast<std::size_t>(tile)] == 1;
 }
+const std::array<std::pair<int,int>,8> kDirections{{{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1}}};
+unsigned directionBetween(int from, int to) {
+    const int dx=(to%kWidth>from%kWidth)-(to%kWidth<from%kWidth);
+    const int dy=(to/kWidth>from/kWidth)-(to/kWidth<from/kWidth);
+    for(unsigned i=0;i<8;++i) if(kDirections[i]==std::make_pair(dx,dy)) return i;
+    return 0;
+}
+bool canAttack(const World& w,int from,int to) {
+    if(!w.walkable(from)||!w.walkable(to)||from==to) return false;
+    const int dx=to%kWidth-from%kWidth,dy=to/kWidth-from/kWidth;
+    if(std::abs(dx)>1||std::abs(dy)>1) return false;
+    // Binary normal-floor world: impassable terrain in either orthogonal side blocks a diagonal.
+    // Actor occupancy on those side tiles is NOT terrain and does not block the corner.
+    return !dx || !dy || (w.walkable(from+dx) && w.walkable(from+dy*kWidth));
+}
+bool canMove(const World& w,int from,int to,const Mask& occupied) {
+    return canAttack(w,from,to) && !occupied[to];
+}
 Search bfs(const World& world, int start, const Mask& blocked) {
     Search result;
     result.distance.fill(-1);
@@ -68,12 +86,11 @@ Search bfs(const World& world, int start, const Mask& blocked) {
     result.distance[start] = 0;
     while (head != tail) {
         const int p = queue[head++], x = p % kWidth, y = p / kWidth;
-        const std::array<std::pair<int, int>, 4> directions{{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}};
-        for (const auto& [dx, dy] : directions) {
+        for (const auto& [dx, dy] : kDirections) {
             const int nx = x + dx, ny = y + dy;
             if (nx < 0 || nx >= kWidth || ny < 0 || ny >= kHeight) continue;
             const int n = ny * kWidth + nx;
-            if (!world.walkable(n) || blocked[n] || result.distance[n] != -1) continue;
+            if (!canMove(world,p,n,blocked) || result.distance[n] != -1) continue;
             result.distance[n] = result.distance[p] + 1;
             result.parent[n] = p;
             queue[tail++] = n;

@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
             check(static_cast<int>(path.size()) == search.distance[w.stairs] && !path.empty(), "BFS not shortest");
             int previous = w.start;
             for (auto tile : path) {
-                check(std::abs(tile % kWidth - previous % kWidth) + std::abs(tile / kWidth - previous / kWidth) == 1,
+                check(canMove(w,previous,tile),
                       "BFS path jumps/wraps"); previous = tile;
             }
             ++roomCounts[w.centers.size()]; maxFloor = std::max(maxFloor, floors);

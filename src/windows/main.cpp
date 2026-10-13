@@ -11,6 +11,7 @@
 #include "core/exploration_package.hpp"
 #include "core/gameplay_scene.hpp"
 #include "core/guild_scene.hpp"
+#include "core/motion.hpp"
 #include <algorithm>
 #include <chrono>
 #include <cstring>
@@ -191,6 +192,9 @@ class App {
     uint64_t chunkVersion_ = 0, chunkSeed_ = 0;
     int64_t exploreDeadline_ = 0;
     bool poseFinished_ = false;
+    Motion playerMotion_;
+    std::map<uint32_t,Motion> actorMotions_;
+    int64_t presentationNow_ = 0;
     Surface itemMarker_{5, 5}, friendMarker_{5, 5}, stairsMarker_{7, 7};
     Animator animator_;
     Surface surface_, background_{32, 24};
@@ -235,10 +239,10 @@ class App {
         bool p = blocked();
         if (p == paused_) return;
         paused_ = p;
-        if (p) { animator_.pause(now); enemyAnimator_.pause(now); log("render_pause"); }
-        else { animator_.resume(now); enemyAnimator_.resume(now); log("render_resume (not user activity)"); }
+        if (p) { playerMotion_.pause(now); for(auto& entry:actorMotions_) entry.second.pause(now); animator_.pause(now); enemyAnimator_.pause(now); log("render_pause"); }
+        else { playerMotion_.resume(now); for(auto& entry:actorMotions_) entry.second.resume(now); animator_.resume(now); enemyAnimator_.resume(now); log("render_resume (not user activity)"); }
         for (auto& actor : guildLive_) { if (p) actor.animator.pause(now); else actor.animator.resume(now); }
-        if (!p && explorer_) exploreDeadline_ = now + 350000;
+        if (!p && explorer_) exploreDeadline_ = now + kMoveDurationUs;
         // Hidden window keeps its last submitted pixels; do not resubmit them on restore.
     }
     int64_t restoredClipStart(int64_t now) const {
@@ -260,7 +264,8 @@ class App {
         Point scene{int32_t(size_ / (2 * scale_)), int32_t(size_ / (2 * scale_))};
         if (explorer_ && dungeonScene(explorer_->state().gameplay)) {
             const int tile = explorer_->state().position;
-            scene = {tile % kWidth * 24 + 12, tile / kWidth * 24 + 12};
+            scene = raster(playerMotion_.sample(presentationNow_));
+            (void)tile;
         } else if (explorer_ && !guildRooms_.empty()) {
             const auto life = explorer_->state().gameplay.life;
             scene = guildRooms_[life == LifePhase::Sleep || life == LifePhase::Wake || life == LifePhase::Ready ? 1 : 0].player().position;
@@ -518,7 +523,7 @@ class App {
         }
         saveSnapshot(options_.snapshot, candidate.state());
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
-        exploreDeadline_ = now + 350000;
+        exploreDeadline_ = now + kMoveDurationUs;
         const auto& g = explorer_->state().gameplay;
         uint32_t nextClip = gameplayClip(g); bool nextLoop = gameplayLoop(g);
         if (event.event == GameplayEvent::Move) nextClip = 0;
@@ -526,17 +531,22 @@ class App {
         if (event.event == GameplayEvent::Move) {
             const auto pos = explorer_->state().position;
             const int dx = pos % kWidth - oldPosition % kWidth, dy = pos / kWidth - oldPosition / kWidth;
-            const unsigned direction = dx > 0 ? 2 : dx < 0 ? 6 : dy < 0 ? 4 : 0;
-            if (direction_ != direction) { direction_ = direction; startClip(now); }
+            direction_ = directionBetween(oldPosition,pos);
+            playerMotion_.begin(0, explorer_->state().floorSteps, tilePoint(oldPosition),tilePoint(pos),now,direction_);
+            (void)dx; (void)dy;
         }
         if (g.life == LifePhase::Combat) {
             const auto entity = std::find_if(explorer_->state().population.entities.begin(), explorer_->state().population.entities.end(), [&](const auto& e) { return e.instanceId == g.enemyInstance; });
             const int dx = entity->tile % kWidth - oldPosition % kWidth, dy = entity->tile / kWidth - oldPosition / kWidth;
-            direction_ = dx > 0 ? 2 : dx < 0 ? 6 : dy < 0 ? 4 : 0;
+            direction_ = directionBetween(explorer_->state().position,entity->tile);
+            (void)dx; (void)dy;
             enemyDirection_ = (direction_ + 4) % 8;
         }
         if (g.homeScene) direction_ = guildRooms_[g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready ? 1 : 0].player().direction;
-        if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
+        if (clip_ == 0 && nextClip == 0 && loop_ && oldLife == g.life && oldCombat == g.combat) {
+            if(oldDirection != direction_) animator_.changeDirection(assets_.package,0,direction_);
+        } else if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
+        if(event.event == GameplayEvent::FloorChanged || event.event == GameplayEvent::Explore) playerMotion_.reset(tilePoint(explorer_->state().position));
         if (g.life == LifePhase::Combat && (oldLife != g.life || oldCombat != g.combat)) {
             enemyClip_ = g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? 33 : 7;
             enemyFrame_ = 0;
@@ -594,8 +604,10 @@ class App {
         }
     }
     void render(int64_t now) {
+        presentationNow_=now;
         synchronizePause(now);
         if (blocked()) return;
+        if(playerMotion_.active(now)) dirty_=true;
         advanceExploration(now);
         bool playerFinished = false;
         if (animator_.active()) {
@@ -628,10 +640,7 @@ class App {
                 chunkVersion_ = state.world.version;
                 chunkSeed_ = state.mapSeed;
             }
-            camera = {state.position % kWidth * 24 + 12 - int32_t(size_ / (2 * scale_)),
-                      state.position / kWidth * 24 + 12 - int32_t(size_ / (2 * scale_))};
-            camera.x = std::clamp(camera.x, 0, std::max(0, kWidth*24-int(size_/scale_)));
-            camera.y = std::clamp(camera.y, 0, std::max(0, kHeight*24-int(size_/scale_)));
+            camera = cameraFor(playerMotion_.sample(now),kWidth*24,kHeight*24,int((size_+scale_-1)/scale_));
             layers.push_back({&dungeonBackdrop_, {0, 0, 200, 200}, {0, 0}, camera});
             auto visible = [&](Point p, int size) {
                 return p.x + size >= camera.x && p.y + size >= camera.y &&
@@ -735,6 +744,7 @@ public:
                             explorationPackage_->assetVersion, explorationPackage_->floors);
                 saveSnapshot(options_.snapshot, explorer_->state());
             }
+            playerMotion_.reset(tilePoint(explorer_->state().position));
             explorer_->enableGameplay(utcMs());
             saveSnapshot(options_.snapshot, explorer_->state());
             log(std::string("exploration snapshot=") + (restoring ? "restored" : "new") +
@@ -833,7 +843,11 @@ public:
             if (stopDeadline_) deadline = std::min(deadline, stopDeadline_);
             if (sessionRetry_) deadline = std::min(deadline, sessionRetry_);
             if (scenarioDeadline_) deadline = std::min(deadline, scenarioDeadline_);
-            if (explorer_ && !blocked()) deadline = std::min(deadline, poseFinished_ ? now : exploreDeadline_);
+            if (explorer_ && !blocked()) {
+                deadline = std::min(deadline, poseFinished_ ? now : exploreDeadline_);
+                if(auto motionDeadline=playerMotion_.nextDeadline(now)) deadline=std::min(deadline,*motionDeadline);
+                for(const auto& entry:actorMotions_) if(auto d=entry.second.nextDeadline(now)) deadline=std::min(deadline,*d);
+            }
             if (!blocked() && animator_.active() && nextFrameDeadline_) deadline = std::min(deadline, *nextFrameDeadline_);
             // Relative timer, one shot; no high-resolution request or 1ms polling.
             LARGE_INTEGER due{}; due.QuadPart = -std::max<int64_t>(1, deadline - nowUs()) * 10;

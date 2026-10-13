@@ -29,6 +29,11 @@ struct Search {
     std::array<int, kTiles> distance{}, parent{};
     std::vector<int> pathTo(int goal) const; // excludes start; empty at start/unreachable
 };
+// Original direction numbering; terrain corners and destination actor occupancy stay separate.
+extern const std::array<std::pair<int,int>,8> kDirections;
+unsigned directionBetween(int from, int to);
+bool canMove(const World&, int from, int to, const Mask& occupied = {});
+bool canAttack(const World&, int from, int to);
 Search bfs(const World& world, int start, const Mask& blocked = {});
 World generate(Rng& rng, std::uint64_t version = 1);
 void validateWorld(const World& world);

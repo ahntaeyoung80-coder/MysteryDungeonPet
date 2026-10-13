@@ -7,7 +7,6 @@
 namespace pet {
 namespace {
 constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750, kSleepMs = 10000, kMealMs = 8000;
-int distance(int a, int b) { return std::abs(a % kWidth - b % kWidth) + std::abs(a / kWidth - b / kWidth); }
 }
 const char* lifeName(LifePhase phase) {
     static const char* names[]{"Explore", "Pose", "ReturnHome", "Emotion", "Eat", "Sleep", "Wake", "Ready", "Combat"};
@@ -199,7 +198,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
     if (now < g.deadlineMs) return {};
     // Recognition/contact at an adjacent tile. Friendly actors never initiate attacks.
     for (auto& e : state_.population.entities) {
-        if (e.done || e.kind != EntityKind::Friend || distance(e.tile, state_.position) > 1 || state_.blocked[e.tile]) continue;
+        if (e.done || e.kind != EntityKind::Friend || !canAttack(state_.world,state_.position,e.tile) || state_.blocked[e.tile]) continue;
         const bool hostile = std::find(g.hostile.begin(), g.hostile.end(), e.instanceId) != g.hostile.end();
         invalidate();
         if (hostile) {
@@ -214,7 +213,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
         return {GameplayEvent::Greeting, once};
     }
     const auto update = advance();
-    g.deadlineMs = now + 350;
+    g.deadlineMs = now + (update.kind == EventKind::Move ? 400 : 0);
     switch (update.kind) {
     case EventKind::Pose: return life(LifePhase::Pose, GameplayEvent::Pose, kFiniteTimeoutMs);
     case EventKind::ReturnedHome: return beginReturn(now, false);

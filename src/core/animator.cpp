@@ -12,6 +12,12 @@ void Animator::start(const Package& p, uint32_t id, unsigned dir, bool loop, int
     for (const auto& f : *frames_) duration_ += f.ticks;
     startUs_ = lastNow_ = now; lastTick_ = 0; loop_ = loop; sampled_ = paused_ = finishedSent_ = false;
 }
+void Animator::changeDirection(const Package& p,uint32_t id,unsigned dir) {
+    const auto& next=p.frames(id,dir);
+    uint64_t duration=0; for(const auto& f:next) duration+=f.ticks;
+    if(!frames_ || !loop_ || duration!=duration_) throw std::runtime_error("direction phase incompatible");
+    frames_=&next; // Preserve start/pause/marker clocks; supported Walk directions share cycle duration.
+}
 Advance Animator::advance(int64_t now) {
     Advance out;
     if (!frames_) return out;

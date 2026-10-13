@@ -13,3 +13,10 @@
 
 ## 다음 작업
 1단계: exploration.cpp bfs/공통 이동·공격 판정, animator 방향 위상, 공통 표시 보간, Windows camera/render/deadline. 원작 참고 fc850408의 dungeon_capabilities_4.c, dungeon_range.c, overlay_29_023047B8.c를 local/reference에 읽기 전용 참고로 확보했다.
+
+## 단계1 결과
+- 원작 방향0~7·8방향 BFS(대각선 한 행동), 지형 코너와 도착 타일 점유 분리. 이진 일반 바닥에서 이동/공격 모두 직교 양옆 벽 차단.
+- Motion 공통 표시 구간(actor/action/from/to/monotonic/duration/direction), 24틱/400ms, pause/resume. Windows 플레이어·카메라·표시 deadline 연결. 적 이동은 단계3에서 같은 모듈로 연결한다.
+- 보행 방향 변경은 Animator 시작 시각/marker 상태 유지. 픽셀 위치는 표시 때만 반올림.
+- 기준선 CTest4개 pass, 변경 후 CTest5개 pass(29.05s), Windows x64 MinGW compile/link pass. 실제 Windows GUI의 부드러움은 아직 미실행이다.
+- 기준 MDES1/2 fixture는 기존 writer로 생성하여 후속 호환 검증에 보존했다.
