@@ -1,0 +1,40 @@
+277436751 exploration snapshot=restored day=1 runId=900
+277440010 initial session flags=1
+277444999 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+277445037 mode=automatic-exploration
+277445062 select clip=17 direction=0 loop=0
+277445094 power=32787
+277446396 show
+277767164 finite finished assetKey=rom:EoS_NA:md:1
+277771057 select clip=7 direction=0 loop=1
+277771088 gameplay onceKey=return:900
+277771102 life=ReturnHome combat=PlayerTurn day=1 hearts=3
+278550001 life=HomeScene opaque original dining map
+278555599 guild room=GuildDining characters=12 objectCount=1
+279292105 select clip=15 direction=0 loop=1
+279292156 gameplay onceKey=meal:900
+279292170 life=Eat combat=PlayerTurn day=1 hearts=3
+279292188 guild room=GuildDining characters=12 objectCount=1
+287536506 select clip=13 direction=2 loop=1
+287536569 life=Sleep combat=PlayerTurn day=1 hearts=3
+287536636 guild room=PlayerRoom characters=2 objectCount=0
+297831636 select clip=14 direction=2 loop=0
+297831691 life=Wake combat=PlayerTurn day=1 hearts=3
+297831708 guild room=PlayerRoom characters=2 objectCount=0
+298527922 guild partner wake finished
+298542133 finite finished assetKey=rom:EoS_NA:md:1
+298559114 select clip=7 direction=2 loop=1
+298559144 life=Ready combat=PlayerTurn day=1 hearts=3
+298559159 guild room=PlayerRoom characters=2 objectCount=0
+298909519 select clip=7 direction=2 loop=1
+298909569 life=Explore combat=PlayerTurn day=2 hearts=3
+299259823 select clip=7 direction=4 loop=1
+299259869 select clip=0 direction=4 loop=1
+299610069 select clip=7 direction=4 loop=1
+299966315 select clip=0 direction=4 loop=1
+300330406 select clip=7 direction=4 loop=1
+300680642 select clip=7 direction=6 loop=1
+300680689 select clip=0 direction=6 loop=1
+301042644 select clip=7 direction=6 loop=1
+301406335 select clip=0 direction=6 loop=1
+301452023 exit submissions=328 decodes=15 switches=0

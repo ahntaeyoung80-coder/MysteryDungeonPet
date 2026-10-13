@@ -1,0 +1,18 @@
+CI38411109815 job 115343361464 success; runtime8decf4f6122d11b12f829db8097e9ab179a10dda
+Filtered test/build evidence from GitHub job log:
+2026-10-13T14:10:58.7651355Z [ 22%] Building CXX object CMakeFiles/pet_core.dir/src/core/gameplay.cpp.o
+2026-10-13T14:11:00.0682443Z [ 27%] Building CXX object CMakeFiles/pet_core.dir/src/core/gameplay_scene.cpp.o
+2026-10-13T14:11:06.4865851Z [ 50%] Building CXX object CMakeFiles/pet_gameplay_tests.dir/tests/gameplay_tests.cpp.o
+2026-10-13T14:11:08.6662259Z [ 54%] Linking CXX executable pet_gameplay_tests
+2026-10-13T14:11:08.7970383Z [ 54%] Built target pet_gameplay_tests
+2026-10-13T14:11:15.9151006Z [100%] Linking CXX executable pet_package_playback
+2026-10-13T14:11:15.9771861Z [100%] Built target pet_package_playback
+2026-10-13T14:11:16.6822909Z     Start 1: pet_gameplay_tests
+2026-10-13T14:12:12.0059095Z 1/4 Test #1: pet_gameplay_tests ...............   Passed   55.32 sec
+2026-10-13T14:13:39.3138994Z 2/4 Test #2: pet_exploration_tests ............   Passed   87.28 sec
+2026-10-13T14:13:44.8732440Z 3/4 Test #3: pet_core_tests ...................   Passed    5.56 sec
+2026-10-13T14:13:44.8856708Z 4/4 Test #4: pet_package_playback .............   Passed    0.01 sec
+2026-10-13T14:13:44.8862474Z 100% tests passed, 0 tests failed out of 4
+2026-10-13T14:13:44.8862857Z Total Test time (real) = 148.30 sec
+2026-10-13T14:14:28.9433299Z Ran 23 tests in 31.596s
+2026-10-13T14:14:28.9433543Z OK

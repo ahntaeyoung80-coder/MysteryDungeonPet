@@ -1,0 +1,58 @@
+{
+  "runtimeCommit": "8decf4f6122d11b12f829db8097e9ab179a10dda",
+  "workflowRun": 38411109815,
+  "jobs": {
+    "core": {
+      "id": 115343361464,
+      "status": "success",
+      "ctests": 4,
+      "sanitizers": "ASan/UBSan",
+      "pythonTests": 23
+    },
+    "windows": {
+      "id": 115343362171,
+      "status": "success",
+      "environment": "Windows Server2025/MSVC",
+      "ctests": 4
+    }
+  },
+  "defaultLaunch": {
+    "diagnosticsMenu": "absent",
+    "status": "pass",
+    "physicalSize": 200,
+    "explicitDiagnostics": "pass, exploration save unchanged",
+    "actualWindows11": "pending",
+    "launch": "installed EXE with zero arguments from another directory",
+    "snapshot": "new then restored same runId"
+  },
+  "life": {
+    "guildDiningCharacters": 12,
+    "status": "pass",
+    "bedroomCharacters": 2,
+    "guildMembers": 10,
+    "test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+    "actualWindows11": "pending",
+    "coreScenarios": 12
+  },
+  "combat": {
+    "actualWindows11": "pending",
+    "status": "pass",
+    "test": "production player first Attack1 Hurt6 Faint33 victory resumes dungeon"
+  },
+  "returnToEatMs": 1521.068,
+  "communalMealMs": 8244.399,
+  "exeSha256": "7ece4c0b24e1459ad144a4bb9e17365900e9a1825cbbed3d8ba2e440630c7951",
+  "exeBytes": 549376,
+  "installedBytes": 1701272,
+  "artifact": {
+    "id": 11821497305,
+    "sha256": "c75a1271fec82aebfb20d0d618eb2f10336fb35db9d82fddbd6d5d981dee8bfb",
+    "bytes": 713598
+  },
+  "previousExeSha256": "3149e4752bca72a648666d64a594b7098adce9148b201837b6665f2fd9ff5919",
+  "limits": [
+    "actual Windows11 OS events/long duration pending",
+    "original meal effects/music/dialogue pending",
+    "movement interpolation and original stair/item graphics pending"
+  ]
+}

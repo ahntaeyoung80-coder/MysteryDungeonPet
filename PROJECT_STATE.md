@@ -2,7 +2,7 @@
 
 ## 기본 실행 오류 수정 (2026-10-13)
 
-사용자가 ZIP의 EXE를 직접 실행했을 때 A-3 방향·동작 시험만 켜지는 문제를 보고했다. `--explore` 없는 기본 Options가 빈 exploration 경로를 사용한 것이 원인이다. 기본 EXE 실행을 dungeon0 자동 탐험·전투·길드 생활 및 기존 저장 복원으로 변경했다. 진단은 `--diagnostics` 또는 기존 명시적 A selectors로 선택한다. 탐험 중에는 방향·동작·Loop/Finite/Stop 등 시험 메뉴를 표시하지 않는다. `Run-A2.ps1`에는 진단 인자를 추가했고 설치본 기본 안내도 교체했다. 설치된 EXE 무인자 실행·다른 CWD·저장 복원·실제 메뉴 검사와 Windows 회귀 실행은 현재 pending이다.
+사용자가 ZIP의 EXE를 직접 실행했을 때 A-3 방향·동작 시험만 켜지는 문제를 보고했다. `--explore` 없는 기본 Options가 빈 exploration 경로를 사용한 것이 원인이다. 기본 EXE 실행을 dungeon0 자동 탐험·전투·길드 생활 및 기존 저장 복원으로 변경했다. 진단은 `--diagnostics` 또는 기존 명시적 A selectors로 선택한다. 탐험 중에는 방향·동작·Loop/Finite/Stop 등 시험 메뉴를 표시하지 않는다. `Run-A2.ps1`에는 진단 인자를 추가했고 설치본 기본 안내도 교체했다. Linux Release4CTests·MinGW 빌드 pass. 런타임8decf4f의 Windows CI38411109815 core/windows 모두success: ASan/UBSan4CTests·Python23tests 및 MSVC4CTests·기존 전투/길드 생활 GUI 검사 통과. 실제 설치 EXE를 인자 없이 다른 CWD에서 실행해 자동 탐험→전투, 저장 복원→승리→탐험 재개를 확인했다. 실제 우클릭 메뉴는 Hide/Always on top/Scale1..3/Exit만 표시한다. 명시적 진단도 pass이고 탐험 저장 hash 불변이다. 새 설치 안내는 docs/WINDOWS_QUICKSTART.md, 증거는 docs/validation/2026-10-13-default-launch-summary.json이다. 실제 사용자 Windows11·장기/OS 사건·원작 식사 효과 등의 기존 미완료 항목은 유지한다.
 
 
 ## 최신 우선 요구 — 길드 생활 장면 (2026-10-13)

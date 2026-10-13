@@ -1,0 +1,16 @@
+368512509 exploration snapshot=restored day=1 runId=364169234
+368516176 initial session flags=1
+368521020 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+368521059 mode=automatic-exploration
+368521080 select clip=7 direction=0 loop=1
+368521113 power=32787
+368522360 show
+368540702 select clip=7 direction=2 loop=1
+368540733 life=Combat combat=CombatVictory day=1 hearts=3
+368906465 select clip=7 direction=2 loop=1
+368906525 life=Explore combat=CombatVictory day=1 hearts=3
+369265585 select clip=7 direction=4 loop=1
+369265633 select clip=0 direction=4 loop=1
+372478759 select clip=0 direction=2 loop=1
+372478820 select clip=0 direction=2 loop=1
+372606811 exit submissions=59 decodes=4 switches=0
