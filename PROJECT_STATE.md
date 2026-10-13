@@ -1,29 +1,27 @@
 # 현재 상태
 
 ## 현재 단계
-Codex 개발 파이프라인과 1차(A) 실행 명세 작성 완료. 제품 구현 착수 전.
+A-1 독립 추출/packer 구현과 fixture 검증 완료. **A-1 실제 원작 gate pending**, A-2/A-3 미착수.
 
-## 현재 구현 상태
-저장소: https://github.com/ahntaeyoung80-coder/MysteryDungeonPet
-개발 진입점: docs/DEVELOPMENT_PIPELINE.md. 전체 A/B/C 개요와 A-1/A-2/A-3 작업·산출물·검증·완료 조건을 정의했다.
-B-2 자동 전투는 선택 검토 단계다. B-1 완료 시 사용자와 추가 여부·범위를 확정하기 전에는 구현하지 않는다.
-조사 보고서 9개: docs/research/. 과거 검사 자료 9개: docs/research/checks/.
-이전 개발 명세: docs/archive/ (현재 실행 기준과 구분).
-제품 코드·추출기·packer·Windows 실행 파일은 아직 없다. 실제 ROM 전체 추출·전체 종/폼 및 Windows 성능은 미검증이다.
+## 구현·검증 범위
+- `tools/mdpet/`: CLI smoke/fixture/pack/validate/extract, catalogue 정규화, 3 WAN 읽기/병합/export 경로, atlas/manifest/support/errors, 실패 출력 보호.
+- `requirements-offline.txt`: 고정 VCS 커밋/의존성. Python 3.12.14/Linux에서 설치·import pass.
+- `tests/test_a1.py`: 10 tests pass. 시험 패키지 1 asset/75 frames pass, 두 번 생성 manifest/atlas 해시 일치. 실제 ROM 추출·원본 WAN 픽셀 대조·Windows 미실행.
+- 생성 fixture/로컬 자산은 `local/`에 두고 Git에서 제외. 원본 ROM도 제외.
 
-## 진행 중
-문서 작성과 진입 경로 정리 완료. 다음 작업은 A-1 자산 준비와 A-2 렌더러 준비다.
+## 현재 자원·막힌 항목
+최초 사용자 .nds 첨부는 32MiB 전송 제한으로 실패. 새 분할 ZIP `.zip`/`.z01`이 도착했으며 사용자 요청으로 **분석 전에 인수인계부터 기록한 상태**다. ROM 내부 판본/해시 미확인. Windows 실행 접근 없음.
+사용자가 잔여 사용량이 적다고 알림. 잔여량/리셋 시각 조회 도구 없음. 중단 시 완료 범위와 실제 재개 지점을 반드시 남긴다.
 
-## 다음 작업 / 재개 지점
-1. docs/DEVELOPMENT_PIPELINE.md §4~§7을 읽는다. 필요한 조사 소스·계약만 추가 참조한다.
-2. 고정 오프라인 의존성 import와 최소 Extractor/Packer, 같은 fixture 계약의 Windows 빌드·렌더러를 준비한다.
-3. 사용자 ROM/Windows가 없으면 가능한 독립 작업을 수행하고 통합 gate는 pending으로 남긴다.
-4. 실제 원작 자산과 Windows 환경으로 A-3을 검증한 후 A 완료를 판정한다.
+## 다음 작업 / 사용량 리셋 후 재개 지점
+1. `docs/A1_IMPLEMENTATION_HANDOFF.md`와 `git status --short` 확인. 구현을 처음부터 반복하지 않는다.
+2. 사용자 `.z01`+`.zip` 다운로드/결합·로컬 ROM 해제 후 hash/edition/language 식별.
+3. `.venv/bin/python -m tools.mdpet extract --rom 'local/rom/user.nds' --out local/a1-rom-01` (실제 경로에 맞춤; 미실행).
+4. 미지원이면 실패 보고/판본 식별 기록, A-1 원작 gate pending 유지. 지원하면 대표 catalogue/WAN/필수 동작/재실행 검증.
+5. 독립 다음 작업은 pipeline A-2.1 C++17/MSVC 빌드·공유 fixture 소비 형식. A-3/B/C는 미착수.
 
-## 알려진 문제
-실제 ROM·Windows 검증은 대기 상태이며 문서 작성이나 공개 fixture 검사를 제품 완료로 취급하지 않는다.
-원작 Pose17 사용은 확정되어 있다. 부가 효과·계단 그림 매핑은 후속 단계에서 확인한다.
-조사 ZIP와 checks/package_validation.json은 수정 전 기록이며 최신 보고서 해시가 아니다.
-
-## 관련 결정
-docs/DECISIONS.md
+## 기록
+인수인계: `docs/A1_IMPLEMENTATION_HANDOFF.md`.
+소단위 로그/예상 시간: `docs/logs/2026-10-13-a1-implementation.md`.
+설계: `docs/DECISIONS.md`, 순서: `docs/DEVELOPMENT_PIPELINE.md`.
+기존 연구 checks/ZIP 보존. 커밋/push 결과는 작업 로그에 추가한다.

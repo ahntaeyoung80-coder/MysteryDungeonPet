@@ -1,0 +1,12 @@
+# Python 3.12; skytemple-files is fixed to the researched source commit.
+skytemple-files @ git+https://github.com/SkyTemple/skytemple-files.git@5ed359a2560a1f04666b9ea02b71649b89cb16d7
+appdirs==1.4.4
+dungeon-eos==0.0.5
+explorerscript==0.2.4
+igraph==0.11.8
+ndspy==4.2.0
+pillow==12.3.0
+pmdsky-debug-py==10.0.48
+range-typed-integers==1.0.1
+skytemple-rust==1.8.5
+texttable==1.7.1

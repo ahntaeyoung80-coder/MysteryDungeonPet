@@ -6,4 +6,8 @@ __pycache__/
 .venv/
 dist/
 build/
+local/
+*.nds
+*.srl
+*.dsv
 *.log
