@@ -32,14 +32,31 @@
       "status": "pass"
     },
     "MSVCReleaseNativeWICCI": {
-      "status": "pending"
+      "status": "pass",
+      "runId": 38339188747,
+      "commit": "680f4c1f46433242a981b27c248098f51b9ace1b",
+      "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38339188747",
+      "environment": "Windows Server2025 build26100 / Visual Studio18 2026 MSVC19.51.36260 / Python3.12.10",
+      "core": "pass",
+      "WIC_PBGRA_Black_Alpha_Cache": "pass",
+      "negativePackages": 8,
+      "Windows11_UI_power_performance": "pending"
     },
     "actualWindows11UI_Drag_DPI_Lock_Display_Suspend_Lifetime_Performance": {
       "status": "pending",
       "reason": "cloud executor Linux; no local Windows command/GUI tool; user will execute"
     }
   },
-  "fixtureInstallation": {
+  "originalPackageRuntimeConversion": {
+    "status": "pending",
+    "reason": "previous local ROM packages not present in replaced environment; no ROM redownload/re-extraction"
+  },
+  "nativeCompactA1Fixture": {
+    "status": "pass",
+    "manifestBytes": 64298
+  },
+  "resume": "User Windows11 Run-A2.ps1, collect CSV/WIC/environment/events and manual UI/power observations; then actual A-3 integration",
+  "crossBuildInstallation": {
     "compiler": "MinGW cross build",
     "files": [
       {
@@ -81,13 +98,20 @@
     "totalBytes": 3535238,
     "note": "synthetic A-2 fixture only; not original/full-species installation or measured runtime RAM"
   },
-  "originalPackageRuntimeConversion": {
-    "status": "pending",
-    "reason": "previous local ROM packages not present in replaced environment; no ROM redownload/re-extraction"
+  "nativeWindowsCIInstallation": {
+    "compiler": "MSVC19.51.36260 Release /MT",
+    "bytesBeforeDocumentationUpdate": 440673,
+    "exeBytes": 414720,
+    "exeSHA256": "b0ed6953de87b3666990d9a3cf33fa49ce5e73bd95c00ae1598a400a94dbf45b",
+    "artifactId": 11786536952,
+    "artifactSHA256": "ecb78ec1df74f1fa4fe0d9d0432b1c40294d8cfd69983a4d59214b5539bcae65",
+    "originalArtifactBytes": 215451,
+    "bytesWithUpdatedDocumentation": 441383
   },
-  "nativeCompactA1Fixture": {
-    "status": "pass",
-    "manifestBytes": 64298
-  },
-  "resume": "User Windows11 Run-A2.ps1, collect CSV/WIC/environment/events and manual UI/power observations; then actual A-3 integration"
+  "userZip": {
+    "file": "MysteryDungeonPet-A2-windows-x64.zip",
+    "bytes": 209312,
+    "sha256": "230db43a75a0c7d84acd3b051cedec97029ad4ba0e3141b972d1d43172342737",
+    "contents": "MSVC CI tested exe unchanged, same fixture and licenses, latest quickstart/PowerShell"
+  }
 }

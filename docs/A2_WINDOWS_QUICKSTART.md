@@ -2,6 +2,14 @@
 
 이 패키지는 합성 시험 자산으로 Windows 창·재생을 검사한다. 원작 ROM·원작 시간 검증은 포함하지 않는다. Python·개발 서버·ROM 없이 실행된다.
 
+## 다운로드
+
+[Windows native 검사를 통과한 MSVC 실행 ZIP](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38339188747/artifacts/11786536952)을 다운로드한다. GitHub 로그인이 필요할 수 있다. 링크를 통해 받은 Actions ZIP은 압축 해제 후 **`package` 폴더 안**에서 실행한다. 함께 들어 있는 `wic-results`는 CI의 기존 검사 보고서다.
+
+이 채팅에 제공된 실행 ZIP을 받았다면 `MysteryDungeonPet-A2` 폴더 안에서 실행한다. 두 패키지의 EXE는 같은 MSVC Release 빌드다. 채팅 ZIP에는 최신 안내 문서가 들어 있다.
+
+이 빌드는 Windows Server2025의 CI에서 native core/WIC/투명도·캐시·오류 파일 검사를 통과했다. 사용자 Windows11의 창/포커스/잠금/전원/성능 검증은 아래 절차로 직접 수행한다.
+
 ## 바로 실행
 
 1. ZIP 전체를 한 폴더에 해제한다. `MysteryDungeonPet.exe`, `assets/fixture/`, `licenses/`, `Run-A2.ps1`을 함께 둔다.

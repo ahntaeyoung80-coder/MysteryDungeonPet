@@ -79,7 +79,7 @@ cmake --install build/mingw --prefix build/package-mingw
 
 현재 cloud 환경의 toolchain은 저장소 밖 `/workspace/toolchain`에 Debian13 패키지를 SHA-256 확인 후 사용자 권한으로 해제했다. cmake4.4.4/ninja1.13.2, GNU14.2/MinGW14-posix 사용. 해당 설치 경로는 제품 의존성이 아니다. Linux 크로스 빌드는 Windows 실행 증거가 아니다.
 
-`.github/workflows/a2.yml`은 Linux sanitizer/A-1 연결과 Windows MSVC Release/core/native WIC/8개 오류 패키지를 검사한다. CI의 headless WIC 통과와 실제 데스크톱/잠금/절전 검증을 구분한다. 실제 결과는 로그와 `docs/validation/`에 기록한다.
+`.github/workflows/a2.yml`은 Linux sanitizer/A-1 연결과 Windows MSVC Release/core/native WIC/8개 오류 패키지를 검사한다. CI의 headless WIC 통과와 실제 데스크톱/잠금/절전 검증을 구분한다. 실제 Windows Server2025/MSVC19.51 Release/core/WIC/8개 오류 검사 pass(run38339188747). 결과는 로그와 `docs/validation/2026-10-13-a2-windows-ci.txt`에 기록했다. 사용자 desktop 사건·성능은 pending이다.
 
 ## 완료 판정과 재개
 
