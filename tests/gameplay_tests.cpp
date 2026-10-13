@@ -176,11 +176,10 @@ int main(int argc, char** argv) {
             if (far == -1 || search.distance[p] > search.distance[far]) far = p;
         }
         s.population.entities = {{1,10,EntityKind::Item,near,false}, {2,70,EntityKind::Item,far,false}};
-        berries = Explorer(s); advance(berries,1000);
-        check(berries.state().target == far && berries.goal() == GoalKind::Item, "Oran priority missing");
-        for (unsigned i = 0; i < kTiles && !berries.state().gameplay.oran; ++i) next(berries);
-        check(berries.state().gameplay.oran == 1, "Oran pickup missing");
-        pass(8,"low hearts choose farther berry70 before nearer regular item");
+        s.knownStairs=s.world.stairs;s.discovered[s.world.stairs]=1;
+        berries=Explorer(s);advance(berries,1000);
+        check(berries.goal()==GoalKind::Stairs,"known stairs lose to berry");
+        pass(8,"known reachable stairs take priority over low-HP berry target");
         auto heal = encounter(); advance(heal,1000); s = heal.state(); s.gameplay.hearts = 1; s.gameplay.oran = 1; heal = Explorer(s);
         check(next(heal).event == GameplayEvent::UseOranBerry && heal.state().gameplay.hearts == 3 && heal.state().gameplay.oran == 0, "Oran did not heal two/cap/consume");
         check(gameplayClip(heal.state().gameplay) == 7 && heal.state().gameplay.combat == CombatPhase::BerryText, "berry plays use animation");
@@ -197,11 +196,7 @@ int main(int argc, char** argv) {
 
         // Upgrade an authentic MDES1 layout (MDES2's default extension is 84 bytes).
         Explorer legacy(200,42,"legacy",fixtureProfiles(1));
-        auto v1 = encodeSnapshot(legacy.state());
-        v1.erase(v1.end()-88,v1.end()-4); v1[4]=1;
-        std::uint32_t crc=0xffffffffU;
-        for (std::size_t i=0;i<v1.size()-4;++i) { crc^=v1[i]; for (int b=0;b<8;++b) crc=(crc>>1)^(0xedb88320U & (0U-(crc&1))); }
-        crc=~crc; for (int b=0;b<4;++b) v1[v1.size()-4+b]=static_cast<std::uint8_t>(crc>>(b*8));
+        auto v1=readFile(std::filesystem::path(argv[1]).parent_path().parent_path().parent_path()/"tests/fixtures/legacy-v1.mdes",1048576);
         Explorer upgraded(decodeSnapshot(v1,"legacy")); upgraded.enableGameplay(1000);
         check(upgraded.state().gameplay.enabled && upgraded.state().position == legacy.state().position,"MDES1 migration lost position");
         // Exercise unforced production rolls across repeated days and restoration.

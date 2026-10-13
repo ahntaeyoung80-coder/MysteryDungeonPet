@@ -138,7 +138,10 @@ struct ExplorationState {
     World world;
     Population population;
     int position = 0;
-    Mask visited{}, blocked{};
+    Mask visited{}, blocked{}, discovered{}, failedTargets{};
+    std::uint32_t visitedRooms = 0, stalledActions = 0, targetFailures = 0;
+    int knownStairs = -1;
+    std::uint32_t targetInstance = 0;
     std::uint64_t occupancyVersion = 0;
     std::uint32_t floorSteps = 0, poseSteps = 0;
     Phase phase = Phase::Explore;
@@ -170,6 +173,8 @@ private:
     std::uint64_t cachedWorld_ = 0, cachedOccupancy_ = 0, bfsCalls_ = 0;
     void enterFloor();
     void plan();
+    void discover();
+    Mask occupancy() const;
     void invalidate();
     std::string key(const std::string& action, std::uint32_t instance = 0) const;
     void assignRelationships();

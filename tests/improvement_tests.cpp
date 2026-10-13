@@ -28,5 +28,16 @@ int main(int argc,char** argv) { try {
     if(argc>1) {auto pkg=loadPackage(argv[1]);Animator a;a.start(pkg,0,0,true,0);a.advance(0);
         auto before=a.advance(200000);a.changeDirection(pkg,0,2);auto after=a.advance(200000);
         check(before.frame==after.frame&&before.nextDeadlineUs==after.nextDeadlineUs&&after.markers.empty(),"direction restarts walking");}
+    Explorer e(300,42,"improve",fixtureProfiles(1),{0,0,0,0});auto state=e.state();
+    const auto reachable=bfs(state.world,state.world.stairs);int near=-1;
+    for(int q=0;q<kTiles;++q) if(reachable.distance[q]==1 && state.world.room[q]==state.world.room[state.world.stairs]) {near=q;break;}
+    check(near>=0,"stairs test room");state.position=near;state.visited[near]=1;
+    state.population.entities.push_back({1,70,EntityKind::Item,near,false});
+    e=Explorer(state);auto move=e.advance();check(move.kind==EventKind::Move && e.state().position==state.world.stairs,"visible stairs lose to item");
+    check(e.state().knownStairs==state.world.stairs,"stairs not remembered");
+    auto blocked=e.state();blocked.position=near;blocked.visited[near]=1;blocked.target=-1;blocked.goalKind=GoalKind::None;blocked.targetInstance=0;
+    Explorer temporary(blocked);temporary.setBlocked(state.world.stairs,true);temporary.advance();check(temporary.state().knownStairs==state.world.stairs,"occupancy erased stairs");
+    check(e.advance().kind==EventKind::Pose && e.state().completed,"arrival does not clear");
+    auto bytes=encodeSnapshot(e.state());check(bytes[4]==3,"writer not MDES3");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
     std::cout<<"improvement tests pass\n";
 } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;} }

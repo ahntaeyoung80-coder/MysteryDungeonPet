@@ -70,7 +70,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(2); // MDES2; the reader also accepts existing MDES1 saves.
+    w.u32(0x5345444d); w.u32(3); // MDES3; the reader also accepts existing MDES1 saves.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -110,6 +110,9 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     for (auto id : g.hostile) w.u32(id);
     w.u32(static_cast<std::uint32_t>(g.onceKeys.size()));
     for (const auto& once : g.onceKeys) w.str(once);
+    for(auto v:s.discovered) w.u32(v);
+    for(auto v:s.failedTargets) w.u32(v);
+    w.u32(s.visitedRooms);w.u32(s.stalledActions);w.u32(s.targetFailures);w.u32(s.knownStairs+1);w.u32(s.targetInstance);
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -118,7 +121,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema != 1 && schema != 2) throw std::runtime_error("unknown snapshot schema");
+    if (schema != 1 && schema != 2 && schema != 3) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -160,7 +163,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     for (std::uint32_t i = 0; i < n; ++i)
         if (!s.onceKeys.insert(r.str()).second) throw std::runtime_error("duplicate onceKey");
     s.target = static_cast<int>(r.count(kTiles)) - 1; s.goalKind = static_cast<GoalKind>(r.count(4));
-    if (schema == 2) {
+    if (schema >= 2) {
         auto& g = s.gameplay;
         g.enabled = r.boolean(); g.defeated = r.boolean(); g.homeScene = r.boolean();
         g.life = static_cast<LifePhase>(r.count(8)); g.combat = static_cast<CombatPhase>(r.count(9));
@@ -172,6 +175,18 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         n = r.count(4096);
         for (std::uint32_t i = 0; i < n; ++i)
             if (!g.onceKeys.insert(r.str()).second) throw std::runtime_error("duplicate gameplay transaction");
+    }
+    if(schema>=3) {
+        for(auto& v:s.discovered) v=static_cast<uint8_t>(r.count(1));
+        for(auto& v:s.failedTargets) v=static_cast<uint8_t>(r.count(3));
+        s.visitedRooms=r.count(7);s.stalledActions=r.count(Explorer::kFloorStepLimit+kTiles+1);s.targetFailures=r.u32();
+        s.knownStairs=static_cast<int>(r.count(kTiles))-1;s.targetInstance=r.count(kTiles);
+    } else {
+        s.discovered=s.visited;
+        s.knownStairs=s.discovered[s.world.stairs]?s.world.stairs:-1;
+        for(int p=0;p<kTiles;++p) if(s.visited[p]&&s.world.room[p]>=0) s.visitedRooms|=1U<<s.world.room[p];
+        // Old entity goals used the occupied tile. Replan safely without replaying transactions.
+        s.target=-1;s.goalKind=GoalKind::None;
     }
     r.u32(); r.end();
     validateState(s);
