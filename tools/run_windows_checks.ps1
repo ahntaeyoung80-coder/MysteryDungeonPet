@@ -14,10 +14,15 @@ try {
     $Exe = "$BuildDir/Release/MysteryDungeonPet.exe"
     & tests/wic_tests.ps1 -Exe $Exe -Output "$BuildDir/wic-results"
     & tests/playback_metrics_tests.ps1 -Exe $Exe -Inspector "$BuildDir/Release/pet_package_inspect.exe" -Output "$BuildDir/playback-results"
+    Get-ChildItem -Directory 'assets/original/runtime' | ForEach-Object {
+        & "$BuildDir/Release/pet_package_playback.exe" "$($_.FullName)/asset.mdpa"
+        if ($LASTEXITCODE -ne 0) { throw 'original native playback failed' }
+        & tests/playback_metrics_tests.ps1 -Exe $Exe -Inspector "$BuildDir/Release/pet_package_inspect.exe" -Package "$($_.FullName)/asset.mdpa" -Output "$BuildDir/playback-results/$($_.Name)"
+    }
     cmake --install $BuildDir --config Release --prefix "$BuildDir/package"
     if ($LASTEXITCODE -ne 0) { throw 'package failed' }
     $bytes = (Get-ChildItem "$BuildDir/package" -Recurse -File | Measure-Object Length -Sum).Sum
-    Write-Output "Installed fixture package bytes: $bytes (A-2 only)"
+    Write-Output "Installed selected package bytes: $bytes (selected runtime only; ROM excluded)"
     if ($Interactive) {
         New-Item -ItemType Directory -Force "$BuildDir/metrics" | Out-Null
         foreach ($scenario in @('empty','idle','walk','hide','switch')) {

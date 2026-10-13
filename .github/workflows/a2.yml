@@ -37,6 +37,6 @@ jobs:
           path: |
             build/windows/package/
             build/windows/wic-results/*.txt
-            build/windows/playback-results/*.csv
-            build/windows/playback-results/*.json
+            build/windows/playback-results/**/*.csv
+            build/windows/playback-results/**/*.json
           if-no-files-found: warn

@@ -39,9 +39,13 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/fixture" "$<TARGET_FILE_DIR:MysteryDungeonPet>/assets/fixture"
     COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:MysteryDungeonPet>/licenses"
     COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/third_party/Windows-classic-samples-LICENSE.txt" "$<TARGET_FILE_DIR:MysteryDungeonPet>/licenses/Windows-classic-samples-LICENSE.txt")
+  add_custom_command(TARGET MysteryDungeonPet POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/original/runtime" "$<TARGET_FILE_DIR:MysteryDungeonPet>/assets/original")
   install(TARGETS MysteryDungeonPet RUNTIME DESTINATION .)
   install(DIRECTORY assets/fixture DESTINATION assets)
+  install(DIRECTORY assets/original/runtime/ DESTINATION assets/original)
   install(FILES third_party/Windows-classic-samples-LICENSE.txt DESTINATION licenses)
   install(FILES tools/Run-A2.ps1 DESTINATION .)
   install(FILES docs/A2_WINDOWS_QUICKSTART.md DESTINATION . RENAME WINDOWS_QUICKSTART.md)
+  install(FILES docs/A3_USAGE.md DESTINATION . RENAME A3_USAGE.md)
 endif()

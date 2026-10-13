@@ -34,11 +34,11 @@ PET_PACKAGE_INSPECT=$PWD/build/linux/pet_package_inspect .venv/bin/python -m uni
 
 검사는 frame/tick/flag/anchor/rect·1/8행 resolver·고정 장면 좌표·유효 DPI·마지막 행·empty 오염 여부를 확인한다. CLI 입력과 같은 asset을 기록했는지 실행 절차에서 보존해야 한다. 검사 보고서에는 CSV/MDPA 해시와 sourceKind를 남긴다. 로그 자체를 위조하지 않았다는 증명이나 원작 시간·8방향 전체 재생 완료 판정은 아니다.
 
-`tools/run_windows_checks.ps1`과 GitHub Actions는 기존 MSVC Release/core/WIC 검사 후 `tests/playback_metrics_tests.ps1`을 실행한다. empty/Walk 방향5/alias 방향4/Eat 방향7/Wake 방향2를 각각3초 실행해 로그를 수집하고 native inspector와 대조한다. CI의 세션이 잠겨 있으면 프레임 진전 없이도 메타데이터 검사는 가능하다. 이 결과를 실제 사용자 Win+L·display-off·절전·전 방향 통과로 확대하지 않는다. CI CSV/JSON은 `a2-windows-fixture` artifact에 함께 보존한다.
+`tools/run_windows_checks.ps1`과 GitHub Actions는 기존 MSVC Release/core/WIC 검사 후 `tests/playback_metrics_tests.ps1`을 실행한다. fixture 및 원작2개 각각의 empty/Walk 방향5/Idle 또는alias 방향4/Eat 방향7/Wake 방향2를3초씩 실행해 로그를 수집하고 native inspector와 대조한다. CI의 세션이 잠겨 있으면 프레임 진전 없이도 메타데이터 검사는 가능하다. 이 결과를 실제 사용자 Win+L·display-off·절전·전 방향 통과로 확대하지 않는다. 원작2개의 native WIC/hash/cache와 모든 clip/방향의 native tick 재생도 검사한다. CI CSV/JSON과 선택 설치물은 호환 artifact명 `a2-windows-fixture`에 보존한다.
 
 ## 다음 실제 연결
 
-사용자가 이전 세션의 `a1-original-package.zip`을 첨부했다. 원작 선택 package를 `local/a3-input/a1-rom-final-01`에 복원했고 변환·native 대조를 수행했다. ROM 자체는 없으며 GitHub에는 게임 자산을 저장하지 않는다. 아래는 이번 수행 명령이며 출력 폴더를 재사용해 덮어쓰지 않는다.
+사용자가 이전 세션의 `a1-original-package.zip`을 첨부했다. 원작 선택 package를 `local/a3-input/a1-rom-final-01`에 복원했고 변환·native 대조를 수행했다. 이후 원격 `work`의4231a0c가 사용자 명시 지시에 따라 원본 입력을 assets/original/에 보관했다. 현재 ROM과 공유 runtime도 사용할 수 있다. 아래는 이번 수행 명령이며 출력 폴더를 재사용해 덮어쓰지 않는다.
 
 ```bash
 .venv/bin/python tools/compile_runtime_package.py --package local/a3-input/a1-rom-final-01 --out local/a3-rom-runtime-01
@@ -54,4 +54,14 @@ PET_PACKAGE_INSPECT=$PWD/build/linux/pet_package_inspect .venv/bin/python -m uni
 
 대표2개 자산/348프레임의 RGBA 재조립과 A-1→MDPA→native 메타데이터 대조, 8clip×8방향×2개=128선택의 tick 경계·finite·marker once·pause/resume·지연·Stop을 통과했다. 1행 Eat/Sleep은 같은 행을8개 요청 방향으로 검사하므로8방향 원작 시트를 만들었다는 뜻은 아니다. 패키지2회 변환 결과가 동일하며 첨부219파일을 ZIP 원문과 바이트 대조했다. `verify_a3_package.py`는 WAN ID가 있는 대표 패키지를 대상으로 하며 알 수 없는 selector를 임의 생성하지 않는다. 원작 시간이 미확정인 잠정60Hz는 유지한다.
 
-현재 Windows 코드/fixture CI와 원작 패키지의 Linux native 결과는 별개다. 실제 원작 패키지·Windows·원작 시간 자료를 연결한 뒤 pipeline §7의 통합 항목을 판정한다. 현재 ROM 재추출·원작 anchor/shadow/wall time·기록에 없는 OS 사건·최종 성능은 pending이다. B/C는 시작하지 않는다.
+현재 Windows 코드/fixture CI와 원작 패키지의 Linux native 결과는 별개다. 실제 원작 패키지·Windows·원작 시간 자료를 연결한 뒤 pipeline §7의 통합 항목을 판정한다. 공유 ROM의 대표 재추출은 동일 manifest와 원본 불변을 확인했다. 원작 anchor/shadow의 실제 표시·wall time·기록에 없는 OS 사건·최종 성능은 pending이다. B/C는 시작하지 않는다.
+
+## Windows 선택 설치물
+
+기본 EXE는 `assets/original/asset-0/asset.mdpa`를 읽는다. `--package`로 asset-1 또는 시험 fixture를 선택할 수 있다. 빌드/설치에는 원작 선택runtime2개와 계약 검사용fixture·크레딧/라이선스를 포함하며 원본 ROM·전체 파일 ZIP·inventory는 포함하지 않는다. 과거 A-2 artifact의 EXE와 이번 수정본을 구분한다.
+
+```powershell
+.\MysteryDungeonPet.exe --package assets\original\asset-1\asset.mdpa --clip 17 --direction 0 --finite
+```
+
+위는 사용 예이며 추가 사용자 수동 테스트 요청이 아니다.

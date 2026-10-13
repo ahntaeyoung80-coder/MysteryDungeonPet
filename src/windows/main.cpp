@@ -90,7 +90,7 @@ std::filesystem::path appDir() {
     CoTaskMemFree(raw); std::filesystem::create_directories(result); return result;
 }
 struct Options {
-    std::filesystem::path package = executableDir() / L"assets/fixture/fixture.mdpa";
+    std::filesystem::path package = executableDir() / L"assets/original/asset-0/asset.mdpa";
     std::filesystem::path metrics, report;
     unsigned scale = 3, direction = 0;
     uint32_t clip = 0;
@@ -492,7 +492,7 @@ public:
         wc.lpszClassName = L"MysteryDungeonPet.A2"; wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
         winCheck(RegisterClassExW(&wc) != 0, "RegisterClass");
         POINT position = restoredPosition();
-        window_ = CreateWindowExW(WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE, wc.lpszClassName, L"MysteryDungeonPet A-2", WS_POPUP,
+        window_ = CreateWindowExW(WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE, wc.lpszClassName, L"MysteryDungeonPet A-3", WS_POPUP,
             position.x, position.y, int(size_), int(size_), nullptr, nullptr, instance_, this);
         winCheck(window_ != nullptr, "CreateWindow");
         clamp(position);
@@ -510,7 +510,7 @@ public:
         NOTIFYICONDATAW icon{}; icon.cbSize = sizeof(icon); icon.hWnd = window_; icon.uID = 1;
         icon.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP; icon.uCallbackMessage = TrayMessage;
         icon.hIcon = LoadIconW(nullptr, IDI_APPLICATION);
-        wcscpy_s(icon.szTip, L"MysteryDungeonPet A-2: right click for controls");
+        wcscpy_s(icon.szTip, L"MysteryDungeonPet A-3: right click for controls");
         tray_ = Shell_NotifyIconW(NIM_ADD, &icon) != 0;
         winCheck(tray_, "tray icon (required to restore hidden window)");
         log("start assetKey=" + assets_.package.assetKey + " atlasSha256=" + assets_.package.pngSha256 + " testTimingHz=" + std::to_string(assets_.package.tickHz));
@@ -594,7 +594,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int) {
     } catch (const std::exception& e) {
         if (!report.empty()) { std::ofstream output(report); output << "status=fail\nerror=" << e.what() << '\n'; }
         OutputDebugStringW((wide(e.what()) + L"\n").c_str());
-        if (!validation) MessageBoxW(nullptr, wide(e.what()).c_str(), L"MysteryDungeonPet A-2", MB_OK | MB_ICONERROR);
+        if (!validation) MessageBoxW(nullptr, wide(e.what()).c_str(), L"MysteryDungeonPet A-3", MB_OK | MB_ICONERROR);
         return 1;
     }
 }

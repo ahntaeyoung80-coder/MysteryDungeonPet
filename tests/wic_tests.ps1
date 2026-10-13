@@ -19,4 +19,7 @@ Run-Validation "$Root/assets/fixture/fixture.mdpa" "$Output/valid.txt" $true
 Get-ChildItem -Directory "$Output/negative" | ForEach-Object {
     Run-Validation "$($_.FullName)/fixture.mdpa" "$Output/$($_.Name).txt" $false
 }
+Get-ChildItem -Directory "$Root/assets/original/runtime" | ForEach-Object {
+    Run-Validation "$($_.FullName)/asset.mdpa" "$Output/original-$($_.Name).txt" $true
+}
 Write-Output 'PASS native WIC fixture/cache/alpha checks and 8 negative packages. Windows UI/power checks remain separate.'

@@ -10,7 +10,7 @@ $environment = [ordered]@{
     installedBytes = (Get-ChildItem $PSScriptRoot -Recurse -File | Measure-Object Length -Sum).Sum
     binarySHA256 = (Get-FileHash $Exe -Algorithm SHA256).Hash
     time = (Get-Date -Format o)
-    scope = 'A-2 synthetic fixture; no ROM or original timing validation'
+    scope = 'selected original runtime; original wall time and user OS-event validation remain separate'
 }
 $environment | ConvertTo-Json -Depth 4 | Set-Content -Encoding UTF8 "$Results/environment.json"
 function Run-Pet([string[]]$PetArguments, [int]$TimeoutSeconds) {
