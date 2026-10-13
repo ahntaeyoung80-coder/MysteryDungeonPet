@@ -72,9 +72,10 @@ def prepare(root, output):
         actor_report = compile_package(audit, generated / 'actors')
         backgrounds = FileType.BG_LIST_DAT.deserialize(rom.getFileByName('MAP_BG/bg_list.dat'))
         from PIL import Image
-        atlas = Image.new('RGBA', (200, 400))
+        atlas = Image.new('RGBA', (504, 984))
+        atlas_y=0
         maps = []
-        for index, name in enumerate(['G01P06B', 'G01P07A']):
+        for index, name in enumerate(['G01P06B', 'G01P07A', 'G01P07C']):
             entry = next(e for e in backgrounds.level if e.bma_name == name)
             refs = []
             def load(kind, filename, extension):
@@ -88,23 +89,30 @@ def prepare(root, output):
             bpas = [load(FileType.BPA, n, 'bpa') if n else None for n in entry.bpa_names]
             image = bma.to_pil(bpc, bpl, bpas, include_collision=False,
                                include_unknown_data_block=False, pal_ani=False, single_frame=True)[0].convert('RGBA')
-            # The original dining actor is (220,184); sleep uses the map centre.
-            center = (280, 212) if index == 0 else (image.width // 2, image.height // 2)
-            left = max(0, min(image.width - 200, center[0] - 100))
-            top = max(0, min(image.height - 200, center[1] - 100))
-            crop = image.crop((left, top, left + 200, top + 200))
-            crop.putalpha(255)  # Native map palette background is opaque; never expose the desktop.
-            atlas.paste(crop, (0, 200 * index))
-            maps.append({'name': name, 'sources': refs, 'sourceSize': image.size, 'crop': [left, top, 200, 200], 'animation': 'first original map frame; BPA/palette animation deferred'})
+            image.putalpha(255)
+            masked=0
+            if name=='G01P07C':
+                # Confirmed original night-sky palette colour inside the window only.
+                # Preserve window frame/crossbar and every pixel outside this rectangle.
+                for yy in range(96,133):
+                    for xx in range(148,190):
+                        if image.getpixel((xx,yy))[:3]==(7,31,95):
+                            image.putpixel((xx,yy),(0,0,0,255));masked+=1
+                if masked!=306:raise ValueError('night window mask/edition mismatch')
+            atlas.paste(image,(0,atlas_y))
+            maps.append({'name':name,'sources':refs,'sourceSize':image.size,'rect':[0,atlas_y,*image.size],
+                         'windowBlackPixels':masked,'windowPolicy':'night sky only; preserve frame',
+                         'animation':'first original map frame; BPA/palette animation deferred'})
+            atlas_y+=image.height
         scene = generated / 'home'; scene.mkdir()
         atlas.save(scene / 'atlas.png')
-        encoded = {'assetVersion': 1, 'tickHz': 60, 'width': 200, 'height': 400,
+        encoded = {'assetVersion': 1, 'tickHz': 60, 'width': 504, 'height': 984,
                    'atlasName': 'atlas.png', 'pngBytes': (scene / 'atlas.png').stat().st_size,
                    'pngSha256': file_hash(scene / 'atlas.png'), 'assetKey': 'rom:EoS_NA:home',
                    'sourceKind': 1, 'provenance': json.dumps(maps), 'clips': []}
-        for index, name in enumerate(['Dining', 'Bedroom']):
+        for index, name in enumerate(['Dining', 'BedroomDay', 'BedroomNight']):
             encoded['clips'].append({'id': index, 'name': name, 'rows': [[{
-                'rect': [0, index * 200, 200, 200], 'anchor': [0, 0], 'shadow': [0, 0], 'ticks': 1, 'markers': []}]]})
+                'rect': maps[index]['rect'], 'anchor': [0, 0], 'shadow': [0, 0], 'ticks': 1, 'markers': []}]]})
         (scene / 'home.mdpa').write_bytes(encode_package(encoded))
         (scene / 'CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; user-provided original assets\n', encoding='utf-8')
         from tools.prepare_dungeon_props import prepare as prepare_props

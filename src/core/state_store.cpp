@@ -114,7 +114,7 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     for(auto v:s.failedTargets) w.u32(v);
     w.u32(s.visitedRooms);w.u32(s.stalledActions);w.u32(s.targetFailures);w.u32(s.knownStairs+1);w.u32(s.targetInstance);
     w.u64(g.actionRound);w.u64(g.playerActionRound);w.u32(g.playerDirection);
-    w.u32(g.playerHidden);w.u32(g.fadeInOnly);w.u32(static_cast<unsigned>(g.deathStage));
+    w.u32(g.playerHidden);w.u32(g.fadeInOnly);w.u32(static_cast<unsigned>(g.deathStage));w.u32(static_cast<unsigned>(g.sceneBeat));w.u32(static_cast<unsigned>(g.dialogueStage));
     for(const auto& e:s.population.entities) {
         w.u32(static_cast<unsigned>(e.tracking));w.u32(e.lastSeen+1);w.u32(e.chaseTarget+1);w.u32(e.blockedTurns);w.u32(e.direction);w.u32(e.remainingHits);w.u64(e.actionRound);
     }
@@ -171,7 +171,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     if (schema >= 2) {
         auto& g = s.gameplay;
         g.enabled = r.boolean(); g.defeated = r.boolean(); g.homeScene = r.boolean();
-        g.life = static_cast<LifePhase>(r.count(schema>=3?9:8)); g.combat = static_cast<CombatPhase>(r.count(schema>=3?10:9));
+        g.life = static_cast<LifePhase>(r.count(schema>=3?10:8)); g.combat = static_cast<CombatPhase>(r.count(schema>=3?10:9));
         g.hearts = r.count(schema>=3?kMaxHp:3); g.oran = r.count(1); g.enemyHits = r.count(2); g.enemyInstance = r.count(kTiles); g.turn = r.u32();
         g.damage = r.count(2); g.meals = r.u32(); g.day = r.u32(); g.hit = r.boolean(); g.critical = r.boolean();
         g.phaseStartedMs = r.u64(); g.deadlineMs = r.u64();
@@ -187,7 +187,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         s.visitedRooms=r.count(7);s.stalledActions=r.count(Explorer::kFloorStepLimit+kTiles+1);s.targetFailures=r.u32();
         s.knownStairs=static_cast<int>(r.count(kTiles))-1;s.targetInstance=r.count(kTiles);
         auto& g=s.gameplay;g.actionRound=r.u64();g.playerActionRound=r.u64();g.playerDirection=r.count(7);
-        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));
+        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));g.sceneBeat=static_cast<SceneBeat>(r.count(12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
         for(auto& e:s.population.entities) {
             e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
             e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();

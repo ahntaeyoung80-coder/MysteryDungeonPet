@@ -291,7 +291,7 @@ void Explorer::setBlocked(int tile, bool value) {
 }
 Mask Explorer::occupancy() const {
     auto mask=state_.blocked;
-    for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && !e.done) mask[e.tile]=1;
+    for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && (!e.done || (state_.gameplay.enabled && std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end()))) mask[e.tile]=1;
     mask[state_.position]=0; return mask;
 }
 void Explorer::discover() {
@@ -409,11 +409,12 @@ Event Explorer::advance(bool poseFinished) {
 }
 void validateState(const ExplorationState& s) {
     const auto& g = s.gameplay;
-    require(static_cast<unsigned>(g.deathStage)<=1,"invalid death stage");
+    require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=12 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
-    require(static_cast<unsigned>(g.life) <= 9 && static_cast<unsigned>(g.combat) <= 10 &&
+    require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 10 &&
             g.hearts <= kMaxHp && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
+    if(g.life==LifePhase::Dialogue) require(std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && e.kind==EntityKind::Friend && !e.done;}),"invalid dialogue owner");
     if (g.enabled) {
         require(g.deadlineMs >= g.phaseStartedMs, "invalid gameplay deadline");
         require(g.life != LifePhase::Combat || (s.phase == Phase::Explore && s.target == -1 && g.enemyInstance > 0 &&
@@ -421,11 +422,11 @@ void validateState(const ExplorationState& s) {
                 return e.instanceId == g.enemyInstance && e.kind == EntityKind::Friend &&
                     (!e.done || g.combat == CombatPhase::Victory);
             })), "invalid combat owner");
-        require((g.life == LifePhase::Explore || g.life == LifePhase::Combat) ? s.phase == Phase::Explore :
+        require((g.life == LifePhase::Explore || g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) ? s.phase == Phase::Explore :
             (g.life == LifePhase::Pose ? s.phase == Phase::Pose : s.phase == Phase::Home), "lifecycle/explorer mismatch");
-        require(!g.homeScene || (g.life != LifePhase::Explore && g.life != LifePhase::Pose && g.life != LifePhase::Combat), "home in dungeon state");
+        require(!g.homeScene || (g.life != LifePhase::Explore && g.life != LifePhase::Pose && g.life != LifePhase::Combat && g.life!=LifePhase::Dialogue), "home in dungeon state");
         require(g.life == LifePhase::Explore || g.life == LifePhase::Pose || g.life == LifePhase::Combat ||
-                g.life == LifePhase::ReturnHome || g.life==LifePhase::Death || g.homeScene, "life event without home scene");
+                g.life == LifePhase::ReturnHome || g.life==LifePhase::Death || g.life==LifePhase::Dialogue || g.homeScene, "life event without home scene");
         if (g.life == LifePhase::ReturnHome || g.homeScene)
             require(g.onceKeys.count("return:" + std::to_string(s.runId)) != 0, "return transaction missing");
         if (g.life == LifePhase::Eat || g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready)

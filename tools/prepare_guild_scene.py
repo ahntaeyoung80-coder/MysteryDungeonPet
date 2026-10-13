@@ -62,22 +62,22 @@ def prepare(root, output):
             actor_effects[actor] = next(e.id for e in config.script_data.sprite_effects if re.sub(r'(?<!^)(?=[A-Z])','_',e.name).upper()==match[1])
     def position(p):
         return [p.x_relative*8+(4 if p.x_offset>=2 else 0), p.y_relative*8+(4 if p.y_offset>=2 else 0)]
-    rooms = [{'name':'GuildDining','source':dining_source+'.ssa','origin':[180,112],'actors':[]},
-             {'name':'PlayerRoom','source':sleeping_source+'.ssa','origin':[92,56],'actors':[]}]
+    rooms = [{'name':'GuildDining','source':dining_source+'.ssa','origin':[0,0],'size':[504,360],'actors':[]},
+             {'name':'PlayerRoom','source':sleeping_source+'.ssa','origin':[0,0],'size':[384,312],'actors':[]}]
     for a in dining.layer_list[0].actors:
         code = actor_codes.get(a.actor.name)
         if code is None: raise ValueError(f'actor missing original meal clip: {a.actor.name}')
         p = position(a.pos)
         rooms[0]['actors'].append({'id':a.actor.id,'name':a.actor.name,'mdIndex':1 if a.actor.id==0 else 4 if a.actor.id==10 else a.actor.entid,
             'kind':0 if a.actor.id==0 else 1 if a.actor.id==10 else 2,'asset':'',
-            'sourcePosition':p,'position':[p[0]-180,p[1]-112],'direction':a.pos.direction.ssb_id,
+            'sourcePosition':p,'position':p,'direction':a.pos.direction.ssb_id,
             'scriptCode':code,'rawAnimationWord':table[code],'clip':table[code]&255,
             'effectId':actor_effects.get(a.actor.name,0)})
     for a in sleeping.layer_list[0].actors:
         if a.actor.id not in [0,10]: continue
         p = position(a.pos)
         rooms[1]['actors'].append({'id':a.actor.id,'name':a.actor.name,'mdIndex':1 if a.actor.id==0 else 4,
-            'kind':0 if a.actor.id==0 else 1,'asset':'','sourcePosition':p,'position':[p[0]-92,p[1]-56],
+            'kind':0 if a.actor.id==0 else 1,'asset':'','sourcePosition':p,'position':p,
             'direction':a.pos.direction.ssb_id,'scriptCode':62,'rawAnimationWord':table[62],'clip':13,'effectId':0})
     if len(rooms[0]['actors']) != 12 or len(rooms[1]['actors']) != 2:
         raise ValueError('original guild cast/bed count mismatch')
@@ -126,17 +126,17 @@ def prepare(root, output):
                 'provenance':json.dumps({'path':path,'sha256':hashlib.sha256(data).hexdigest()}),'clips':[{'id':0,'name':'DiningObject','rows':[frames]}]}
             (dest/'asset.mdpa').write_bytes(encode_package(package));(dest/'CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; original dining object\n')
             p=position(o.pos);rooms[0]['actors'].append({'id':10000+o.object.id,'name':o.object.name,'mdIndex':0,'kind':3,
-                'asset':f'guild/object-{o.object.id}/asset.mdpa','sourcePosition':p,'position':[p[0]-180,p[1]-112],
+                'asset':f'guild/object-{o.object.id}/asset.mdpa','sourcePosition':p,'position':p,
                 'direction':0,'clip':0,'effectId':0})
         data=bytearray()
         def u32(value):data.extend(struct.pack('<I',value))
         def string(value):b=value.encode();u32(len(b));data.extend(b)
-        u32(0x5347444D);u32(1);u32(2)
+        u32(0x5347444D);u32(2);u32(2)
         for room in rooms:
             room['actors'].sort(key=lambda a:(a['position'][1],a['id']))
-            string(room['name']);string(room['source']);u32(room['origin'][0]);u32(room['origin'][1]);u32(len(room['actors']))
+            string(room['name']);string(room['source']);u32(room['origin'][0]);u32(room['origin'][1]);u32(room['size'][0]);u32(room['size'][1]);u32(len(room['actors']))
             for a in room['actors']:
-                if not all(0<=p<200 for p in a['position']):raise ValueError('guild actor outside viewport')
+                if not all(0<=p<room['size'][axis] for axis,p in enumerate(a['position'])):raise ValueError('guild actor outside world')
                 for n in [a['id'],a['mdIndex'],a['kind']]:u32(n)
                 string(a['name']);string(a['asset'])
                 for n in [*a['position'],a['direction'],a['clip'],a['effectId']]:u32(n)

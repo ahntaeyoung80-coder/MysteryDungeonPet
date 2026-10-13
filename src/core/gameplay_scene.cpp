@@ -25,6 +25,14 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now) {
             s.pixels[i+3]=255; // death is an opaque blackout, never desktop transparency
         }
     }
+    const bool out=g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::MorningFadeOut;
+    const bool in=g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::ExploreFadeIn || g.sceneBeat==SceneBeat::BedFadeIn;
+    if(out||in) {
+        const auto elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
+        const auto opacity=out?std::min<uint64_t>(255,elapsed*255/750):elapsed>=750?0:(750-elapsed)*255/750;
+        for(size_t i=0;i<s.pixels.size();i+=4) {for(unsigned ch=0;ch<3;++ch) s.pixels[i+ch]=static_cast<uint8_t>(s.pixels[i+ch]*(255-opacity)/255);s.pixels[i+3]=255;}
+    }
+    if(g.life==LifePhase::Dialogue) for(unsigned y=150;y<190;++y) for(unsigned x=8;x<192;++x) pixel(x,y,40,30,20);
     if (g.life == LifePhase::ReturnHome) {
         const auto elapsed = now > g.phaseStartedMs ? now - g.phaseStartedMs : 0;
         const auto opacity = g.fadeInOnly ? (elapsed>=750?0:(750-elapsed)*255/750) : g.homeScene ? (elapsed >= 1500 ? 0 : std::min<std::uint64_t>(255, (1500-elapsed)*255/750)) : std::min<std::uint64_t>(255, elapsed*255/750);

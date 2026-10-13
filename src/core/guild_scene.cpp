@@ -11,12 +11,15 @@ const GuildActor& GuildRoom::player() const {
 std::vector<GuildRoom> loadGuildScene(const std::filesystem::path& path) {
     const auto bytes = readFile(path, 32768);
     detail::Reader r(bytes);
-    if (r.u32() != 0x5347444d || r.u32() != 1 || r.count(2) != 2) throw std::runtime_error("invalid guild scene header");
+    if(r.u32()!=0x5347444d) throw std::runtime_error("invalid guild magic");
+    const auto schema=r.u32();
+    if ((schema!=1 && schema!=2) || r.count(2) != 2) throw std::runtime_error("invalid guild scene header");
     std::vector<GuildRoom> rooms;
     for (unsigned room = 0; room < 2; ++room) {
         GuildRoom scene;
         scene.name = r.str(); scene.sourceScene = r.str();
         scene.sourceOrigin = {static_cast<std::int32_t>(r.count(4096)), static_cast<std::int32_t>(r.count(4096))};
+        if(schema==2) {scene.width=r.count(4096);scene.height=r.count(4096);if(!scene.width||!scene.height) throw std::runtime_error("invalid guild dimensions");}
         std::set<unsigned> ids;
         const auto n = r.count(32);
         unsigned players = 0, partners = 0;
@@ -24,7 +27,7 @@ std::vector<GuildRoom> loadGuildScene(const std::filesystem::path& path) {
             GuildActor a;
             a.id = r.u32(); a.mdIndex = r.count(65535); a.kind = static_cast<GuildActorKind>(r.count(3));
             a.name = r.str(); a.assetFile = r.str();
-            a.position = {static_cast<std::int32_t>(r.count(199)), static_cast<std::int32_t>(r.count(199))};
+            a.position = {static_cast<std::int32_t>(r.count(scene.width-1)), static_cast<std::int32_t>(r.count(scene.height-1))};
             a.direction = r.count(7); a.actionClip = r.count(255); a.effectId = r.count(65535);
             if (!ids.insert(a.id).second) throw std::runtime_error("duplicate guild actor");
             players += a.kind == GuildActorKind::Player; partners += a.kind == GuildActorKind::Partner;

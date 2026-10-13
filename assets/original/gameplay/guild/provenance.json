@@ -129,8 +129,8 @@
           "mdIndex": 1,
           "name": "PLAYER",
           "position": [
-            40,
-            72
+            220,
+            184
           ],
           "rawAnimationWord": 2063,
           "scriptCode": 64,
@@ -149,8 +149,8 @@
           "mdIndex": 4,
           "name": "ATTENDANT1",
           "position": [
-            16,
-            72
+            196,
+            184
           ],
           "rawAnimationWord": 2063,
           "scriptCode": 64,
@@ -169,8 +169,8 @@
           "mdIndex": 322,
           "name": "NPC_DOGOOMU",
           "position": [
-            64,
-            72
+            244,
+            184
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 42,
@@ -189,8 +189,8 @@
           "mdIndex": 369,
           "name": "NPC_HEIGANI",
           "position": [
-            112,
-            72
+            292,
+            184
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 42,
@@ -209,8 +209,8 @@
           "mdIndex": 990,
           "name": "NPC_CHIRIIN",
           "position": [
-            136,
-            72
+            316,
+            184
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 42,
@@ -229,8 +229,8 @@
           "mdIndex": 434,
           "name": "NPC_BIPPA",
           "position": [
-            88,
-            72
+            268,
+            184
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 42,
@@ -249,8 +249,8 @@
           "mdIndex": 483,
           "name": "NPC_PERAPPU",
           "position": [
-            160,
-            96
+            340,
+            208
           ],
           "rawAnimationWord": 2062,
           "scriptCode": 43,
@@ -269,8 +269,8 @@
           "mdIndex": 0,
           "name": "g01p06b1",
           "position": [
-            76,
-            100
+            256,
+            212
           ],
           "sourcePosition": [
             256,
@@ -287,8 +287,8 @@
           "mdIndex": 40,
           "name": "NPC_PUKURIN",
           "position": [
-            188,
-            116
+            368,
+            228
           ],
           "rawAnimationWord": 2048,
           "scriptCode": 5,
@@ -307,8 +307,8 @@
           "mdIndex": 50,
           "name": "NPC_DIGUDA",
           "position": [
-            136,
-            116
+            316,
+            228
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 42,
@@ -327,8 +327,8 @@
           "mdIndex": 51,
           "name": "NPC_DAGUTORIO",
           "position": [
-            112,
-            116
+            292,
+            228
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 42,
@@ -347,8 +347,8 @@
           "mdIndex": 792,
           "name": "NPC_KIMAWARI",
           "position": [
-            64,
-            116
+            244,
+            228
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 42,
@@ -367,8 +367,8 @@
           "mdIndex": 495,
           "name": "NPC_GUREGGURU",
           "position": [
-            88,
-            116
+            268,
+            228
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 42,
@@ -380,8 +380,12 @@
       ],
       "name": "GuildDining",
       "origin": [
-        180,
-        112
+        0,
+        0
+      ],
+      "size": [
+        504,
+        360
       ],
       "source": "SCRIPT/G01P06B/c00a0601.ssa"
     },
@@ -397,8 +401,8 @@
           "mdIndex": 1,
           "name": "PLAYER",
           "position": [
-            112,
-            128
+            204,
+            184
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 62,
@@ -417,8 +421,8 @@
           "mdIndex": 4,
           "name": "ATTENDANT1",
           "position": [
-            64,
-            128
+            156,
+            184
           ],
           "rawAnimationWord": 2061,
           "scriptCode": 62,
@@ -430,8 +434,12 @@
       ],
       "name": "PlayerRoom",
       "origin": [
-        92,
-        56
+        0,
+        0
+      ],
+      "size": [
+        384,
+        312
       ],
       "source": "SCRIPT/G01P07A/c00a0201.ssa"
     }

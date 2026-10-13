@@ -12,6 +12,7 @@ struct GuildActor {
 struct GuildRoom {
     std::string name, sourceScene;
     Point sourceOrigin;
+    std::uint32_t width=200,height=200;
     std::vector<GuildActor> actors;
     const GuildActor& player() const;
 };

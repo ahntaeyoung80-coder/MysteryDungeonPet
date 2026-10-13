@@ -105,8 +105,10 @@ struct InventoryEntry {
 };
 constexpr std::uint32_t kMaxHp=5;
 constexpr std::uint32_t MOVE_REGULAR_ATTACK = 355, ITEM_ORAN_BERRY = 70;
-enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat, Death };
+enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat, Death, Dialogue };
 enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat, PlayerFaint };
+enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn };
+enum class DialogueStage : std::uint8_t { Player, Npc };
 enum class DeathStage : std::uint8_t { FadeOut, Blackout };
 struct ActorCompletion { bool player=false, enemy=false, partner=false; };
 struct GameplayState {
@@ -119,13 +121,15 @@ struct GameplayState {
     std::uint64_t phaseStartedMs = 0, deadlineMs = 0;
     bool playerHidden=false, fadeInOnly=false;
     DeathStage deathStage=DeathStage::FadeOut;
+    SceneBeat sceneBeat=SceneBeat::None;
+    DialogueStage dialogueStage=DialogueStage::Player;
     std::uint64_t actionRound=1, playerActionRound=0;
     std::uint32_t playerDirection=0;
     std::vector<std::uint32_t> hostile;
     std::set<std::string> onceKeys;
 };
 enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
-    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout };
+    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout, DialoguePlayer, DialogueNpc };
 struct GameplayUpdate {
     GameplayEvent event = GameplayEvent::None;
     std::string onceKey;
@@ -136,6 +140,8 @@ struct GameplayUpdate {
 const char* lifeName(LifePhase);
 const char* combatName(CombatPhase);
 bool dungeonScene(const GameplayState&);
+bool bedroomScene(const GameplayState&);
+bool nightScene(const GameplayState&);
 std::uint32_t gameplayClip(const GameplayState&);
 bool gameplayLoop(const GameplayState&);
 // Shared attack roll: both sides hit 80%; only critical chance differs.

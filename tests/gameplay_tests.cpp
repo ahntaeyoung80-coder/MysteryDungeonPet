@@ -84,14 +84,22 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     check(e.state().gameplay.meals == meals && meals == 1, "meal consumed twice");
     advance(e, e.state().gameplay.phaseStartedMs+1000, true);
     check(e.state().gameplay.life == LifePhase::Eat && gameplayLoop(e.state().gameplay), "communal meal ended after one Eat clip");
-    check(next(e).event == GameplayEvent::Sleep, "Eat does not lead to Sleep");
-    const auto sleepEnd = e.state().gameplay.deadlineMs;
-    advance(e, sleepEnd-1, true);
-    check(e.state().gameplay.life == LifePhase::Sleep && gameplayLoop(e.state().gameplay), "Sleep ended on clip finished");
-    check(advance(e, sleepEnd).event == GameplayEvent::Wake, "Sleep deadline stuck");
-    check(!gameplayLoop(e.state().gameplay) && gameplayClip(e.state().gameplay) == 14, "Wake not finite14");
-    check(next(e).event == GameplayEvent::Ready && gameplayClip(e.state().gameplay) == 7, "Wake missing Idle");
-    check(next(e).event == GameplayEvent::Explore && e.state().gameplay.day == 2 && e.state().gameplay.hearts == kMaxHp, "next day does not explore");
+    check(next(e).event==GameplayEvent::Sleep && e.state().gameplay.sceneBeat==SceneBeat::DiningExit,"meal exit fade missing");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeIn && bedroomScene(e.state().gameplay),"bedroom swap missing");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFace && gameplayClip(e.state().gameplay)==22,"bed face Nod missing");
+    e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{true,false,false});check(e.state().gameplay.sceneBeat==SceneBeat::BedFace,"partner Nod skipped");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedLay && gameplayClip(e.state().gameplay)==27,"original Laying missing");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeOut,"night fade-out missing");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::NightFadeIn && nightScene(e.state().gameplay),"night swap not at black");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Sleeping && gameplayClip(e.state().gameplay)==13,"sleep missing");
+    const auto sleepEnd=e.state().gameplay.deadlineMs;advance(e,sleepEnd-1,true);check(e.state().gameplay.life==LifePhase::Sleep,"sleep ended early");
+    check(advance(e,sleepEnd).event==GameplayEvent::Wake,"sleep deadline stuck");
+    e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{true,false,false});check(e.state().gameplay.life==LifePhase::Wake,"partner Wake skipped");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::MorningFace && gameplayClip(e.state().gameplay)==22,"morning Nod missing");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::MorningFadeOut,"morning fade missing");
+    next(e);check(e.state().gameplay.day==2 && e.state().gameplay.hearts==kMaxHp && e.state().gameplay.sceneBeat==SceneBeat::ExploreFadeIn,"next day not committed once");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::None && e.state().gameplay.life==LifePhase::Explore,"exploration fade-in stuck");
+
 }
 }
 int main(int argc, char** argv) {
@@ -103,13 +111,13 @@ int main(int argc, char** argv) {
         const auto home = loadPackage(std::filesystem::path(argv[1]) / "home/home.mdpa");
         for (auto clip : {0U,1U,5U,6U,7U,14U,15U,17U,22U,33U})
             for (unsigned d = 0; d < 8; ++d) { check(!player.frames(clip,d).empty(), "original player clip missing"); check(!enemy.frames(clip,d).empty(), "original enemy clip missing"); }
-        check(home.frames(0,0).front().rect.w == 200 && home.frames(1,0).front().rect.h == 200, "home map not linked");
+        check(home.frames(0,0).front().rect.w == 504 && home.frames(0,0).front().rect.h == 360 && home.frames(2,0).front().rect.w==384, "home map not linked");
         const auto rooms = loadGuildScene(std::filesystem::path(argv[1]) / "guild/guild.mdgs");
         check(rooms.size() == 2 && rooms[0].actors.size() == 13 && rooms[1].actors.size() == 2, "original guild cast not connected");
-        check(rooms[0].player().position.x == 40 && rooms[0].player().position.y == 72 && rooms[0].player().direction == 0, "dining player SSA placement lost");
-        check(rooms[1].player().position.x == 112 && rooms[1].player().position.y == 128 && rooms[1].player().direction == 2, "player not in original right bed");
+        check(rooms[0].player().position.x == 220 && rooms[0].player().position.y == 184 && rooms[0].player().direction == 0, "dining player SSA placement lost");
+        check(rooms[1].player().position.x == 204 && rooms[1].player().position.y == 184 && rooms[1].player().direction == 2, "player not in original right bed");
         const auto partner = std::find_if(rooms[1].actors.begin(), rooms[1].actors.end(), [](const auto& a) { return a.kind == GuildActorKind::Partner; });
-        check(partner != rooms[1].actors.end() && partner->position.x == 64 && partner->position.y == 128 && partner->direction == 6, "partner not in original left bed");
+        check(partner != rooms[1].actors.end() && partner->position.x == 156 && partner->position.y == 184 && partner->direction == 6, "partner not in original left bed");
         unsigned guildMembers = 0, changing = 0;
         for (const auto& actor : rooms[0].actors) if (actor.kind == GuildActorKind::GuildMember || actor.kind == GuildActorKind::Object) {
             const auto asset = loadPackage(std::filesystem::path(argv[1]) / actor.assetFile);
@@ -197,8 +205,10 @@ int main(int argc, char** argv) {
         check(heal.state().gameplay.combat == CombatPhase::EnemyAttack && heal.state().gameplay.hearts == 2, "Oran skipped enemy turn");
         pass(9,"text only; one berry consumed; 1->3 hearts; enemy turn follows");
         auto friendly = encounter(false); const auto friendlyPosition = friendly.state().position;
-        check(advance(friendly,1000).event == GameplayEvent::Greeting && friendly.state().gameplay.life == LifePhase::Explore && friendly.state().position == friendlyPosition && friendly.state().population.entities[0].done, "friendly attacked/overlapped");
-        next(friendly); check(friendly.state().gameplay.life == LifePhase::Explore, "friendly did not resume exploration");
+        check(advance(friendly,1000).event==GameplayEvent::DialoguePlayer && friendly.state().gameplay.life==LifePhase::Dialogue && !friendly.state().population.entities[0].done,"friendly dialogue starts done/overlapped");
+        auto dialogSave=encodeSnapshot(friendly.state());advance(friendly,1100,true);check(encodeSnapshot(friendly.state())==dialogSave,"dialogue pacing skipped");
+        check(next(friendly).event==GameplayEvent::DialogueNpc && !friendly.state().population.entities[0].done,"NPC response skipped");
+        check(next(friendly).event==GameplayEvent::Explore && friendly.state().population.entities[0].done && friendly.state().position==friendlyPosition,"dialogue completion missing");
         pass(10,"friendly waits; adjacent greeting; no attack; Explore resumes");
 
         // Upgrade an authentic MDES1 layout (MDES2's default extension is 84 bytes).

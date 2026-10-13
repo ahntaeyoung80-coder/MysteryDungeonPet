@@ -9,7 +9,7 @@ namespace {
 constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750, kSleepMs = 10000, kMealMs = 8000;
 }
 const char* lifeName(LifePhase phase) {
-    static const char* names[]{"Explore", "Pose", "ReturnHome", "Emotion", "Eat", "Sleep", "Wake", "Ready", "Combat", "Death"};
+    static const char* names[]{"Explore", "Pose", "ReturnHome", "Emotion", "Eat", "Sleep", "Wake", "Ready", "Combat", "Death", "Dialogue"};
     return names[static_cast<unsigned>(phase)];
 }
 const char* combatName(CombatPhase phase) {
@@ -17,12 +17,24 @@ const char* combatName(CombatPhase phase) {
     return names[static_cast<unsigned>(phase)];
 }
 bool dungeonScene(const GameplayState& g) { return !g.homeScene; }
+bool bedroomScene(const GameplayState& g) {
+    return g.sceneBeat==SceneBeat::BedFadeIn || (g.sceneBeat>=SceneBeat::BedFace && g.sceneBeat<=SceneBeat::MorningFadeOut) ||
+        (g.sceneBeat==SceneBeat::None && (g.life==LifePhase::Sleep || g.life==LifePhase::Wake || g.life==LifePhase::Ready));
+}
+bool nightScene(const GameplayState& g) { return g.sceneBeat>=SceneBeat::NightFadeIn && g.sceneBeat<=SceneBeat::MorningFadeOut; }
 std::uint32_t gameplayClip(const GameplayState& g) {
     switch (g.life) {
     case LifePhase::Pose: return 17;
     case LifePhase::Emotion: return 6; // New defeat expression cue using the supported Hurt body clip.
     case LifePhase::Eat: return 15;
-    case LifePhase::Sleep: return 13;
+    case LifePhase::Sleep:
+        if(g.sceneBeat==SceneBeat::BedFadeIn) return 7;
+        if(g.sceneBeat==SceneBeat::DiningExit) return 15;
+        if(g.sceneBeat==SceneBeat::BedFace) return 22;
+        if(g.sceneBeat==SceneBeat::BedLay || g.sceneBeat==SceneBeat::BedFadeOut) return 27;
+        return 13;
+    case LifePhase::Ready: return g.sceneBeat==SceneBeat::MorningFace || g.sceneBeat==SceneBeat::MorningFadeOut ? 22:7;
+    case LifePhase::Dialogue:return g.dialogueStage==DialogueStage::Player?22:7;
     case LifePhase::Wake: return 14;
     case LifePhase::Combat:
         if (g.combat == CombatPhase::PlayerAttack) return 1;
@@ -34,7 +46,7 @@ std::uint32_t gameplayClip(const GameplayState& g) {
 }
 bool gameplayLoop(const GameplayState& g) {
     const auto clip = gameplayClip(g);
-    return clip == 0 || clip == 7 || clip == 5 || clip == 13 || g.life == LifePhase::Eat;
+    return clip == 0 || clip == 7 || clip == 5 || clip == 13 || g.life == LifePhase::Eat || g.sceneBeat==SceneBeat::DiningExit;
 }
 AttackRoll rollBasicAttack(Rng& rng, bool player) {
     AttackRoll result;
@@ -66,7 +78,7 @@ GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     invalidate();
     state_.phase = Phase::Home;
     auto& g = state_.gameplay;
-    g.life = LifePhase::ReturnHome; g.defeated = defeated; g.homeScene = false;
+    g.life = LifePhase::ReturnHome; g.defeated = defeated; g.homeScene = false;g.sceneBeat=SceneBeat::None;g.fadeInOnly=false;
     g.phaseStartedMs = now; g.deadlineMs = now + kFadeMs;
     const auto once = "return:" + std::to_string(state_.runId);
     if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate return transaction");
@@ -84,7 +96,7 @@ void Explorer::completeEncounter() {
 GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,bool finished) {
     // Legacy headless driver: completion belongs to the active clip's actor.
     const auto& g=state_.gameplay;ActorCompletion result;
-    if(g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint)) result.enemy=finished;
+    if((g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint))) result.enemy=finished;
     else {result.player=finished;result.partner=finished;}
     return advanceGameplay(now,result);
 }
@@ -125,6 +137,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             return {GameplayEvent::HomeScene, {}};
         }
         if (g.defeated) return life(LifePhase::Emotion, GameplayEvent::Emotion, kFiniteTimeoutMs);
+        g.sceneBeat=SceneBeat::DiningPan;
         auto update = life(LifePhase::Eat, GameplayEvent::Eat, kMealMs);
         update.onceKey = "meal:" + std::to_string(state_.runId);
         if (g.onceKeys.insert(update.onceKey).second) ++g.meals;
@@ -132,31 +145,63 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
     }
     if (g.life == LifePhase::Emotion) {
         if (!finiteDone) return {};
+        g.sceneBeat=SceneBeat::DiningPan;
         auto update = life(LifePhase::Eat, GameplayEvent::Eat, kMealMs);
         update.onceKey = "meal:" + std::to_string(state_.runId);
         if (g.onceKeys.insert(update.onceKey).second) ++g.meals;
         return update;
     }
-    if (g.life == LifePhase::Eat) return now >= g.deadlineMs ? life(LifePhase::Sleep, GameplayEvent::Sleep, kSleepMs) : GameplayUpdate{};
-    if (g.life == LifePhase::Sleep) return now >= g.deadlineMs ? life(LifePhase::Wake, GameplayEvent::Wake, kFiniteTimeoutMs) : GameplayUpdate{};
-    if (g.life == LifePhase::Wake) {
-        if (!(completed.player&&completed.partner)) return {};
-        g.hearts = kMaxHp;
-        return life(LifePhase::Ready, GameplayEvent::Ready, 350);
+    if(g.life==LifePhase::Dialogue) {
+        if(now<g.deadlineMs) return {};
+        if(g.dialogueStage==DialogueStage::Player) {
+            if(!completed.player) return {};
+            g.dialogueStage=DialogueStage::Npc;g.phaseStartedMs=now;g.deadlineMs=now+1200;
+            return {GameplayEvent::DialogueNpc,{}};
+        }
+        if(!completed.enemy) return {};
+        auto& e=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){return x.instanceId==g.enemyInstance;});
+        const auto once=key("greet",e.instanceId);e.done=true;state_.onceKeys.insert(once);
+        return life(LifePhase::Explore,GameplayEvent::Explore,0);
     }
-    if (g.life == LifePhase::Ready) {
-        if (now < g.deadlineMs) return {};
-        if (state_.runId == std::numeric_limits<std::uint64_t>::max() || g.day == UINT32_MAX) throw std::runtime_error("day counter exhausted");
-        const auto previous = g;
-        Explorer next(state_.runId + 1, state_.rng.state, state_.assetVersion, state_.floors, state_.spawnPolicy);
-        next.state_.gameplay.enabled = true;
-        next.state_.gameplay.day = previous.day + 1;
-        next.state_.gameplay.meals = previous.meals;
-        next.state_.gameplay.oran = previous.oran;
-        next.state_.gameplay.phaseStartedMs = now; next.state_.gameplay.deadlineMs = now + 350;
-        next.assignRelationships();
-        *this = std::move(next);
-        return {GameplayEvent::Explore, {}};
+    if(g.life==LifePhase::Explore && g.sceneBeat==SceneBeat::ExploreFadeIn) {
+        if(now<g.deadlineMs) return {};
+        g.sceneBeat=SceneBeat::None;g.phaseStartedMs=g.deadlineMs=now;return {GameplayEvent::Explore,{}};
+    }
+    if(g.life==LifePhase::Eat) {
+        if(now<g.deadlineMs) return {};
+        g.sceneBeat=SceneBeat::DiningExit;return life(LifePhase::Sleep,GameplayEvent::Sleep,750);
+    }
+    if(g.life==LifePhase::Sleep) {
+        if(g.sceneBeat==SceneBeat::BedFace) {
+            if(!(completed.player&&completed.partner)) return {};
+            g.sceneBeat=SceneBeat::BedLay;return life(LifePhase::Sleep,GameplayEvent::Sleep,500);
+        }
+        if(now<g.deadlineMs) return {};
+        switch(g.sceneBeat) {
+        case SceneBeat::DiningExit:g.sceneBeat=SceneBeat::BedFadeIn;return life(LifePhase::Sleep,GameplayEvent::HomeScene,750);
+        case SceneBeat::BedFadeIn:g.sceneBeat=SceneBeat::BedFace;return life(LifePhase::Sleep,GameplayEvent::Sleep,5000);
+        case SceneBeat::BedLay:g.sceneBeat=SceneBeat::BedFadeOut;return life(LifePhase::Sleep,GameplayEvent::Sleep,750);
+        case SceneBeat::BedFadeOut:g.sceneBeat=SceneBeat::NightFadeIn;return life(LifePhase::Sleep,GameplayEvent::HomeScene,750);
+        case SceneBeat::NightFadeIn:g.sceneBeat=SceneBeat::Sleeping;return life(LifePhase::Sleep,GameplayEvent::Sleep,kSleepMs);
+        default:g.sceneBeat=SceneBeat::Waking;return life(LifePhase::Wake,GameplayEvent::Wake,5000);
+        }
+    }
+    if(g.life==LifePhase::Wake) {
+        if(!(completed.player&&completed.partner)) return {};
+        g.hearts=kMaxHp;g.sceneBeat=SceneBeat::MorningFace;return life(LifePhase::Ready,GameplayEvent::Ready,5000);
+    }
+    if(g.life==LifePhase::Ready) {
+        if(g.sceneBeat!=SceneBeat::MorningFadeOut) {
+            if(!(completed.player&&completed.partner)) return {};
+            g.sceneBeat=SceneBeat::MorningFadeOut;return life(LifePhase::Ready,GameplayEvent::Ready,750);
+        }
+        if(now<g.deadlineMs) return {};
+        if(state_.runId==UINT64_MAX || g.day==UINT32_MAX) throw std::runtime_error("day counter exhausted");
+        const auto previous=g;
+        Explorer next(state_.runId+1,state_.rng.state,state_.assetVersion,state_.floors,state_.spawnPolicy);
+        next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+1;next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
+        next.state_.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+750;
+        next.assignRelationships();*this=std::move(next);return {GameplayEvent::Explore,{}};
     }
     if (g.life == LifePhase::Combat) {
         switch (g.combat) {
@@ -283,10 +328,10 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     for(auto& e:state_.population.entities) {
         if(e.done||e.kind!=EntityKind::Friend||!canAttack(state_.world,state_.position,e.tile)||state_.blocked[e.tile]) continue;
         if(hostile(e)) return beginCombat(e,now,CombatPhase::PlayerTurn);
-        invalidate();const auto once=key("greet",e.instanceId);state_.onceKeys.insert(once);e.done=true;
+        invalidate();g.enemyInstance=e.instanceId;g.dialogueStage=DialogueStage::Player;
         g.playerDirection=directionBetween(state_.position,e.tile);e.direction=directionBetween(e.tile,state_.position);
-        g.playerActionRound=g.actionRound;g.deadlineMs=now+700;
-        return {GameplayEvent::Greeting,once};
+        g.playerActionRound=g.actionRound;g.life=LifePhase::Dialogue;g.phaseStartedMs=now;g.deadlineMs=now+1200;
+        return {GameplayEvent::DialoguePlayer,{}};
     }
     const int old=state_.position;
     const auto update=advance();

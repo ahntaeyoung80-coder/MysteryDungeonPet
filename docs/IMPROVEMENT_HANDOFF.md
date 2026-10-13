@@ -47,3 +47,11 @@
 - 원본995의 50개4bpp tile table에서 노란 중형 원반 tile8/9,997 palette0를 조합한16×8·shadowSize1. 원본 픽셀 그대로, frame.shadow-anchor 발 위치에 먼저 그린다. 모든 우호 배우에 표시하는 것은 사용자 정책이다.
 - 동일 카메라·보간 좌표로 계단/열매/원반 합성. 하트5개2배. 기존 미확인 일반 아이템은 명시적 검증표시 유지.
 - 두 번 추출한 전체 props 파일 bytes 일치, ROM hash 불변. CTest5개 pass·원본 크기·하트 픽셀 개수 검증, Windows x64 compile/link pass. 원본 ROM/압축본은 변경하지 않았다.
+
+## 단계6 결과
+- 식당504×360·침실 낮/밤384×312 전체 원본 배경과 SSA 월드 좌표로 전환. MDGS2에 방 크기 저장(MDGS1 읽기 유지). 기존 배우 패키지 bytes 변경 없음.
+- 식당 카메라 중심368,212→168,212(4초는 구현 선택). 원본 공동 식사8초·소비once 유지, 식사 시작/종료 fade. 배경·모든 배우·소품에 같은 camera.
+- 식당 fade-out→낮 침실 fade-in→마주보는 Nod22(두 배우)→원본 Laying27 자세500ms 유지→fade-out→밤배경 fade-in→EventSleep13→두 배우 Wake14 완료→Nod22→fade-out→다음날 초기화/회복once→탐험 fade-in.
+- 원본G01P07C 창 내부(148,96)-(190,133)의 확인된 하늘 RGB(7,31,95)306픽셀만 검정. 창틀/창살·다른 원본 픽셀 보존. 원본 데이터 수정 없음.
+- NPC 인접 이동 종료→마주보기→플레이어/NPC Nod와1200ms씩 한국어 발화→완료once→Explore. 대화 동안 이동/재접촉 잠금, 완료해도 우호NPC 표시·점유 유지. 대사는 신규 한국어 정책이며 tbl_talk.tlk 원문 복원 아님.
+- CTest5개 pass(16.73s): 모든 생활 subphase와 두 배우 완료, NPC 시작/응답/완료·복원. Windows x64 compile/link pass. 원본 두 파일 SHA256은 기준과 동일. 실제 Windows 화면·밤 창틀 육안 확인은 미실행.
