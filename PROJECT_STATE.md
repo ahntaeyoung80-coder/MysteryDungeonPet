@@ -1,28 +1,28 @@
 # 현재 상태
 
 ## 현재 단계
-A-1 완료(pipeline §5의 대표 데이터·원작 자산 준비 범위). 실제 ROM 추출/3 WAN 병합/필수 동작/참조/재현성/errors·support 보고서의 완료 조건을 통과했다. 다음 단계는 A-2.1이며 A-2/A-3/B/C 미착수. 한국어 문자 지원·전체 지원·A 전체 완료를 의미하지 않는다.
+A-1은 pipeline §5의 대표 데이터·원작 자산 준비 범위에서 완료. A-2 네이티브 구현·A-1 소비 계약·독립 검증·Windows 크로스 빌드 완료. 실제 Windows UI/전원/성능 검증 대기로 A-2 완료 판정은 pending, A-3/B/C 미완료.
 
 ## 구현·실행된 검사
-- `tools/mdpet/`: 오프라인 Extractor/Packer/CLI/fixture/validator, 3 WAN 병합, alias·1/8행·crop/anchor/marker/tick, 임시 출력·실패 보고.
-- `requirements-offline.txt`: 고정 VCS 커밋/의존성. Linux/Python3.12.14 설치/import pass. `tests/test_a1.py` 11 tests pass.
-- 실제 ROM C2SE/0x271A→EoS_NA, 91,394,048bytes. hash `6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf`, 전후 일치.
-- 180 정의/100 MAPPA/1155 MD/1400 item, 선택 profile3개(d0 local0, d15 local0/6). MD1/sprite0와 MD4/sprite4 자동 선택, 필수6+선택2 clip/348 atlas frames pass. 원본3 WAN→merge→atlas 484 source-frame RGBA/marker/flag/tick 비교 pass.
-- `local/a1-rom-final-01`과 `-02`의 catalogue/manifest/support/errors/atlas 해시 일치. atlas 32,363bytes/decoded508,928bytes(런타임 메모리·설치 크기 측정 아님).
-- manifest hash `c657d24ce3da04c8c20a289c9a2f5ee493838a9ab2471ad31723406b7b294c8d`.
+- 기존 `tools/mdpet/` Extractor/Packer/CLI와 대표 ROM 검증을 보존. 최신 origin/work `4d6ed6b`를 받아 A-1을 재구현하지 않았다.
+- A-1 증거: C2SE/0x271A→EoS_NA, ROM91,394,048bytes/hash `6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf`, 원본 불변. profile3, MD1/sprite0·MD4/sprite4, 필수6+선택2 clip/348 atlas frames, 원본3 WAN→merge→atlas484 source frames 비교pass, 2회 추출hash 일치. 상세는 기존 A1 로그/summary.
+- `src/core/` Package/Animator/Surface, `src/windows/` WIC AssetStore/WindowHost/DIB Renderer/CSV 계측/창 state 구현.
+- `tools/compile_runtime_package.py`: A-1 audit→MDPA 소비 형식. alias 자기 tick/flag/marker와 대상 atlas 공유. 합성 A-1→native144 frames 대조pass, 변환 재현성/기존 출력 보호pass.
+- Python13 tests pass, C++10,716 checks/전체 잘린 prefix/10,000 seeded mutations pass, ASan/UBSan pass, Windows x64 MinGW Release compile/link pass.
+- 직접 생성 fixture/PNG/manifest·재현 검사, MSVC/native WIC와 8개 오류 package의 CI, Windows 실행 ZIP/PowerShell 절차 추가. 실제 CI 결과는 로그에 추가한다.
 
-## 막힌 자원·지원 한계
-`text_e.str/pmd2_decode` unknown byte141. `--allow-undecoded-text`로 rawNameHex/오류를 보존하며 이름과 실제 language는 null이다. 구성언어 English를 실제 문자 지원으로 취급하지 않는다.
-일반 정의 범위오류2/upstream validator 경고33을 보존. MD2/3 Eat/Wake/Pose 누락 보존. 전체 층/도장/종·폼 감사, 원작 wall time/tickHz, Windows 실제 빌드/실행·성능 pending.
-사용자가 잔여 사용량이 적다고 알려 대표 검증 단위에서 인수인계 확정. 잔여량/리셋 시각 조회 도구 없음. 이전의 A-1 부분 완료 표시는 후속 검증을 A-1 완료 조건으로 잘못 포함한 것이며 바로잡았다.
+## 자원·지원 한계
+사용자 PC는 Windows11로 확인. 연결된 실행기는 Linux6.18/Debian13이며 사용자 PC의 명령 실행/GUI 조작 도구·연결 terminal이 없다. 실제 Windows11 실행은 로컬 Codex 프로젝트 또는 사용자의 스크립트 실행이 필요하다.
+환경 교체로 이전 `local/a1-rom-final-01/-02`·ROM은 현재 환경에 없다. 기존 성공 ROM 추출 기록을 이번에 재검증했다고 취급하지 않는다. 이번 연결 검사는 재생성한 합성 A-1 fixture만 사용했다. 원본 ROM/자산 재다운로드·재추출은 수행하지 않았다.
+기존 `text_e.str` unknown byte141은 rawNameHex/actual language=null을 유지하며 unresolved. 전체/도장/종·폼 감사, 원작 wall time, 그림자 표시, 실제 Windows UI/lock/display-off/suspend/CPU/RAM/handle 수명은 pending.
 
-## 사용량 리셋 후 재개
-1. `docs/A1_IMPLEMENTATION_HANDOFF.md` 최종 체크포인트와 `git status --short` 확인. 기존 성공 추출/조사를 반복하지 않는다.
-2. 다음 구현은 **pipeline A-2.1 C++17/MSVC/CMake 빌드와 공유 fixture/선택 패키지 소비 형식**. 네이티브 코드·AssetStore/Animator/WindowHost/Renderer 전부 미착수. A-2 예상90~150분, A-3 45~90분(Windows 접근 대기 별도).
-3. 기존 원작 패키지 검사: `.venv/bin/python -m tools.mdpet validate local/a1-rom-final-01`. 원본은 `local/rom/user.nds`. 새 추출이 필요할 때만 새 --out과 --allow-undecoded-text 사용.
-4. 문자 지원을 이어갈 경우 `local/a1-rom-02.failure.json`과 `checked_raw_strings`/rawNameHex의 실제 인코딩 매핑부터. 문자 미확인으로 다른 원본이나 임의 영문 이름으로 대체하지 않는다.
-5. 실제 Windows 실행 접근은 아직 없음. 독립 개발은 진행 가능하나 OS gate는 실제 실행 결과 필요.
+## 다음 실행 지점
+1. `docs/A2_USAGE.md`와 `docs/A2_WINDOWS_QUICKSTART.md` 참조. ZIP의 EXE를 직접, 또는 `Run-A2.ps1`을 실제 Windows11에서 실행.
+2. 로컬 Codex에서 이어가면 저장된 work 브랜치를 열고 `tools/run_windows_checks.ps1`로 MSVC/core/WIC 확인. `-Interactive`로 기준선·100회 전환 후 실제 drag/DPI/Win+L/display-off/절전 복귀 확인.
+3. CSV·environment.json·WIC 보고서·events.log·육안 결과를 수집해 gate 판정 갱신. `tools/summarize_metrics.py`로 warm-up60초 이후 수치 집계.
+4. 이전 원작 선택 package를 사용할 수 있으면 `compile_runtime_package.py --package ... --out 새경로`로 변환해 A-3에 연결. 원작 시간/anchor/shadow와 Windows 통합이 pass일 때까지 A 전체 완료로 판정하지 않는다.
+5. B-2 자동 전투는 B-1 완료 후 선택 단계이며 미확정 상태로 구현하지 않는다.
 
 ## 기록
-`docs/A1_IMPLEMENTATION_HANDOFF.md`, `docs/A1_USAGE.md`, `docs/logs/2026-10-13-a1-implementation.md`, `docs/validation/2026-10-13-a1-summary.json`.
-원본 ROM·게임 자산·생성 catalogue/atlas는 local/에만 저장, Git 제외. 기존 연구 checks/ZIP 보존. 분석 전 체크포인트4db2628 push/SHA 일치 확인. A-1 실제 검증 구현9a57eb7 push/원격 SHA 일치·작업 트리 clean 확인. 이 원격 반영 기록도 별도 문서 커밋으로 동기화한다.
+`docs/A1_IMPLEMENTATION_HANDOFF.md`, `docs/A1_USAGE.md`, 기존 A1 로그/검증summary, `docs/A2_USAGE.md`, `docs/implementation/MDPA_FORMAT.md`, `docs/logs/2026-10-13-a2-runtime.md`, `docs/validation/2026-10-13-a2-summary.json`.
+ROM/게임 자산/생성 원작 package는 local/에만 두고 Git 제외. 연구 checks/ZIP 보존. push 결과와 실제 Windows 실행 판정을 별도로 기록한다.

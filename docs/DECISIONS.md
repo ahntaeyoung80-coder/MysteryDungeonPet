@@ -32,3 +32,11 @@
 - 원본 WAN은 MergeWan 전에 보존한다. 기존 GeneratePiece/DrawOn으로 원본3pack→merged→atlas의 픽셀/marker/flag/tick을 대조하며 시트→atlas 해시만으로 원본 동일성을 보고하지 않는다.
 - 오프라인 선택 package는 schemaVersion/assetVersion1, PNG straightRGBA+감사용JSON이다. 변환 버전/sourceHash/핵심 의존성 버전을 보존하며 런타임 소비 형식은 A-2에서 확정한다.
 - 정상 출력 덮어쓰기 대신 새 출력 디렉터리의 임시 생성/검사/rename으로 확정한다. 실패 보고는 별도 파일에 남긴다.
+
+## 2026-10-13 — A-2 소비 계약과 실행 환경
+
+- A-1 audit manifest를 의미 원본으로 유지하고 `compile_runtime_package.py`로 MDPA v1 소비 형식을 만든다. runtime에는 JSON 엔진을 추가하지 않으며 원본 provenance·timing·frame 정보를 함께 보존한다.
+- alias는 atlas를 공유하되 원본 alias의 duration/flag/marker/프레임 수를 유지한다. geometry가 다른 alias, 해석되지 않은 rawSpeed, 단일 atlas8MiB 초과는 명시 오류로 처리한다.
+- Windows 창은100/200 실제 px, PMv2 aware, 별도 integerScale1..8로 표시한다. DPI 변경은 위치 clamp만 적용하며 비정수 확대를 도입하지 않는다.
+- 한 UI 스레드와 one-shot waitable timer, 동일 pixel 재제출 방지, 단일 atlas 캐시부터 시작한다. 검사 모드의 CSV는1초 간격으로 기록한다.
+- 연결된 cloud 실행기는 Linux이고 사용자 PC는Windows11다. 현재 도구로 사용자 PC에 직접 실행할 수 없으며, 사용자가 Windows 실행 ZIP/PowerShell 문서대로 직접 검증한다. headless Windows CI와 실제 UI/lock/suspend gate를 구분한다.

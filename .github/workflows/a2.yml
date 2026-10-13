@@ -1,0 +1,40 @@
+name: A2 core and Windows package
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python tools/make_fixture.py --check
+      - run: cmake -S . -B build/linux -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
+      - run: cmake --build build/linux
+      - run: ctest --test-dir build/linux --output-on-failure
+      - run: python -m pip install -r requirements-offline.txt
+      - run: python -m unittest discover -s tests -v
+        env:
+          PET_PACKAGE_INSPECT: ${{ github.workspace }}/build/linux/pet_package_inspect
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: MSVC Release, native core and WIC, package
+        shell: pwsh
+        run: ./tools/run_windows_checks.ps1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: a2-windows-fixture
+          path: |
+            build/windows/package/
+            build/windows/wic-results/*.txt
+          if-no-files-found: warn
