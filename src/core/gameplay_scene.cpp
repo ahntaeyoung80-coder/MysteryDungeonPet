@@ -11,7 +11,8 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now) {
     if (dungeonScene(g)) {
         static const char* heart[]{"0110110", "1111111", "1111111", "0111110", "0011100", "0001000"};
         for (unsigned h = 0; h < kMaxHp; ++h) for (unsigned y = 0; y < 6; ++y) for (unsigned x = 0; x < 7; ++x)
-            if (heart[y][x] == '1') pixel(8 + 10*h+x, 8+y, 35, 35, h < g.hearts ? 230 : 65);
+            if (heart[y][x] == '1') for(unsigned yy=0;yy<2;++yy) for(unsigned xx=0;xx<2;++xx)
+                pixel(8 + 18*h + 2*x+xx,8+2*y+yy,35,35,h<g.hearts?230:65);
     }
     if (g.life == LifePhase::Combat && g.combat == CombatPhase::BerryText)
         for (unsigned y = 150; y < std::min(190U, s.height); ++y)

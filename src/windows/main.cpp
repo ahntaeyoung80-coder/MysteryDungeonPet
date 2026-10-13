@@ -166,7 +166,7 @@ class App {
     Options options_;
     std::filesystem::path directory_;
     Assets assets_;
-    std::optional<Assets> enemyAssets_, homeAssets_;
+    std::optional<Assets> enemyAssets_, homeAssets_, propsAssets_;
     std::vector<GuildRoom> guildRooms_;
     std::map<std::string, Assets> guildAssets_;
     struct GuildLiveActor {
@@ -263,6 +263,13 @@ class App {
         }
         dirty_ = true;
         log("select clip=" + std::to_string(clip_) + " direction=" + std::to_string(direction_) + " loop=" + std::to_string(loop_));
+    }
+    void addProp(std::vector<Layer>& layers,unsigned id,Point position) const {
+        const auto& f=propsAssets_->package.frames(id,0).front();
+        layers.push_back({propsAssets_->atlas.get(),f.rect,f.anchor,position});
+    }
+    void addDisc(std::vector<Layer>& layers,const Frame& frame,Point actor) const {
+        addProp(layers,3,{actor.x+frame.shadow.x-frame.anchor.x,actor.y+frame.shadow.y-frame.anchor.y});
     }
     PlaybackSample currentPlayback() const {
         Point scene{int32_t(size_ / (2 * scale_)), int32_t(size_ / (2 * scale_))};
@@ -677,8 +684,8 @@ class App {
                 const Point p{tile % kWidth * 24, tile / kWidth * 24};
                 if (visible(p, 24)) layers.push_back({tileAssets.atlas.get(), frames[chunks_[tile]].rect, {0, 0}, p});
             }
-            const Point stairPos{state.world.stairs % kWidth * 24 + 9, state.world.stairs / kWidth * 24 + 9};
-            if (visible(stairPos, 7)) layers.push_back({&stairsMarker_, {0, 0, 7, 7}, {0, 0}, stairPos});
+            const Point stairPos=raster(tilePoint(state.world.stairs));
+            if(visible(stairPos,24)) addProp(layers,1,stairPos);
             for (const auto& e : state.population.entities) if (!e.done) {
                 if (e.kind == EntityKind::Friend) {
                     const auto& g = state.gameplay;
@@ -686,12 +693,15 @@ class App {
                     const bool moving=actorMotions_.count(e.instanceId)&&actorMotions_.at(e.instanceId).active(now);
                     const auto& f = enemyAssets_->package.frames(active ? enemyClip_ : moving?0:7, active ? enemyDirection_ : e.direction)[active ? enemyFrame_ : moving?actorFrames_[e.instanceId]:0];
                     const auto world=actorMotions_.count(e.instanceId)?raster(actorMotions_.at(e.instanceId).sample(now)):raster(tilePoint(e.tile));
+                    if(std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end()) addDisc(layers,f,world);
                     layers.push_back({enemyAssets_->atlas.get(), f.rect, f.anchor, world});
                     continue;
                 }
-                const Point p{e.tile % kWidth * 24 + 10, e.tile / kWidth * 24 + 10};
-                if (visible(p, 5)) layers.push_back({e.kind == EntityKind::Item ? &itemMarker_ : &friendMarker_,
-                                                   {0, 0, 5, 5}, {0, 0}, p});
+                const Point p=raster(tilePoint(e.tile));
+                if(visible(p,16)) {
+                    if(e.originalId==ITEM_ORAN_BERRY) addProp(layers,0,p);
+                    else layers.push_back({&itemMarker_,{0,0,5,5},{2,2},p}); // unsupported item graphics remain explicit
+                }
             }
         } else if (explorer_) {
             const auto& g = explorer_->state().gameplay;
@@ -701,10 +711,11 @@ class App {
             for (const auto& cue : guildRooms_[bedroom ? 1 : 0].actors) {
                 if (cue.kind == GuildActorKind::Player) {
                     const auto sample = currentPlayback();
-                    if (sample.frame) layers.push_back({assets_.atlas.get(), sample.frame->rect, sample.frame->anchor, cue.position});
+                    if (sample.frame) {addDisc(layers,*sample.frame,cue.position);layers.push_back({assets_.atlas.get(), sample.frame->rect, sample.frame->anchor, cue.position});}
                 } else {
                     const auto it = std::find_if(guildLive_.begin(), guildLive_.end(), [&](const auto& a) { return a.cue->id == cue.id; });
                     const auto& frame = it->assets->package.frames(it->clip, it->direction)[it->frame];
+                    if(cue.kind!=GuildActorKind::Object) addDisc(layers,frame,cue.position);
                     layers.push_back({it->assets->atlas.get(), frame.rect, frame.anchor, cue.position});
                 }
             }
@@ -713,6 +724,7 @@ class App {
         const auto playback = currentPlayback();
         if (playback.frame && (!explorer_ || (!explorer_->state().gameplay.playerHidden && dungeonScene(explorer_->state().gameplay)))) {
             const auto& f = *playback.frame;
+            if(explorer_) addDisc(layers,f,playback.scenePosition);
             layers.push_back({assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition});
         }
         const auto previous = surface_.pixels;
@@ -759,6 +771,8 @@ public:
         if (!options_.exploration.empty()) {
             enemyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-1/asset.mdpa");
             homeAssets_ = Assets::load(options_.gameplayAssets / L"home/home.mdpa");
+            propsAssets_=Assets::load(options_.gameplayAssets / L"props/props.mdpa");
+            decodes_+=propsAssets_->decoded?1:0;
             guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");
             decodes_ += (enemyAssets_->decoded ? 1 : 0) + (homeAssets_->decoded ? 1 : 0);
             explorationPackage_ = loadExplorationPackage(options_.exploration);

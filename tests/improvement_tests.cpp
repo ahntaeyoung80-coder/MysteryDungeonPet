@@ -76,5 +76,12 @@ int main(int argc,char** argv) { try {
     death.advanceGameplay(2750);check(death.state().gameplay.fadeInOnly&&death.state().gameplay.homeScene,"blackout target swap");
     auto migrated=decodeSnapshot(readFile(std::filesystem::path(argv[1]).parent_path().parent_path().parent_path().parent_path().parent_path().parent_path()/"tests/fixtures/legacy-v2.mdes",1048576),"legacy");
     check(migrated.gameplay.actionRound==1,"MDES2 action defaults");
+    if(argc>1) {
+        const auto props=loadPackage(std::filesystem::path(argv[1]).parent_path().parent_path().parent_path()/"props/props.mdpa");
+        check(props.frames(0,0)[0].rect.w==16 && props.frames(1,0)[0].rect.w==24 && props.frames(3,0)[0].rect.h==8,"original prop dimensions");
+    }
+    Surface hearts(200,200);GameplayState hp;gameplayOverlay(hearts,hp,0);
+    unsigned red=0;for(size_t i=0;i<hearts.pixels.size();i+=4) if(hearts.pixels[i+2]==230) ++red;
+    check(red==5*4*27,"heart scale/count");
     std::cout<<"improvement tests pass\n";
 } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;} }

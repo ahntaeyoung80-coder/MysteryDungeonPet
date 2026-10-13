@@ -1,0 +1,54 @@
+{
+  "props": [
+    {
+      "palette": 0,
+      "rgbaSha256": "9ee578ef8c5b80a617f7d046bfcca01d219c3d4fca7d50f1a30bb1edb8a28985",
+      "size": [
+        16,
+        16
+      ],
+      "slot": 1022,
+      "sprite": 2
+    },
+    {
+      "palette": 1,
+      "rgbaSha256": "06b620a72ace976fd249427de9d09545b385698b3b0278d52cbbd76827acad44",
+      "size": [
+        24,
+        24
+      ],
+      "slot": 1033,
+      "sprite": 27
+    },
+    {
+      "palette": 1,
+      "rgbaSha256": "5cefbfc7dc9dcef8842c40f1e5d75bfa25310ebced07615031001c49a12a94e7",
+      "size": [
+        24,
+        24
+      ],
+      "slot": 1033,
+      "sprite": 28
+    },
+    {
+      "palette": 0,
+      "paletteSlot": 997,
+      "policy": "player and all friendly NPCs; user policy",
+      "rgbaSha256": "dc484e6955e460c3b171427e137b20aee795ac398158e1c3d69715799d404ced",
+      "shadowSize": 1,
+      "size": [
+        16,
+        8
+      ],
+      "slot": 995,
+      "tiles": [
+        8,
+        9
+      ]
+    }
+  ],
+  "romHashUnchanged": true,
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "sourcePath": "DUNGEON/dungeon.bin",
+  "sourceSha256": "c6866569313f971bf01f89dfe7d0796fb9a61a044ad81455f26a1571863c8a34"
+}

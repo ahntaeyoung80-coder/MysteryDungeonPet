@@ -41,3 +41,9 @@
 - enum 끝에 PlayerFaint/Death 추가(기존 번호 불변). 피격 완료→플레이어 Faint33→숨김→750ms fade-out→1000ms 불투명 검정/한국어 문구→귀가 장면750ms fade-in→기존 패배 처리. 화면 유지 시간은 구현 선택이다.
 - ActorCompletion(player/enemy/partner) 분리. Faint는 플레이어 실제 완료만, Wake는 두 배우 완료를 기다린다. 기존 bool API는 headless 시뮬레이션의 활성 배우 완료로만 변환한다.
 - CTest5개 pass(16.09s), Windows x64 compile/link pass. HP 기본5·다른 배우 완료 차단·사망 순서·검정 RGBA alpha255·저장복원 검증. GUI 문구/연출 실측은 미실행.
+
+## 단계5 결과
+- prepare_dungeon_props.py: slot1022 sprite2 palette0 열매16×16, slot1033 sprite27/28 palette1 계단24×24. palette index0(각16색 bank 첫색) 투명 유지.
+- 원본995의 50개4bpp tile table에서 노란 중형 원반 tile8/9,997 palette0를 조합한16×8·shadowSize1. 원본 픽셀 그대로, frame.shadow-anchor 발 위치에 먼저 그린다. 모든 우호 배우에 표시하는 것은 사용자 정책이다.
+- 동일 카메라·보간 좌표로 계단/열매/원반 합성. 하트5개2배. 기존 미확인 일반 아이템은 명시적 검증표시 유지.
+- 두 번 추출한 전체 props 파일 bytes 일치, ROM hash 불변. CTest5개 pass·원본 크기·하트 픽셀 개수 검증, Windows x64 compile/link pass. 원본 ROM/압축본은 변경하지 않았다.

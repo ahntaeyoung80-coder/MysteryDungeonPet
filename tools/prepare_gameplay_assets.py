@@ -107,6 +107,8 @@ def prepare(root, output):
                 'rect': [0, index * 200, 200, 200], 'anchor': [0, 0], 'shadow': [0, 0], 'ticks': 1, 'markers': []}]]})
         (scene / 'home.mdpa').write_bytes(encode_package(encoded))
         (scene / 'CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; user-provided original assets\n', encoding='utf-8')
+        from tools.prepare_dungeon_props import prepare as prepare_props
+        prepare_props(root,generated / "props")
         from tools.prepare_guild_scene import prepare as prepare_guild
         guild_report = prepare_guild(root, generated / 'guild')
         if file_hash(rom_path) != before:
