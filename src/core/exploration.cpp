@@ -409,6 +409,7 @@ Event Explorer::advance(bool poseFinished) {
 }
 void validateState(const ExplorationState& s) {
     const auto& g = s.gameplay;
+    require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
     require(static_cast<unsigned>(g.life) <= 8 && static_cast<unsigned>(g.combat) <= 9 &&
             g.hearts <= 3 && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
@@ -488,9 +489,12 @@ void validateState(const ExplorationState& s) {
     for (std::size_t i = 0; i < s.population.entities.size(); ++i) {
         const auto& e = s.population.entities[i];
         require(e.instanceId == i + 1 && s.world.walkable(e.tile) &&
-                e.tile != s.world.start && e.tile != s.world.stairs && !occupied[e.tile] &&
+                (e.kind==EntityKind::Friend || (e.tile!=s.world.start && e.tile!=s.world.stairs)) &&
+                (e.kind!=EntityKind::Friend || e.done || (e.tile!=s.position && !occupied[e.tile])) &&
                 static_cast<unsigned>(e.kind) <= 1, "invalid entity");
-        occupied[e.tile] = 1;
+        if(e.kind==EntityKind::Friend && !e.done) occupied[e.tile]=1;
+        require(static_cast<unsigned>(e.tracking)<=1 && e.direction<8 && e.remainingHits<=2 && e.actionRound<=g.actionRound &&
+            e.blockedTurns<=3 && (e.lastSeen==-1||s.world.walkable(e.lastSeen)) && (e.chaseTarget==-1||s.world.walkable(e.chaseTarget)),"invalid actor tracking");
         const auto onceKey = prefix(e.kind == EntityKind::Item ? "pickup" : "greet",
                                    s.floorIndex, e.instanceId);
         require((s.onceKeys.count(onceKey) != 0) == e.done, "entity/journal mismatch");

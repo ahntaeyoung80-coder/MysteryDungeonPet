@@ -63,11 +63,16 @@ struct SpawnPolicy {
     std::uint32_t itemBudget = 8, friendBudget = 4;
 };
 enum class EntityKind : std::uint8_t { Item, Friend };
+enum class Tracking : std::uint8_t { Idle, Chase };
 struct Entity {
     std::uint32_t instanceId = 0, originalId = 0;
     EntityKind kind = EntityKind::Item;
     int tile = 0;
     bool done = false;
+    Tracking tracking=Tracking::Idle;
+    int lastSeen=-1, chaseTarget=-1;
+    std::uint32_t blockedTurns=0, direction=0, remainingHits=2;
+    std::uint64_t actionRound=0;
 };
 enum class OmissionReason : std::uint8_t { Budget, Space, EmptyDistribution };
 struct Omission {
@@ -109,16 +114,19 @@ struct GameplayState {
     std::uint32_t damage = 0, meals = 0, day = 1;
     bool hit = false, critical = false;
     std::uint64_t phaseStartedMs = 0, deadlineMs = 0;
+    std::uint64_t actionRound=1, playerActionRound=0;
+    std::uint32_t playerDirection=0;
     std::vector<std::uint32_t> hostile;
     std::set<std::string> onceKeys;
 };
 enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
-    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged };
+    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait };
 struct GameplayUpdate {
     GameplayEvent event = GameplayEvent::None;
     std::string onceKey;
     std::uint32_t damage = 0;
     bool critical = false;
+    std::uint32_t actorId=0;
 };
 const char* lifeName(LifePhase);
 const char* combatName(CombatPhase);
@@ -180,6 +188,9 @@ private:
     void assignRelationships();
     GameplayUpdate beginReturn(std::uint64_t now, bool defeated);
     void completeEncounter();
+    GameplayUpdate scheduleDungeon(std::uint64_t now);
+    GameplayUpdate beginCombat(Entity&, std::uint64_t now, CombatPhase);
+    GameplayUpdate afterCombatAction(std::uint64_t now);
 };
 
 void validateState(const ExplorationState&);

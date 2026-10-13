@@ -194,7 +194,10 @@ class App {
     bool poseFinished_ = false;
     Motion playerMotion_;
     std::map<uint32_t,Motion> actorMotions_;
-    int64_t presentationNow_ = 0;
+    int64_t presentationNow_ = 0, pauseStarted_ = 0;
+    Point lastPlayerDraw_{-1,-1};
+    std::map<uint32_t,Animator> actorAnimators_;
+    std::map<uint32_t,size_t> actorFrames_;
     Surface itemMarker_{5, 5}, friendMarker_{5, 5}, stairsMarker_{7, 7};
     Animator animator_;
     Surface surface_, background_{32, 24};
@@ -239,10 +242,10 @@ class App {
         bool p = blocked();
         if (p == paused_) return;
         paused_ = p;
-        if (p) { playerMotion_.pause(now); for(auto& entry:actorMotions_) entry.second.pause(now); animator_.pause(now); enemyAnimator_.pause(now); log("render_pause"); }
-        else { playerMotion_.resume(now); for(auto& entry:actorMotions_) entry.second.resume(now); animator_.resume(now); enemyAnimator_.resume(now); log("render_resume (not user activity)"); }
+        if (p) { pauseStarted_=now; playerMotion_.pause(now); for(auto& entry:actorAnimators_) entry.second.pause(now); for(auto& entry:actorMotions_) entry.second.pause(now); animator_.pause(now); enemyAnimator_.pause(now); log("render_pause"); }
+        else { playerMotion_.resume(now); for(auto& entry:actorAnimators_) entry.second.resume(now); for(auto& entry:actorMotions_) entry.second.resume(now); animator_.resume(now); enemyAnimator_.resume(now); log("render_resume (not user activity)"); }
         for (auto& actor : guildLive_) { if (p) actor.animator.pause(now); else actor.animator.resume(now); }
-        if (!p && explorer_) exploreDeadline_ = now + kMoveDurationUs;
+        if (!p && explorer_) exploreDeadline_ += now-pauseStarted_;
         // Hidden window keeps its last submitted pixels; do not resubmit them on restore.
     }
     int64_t restoredClipStart(int64_t now) const {
@@ -510,6 +513,7 @@ class App {
     void advanceExploration(int64_t now) {
         if (!explorer_ || blocked() || (now < exploreDeadline_ && !poseFinished_)) return;
         const int oldPosition = explorer_->state().position;
+        const auto oldEntities=explorer_->state().population.entities;
         const unsigned oldDirection = direction_;
         const auto oldLife = explorer_->state().gameplay.life;
         const auto oldCombat = explorer_->state().gameplay.combat;
@@ -525,6 +529,15 @@ class App {
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
         exploreDeadline_ = now + kMoveDurationUs;
         const auto& g = explorer_->state().gameplay;
+        for(const auto& e:explorer_->state().population.entities) {
+            const auto old=std::find_if(oldEntities.begin(),oldEntities.end(),[&](const auto& x){return x.instanceId==e.instanceId;});
+            if(old!=oldEntities.end() && old->tile!=e.tile && event.event==GameplayEvent::ActorMove) {
+                actorMotions_[e.instanceId].begin(e.instanceId,g.actionRound,tilePoint(old->tile),tilePoint(e.tile),now,e.direction);
+                auto& animation=actorAnimators_[e.instanceId];
+                if(animation.active()) animation.changeDirection(enemyAssets_->package,0,e.direction);
+                else animation.start(enemyAssets_->package,0,e.direction,true,now);
+            }
+        }
         uint32_t nextClip = gameplayClip(g); bool nextLoop = gameplayLoop(g);
         if (event.event == GameplayEvent::Move) nextClip = 0;
         if (event.event == GameplayEvent::Greeting) { nextClip = 22; nextLoop = false; }
@@ -546,7 +559,7 @@ class App {
         if (clip_ == 0 && nextClip == 0 && loop_ && oldLife == g.life && oldCombat == g.combat) {
             if(oldDirection != direction_) animator_.changeDirection(assets_.package,0,direction_);
         } else if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
-        if(event.event == GameplayEvent::FloorChanged || event.event == GameplayEvent::Explore) playerMotion_.reset(tilePoint(explorer_->state().position));
+        if(event.event == GameplayEvent::FloorChanged || (event.event == GameplayEvent::Explore && oldLife==LifePhase::Ready)) {playerMotion_.reset(tilePoint(explorer_->state().position));actorMotions_.clear();actorAnimators_.clear();}
         if (g.life == LifePhase::Combat && (oldLife != g.life || oldCombat != g.combat)) {
             enemyClip_ = g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? 33 : 7;
             enemyFrame_ = 0;
@@ -607,7 +620,12 @@ class App {
         presentationNow_=now;
         synchronizePause(now);
         if (blocked()) return;
-        if(playerMotion_.active(now)) dirty_=true;
+        const auto playerPoint=raster(playerMotion_.sample(now));
+        if(playerPoint.x!=lastPlayerDraw_.x||playerPoint.y!=lastPlayerDraw_.y) {dirty_=true;lastPlayerDraw_=playerPoint;}
+        for(auto& entry:actorMotions_) {
+            if(entry.second.active(now)) {dirty_=true;auto result=actorAnimators_[entry.first].advance(now);actorFrames_[entry.first]=result.frame;}
+            else if(actorAnimators_[entry.first].active()) {actorAnimators_[entry.first].stop();dirty_=true;}
+        }
         advanceExploration(now);
         bool playerFinished = false;
         if (animator_.active()) {
@@ -657,8 +675,10 @@ class App {
                 if (e.kind == EntityKind::Friend) {
                     const auto& g = state.gameplay;
                     const bool active = g.life == LifePhase::Combat && e.instanceId == g.enemyInstance;
-                    const auto& f = enemyAssets_->package.frames(active ? enemyClip_ : 7, active ? enemyDirection_ : 0)[active ? enemyFrame_ : 0];
-                    layers.push_back({enemyAssets_->atlas.get(), f.rect, f.anchor, {e.tile % kWidth*24+12, e.tile/kWidth*24+12}});
+                    const bool moving=actorMotions_.count(e.instanceId)&&actorMotions_.at(e.instanceId).active(now);
+                    const auto& f = enemyAssets_->package.frames(active ? enemyClip_ : moving?0:7, active ? enemyDirection_ : e.direction)[active ? enemyFrame_ : moving?actorFrames_[e.instanceId]:0];
+                    const auto world=actorMotions_.count(e.instanceId)?raster(actorMotions_.at(e.instanceId).sample(now)):raster(tilePoint(e.tile));
+                    layers.push_back({enemyAssets_->atlas.get(), f.rect, f.anchor, world});
                     continue;
                 }
                 const Point p{e.tile % kWidth * 24 + 10, e.tile / kWidth * 24 + 10};

@@ -28,3 +28,10 @@
 - MDES3 writer·MDES1/2 reader. 기본 누락 필드는 방문 기록에서 복원하며 과거 점유 타일 목표는 재계획. 호환 fixture 검증.
 - CTest5개 pass, 10,000 geometry seed·1,000 탐험·원작 던전 회귀 pass. Windows x64 compile/link pass.
 - 이전 '모든 아이템 수집', '열매가 항상 목표 최우선' 검사는 사용자 계단 우선 명세에 맞게 변경했다. blocked frontier 앞의 발견 경계 접근으로 조기 귀가 문제를 수정했다.
+
+## 단계3 결과
+- actionRound/playerActionRound 및 각 배우 actionRound로 플레이어→적 instance 순서를 처리. 이동/대기/공격/열매 사용은 소비, 방향은 비소비. 적 이동400ms 완료는 추가 공격권을 만들지 않는다.
+- player(3,3)→(4,3), enemy(5,3) 고정: EnemyTurn. player(3,3) 고정, enemy(5,3)→(4,3): PlayerTurn. 양쪽 player(3,3)→(4,3), enemy(6,3)→(5,3) 소비: 다음 round PlayerTurn. 원작은 플레이어 이동 직후 인접이면 적 공격 가능하며 거리 선공 예외는 추가하지 않았다.
+- Idle/Chase·마지막 발견·목표·막힘·방향·배우별 잔여 적중수 저장. 방/통로 발견 시8방향 BFS로 추적하고 도착 점유 검사. 막힘3회 이후 추적 종료/대기. 이동은 공통 Motion·보행 Animator 연결.
+- 공통 canAttack의 8방향·지형 코너 사용. 기존 명중/치명타/피해/열매 유지.
+- CTest5개 pass(18.07s): 세 소비 상황·대각선 추적 좌표·이동 중 완료 신호 무시·MDES2 안전 기본값. Windows x64 compile/link pass. GUI에서 새 추적 실측은 미실행.

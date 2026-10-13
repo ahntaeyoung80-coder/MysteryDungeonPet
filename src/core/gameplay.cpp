@@ -143,6 +143,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
         switch (g.combat) {
         case CombatPhase::PlayerTurn: {
             if (now < g.deadlineMs) return {};
+            if(g.playerActionRound==g.actionRound) return afterCombatAction(now);
+            g.playerActionRound=g.actionRound;
             const auto once = "turn:" + std::to_string(state_.runId) + ":" + std::to_string(state_.floorIndex) + ":" + std::to_string(g.enemyInstance) + ":" + std::to_string(++g.turn);
             if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate combat turn");
             if (g.oran && g.hearts < 3) {
@@ -153,22 +155,26 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
             const auto roll = rollBasicAttack(state_.rng, true);
             g.hit = roll.hit; g.critical = roll.critical; g.damage = roll.damage;
             g.enemyHits -= std::min(g.enemyHits, roll.damage);
+            for(auto& e:state_.population.entities) if(e.instanceId==g.enemyInstance) e.remainingHits=g.enemyHits;
             auto update = combat(CombatPhase::PlayerAttack, GameplayEvent::PlayerAttack); update.onceKey = once; update.damage = roll.damage; update.critical = roll.critical;
             return update;
         }
         case CombatPhase::PlayerAttack:
             if (!finiteDone) return {};
             if (g.hit) return combat(CombatPhase::EnemyHurt, GameplayEvent::Hurt);
-            return combat(CombatPhase::EnemyTurn, GameplayEvent::Miss, 350);
+            return afterCombatAction(now);
         case CombatPhase::EnemyHurt:
             if (!finiteDone) return {};
-            return !g.enemyHits ? combat(CombatPhase::Faint, GameplayEvent::EnemyFaint) : combat(CombatPhase::EnemyTurn, GameplayEvent::None, 350);
+            return !g.enemyHits ? combat(CombatPhase::Faint, GameplayEvent::EnemyFaint) : afterCombatAction(now);
         case CombatPhase::BerryText:
             if (now < g.deadlineMs) return {};
-            return combat(CombatPhase::EnemyTurn, GameplayEvent::None, 350);
+            return afterCombatAction(now);
         case CombatPhase::EnemyTurn: {
             if (now < g.deadlineMs) return {};
-            const auto once = "enemy:" + std::to_string(state_.runId) + ":" + std::to_string(state_.floorIndex) + ":" + std::to_string(g.enemyInstance) + ":" + std::to_string(g.turn);
+            auto& enemy=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance;});
+            if(enemy.actionRound==g.actionRound) return afterCombatAction(now);
+            enemy.actionRound=g.actionRound;
+            const auto once = "enemy:" + std::to_string(state_.runId) + ":" + std::to_string(state_.floorIndex) + ":" + std::to_string(g.enemyInstance) + ":" + std::to_string(g.actionRound);
             if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate enemy turn");
             const auto roll = rollBasicAttack(state_.rng, false);
             g.hit = roll.hit; g.critical = roll.critical; g.damage = roll.damage;
@@ -178,10 +184,10 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
         }
         case CombatPhase::EnemyAttack:
             if (!finiteDone) return {};
-            return g.hit ? combat(CombatPhase::PlayerHurt, GameplayEvent::Hurt) : combat(CombatPhase::PlayerTurn, GameplayEvent::Miss, 350);
+            return g.hit ? combat(CombatPhase::PlayerHurt, GameplayEvent::Hurt) : afterCombatAction(now);
         case CombatPhase::PlayerHurt:
             if (!finiteDone) return {};
-            return !g.hearts ? combat(CombatPhase::Defeat, GameplayEvent::CombatDefeat, 350) : combat(CombatPhase::PlayerTurn, GameplayEvent::None, 350);
+            return !g.hearts ? combat(CombatPhase::Defeat, GameplayEvent::CombatDefeat, 350) : afterCombatAction(now);
         case CombatPhase::Faint:
             if (!finiteDone) return {};
             completeEncounter();
@@ -196,34 +202,85 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
         }
     }
     if (now < g.deadlineMs) return {};
-    // Recognition/contact at an adjacent tile. Friendly actors never initiate attacks.
-    for (auto& e : state_.population.entities) {
-        if (e.done || e.kind != EntityKind::Friend || !canAttack(state_.world,state_.position,e.tile) || state_.blocked[e.tile]) continue;
-        const bool hostile = std::find(g.hostile.begin(), g.hostile.end(), e.instanceId) != g.hostile.end();
-        invalidate();
-        if (hostile) {
-            g.life = LifePhase::Combat; g.combat = CombatPhase::PlayerTurn;
-            g.enemyInstance = e.instanceId; g.enemyHits = 2; g.turn = 0;
-            g.phaseStartedMs = now; g.deadlineMs = now + 350;
-            return {GameplayEvent::HostileEncounter, {}};
+    return scheduleDungeon(now);
+}
+GameplayUpdate Explorer::beginCombat(Entity& e,std::uint64_t now,CombatPhase first) {
+    invalidate();auto& g=state_.gameplay;
+    g.life=LifePhase::Combat;g.combat=first;g.enemyInstance=e.instanceId;g.enemyHits=e.remainingHits;
+    g.playerDirection=directionBetween(state_.position,e.tile);e.direction=directionBetween(e.tile,state_.position);
+    g.phaseStartedMs=now;g.deadlineMs=now+350;
+    return {GameplayEvent::HostileEncounter,{}};
+}
+GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
+    auto& g=state_.gameplay;
+    auto& e=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){return x.instanceId==g.enemyInstance;});
+    g.phaseStartedMs=now;g.deadlineMs=now+350;
+    if(g.playerActionRound!=g.actionRound) {g.combat=CombatPhase::PlayerTurn;return {};}
+    if(e.actionRound!=g.actionRound) {g.combat=CombatPhase::EnemyTurn;return {};}
+    const bool pending=std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){
+        return !x.done && x.kind==EntityKind::Friend && x.actionRound!=g.actionRound &&
+            std::find(g.hostile.begin(),g.hostile.end(),x.instanceId)!=g.hostile.end();});
+    if(pending) {g.life=LifePhase::Explore;return {GameplayEvent::Explore,{}};}
+    if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
+    ++g.actionRound;g.combat=CombatPhase::PlayerTurn;return {};
+}
+GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
+    auto& g=state_.gameplay;
+    auto hostile=[&](const Entity& e){return std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end();};
+    auto visible=[&](int a,int b){
+        const int room=state_.world.room[a];
+        return (room>=0 && room==state_.world.room[b]) || (bfs(state_.world,a).distance[b]>=0 && bfs(state_.world,a).distance[b]<=2);
+    };
+    // Player then each hostile in stable instance order. A movement completion never grants an action.
+    if(g.playerActionRound==g.actionRound) {
+        for(auto& e:state_.population.entities) {
+            if(e.kind!=EntityKind::Friend || e.done || !hostile(e) || e.actionRound==g.actionRound) continue;
+            if(visible(e.tile,state_.position)) {e.tracking=Tracking::Chase;e.lastSeen=state_.position;e.chaseTarget=e.lastSeen;}
+            if(canAttack(state_.world,e.tile,state_.position)) return beginCombat(e,now,CombatPhase::EnemyTurn);
+            e.actionRound=g.actionRound; // a move OR wait, never move followed by attack
+            if(e.tracking==Tracking::Chase && e.lastSeen>=0) {
+                auto occupied=occupancy();occupied[e.tile]=0;occupied[state_.position]=1;
+                const auto reach=bfs(state_.world,e.tile,occupied);++bfsCalls_;
+                int goal=-1,best=kTiles+1;
+                for(int p=0;p<kTiles;++p) if((p==e.lastSeen || canAttack(state_.world,p,e.lastSeen)) && reach.distance[p]>0 && reach.distance[p]<best) {
+                    goal=p;best=reach.distance[p];
+                }
+                if(goal>=0) {
+                    const auto path=reach.pathTo(goal);const int old=e.tile;e.tile=path.front();
+                    e.direction=directionBetween(old,e.tile);e.blockedTurns=0;++state_.occupancyVersion;invalidate();
+                    g.phaseStartedMs=now;g.deadlineMs=now+400;
+                    return {GameplayEvent::ActorMove,{},0,false,e.instanceId};
+                }
+                if(e.tile==e.lastSeen || (e.blockedTurns=std::min(3U,e.blockedTurns+1))>=3) {e.tracking=Tracking::Idle;e.chaseTarget=-1;}
+            }
         }
-        const auto once = key("greet", e.instanceId);
-        state_.onceKeys.insert(once); e.done = true;
-        g.deadlineMs = now + 700;
-        return {GameplayEvent::Greeting, once};
+        if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
+        ++g.actionRound;
     }
-    const auto update = advance();
-    g.deadlineMs = now + (update.kind == EventKind::Move ? 400 : 0);
-    switch (update.kind) {
-    case EventKind::Pose: return life(LifePhase::Pose, GameplayEvent::Pose, kFiniteTimeoutMs);
-    case EventKind::ReturnedHome: return beginReturn(now, false);
+    for(auto& e:state_.population.entities) {
+        if(e.done||e.kind!=EntityKind::Friend||!canAttack(state_.world,state_.position,e.tile)||state_.blocked[e.tile]) continue;
+        if(hostile(e)) return beginCombat(e,now,CombatPhase::PlayerTurn);
+        invalidate();const auto once=key("greet",e.instanceId);state_.onceKeys.insert(once);e.done=true;
+        g.playerDirection=directionBetween(state_.position,e.tile);e.direction=directionBetween(e.tile,state_.position);
+        g.playerActionRound=g.actionRound;g.deadlineMs=now+700;
+        return {GameplayEvent::Greeting,once};
+    }
+    const int old=state_.position;
+    const auto update=advance();
+    g.phaseStartedMs=now;g.deadlineMs=now+(update.kind==EventKind::Move?400:0);
+    if(update.kind==EventKind::Move) {g.playerActionRound=g.actionRound;g.playerDirection=directionBetween(old,state_.position);}
+    switch(update.kind) {
+    case EventKind::Pose:
+        g.life=LifePhase::Pose;g.deadlineMs=now+5000;return {GameplayEvent::Pose,update.onceKey};
+    case EventKind::ReturnedHome:return beginReturn(now,false);
     case EventKind::Pickup:
-        if (update.originalId == ITEM_ORAN_BERRY && !g.oran) ++g.oran;
-        return {GameplayEvent::Pickup, update.onceKey};
-    case EventKind::Move: return {GameplayEvent::Move, {}};
-    case EventKind::Greeting: return {GameplayEvent::Greeting, update.onceKey};
-    case EventKind::FloorChanged: return {GameplayEvent::FloorChanged, update.onceKey};
-    default: return {};
+        if(update.originalId==ITEM_ORAN_BERRY && !g.oran) ++g.oran;
+        return {GameplayEvent::Pickup,update.onceKey};
+    case EventKind::Move:return {GameplayEvent::Move,{}};
+    case EventKind::Greeting:return {GameplayEvent::Greeting,update.onceKey};
+    case EventKind::FloorChanged:return {GameplayEvent::FloorChanged,update.onceKey};
+    default:g.playerActionRound=g.actionRound;g.deadlineMs=now+400;return {GameplayEvent::Wait,{}};
     }
 }
+
 } // namespace pet

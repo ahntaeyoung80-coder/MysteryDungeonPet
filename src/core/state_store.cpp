@@ -113,6 +113,10 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     for(auto v:s.discovered) w.u32(v);
     for(auto v:s.failedTargets) w.u32(v);
     w.u32(s.visitedRooms);w.u32(s.stalledActions);w.u32(s.targetFailures);w.u32(s.knownStairs+1);w.u32(s.targetInstance);
+    w.u64(g.actionRound);w.u64(g.playerActionRound);w.u32(g.playerDirection);
+    for(const auto& e:s.population.entities) {
+        w.u32(static_cast<unsigned>(e.tracking));w.u32(e.lastSeen+1);w.u32(e.chaseTarget+1);w.u32(e.blockedTurns);w.u32(e.direction);w.u32(e.remainingHits);w.u64(e.actionRound);
+    }
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -181,12 +185,25 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         for(auto& v:s.failedTargets) v=static_cast<uint8_t>(r.count(3));
         s.visitedRooms=r.count(7);s.stalledActions=r.count(Explorer::kFloorStepLimit+kTiles+1);s.targetFailures=r.u32();
         s.knownStairs=static_cast<int>(r.count(kTiles))-1;s.targetInstance=r.count(kTiles);
+        auto& g=s.gameplay;g.actionRound=r.u64();g.playerActionRound=r.u64();g.playerDirection=r.count(7);
+        for(auto& e:s.population.entities) {
+            e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
+            e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();
+        }
     } else {
         s.discovered=s.visited;
         s.knownStairs=s.discovered[s.world.stairs]?s.world.stairs:-1;
         for(int p=0;p<kTiles;++p) if(s.visited[p]&&s.world.room[p]>=0) s.visitedRooms|=1U<<s.world.room[p];
         // Old entity goals used the occupied tile. Replan safely without replaying transactions.
         s.target=-1;s.goalKind=GoalKind::None;
+        auto& g=s.gameplay;
+        if(g.life==LifePhase::Combat) {
+            if(g.combat!=CombatPhase::PlayerTurn) g.playerActionRound=g.actionRound;
+            for(auto& e:s.population.entities) if(e.instanceId==g.enemyInstance) {
+                e.remainingHits=g.enemyHits;
+                if(g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::Defeat) e.actionRound=g.actionRound;
+            }
+        }
     }
     r.u32(); r.end();
     validateState(s);

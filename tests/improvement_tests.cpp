@@ -39,5 +39,32 @@ int main(int argc,char** argv) { try {
     Explorer temporary(blocked);temporary.setBlocked(state.world.stairs,true);temporary.advance();check(temporary.state().knownStairs==state.world.stairs,"occupancy erased stairs");
     check(e.advance().kind==EventKind::Pose && e.state().completed,"arrival does not clear");
     auto bytes=encodeSnapshot(e.state());check(bytes[4]==3,"writer not MDES3");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
+    auto turnFixture=[](int player,int enemy,bool playerMoved,bool enemyMoved) {
+        Explorer initial(400,42,"turns",fixtureProfiles(1),{0,0,0,0});auto s=initial.state();
+        s.world.terrain.fill(0);s.world.room.fill(-1);
+        for(int y=2;y<=7;++y) for(int x=2;x<=7;++x) {s.world.terrain[y*kWidth+x]=1;s.world.room[y*kWidth+x]=0;}
+        for(int y=2;y<=7;++y) for(int x=10;x<=15;++x) {s.world.terrain[y*kWidth+x]=1;s.world.room[y*kWidth+x]=1;}
+        for(int x=7;x<=10;++x) s.world.terrain[4*kWidth+x]=1;
+        s.world.centers={4*kWidth+4,4*kWidth+12};s.world.start=s.world.centers[0];s.world.stairs=s.world.centers[1];
+        s.position=player;s.visited.fill(0);s.visited[player]=1;s.discovered.fill(0);s.knownStairs=-1;
+        s.population.entities={{1,4,EntityKind::Friend,enemy,false}};
+        s.gameplay.enabled=true;s.gameplay.hostile={1};s.gameplay.playerActionRound=playerMoved?1:0;
+        s.population.entities[0].actionRound=enemyMoved?1:0;return Explorer(s);
+    };
+    // Player (3,3)->(4,3); stationary enemy (5,3): enemy has its action left.
+    auto playerMoved=turnFixture(3*kWidth+4,3*kWidth+5,true,false);
+    playerMoved.advanceGameplay(1000);check(playerMoved.state().gameplay.combat==CombatPhase::EnemyTurn,"player move stole enemy attack");
+    // Player stationary (3,3); enemy (5,3)->(4,3): enemy already consumed movement.
+    auto enemyMoved=turnFixture(3*kWidth+3,3*kWidth+4,false,true);
+    enemyMoved.advanceGameplay(1000);check(enemyMoved.state().gameplay.combat==CombatPhase::PlayerTurn,"enemy move grants extra attack");
+    // Player (3,3)->(4,3), enemy (6,3)->(5,3): both consumed; next round starts with player.
+    auto bothMoved=turnFixture(3*kWidth+4,3*kWidth+5,true,true);
+    bothMoved.advanceGameplay(1000);check(bothMoved.state().gameplay.combat==CombatPhase::PlayerTurn&&bothMoved.state().gameplay.actionRound==2,"both moves not consumed");
+    auto chase=turnFixture(3*kWidth+3,3*kWidth+6,true,false);
+    auto chaseEvent=chase.advanceGameplay(1000);check(chaseEvent.event==GameplayEvent::ActorMove,"enemy did not chase");
+    check(chase.state().population.entities[0].tile==2*kWidth+5&&chase.state().population.entities[0].actionRound==1,"chase wrong step/consumption");
+    auto unchanged=encodeSnapshot(chase.state());chase.advanceGameplay(1100,true);check(unchanged==encodeSnapshot(chase.state()),"move completion grants attack early");
+    auto migrated=decodeSnapshot(readFile(std::filesystem::path(argv[1]).parent_path().parent_path().parent_path().parent_path().parent_path().parent_path()/"tests/fixtures/legacy-v2.mdes",1048576),"legacy");
+    check(migrated.gameplay.actionRound==1,"MDES2 action defaults");
     std::cout<<"improvement tests pass\n";
 } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;} }
