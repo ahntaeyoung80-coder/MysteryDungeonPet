@@ -1,5 +1,17 @@
 # 현재 상태
 
+## 최신 우선 요구 — 길드 생활 장면 (2026-10-13)
+
+사용자가 길드의 주인공 방 취침·길드 식당 식사·길드원 공동 식사 애니메이션을 핵심 요구로 확정했다. 기존 배경+주인공만 표시하던 상태를 보완했다.
+
+- 원본 `SCRIPT/G01P06B/c00a0601.ssa/.ssb`에서 주인공·동료·길드원10명과 식탁 소품107을 확인했다. MDindex/원작spriteIndex/방향/좌표/각각의 scriptAnimationCode를 추출해 `guild.mdgs` cue로 연결했다. 노공룡·비버니·가재군·치렁·페라페·디그다·닥트리오·삐딱구리·해루미·푸크린을 각자의 원작 몸체로 표시한다.
+- 식사는8초 유한 장면 동안 원본 지정 Eat15/EventSleep13/Wake14/Walk0을 개별 loop로 재생한다. 모든 길드원에게 Eat15를 적용하지 않는다. 주인공의 식사 소비는 once이며 단일 clip 종료로 공동 식사를 중단하지 않는다. NPC texture는 집 장면 진입 때만 로드하고 캐시한다.
+- 원본 `G01P07A/c00a0201.ssa`의 주인공 침상(204,184), Right2와 동료 침상(156,184), Left6을 사용한다. viewport에서는(112,128)/(64,128)이다. EventSleep13→Wake14를 연결하고 두 개체의 기상이 끝난 뒤 Idle·다음날 탐험으로 진행한다.
+- 길드원10명 전부 실제 frame 변화 검사 pass. 원본 WAN→merged→atlas516frame/원본996frame 대조 pass, ROM hash 불변. Linux Release4CTests/Python23tests/Windows 크로스 빌드 pass. 기존12시나리오와 저장복원도 재검사했다. Windows 실제 실행 결과는 수집 중이다.
+- 원본의 Eating642/EatingSlow643/AppleOnHead624와 Laying27은 provenance에 보존했다. 별도 식사 효과 graphic 연결·원작 대사 디코딩·음악·전체 story VM은 아직 재현하지 않았다. 이를 완전한 원작 연출 이식으로 보고하지 않는다.
+
+구현: `src/core/guild_scene.*`, `src/windows/main.cpp`. 재현: `tools/prepare_gameplay_assets.py`(길드 추출 포함), `tools/prepare_guild_scene.py`. 상세 요구·검증: `docs/GUILD_LIFE_SCENE.md`. 이전 생활 연결 결과는 아래 체크포인트로 보존한다.
+
 ## 최신 작업 — B-1 생활 연결·최소 B-2 (2026-10-13)
 
 최초 체크아웃 `/workspace/MysteryDungeonPet`, `work=70eb4cf`는 문서만 있었다. 원격 조회·fetch 후 실제 B-1 코드가 `origin/work=3cbb95b`에 있음을 확인했다. 별도 워크트리 `/workspace/MysteryDungeonPet-b1`, 브랜치 `fix/b1-life-combat`에서 기존 코드·자산을 재사용하고 최신 main의 임시 문제 문서를 병합했다. 기존 체크아웃은 보존했다.

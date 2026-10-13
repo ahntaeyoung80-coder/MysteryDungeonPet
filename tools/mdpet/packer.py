@@ -117,13 +117,15 @@ class Atlas:
                 "byteSize": path.stat().st_size, "format": "straight_rgba8"}
 
 
-def pack_asset(sheets: Path, output: Path, asset_key: str, provenance: dict, raw_wan=None, extra_animations=None) -> tuple[dict, dict]:
+def pack_asset(sheets: Path, output: Path, asset_key: str, provenance: dict, raw_wan=None, extra_animations=None, required_animations=None, optional_animations=None) -> tuple[dict, dict]:
     provenance = {**provenance, "transform": transform_identity()}
     shadow_size, nodes = nodes_from_xml(sheets / "AnimData.xml")
     # 전체 alias graph는 선택 범위 바깥에도 검사한다.
     for name in nodes:
         resolve_alias(nodes, name)
-    requested = {**REQUIRED, **OPTIONAL, **(extra_animations or {})}
+    required = REQUIRED if required_animations is None else required_animations
+    optional = OPTIONAL if optional_animations is None else optional_animations
+    requested = {**required, **optional, **(extra_animations or {})}
     selected = [name for name in requested if name in nodes]
     for name in list(selected):
         target = nodes[name].findtext("CopyOf")
@@ -136,7 +138,7 @@ def pack_asset(sheets: Path, output: Path, asset_key: str, provenance: dict, raw
     clips, all_frames = [], []
     report = {"assetKey": asset_key, "sourceKind": provenance["sourceKind"], "animations": [],
               "romPixelMatch": "pending", "originalWallTime": "pending"}
-    for name, expected_id in REQUIRED.items():
+    for name, expected_id in required.items():
         if name not in nodes:
             report["animations"].append({"name": name, "wanId": expected_id, "status": "missing"})
     for name in selected:
@@ -224,7 +226,7 @@ def pack_asset(sheets: Path, output: Path, asset_key: str, provenance: dict, raw
     asset = {"assetKey": asset_key, "source": provenance, "atlas": atlas_info,
              "shadowSize": shadow_size, "shadowEncoding": "skytemple_rgb_size_mask_with_white_origin",
              "animations": clips}
-    report["requiredComplete"] = all(name in nodes for name in REQUIRED)
+    report["requiredComplete"] = all(name in nodes for name in required)
     return asset, report
 
 

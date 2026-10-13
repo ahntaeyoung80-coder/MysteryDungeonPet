@@ -1,6 +1,7 @@
 #include "core/exploration.hpp"
 #include "core/exploration_package.hpp"
 #include "core/gameplay_scene.hpp"
+#include "core/guild_scene.hpp"
 #include "core/animator.hpp"
 #include <algorithm>
 #include <chrono>
@@ -76,6 +77,8 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     const auto meals = e.state().gameplay.meals;
     advance(e, e.state().gameplay.phaseStartedMs+1);
     check(e.state().gameplay.meals == meals && meals == 1, "meal consumed twice");
+    advance(e, e.state().gameplay.phaseStartedMs+1000, true);
+    check(e.state().gameplay.life == LifePhase::Eat && gameplayLoop(e.state().gameplay), "communal meal ended after one Eat clip");
     check(next(e).event == GameplayEvent::Sleep, "Eat does not lead to Sleep");
     const auto sleepEnd = e.state().gameplay.deadlineMs;
     advance(e, sleepEnd-1, true);
@@ -96,6 +99,25 @@ int main(int argc, char** argv) {
         for (auto clip : {0U,1U,5U,6U,7U,14U,15U,17U,22U,33U})
             for (unsigned d = 0; d < 8; ++d) { check(!player.frames(clip,d).empty(), "original player clip missing"); check(!enemy.frames(clip,d).empty(), "original enemy clip missing"); }
         check(home.frames(0,0).front().rect.w == 200 && home.frames(1,0).front().rect.h == 200, "home map not linked");
+        const auto rooms = loadGuildScene(std::filesystem::path(argv[1]) / "guild/guild.mdgs");
+        check(rooms.size() == 2 && rooms[0].actors.size() == 13 && rooms[1].actors.size() == 2, "original guild cast not connected");
+        check(rooms[0].player().position.x == 40 && rooms[0].player().position.y == 72 && rooms[0].player().direction == 0, "dining player SSA placement lost");
+        check(rooms[1].player().position.x == 112 && rooms[1].player().position.y == 128 && rooms[1].player().direction == 2, "player not in original right bed");
+        const auto partner = std::find_if(rooms[1].actors.begin(), rooms[1].actors.end(), [](const auto& a) { return a.kind == GuildActorKind::Partner; });
+        check(partner != rooms[1].actors.end() && partner->position.x == 64 && partner->position.y == 128 && partner->direction == 6, "partner not in original left bed");
+        unsigned guildMembers = 0, changing = 0;
+        for (const auto& actor : rooms[0].actors) if (actor.kind == GuildActorKind::GuildMember || actor.kind == GuildActorKind::Object) {
+            const auto asset = loadPackage(std::filesystem::path(argv[1]) / actor.assetFile);
+            check(!asset.frames(actor.actionClip, actor.direction).empty(), "guild original clip missing");
+            Animator animation; animation.start(asset, actor.actionClip, actor.direction, true, 0);
+            const auto initial = animation.advance(0).frame;
+            bool changed = false;
+            for (std::int64_t time = 100000; time < 3000000; time += 100000) changed = changed || animation.advance(time).frame != initial;
+            guildMembers += actor.kind == GuildActorKind::GuildMember;
+            changing += changed && actor.kind == GuildActorKind::GuildMember;
+        }
+        check(guildMembers == 10 && changing >= 8, "guild meal is a static background");
+        std::cout << "{\"guildMembers\":" << guildMembers << ",\"animatedGuildMembers\":" << changing << ",\"bedPlacement\":\"pass\"}\n";
 
         auto clear = empty(); auto s = clear.state();
         s.position = s.world.stairs; s.visited = s.world.terrain;
@@ -107,7 +129,7 @@ int main(int argc, char** argv) {
         do { result = pose.advance(at); if (result.nextDeadlineUs) at = *result.nextDeadlineUs; } while (!result.finished);
         check(advance(clear,1000+static_cast<std::uint64_t>(at/1000),true).event == GameplayEvent::ReturnHome, "Pose completion missing return");
         homePipeline(clear,false);
-        pass(1,"actual Pose17 and Eat15 Sleep5 Wake14; next day Explore");
+        pass(1,"actual Pose17 and communal Eat15 EventSleep13 Wake14; next day Explore");
         pass(2,"return 1500ms; zero position/floorStep/BFS change; cached target cleared");
 
         auto fight = encounter(); check(advance(fight,1000).event == GameplayEvent::HostileEncounter, "recognition did not start combat");

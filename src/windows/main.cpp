@@ -10,6 +10,7 @@
 #include "core/playback_sample.hpp"
 #include "core/exploration_package.hpp"
 #include "core/gameplay_scene.hpp"
+#include "core/guild_scene.hpp"
 #include <algorithm>
 #include <chrono>
 #include <cstring>
@@ -159,6 +160,20 @@ class App {
     std::filesystem::path directory_;
     Assets assets_;
     std::optional<Assets> enemyAssets_, homeAssets_;
+    std::vector<GuildRoom> guildRooms_;
+    std::map<std::string, Assets> guildAssets_;
+    struct GuildLiveActor {
+        const GuildActor* cue = nullptr;
+        const Assets* assets = nullptr;
+        Animator animator;
+        std::uint32_t clip = 7;
+        unsigned direction = 0;
+        size_t frame = 0;
+        bool finished = false;
+    };
+    std::vector<GuildLiveActor> guildLive_;
+    int guildRoom_ = -1;
+    LifePhase guildLife_ = LifePhase::Explore;
     Animator enemyAnimator_;
     uint32_t enemyClip_ = 7;
     size_t enemyFrame_ = 0;
@@ -216,19 +231,20 @@ class App {
         paused_ = p;
         if (p) { animator_.pause(now); enemyAnimator_.pause(now); log("render_pause"); }
         else { animator_.resume(now); enemyAnimator_.resume(now); log("render_resume (not user activity)"); }
+        for (auto& actor : guildLive_) { if (p) actor.animator.pause(now); else actor.animator.resume(now); }
         if (!p && explorer_) exploreDeadline_ = now + 350000;
         // Hidden window keeps its last submitted pixels; do not resubmit them on restore.
     }
     int64_t restoredClipStart(int64_t now) const {
         if (!explorer_) return now;
         const auto started = explorer_->state().gameplay.phaseStartedMs, utc = utcMs();
-        return now - static_cast<int64_t>(std::min<uint64_t>(utc > started ? utc-started : 0, 5000))*1000;
+        return now - static_cast<int64_t>(std::min<uint64_t>(utc > started ? utc-started : 0, 60000))*1000;
     }
     void startClip(int64_t now, bool restoring = false) {
         frame_ = 0; nextFrameDeadline_.reset();
         if (options_.scenario == L"empty") animator_.stop();
         else {
-            animator_.start(assets_.package, clip_, direction_, loop_, restoring && !loop_ ? restoredClipStart(now) : now);
+            animator_.start(assets_.package, clip_, direction_, loop_, restoring && explorer_ && explorer_->state().gameplay.life != LifePhase::Explore ? restoredClipStart(now) : now);
             if (paused_) animator_.pause(now);
         }
         dirty_ = true;
@@ -239,6 +255,9 @@ class App {
         if (explorer_ && dungeonScene(explorer_->state().gameplay)) {
             const int tile = explorer_->state().position;
             scene = {tile % kWidth * 24 + 12, tile / kWidth * 24 + 12};
+        } else if (explorer_ && !guildRooms_.empty()) {
+            const auto life = explorer_->state().gameplay.life;
+            scene = guildRooms_[life == LifePhase::Sleep || life == LifePhase::Wake || life == LifePhase::Ready ? 1 : 0].player().position;
         }
         return playbackSample(assets_.package, clip_, direction_, frame_, animator_.active(), scene, options_.scenario != L"empty");
     }
@@ -476,6 +495,7 @@ class App {
     void advanceExploration(int64_t now) {
         if (!explorer_ || blocked() || (now < exploreDeadline_ && !poseFinished_)) return;
         const int oldPosition = explorer_->state().position;
+        const unsigned oldDirection = direction_;
         const auto oldLife = explorer_->state().gameplay.life;
         const auto oldCombat = explorer_->state().gameplay.combat;
         auto candidate = *explorer_;
@@ -505,8 +525,8 @@ class App {
             direction_ = dx > 0 ? 2 : dx < 0 ? 6 : dy < 0 ? 4 : 0;
             enemyDirection_ = (direction_ + 4) % 8;
         }
-        if (g.homeScene) direction_ = 0;
-        if (clip_ != nextClip || loop_ != nextLoop || oldLife != g.life || oldCombat != g.combat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
+        if (g.homeScene) direction_ = guildRooms_[g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready ? 1 : 0].player().direction;
+        if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
         if (g.life == LifePhase::Combat && (oldLife != g.life || oldCombat != g.combat)) {
             enemyClip_ = g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? 33 : 7;
             enemyFrame_ = 0;
@@ -521,10 +541,53 @@ class App {
         if (g.life == LifePhase::ReturnHome) exploreDeadline_ = now + 33000;
         dirty_ = true;
     }
+    void advanceGuildActors(int64_t now) {
+        if (!explorer_ || dungeonScene(explorer_->state().gameplay)) { guildLive_.clear(); guildRoom_ = -1; return; }
+        const auto& g = explorer_->state().gameplay;
+        const int room = g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready ? 1 : 0;
+        if (guildRoom_ != room || guildLife_ != g.life) {
+            guildLive_.clear(); guildRoom_ = room; guildLife_ = g.life;
+            for (const auto& cue : guildRooms_[room].actors) {
+                if (cue.kind == GuildActorKind::Player) continue;
+                const Assets* source = nullptr;
+                if (cue.kind == GuildActorKind::Partner) source = &*enemyAssets_;
+                else {
+                    auto it = guildAssets_.find(cue.assetFile);
+                    if (it == guildAssets_.end()) {
+                        auto loaded = Assets::load(options_.gameplayAssets / cue.assetFile);
+                        decodes_ += loaded.decoded ? 1 : 0;
+                        it = guildAssets_.emplace(cue.assetFile, std::move(loaded)).first;
+                    }
+                    source = &it->second;
+                }
+                GuildLiveActor actor; actor.cue = &cue; actor.assets = source; actor.direction = cue.direction;
+                actor.clip = cue.kind == GuildActorKind::Object ? cue.actionClip :
+                    cue.kind == GuildActorKind::Partner ? (room == 1 ? gameplayClip(g) : g.life == LifePhase::Eat ? 15U : 7U) :
+                    g.life == LifePhase::Eat ? cue.actionClip : 7U;
+                actor.animator.start(source->package, actor.clip, actor.direction, g.life != LifePhase::Wake, restoredClipStart(now));
+                guildLive_.push_back(std::move(actor));
+            }
+            log("guild room=" + guildRooms_[room].name + " characters=" + std::to_string(guildRooms_[room].actors.size() - (room == 0 ? 1 : 0)) + " objectCount=" + std::to_string(room == 0 ? 1 : 0));
+            dirty_ = true;
+        }
+        for (auto& actor : guildLive_) {
+            if (g.life == LifePhase::Eat && actor.cue->id == 79) {
+                const auto elapsed = utcMs() > g.phaseStartedMs ? utcMs()-g.phaseStartedMs : 0;
+                const unsigned direction = (elapsed*60/1000/20)%2 ? 0 : 4;
+                if (direction != actor.direction) { actor.direction = direction; actor.animator.start(actor.assets->package, actor.clip, direction, true, now); dirty_ = true; }
+            }
+            const auto result = actor.animator.advance(now);
+            actor.finished = result.finished;
+            if (result.finishedEvent && actor.cue->kind == GuildActorKind::Partner && g.life == LifePhase::Wake) log("guild partner wake finished");
+            dirty_ = dirty_ || actor.frame != result.frame; actor.frame = result.frame;
+            if (result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs < *nextFrameDeadline_)) nextFrameDeadline_ = result.nextDeadlineUs;
+        }
+    }
     void render(int64_t now) {
         synchronizePause(now);
         if (blocked()) return;
         advanceExploration(now);
+        bool playerFinished = false;
         if (animator_.active()) {
             auto result = animator_.advance(now);
             dirty_ = dirty_ || frame_ != result.frame; frame_ = result.frame;
@@ -532,6 +595,7 @@ class App {
             nextFrameDeadline_ = result.nextDeadlineUs;
             if (result.finishedEvent) log("finite finished assetKey=" + assets_.package.assetKey);
             if (result.finishedEvent && explorer_) poseFinished_ = true;
+            playerFinished = result.finished;
         }
         if (explorer_ && explorer_->state().gameplay.life == LifePhase::Combat && enemyAnimator_.active()) {
             const auto result = enemyAnimator_.advance(now);
@@ -539,6 +603,9 @@ class App {
             if (result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs < *nextFrameDeadline_)) nextFrameDeadline_ = result.nextDeadlineUs;
             if (result.finishedEvent) poseFinished_ = true;
         }
+        advanceGuildActors(now);
+        if (explorer_ && explorer_->state().gameplay.life == LifePhase::Wake)
+            poseFinished_ = playerFinished && std::all_of(guildLive_.begin(), guildLive_.end(), [](const auto& actor) { return actor.cue->kind != GuildActorKind::Partner || actor.finished; });
         if (!dirty_) return;
         std::vector<Layer> layers;
         Point camera{0, 0};
@@ -584,10 +651,20 @@ class App {
             const bool bedroom = g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready;
             const auto& f = homeAssets_->package.frames(bedroom ? 1 : 0, 0).front();
             layers.push_back({homeAssets_->atlas.get(), f.rect, f.anchor, {0, 0}});
+            for (const auto& cue : guildRooms_[bedroom ? 1 : 0].actors) {
+                if (cue.kind == GuildActorKind::Player) {
+                    const auto sample = currentPlayback();
+                    if (sample.frame) layers.push_back({assets_.atlas.get(), sample.frame->rect, sample.frame->anchor, cue.position});
+                } else {
+                    const auto it = std::find_if(guildLive_.begin(), guildLive_.end(), [&](const auto& a) { return a.cue->id == cue.id; });
+                    const auto& frame = it->assets->package.frames(it->clip, it->direction)[it->frame];
+                    layers.push_back({it->assets->atlas.get(), frame.rect, frame.anchor, cue.position});
+                }
+            }
         }
         if (backgroundOn_ && options_.scenario != L"empty") layers.push_back({&background_, {0, 0, 32, 24}, {0, 0}, {0, 0}});
         const auto playback = currentPlayback();
-        if (playback.frame) {
+        if (playback.frame && (!explorer_ || dungeonScene(explorer_->state().gameplay))) {
             const auto& f = *playback.frame;
             layers.push_back({assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition});
         }
@@ -630,6 +707,7 @@ public:
         if (!options_.exploration.empty()) {
             enemyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-1/asset.mdpa");
             homeAssets_ = Assets::load(options_.gameplayAssets / L"home/home.mdpa");
+            guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");
             decodes_ += (enemyAssets_->decoded ? 1 : 0) + (homeAssets_->decoded ? 1 : 0);
             explorationPackage_ = loadExplorationPackage(options_.exploration);
             for (const auto& tileset : explorationPackage_->tilesets) {
@@ -653,6 +731,7 @@ public:
             clip_ = gameplayClip(explorer_->state().gameplay);
             loop_ = gameplayLoop(explorer_->state().gameplay);
             const auto& g = explorer_->state().gameplay;
+            if (g.homeScene) direction_ = guildRooms_[g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready ? 1 : 0].player().direction;
             if (g.life == LifePhase::Combat) {
                 enemyClip_ = g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? 33 : 7;
                 const auto now = nowUs();

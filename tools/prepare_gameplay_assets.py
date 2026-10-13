@@ -89,7 +89,7 @@ def prepare(root, output):
             image = bma.to_pil(bpc, bpl, bpas, include_collision=False,
                                include_unknown_data_block=False, pal_ani=False, single_frame=True)[0].convert('RGBA')
             # The original dining actor is (220,184); sleep uses the map centre.
-            center = (220, 184) if index == 0 else (image.width // 2, image.height // 2)
+            center = (280, 212) if index == 0 else (image.width // 2, image.height // 2)
             left = max(0, min(image.width - 200, center[0] - 100))
             top = max(0, min(image.height - 200, center[1] - 100))
             crop = image.crop((left, top, left + 200, top + 200))
@@ -107,9 +107,11 @@ def prepare(root, output):
                 'rect': [0, index * 200, 200, 200], 'anchor': [0, 0], 'shadow': [0, 0], 'ticks': 1, 'markers': []}]]})
         (scene / 'home.mdpa').write_bytes(encode_package(encoded))
         (scene / 'CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; user-provided original assets\n', encoding='utf-8')
+        from tools.prepare_guild_scene import prepare as prepare_guild
+        guild_report = prepare_guild(root, generated / 'guild')
         if file_hash(rom_path) != before:
             raise ValueError('ROM modified')
-        report = {'romHashUnchanged': True, 'romSha256': before, 'extraWAN': EXTRA, 'originalWANChecks': original_checks,
+        report = {'romHashUnchanged': True, 'romSha256': before, 'extraWAN': EXTRA, 'originalWANChecks': original_checks, 'guildScene': guild_report,
                   'actors': actor_report, 'home': maps, 'originalWallTime': 'pending'}
         write_json(generated / 'provenance.json', report)
         output.parent.mkdir(parents=True, exist_ok=True)

@@ -10,7 +10,7 @@ else()
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 add_library(pet_core src/core/package.cpp src/core/animator.cpp src/core/surface.cpp
-  src/core/exploration.cpp src/core/gameplay.cpp src/core/gameplay_scene.cpp src/core/state_store.cpp src/core/exploration_package.cpp)
+  src/core/exploration.cpp src/core/gameplay.cpp src/core/gameplay_scene.cpp src/core/guild_scene.cpp src/core/state_store.cpp src/core/exploration_package.cpp)
 target_include_directories(pet_core PUBLIC src)
 include(CTest)
 if(BUILD_TESTING)

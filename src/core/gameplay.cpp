@@ -6,7 +6,7 @@
 
 namespace pet {
 namespace {
-constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750, kSleepMs = 10000;
+constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750, kSleepMs = 10000, kMealMs = 8000;
 int distance(int a, int b) { return std::abs(a % kWidth - b % kWidth) + std::abs(a / kWidth - b / kWidth); }
 }
 const char* lifeName(LifePhase phase) {
@@ -23,7 +23,7 @@ std::uint32_t gameplayClip(const GameplayState& g) {
     case LifePhase::Pose: return 17;
     case LifePhase::Emotion: return 6; // New defeat expression cue using the supported Hurt body clip.
     case LifePhase::Eat: return 15;
-    case LifePhase::Sleep: return 5;
+    case LifePhase::Sleep: return 13;
     case LifePhase::Wake: return 14;
     case LifePhase::Combat:
         if (g.combat == CombatPhase::PlayerAttack) return 1;
@@ -34,7 +34,7 @@ std::uint32_t gameplayClip(const GameplayState& g) {
 }
 bool gameplayLoop(const GameplayState& g) {
     const auto clip = gameplayClip(g);
-    return clip == 0 || clip == 7 || clip == 5 || clip == 13;
+    return clip == 0 || clip == 7 || clip == 5 || clip == 13 || g.life == LifePhase::Eat;
 }
 AttackRoll rollBasicAttack(Rng& rng, bool player) {
     AttackRoll result;
@@ -107,19 +107,19 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
             return {GameplayEvent::HomeScene, {}};
         }
         if (g.defeated) return life(LifePhase::Emotion, GameplayEvent::Emotion, kFiniteTimeoutMs);
-        auto update = life(LifePhase::Eat, GameplayEvent::Eat, kFiniteTimeoutMs);
+        auto update = life(LifePhase::Eat, GameplayEvent::Eat, kMealMs);
         update.onceKey = "meal:" + std::to_string(state_.runId);
         if (g.onceKeys.insert(update.onceKey).second) ++g.meals;
         return update;
     }
     if (g.life == LifePhase::Emotion) {
         if (!finiteDone) return {};
-        auto update = life(LifePhase::Eat, GameplayEvent::Eat, kFiniteTimeoutMs);
+        auto update = life(LifePhase::Eat, GameplayEvent::Eat, kMealMs);
         update.onceKey = "meal:" + std::to_string(state_.runId);
         if (g.onceKeys.insert(update.onceKey).second) ++g.meals;
         return update;
     }
-    if (g.life == LifePhase::Eat) return finiteDone ? life(LifePhase::Sleep, GameplayEvent::Sleep, kSleepMs) : GameplayUpdate{};
+    if (g.life == LifePhase::Eat) return now >= g.deadlineMs ? life(LifePhase::Sleep, GameplayEvent::Sleep, kSleepMs) : GameplayUpdate{};
     if (g.life == LifePhase::Sleep) return now >= g.deadlineMs ? life(LifePhase::Wake, GameplayEvent::Wake, kFiniteTimeoutMs) : GameplayUpdate{};
     if (g.life == LifePhase::Wake) {
         if (!finiteDone) return {};

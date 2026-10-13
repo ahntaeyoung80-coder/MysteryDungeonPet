@@ -1,5 +1,14 @@
 # 설계 결정
 
+## 2026-10-13 — 길드 식당·주인공 방은 필수 생활 장면
+
+- 최신 사용자 요구로 길드 식당의 주인공·동료·길드원 공동 식사와 길드 주인공 방의 취침을 생활 루프의 필수 장면으로 확정한다. 빈 배경·대표 NPC 치환만으로 이 요구를 완료 처리하지 않는다.
+- 원본 SSA의 actorId→MDindex→spriteIndex와 방향/좌표, SSB의 각 개체 SetAnimation을 재사용한다. 식사 중 NPC는 원본 지정13/14/0을 쓰며 플레이어·동료만15를 사용한다. 푸크린은 원본 Wait20 계열의 상·하 방향 반복을 적용하되 Turn2Direction 보간의 완전 이식은 하지 않는다.
+- 200px viewport의 식당 crop을(180,112)로 옮겨12개 개체 모두를 표시하고 원본 식탁 object107도 별도 layer로 그린다. 취침은 원본 침상 좌표·Right2/Left6을 유지한다.
+- 공동 식사는8초 deadline 동안 반복하며 meal transaction은1회다. Sleep은EventSleep13, Wake는14이며 플레이어·동료가 모두 기상 재생을 끝내야 Ready로 전환한다. 취침10초·식사8초는 신규 최소 생활 시간이며 원작 대사·음악의 시간 재현이 아니다.
+- runtime에는 작은 MDGS scene cue만 추가하고 JSON/SSB VM을 넣지 않는다. 길드 texture는 필요한 장면에서만 로드·캐시하며 애니메이션은 공통 Animator/Surface를 재사용한다. 화면 중단 시 actor clock·렌더도 중지한다.
+- 원본 SSB의 알 수 없는 문자로 strict 문자열 디코딩이 실패했다. opcode 추출에만 byte-preserving codec을 사용하고 대사의 실제 언어 지원은 unresolved로 유지한다. 원작 Eating/AppleOnHead effect ID를 동일 번호 graphic slot으로 추측하지 않는다.
+
 ## 2026-10-13 — 탐험 종료 생활 루프와 최소 전투 승인
 
 - 최신 사용자 지시에 따라 B-2는 기본공격 `MOVE_REGULAR_ATTACK=355`만 먼저 구현한다. 이상해씨14기술·무작위4슬롯·레벨·기술UI·위력/타입/상태이상/사거리/PP·적HP표시·복수아이템 가방은 보류한다. 아래 과거 선택 검토 지침의 승인 대기는 이번 최소 범위에 적용하지 않는다.
