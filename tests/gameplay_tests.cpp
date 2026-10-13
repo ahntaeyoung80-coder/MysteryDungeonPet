@@ -65,6 +65,10 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     const auto position = e.state().position, target = e.state().target;
     const auto plans = e.bfsCalls(); const auto moves = e.state().floorSteps;
     check(target == -1, "return retains a dungeon target");
+    if(e.state().gameplay.fadeInOnly) {
+        check(e.state().gameplay.homeScene,"defeat target scene not ready for fade-in");
+        next(e);check(e.state().gameplay.life==LifePhase::Emotion,"defeat fade-in stuck");
+    } else {
     for (auto time : {start, start+500, start+749}) {
         advance(e, time);
         check(e.state().position == position && e.bfsCalls() == plans && e.state().floorSteps == moves, "return walks/replans");
@@ -73,6 +77,7 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     check(e.state().gameplay.homeScene, "home is transparent/dungeon scene retained");
     advance(e, start+1500);
     check(e.state().gameplay.life == (defeat ? LifePhase::Emotion : LifePhase::Eat), "return exceeds 1500ms");
+    }
     if (defeat) check(next(e).event == GameplayEvent::Eat, "defeat emotion does not lead to eating");
     const auto meals = e.state().gameplay.meals;
     advance(e, e.state().gameplay.phaseStartedMs+1);
@@ -86,7 +91,7 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     check(advance(e, sleepEnd).event == GameplayEvent::Wake, "Sleep deadline stuck");
     check(!gameplayLoop(e.state().gameplay) && gameplayClip(e.state().gameplay) == 14, "Wake not finite14");
     check(next(e).event == GameplayEvent::Ready && gameplayClip(e.state().gameplay) == 7, "Wake missing Idle");
-    check(next(e).event == GameplayEvent::Explore && e.state().gameplay.day == 2 && e.state().gameplay.hearts == 3, "next day does not explore");
+    check(next(e).event == GameplayEvent::Explore && e.state().gameplay.day == 2 && e.state().gameplay.hearts == kMaxHp, "next day does not explore");
 }
 }
 int main(int argc, char** argv) {
@@ -156,16 +161,18 @@ int main(int argc, char** argv) {
         check(critical.critical && critical.damage == 2 && crit.state().gameplay.enemyHits == 0, "player critical not double damage");
         pass(5,"player critical applies two damage and removes two internal hit counts");
 
-        auto dead = encounter(); advance(dead,1000);
+        auto dead = encounter(); {auto start=dead.state();start.gameplay.hearts=3;dead=Explorer(start);} advance(dead,1000);
         for (unsigned i = 0; i < 3; ++i) {
             forceRoll(dead,true,false,false); next(dead); enemyTurn(dead,true);
             check(dead.state().gameplay.hearts == 2-i, "normal enemy hit not one heart");
         }
-        check(dead.state().gameplay.combat == CombatPhase::Defeat, "third enemy hit missing death");
-        next(dead); homePipeline(dead,true);
+        check(dead.state().gameplay.combat == CombatPhase::PlayerFaint, "third enemy hit missing death");
+        next(dead);check(dead.state().gameplay.life==LifePhase::Death && dead.state().gameplay.playerHidden,"Faint did not hide player");
+        next(dead);check(dead.state().gameplay.deathStage==DeathStage::Blackout,"opaque blackout missing");
+        next(dead);homePipeline(dead,true);
         pass(6,"three enemy normal hits -> defeat -> return -> expression -> meal -> sleep -> wake");
         auto enemyCrit = encounter(); advance(enemyCrit,1000); forceRoll(enemyCrit,true,false,false); next(enemyCrit); enemyTurn(enemyCrit,true,true);
-        check(enemyCrit.state().gameplay.hearts == 1 && enemyCrit.state().gameplay.damage == 2, "enemy critical not two hearts");
+        check(enemyCrit.state().gameplay.hearts == kMaxHp-2 && enemyCrit.state().gameplay.damage == 2, "enemy critical not two hearts");
         pass(7,"enemy critical removes two hearts");
 
         auto berries = empty(); s = berries.state(); s.gameplay.hearts = 1;
@@ -209,7 +216,7 @@ int main(int argc, char** argv) {
                 clock=std::max(clock+350,run.state().gameplay.deadlineMs);
                 advance(run,clock,true);
             }
-            check(run.state().gameplay.hearts==3 && run.state().gameplay.oran<=1,"multi-day inventory/hearts violated");
+            check(run.state().gameplay.hearts==kMaxHp && run.state().gameplay.oran<=1,"multi-day inventory/hearts violated");
         }
 
         // Probability audit exercises the same persisted RNG and relationship assignment as production.

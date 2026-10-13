@@ -409,9 +409,10 @@ Event Explorer::advance(bool poseFinished) {
 }
 void validateState(const ExplorationState& s) {
     const auto& g = s.gameplay;
+    require(static_cast<unsigned>(g.deathStage)<=1,"invalid death stage");
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
-    require(static_cast<unsigned>(g.life) <= 8 && static_cast<unsigned>(g.combat) <= 9 &&
-            g.hearts <= 3 && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
+    require(static_cast<unsigned>(g.life) <= 9 && static_cast<unsigned>(g.combat) <= 10 &&
+            g.hearts <= kMaxHp && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
     if (g.enabled) {
         require(g.deadlineMs >= g.phaseStartedMs, "invalid gameplay deadline");
@@ -424,7 +425,7 @@ void validateState(const ExplorationState& s) {
             (g.life == LifePhase::Pose ? s.phase == Phase::Pose : s.phase == Phase::Home), "lifecycle/explorer mismatch");
         require(!g.homeScene || (g.life != LifePhase::Explore && g.life != LifePhase::Pose && g.life != LifePhase::Combat), "home in dungeon state");
         require(g.life == LifePhase::Explore || g.life == LifePhase::Pose || g.life == LifePhase::Combat ||
-                g.life == LifePhase::ReturnHome || g.homeScene, "life event without home scene");
+                g.life == LifePhase::ReturnHome || g.life==LifePhase::Death || g.homeScene, "life event without home scene");
         if (g.life == LifePhase::ReturnHome || g.homeScene)
             require(g.onceKeys.count("return:" + std::to_string(s.runId)) != 0, "return transaction missing");
         if (g.life == LifePhase::Eat || g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready)

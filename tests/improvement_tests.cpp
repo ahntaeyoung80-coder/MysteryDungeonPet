@@ -1,6 +1,7 @@
 #include "core/exploration.hpp"
 #include "core/motion.hpp"
 #include "core/animator.hpp"
+#include "core/gameplay_scene.hpp"
 #include <iostream>
 #include <stdexcept>
 using namespace pet;
@@ -64,6 +65,15 @@ int main(int argc,char** argv) { try {
     auto chaseEvent=chase.advanceGameplay(1000);check(chaseEvent.event==GameplayEvent::ActorMove,"enemy did not chase");
     check(chase.state().population.entities[0].tile==2*kWidth+5&&chase.state().population.entities[0].actionRound==1,"chase wrong step/consumption");
     auto unchanged=encodeSnapshot(chase.state());chase.advanceGameplay(1100,true);check(unchanged==encodeSnapshot(chase.state()),"move completion grants attack early");
+    auto death=turnFixture(3*kWidth+3,3*kWidth+4,false,false);auto ds=death.state();
+    check(ds.gameplay.hearts==kMaxHp,"default HP not five");
+    ds.gameplay.life=LifePhase::Combat;ds.gameplay.combat=CombatPhase::PlayerFaint;ds.gameplay.hearts=0;ds.gameplay.enemyInstance=1;ds.gameplay.deadlineMs=5000;death=Explorer(ds);
+    death.advanceGameplay(1000,ActorCompletion{false,true,true});check(death.state().gameplay.combat==CombatPhase::PlayerFaint,"other actor completed death");
+    death.advanceGameplay(1000,ActorCompletion{true,false,false});check(death.state().gameplay.life==LifePhase::Death&&death.state().gameplay.playerHidden,"player Faint not hidden");
+    death.advanceGameplay(1750);check(death.state().gameplay.deathStage==DeathStage::Blackout,"death order");
+    Surface blackout(200,200);gameplayOverlay(blackout,death.state().gameplay,1750);
+    for(size_t i=0;i<blackout.pixels.size();i+=4) check(blackout.pixels[i]==0&&blackout.pixels[i+3]==255,"blackout transparency");
+    death.advanceGameplay(2750);check(death.state().gameplay.fadeInOnly&&death.state().gameplay.homeScene,"blackout target swap");
     auto migrated=decodeSnapshot(readFile(std::filesystem::path(argv[1]).parent_path().parent_path().parent_path().parent_path().parent_path().parent_path()/"tests/fixtures/legacy-v2.mdes",1048576),"legacy");
     check(migrated.gameplay.actionRound==1,"MDES2 action defaults");
     std::cout<<"improvement tests pass\n";

@@ -9,11 +9,11 @@ namespace {
 constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750, kSleepMs = 10000, kMealMs = 8000;
 }
 const char* lifeName(LifePhase phase) {
-    static const char* names[]{"Explore", "Pose", "ReturnHome", "Emotion", "Eat", "Sleep", "Wake", "Ready", "Combat"};
+    static const char* names[]{"Explore", "Pose", "ReturnHome", "Emotion", "Eat", "Sleep", "Wake", "Ready", "Combat", "Death"};
     return names[static_cast<unsigned>(phase)];
 }
 const char* combatName(CombatPhase phase) {
-    static const char* names[]{"PlayerTurn", "PlayerAttack", "EnemyHurt", "EnemyTurn", "EnemyAttack", "PlayerHurt", "BerryText", "Faint", "CombatVictory", "CombatDefeat"};
+    static const char* names[]{"PlayerTurn", "PlayerAttack", "EnemyHurt", "EnemyTurn", "EnemyAttack", "PlayerHurt", "BerryText", "Faint", "CombatVictory", "CombatDefeat", "PlayerFaint"};
     return names[static_cast<unsigned>(phase)];
 }
 bool dungeonScene(const GameplayState& g) { return !g.homeScene; }
@@ -27,6 +27,7 @@ std::uint32_t gameplayClip(const GameplayState& g) {
     case LifePhase::Combat:
         if (g.combat == CombatPhase::PlayerAttack) return 1;
         if (g.combat == CombatPhase::PlayerHurt) return 6;
+        if (g.combat == CombatPhase::PlayerFaint) return 33;
         return 7;
     default: return 7;
     }
@@ -80,10 +81,19 @@ void Explorer::completeEncounter() {
     it->done = true;
     invalidate();
 }
-GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
+GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,bool finished) {
+    // Legacy headless driver: completion belongs to the active clip's actor.
+    const auto& g=state_.gameplay;ActorCompletion result;
+    if(g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint)) result.enemy=finished;
+    else {result.player=finished;result.partner=finished;}
+    return advanceGameplay(now,result);
+}
+GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion completed) {
     if (!state_.gameplay.enabled) throw std::logic_error("gameplay is disabled");
     auto& g = state_.gameplay;
-    const bool finiteDone = finished || now >= g.deadlineMs;
+    const bool enemyOwner=g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint);
+    const bool finished=enemyOwner?completed.enemy:completed.player;
+    const bool finiteDone=finished || now>=g.deadlineMs;
     auto life = [&](LifePhase phase, GameplayEvent event, std::uint64_t duration) {
         g.life = phase; g.phaseStartedMs = now; g.deadlineMs = now + duration;
         return GameplayUpdate{event, {}};
@@ -92,6 +102,15 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
         g.combat = phase; g.phaseStartedMs = now; g.deadlineMs = now + duration;
         return GameplayUpdate{event, {}};
     };
+    if(g.life==LifePhase::Death) {
+        if(now<g.deadlineMs) return {};
+        if(g.deathStage==DeathStage::FadeOut) {
+            g.deathStage=DeathStage::Blackout;g.phaseStartedMs=now;g.deadlineMs=now+1000;
+            return {GameplayEvent::Blackout,{}};
+        }
+        auto result=beginReturn(now,true);g.homeScene=true;g.fadeInOnly=true;g.playerHidden=false;g.deadlineMs=now+750;
+        return result;
+    }
     if (g.life == LifePhase::Pose) {
         if (!finiteDone) return {};
         (void)advance(true);
@@ -121,8 +140,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
     if (g.life == LifePhase::Eat) return now >= g.deadlineMs ? life(LifePhase::Sleep, GameplayEvent::Sleep, kSleepMs) : GameplayUpdate{};
     if (g.life == LifePhase::Sleep) return now >= g.deadlineMs ? life(LifePhase::Wake, GameplayEvent::Wake, kFiniteTimeoutMs) : GameplayUpdate{};
     if (g.life == LifePhase::Wake) {
-        if (!finiteDone) return {};
-        g.hearts = 3;
+        if (!(completed.player&&completed.partner)) return {};
+        g.hearts = kMaxHp;
         return life(LifePhase::Ready, GameplayEvent::Ready, 350);
     }
     if (g.life == LifePhase::Ready) {
@@ -147,8 +166,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
             g.playerActionRound=g.actionRound;
             const auto once = "turn:" + std::to_string(state_.runId) + ":" + std::to_string(state_.floorIndex) + ":" + std::to_string(g.enemyInstance) + ":" + std::to_string(++g.turn);
             if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate combat turn");
-            if (g.oran && g.hearts < 3) {
-                --g.oran; g.hearts = std::min(3U, g.hearts + 2);
+            if (g.oran && g.hearts < kMaxHp) {
+                --g.oran; g.hearts = std::min(kMaxHp, g.hearts + 2);
                 auto update = combat(CombatPhase::BerryText, GameplayEvent::UseOranBerry, 1000); update.onceKey = once;
                 return update;
             }
@@ -187,7 +206,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
             return g.hit ? combat(CombatPhase::PlayerHurt, GameplayEvent::Hurt) : afterCombatAction(now);
         case CombatPhase::PlayerHurt:
             if (!finiteDone) return {};
-            return !g.hearts ? combat(CombatPhase::Defeat, GameplayEvent::CombatDefeat, 350) : afterCombatAction(now);
+            return !g.hearts ? combat(CombatPhase::PlayerFaint, GameplayEvent::PlayerFaint) : afterCombatAction(now);
         case CombatPhase::Faint:
             if (!finiteDone) return {};
             completeEncounter();
@@ -196,6 +215,10 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, bool finished) {
         case CombatPhase::Victory:
             if (now < g.deadlineMs) return {};
             return life(LifePhase::Explore, GameplayEvent::Explore, 350);
+        case CombatPhase::PlayerFaint:
+            if(!completed.player) return {};
+            state_.phase=Phase::Home;g.playerHidden=true;g.deathStage=DeathStage::FadeOut;
+            return life(LifePhase::Death,GameplayEvent::CombatDefeat,750);
         case CombatPhase::Defeat:
             if (now < g.deadlineMs) return {};
             return beginReturn(now, true);

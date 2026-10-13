@@ -103,24 +103,29 @@ struct InventoryEntry {
     std::string onceKey;
     std::uint32_t originalId = 0;
 };
+constexpr std::uint32_t kMaxHp=5;
 constexpr std::uint32_t MOVE_REGULAR_ATTACK = 355, ITEM_ORAN_BERRY = 70;
-enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat };
-enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat };
+enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat, Death };
+enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat, PlayerFaint };
+enum class DeathStage : std::uint8_t { FadeOut, Blackout };
+struct ActorCompletion { bool player=false, enemy=false, partner=false; };
 struct GameplayState {
     bool enabled = false, defeated = false, homeScene = false;
     LifePhase life = LifePhase::Explore;
     CombatPhase combat = CombatPhase::PlayerTurn;
-    std::uint32_t hearts = 3, oran = 0, enemyHits = 2, enemyInstance = 0, turn = 0;
+    std::uint32_t hearts = kMaxHp, oran = 0, enemyHits = 2, enemyInstance = 0, turn = 0;
     std::uint32_t damage = 0, meals = 0, day = 1;
     bool hit = false, critical = false;
     std::uint64_t phaseStartedMs = 0, deadlineMs = 0;
+    bool playerHidden=false, fadeInOnly=false;
+    DeathStage deathStage=DeathStage::FadeOut;
     std::uint64_t actionRound=1, playerActionRound=0;
     std::uint32_t playerDirection=0;
     std::vector<std::uint32_t> hostile;
     std::set<std::string> onceKeys;
 };
 enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
-    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait };
+    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout };
 struct GameplayUpdate {
     GameplayEvent event = GameplayEvent::None;
     std::string onceKey;
@@ -174,6 +179,7 @@ public:
     std::uint64_t bfsCalls() const { return bfsCalls_; }
     void enableGameplay(std::uint64_t utcMs);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
+    GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
 private:
     ExplorationState state_;
     std::vector<int> path_;

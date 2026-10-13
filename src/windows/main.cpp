@@ -192,6 +192,7 @@ class App {
     uint64_t chunkVersion_ = 0, chunkSeed_ = 0;
     int64_t exploreDeadline_ = 0;
     bool poseFinished_ = false;
+    ActorCompletion completion_;
     Motion playerMotion_;
     std::map<uint32_t,Motion> actorMotions_;
     int64_t presentationNow_ = 0, pauseStarted_ = 0;
@@ -518,8 +519,8 @@ class App {
         const auto oldLife = explorer_->state().gameplay.life;
         const auto oldCombat = explorer_->state().gameplay.combat;
         auto candidate = *explorer_;
-        const auto event = candidate.advanceGameplay(utcMs(), poseFinished_);
-        poseFinished_ = false;
+        const auto event = candidate.advanceGameplay(utcMs(), completion_);
+        poseFinished_ = false; completion_={};
         if (encodeSnapshot(candidate.state()) == encodeSnapshot(explorer_->state())) {
             exploreDeadline_ = now + (candidate.state().gameplay.life == LifePhase::ReturnHome ? 33000 : 350000);
             if (candidate.state().gameplay.life == LifePhase::ReturnHome) dirty_ = true;
@@ -567,7 +568,7 @@ class App {
         }
         if (!event.onceKey.empty()) log("gameplay onceKey=" + event.onceKey);
         if (oldLife != g.life || oldCombat != g.combat) log(std::string("life=") + lifeName(g.life) + " combat=" + combatName(g.combat) + " day=" + std::to_string(g.day) + " hearts=" + std::to_string(g.hearts));
-        if (event.event == GameplayEvent::UseOranBerry) log("OranBerry70 text: healed 2 hearts (capped at 3); enemy turn follows");
+        if (event.event == GameplayEvent::UseOranBerry) log("OranBerry70 text: healed 2 hearts (capped at 5); enemy turn follows");
         if (event.event == GameplayEvent::PlayerAttack || event.event == GameplayEvent::EnemyAttack)
             log("move355 damage=" + std::to_string(event.damage) + " critical=" + std::to_string(event.critical));
         if (event.event == GameplayEvent::HomeScene) log("life=HomeScene opaque original dining map");
@@ -634,18 +635,25 @@ class App {
             markers_ += result.markers.size(); finishes_ += result.finishedEvent ? 1 : 0; skippedCycles_ += result.skippedCycles;
             nextFrameDeadline_ = result.nextDeadlineUs;
             if (result.finishedEvent) log("finite finished assetKey=" + assets_.package.assetKey);
-            if (result.finishedEvent && explorer_) poseFinished_ = true;
+            if(explorer_) completion_.player=result.finished;
             playerFinished = result.finished;
         }
         if (explorer_ && explorer_->state().gameplay.life == LifePhase::Combat && enemyAnimator_.active()) {
             const auto result = enemyAnimator_.advance(now);
             dirty_ = dirty_ || enemyFrame_ != result.frame; enemyFrame_ = result.frame;
             if (result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs < *nextFrameDeadline_)) nextFrameDeadline_ = result.nextDeadlineUs;
-            if (result.finishedEvent) poseFinished_ = true;
+            completion_.enemy=result.finished;
         }
         advanceGuildActors(now);
         if (explorer_ && explorer_->state().gameplay.life == LifePhase::Wake)
-            poseFinished_ = playerFinished && std::all_of(guildLive_.begin(), guildLive_.end(), [](const auto& actor) { return actor.cue->kind != GuildActorKind::Partner || actor.finished; });
+            completion_.partner = std::all_of(guildLive_.begin(), guildLive_.end(), [](const auto& actor) { return actor.cue->kind != GuildActorKind::Partner || actor.finished; });
+        if(explorer_) {
+            const auto& g=explorer_->state().gameplay;
+            const bool enemy=g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint);
+            poseFinished_=g.life==LifePhase::Wake ? completion_.player&&completion_.partner : enemy?completion_.enemy:completion_.player;
+            if(g.life==LifePhase::Death || g.life==LifePhase::ReturnHome) dirty_=true;
+        }
+        (void)playerFinished;
         if (!dirty_) return;
         std::vector<Layer> layers;
         Point camera{0, 0};
@@ -703,7 +711,7 @@ class App {
         }
         if (backgroundOn_ && options_.scenario != L"empty") layers.push_back({&background_, {0, 0, 32, 24}, {0, 0}, {0, 0}});
         const auto playback = currentPlayback();
-        if (playback.frame && (!explorer_ || dungeonScene(explorer_->state().gameplay))) {
+        if (playback.frame && (!explorer_ || (!explorer_->state().gameplay.playerHidden && dungeonScene(explorer_->state().gameplay)))) {
             const auto& f = *playback.frame;
             layers.push_back({assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition});
         }
@@ -720,6 +728,11 @@ class App {
             DrawTextW(dib_->dc, L"오랭열매! 2하트 회복", -1, &text, DT_CENTER | DT_WORDBREAK);
             auto* pixels = static_cast<uint8_t*>(dib_->bits);
             for (unsigned y = 150; y < 190; ++y) for (unsigned x = 8; x < 192; ++x) pixels[(y*size_+x)*4+3] = 255;
+        }
+        if(explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout) {
+            SetBkMode(dib_->dc,TRANSPARENT);SetTextColor(dib_->dc,RGB(255,255,255));RECT text{8,80,192,130};
+            DrawTextW(dib_->dc,L"눈앞이 깜깜해졌다",-1,&text,DT_CENTER|DT_WORDBREAK);
+            auto* pixels=static_cast<uint8_t*>(dib_->bits);for(unsigned y=0;y<size_;++y) for(unsigned x=0;x<size_;++x) pixels[(y*size_+x)*4+3]=255;
         }
         RECT rect{}; winCheck(GetWindowRect(window_, &rect) != 0, "submit rect");
         POINT position{rect.left, rect.top}, source{0, 0}; SIZE size{LONG(size_), LONG(size_)};

@@ -35,3 +35,9 @@
 - Idle/Chase·마지막 발견·목표·막힘·방향·배우별 잔여 적중수 저장. 방/통로 발견 시8방향 BFS로 추적하고 도착 점유 검사. 막힘3회 이후 추적 종료/대기. 이동은 공통 Motion·보행 Animator 연결.
 - 공통 canAttack의 8방향·지형 코너 사용. 기존 명중/치명타/피해/열매 유지.
 - CTest5개 pass(18.07s): 세 소비 상황·대각선 추적 좌표·이동 중 완료 신호 무시·MDES2 안전 기본값. Windows x64 compile/link pass. GUI에서 새 추적 실측은 미실행.
+
+## 단계4 결과
+- 공통 kMaxHp=5로 기본값·기상 회복·열매 상한(회복량2 유지)·저장 검증·UI 개수 통일. 과거 저장의 현재 HP는 그대로 유지.
+- enum 끝에 PlayerFaint/Death 추가(기존 번호 불변). 피격 완료→플레이어 Faint33→숨김→750ms fade-out→1000ms 불투명 검정/한국어 문구→귀가 장면750ms fade-in→기존 패배 처리. 화면 유지 시간은 구현 선택이다.
+- ActorCompletion(player/enemy/partner) 분리. Faint는 플레이어 실제 완료만, Wake는 두 배우 완료를 기다린다. 기존 bool API는 headless 시뮬레이션의 활성 배우 완료로만 변환한다.
+- CTest5개 pass(16.09s), Windows x64 compile/link pass. HP 기본5·다른 배우 완료 차단·사망 순서·검정 RGBA alpha255·저장복원 검증. GUI 문구/연출 실측은 미실행.
