@@ -16,16 +16,16 @@ A-1은 pipeline §5의 대표 데이터·원작 자산 준비 범위에서 완�
 
 ## 자원·지원 한계
 사용자 PC는 Windows11로 확인. 연결된 실행기는 Linux6.18/Debian13이며 사용자 PC의 명령 실행/GUI 조작 도구·연결 terminal이 없다. 실제 Windows11 실행은 로컬 Codex 프로젝트 또는 사용자의 스크립트 실행이 필요하다.
-환경 교체로 이전 `local/a1-rom-final-01/-02`·ROM은 현재 환경에 없다. 기존 성공 ROM 추출 기록을 이번에 재검증했다고 취급하지 않는다. 이번 연결 검사는 재생성한 합성 A-1 fixture만 사용했다. 원본 ROM/자산 재다운로드·재추출은 수행하지 않았다.
+A-2 당시 별도 환경에는 기존 local 원본이 없어 합성 fixture만 연결 검사했다. 이후 사용자 명시 지시로 원본 ROM 전체와 모든 내부 파일 압축본을 assets/original/source/에 저장소 입력으로 추가했다. 기존 A-1 패키지 감사본과 실제 MDPA도 assets/original/에 보관해 이후 세션은 Git에서 직접 사용할 수 있다. 이번 native loader 검사348frames는 실제 원작 선택 자산이며 Windows 재생 검증과 구분한다.
 기존 `text_e.str` unknown byte141은 rawNameHex/actual language=null을 유지하며 unresolved. 전체/도장/종·폼 감사, 원작 wall time, 그림자 표시, 실제 lock/display-off/suspend·DPI변경의 명시 증거와 장기 자원 수명은 pending. 합성 자산의 제출된 성능 기록은 확인했지만 최종 제품 성능으로 확대하지 않는다.
 
 ## 다음 실행 지점
 1. `docs/logs/2026-10-13-a2-user-review.md`와 측정 JSON을 읽고 기존 사용자 결과를 재사용한다. A-3 착수 전에 새 수동 테스트를 요청하지 않는다. 이번 저장은 점검 기록만 반영하며 제품 코드·자산은 변경하지 않는다.
 2. A-3 첫 작업에서 방향·동작ID·frame·장면 좌표 로그 추가, 종료 전 마지막 측정, empty의 Animator 중단을 수행한다. 마지막 정상 위치/DPI와 기록된 재생 상태의 일치를 자동 검사한다.
 3. 사용자 요구인200×200 실제px 고정·카메라 컷/조작 제거를 반영한다. 현재 코드의100/200 선택·카메라 메뉴는 아직 제거되지 않았다. 합성 도형 개선은 생략한다.
-4. 이전 원작 선택 package를 확보해 `compile_runtime_package.py --package ... --out 새경로`로 변환하고 실제 원작 자산·시간·anchor/shadow를 통합 검증한다. 미검증 항목을 pass로 바꾸지 않으며 A 전체 완료는 통합 결과 확인 후 판정한다.
+4. 원작 MDPA는 `assets/original/runtime/asset-0/asset.mdpa`와 `asset-1/asset.mdpa`를 사용한다. 전체 재추출 입력은 `assets/original/source/user-supplied.nds`이며 모든 ROM 내부 파일은 `source/rom-files.zip`에 있다. 추가 입력 요청 없이 실제 원작 자산·시간·anchor/shadow를 통합 검증한다. 미검증 항목을 pass로 바꾸지 않으며 A 전체 완료는 통합 결과 확인 후 판정한다.
 5. B-2 자동 전투는 B-1 완료 후 선택 단계이며 미확정 상태로 구현하지 않는다.
 
 ## 기록
 `docs/A1_IMPLEMENTATION_HANDOFF.md`, `docs/A1_USAGE.md`, 기존 A1 로그/검증summary, `docs/A2_USAGE.md`, `docs/implementation/MDPA_FORMAT.md`, `docs/logs/2026-10-13-a2-runtime.md`, `docs/validation/2026-10-13-a2-summary.json`, `docs/logs/2026-10-13-a2-user-review.md`, `docs/validation/2026-10-13-a2-user-review.json`.
-ROM/게임 자산/생성 원작 package는 local/에만 두고 Git 제외. 연구 checks/ZIP 보존. push 결과와 실제 Windows 실행 판정을 별도로 기록한다.
+2026-10-13 사용자 최신 지시로 원본 ROM·전체 파일 입력·검증 패키지의 assets/original/ 커밋을 허용한다. 인증 정보와 임시 local/은 계속 제외한다. 연구 checks/ZIP 보존. push 결과와 실제 Windows 실행 판정을 별도로 기록한다.

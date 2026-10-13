@@ -9,6 +9,7 @@ A-1 대표 원작 데이터·자산 준비를 완료했고, A-2 Windows 시험 �
 - [A-2 사용자 실행 점검·A-3 재개](docs/logs/2026-10-13-a2-user-review.md)
 - [A-2 빌드·패키지 연결](docs/A2_USAGE.md)
 - [Windows 11 빠른 실행](docs/A2_WINDOWS_QUICKSTART.md)
+- [전체 원작 입력·A-3 실행 패키지](assets/original/README.md)
 - [A-1 추출·패키징 실행](docs/A1_USAGE.md)
 - [구현 인수인계](docs/research/IMPLEMENTATION_HANDOFF.md)
 - [조사 상태](docs/research/00_RESEARCH_STATE.md)

@@ -1,0 +1,18 @@
+{
+  "assetVersion": 1,
+  "assets": [
+    1,
+    4
+  ],
+  "byteSize": 587906,
+  "file": "a1-original-package.zip",
+  "fileCount": 219,
+  "frames": 348,
+  "includesROM": false,
+  "note": "A-1 JSON/PNG package; if A-2 runtime uses compact format, run its pack conversion on this package",
+  "rootDirectory": "a1-rom-final-01",
+  "schemaVersion": 1,
+  "sha256": "834786ad283bc5980333867988192522891ca3323a996b05b6c6a1ee2ae27bb4",
+  "sourceManifestHash": "c657d24ce3da04c8c20a289c9a2f5ee493838a9ab2471ad31723406b7b294c8d",
+  "sourceROMHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf"
+}

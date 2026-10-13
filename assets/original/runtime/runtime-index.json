@@ -1,0 +1,20 @@
+{
+  "WindowsExecution": "pending",
+  "assets": [
+    {
+      "assetKey": "rom:EoS_NA:md:1",
+      "atlasSha256": "1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd",
+      "manifest": "asset-0/asset.mdpa",
+      "sha256": "48b370cc864366955939e703106e676ee60c1eca6a9068046a069e6b0411ed11"
+    },
+    {
+      "assetKey": "rom:EoS_NA:md:4",
+      "atlasSha256": "b446db9bc52015e1c7d0353a1490c7ae53821ebbc73287f2b43f9d8703709959",
+      "manifest": "asset-1/asset.mdpa",
+      "sha256": "13006d9f64b93583ca150a8402b99cd79e5b4ca5ebbb6720ef681220826ea18f"
+    }
+  ],
+  "originalWallTime": "pending",
+  "sourceManifestHash": "c657d24ce3da04c8c20a289c9a2f5ee493838a9ab2471ad31723406b7b294c8d",
+  "status": "compiled_requires_consumer_validation"
+}

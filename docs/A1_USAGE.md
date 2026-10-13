@@ -1,6 +1,6 @@
 # A-1 추출·패키징 실행
 
-검증 환경: Linux/Python 3.12.14. Windows의 오프라인 도구 실행은 미검증. GUI/GTK 없이 실행하고 ROM·생성 자산은 `local/`에 두며 커밋하지 않는다.
+검증 환경: Linux/Python 3.12.14. Windows의 오프라인 도구 실행은 미검증. GUI/GTK 없이 실행한다. 임시 추출은 local/에 두며, 사용자 명시 지시로 전체 원본 입력과 검증 패키지는 assets/original/에 커밋한다. 현재 공유 입력·실행법은 assets/original/README.md를 따른다.
 
 ## 설치·독립 검사
 

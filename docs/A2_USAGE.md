@@ -92,3 +92,7 @@ Windows 결과 CSV 요약은 다음과 같다. 기본 warm-up60초, peak는 시�
 ```bash
 python3 tools/summarize_metrics.py 실제경로/walk.csv --output walk-summary.json
 ```
+
+## 2026-10-13 원작 입력 공유
+
+사용자가 원본 ROM까지 포함한 입력 전체 보관을 명시했다. 원작 MDPA는 `assets/original/runtime/asset-0/asset.mdpa` 또는 `asset-1/asset.mdpa`, 전체 재추출 입력은 `assets/original/source/user-supplied.nds`다. 모든 ROM 파일·system binary 압축본과 해시 목록도 source/에 있다. 추가 업로드 없이 이 경로로 A-3을 진행한다. 전체 입력 보관은 전체 종/폼 변환·재생 pass를 뜻하지 않는다.

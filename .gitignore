@@ -10,4 +10,5 @@ local/
 *.nds
 *.srl
 *.dsv
+!assets/original/source/user-supplied.nds
 *.log
