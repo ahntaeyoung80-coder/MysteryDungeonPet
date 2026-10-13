@@ -29,8 +29,8 @@ if (@($rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
 }
 $finish = (& $Explorer $Package 42 $Snapshot | ConvertFrom-Json)
 if ($LASTEXITCODE -ne 0 -or -not $finish.completed) { throw 'Windows snapshot cannot complete natively' }
-$home = (& $Explorer $Package 99 $Snapshot | ConvertFrom-Json)
-if ($LASTEXITCODE -ne 0 -or $home.newClears -ne 0 -or $home.newPickups -ne 0 -or $home.inventory -ne $finish.inventory) {
+$restoredRun = (& $Explorer $Package 99 $Snapshot | ConvertFrom-Json)
+if ($LASTEXITCODE -ne 0 -or $restoredRun.newClears -ne 0 -or $restoredRun.newPickups -ne 0 -or $restoredRun.inventory -ne $finish.inventory) {
     throw 'Windows restored home replayed transaction'
 }
 @{status='pass'; uiMovement=$movement; decodeCount=2; physicalSize=200; snapshotRestore='pass';

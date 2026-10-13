@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
             check(w.terrain == other.terrain && w.room == other.room && w.start == other.start &&
                   w.stairs == other.stairs && rng.state == repeat.state, "seed reproduction mismatch");
             const auto search = bfs(w, w.start);
-            const int floors = std::count(w.terrain.begin(), w.terrain.end(), 1);
+            const int floors = static_cast<int>(std::count(w.terrain.begin(), w.terrain.end(), 1));
             check(std::count_if(search.distance.begin(), search.distance.end(), [](auto d) { return d >= 0; }) == floors,
                   "native geometry disconnected");
             const auto path = search.pathTo(w.stairs);
@@ -179,11 +179,11 @@ int main(int argc, char** argv) {
                 distributions.push_back(statistics(name + ":categories", categories, rng));
             }
             for (const auto& t : p.tilesets) {
-                const auto tiles = loadPackage(std::filesystem::path(argv[arg]).parent_path() / t.packageFile);
-                check(tiles.frames(0, 0).size() == t.chunkCount, "tile MDPA count differs");
+                const auto tileAtlas = loadPackage(std::filesystem::path(argv[arg]).parent_path() / t.packageFile);
+                check(tileAtlas.frames(0, 0).size() == t.chunkCount, "tile MDPA count differs");
                 for (std::uint64_t seed = 1; seed <= 100; ++seed) {
                     Rng random{seed}; const auto w = generate(random); const auto chunks = chunkGrid(w, t);
-                    for (auto chunk : chunks) check(chunk < tiles.frames(0, 0).size(), "autotile outside atlas");
+                    for (auto chunk : chunks) check(chunk < tileAtlas.frames(0, 0).size(), "autotile outside atlas");
                 }
             }
             for (std::uint64_t seed = 1; seed <= 100; ++seed) {
