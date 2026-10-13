@@ -62,14 +62,30 @@
   },
   "windows": {
     "crossBuild": "pass; MinGW GCC14-posix x64 Release compile/link",
-    "nativeCI": "pending after push",
+    "nativeCI": {
+      "status": "pass",
+      "runId": 38367994286,
+      "headSha": "3299e3a83551dd033aa9aee8e7d0f0832efb7fbb",
+      "os": "Windows Server 2025",
+      "compiler": "MSVC 19.51.36260",
+      "ctest": 3,
+      "explorationUi": "pass",
+      "scenePositions": 4,
+      "decodeCount": 2,
+      "physicalSize": 200,
+      "desktopPositions": 1,
+      "snapshotRestore": "pass",
+      "priorFailure": "PowerShell HOME variable in run38367620743; renamed and verified"
+    },
     "Windows11Exploration": "pending"
   },
   "package": {
     "selectedB1DataBytes": 153968,
     "crossBuildInstalledBytes": 4013149,
     "crossBuildZipBytes": 1146205,
-    "includesRom": false
+    "includesRom": false,
+    "msvcInstalledBytes": 886179,
+    "msvcZipBytes": 364300
   },
   "pending": [
     "original item/friend graphics and encounter animation",
@@ -80,5 +96,12 @@
     "Windows11 exploration and final performance",
     "A3 original wall time/anchor/shadow and actual OS events"
   ],
-  "remoteWrite": "pending commit/push"
+  "remoteWrite": {
+    "status": "pass",
+    "branch": "work",
+    "implementationCommit": "f16258d794310b9afe68cac6d03c0fe8365a3a12",
+    "verifiedCodeCommit": "3299e3a83551dd033aa9aee8e7d0f0832efb7fbb",
+    "remoteShaMatched": true,
+    "evidenceCommit": "separate documentation-only commit; no code changes"
+  }
 }

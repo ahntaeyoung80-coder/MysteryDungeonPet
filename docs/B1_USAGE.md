@@ -53,7 +53,7 @@ Windows 설치물에서는 다음 명령으로 탐험한다. 검증된 A 패키�
 
 기본 저장 위치는 `%LOCALAPPDATA%\MysteryDungeonPet\exploration.mdes`다. `--snapshot 경로`로 별도 저장 위치를 지정하고 `--new-run`으로 해당 위치에 새 run을 시작한다. 다른 던전/변환 버전의 snapshot은 임의 해석하지 않고 assetVersion 불일치로 거부한다. 던전15를 시작하려면 다른 snapshot 경로를 사용한다.
 
-UI thread는 350ms action deadline에 한 번 진행한다. 지도 이동은 창 내부 카메라로 표시하고 창의 화면 위치를 바꾸지 않는다. 원작 타일과 몸체 atlas는 최초 로드 후 캐시하며 표시 영역과 교차하는 레이어만 합성한다. Hide/lock/display/suspend 중 탐험도 멈추고 복귀 시 과거 action을 폭주 재생하지 않는다. 메뉴의 수동 동작/방향 조작은 탐험 중 무시한다. Windows 탐험 연결 검사기는 `tests/exploration_windows_tests.ps1`이며 CI의 기존 Windows 검사와 함께 실행한다.
+UI thread는 350ms action deadline에 한 번 진행한다. 지도 이동은 창 내부 카메라로 표시하고 창의 화면 위치를 바꾸지 않는다. 원작 타일과 몸체 atlas는 최초 로드 후 캐시하며 표시 영역과 교차하는 레이어만 합성한다. Hide/lock/display/suspend 중 탐험도 멈추고 복귀 시 과거 action을 폭주 재생하지 않는다. 메뉴의 수동 동작/방향 조작은 탐험 중 무시한다. Windows 탐험 연결 검사기는 `tests/exploration_windows_tests.ps1`이며 CI의 기존 Windows 검사와 함께 실행한다. run38367994286의Windows Server2025/MSVC Release에서UI이동/타일WIC·decode2회/창고정/저장복원 검사가pass했다. 사용자Windows11·실제OS사건 검증과구분한다.
 
 ## snapshot 계약과 중단 복원
 

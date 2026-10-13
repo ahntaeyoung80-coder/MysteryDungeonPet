@@ -13,6 +13,8 @@
 | `runtime/asset-0/asset.mdpa` | A-2/A-3에서 바로 읽을 MD1/sprite0 패키지 |
 | `runtime/asset-1/asset.mdpa` | A-2/A-3에서 바로 읽을 MD4/sprite4 패키지 |
 | `runtime-consumer-validation.json` | 원작 2종의 C++ 소비 계약 대조 결과 |
+| `exploration/dungeon-0/` | B-1 dungeon0/3층, 원작tileset0/400청크 MDPA+PNG와 분포/DMA규칙 MDPE |
+| `exploration/dungeon-15/` | B-1 dungeon15/7층(groupFloor8..14), 원작tileset12/400청크와 MDPE |
 
 **전체 입력 보관과 전체 변환 지원은 별개다.** 모든 원본 파일은 보관하지만, 현재 변환·프레임 검증 범위는 이전 A-1의 대표 2종이다. 모든 종/폼/동작·타일/배경의 PNG/MDPA 변환이나 재생을 완료했다고 표시하지 않는다. 전체 원본이 있으므로 이후 세션은 사용자에게 재업로드를 요청하지 않고 필요한 자산을 추출할 수 있다.
 
@@ -33,3 +35,5 @@
 실행 파일 위치에 맞춰 package 경로를 바꾼다. Windows 실제 실행·원작 wall time·전체 지원은 별도 검증 항목이다. 새 변환에 필요한 A-1 감사본은 ZIP을 해제해 `tools/compile_runtime_package.py --package 해제경로/a1-rom-final-01 --out 새경로`에 입력한다.
 
 출처와 해시: `transfer.json`, `source/inventory.json`, 각 runtime의 `CREDITS.txt`/provenance. 기본 배포 크기와 원본 입력 저장소 크기는 구분한다. 전체 ROM을 실행 프로그램의 설치물에 자동 포함하지 않는다.
+
+B-1 선택 타일은 원본 ROM에서 공식 파서로 변환했고 기존 A catalogue와 같은층을 대조했다. 감사·재현·native/Python 별도결과는 `docs/B1_USAGE.md`, `docs/validation/2026-10-13-b1-*.json`을 따른다. 정적 DPL/variation0 표시이며 원작계단그림·아이템/친구그림·DPLA/전체지원은 아직 pending이다. A-3잔여검증도 pending을 유지한다.
