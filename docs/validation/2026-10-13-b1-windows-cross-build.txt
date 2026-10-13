@@ -1,0 +1,10 @@
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/MysteryDungeonPet/build/b1-windows
+[ 33%] Built target pet_core
+[ 42%] Built target pet_explore
+[ 52%] Built target pet_exploration_tests
+[ 61%] Built target pet_package_inspect
+[ 80%] Built target pet_core_tests
+[ 71%] Built target pet_package_playback
+[100%] Built target MysteryDungeonPet

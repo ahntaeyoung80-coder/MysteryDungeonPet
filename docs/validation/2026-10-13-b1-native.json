@@ -1,0 +1,4927 @@
+{
+  "status": "pass",
+  "checks": 8516166,
+  "nativeGeometry": {
+    "seeds": [
+      1,
+      10000
+    ],
+    "passed": 10000,
+    "roomCounts": {
+      "2": 4987,
+      "3": 5013
+    },
+    "maxFloorTiles": 139,
+    "maxStartStairsDistance": 55
+  },
+  "fixtureRuns": 1000,
+  "maxFixtureSteps": 800,
+  "restoreAtEveryStep": 10839,
+  "originalRuns": 200,
+  "originalTransactionRestores": 6000,
+  "originalPoseAdvances": 5,
+  "corruptSnapshotsRejected": 10000,
+  "truncatedPrefixesRejected": 9654,
+  "distributions": [
+    {
+      "name": "synthetic-1-2-7",
+      "trials": 100000,
+      "maxSigma": 1.40083,
+      "entries": [
+        {
+          "originalId": 1,
+          "weight": 1,
+          "observed": 10028
+        },
+        {
+          "originalId": 2,
+          "weight": 2,
+          "observed": 20175
+        },
+        {
+          "originalId": 3,
+          "weight": 7,
+          "observed": 69797
+        },
+        {
+          "originalId": 4,
+          "weight": 0,
+          "observed": 0
+        }
+      ]
+    },
+    {
+      "name": "0:0:normal",
+      "trials": 100000,
+      "maxSigma": 1.29099,
+      "entries": [
+        {
+          "originalId": 16,
+          "weight": 8,
+          "observed": 31893
+        },
+        {
+          "originalId": 191,
+          "weight": 8,
+          "observed": 31849
+        },
+        {
+          "originalId": 293,
+          "weight": 8,
+          "observed": 32178
+        },
+        {
+          "originalId": 425,
+          "weight": 1,
+          "observed": 4080
+        }
+      ]
+    },
+    {
+      "name": "0:0:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "0:0:items:8",
+      "trials": 100000,
+      "maxSigma": 1.61909,
+      "entries": [
+        {
+          "originalId": 167,
+          "weight": 1,
+          "observed": 49744
+        },
+        {
+          "originalId": 168,
+          "weight": 1,
+          "observed": 50256
+        }
+      ]
+    },
+    {
+      "name": "0:0:categories",
+      "trials": 100000,
+      "maxSigma": 0.593121,
+      "entries": [
+        {
+          "originalId": 6,
+          "weight": 2451,
+          "observed": 98014
+        },
+        {
+          "originalId": 8,
+          "weight": 49,
+          "observed": 1986
+        }
+      ]
+    },
+    {
+      "name": "0:1:normal",
+      "trials": 100000,
+      "maxSigma": 1.38782,
+      "entries": [
+        {
+          "originalId": 16,
+          "weight": 8,
+          "observed": 31988
+        },
+        {
+          "originalId": 191,
+          "weight": 8,
+          "observed": 32076
+        },
+        {
+          "originalId": 293,
+          "weight": 8,
+          "observed": 31850
+        },
+        {
+          "originalId": 425,
+          "weight": 1,
+          "observed": 4086
+        }
+      ]
+    },
+    {
+      "name": "0:1:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "0:1:items:8",
+      "trials": 100000,
+      "maxSigma": 0.0442719,
+      "entries": [
+        {
+          "originalId": 167,
+          "weight": 1,
+          "observed": 49993
+        },
+        {
+          "originalId": 168,
+          "weight": 1,
+          "observed": 50007
+        }
+      ]
+    },
+    {
+      "name": "0:1:categories",
+      "trials": 100000,
+      "maxSigma": 0.364998,
+      "entries": [
+        {
+          "originalId": 6,
+          "weight": 2451,
+          "observed": 98056
+        },
+        {
+          "originalId": 8,
+          "weight": 49,
+          "observed": 1944
+        }
+      ]
+    },
+    {
+      "name": "0:2:normal",
+      "trials": 100000,
+      "maxSigma": 1.91024,
+      "entries": [
+        {
+          "originalId": 16,
+          "weight": 2759,
+          "observed": 27860
+        },
+        {
+          "originalId": 102,
+          "weight": 1379,
+          "observed": 13630
+        },
+        {
+          "originalId": 191,
+          "weight": 2759,
+          "observed": 27625
+        },
+        {
+          "originalId": 293,
+          "weight": 2758,
+          "observed": 27388
+        },
+        {
+          "originalId": 425,
+          "weight": 345,
+          "observed": 3497
+        }
+      ]
+    },
+    {
+      "name": "0:2:items:2",
+      "trials": 100000,
+      "maxSigma": 1.68983,
+      "entries": [
+        {
+          "originalId": 70,
+          "weight": 5556,
+          "observed": 55816
+        },
+        {
+          "originalId": 81,
+          "weight": 1851,
+          "observed": 18444
+        },
+        {
+          "originalId": 104,
+          "weight": 371,
+          "observed": 3761
+        },
+        {
+          "originalId": 105,
+          "weight": 370,
+          "observed": 3619
+        },
+        {
+          "originalId": 106,
+          "weight": 371,
+          "observed": 3678
+        },
+        {
+          "originalId": 107,
+          "weight": 370,
+          "observed": 3623
+        },
+        {
+          "originalId": 116,
+          "weight": 370,
+          "observed": 3782
+        },
+        {
+          "originalId": 117,
+          "weight": 371,
+          "observed": 3609
+        },
+        {
+          "originalId": 118,
+          "weight": 370,
+          "observed": 3668
+        }
+      ]
+    },
+    {
+      "name": "0:2:items:8",
+      "trials": 100000,
+      "maxSigma": 1.14474,
+      "entries": [
+        {
+          "originalId": 167,
+          "weight": 1,
+          "observed": 49819
+        },
+        {
+          "originalId": 168,
+          "weight": 1,
+          "observed": 50181
+        }
+      ]
+    },
+    {
+      "name": "0:2:categories",
+      "trials": 100000,
+      "maxSigma": 0.326745,
+      "entries": [
+        {
+          "originalId": 2,
+          "weight": 2381,
+          "observed": 95218
+        },
+        {
+          "originalId": 8,
+          "weight": 119,
+          "observed": 4782
+        }
+      ]
+    },
+    {
+      "name": "15:0:normal",
+      "trials": 100000,
+      "maxSigma": 1.97867,
+      "entries": [
+        {
+          "originalId": 83,
+          "weight": 625,
+          "observed": 6268
+        },
+        {
+          "originalId": 193,
+          "weight": 1042,
+          "observed": 10518
+        },
+        {
+          "originalId": 237,
+          "weight": 1666,
+          "observed": 16771
+        },
+        {
+          "originalId": 240,
+          "weight": 834,
+          "observed": 8167
+        },
+        {
+          "originalId": 341,
+          "weight": 1666,
+          "observed": 16717
+        },
+        {
+          "originalId": 342,
+          "weight": 1667,
+          "observed": 16785
+        },
+        {
+          "originalId": 437,
+          "weight": 2500,
+          "observed": 24774
+        }
+      ]
+    },
+    {
+      "name": "15:0:items:0",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 2,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:0:items:2",
+      "trials": 100000,
+      "maxSigma": 2.31806,
+      "entries": [
+        {
+          "originalId": 69,
+          "weight": 620,
+          "observed": 6195
+        },
+        {
+          "originalId": 70,
+          "weight": 2713,
+          "observed": 27244
+        },
+        {
+          "originalId": 73,
+          "weight": 388,
+          "observed": 3849
+        },
+        {
+          "originalId": 76,
+          "weight": 465,
+          "observed": 4534
+        },
+        {
+          "originalId": 81,
+          "weight": 1163,
+          "observed": 11865
+        },
+        {
+          "originalId": 82,
+          "weight": 542,
+          "observed": 5332
+        },
+        {
+          "originalId": 84,
+          "weight": 776,
+          "observed": 7710
+        },
+        {
+          "originalId": 86,
+          "weight": 542,
+          "observed": 5391
+        },
+        {
+          "originalId": 87,
+          "weight": 775,
+          "observed": 7747
+        },
+        {
+          "originalId": 91,
+          "weight": 776,
+          "observed": 7886
+        },
+        {
+          "originalId": 99,
+          "weight": 697,
+          "observed": 6916
+        },
+        {
+          "originalId": 104,
+          "weight": 78,
+          "observed": 778
+        },
+        {
+          "originalId": 105,
+          "weight": 77,
+          "observed": 709
+        },
+        {
+          "originalId": 106,
+          "weight": 78,
+          "observed": 751
+        },
+        {
+          "originalId": 107,
+          "weight": 77,
+          "observed": 766
+        },
+        {
+          "originalId": 116,
+          "weight": 78,
+          "observed": 778
+        },
+        {
+          "originalId": 117,
+          "weight": 77,
+          "observed": 756
+        },
+        {
+          "originalId": 118,
+          "weight": 78,
+          "observed": 793
+        }
+      ]
+    },
+    {
+      "name": "15:0:items:3",
+      "trials": 100000,
+      "maxSigma": 1.66216,
+      "entries": [
+        {
+          "originalId": 109,
+          "weight": 8,
+          "observed": 31947
+        },
+        {
+          "originalId": 119,
+          "weight": 1,
+          "observed": 4019
+        },
+        {
+          "originalId": 120,
+          "weight": 1,
+          "observed": 4071
+        },
+        {
+          "originalId": 121,
+          "weight": 1,
+          "observed": 3961
+        },
+        {
+          "originalId": 122,
+          "weight": 1,
+          "observed": 4026
+        },
+        {
+          "originalId": 123,
+          "weight": 1,
+          "observed": 3983
+        },
+        {
+          "originalId": 124,
+          "weight": 1,
+          "observed": 3901
+        },
+        {
+          "originalId": 125,
+          "weight": 1,
+          "observed": 4069
+        },
+        {
+          "originalId": 126,
+          "weight": 1,
+          "observed": 4057
+        },
+        {
+          "originalId": 127,
+          "weight": 1,
+          "observed": 4031
+        },
+        {
+          "originalId": 128,
+          "weight": 1,
+          "observed": 3968
+        },
+        {
+          "originalId": 129,
+          "weight": 1,
+          "observed": 3969
+        },
+        {
+          "originalId": 130,
+          "weight": 1,
+          "observed": 4047
+        },
+        {
+          "originalId": 131,
+          "weight": 1,
+          "observed": 4103
+        },
+        {
+          "originalId": 132,
+          "weight": 1,
+          "observed": 4002
+        },
+        {
+          "originalId": 133,
+          "weight": 1,
+          "observed": 3907
+        },
+        {
+          "originalId": 134,
+          "weight": 1,
+          "observed": 4022
+        },
+        {
+          "originalId": 135,
+          "weight": 1,
+          "observed": 3917
+        }
+      ]
+    },
+    {
+      "name": "15:0:items:4",
+      "trials": 100000,
+      "maxSigma": 0.828813,
+      "entries": [
+        {
+          "originalId": 18,
+          "weight": 1724,
+          "observed": 17284
+        },
+        {
+          "originalId": 26,
+          "weight": 2069,
+          "observed": 20762
+        },
+        {
+          "originalId": 27,
+          "weight": 1724,
+          "observed": 17141
+        },
+        {
+          "originalId": 38,
+          "weight": 2414,
+          "observed": 24207
+        },
+        {
+          "originalId": 40,
+          "weight": 2069,
+          "observed": 20606
+        }
+      ]
+    },
+    {
+      "name": "15:0:items:5",
+      "trials": 100000,
+      "maxSigma": 2.38636,
+      "entries": [
+        {
+          "originalId": 188,
+          "weight": 374,
+          "observed": 3719
+        },
+        {
+          "originalId": 189,
+          "weight": 187,
+          "observed": 1931
+        },
+        {
+          "originalId": 190,
+          "weight": 374,
+          "observed": 3720
+        },
+        {
+          "originalId": 191,
+          "weight": 186,
+          "observed": 1870
+        },
+        {
+          "originalId": 192,
+          "weight": 187,
+          "observed": 1841
+        },
+        {
+          "originalId": 196,
+          "weight": 47,
+          "observed": 485
+        },
+        {
+          "originalId": 197,
+          "weight": 187,
+          "observed": 1910
+        },
+        {
+          "originalId": 199,
+          "weight": 47,
+          "observed": 484
+        },
+        {
+          "originalId": 202,
+          "weight": 140,
+          "observed": 1355
+        },
+        {
+          "originalId": 203,
+          "weight": 374,
+          "observed": 3698
+        },
+        {
+          "originalId": 204,
+          "weight": 187,
+          "observed": 1860
+        },
+        {
+          "originalId": 206,
+          "weight": 187,
+          "observed": 1808
+        },
+        {
+          "originalId": 207,
+          "weight": 187,
+          "observed": 1861
+        },
+        {
+          "originalId": 209,
+          "weight": 93,
+          "observed": 931
+        },
+        {
+          "originalId": 210,
+          "weight": 47,
+          "observed": 458
+        },
+        {
+          "originalId": 211,
+          "weight": 93,
+          "observed": 872
+        },
+        {
+          "originalId": 215,
+          "weight": 94,
+          "observed": 965
+        },
+        {
+          "originalId": 218,
+          "weight": 373,
+          "observed": 3873
+        },
+        {
+          "originalId": 220,
+          "weight": 374,
+          "observed": 3811
+        },
+        {
+          "originalId": 221,
+          "weight": 234,
+          "observed": 2259
+        },
+        {
+          "originalId": 227,
+          "weight": 187,
+          "observed": 1886
+        },
+        {
+          "originalId": 228,
+          "weight": 187,
+          "observed": 1863
+        },
+        {
+          "originalId": 231,
+          "weight": 374,
+          "observed": 3701
+        },
+        {
+          "originalId": 232,
+          "weight": 187,
+          "observed": 1880
+        },
+        {
+          "originalId": 234,
+          "weight": 140,
+          "observed": 1320
+        },
+        {
+          "originalId": 238,
+          "weight": 187,
+          "observed": 1870
+        },
+        {
+          "originalId": 239,
+          "weight": 187,
+          "observed": 1849
+        },
+        {
+          "originalId": 240,
+          "weight": 373,
+          "observed": 3750
+        },
+        {
+          "originalId": 241,
+          "weight": 187,
+          "observed": 1797
+        },
+        {
+          "originalId": 242,
+          "weight": 187,
+          "observed": 1935
+        },
+        {
+          "originalId": 250,
+          "weight": 374,
+          "observed": 3794
+        },
+        {
+          "originalId": 251,
+          "weight": 187,
+          "observed": 1923
+        },
+        {
+          "originalId": 252,
+          "weight": 47,
+          "observed": 456
+        },
+        {
+          "originalId": 253,
+          "weight": 187,
+          "observed": 1848
+        },
+        {
+          "originalId": 254,
+          "weight": 373,
+          "observed": 3829
+        },
+        {
+          "originalId": 255,
+          "weight": 47,
+          "observed": 474
+        },
+        {
+          "originalId": 257,
+          "weight": 187,
+          "observed": 1871
+        },
+        {
+          "originalId": 260,
+          "weight": 280,
+          "observed": 2741
+        },
+        {
+          "originalId": 261,
+          "weight": 374,
+          "observed": 3762
+        },
+        {
+          "originalId": 262,
+          "weight": 281,
+          "observed": 2847
+        },
+        {
+          "originalId": 265,
+          "weight": 374,
+          "observed": 3813
+        },
+        {
+          "originalId": 267,
+          "weight": 373,
+          "observed": 3719
+        },
+        {
+          "originalId": 268,
+          "weight": 187,
+          "observed": 1841
+        },
+        {
+          "originalId": 272,
+          "weight": 187,
+          "observed": 1899
+        },
+        {
+          "originalId": 275,
+          "weight": 187,
+          "observed": 1792
+        },
+        {
+          "originalId": 276,
+          "weight": 187,
+          "observed": 1829
+        }
+      ]
+    },
+    {
+      "name": "15:0:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:0:items:9",
+      "trials": 100000,
+      "maxSigma": 1.84148,
+      "entries": [
+        {
+          "originalId": 312,
+          "weight": 556,
+          "observed": 5531
+        },
+        {
+          "originalId": 313,
+          "weight": 555,
+          "observed": 5468
+        },
+        {
+          "originalId": 314,
+          "weight": 556,
+          "observed": 5459
+        },
+        {
+          "originalId": 315,
+          "weight": 555,
+          "observed": 5576
+        },
+        {
+          "originalId": 318,
+          "weight": 556,
+          "observed": 5501
+        },
+        {
+          "originalId": 319,
+          "weight": 555,
+          "observed": 5529
+        },
+        {
+          "originalId": 325,
+          "weight": 556,
+          "observed": 5572
+        },
+        {
+          "originalId": 326,
+          "weight": 555,
+          "observed": 5574
+        },
+        {
+          "originalId": 327,
+          "weight": 556,
+          "observed": 5589
+        },
+        {
+          "originalId": 330,
+          "weight": 1111,
+          "observed": 11293
+        },
+        {
+          "originalId": 333,
+          "weight": 556,
+          "observed": 5476
+        },
+        {
+          "originalId": 335,
+          "weight": 555,
+          "observed": 5605
+        },
+        {
+          "originalId": 347,
+          "weight": 556,
+          "observed": 5571
+        },
+        {
+          "originalId": 354,
+          "weight": 555,
+          "observed": 5663
+        },
+        {
+          "originalId": 357,
+          "weight": 556,
+          "observed": 5455
+        },
+        {
+          "originalId": 358,
+          "weight": 555,
+          "observed": 5616
+        },
+        {
+          "originalId": 359,
+          "weight": 556,
+          "observed": 5522
+        }
+      ]
+    },
+    {
+      "name": "15:0:categories",
+      "trials": 100000,
+      "maxSigma": 0.66666,
+      "entries": [
+        {
+          "originalId": 0,
+          "weight": 855,
+          "observed": 8516
+        },
+        {
+          "originalId": 2,
+          "weight": 2136,
+          "observed": 21302
+        },
+        {
+          "originalId": 3,
+          "weight": 1283,
+          "observed": 12852
+        },
+        {
+          "originalId": 4,
+          "weight": 598,
+          "observed": 5994
+        },
+        {
+          "originalId": 5,
+          "weight": 427,
+          "observed": 4229
+        },
+        {
+          "originalId": 6,
+          "weight": 3419,
+          "observed": 34290
+        },
+        {
+          "originalId": 9,
+          "weight": 1282,
+          "observed": 12817
+        }
+      ]
+    },
+    {
+      "name": "15:1:normal",
+      "trials": 100000,
+      "maxSigma": 1.1323,
+      "entries": [
+        {
+          "originalId": 126,
+          "weight": 1667,
+          "observed": 16719
+        },
+        {
+          "originalId": 237,
+          "weight": 1666,
+          "observed": 16582
+        },
+        {
+          "originalId": 240,
+          "weight": 834,
+          "observed": 8241
+        },
+        {
+          "originalId": 341,
+          "weight": 1666,
+          "observed": 16652
+        },
+        {
+          "originalId": 342,
+          "weight": 1667,
+          "observed": 16738
+        },
+        {
+          "originalId": 437,
+          "weight": 2500,
+          "observed": 25068
+        }
+      ]
+    },
+    {
+      "name": "15:1:items:0",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 2,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:1:items:2",
+      "trials": 100000,
+      "maxSigma": 2.34711,
+      "entries": [
+        {
+          "originalId": 69,
+          "weight": 620,
+          "observed": 6209
+        },
+        {
+          "originalId": 70,
+          "weight": 2713,
+          "observed": 27267
+        },
+        {
+          "originalId": 73,
+          "weight": 388,
+          "observed": 3922
+        },
+        {
+          "originalId": 76,
+          "weight": 465,
+          "observed": 4718
+        },
+        {
+          "originalId": 81,
+          "weight": 1163,
+          "observed": 11553
+        },
+        {
+          "originalId": 82,
+          "weight": 542,
+          "observed": 5338
+        },
+        {
+          "originalId": 84,
+          "weight": 776,
+          "observed": 7803
+        },
+        {
+          "originalId": 86,
+          "weight": 542,
+          "observed": 5416
+        },
+        {
+          "originalId": 87,
+          "weight": 775,
+          "observed": 7784
+        },
+        {
+          "originalId": 91,
+          "weight": 776,
+          "observed": 7865
+        },
+        {
+          "originalId": 99,
+          "weight": 697,
+          "observed": 6781
+        },
+        {
+          "originalId": 104,
+          "weight": 78,
+          "observed": 778
+        },
+        {
+          "originalId": 105,
+          "weight": 77,
+          "observed": 706
+        },
+        {
+          "originalId": 106,
+          "weight": 78,
+          "observed": 744
+        },
+        {
+          "originalId": 107,
+          "weight": 77,
+          "observed": 734
+        },
+        {
+          "originalId": 116,
+          "weight": 78,
+          "observed": 771
+        },
+        {
+          "originalId": 117,
+          "weight": 77,
+          "observed": 813
+        },
+        {
+          "originalId": 118,
+          "weight": 78,
+          "observed": 798
+        }
+      ]
+    },
+    {
+      "name": "15:1:items:3",
+      "trials": 100000,
+      "maxSigma": 3.56637,
+      "entries": [
+        {
+          "originalId": 109,
+          "weight": 8,
+          "observed": 31804
+        },
+        {
+          "originalId": 119,
+          "weight": 1,
+          "observed": 3903
+        },
+        {
+          "originalId": 120,
+          "weight": 1,
+          "observed": 4059
+        },
+        {
+          "originalId": 121,
+          "weight": 1,
+          "observed": 4010
+        },
+        {
+          "originalId": 122,
+          "weight": 1,
+          "observed": 3837
+        },
+        {
+          "originalId": 123,
+          "weight": 1,
+          "observed": 4001
+        },
+        {
+          "originalId": 124,
+          "weight": 1,
+          "observed": 3961
+        },
+        {
+          "originalId": 125,
+          "weight": 1,
+          "observed": 4029
+        },
+        {
+          "originalId": 126,
+          "weight": 1,
+          "observed": 4221
+        },
+        {
+          "originalId": 127,
+          "weight": 1,
+          "observed": 4019
+        },
+        {
+          "originalId": 128,
+          "weight": 1,
+          "observed": 3962
+        },
+        {
+          "originalId": 129,
+          "weight": 1,
+          "observed": 4059
+        },
+        {
+          "originalId": 130,
+          "weight": 1,
+          "observed": 4071
+        },
+        {
+          "originalId": 131,
+          "weight": 1,
+          "observed": 4091
+        },
+        {
+          "originalId": 132,
+          "weight": 1,
+          "observed": 3995
+        },
+        {
+          "originalId": 133,
+          "weight": 1,
+          "observed": 3948
+        },
+        {
+          "originalId": 134,
+          "weight": 1,
+          "observed": 4067
+        },
+        {
+          "originalId": 135,
+          "weight": 1,
+          "observed": 3963
+        }
+      ]
+    },
+    {
+      "name": "15:1:items:4",
+      "trials": 100000,
+      "maxSigma": 2.67899,
+      "entries": [
+        {
+          "originalId": 18,
+          "weight": 1724,
+          "observed": 17560
+        },
+        {
+          "originalId": 26,
+          "weight": 2069,
+          "observed": 20405
+        },
+        {
+          "originalId": 27,
+          "weight": 1724,
+          "observed": 17327
+        },
+        {
+          "originalId": 38,
+          "weight": 2414,
+          "observed": 23915
+        },
+        {
+          "originalId": 40,
+          "weight": 2069,
+          "observed": 20793
+        }
+      ]
+    },
+    {
+      "name": "15:1:items:5",
+      "trials": 100000,
+      "maxSigma": 1.98425,
+      "entries": [
+        {
+          "originalId": 188,
+          "weight": 374,
+          "observed": 3759
+        },
+        {
+          "originalId": 189,
+          "weight": 187,
+          "observed": 1788
+        },
+        {
+          "originalId": 190,
+          "weight": 374,
+          "observed": 3702
+        },
+        {
+          "originalId": 191,
+          "weight": 186,
+          "observed": 1822
+        },
+        {
+          "originalId": 192,
+          "weight": 187,
+          "observed": 1853
+        },
+        {
+          "originalId": 196,
+          "weight": 47,
+          "observed": 454
+        },
+        {
+          "originalId": 197,
+          "weight": 187,
+          "observed": 1850
+        },
+        {
+          "originalId": 199,
+          "weight": 47,
+          "observed": 501
+        },
+        {
+          "originalId": 202,
+          "weight": 140,
+          "observed": 1416
+        },
+        {
+          "originalId": 203,
+          "weight": 374,
+          "observed": 3776
+        },
+        {
+          "originalId": 204,
+          "weight": 187,
+          "observed": 1862
+        },
+        {
+          "originalId": 206,
+          "weight": 187,
+          "observed": 1849
+        },
+        {
+          "originalId": 207,
+          "weight": 187,
+          "observed": 1870
+        },
+        {
+          "originalId": 209,
+          "weight": 93,
+          "observed": 908
+        },
+        {
+          "originalId": 210,
+          "weight": 47,
+          "observed": 491
+        },
+        {
+          "originalId": 211,
+          "weight": 93,
+          "observed": 935
+        },
+        {
+          "originalId": 215,
+          "weight": 94,
+          "observed": 937
+        },
+        {
+          "originalId": 218,
+          "weight": 373,
+          "observed": 3768
+        },
+        {
+          "originalId": 220,
+          "weight": 374,
+          "observed": 3768
+        },
+        {
+          "originalId": 221,
+          "weight": 234,
+          "observed": 2388
+        },
+        {
+          "originalId": 227,
+          "weight": 187,
+          "observed": 1867
+        },
+        {
+          "originalId": 228,
+          "weight": 187,
+          "observed": 1876
+        },
+        {
+          "originalId": 231,
+          "weight": 374,
+          "observed": 3788
+        },
+        {
+          "originalId": 232,
+          "weight": 187,
+          "observed": 1911
+        },
+        {
+          "originalId": 234,
+          "weight": 140,
+          "observed": 1350
+        },
+        {
+          "originalId": 238,
+          "weight": 187,
+          "observed": 1904
+        },
+        {
+          "originalId": 239,
+          "weight": 187,
+          "observed": 1874
+        },
+        {
+          "originalId": 240,
+          "weight": 373,
+          "observed": 3770
+        },
+        {
+          "originalId": 241,
+          "weight": 187,
+          "observed": 1897
+        },
+        {
+          "originalId": 242,
+          "weight": 187,
+          "observed": 1787
+        },
+        {
+          "originalId": 250,
+          "weight": 374,
+          "observed": 3743
+        },
+        {
+          "originalId": 251,
+          "weight": 187,
+          "observed": 1894
+        },
+        {
+          "originalId": 252,
+          "weight": 47,
+          "observed": 457
+        },
+        {
+          "originalId": 253,
+          "weight": 187,
+          "observed": 1818
+        },
+        {
+          "originalId": 254,
+          "weight": 373,
+          "observed": 3656
+        },
+        {
+          "originalId": 255,
+          "weight": 47,
+          "observed": 505
+        },
+        {
+          "originalId": 257,
+          "weight": 187,
+          "observed": 1924
+        },
+        {
+          "originalId": 260,
+          "weight": 280,
+          "observed": 2745
+        },
+        {
+          "originalId": 261,
+          "weight": 374,
+          "observed": 3829
+        },
+        {
+          "originalId": 262,
+          "weight": 281,
+          "observed": 2850
+        },
+        {
+          "originalId": 265,
+          "weight": 374,
+          "observed": 3709
+        },
+        {
+          "originalId": 267,
+          "weight": 373,
+          "observed": 3714
+        },
+        {
+          "originalId": 268,
+          "weight": 187,
+          "observed": 1888
+        },
+        {
+          "originalId": 272,
+          "weight": 187,
+          "observed": 1869
+        },
+        {
+          "originalId": 275,
+          "weight": 187,
+          "observed": 1785
+        },
+        {
+          "originalId": 276,
+          "weight": 187,
+          "observed": 1893
+        }
+      ]
+    },
+    {
+      "name": "15:1:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:1:items:9",
+      "trials": 100000,
+      "maxSigma": 2.9143,
+      "entries": [
+        {
+          "originalId": 312,
+          "weight": 556,
+          "observed": 5729
+        },
+        {
+          "originalId": 313,
+          "weight": 555,
+          "observed": 5399
+        },
+        {
+          "originalId": 314,
+          "weight": 556,
+          "observed": 5594
+        },
+        {
+          "originalId": 315,
+          "weight": 555,
+          "observed": 5542
+        },
+        {
+          "originalId": 318,
+          "weight": 556,
+          "observed": 5518
+        },
+        {
+          "originalId": 319,
+          "weight": 555,
+          "observed": 5530
+        },
+        {
+          "originalId": 325,
+          "weight": 556,
+          "observed": 5548
+        },
+        {
+          "originalId": 326,
+          "weight": 555,
+          "observed": 5761
+        },
+        {
+          "originalId": 327,
+          "weight": 556,
+          "observed": 5573
+        },
+        {
+          "originalId": 330,
+          "weight": 1111,
+          "observed": 11190
+        },
+        {
+          "originalId": 333,
+          "weight": 556,
+          "observed": 5597
+        },
+        {
+          "originalId": 335,
+          "weight": 555,
+          "observed": 5469
+        },
+        {
+          "originalId": 347,
+          "weight": 556,
+          "observed": 5558
+        },
+        {
+          "originalId": 354,
+          "weight": 555,
+          "observed": 5424
+        },
+        {
+          "originalId": 357,
+          "weight": 556,
+          "observed": 5529
+        },
+        {
+          "originalId": 358,
+          "weight": 555,
+          "observed": 5548
+        },
+        {
+          "originalId": 359,
+          "weight": 556,
+          "observed": 5491
+        }
+      ]
+    },
+    {
+      "name": "15:1:categories",
+      "trials": 100000,
+      "maxSigma": 1.23332,
+      "entries": [
+        {
+          "originalId": 0,
+          "weight": 855,
+          "observed": 8444
+        },
+        {
+          "originalId": 2,
+          "weight": 2136,
+          "observed": 21425
+        },
+        {
+          "originalId": 3,
+          "weight": 1283,
+          "observed": 12801
+        },
+        {
+          "originalId": 4,
+          "weight": 598,
+          "observed": 5992
+        },
+        {
+          "originalId": 5,
+          "weight": 427,
+          "observed": 4222
+        },
+        {
+          "originalId": 6,
+          "weight": 3419,
+          "observed": 34375
+        },
+        {
+          "originalId": 9,
+          "weight": 1282,
+          "observed": 12741
+        }
+      ]
+    },
+    {
+      "name": "15:2:normal",
+      "trials": 100000,
+      "maxSigma": 1.66298,
+      "entries": [
+        {
+          "originalId": 126,
+          "weight": 1667,
+          "observed": 16690
+        },
+        {
+          "originalId": 237,
+          "weight": 1666,
+          "observed": 16578
+        },
+        {
+          "originalId": 240,
+          "weight": 834,
+          "observed": 8217
+        },
+        {
+          "originalId": 341,
+          "weight": 1666,
+          "observed": 16715
+        },
+        {
+          "originalId": 342,
+          "weight": 1667,
+          "observed": 16866
+        },
+        {
+          "originalId": 437,
+          "weight": 2500,
+          "observed": 24934
+        }
+      ]
+    },
+    {
+      "name": "15:2:items:0",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 2,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:2:items:2",
+      "trials": 100000,
+      "maxSigma": 1.95384,
+      "entries": [
+        {
+          "originalId": 69,
+          "weight": 620,
+          "observed": 6051
+        },
+        {
+          "originalId": 70,
+          "weight": 2713,
+          "observed": 26966
+        },
+        {
+          "originalId": 73,
+          "weight": 388,
+          "observed": 3892
+        },
+        {
+          "originalId": 76,
+          "weight": 465,
+          "observed": 4694
+        },
+        {
+          "originalId": 81,
+          "weight": 1163,
+          "observed": 11722
+        },
+        {
+          "originalId": 82,
+          "weight": 542,
+          "observed": 5407
+        },
+        {
+          "originalId": 84,
+          "weight": 776,
+          "observed": 7776
+        },
+        {
+          "originalId": 86,
+          "weight": 542,
+          "observed": 5393
+        },
+        {
+          "originalId": 87,
+          "weight": 775,
+          "observed": 7912
+        },
+        {
+          "originalId": 91,
+          "weight": 776,
+          "observed": 7800
+        },
+        {
+          "originalId": 99,
+          "weight": 697,
+          "observed": 6986
+        },
+        {
+          "originalId": 104,
+          "weight": 78,
+          "observed": 729
+        },
+        {
+          "originalId": 105,
+          "weight": 77,
+          "observed": 810
+        },
+        {
+          "originalId": 106,
+          "weight": 78,
+          "observed": 781
+        },
+        {
+          "originalId": 107,
+          "weight": 77,
+          "observed": 783
+        },
+        {
+          "originalId": 116,
+          "weight": 78,
+          "observed": 740
+        },
+        {
+          "originalId": 117,
+          "weight": 77,
+          "observed": 764
+        },
+        {
+          "originalId": 118,
+          "weight": 78,
+          "observed": 794
+        }
+      ]
+    },
+    {
+      "name": "15:2:items:3",
+      "trials": 100000,
+      "maxSigma": 2.30765,
+      "entries": [
+        {
+          "originalId": 109,
+          "weight": 8,
+          "observed": 31848
+        },
+        {
+          "originalId": 119,
+          "weight": 1,
+          "observed": 4143
+        },
+        {
+          "originalId": 120,
+          "weight": 1,
+          "observed": 3909
+        },
+        {
+          "originalId": 121,
+          "weight": 1,
+          "observed": 4042
+        },
+        {
+          "originalId": 122,
+          "weight": 1,
+          "observed": 3941
+        },
+        {
+          "originalId": 123,
+          "weight": 1,
+          "observed": 4061
+        },
+        {
+          "originalId": 124,
+          "weight": 1,
+          "observed": 4076
+        },
+        {
+          "originalId": 125,
+          "weight": 1,
+          "observed": 4039
+        },
+        {
+          "originalId": 126,
+          "weight": 1,
+          "observed": 4077
+        },
+        {
+          "originalId": 127,
+          "weight": 1,
+          "observed": 3905
+        },
+        {
+          "originalId": 128,
+          "weight": 1,
+          "observed": 3968
+        },
+        {
+          "originalId": 129,
+          "weight": 1,
+          "observed": 3996
+        },
+        {
+          "originalId": 130,
+          "weight": 1,
+          "observed": 4023
+        },
+        {
+          "originalId": 131,
+          "weight": 1,
+          "observed": 4096
+        },
+        {
+          "originalId": 132,
+          "weight": 1,
+          "observed": 3989
+        },
+        {
+          "originalId": 133,
+          "weight": 1,
+          "observed": 4018
+        },
+        {
+          "originalId": 134,
+          "weight": 1,
+          "observed": 3925
+        },
+        {
+          "originalId": 135,
+          "weight": 1,
+          "observed": 3944
+        }
+      ]
+    },
+    {
+      "name": "15:2:items:4",
+      "trials": 100000,
+      "maxSigma": 2.03436,
+      "entries": [
+        {
+          "originalId": 18,
+          "weight": 1724,
+          "observed": 17483
+        },
+        {
+          "originalId": 26,
+          "weight": 2069,
+          "observed": 20541
+        },
+        {
+          "originalId": 27,
+          "weight": 1724,
+          "observed": 17213
+        },
+        {
+          "originalId": 38,
+          "weight": 2414,
+          "observed": 24070
+        },
+        {
+          "originalId": 40,
+          "weight": 2069,
+          "observed": 20693
+        }
+      ]
+    },
+    {
+      "name": "15:2:items:5",
+      "trials": 100000,
+      "maxSigma": 2.89468,
+      "entries": [
+        {
+          "originalId": 188,
+          "weight": 374,
+          "observed": 3813
+        },
+        {
+          "originalId": 189,
+          "weight": 187,
+          "observed": 1943
+        },
+        {
+          "originalId": 190,
+          "weight": 374,
+          "observed": 3730
+        },
+        {
+          "originalId": 191,
+          "weight": 186,
+          "observed": 1812
+        },
+        {
+          "originalId": 192,
+          "weight": 187,
+          "observed": 1760
+        },
+        {
+          "originalId": 196,
+          "weight": 47,
+          "observed": 466
+        },
+        {
+          "originalId": 197,
+          "weight": 187,
+          "observed": 1859
+        },
+        {
+          "originalId": 199,
+          "weight": 47,
+          "observed": 459
+        },
+        {
+          "originalId": 202,
+          "weight": 140,
+          "observed": 1392
+        },
+        {
+          "originalId": 203,
+          "weight": 374,
+          "observed": 3828
+        },
+        {
+          "originalId": 204,
+          "weight": 187,
+          "observed": 1856
+        },
+        {
+          "originalId": 206,
+          "weight": 187,
+          "observed": 1860
+        },
+        {
+          "originalId": 207,
+          "weight": 187,
+          "observed": 1893
+        },
+        {
+          "originalId": 209,
+          "weight": 93,
+          "observed": 940
+        },
+        {
+          "originalId": 210,
+          "weight": 47,
+          "observed": 453
+        },
+        {
+          "originalId": 211,
+          "weight": 93,
+          "observed": 949
+        },
+        {
+          "originalId": 215,
+          "weight": 94,
+          "observed": 942
+        },
+        {
+          "originalId": 218,
+          "weight": 373,
+          "observed": 3679
+        },
+        {
+          "originalId": 220,
+          "weight": 374,
+          "observed": 3714
+        },
+        {
+          "originalId": 221,
+          "weight": 234,
+          "observed": 2323
+        },
+        {
+          "originalId": 227,
+          "weight": 187,
+          "observed": 1783
+        },
+        {
+          "originalId": 228,
+          "weight": 187,
+          "observed": 1876
+        },
+        {
+          "originalId": 231,
+          "weight": 374,
+          "observed": 3743
+        },
+        {
+          "originalId": 232,
+          "weight": 187,
+          "observed": 1923
+        },
+        {
+          "originalId": 234,
+          "weight": 140,
+          "observed": 1413
+        },
+        {
+          "originalId": 238,
+          "weight": 187,
+          "observed": 1913
+        },
+        {
+          "originalId": 239,
+          "weight": 187,
+          "observed": 1865
+        },
+        {
+          "originalId": 240,
+          "weight": 373,
+          "observed": 3711
+        },
+        {
+          "originalId": 241,
+          "weight": 187,
+          "observed": 1825
+        },
+        {
+          "originalId": 242,
+          "weight": 187,
+          "observed": 1746
+        },
+        {
+          "originalId": 250,
+          "weight": 374,
+          "observed": 3738
+        },
+        {
+          "originalId": 251,
+          "weight": 187,
+          "observed": 1844
+        },
+        {
+          "originalId": 252,
+          "weight": 47,
+          "observed": 500
+        },
+        {
+          "originalId": 253,
+          "weight": 187,
+          "observed": 1914
+        },
+        {
+          "originalId": 254,
+          "weight": 373,
+          "observed": 3706
+        },
+        {
+          "originalId": 255,
+          "weight": 47,
+          "observed": 451
+        },
+        {
+          "originalId": 257,
+          "weight": 187,
+          "observed": 1815
+        },
+        {
+          "originalId": 260,
+          "weight": 280,
+          "observed": 2826
+        },
+        {
+          "originalId": 261,
+          "weight": 374,
+          "observed": 3772
+        },
+        {
+          "originalId": 262,
+          "weight": 281,
+          "observed": 2801
+        },
+        {
+          "originalId": 265,
+          "weight": 374,
+          "observed": 3729
+        },
+        {
+          "originalId": 267,
+          "weight": 373,
+          "observed": 3815
+        },
+        {
+          "originalId": 268,
+          "weight": 187,
+          "observed": 1919
+        },
+        {
+          "originalId": 272,
+          "weight": 187,
+          "observed": 1909
+        },
+        {
+          "originalId": 275,
+          "weight": 187,
+          "observed": 1943
+        },
+        {
+          "originalId": 276,
+          "weight": 187,
+          "observed": 1849
+        }
+      ]
+    },
+    {
+      "name": "15:2:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:2:items:9",
+      "trials": 100000,
+      "maxSigma": 1.87841,
+      "entries": [
+        {
+          "originalId": 312,
+          "weight": 556,
+          "observed": 5579
+        },
+        {
+          "originalId": 313,
+          "weight": 555,
+          "observed": 5541
+        },
+        {
+          "originalId": 314,
+          "weight": 556,
+          "observed": 5464
+        },
+        {
+          "originalId": 315,
+          "weight": 555,
+          "observed": 5667
+        },
+        {
+          "originalId": 318,
+          "weight": 556,
+          "observed": 5465
+        },
+        {
+          "originalId": 319,
+          "weight": 555,
+          "observed": 5417
+        },
+        {
+          "originalId": 325,
+          "weight": 556,
+          "observed": 5572
+        },
+        {
+          "originalId": 326,
+          "weight": 555,
+          "observed": 5614
+        },
+        {
+          "originalId": 327,
+          "weight": 556,
+          "observed": 5516
+        },
+        {
+          "originalId": 330,
+          "weight": 1111,
+          "observed": 11078
+        },
+        {
+          "originalId": 333,
+          "weight": 556,
+          "observed": 5578
+        },
+        {
+          "originalId": 335,
+          "weight": 555,
+          "observed": 5550
+        },
+        {
+          "originalId": 347,
+          "weight": 556,
+          "observed": 5589
+        },
+        {
+          "originalId": 354,
+          "weight": 555,
+          "observed": 5501
+        },
+        {
+          "originalId": 357,
+          "weight": 556,
+          "observed": 5585
+        },
+        {
+          "originalId": 358,
+          "weight": 555,
+          "observed": 5686
+        },
+        {
+          "originalId": 359,
+          "weight": 556,
+          "observed": 5598
+        }
+      ]
+    },
+    {
+      "name": "15:2:categories",
+      "trials": 100000,
+      "maxSigma": 2.55309,
+      "entries": [
+        {
+          "originalId": 0,
+          "weight": 855,
+          "observed": 8456
+        },
+        {
+          "originalId": 2,
+          "weight": 2136,
+          "observed": 21240
+        },
+        {
+          "originalId": 3,
+          "weight": 1283,
+          "observed": 13100
+        },
+        {
+          "originalId": 4,
+          "weight": 598,
+          "observed": 6025
+        },
+        {
+          "originalId": 5,
+          "weight": 427,
+          "observed": 4262
+        },
+        {
+          "originalId": 6,
+          "weight": 3419,
+          "observed": 34100
+        },
+        {
+          "originalId": 9,
+          "weight": 1282,
+          "observed": 12817
+        }
+      ]
+    },
+    {
+      "name": "15:3:normal",
+      "trials": 100000,
+      "maxSigma": 0.4564,
+      "entries": [
+        {
+          "originalId": 126,
+          "weight": 1111,
+          "observed": 22205
+        },
+        {
+          "originalId": 237,
+          "weight": 1111,
+          "observed": 22280
+        },
+        {
+          "originalId": 240,
+          "weight": 556,
+          "observed": 11087
+        },
+        {
+          "originalId": 341,
+          "weight": 1111,
+          "observed": 22190
+        },
+        {
+          "originalId": 342,
+          "weight": 1111,
+          "observed": 22238
+        }
+      ]
+    },
+    {
+      "name": "15:3:items:0",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 2,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:3:items:2",
+      "trials": 100000,
+      "maxSigma": 2.35214,
+      "entries": [
+        {
+          "originalId": 69,
+          "weight": 620,
+          "observed": 6309
+        },
+        {
+          "originalId": 70,
+          "weight": 2713,
+          "observed": 27043
+        },
+        {
+          "originalId": 73,
+          "weight": 388,
+          "observed": 3870
+        },
+        {
+          "originalId": 76,
+          "weight": 465,
+          "observed": 4620
+        },
+        {
+          "originalId": 81,
+          "weight": 1163,
+          "observed": 11592
+        },
+        {
+          "originalId": 82,
+          "weight": 542,
+          "observed": 5395
+        },
+        {
+          "originalId": 84,
+          "weight": 776,
+          "observed": 7959
+        },
+        {
+          "originalId": 86,
+          "weight": 542,
+          "observed": 5277
+        },
+        {
+          "originalId": 87,
+          "weight": 775,
+          "observed": 7701
+        },
+        {
+          "originalId": 91,
+          "weight": 776,
+          "observed": 7777
+        },
+        {
+          "originalId": 99,
+          "weight": 697,
+          "observed": 7106
+        },
+        {
+          "originalId": 104,
+          "weight": 78,
+          "observed": 813
+        },
+        {
+          "originalId": 105,
+          "weight": 77,
+          "observed": 740
+        },
+        {
+          "originalId": 106,
+          "weight": 78,
+          "observed": 769
+        },
+        {
+          "originalId": 107,
+          "weight": 77,
+          "observed": 774
+        },
+        {
+          "originalId": 116,
+          "weight": 78,
+          "observed": 743
+        },
+        {
+          "originalId": 117,
+          "weight": 77,
+          "observed": 746
+        },
+        {
+          "originalId": 118,
+          "weight": 78,
+          "observed": 766
+        }
+      ]
+    },
+    {
+      "name": "15:3:items:3",
+      "trials": 100000,
+      "maxSigma": 1.58147,
+      "entries": [
+        {
+          "originalId": 109,
+          "weight": 8,
+          "observed": 32188
+        },
+        {
+          "originalId": 119,
+          "weight": 1,
+          "observed": 4048
+        },
+        {
+          "originalId": 120,
+          "weight": 1,
+          "observed": 4063
+        },
+        {
+          "originalId": 121,
+          "weight": 1,
+          "observed": 3960
+        },
+        {
+          "originalId": 122,
+          "weight": 1,
+          "observed": 3953
+        },
+        {
+          "originalId": 123,
+          "weight": 1,
+          "observed": 3999
+        },
+        {
+          "originalId": 124,
+          "weight": 1,
+          "observed": 4031
+        },
+        {
+          "originalId": 125,
+          "weight": 1,
+          "observed": 3934
+        },
+        {
+          "originalId": 126,
+          "weight": 1,
+          "observed": 3948
+        },
+        {
+          "originalId": 127,
+          "weight": 1,
+          "observed": 3960
+        },
+        {
+          "originalId": 128,
+          "weight": 1,
+          "observed": 3911
+        },
+        {
+          "originalId": 129,
+          "weight": 1,
+          "observed": 3910
+        },
+        {
+          "originalId": 130,
+          "weight": 1,
+          "observed": 3982
+        },
+        {
+          "originalId": 131,
+          "weight": 1,
+          "observed": 4098
+        },
+        {
+          "originalId": 132,
+          "weight": 1,
+          "observed": 4059
+        },
+        {
+          "originalId": 133,
+          "weight": 1,
+          "observed": 4008
+        },
+        {
+          "originalId": 134,
+          "weight": 1,
+          "observed": 4028
+        },
+        {
+          "originalId": 135,
+          "weight": 1,
+          "observed": 3920
+        }
+      ]
+    },
+    {
+      "name": "15:3:items:4",
+      "trials": 100000,
+      "maxSigma": 0.937647,
+      "entries": [
+        {
+          "originalId": 18,
+          "weight": 1724,
+          "observed": 17173
+        },
+        {
+          "originalId": 26,
+          "weight": 2069,
+          "observed": 20628
+        },
+        {
+          "originalId": 27,
+          "weight": 1724,
+          "observed": 17352
+        },
+        {
+          "originalId": 38,
+          "weight": 2414,
+          "observed": 24173
+        },
+        {
+          "originalId": 40,
+          "weight": 2069,
+          "observed": 20674
+        }
+      ]
+    },
+    {
+      "name": "15:3:items:5",
+      "trials": 100000,
+      "maxSigma": 2.0526,
+      "entries": [
+        {
+          "originalId": 188,
+          "weight": 374,
+          "observed": 3689
+        },
+        {
+          "originalId": 189,
+          "weight": 187,
+          "observed": 1802
+        },
+        {
+          "originalId": 190,
+          "weight": 374,
+          "observed": 3739
+        },
+        {
+          "originalId": 191,
+          "weight": 186,
+          "observed": 1883
+        },
+        {
+          "originalId": 192,
+          "weight": 187,
+          "observed": 1864
+        },
+        {
+          "originalId": 196,
+          "weight": 47,
+          "observed": 477
+        },
+        {
+          "originalId": 197,
+          "weight": 187,
+          "observed": 1805
+        },
+        {
+          "originalId": 199,
+          "weight": 47,
+          "observed": 442
+        },
+        {
+          "originalId": 202,
+          "weight": 140,
+          "observed": 1398
+        },
+        {
+          "originalId": 203,
+          "weight": 374,
+          "observed": 3740
+        },
+        {
+          "originalId": 204,
+          "weight": 187,
+          "observed": 1946
+        },
+        {
+          "originalId": 206,
+          "weight": 187,
+          "observed": 1829
+        },
+        {
+          "originalId": 207,
+          "weight": 187,
+          "observed": 1869
+        },
+        {
+          "originalId": 209,
+          "weight": 93,
+          "observed": 918
+        },
+        {
+          "originalId": 210,
+          "weight": 47,
+          "observed": 463
+        },
+        {
+          "originalId": 211,
+          "weight": 93,
+          "observed": 922
+        },
+        {
+          "originalId": 215,
+          "weight": 94,
+          "observed": 956
+        },
+        {
+          "originalId": 218,
+          "weight": 373,
+          "observed": 3827
+        },
+        {
+          "originalId": 220,
+          "weight": 374,
+          "observed": 3787
+        },
+        {
+          "originalId": 221,
+          "weight": 234,
+          "observed": 2328
+        },
+        {
+          "originalId": 227,
+          "weight": 187,
+          "observed": 1876
+        },
+        {
+          "originalId": 228,
+          "weight": 187,
+          "observed": 1936
+        },
+        {
+          "originalId": 231,
+          "weight": 374,
+          "observed": 3737
+        },
+        {
+          "originalId": 232,
+          "weight": 187,
+          "observed": 1909
+        },
+        {
+          "originalId": 234,
+          "weight": 140,
+          "observed": 1380
+        },
+        {
+          "originalId": 238,
+          "weight": 187,
+          "observed": 1852
+        },
+        {
+          "originalId": 239,
+          "weight": 187,
+          "observed": 1843
+        },
+        {
+          "originalId": 240,
+          "weight": 373,
+          "observed": 3623
+        },
+        {
+          "originalId": 241,
+          "weight": 187,
+          "observed": 1863
+        },
+        {
+          "originalId": 242,
+          "weight": 187,
+          "observed": 1900
+        },
+        {
+          "originalId": 250,
+          "weight": 374,
+          "observed": 3727
+        },
+        {
+          "originalId": 251,
+          "weight": 187,
+          "observed": 1816
+        },
+        {
+          "originalId": 252,
+          "weight": 47,
+          "observed": 481
+        },
+        {
+          "originalId": 253,
+          "weight": 187,
+          "observed": 1917
+        },
+        {
+          "originalId": 254,
+          "weight": 373,
+          "observed": 3724
+        },
+        {
+          "originalId": 255,
+          "weight": 47,
+          "observed": 467
+        },
+        {
+          "originalId": 257,
+          "weight": 187,
+          "observed": 1837
+        },
+        {
+          "originalId": 260,
+          "weight": 280,
+          "observed": 2824
+        },
+        {
+          "originalId": 261,
+          "weight": 374,
+          "observed": 3723
+        },
+        {
+          "originalId": 262,
+          "weight": 281,
+          "observed": 2819
+        },
+        {
+          "originalId": 265,
+          "weight": 374,
+          "observed": 3757
+        },
+        {
+          "originalId": 267,
+          "weight": 373,
+          "observed": 3853
+        },
+        {
+          "originalId": 268,
+          "weight": 187,
+          "observed": 1814
+        },
+        {
+          "originalId": 272,
+          "weight": 187,
+          "observed": 1894
+        },
+        {
+          "originalId": 275,
+          "weight": 187,
+          "observed": 1858
+        },
+        {
+          "originalId": 276,
+          "weight": 187,
+          "observed": 1886
+        }
+      ]
+    },
+    {
+      "name": "15:3:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:3:items:9",
+      "trials": 100000,
+      "maxSigma": 1.94747,
+      "entries": [
+        {
+          "originalId": 312,
+          "weight": 556,
+          "observed": 5540
+        },
+        {
+          "originalId": 313,
+          "weight": 555,
+          "observed": 5643
+        },
+        {
+          "originalId": 314,
+          "weight": 556,
+          "observed": 5527
+        },
+        {
+          "originalId": 315,
+          "weight": 555,
+          "observed": 5691
+        },
+        {
+          "originalId": 318,
+          "weight": 556,
+          "observed": 5574
+        },
+        {
+          "originalId": 319,
+          "weight": 555,
+          "observed": 5415
+        },
+        {
+          "originalId": 325,
+          "weight": 556,
+          "observed": 5644
+        },
+        {
+          "originalId": 326,
+          "weight": 555,
+          "observed": 5412
+        },
+        {
+          "originalId": 327,
+          "weight": 556,
+          "observed": 5586
+        },
+        {
+          "originalId": 330,
+          "weight": 1111,
+          "observed": 11172
+        },
+        {
+          "originalId": 333,
+          "weight": 556,
+          "observed": 5539
+        },
+        {
+          "originalId": 335,
+          "weight": 555,
+          "observed": 5551
+        },
+        {
+          "originalId": 347,
+          "weight": 556,
+          "observed": 5491
+        },
+        {
+          "originalId": 354,
+          "weight": 555,
+          "observed": 5598
+        },
+        {
+          "originalId": 357,
+          "weight": 556,
+          "observed": 5525
+        },
+        {
+          "originalId": 358,
+          "weight": 555,
+          "observed": 5633
+        },
+        {
+          "originalId": 359,
+          "weight": 556,
+          "observed": 5459
+        }
+      ]
+    },
+    {
+      "name": "15:3:categories",
+      "trials": 100000,
+      "maxSigma": 1.05906,
+      "entries": [
+        {
+          "originalId": 0,
+          "weight": 855,
+          "observed": 8611
+        },
+        {
+          "originalId": 2,
+          "weight": 2136,
+          "observed": 21416
+        },
+        {
+          "originalId": 3,
+          "weight": 1283,
+          "observed": 12942
+        },
+        {
+          "originalId": 4,
+          "weight": 598,
+          "observed": 5914
+        },
+        {
+          "originalId": 5,
+          "weight": 427,
+          "observed": 4213
+        },
+        {
+          "originalId": 6,
+          "weight": 3419,
+          "observed": 34034
+        },
+        {
+          "originalId": 9,
+          "weight": 1282,
+          "observed": 12870
+        }
+      ]
+    },
+    {
+      "name": "15:4:normal",
+      "trials": 100000,
+      "maxSigma": 1.55937,
+      "entries": [
+        {
+          "originalId": 126,
+          "weight": 1111,
+          "observed": 22151
+        },
+        {
+          "originalId": 237,
+          "weight": 1111,
+          "observed": 22109
+        },
+        {
+          "originalId": 240,
+          "weight": 556,
+          "observed": 11082
+        },
+        {
+          "originalId": 341,
+          "weight": 1111,
+          "observed": 22233
+        },
+        {
+          "originalId": 342,
+          "weight": 1111,
+          "observed": 22425
+        }
+      ]
+    },
+    {
+      "name": "15:4:items:0",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 2,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:4:items:2",
+      "trials": 100000,
+      "maxSigma": 2.68309,
+      "entries": [
+        {
+          "originalId": 69,
+          "weight": 620,
+          "observed": 6062
+        },
+        {
+          "originalId": 70,
+          "weight": 2713,
+          "observed": 27189
+        },
+        {
+          "originalId": 73,
+          "weight": 388,
+          "observed": 4013
+        },
+        {
+          "originalId": 76,
+          "weight": 465,
+          "observed": 4594
+        },
+        {
+          "originalId": 81,
+          "weight": 1163,
+          "observed": 11551
+        },
+        {
+          "originalId": 82,
+          "weight": 542,
+          "observed": 5344
+        },
+        {
+          "originalId": 84,
+          "weight": 776,
+          "observed": 7791
+        },
+        {
+          "originalId": 86,
+          "weight": 542,
+          "observed": 5360
+        },
+        {
+          "originalId": 87,
+          "weight": 775,
+          "observed": 7782
+        },
+        {
+          "originalId": 91,
+          "weight": 776,
+          "observed": 7987
+        },
+        {
+          "originalId": 99,
+          "weight": 697,
+          "observed": 7027
+        },
+        {
+          "originalId": 104,
+          "weight": 78,
+          "observed": 758
+        },
+        {
+          "originalId": 105,
+          "weight": 77,
+          "observed": 764
+        },
+        {
+          "originalId": 106,
+          "weight": 78,
+          "observed": 769
+        },
+        {
+          "originalId": 107,
+          "weight": 77,
+          "observed": 718
+        },
+        {
+          "originalId": 116,
+          "weight": 78,
+          "observed": 734
+        },
+        {
+          "originalId": 117,
+          "weight": 77,
+          "observed": 766
+        },
+        {
+          "originalId": 118,
+          "weight": 78,
+          "observed": 791
+        }
+      ]
+    },
+    {
+      "name": "15:4:items:3",
+      "trials": 100000,
+      "maxSigma": 2.54971,
+      "entries": [
+        {
+          "originalId": 109,
+          "weight": 8,
+          "observed": 31803
+        },
+        {
+          "originalId": 119,
+          "weight": 1,
+          "observed": 3890
+        },
+        {
+          "originalId": 120,
+          "weight": 1,
+          "observed": 3980
+        },
+        {
+          "originalId": 121,
+          "weight": 1,
+          "observed": 4035
+        },
+        {
+          "originalId": 122,
+          "weight": 1,
+          "observed": 4089
+        },
+        {
+          "originalId": 123,
+          "weight": 1,
+          "observed": 3916
+        },
+        {
+          "originalId": 124,
+          "weight": 1,
+          "observed": 4051
+        },
+        {
+          "originalId": 125,
+          "weight": 1,
+          "observed": 4029
+        },
+        {
+          "originalId": 126,
+          "weight": 1,
+          "observed": 4028
+        },
+        {
+          "originalId": 127,
+          "weight": 1,
+          "observed": 4122
+        },
+        {
+          "originalId": 128,
+          "weight": 1,
+          "observed": 4042
+        },
+        {
+          "originalId": 129,
+          "weight": 1,
+          "observed": 3995
+        },
+        {
+          "originalId": 130,
+          "weight": 1,
+          "observed": 3990
+        },
+        {
+          "originalId": 131,
+          "weight": 1,
+          "observed": 3939
+        },
+        {
+          "originalId": 132,
+          "weight": 1,
+          "observed": 4158
+        },
+        {
+          "originalId": 133,
+          "weight": 1,
+          "observed": 3893
+        },
+        {
+          "originalId": 134,
+          "weight": 1,
+          "observed": 4109
+        },
+        {
+          "originalId": 135,
+          "weight": 1,
+          "observed": 3931
+        }
+      ]
+    },
+    {
+      "name": "15:4:items:4",
+      "trials": 100000,
+      "maxSigma": 1.52227,
+      "entries": [
+        {
+          "originalId": 18,
+          "weight": 1724,
+          "observed": 17108
+        },
+        {
+          "originalId": 26,
+          "weight": 2069,
+          "observed": 20697
+        },
+        {
+          "originalId": 27,
+          "weight": 1724,
+          "observed": 17325
+        },
+        {
+          "originalId": 38,
+          "weight": 2414,
+          "observed": 24346
+        },
+        {
+          "originalId": 40,
+          "weight": 2069,
+          "observed": 20524
+        }
+      ]
+    },
+    {
+      "name": "15:4:items:5",
+      "trials": 100000,
+      "maxSigma": 1.93579,
+      "entries": [
+        {
+          "originalId": 188,
+          "weight": 374,
+          "observed": 3730
+        },
+        {
+          "originalId": 189,
+          "weight": 187,
+          "observed": 1884
+        },
+        {
+          "originalId": 190,
+          "weight": 374,
+          "observed": 3717
+        },
+        {
+          "originalId": 191,
+          "weight": 186,
+          "observed": 1912
+        },
+        {
+          "originalId": 192,
+          "weight": 187,
+          "observed": 1876
+        },
+        {
+          "originalId": 196,
+          "weight": 47,
+          "observed": 475
+        },
+        {
+          "originalId": 197,
+          "weight": 187,
+          "observed": 1893
+        },
+        {
+          "originalId": 199,
+          "weight": 47,
+          "observed": 468
+        },
+        {
+          "originalId": 202,
+          "weight": 140,
+          "observed": 1368
+        },
+        {
+          "originalId": 203,
+          "weight": 374,
+          "observed": 3711
+        },
+        {
+          "originalId": 204,
+          "weight": 187,
+          "observed": 1917
+        },
+        {
+          "originalId": 206,
+          "weight": 187,
+          "observed": 1813
+        },
+        {
+          "originalId": 207,
+          "weight": 187,
+          "observed": 1872
+        },
+        {
+          "originalId": 209,
+          "weight": 93,
+          "observed": 906
+        },
+        {
+          "originalId": 210,
+          "weight": 47,
+          "observed": 460
+        },
+        {
+          "originalId": 211,
+          "weight": 93,
+          "observed": 932
+        },
+        {
+          "originalId": 215,
+          "weight": 94,
+          "observed": 951
+        },
+        {
+          "originalId": 218,
+          "weight": 373,
+          "observed": 3614
+        },
+        {
+          "originalId": 220,
+          "weight": 374,
+          "observed": 3734
+        },
+        {
+          "originalId": 221,
+          "weight": 234,
+          "observed": 2361
+        },
+        {
+          "originalId": 227,
+          "weight": 187,
+          "observed": 1836
+        },
+        {
+          "originalId": 228,
+          "weight": 187,
+          "observed": 1805
+        },
+        {
+          "originalId": 231,
+          "weight": 374,
+          "observed": 3787
+        },
+        {
+          "originalId": 232,
+          "weight": 187,
+          "observed": 1811
+        },
+        {
+          "originalId": 234,
+          "weight": 140,
+          "observed": 1439
+        },
+        {
+          "originalId": 238,
+          "weight": 187,
+          "observed": 1879
+        },
+        {
+          "originalId": 239,
+          "weight": 187,
+          "observed": 1871
+        },
+        {
+          "originalId": 240,
+          "weight": 373,
+          "observed": 3678
+        },
+        {
+          "originalId": 241,
+          "weight": 187,
+          "observed": 1862
+        },
+        {
+          "originalId": 242,
+          "weight": 187,
+          "observed": 1914
+        },
+        {
+          "originalId": 250,
+          "weight": 374,
+          "observed": 3834
+        },
+        {
+          "originalId": 251,
+          "weight": 187,
+          "observed": 1863
+        },
+        {
+          "originalId": 252,
+          "weight": 47,
+          "observed": 447
+        },
+        {
+          "originalId": 253,
+          "weight": 187,
+          "observed": 1934
+        },
+        {
+          "originalId": 254,
+          "weight": 373,
+          "observed": 3750
+        },
+        {
+          "originalId": 255,
+          "weight": 47,
+          "observed": 454
+        },
+        {
+          "originalId": 257,
+          "weight": 187,
+          "observed": 1871
+        },
+        {
+          "originalId": 260,
+          "weight": 280,
+          "observed": 2791
+        },
+        {
+          "originalId": 261,
+          "weight": 374,
+          "observed": 3817
+        },
+        {
+          "originalId": 262,
+          "weight": 281,
+          "observed": 2798
+        },
+        {
+          "originalId": 265,
+          "weight": 374,
+          "observed": 3805
+        },
+        {
+          "originalId": 267,
+          "weight": 373,
+          "observed": 3755
+        },
+        {
+          "originalId": 268,
+          "weight": 187,
+          "observed": 1854
+        },
+        {
+          "originalId": 272,
+          "weight": 187,
+          "observed": 1822
+        },
+        {
+          "originalId": 275,
+          "weight": 187,
+          "observed": 1839
+        },
+        {
+          "originalId": 276,
+          "weight": 187,
+          "observed": 1890
+        }
+      ]
+    },
+    {
+      "name": "15:4:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:4:items:9",
+      "trials": 100000,
+      "maxSigma": 2.15283,
+      "entries": [
+        {
+          "originalId": 312,
+          "weight": 556,
+          "observed": 5597
+        },
+        {
+          "originalId": 313,
+          "weight": 555,
+          "observed": 5604
+        },
+        {
+          "originalId": 314,
+          "weight": 556,
+          "observed": 5573
+        },
+        {
+          "originalId": 315,
+          "weight": 555,
+          "observed": 5548
+        },
+        {
+          "originalId": 318,
+          "weight": 556,
+          "observed": 5659
+        },
+        {
+          "originalId": 319,
+          "weight": 555,
+          "observed": 5576
+        },
+        {
+          "originalId": 325,
+          "weight": 556,
+          "observed": 5505
+        },
+        {
+          "originalId": 326,
+          "weight": 555,
+          "observed": 5624
+        },
+        {
+          "originalId": 327,
+          "weight": 556,
+          "observed": 5474
+        },
+        {
+          "originalId": 330,
+          "weight": 1111,
+          "observed": 11048
+        },
+        {
+          "originalId": 333,
+          "weight": 556,
+          "observed": 5609
+        },
+        {
+          "originalId": 335,
+          "weight": 555,
+          "observed": 5522
+        },
+        {
+          "originalId": 347,
+          "weight": 556,
+          "observed": 5573
+        },
+        {
+          "originalId": 354,
+          "weight": 555,
+          "observed": 5600
+        },
+        {
+          "originalId": 357,
+          "weight": 556,
+          "observed": 5404
+        },
+        {
+          "originalId": 358,
+          "weight": 555,
+          "observed": 5588
+        },
+        {
+          "originalId": 359,
+          "weight": 556,
+          "observed": 5496
+        }
+      ]
+    },
+    {
+      "name": "15:4:categories",
+      "trials": 100000,
+      "maxSigma": 1.66424,
+      "entries": [
+        {
+          "originalId": 0,
+          "weight": 855,
+          "observed": 8486
+        },
+        {
+          "originalId": 2,
+          "weight": 2136,
+          "observed": 21346
+        },
+        {
+          "originalId": 3,
+          "weight": 1283,
+          "observed": 13006
+        },
+        {
+          "originalId": 4,
+          "weight": 598,
+          "observed": 6064
+        },
+        {
+          "originalId": 5,
+          "weight": 427,
+          "observed": 4219
+        },
+        {
+          "originalId": 6,
+          "weight": 3419,
+          "observed": 34120
+        },
+        {
+          "originalId": 9,
+          "weight": 1282,
+          "observed": 12759
+        }
+      ]
+    },
+    {
+      "name": "15:5:normal",
+      "trials": 100000,
+      "maxSigma": 1.49851,
+      "entries": [
+        {
+          "originalId": 126,
+          "weight": 1111,
+          "observed": 22375
+        },
+        {
+          "originalId": 237,
+          "weight": 1111,
+          "observed": 22185
+        },
+        {
+          "originalId": 240,
+          "weight": 556,
+          "observed": 11149
+        },
+        {
+          "originalId": 341,
+          "weight": 1111,
+          "observed": 22268
+        },
+        {
+          "originalId": 342,
+          "weight": 1111,
+          "observed": 22023
+        }
+      ]
+    },
+    {
+      "name": "15:5:items:0",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 2,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:5:items:2",
+      "trials": 100000,
+      "maxSigma": 2.30789,
+      "entries": [
+        {
+          "originalId": 69,
+          "weight": 620,
+          "observed": 6024
+        },
+        {
+          "originalId": 70,
+          "weight": 2713,
+          "observed": 27187
+        },
+        {
+          "originalId": 73,
+          "weight": 388,
+          "observed": 3894
+        },
+        {
+          "originalId": 76,
+          "weight": 465,
+          "observed": 4610
+        },
+        {
+          "originalId": 81,
+          "weight": 1163,
+          "observed": 11753
+        },
+        {
+          "originalId": 82,
+          "weight": 542,
+          "observed": 5523
+        },
+        {
+          "originalId": 84,
+          "weight": 776,
+          "observed": 7804
+        },
+        {
+          "originalId": 86,
+          "weight": 542,
+          "observed": 5428
+        },
+        {
+          "originalId": 87,
+          "weight": 775,
+          "observed": 7826
+        },
+        {
+          "originalId": 91,
+          "weight": 776,
+          "observed": 7708
+        },
+        {
+          "originalId": 99,
+          "weight": 697,
+          "observed": 6884
+        },
+        {
+          "originalId": 104,
+          "weight": 78,
+          "observed": 797
+        },
+        {
+          "originalId": 105,
+          "weight": 77,
+          "observed": 736
+        },
+        {
+          "originalId": 106,
+          "weight": 78,
+          "observed": 812
+        },
+        {
+          "originalId": 107,
+          "weight": 77,
+          "observed": 749
+        },
+        {
+          "originalId": 116,
+          "weight": 78,
+          "observed": 770
+        },
+        {
+          "originalId": 117,
+          "weight": 77,
+          "observed": 748
+        },
+        {
+          "originalId": 118,
+          "weight": 78,
+          "observed": 747
+        }
+      ]
+    },
+    {
+      "name": "15:5:items:3",
+      "trials": 100000,
+      "maxSigma": 2.54971,
+      "entries": [
+        {
+          "originalId": 109,
+          "weight": 8,
+          "observed": 32046
+        },
+        {
+          "originalId": 119,
+          "weight": 1,
+          "observed": 4070
+        },
+        {
+          "originalId": 120,
+          "weight": 1,
+          "observed": 3976
+        },
+        {
+          "originalId": 121,
+          "weight": 1,
+          "observed": 3992
+        },
+        {
+          "originalId": 122,
+          "weight": 1,
+          "observed": 3971
+        },
+        {
+          "originalId": 123,
+          "weight": 1,
+          "observed": 3842
+        },
+        {
+          "originalId": 124,
+          "weight": 1,
+          "observed": 3916
+        },
+        {
+          "originalId": 125,
+          "weight": 1,
+          "observed": 4046
+        },
+        {
+          "originalId": 126,
+          "weight": 1,
+          "observed": 3967
+        },
+        {
+          "originalId": 127,
+          "weight": 1,
+          "observed": 4057
+        },
+        {
+          "originalId": 128,
+          "weight": 1,
+          "observed": 3944
+        },
+        {
+          "originalId": 129,
+          "weight": 1,
+          "observed": 4037
+        },
+        {
+          "originalId": 130,
+          "weight": 1,
+          "observed": 4043
+        },
+        {
+          "originalId": 131,
+          "weight": 1,
+          "observed": 4027
+        },
+        {
+          "originalId": 132,
+          "weight": 1,
+          "observed": 3964
+        },
+        {
+          "originalId": 133,
+          "weight": 1,
+          "observed": 4082
+        },
+        {
+          "originalId": 134,
+          "weight": 1,
+          "observed": 3987
+        },
+        {
+          "originalId": 135,
+          "weight": 1,
+          "observed": 4033
+        }
+      ]
+    },
+    {
+      "name": "15:5:items:4",
+      "trials": 100000,
+      "maxSigma": 2.11345,
+      "entries": [
+        {
+          "originalId": 18,
+          "weight": 1724,
+          "observed": 17455
+        },
+        {
+          "originalId": 26,
+          "weight": 2069,
+          "observed": 20672
+        },
+        {
+          "originalId": 27,
+          "weight": 1724,
+          "observed": 17080
+        },
+        {
+          "originalId": 38,
+          "weight": 2414,
+          "observed": 23854
+        },
+        {
+          "originalId": 40,
+          "weight": 2069,
+          "observed": 20939
+        }
+      ]
+    },
+    {
+      "name": "15:5:items:5",
+      "trials": 100000,
+      "maxSigma": 2.35776,
+      "entries": [
+        {
+          "originalId": 188,
+          "weight": 374,
+          "observed": 3802
+        },
+        {
+          "originalId": 189,
+          "weight": 187,
+          "observed": 1835
+        },
+        {
+          "originalId": 190,
+          "weight": 374,
+          "observed": 3647
+        },
+        {
+          "originalId": 191,
+          "weight": 186,
+          "observed": 1920
+        },
+        {
+          "originalId": 192,
+          "weight": 187,
+          "observed": 1892
+        },
+        {
+          "originalId": 196,
+          "weight": 47,
+          "observed": 469
+        },
+        {
+          "originalId": 197,
+          "weight": 187,
+          "observed": 1905
+        },
+        {
+          "originalId": 199,
+          "weight": 47,
+          "observed": 462
+        },
+        {
+          "originalId": 202,
+          "weight": 140,
+          "observed": 1325
+        },
+        {
+          "originalId": 203,
+          "weight": 374,
+          "observed": 3793
+        },
+        {
+          "originalId": 204,
+          "weight": 187,
+          "observed": 1831
+        },
+        {
+          "originalId": 206,
+          "weight": 187,
+          "observed": 1886
+        },
+        {
+          "originalId": 207,
+          "weight": 187,
+          "observed": 1812
+        },
+        {
+          "originalId": 209,
+          "weight": 93,
+          "observed": 953
+        },
+        {
+          "originalId": 210,
+          "weight": 47,
+          "observed": 466
+        },
+        {
+          "originalId": 211,
+          "weight": 93,
+          "observed": 900
+        },
+        {
+          "originalId": 215,
+          "weight": 94,
+          "observed": 891
+        },
+        {
+          "originalId": 218,
+          "weight": 373,
+          "observed": 3819
+        },
+        {
+          "originalId": 220,
+          "weight": 374,
+          "observed": 3812
+        },
+        {
+          "originalId": 221,
+          "weight": 234,
+          "observed": 2306
+        },
+        {
+          "originalId": 227,
+          "weight": 187,
+          "observed": 1874
+        },
+        {
+          "originalId": 228,
+          "weight": 187,
+          "observed": 1843
+        },
+        {
+          "originalId": 231,
+          "weight": 374,
+          "observed": 3664
+        },
+        {
+          "originalId": 232,
+          "weight": 187,
+          "observed": 1840
+        },
+        {
+          "originalId": 234,
+          "weight": 140,
+          "observed": 1397
+        },
+        {
+          "originalId": 238,
+          "weight": 187,
+          "observed": 1943
+        },
+        {
+          "originalId": 239,
+          "weight": 187,
+          "observed": 1926
+        },
+        {
+          "originalId": 240,
+          "weight": 373,
+          "observed": 3841
+        },
+        {
+          "originalId": 241,
+          "weight": 187,
+          "observed": 1852
+        },
+        {
+          "originalId": 242,
+          "weight": 187,
+          "observed": 1889
+        },
+        {
+          "originalId": 250,
+          "weight": 374,
+          "observed": 3720
+        },
+        {
+          "originalId": 251,
+          "weight": 187,
+          "observed": 1769
+        },
+        {
+          "originalId": 252,
+          "weight": 47,
+          "observed": 461
+        },
+        {
+          "originalId": 253,
+          "weight": 187,
+          "observed": 1847
+        },
+        {
+          "originalId": 254,
+          "weight": 373,
+          "observed": 3655
+        },
+        {
+          "originalId": 255,
+          "weight": 47,
+          "observed": 503
+        },
+        {
+          "originalId": 257,
+          "weight": 187,
+          "observed": 1873
+        },
+        {
+          "originalId": 260,
+          "weight": 280,
+          "observed": 2858
+        },
+        {
+          "originalId": 261,
+          "weight": 374,
+          "observed": 3615
+        },
+        {
+          "originalId": 262,
+          "weight": 281,
+          "observed": 2867
+        },
+        {
+          "originalId": 265,
+          "weight": 374,
+          "observed": 3850
+        },
+        {
+          "originalId": 267,
+          "weight": 373,
+          "observed": 3646
+        },
+        {
+          "originalId": 268,
+          "weight": 187,
+          "observed": 1799
+        },
+        {
+          "originalId": 272,
+          "weight": 187,
+          "observed": 1881
+        },
+        {
+          "originalId": 275,
+          "weight": 187,
+          "observed": 1914
+        },
+        {
+          "originalId": 276,
+          "weight": 187,
+          "observed": 1947
+        }
+      ]
+    },
+    {
+      "name": "15:5:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:5:items:9",
+      "trials": 100000,
+      "maxSigma": 2.32039,
+      "entries": [
+        {
+          "originalId": 312,
+          "weight": 556,
+          "observed": 5530
+        },
+        {
+          "originalId": 313,
+          "weight": 555,
+          "observed": 5623
+        },
+        {
+          "originalId": 314,
+          "weight": 556,
+          "observed": 5535
+        },
+        {
+          "originalId": 315,
+          "weight": 555,
+          "observed": 5531
+        },
+        {
+          "originalId": 318,
+          "weight": 556,
+          "observed": 5533
+        },
+        {
+          "originalId": 319,
+          "weight": 555,
+          "observed": 5608
+        },
+        {
+          "originalId": 325,
+          "weight": 556,
+          "observed": 5553
+        },
+        {
+          "originalId": 326,
+          "weight": 555,
+          "observed": 5718
+        },
+        {
+          "originalId": 327,
+          "weight": 556,
+          "observed": 5594
+        },
+        {
+          "originalId": 330,
+          "weight": 1111,
+          "observed": 11081
+        },
+        {
+          "originalId": 333,
+          "weight": 556,
+          "observed": 5622
+        },
+        {
+          "originalId": 335,
+          "weight": 555,
+          "observed": 5463
+        },
+        {
+          "originalId": 347,
+          "weight": 556,
+          "observed": 5470
+        },
+        {
+          "originalId": 354,
+          "weight": 555,
+          "observed": 5454
+        },
+        {
+          "originalId": 357,
+          "weight": 556,
+          "observed": 5629
+        },
+        {
+          "originalId": 358,
+          "weight": 555,
+          "observed": 5546
+        },
+        {
+          "originalId": 359,
+          "weight": 556,
+          "observed": 5510
+        }
+      ]
+    },
+    {
+      "name": "15:5:categories",
+      "trials": 100000,
+      "maxSigma": 1.2009,
+      "entries": [
+        {
+          "originalId": 0,
+          "weight": 855,
+          "observed": 8633
+        },
+        {
+          "originalId": 2,
+          "weight": 2136,
+          "observed": 21290
+        },
+        {
+          "originalId": 3,
+          "weight": 1283,
+          "observed": 12703
+        },
+        {
+          "originalId": 4,
+          "weight": 598,
+          "observed": 5980
+        },
+        {
+          "originalId": 5,
+          "weight": 427,
+          "observed": 4217
+        },
+        {
+          "originalId": 6,
+          "weight": 3419,
+          "observed": 34313
+        },
+        {
+          "originalId": 9,
+          "weight": 1282,
+          "observed": 12864
+        }
+      ]
+    },
+    {
+      "name": "15:6:normal",
+      "trials": 100000,
+      "maxSigma": 0.905291,
+      "entries": [
+        {
+          "originalId": 126,
+          "weight": 1111,
+          "observed": 22203
+        },
+        {
+          "originalId": 237,
+          "weight": 1111,
+          "observed": 22235
+        },
+        {
+          "originalId": 240,
+          "weight": 556,
+          "observed": 11210
+        },
+        {
+          "originalId": 341,
+          "weight": 1111,
+          "observed": 22222
+        },
+        {
+          "originalId": 342,
+          "weight": 1111,
+          "observed": 22130
+        }
+      ]
+    },
+    {
+      "name": "15:6:items:0",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 2,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:6:items:2",
+      "trials": 100000,
+      "maxSigma": 1.79731,
+      "entries": [
+        {
+          "originalId": 69,
+          "weight": 620,
+          "observed": 6243
+        },
+        {
+          "originalId": 70,
+          "weight": 2713,
+          "observed": 27127
+        },
+        {
+          "originalId": 73,
+          "weight": 388,
+          "observed": 3943
+        },
+        {
+          "originalId": 76,
+          "weight": 465,
+          "observed": 4680
+        },
+        {
+          "originalId": 81,
+          "weight": 1163,
+          "observed": 11660
+        },
+        {
+          "originalId": 82,
+          "weight": 542,
+          "observed": 5320
+        },
+        {
+          "originalId": 84,
+          "weight": 776,
+          "observed": 7813
+        },
+        {
+          "originalId": 86,
+          "weight": 542,
+          "observed": 5391
+        },
+        {
+          "originalId": 87,
+          "weight": 775,
+          "observed": 7708
+        },
+        {
+          "originalId": 91,
+          "weight": 776,
+          "observed": 7843
+        },
+        {
+          "originalId": 99,
+          "weight": 697,
+          "observed": 6916
+        },
+        {
+          "originalId": 104,
+          "weight": 78,
+          "observed": 743
+        },
+        {
+          "originalId": 105,
+          "weight": 77,
+          "observed": 808
+        },
+        {
+          "originalId": 106,
+          "weight": 78,
+          "observed": 770
+        },
+        {
+          "originalId": 107,
+          "weight": 77,
+          "observed": 743
+        },
+        {
+          "originalId": 116,
+          "weight": 78,
+          "observed": 798
+        },
+        {
+          "originalId": 117,
+          "weight": 77,
+          "observed": 764
+        },
+        {
+          "originalId": 118,
+          "weight": 78,
+          "observed": 730
+        }
+      ]
+    },
+    {
+      "name": "15:6:items:3",
+      "trials": 100000,
+      "maxSigma": 2.7595,
+      "entries": [
+        {
+          "originalId": 109,
+          "weight": 8,
+          "observed": 31820
+        },
+        {
+          "originalId": 119,
+          "weight": 1,
+          "observed": 4018
+        },
+        {
+          "originalId": 120,
+          "weight": 1,
+          "observed": 3985
+        },
+        {
+          "originalId": 121,
+          "weight": 1,
+          "observed": 3982
+        },
+        {
+          "originalId": 122,
+          "weight": 1,
+          "observed": 3983
+        },
+        {
+          "originalId": 123,
+          "weight": 1,
+          "observed": 4029
+        },
+        {
+          "originalId": 124,
+          "weight": 1,
+          "observed": 4120
+        },
+        {
+          "originalId": 125,
+          "weight": 1,
+          "observed": 3907
+        },
+        {
+          "originalId": 126,
+          "weight": 1,
+          "observed": 4020
+        },
+        {
+          "originalId": 127,
+          "weight": 1,
+          "observed": 4171
+        },
+        {
+          "originalId": 128,
+          "weight": 1,
+          "observed": 4075
+        },
+        {
+          "originalId": 129,
+          "weight": 1,
+          "observed": 4085
+        },
+        {
+          "originalId": 130,
+          "weight": 1,
+          "observed": 3958
+        },
+        {
+          "originalId": 131,
+          "weight": 1,
+          "observed": 3989
+        },
+        {
+          "originalId": 132,
+          "weight": 1,
+          "observed": 3985
+        },
+        {
+          "originalId": 133,
+          "weight": 1,
+          "observed": 3897
+        },
+        {
+          "originalId": 134,
+          "weight": 1,
+          "observed": 4031
+        },
+        {
+          "originalId": 135,
+          "weight": 1,
+          "observed": 3945
+        }
+      ]
+    },
+    {
+      "name": "15:6:items:4",
+      "trials": 100000,
+      "maxSigma": 1.22668,
+      "entries": [
+        {
+          "originalId": 18,
+          "weight": 1724,
+          "observed": 17377
+        },
+        {
+          "originalId": 26,
+          "weight": 2069,
+          "observed": 20683
+        },
+        {
+          "originalId": 27,
+          "weight": 1724,
+          "observed": 17202
+        },
+        {
+          "originalId": 38,
+          "weight": 2414,
+          "observed": 23974
+        },
+        {
+          "originalId": 40,
+          "weight": 2069,
+          "observed": 20764
+        }
+      ]
+    },
+    {
+      "name": "15:6:items:5",
+      "trials": 100000,
+      "maxSigma": 2.66123,
+      "entries": [
+        {
+          "originalId": 188,
+          "weight": 374,
+          "observed": 3730
+        },
+        {
+          "originalId": 189,
+          "weight": 187,
+          "observed": 1893
+        },
+        {
+          "originalId": 190,
+          "weight": 374,
+          "observed": 3719
+        },
+        {
+          "originalId": 191,
+          "weight": 186,
+          "observed": 1815
+        },
+        {
+          "originalId": 192,
+          "weight": 187,
+          "observed": 1869
+        },
+        {
+          "originalId": 196,
+          "weight": 47,
+          "observed": 490
+        },
+        {
+          "originalId": 197,
+          "weight": 187,
+          "observed": 1885
+        },
+        {
+          "originalId": 199,
+          "weight": 47,
+          "observed": 451
+        },
+        {
+          "originalId": 202,
+          "weight": 140,
+          "observed": 1351
+        },
+        {
+          "originalId": 203,
+          "weight": 374,
+          "observed": 3713
+        },
+        {
+          "originalId": 204,
+          "weight": 187,
+          "observed": 1839
+        },
+        {
+          "originalId": 206,
+          "weight": 187,
+          "observed": 1924
+        },
+        {
+          "originalId": 207,
+          "weight": 187,
+          "observed": 1883
+        },
+        {
+          "originalId": 209,
+          "weight": 93,
+          "observed": 982
+        },
+        {
+          "originalId": 210,
+          "weight": 47,
+          "observed": 479
+        },
+        {
+          "originalId": 211,
+          "weight": 93,
+          "observed": 946
+        },
+        {
+          "originalId": 215,
+          "weight": 94,
+          "observed": 944
+        },
+        {
+          "originalId": 218,
+          "weight": 373,
+          "observed": 3711
+        },
+        {
+          "originalId": 220,
+          "weight": 374,
+          "observed": 3724
+        },
+        {
+          "originalId": 221,
+          "weight": 234,
+          "observed": 2394
+        },
+        {
+          "originalId": 227,
+          "weight": 187,
+          "observed": 1857
+        },
+        {
+          "originalId": 228,
+          "weight": 187,
+          "observed": 1831
+        },
+        {
+          "originalId": 231,
+          "weight": 374,
+          "observed": 3797
+        },
+        {
+          "originalId": 232,
+          "weight": 187,
+          "observed": 1940
+        },
+        {
+          "originalId": 234,
+          "weight": 140,
+          "observed": 1410
+        },
+        {
+          "originalId": 238,
+          "weight": 187,
+          "observed": 1845
+        },
+        {
+          "originalId": 239,
+          "weight": 187,
+          "observed": 1916
+        },
+        {
+          "originalId": 240,
+          "weight": 373,
+          "observed": 3776
+        },
+        {
+          "originalId": 241,
+          "weight": 187,
+          "observed": 1814
+        },
+        {
+          "originalId": 242,
+          "weight": 187,
+          "observed": 1929
+        },
+        {
+          "originalId": 250,
+          "weight": 374,
+          "observed": 3731
+        },
+        {
+          "originalId": 251,
+          "weight": 187,
+          "observed": 1886
+        },
+        {
+          "originalId": 252,
+          "weight": 47,
+          "observed": 499
+        },
+        {
+          "originalId": 253,
+          "weight": 187,
+          "observed": 1964
+        },
+        {
+          "originalId": 254,
+          "weight": 373,
+          "observed": 3777
+        },
+        {
+          "originalId": 255,
+          "weight": 47,
+          "observed": 430
+        },
+        {
+          "originalId": 257,
+          "weight": 187,
+          "observed": 1984
+        },
+        {
+          "originalId": 260,
+          "weight": 280,
+          "observed": 2718
+        },
+        {
+          "originalId": 261,
+          "weight": 374,
+          "observed": 3590
+        },
+        {
+          "originalId": 262,
+          "weight": 281,
+          "observed": 2727
+        },
+        {
+          "originalId": 265,
+          "weight": 374,
+          "observed": 3747
+        },
+        {
+          "originalId": 267,
+          "weight": 373,
+          "observed": 3650
+        },
+        {
+          "originalId": 268,
+          "weight": 187,
+          "observed": 1832
+        },
+        {
+          "originalId": 272,
+          "weight": 187,
+          "observed": 1846
+        },
+        {
+          "originalId": 275,
+          "weight": 187,
+          "observed": 1856
+        },
+        {
+          "originalId": 276,
+          "weight": 187,
+          "observed": 1906
+        }
+      ]
+    },
+    {
+      "name": "15:6:items:6",
+      "trials": 100000,
+      "maxSigma": 0,
+      "entries": [
+        {
+          "originalId": 183,
+          "weight": 1,
+          "observed": 100000
+        }
+      ]
+    },
+    {
+      "name": "15:6:items:9",
+      "trials": 100000,
+      "maxSigma": 2.52543,
+      "entries": [
+        {
+          "originalId": 312,
+          "weight": 556,
+          "observed": 5586
+        },
+        {
+          "originalId": 313,
+          "weight": 555,
+          "observed": 5552
+        },
+        {
+          "originalId": 314,
+          "weight": 556,
+          "observed": 5379
+        },
+        {
+          "originalId": 315,
+          "weight": 555,
+          "observed": 5510
+        },
+        {
+          "originalId": 318,
+          "weight": 556,
+          "observed": 5581
+        },
+        {
+          "originalId": 319,
+          "weight": 555,
+          "observed": 5633
+        },
+        {
+          "originalId": 325,
+          "weight": 556,
+          "observed": 5557
+        },
+        {
+          "originalId": 326,
+          "weight": 555,
+          "observed": 5635
+        },
+        {
+          "originalId": 327,
+          "weight": 556,
+          "observed": 5377
+        },
+        {
+          "originalId": 330,
+          "weight": 1111,
+          "observed": 11127
+        },
+        {
+          "originalId": 333,
+          "weight": 556,
+          "observed": 5524
+        },
+        {
+          "originalId": 335,
+          "weight": 555,
+          "observed": 5618
+        },
+        {
+          "originalId": 347,
+          "weight": 556,
+          "observed": 5616
+        },
+        {
+          "originalId": 354,
+          "weight": 555,
+          "observed": 5484
+        },
+        {
+          "originalId": 357,
+          "weight": 556,
+          "observed": 5596
+        },
+        {
+          "originalId": 358,
+          "weight": 555,
+          "observed": 5607
+        },
+        {
+          "originalId": 359,
+          "weight": 556,
+          "observed": 5618
+        }
+      ]
+    },
+    {
+      "name": "15:6:categories",
+      "trials": 100000,
+      "maxSigma": 1.79813,
+      "entries": [
+        {
+          "originalId": 0,
+          "weight": 855,
+          "observed": 8391
+        },
+        {
+          "originalId": 2,
+          "weight": 2136,
+          "observed": 21517
+        },
+        {
+          "originalId": 3,
+          "weight": 1283,
+          "observed": 12734
+        },
+        {
+          "originalId": 4,
+          "weight": 598,
+          "observed": 6018
+        },
+        {
+          "originalId": 5,
+          "weight": 427,
+          "observed": 4286
+        },
+        {
+          "originalId": 6,
+          "weight": 3419,
+          "observed": 34221
+        },
+        {
+          "originalId": 9,
+          "weight": 1282,
+          "observed": 12833
+        }
+      ]
+    }
+  ],
+  "recordedKST": "2026-10-13",
+  "environment": {
+    "os": "Debian 13/Linux x86_64",
+    "compiler": "GCC 14.2.0",
+    "mode": "Release/C++17"
+  },
+  "baseCommit": "19ea3a1e34b9d157c9a04fef460ddff5ede324b3",
+  "command": "build/b1/pet_exploration_tests assets/original/exploration/dungeon-0/exploration.mdpe assets/original/exploration/dungeon-15/exploration.mdpe",
+  "sourceHashes": {
+    "src/core/exploration.hpp": "c3c3ce5bc2bc638cd3be099ea9ad24748346c29533decbb22af7cfd67f4f0be8",
+    "src/core/exploration_package.hpp": "0ec9ef8194a610b84e092b1ea680445294df7e818a20cbfbd538d001639f4764",
+    "src/core/exploration_io.hpp": "ce2232a7b6f7923ee5079fa086719756615e3915fe1dbd95c049aa907508887b",
+    "src/core/exploration.cpp": "8dd19ed4fa6c52468b4db0b4b635951eac9f8bf505938a248ea2c73fff3698a4",
+    "src/core/exploration_package.cpp": "97c379ee548b69069401260e551dd1e78ebadb7aea77c63ecda6397c4af16170",
+    "src/core/state_store.cpp": "de5e84fc052462809cbdaf8e9e39f7d47f47f07601684f9432b6277b977fd25c",
+    "tools/mdpet/b1.py": "7934bdefa8ad5ae020260d4333755812f2bf8e8cda7ff4f0a3c1b95153e2dca2",
+    "tests/exploration_tests.cpp": "ccd9792452d4bdd4355aa47340a3dd8e3c04a52b7ecefff9a8eff3fdd8fc9da7"
+  }
+}

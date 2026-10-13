@@ -1,0 +1,112 @@
+[
+  {
+    "a3Remaining": "pending",
+    "aCatalogueHash": "834786ad283bc5980333867988192522891ca3323a996b05b6c6a1ee2ae27bb4",
+    "assetVersion": "67a33aa911a679e6b16e14442f267d5221734c72008529a85ce779fc533bf893",
+    "dungeonId": 0,
+    "floorCount": 3,
+    "friendGraphics": "missing species remain logical markers; original weights preserved",
+    "paletteAnimation": "pending",
+    "romHashAfter": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "romHashBefore": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "stairsGraphic": "unresolved; logical marker only",
+    "status": "pass",
+    "tilesets": [
+      {
+        "atlasHash": "dcf06c903c2e8c2ec38a03a6a7a815231049537151cc693f453c1bf1eada6acc",
+        "count": 400,
+        "id": 0,
+        "package": "tileset-0.mdpa",
+        "provenance": {
+          "credit": "Nintendo / Pokémon / CHUNSOFT",
+          "paletteAnimation": "pending; static DPL palette only",
+          "refs": [
+            {
+              "name": "dungeon0.dpla",
+              "sha256": "d3c0a55635d765764902eb89a2904200c6aabd2e22766d036dd20362c7962224",
+              "slot": 0
+            },
+            {
+              "name": "dungeon0.dma",
+              "sha256": "ff27b6ccddd9a316dceee0fe7bcaa57e30a0ab7ad3c33146cf96dc16090cec76",
+              "slot": 170
+            },
+            {
+              "name": "dungeon0.dpc",
+              "sha256": "e583b55005a6c2e7b09e295cf790c552297b00b8bc4056665295c1ae3a50101f",
+              "slot": 340
+            },
+            {
+              "name": "dungeon0.dpci",
+              "sha256": "f056ebc136bb3cc0669b07290a116388d195d0bd78900be06b3f04426025cabe",
+              "slot": 510
+            },
+            {
+              "name": "dungeon0.dpl",
+              "sha256": "bd6eda0d35ebce1092838785c067be7df012cc48d0ba03cec9e554b6f4922de0",
+              "slot": 680
+            }
+          ],
+          "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+          "sourceKind": "rom",
+          "tilesetId": 0
+        }
+      }
+    ]
+  },
+  {
+    "a3Remaining": "pending",
+    "aCatalogueHash": "834786ad283bc5980333867988192522891ca3323a996b05b6c6a1ee2ae27bb4",
+    "assetVersion": "06e80ef75e7693648644ed9811c60094be6783d3d2d323a7a311af5f287c2359",
+    "dungeonId": 15,
+    "floorCount": 7,
+    "friendGraphics": "missing species remain logical markers; original weights preserved",
+    "paletteAnimation": "pending",
+    "romHashAfter": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "romHashBefore": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "stairsGraphic": "unresolved; logical marker only",
+    "status": "pass",
+    "tilesets": [
+      {
+        "atlasHash": "b7984149ef2406d21ae9423912ef9540f9c5ee836d7b1cae9dbefe387e4bb2dd",
+        "count": 400,
+        "id": 12,
+        "package": "tileset-12.mdpa",
+        "provenance": {
+          "credit": "Nintendo / Pokémon / CHUNSOFT",
+          "paletteAnimation": "pending; static DPL palette only",
+          "refs": [
+            {
+              "name": "dungeon12.dpla",
+              "sha256": "bffde404118d3c08bb470f08b7ccdbe08a7822e9da71677ad70ef843dbfaa21a",
+              "slot": 12
+            },
+            {
+              "name": "dungeon12.dma",
+              "sha256": "3df7d293054a99b881323749d6405abd3192d5582a9cb28c247b2d170018bbe0",
+              "slot": 182
+            },
+            {
+              "name": "dungeon12.dpc",
+              "sha256": "6de9e8a9017e86982e9ea98f4a54f72d347a5de463e817d5242b6db60231430d",
+              "slot": 352
+            },
+            {
+              "name": "dungeon12.dpci",
+              "sha256": "6e44c1be6df105cc9c8639628f1603ef41b1417f85e3648bf6d5760b8927e6a0",
+              "slot": 522
+            },
+            {
+              "name": "dungeon12.dpl",
+              "sha256": "1c23bf1900b362a883aff65a20f100b2646c66d4113afe2662c7063e5506e31a",
+              "slot": 692
+            }
+          ],
+          "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+          "sourceKind": "rom",
+          "tilesetId": 12
+        }
+      }
+    ]
+  }
+]

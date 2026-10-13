@@ -1,9 +1,21 @@
 # 현재 상태
 
 ## 현재 단계
-A-3 착수: 최신 origin/work `3097aa6`의 A-1/A-2와 사용자 Windows11 기록을 재사용해 계측·200px 고정 요구를 구현했다. A-1은 대표 범위 완료, A 전체/B/C는 미완료다. 첨부/공유 원작 package의 native 연결과 MSVC Windows CI의 원작 WIC·단기 재생 로그는 pass다. 실제 사용자 OS 사건·원작 시간/그림자·육안 anchor는 pending이다. 추가 수동 테스트를 요청하지 않는다.
+B-1 비전투 코어·선택 원작 타일 변환 구현 및 Linux/native 검증 통과. 사용자 최신 지시로 `origin/work` 기준 `19ea3a1`을 명시 fetch/fast-forward해 기존 A를 재사용했다. A-3 잔여 gate는 pending, B-1 제품 전체/Windows11 탐험·미연결 원작 그림은 pending, B-2는 미착수다. 사용법은 `docs/B1_USAGE.md`.
 
-## 구현·실행된 검사
+이전 A 체크포인트: A-3 착수: 최신 origin/work `3097aa6`의 A-1/A-2와 사용자 Windows11 기록을 재사용해 계측·200px 고정 요구를 구현했다. A-1은 대표 범위 완료, A 전체/B/C는 미완료다. 첨부/공유 원작 package의 native 연결과 MSVC Windows CI의 원작 WIC·단기 재생 로그는 pass다. 실제 사용자 OS 사건·원작 시간/그림자·육안 anchor는 pending이다. 추가 수동 테스트를 요청하지 않는다.
+
+## B-1 구현·검증
+- 중단한 초안2개는 `docs/archive/b1-initial-draft/`에 정확한 bytes/SHA-256으로 보존했다. 최신 코드는 `src/core/exploration.*`, `state_store.cpp`, `exploration_package.*`다.
+- 24×24/2~3방/L통로/4방향 FIFO BFS, 아이템·친구·미방문·계단 목표와 유한 복구, 비복원·예산 제한 배치, 원작 normal/category/conditional 가중치, inventory/onceKey, 마지막 Pose17/귀가, RNG/목표/점유를 포함한 MDES1 저장·복원 구현.
+- A ZIP catalogue와 ROM을 재사용해 dungeon0의3층/tileset0, dungeon15의7층/groupFloor8..14/tileset12를 변환했다. 원작400청크×2/2,304 DMA규칙×2, 기존 MDPA/WIC 재사용. 실행 자산 `assets/original/exploration/`153,968bytes. ROM 전후hash 동일.
+- native seeds1..10000 모두pass:2방4,987/3방5,013, 최대floor139/계단거리55. 기존 Python geometry도 별도로10,000pass/2방5,000/3방5,000/105/50. 원본 Python과 과거 조사 검사는 보존했다.
+- native8,516,166 checks, fixture1,000run, 원작2던전200run, 매action10,839복원과 원작transaction6,000복원, 잘린snapshot9,654prefix/손상10,000거부pass. 76분포×100,000추첨/최대3.56637sigma, SkyTemple와200지도115,200타일 대조pass.
+- Python23tests/Release3CTests/ASan·UBSan3CTests pass. 프로세스 실제kill 후 저장복원·최종 상태/RNG 일치pass. MinGW Windows x64 Release compile/link·선택 설치물4,013,149bytes pass. 크로스 빌드를 실제 Windows 실행으로 판정하지 않는다.
+- Windows `--explore`를 기존200px/WIC/Animator/Surface/one-shot timer에 연결했다. 원작타일·몸체캐시, 표시영역합성, 창고정·snapshot commit 후효과공개, render중단 시탐험중단. MSVC/native Windows CI는push 후확인한다.
+- 원작 아이템/친구/계단 그림은 노랑/파랑/회색 검증표시다. 원작계단unresolved·DPLA/이동보간·전체종/던전·Windows11 탐험/최종성능은pending. 실제 정전·스토리지 장애내구성은미검증이다.
+
+## 기존 A 구현·실행된 검사
 - 기존 `tools/mdpet/` Extractor/Packer/CLI와 대표 ROM 검증을 보존. 최신 origin/work `4d6ed6b`를 받아 A-1을 재구현하지 않았다.
 - A-1 증거: C2SE/0x271A→EoS_NA, ROM91,394,048bytes/hash `6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf`, 원본 불변. profile3, MD1/sprite0·MD4/sprite4, 필수6+선택2 clip/348 atlas frames, 원본3 WAN→merge→atlas484 source frames 비교pass, 2회 추출hash 일치. 상세는 기존 A1 로그/summary.
 - `src/core/` Package/Animator/Surface, `src/windows/` WIC AssetStore/WindowHost/DIB Renderer/CSV 계측/창 state 구현.
@@ -20,10 +32,10 @@ A-3 착수: 최신 origin/work `3097aa6`의 A-1/A-2와 사용자 Windows11 기�
 기존 `text_e.str` unknown byte141은 rawNameHex/actual language=null을 유지하며 unresolved. 전체/도장/종·폼 감사, 원작 wall time, 그림자 표시, 실제 lock/display-off/suspend·DPI변경의 명시 증거와 장기 자원 수명은 pending. 합성 자산의 제출된 성능 기록은 확인했지만 최종 제품 성능으로 확대하지 않는다.
 
 ## 다음 실행 지점
-1. `docs/A3_USAGE.md`와 `docs/logs/2026-10-13-a3-start.md`의 검증·환경 제한을 확인한다. 기존 Windows11 결과는 재사용하며 사용자 수동 테스트 전체 반복을 요청하지 않는다.
-2. 공유 원작 runtime은 `assets/original/runtime/asset-0/asset.mdpa`와 `asset-1/asset.mdpa`다. 이번 재변환 사본도 local/a3-rom-runtime-01/에 있다. 원본 ROM은 assets/original/source/user-supplied.nds에 있다. 이전 변환을 반복하지 않는다. Windows CI의 연결/로그 결과는 저장했다. 원작 anchor/shadow/wall time과 실제 사용자 OS 사건의 남은 증거를 확보해 A 전체를 판정한다. 원작 시간·그림자 표시·미관찰 OS 사건은 pending이다.
-3. 새 CSV는 `tools/check_playback_metrics.py --package ... --inspector ...`로 native 해석과 대조한다. 구버전 사용자 CSV는 새 필드가 없어 이번 검사의 통과 자료로 재사용하지 않는다.
-4. B-2 자동 전투는 B-1 완료 후 선택 단계이며 미확정 상태로 구현하지 않는다. A 전체 완료 전 B/C는 미착수다.
+1. `docs/B1_USAGE.md`와 `docs/validation/2026-10-13-b1-summary.json`을 읽고 최신work/검증 기록을 확인한다. 사용자 원본 ROM·ZIP catalogue·A코드는 모두 저장소에 있어 재업로드·A재작성부터 요청하지 않는다.
+2. `cmake -S . -B build/b1 -DCMAKE_BUILD_TYPE=Release`, build/ctest 후 `pet_explore assets/original/exploration/dungeon-0/exploration.mdpe 42 local/b1-run.mdes`로 저장/복원 코어를 재현한다. 기존 Python geometry는 별도 실행·기록한다.
+3. Windows 설치물의 `Run-B1.ps1` 또는 `--explore assets/exploration/dungeon-0/exploration.mdpe`로 기존 원작몸체+타일을 사용한다. 원작 아이템/친구그림·인사cue/계단매핑·DPLA/이동보간을 이어갈 수 있다. 아직 전체완료를 판정하지 않는다.
+4. A-3의 원작wall time/anchor/shadow·실제 사용자OS사건은pending 유지. 이전 Windows11/원작CI 기록은 재사용하고 사용자 수동테스트 전체반복을 요청하지 않는다. B-2 전투는 미확정·미착수다.
 
 
 ## 기록

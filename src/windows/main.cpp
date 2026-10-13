@@ -8,6 +8,7 @@
 #include "windows/assets.hpp"
 #include "core/animator.hpp"
 #include "core/playback_sample.hpp"
+#include "core/exploration_package.hpp"
 #include <algorithm>
 #include <chrono>
 #include <cstring>
@@ -15,6 +16,7 @@
 #include <iomanip>
 #include <limits>
 #include <memory>
+#include <map>
 #include <sstream>
 #include <stdexcept>
 
@@ -92,6 +94,9 @@ std::filesystem::path appDir() {
 struct Options {
     std::filesystem::path package = executableDir() / L"assets/original/asset-0/asset.mdpa";
     std::filesystem::path metrics, report;
+    std::filesystem::path exploration, snapshot;
+    unsigned seed = 1;
+    bool newRun = false;
     unsigned scale = 3, direction = 0;
     uint32_t clip = 0;
     bool loop = true, validate = false, scaleExplicit = false;
@@ -114,6 +119,10 @@ Options options() {
         std::wstring arg = args[i];
         auto value = [&]() -> std::wstring { if (++i == count) throw std::runtime_error("missing option value"); return args[i]; };
         if (arg == L"--package") o.package = value();
+        else if (arg == L"--explore") o.exploration = value();
+        else if (arg == L"--snapshot") o.snapshot = value();
+        else if (arg == L"--seed") o.seed = number(value(), UINT32_MAX);
+        else if (arg == L"--new-run") o.newRun = true;
         else if (arg == L"--metrics") o.metrics = value();
         else if (arg == L"--report") o.report = value();
         else if (arg == L"--clip") o.clip = number(value(), INT32_MAX);
@@ -127,6 +136,8 @@ Options options() {
         else throw std::runtime_error("unknown command-line option");
     }
     if (!o.scale) throw std::runtime_error("scale must be 1..8");
+    if (!o.exploration.empty() && (o.validate || o.scenario != L"manual"))
+        throw std::runtime_error("exploration requires manual scenario");
     if (o.scenario != L"manual" && o.scenario != L"idle" && o.scenario != L"walk" && o.scenario != L"empty" && o.scenario != L"switch" && o.scenario != L"hide")
         throw std::runtime_error("scenario must be manual/idle/walk/empty/switch/hide");
     return o;
@@ -143,6 +154,14 @@ class App {
     Options options_;
     std::filesystem::path directory_;
     Assets assets_;
+    std::optional<ExplorationPackage> explorationPackage_;
+    std::unique_ptr<Explorer> explorer_;
+    std::map<uint32_t, Assets> tiles_;
+    std::array<uint32_t, kTiles> chunks_{};
+    uint64_t chunkVersion_ = 0;
+    int64_t exploreDeadline_ = 0;
+    bool poseFinished_ = false;
+    Surface itemMarker_{5, 5}, friendMarker_{5, 5}, stairsMarker_{7, 7};
     Animator animator_;
     Surface surface_, background_{32, 24};
     std::unique_ptr<Dib> dib_;
@@ -187,6 +206,7 @@ class App {
         paused_ = p;
         if (p) { animator_.pause(now); log("render_pause"); }
         else { animator_.resume(now); log("render_resume (not user activity)"); }
+        if (!p && explorer_) exploreDeadline_ = now + 350000;
         // Hidden window keeps its last submitted pixels; do not resubmit them on restore.
     }
     void startClip(int64_t now) {
@@ -200,7 +220,11 @@ class App {
         log("select clip=" + std::to_string(clip_) + " direction=" + std::to_string(direction_) + " loop=" + std::to_string(loop_));
     }
     PlaybackSample currentPlayback() const {
-        const Point scene{int32_t(size_ / (2 * scale_)), int32_t(size_ / (2 * scale_))};
+        Point scene{int32_t(size_ / (2 * scale_)), int32_t(size_ / (2 * scale_))};
+        if (explorer_ && explorer_->state().phase != Phase::Home) {
+            const int tile = explorer_->state().position;
+            scene = {tile % kWidth * 24 + 12, tile / kWidth * 24 + 12};
+        }
         return playbackSample(assets_.package, clip_, direction_, frame_, animator_.active(), scene, options_.scenario != L"empty");
     }
     void clamp(POINT desired) {
@@ -212,6 +236,7 @@ class App {
         winCheck(SetWindowPos(window_, nullptr, x, y, int(size_), int(size_), SWP_NOACTIVATE | SWP_NOZORDER) != 0, "window position");
     }
     void save() {
+        if (explorer_) saveSnapshot(options_.snapshot, explorer_->state());
         RECT rect{};
         winCheck(GetWindowRect(window_, &rect) != 0, "save window position");
         std::ostringstream s;
@@ -240,7 +265,7 @@ class App {
                 x < -1000000 || x > 1000000 || y < -1000000 || y > 1000000 || (size != 100 && size != 200) || scale < 1 || scale > 8 || (top != 0 && top != 1))
                 throw std::runtime_error("invalid window state/version");
             // Version 1's 100px state remains readable, but cannot resize the fixed viewport.
-            if (!options_.scaleExplicit && options_.scenario == L"manual") scale_ = unsigned(scale);
+            if (!options_.scaleExplicit && options_.scenario == L"manual" && !explorer_) scale_ = unsigned(scale);
             position = {x, y}; topmost_ = top != 0;
         } catch (const std::exception& e) { log(std::string("state ignored: ") + e.what()); }
         return position;
@@ -281,6 +306,9 @@ class App {
         if (cmd) command(cmd);
     }
     void command(UINT id) {
+        if (explorer_ && (id == Loop || id == Finite || id == Stop || id == Reload || id == Background ||
+            (id >= ClipBase && id < ClipBase + assets_.package.clips.size()) ||
+            (id >= DirectionBase && id < DirectionBase + 8))) return;
         int64_t now = nowUs();
         if (id >= ClipBase && id < ClipBase + assets_.package.clips.size()) {
             clip_ = assets_.package.clips[id - ClipBase].id; startClip(now);
@@ -430,25 +458,78 @@ class App {
         log("WTSRegisterSessionNotification OS=" + std::to_string(GetLastError()));
         sessionRetry_ = sessionAttempts_ < 3 ? now + 5000000 : 0;
     }
+    void advanceExploration(int64_t now) {
+        if (!explorer_ || blocked() || now < exploreDeadline_ || explorer_->state().phase == Phase::Home) return;
+        const int oldPosition = explorer_->state().position;
+        auto candidate = *explorer_;
+        const auto event = candidate.advance(poseFinished_);
+        saveSnapshot(options_.snapshot, candidate.state());
+        *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
+        exploreDeadline_ = now + 350000;
+        const auto phase = explorer_->state().phase;
+        uint32_t nextClip = 7; bool nextLoop = true;
+        if (phase == Phase::Pose) { nextClip = 17; nextLoop = false; }
+        else if (event.kind == EventKind::Move) nextClip = 0;
+        if (event.kind == EventKind::Move) {
+            const auto pos = explorer_->state().position;
+            const int dx = pos % kWidth - oldPosition % kWidth, dy = pos / kWidth - oldPosition / kWidth;
+            const unsigned direction = dx > 0 ? 2 : dx < 0 ? 6 : dy < 0 ? 4 : 0;
+            if (direction_ != direction) { direction_ = direction; startClip(now); }
+        }
+        if (clip_ != nextClip || loop_ != nextLoop) { clip_ = nextClip; loop_ = nextLoop; poseFinished_ = false; startClip(now); }
+        if (!event.onceKey.empty()) log("explore onceKey=" + event.onceKey + " originalId=" + std::to_string(event.originalId));
+        if (event.kind == EventKind::ReturnedHome) log("explore home completed=" + std::to_string(explorer_->state().completed));
+        dirty_ = true;
+    }
     void render(int64_t now) {
         synchronizePause(now);
         if (blocked()) return;
+        advanceExploration(now);
         if (animator_.active()) {
             auto result = animator_.advance(now);
             dirty_ = dirty_ || frame_ != result.frame; frame_ = result.frame;
             markers_ += result.markers.size(); finishes_ += result.finishedEvent ? 1 : 0; skippedCycles_ += result.skippedCycles;
             nextFrameDeadline_ = result.nextDeadlineUs;
             if (result.finishedEvent) log("finite finished assetKey=" + assets_.package.assetKey);
+            if (result.finishedEvent && explorer_ && explorer_->state().phase == Phase::Pose) poseFinished_ = true;
         }
         if (!dirty_) return;
         std::vector<Layer> layers;
+        Point camera{0, 0};
+        if (explorer_ && explorer_->state().phase != Phase::Home) {
+            const auto& state = explorer_->state();
+            const auto tileId = state.floors[state.floorIndex].tilesetId;
+            const auto& tileAssets = tiles_.at(tileId);
+            if (chunkVersion_ != state.world.version) {
+                chunks_ = chunkGrid(state.world, explorationPackage_->tileset(tileId));
+                chunkVersion_ = state.world.version;
+            }
+            camera = {state.position % kWidth * 24 + 12 - int32_t(size_ / (2 * scale_)),
+                      state.position / kWidth * 24 + 12 - int32_t(size_ / (2 * scale_))};
+            auto visible = [&](Point p, int size) {
+                return p.x + size >= camera.x && p.y + size >= camera.y &&
+                       p.x < camera.x + int(size_ / scale_) + 1 && p.y < camera.y + int(size_ / scale_) + 1;
+            };
+            const auto& frames = tileAssets.package.frames(0, 0);
+            for (int tile = 0; tile < kTiles; ++tile) {
+                const Point p{tile % kWidth * 24, tile / kWidth * 24};
+                if (visible(p, 24)) layers.push_back({tileAssets.atlas.get(), frames[chunks_[tile]].rect, {0, 0}, p});
+            }
+            const Point stairPos{state.world.stairs % kWidth * 24 + 9, state.world.stairs / kWidth * 24 + 9};
+            if (visible(stairPos, 7)) layers.push_back({&stairsMarker_, {0, 0, 7, 7}, {0, 0}, stairPos});
+            for (const auto& e : state.population.entities) if (!e.done) {
+                const Point p{e.tile % kWidth * 24 + 10, e.tile / kWidth * 24 + 10};
+                if (visible(p, 5)) layers.push_back({e.kind == EntityKind::Item ? &itemMarker_ : &friendMarker_,
+                                                   {0, 0, 5, 5}, {0, 0}, p});
+            }
+        }
         if (backgroundOn_ && options_.scenario != L"empty") layers.push_back({&background_, {0, 0, 32, 24}, {0, 0}, {0, 0}});
         const auto playback = currentPlayback();
         if (playback.frame) {
             const auto& f = *playback.frame;
             layers.push_back({assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition});
         }
-        bool changed = compose(surface_, layers, {0, 0}, scale_);
+        bool changed = compose(surface_, layers, camera, scale_);
         dirty_ = false;
         if (!changed && submitted_) return;
         std::memcpy(dib_->bits, surface_.pixels.data(), surface_.pixels.size());
@@ -474,6 +555,33 @@ public:
         if (!events_) throw std::runtime_error("cannot open event log");
         metrics_ << "elapsed_seconds,cpu_one_core_percent,cpu_all_cores_percent,logical_cores,working_set_bytes,private_bytes,peak_working_set_bytes,render_submissions,decode_count,marker_count,finite_finish_count,skipped_cycles,process_handles,gdi_objects,render_paused,submissions_while_paused,dpi,physical_size,integer_scale,window_x,window_y,switch_count,final_sample," << PlaybackSample::columns << '\n';
         decodes_ = assets_.decoded ? 1 : 0;
+        if (!options_.exploration.empty()) {
+            explorationPackage_ = loadExplorationPackage(options_.exploration);
+            for (const auto& tileset : explorationPackage_->tilesets) {
+                auto tiles = Assets::load(options_.exploration.parent_path() / tileset.packageFile);
+                if (tiles.package.frames(0, 0).size() != tileset.chunkCount)
+                    throw std::runtime_error("tileset atlas count mismatch");
+                decodes_ += tiles.decoded ? 1 : 0; tiles_.emplace(tileset.id, std::move(tiles));
+            }
+            if (options_.snapshot.empty()) options_.snapshot = directory_ / L"exploration.mdes";
+            if (!options_.newRun && std::filesystem::exists(options_.snapshot))
+                explorer_ = std::make_unique<Explorer>(loadSnapshot(options_.snapshot, explorationPackage_->assetVersion));
+            else {
+                explorer_ = std::make_unique<Explorer>(static_cast<uint64_t>(nowUs()), options_.seed,
+                            explorationPackage_->assetVersion, explorationPackage_->floors);
+                saveSnapshot(options_.snapshot, explorer_->state());
+            }
+            assets_.package.frames(0, 0); assets_.package.frames(7, 0); assets_.package.frames(17, 0);
+            if (!options_.scaleExplicit) scale_ = 1;
+            clip_ = explorer_->state().phase == Phase::Pose ? 17 : 7;
+            loop_ = explorer_->state().phase != Phase::Pose;
+            auto marker = [](Surface& s, uint8_t blue, uint8_t green, uint8_t red) {
+                for (size_t offset = 0; offset < s.pixels.size(); offset += 4) {
+                    s.pixels[offset] = blue; s.pixels[offset+1] = green; s.pixels[offset+2] = red; s.pixels[offset+3] = 255;
+                }
+            };
+            marker(itemMarker_, 30, 210, 240); marker(friendMarker_, 230, 150, 70); marker(stairsMarker_, 220, 220, 220);
+        }
         for (unsigned y = 0; y < background_.height; ++y) for (unsigned x = 0; x < background_.width; ++x) {
             auto offset = (y * background_.width + x) * 4;
             uint8_t shade = ((x / 4 + y / 4) % 2) ? 45 : 65;
@@ -515,6 +623,7 @@ public:
         winCheck(tray_, "tray icon (required to restore hidden window)");
         log("start assetKey=" + assets_.package.assetKey + " atlasSha256=" + assets_.package.pngSha256 + " testTimingHz=" + std::to_string(assets_.package.tickHz));
         startClip(nowUs());
+        if (explorer_) exploreDeadline_ = nowUs() + 350000;
         synchronizePause(nowUs());
         MSG initial{};
         while (PeekMessageW(&initial, nullptr, 0, 0, PM_REMOVE)) { TranslateMessage(&initial); DispatchMessageW(&initial); }
@@ -545,6 +654,7 @@ public:
             if (stopDeadline_) deadline = std::min(deadline, stopDeadline_);
             if (sessionRetry_) deadline = std::min(deadline, sessionRetry_);
             if (scenarioDeadline_) deadline = std::min(deadline, scenarioDeadline_);
+            if (explorer_ && !blocked() && explorer_->state().phase != Phase::Home) deadline = std::min(deadline, exploreDeadline_);
             if (!blocked() && animator_.active() && nextFrameDeadline_) deadline = std::min(deadline, *nextFrameDeadline_);
             // Relative timer, one shot; no high-resolution request or 1ms polling.
             LARGE_INTEGER due{}; due.QuadPart = -std::max<int64_t>(1, deadline - nowUs()) * 10;

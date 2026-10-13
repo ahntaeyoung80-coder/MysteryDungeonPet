@@ -5,7 +5,10 @@
 
 A-1 대표 원작 데이터·자산 준비를 완료했고, A-2 Windows 시험 런타임과 공유 패키지 소비를 구현했다. 사용자 Windows11 기록을 재사용해 A-3 계측·200px 고정과 실제 원작 package의 native 통합을 검증 중이다. 추가 수동 테스트 없이 기존 결과를 재사용하고 미검증 항목은 유지한다. 작업 재개 시 [PROJECT_STATE.md](PROJECT_STATE.md)를 먼저 읽는다.
 
+최신 사용자 지시로 A를 재사용한 B-1 비전투 탐험 코어·저장/복원과 원작 tileset0/12 변환을 구현했다. Python geometry와 native10,000 seed 결과를 별도로 보존하며 A-3 잔여 항목과 B-1의 미연결 원작 그림·Windows11 탐험 검증은 pending이다.
+
 - [Codex 개발 파이프라인·1차 실행 명세](docs/DEVELOPMENT_PIPELINE.md)
+- [B-1 비전투 탐험·원작 타일·저장/복원](docs/B1_USAGE.md)
 - [A-3 착수·자동 검사·원작 연결 재개](docs/A3_USAGE.md)
 - [A-3 Windows 원작 패키지 실행](docs/A3_WINDOWS_QUICKSTART.md)
 - [A-2 사용자 실행 점검·A-3 재개](docs/logs/2026-10-13-a2-user-review.md)

@@ -62,3 +62,13 @@
 - assets/original/source/에 정확한 원본 ROM 복사본, 8644개 내부 파일과 시스템 바이너리5개 ZIP, fileId/path/size/SHA-256 인벤토리를 보관한다. .gitignore 예외는 지정된 ROM 경로 하나만 둔다. local 임시 자료·인증 정보 제외는 유지한다.
 - 전체 입력 보관과 전체 지원 판정은 분리한다. 기존 대표2종 패키지도 전체 입력과 함께 보존하며 A-2의 MDPA 변환본을 제공한다. 이후 세션에서 추가 파일 업로드 없이 재추출·최종 통합을 진행할 수 있다.
 - 저장소의 원본 입력을 실행 프로그램 설치물에 자동 포함하지 않는다. 기존 설치 용량/메모리 예산은 선택 실행 자산 기준으로 측정한다.
+
+## 2026-10-13 — 기존 A를 재사용한 B-1 독립 착수
+
+- 최신 사용자 지시로 기준19ea3a1의 origin/work를 명시 fetch/fast-forward했다. A-3 잔여 gate는 pending을 유지하고 B-1 코어부터 진행한다. 원본 ROM·ZIP catalogue·A 추출/정규화·MDPA·Animator·WIC·Surface·창 코드를 재사용한다.
+- C++17 코어는24×24/2~3방/4방향 FIFO BFS/목표 캐시다. RNG는 SplitMix64+편향 없는 bounded draw로 저장한다. Python 연구용 LCG 결과를 native 검사로 치환하지 않고 각각 기록한다.
+- normal MD와 floor_items의 category/conditional 상대 가중치를 보존한다. 새 요청 수/예산과 분리한다. guaranteed item을 먼저 배치하고 미배치 사유를 집계한다. 미확정 guaranteed category 정책은 명시 실패다.
+- 같은 던전의 localFloor0..끝만 이어 탐험한다. B에서 start_after를 다시 계산해 재해석하지 않고 A build_floor 결과의 groupFloor를 보존한다. 이번 범위는 dungeon0/3층과 dungeon15/7층이다.
+- 타일 청크는 기존 MDPA/WIC 계약, 지도·분포·DMA 규칙은 작은 MDPE1, 저장은 CRC32를 포함한 MDES1이다. JSON 파서는 runtime에 추가하지 않는다. schema와 assetVersion 불일치는 거부한다.
+- onceKey·인벤토리·entity 결과·층/Pose·RNG를 같은 durable snapshot에 commit한 뒤 UI 효과를 공개한다. interrupted tmp는 읽지 않는다. 외부 렌더/로그의 exactly-once나 실제 정전 내구성까지 성공으로 보고하지 않는다.
+- 원작 DPC 청크와 DMA3variation을 보존하되 현재 표시 variation0·정적 DPL을 사용한다. 미연결 아이템/친구/계단 그림은 검증 표시로 구분한다. B-1 전체 완료·Windows11 탐험/최종 성능은 아직 판정하지 않으며 B-2 전투는 미착수다.

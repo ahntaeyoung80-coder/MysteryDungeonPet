@@ -14,6 +14,7 @@ try {
     $Exe = "$BuildDir/Release/MysteryDungeonPet.exe"
     & tests/wic_tests.ps1 -Exe $Exe -Output "$BuildDir/wic-results"
     & tests/playback_metrics_tests.ps1 -Exe $Exe -Inspector "$BuildDir/Release/pet_package_inspect.exe" -Output "$BuildDir/playback-results"
+    & tests/exploration_windows_tests.ps1 -Exe $Exe -Explorer "$BuildDir/Release/pet_explore.exe" -Output "$BuildDir/exploration-results"
     Get-ChildItem -Directory 'assets/original/runtime' | ForEach-Object {
         & "$BuildDir/Release/pet_package_playback.exe" "$($_.FullName)/asset.mdpa"
         if ($LASTEXITCODE -ne 0) { throw 'original native playback failed' }

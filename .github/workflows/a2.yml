@@ -20,6 +20,7 @@ jobs:
       - run: python -m unittest discover -s tests -v
         env:
           PET_PACKAGE_INSPECT: ${{ github.workspace }}/build/linux/pet_package_inspect
+          PET_EXPLORE: ${{ github.workspace }}/build/linux/pet_explore
   windows:
     runs-on: windows-latest
     steps:
@@ -39,4 +40,5 @@ jobs:
             build/windows/wic-results/*.txt
             build/windows/playback-results/**/*.csv
             build/windows/playback-results/**/*.json
+            build/windows/exploration-results/*
           if-no-files-found: warn
