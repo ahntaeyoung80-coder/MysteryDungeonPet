@@ -132,6 +132,13 @@
       }
     }
   ],
+  "stageAcceptance": {
+    "A": "pending_A2_A3",
+    "A-1": "pass_representative_scope",
+    "criterion": "DEVELOPMENT_PIPELINE.md section 5 completion conditions",
+    "fullSupportAudit": "pending_C",
+    "languageSupport": "unresolved"
+  },
   "status": "selected_rom_data_assets_pass_with_unresolved_text",
   "warnings": {
     "definitionRangeFailures": 2,

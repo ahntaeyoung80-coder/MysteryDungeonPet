@@ -1,7 +1,7 @@
 # 현재 상태
 
 ## 현재 단계
-A-1 대표 실제 ROM 데이터·자산 준비 검증 완료. **A-1 부분 완료**(문자 매핑·전체 감사 pending). 다음 독립 구현은 A-2.1이며 A-2/A-3/B/C 미착수.
+A-1 완료(pipeline §5의 대표 데이터·원작 자산 준비 범위). 실제 ROM 추출/3 WAN 병합/필수 동작/참조/재현성/errors·support 보고서의 완료 조건을 통과했다. 다음 단계는 A-2.1이며 A-2/A-3/B/C 미착수. 한국어 문자 지원·전체 지원·A 전체 완료를 의미하지 않는다.
 
 ## 구현·실행된 검사
 - `tools/mdpet/`: 오프라인 Extractor/Packer/CLI/fixture/validator, 3 WAN 병합, alias·1/8행·crop/anchor/marker/tick, 임시 출력·실패 보고.
@@ -14,7 +14,7 @@ A-1 대표 실제 ROM 데이터·자산 준비 검증 완료. **A-1 부분 완�
 ## 막힌 자원·지원 한계
 `text_e.str/pmd2_decode` unknown byte141. `--allow-undecoded-text`로 rawNameHex/오류를 보존하며 이름과 실제 language는 null이다. 구성언어 English를 실제 문자 지원으로 취급하지 않는다.
 일반 정의 범위오류2/upstream validator 경고33을 보존. MD2/3 Eat/Wake/Pose 누락 보존. 전체 층/도장/종·폼 감사, 원작 wall time/tickHz, Windows 실제 빌드/실행·성능 pending.
-사용자가 잔여 사용량이 적다고 알려 대표 검증 단위에서 인수인계 확정. 잔여량/리셋 시각 조회 도구 없음.
+사용자가 잔여 사용량이 적다고 알려 대표 검증 단위에서 인수인계 확정. 잔여량/리셋 시각 조회 도구 없음. 이전의 A-1 부분 완료 표시는 후속 검증을 A-1 완료 조건으로 잘못 포함한 것이며 바로잡았다.
 
 ## 사용량 리셋 후 재개
 1. `docs/A1_IMPLEMENTATION_HANDOFF.md` 최종 체크포인트와 `git status --short` 확인. 기존 성공 추출/조사를 반복하지 않는다.
