@@ -24,3 +24,11 @@
 - 현재 A/B-1은 비전투·우호 정책으로 구현한다. 자동 전투 B-2는 B-1 완료 뒤 C 전에 검토 가능한 선택 단계이며 구현은 아직 확정하지 않았다.
 - B-1 완료 시 사용자와 B-2 추가·제외·보류 여부를 확인한다. 착수 전에 전투 규칙·자산/저장 범위·완료 조건·검증 방법을 확정한다. 미확정 상태로 자동 구현하지 않는다.
 - 관계·조우 행동은 작은 정책 경계로 두고 원본 공격/피격 자산의 참조·지원 정보와 저장 버전을 보존한다. 전투용 자산 패키징·HP·AI는 선행 구현하지 않는다. 상세 기준은 DEVELOPMENT_PIPELINE.md §8이다.
+
+## 2026-10-13 — 실제 A-1 입력과 패키징
+
+- 입력 ROM의 실제 식별은 EoS_NA(C2SE/0x271A)이지만 text_e.str 디코딩은 실패한다. 구성 언어와 실제 문자 지원을 분리한다. strict 기본값을 유지하고 명시적 --allow-undecoded-text에서는 이름 null/rawNameHex/오류를 보존한다. 임의 인코딩·번역을 성공으로 간주하지 않는다.
+- 공식 STR raw API 앞에서 포인터/범위를 검사하며 실제 ROM의 명시적 EOF entry 없는 형식도 다룬다.
+- 원본 WAN은 MergeWan 전에 보존한다. 기존 GeneratePiece/DrawOn으로 원본3pack→merged→atlas의 픽셀/marker/flag/tick을 대조하며 시트→atlas 해시만으로 원본 동일성을 보고하지 않는다.
+- 오프라인 선택 package는 schemaVersion/assetVersion1, PNG straightRGBA+감사용JSON이다. 변환 버전/sourceHash/핵심 의존성 버전을 보존하며 런타임 소비 형식은 A-2에서 확정한다.
+- 정상 출력 덮어쓰기 대신 새 출력 디렉터리의 임시 생성/검사/rename으로 확정한다. 실패 보고는 별도 파일에 남긴다.

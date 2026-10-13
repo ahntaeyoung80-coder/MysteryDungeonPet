@@ -13,7 +13,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from tools.mdpet.__main__ import main
 from tools.mdpet.catalogue import cdf_weights, floor_index, item_distribution, monster_distributions
 from tools.mdpet.common import file_hash, read_json, staging, write_json
-from tools.mdpet.extractor import checked_pack, raw_wan_metadata, select_floors
+from tools.mdpet.extractor import checked_pack, checked_raw_strings, select_floors
 from tools.mdpet.fixture import create_sheets, provenance
 from tools.mdpet.packer import pack_asset, validate_package, write_package
 
@@ -72,6 +72,17 @@ class Distributions(unittest.TestCase):
                      struct.pack("<IIII", 0, 1, 16, 20), struct.pack("<IIII", 0, 1, 0, 0)):
             with self.assertRaises(ValueError):
                 checked_pack(data)
+
+    def test_raw_strings_preserve_unknown_encoding_and_check_bounds(self):
+        data = struct.pack("<III", 12, 15, 17) + b"\x8dA\x00B\x00"
+        self.assertEqual(checked_raw_strings(data), [b"\x8dA", b"B"])
+        implicit_end = struct.pack("<II", 8, 13) + b"ABCD\x00X\x00"
+        self.assertEqual(checked_raw_strings(implicit_end), [b"ABCD", b"X"])
+        for bad in (b"", data[:-1], struct.pack("<I", 999),
+                    struct.pack("<III", 12, 11, 17) + b"\x8dA\x00B\x00",
+                    struct.pack("<III", 12, 15, 17) + b"abcde"):
+            with self.assertRaises(ValueError):
+                checked_raw_strings(bad)
 
 
 class Packages(unittest.TestCase):

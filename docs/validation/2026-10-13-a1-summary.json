@@ -1,0 +1,153 @@
+{
+  "checks": {
+    "archiveCRC": "pass",
+    "repeatHashes": "pass",
+    "requiredSelectedAnimations": "pass",
+    "romHashUnchanged": "pass",
+    "sheetAtlasReassembly": "pass",
+    "sourceWANMergeRGBAAndMetadata": "pass"
+  },
+  "commands": [
+    "python -m tools.mdpet extract --rom local/rom/user.nds --out local/a1-rom-final-01 --allow-undecoded-text",
+    "python -m tools.mdpet extract --rom local/rom/user.nds --out local/a1-rom-final-02 --allow-undecoded-text",
+    "python -m unittest discover -s tests -v"
+  ],
+  "counts": {
+    "assets": 2,
+    "definitions": 180,
+    "frames": 348,
+    "itemRecords": 1400,
+    "mappaGroups": 100,
+    "mdRecords": 1155,
+    "selectedFloorProfiles": 3,
+    "sourceFrameComparisons": 484,
+    "testsPassed": 11
+  },
+  "environment": {
+    "os": "Linux",
+    "python": "3.12.14",
+    "sourceCommit": "5ed359a2560a1f04666b9ea02b71649b89cb16d7"
+  },
+  "pending": [
+    "patched text encoding/language mapping",
+    "full dungeon/dojo audit",
+    "all species/forms support",
+    "original wall time/tickHz",
+    "A-2 build/runtime",
+    "actual Windows A-3"
+  ],
+  "reproducibility": {
+    "assets/1/atlas.png": {
+      "first": "1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd",
+      "second": "1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd"
+    },
+    "assets/4/atlas.png": {
+      "first": "b446db9bc52015e1c7d0353a1490c7ae53821ebbc73287f2b43f9d8703709959",
+      "second": "b446db9bc52015e1c7d0353a1490c7ae53821ebbc73287f2b43f9d8703709959"
+    },
+    "catalogue.json": {
+      "first": "8147fe78abf6f2b4caf3d8acd4fc65039b52325d79f7b14eb7ff63327a7eb9c4",
+      "second": "8147fe78abf6f2b4caf3d8acd4fc65039b52325d79f7b14eb7ff63327a7eb9c4"
+    },
+    "errors.json": {
+      "first": "7722e770b23807e9c58a0b3fcf4bd11cf662018660ee58ec747bc3b9ab472039",
+      "second": "7722e770b23807e9c58a0b3fcf4bd11cf662018660ee58ec747bc3b9ab472039"
+    },
+    "manifest.json": {
+      "first": "c657d24ce3da04c8c20a289c9a2f5ee493838a9ab2471ad31723406b7b294c8d",
+      "second": "c657d24ce3da04c8c20a289c9a2f5ee493838a9ab2471ad31723406b7b294c8d"
+    },
+    "support.json": {
+      "first": "f38f97263d7b75df9ca68ad7a3114a341d792529f0c7bc63bd43dac6d08815e9",
+      "second": "f38f97263d7b75df9ca68ad7a3114a341d792529f0c7bc63bd43dac6d08815e9"
+    }
+  },
+  "romByteSize": 91394048,
+  "romIdentity": {
+    "arm9off14": 10010,
+    "configuredLanguage": "English",
+    "edition": "EoS_NA",
+    "gameCode": "C2SE",
+    "language": null,
+    "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "stringFilename": "text_e.str",
+    "textEncoding": "pmd2str",
+    "textSupport": "undecoded"
+  },
+  "schemaVersion": 1,
+  "selectedAssets": [
+    {
+      "atlasByteSize": 19256,
+      "decodedBytes": 284672,
+      "mdIndex": 1,
+      "spriteIndex": 0,
+      "wanVerification": {
+        "comparedFrames": 190,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "originalSourceFrames": 262,
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+        "status": "pass"
+      }
+    },
+    {
+      "atlasByteSize": 13107,
+      "decodedBytes": 224256,
+      "mdIndex": 4,
+      "spriteIndex": 4,
+      "wanVerification": {
+        "comparedFrames": 158,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "originalSourceFrames": 222,
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+        "status": "pass"
+      }
+    }
+  ],
+  "selectedFloors": [
+    {
+      "groupFloor": 0,
+      "groupIndex": 0,
+      "key": {
+        "dungeonId": 0,
+        "edition": "EoS_NA",
+        "localFloor": 0
+      }
+    },
+    {
+      "groupFloor": 8,
+      "groupIndex": 12,
+      "key": {
+        "dungeonId": 15,
+        "edition": "EoS_NA",
+        "localFloor": 0
+      }
+    },
+    {
+      "groupFloor": 14,
+      "groupIndex": 12,
+      "key": {
+        "dungeonId": 15,
+        "edition": "EoS_NA",
+        "localFloor": 6
+      }
+    }
+  ],
+  "status": "selected_rom_data_assets_pass_with_unresolved_text",
+  "warnings": {
+    "definitionRangeFailures": 2,
+    "rejectedMD": [
+      {
+        "mdIndex": 2,
+        "reason": "missing required WAN groups: ['Eat', 'Wake', 'Pose']",
+        "spriteIndex": 1
+      },
+      {
+        "mdIndex": 3,
+        "reason": "missing required WAN groups: ['Eat', 'Wake', 'Pose']",
+        "spriteIndex": 3
+      }
+    ],
+    "stringsUnresolved": 1,
+    "upstreamValidatorWarnings": 33
+  }
+}

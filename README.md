@@ -6,6 +6,7 @@
 현재는 A-1 오프라인 추출·패키징 구현과 fixture 검사 단계다. 실제 ROM과 Windows gate는 아직 통과하지 않았다. 작업 재개 시 [PROJECT_STATE.md](PROJECT_STATE.md)와 [A-1 구현 인수인계](docs/A1_IMPLEMENTATION_HANDOFF.md)를 먼저 읽는다.
 
 - [Codex 개발 파이프라인·1차 실행 명세](docs/DEVELOPMENT_PIPELINE.md)
+- [A-1 추출·패키징 실행](docs/A1_USAGE.md)
 - [구현 인수인계](docs/research/IMPLEMENTATION_HANDOFF.md)
 - [조사 상태](docs/research/00_RESEARCH_STATE.md)
 - [설계 결정](docs/DECISIONS.md)

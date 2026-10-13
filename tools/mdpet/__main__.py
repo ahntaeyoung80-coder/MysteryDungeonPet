@@ -40,6 +40,8 @@ def parser():
     extract.add_argument("--floor", type=floor_arg, action="append", default=[])
     extract.add_argument("--language")
     extract.add_argument("--all-general-floors", action="store_true")
+    extract.add_argument("--allow-undecoded-text", action="store_true",
+                         help="preserve raw names and unresolved text error; no language support claim")
     return cli
 
 
@@ -61,7 +63,8 @@ def main(argv=None) -> int:
                 try:
                     if args.command == "extract":
                         from .extractor import extract
-                        result = extract(args.rom, temp, args.md, args.floor, args.language, args.all_general_floors)
+                        result = extract(args.rom, temp, args.md, args.floor, args.language,
+                                         args.all_general_floors, args.allow_undecoded_text)
                     elif args.command == "fixture":
                         from .fixture import create_sheets, provenance
                         create_sheets(temp / "sheets")

@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 from PIL import Image
 
 from . import ASSET_VERSION, OPTIONAL, REQUIRED, SCHEMA_VERSION
-from .common import file_hash, integer, read_json, safe_file, sha256, write_json
+from .common import file_hash, integer, read_json, safe_file, sha256, transform_identity, write_json
 
 MAX_PIXELS = 16 * 1024 * 1024
 MAX_FRAMES = 16384
@@ -118,6 +118,7 @@ class Atlas:
 
 
 def pack_asset(sheets: Path, output: Path, asset_key: str, provenance: dict, raw_wan=None) -> tuple[dict, dict]:
+    provenance = {**provenance, "transform": transform_identity()}
     shadow_size, nodes = nodes_from_xml(sheets / "AnimData.xml")
     # 전체 alias graph는 선택 범위 바깥에도 검사한다.
     for name in nodes:

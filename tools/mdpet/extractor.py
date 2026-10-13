@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.metadata
+from copy import deepcopy
 import json
 from pathlib import Path
 from struct import unpack_from
@@ -57,6 +58,32 @@ def checked_pack(data: bytes):
     return FileType.BIN_PACK.deserialize(data)
 
 
+def checked_raw_strings(data: bytes) -> list[bytes]:
+    """공식 raw STR API를 사용하기 전에 포인터·종단·범위를 검사한다."""
+    from skytemple_files.data.str.model import Str
+    if len(data) < 4:
+        raise ValueError("truncated STR header")
+    first = unpack_from("<I", data)[0]
+    if first % 4 or not 4 <= first <= len(data) or first // 4 > 65536:
+        raise ValueError("invalid STR pointer table")
+    pointers = list(unpack_from("<" + "I" * (first // 4), data))
+    # 공식 writer는 명시적 end 포인터를 쓰지만 실제 ROM에는 마지막 문자열이
+    # EOF에 닿고 별도 end entry가 없는 STR도 있다. 데이터 bytes를 포인터로 읽지 않는다.
+    if pointers[-1] == len(data):
+        pointers.pop()
+    if any(p < first or p >= len(data) for p in pointers):
+        raise ValueError("STR pointer outside string payload")
+    previous = first
+    for start, end in zip(pointers, pointers[1:] + [len(data)]):
+        if start < previous or end < start or end > len(data) or data.find(b"\x00", start, end) < 0:
+            raise ValueError("invalid STR span/terminator")
+        previous = start
+    strings = Str.internal__get_all_raw_strings_from(data)
+    if len(strings) != len(pointers):
+        raise ValueError("STR parser/table count mismatch")
+    return strings
+
+
 def select_floors(definitions, groups, requested):
     if requested:
         pairs = list(dict.fromkeys(requested))
@@ -72,7 +99,7 @@ def select_floors(definitions, groups, requested):
                 continue
             if ordinary is None and definition.start_after == 0:
                 ordinary = (dungeon_id, 0)
-            if shifted is None and definition.start_after > 0:
+            if shifted is None and definition.start_after > 0 and definition.number_floors > 1:
                 shifted = dungeon_id
         if ordinary is None or shifted is None:
             raise ValueError("general/nonzero-start_after validation floors unavailable")
@@ -99,6 +126,7 @@ def export_sprite(index, record, packs, config, identity, output):
         if "ground" not in path:
             data = FileType.PKDPX.deserialize(data).decompress()
         wans.append(CharaWanHandler.deserialize(data))
+    originals = deepcopy(wans)  # MergeWan이 입력 frame/piece 인덱스를 변경하므로 원본 비교용 보존.
     merged = CharaWanHandler.merge_wan(*wans)
     raw_meta = raw_wan_metadata(merged)
     missing = [name for name, wan_id in REQUIRED.items() if str(wan_id) not in raw_meta]
@@ -117,11 +145,17 @@ def export_sprite(index, record, packs, config, identity, output):
     asset, report = pack_asset(sheets, asset_dir, record["assetKey"], source, raw_meta)
     if not report["requiredComplete"]:
         raise ValueError("required exported sheet names missing")
+    from .wan_verify import verify_wan_asset
+    verification = verify_wan_asset(merged, asset, asset_dir, originals)
+    report["romPixelMatch"] = "pass"
+    report["rawWanAtlas"] = verification
+    write_json(sheets / "wan-validation.json", verification)
     asset["atlas"]["file"] = f"assets/{index}/atlas.png"
     return asset, report
 
 
-def extract(rom_path: Path, output: Path, requested_md: list[int], requested_floors, language=None, all_floors=False) -> dict:
+def extract(rom_path: Path, output: Path, requested_md: list[int], requested_floors, language=None,
+            all_floors=False, allow_undecoded_text=False) -> dict:
     from ndspy.rom import NintendoDSRom
     from skytemple_files.common.types.file_types import FileType
     from skytemple_files.common.util import get_ppmdu_config_for_rom, get_binary_from_rom
@@ -156,7 +190,21 @@ def extract(rom_path: Path, output: Path, requested_md: list[int], requested_flo
         mappa = FileType.MAPPA_BIN.deserialize(read("BALANCE/mappa_s.bin"))
         md_raw = FileType.MD.deserialize(read("BALANCE/monster.md"))
         item_raw = FileType.ITEM_P.deserialize(read("BALANCE/item_p.bin"))
-        strings = FileType.STR.deserialize(read("MESSAGE/" + lang.filename), string_encoding=config.string_encoding).strings
+        string_data = read("MESSAGE/" + lang.filename)
+        raw_strings = checked_raw_strings(string_data)
+        strings = None
+        try:
+            strings = FileType.STR.deserialize(string_data, string_encoding=config.string_encoding).strings
+            identity["textSupport"] = "decoded_configured_encoding"
+        except ValueError as error:
+            if not allow_undecoded_text:
+                raise
+            identity.update({"configuredLanguage": lang.name, "language": None, "textSupport": "undecoded",
+                             "textEncoding": config.string_encoding})
+            errors.append({"stage": "strings_decode", "sourcePath": "MESSAGE/" + lang.filename,
+                           "status": "unresolved", "reason": str(error),
+                           "resume": "verify patched-ROM character mapping; do not assume English/CP949"})
+        write_json(output / "identity.json", identity)
         md = [{"mdIndex": i, "entid": int(e.entid), "nationalDex": int(e.national_pokedex_number),
                "baseForm": int(e.base_form_index), "gender": scalar(e.gender), "spriteIndex": int(e.sprite_index),
                "assetKey": f"rom:{edition}:md:{i}"} for i, e in enumerate(md_raw.entries)]
@@ -170,10 +218,13 @@ def extract(rom_path: Path, output: Path, requested_md: list[int], requested_flo
             record = {"dungeonId": i, "numberFloors": int(d.number_floors), "mappaIndex": int(d.mappa_index),
                       "startAfter": int(d.start_after), "numberFloorsInGroup": int(d.number_floors_in_group),
                       "playable": bool(d.number_floors), "status": "pending", "name": None,
-                      "stringIndex": name_block.begin + i, "language": lang.name, "restrictions": None}
-            if record["stringIndex"] >= min(name_block.end, len(strings)):
+                      "stringIndex": name_block.begin + i, "language": identity["language"],
+                      "nameStatus": "decoded" if strings is not None else "undecoded",
+                      "restrictions": None}
+            if record["stringIndex"] >= min(name_block.end, len(raw_strings)):
                 raise ValueError(f"dungeon string index outside block: {i}")
-            record["name"] = strings[record["stringIndex"]]
+            record["name"] = strings[record["stringIndex"]] if strings is not None else None
+            record["rawNameHex"] = raw_strings[record["stringIndex"]].hex()
             if i < len(restrictions):
                 record["restrictions"] = {k: scalar(v) for k, v in vars(restrictions[i]).items()}
             if d.number_floors:

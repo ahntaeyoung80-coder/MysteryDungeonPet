@@ -38,6 +38,14 @@ def read_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def transform_identity() -> dict:
+    root = Path(__file__).parent
+    hashes = {p.name: file_hash(p) for p in sorted(root.glob("*.py"))}
+    return {"version": 1, "sourceHash": sha256(canonical(hashes)),
+            "dependencyVersions": {name: __import__("importlib.metadata", fromlist=["version"]).version(name)
+                                   for name in ("skytemple-files", "skytemple-rust", "Pillow", "ndspy")}}
+
+
 def integer(value, label: str, minimum=0, maximum=0xFFFFFFFF) -> int:
     if type(value) is not int or not minimum <= value <= maximum:
         raise ValueError(f"{label}: integer outside [{minimum}, {maximum}]")
