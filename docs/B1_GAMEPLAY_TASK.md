@@ -6,6 +6,9 @@
 
 ## 완료 항목
 
+- [x] EXE 기본 실행을 자동 탐험으로 변경하고 진단 모드에는 `--diagnostics`를 추가. 탐험 메뉴에서 수동 동작·방향 제거.
+- [ ] 설치된 EXE 무인자 실행·다른 작업 디렉터리·기존 저장 복원 Windows 재검증.
+
 - [x] B-1 실제 브랜치·커밋·실행 진입점 확인 및 기존 코드 재사용.
 - [x] 마지막 계단 → once Pose17 → ReturnHome, 목표·경로 캐시·탐험 이동 중단.
 - [x] 750ms fade-out → 원작 집 배경 → 750ms fade-in. 실제 던전 귀가 이동 없음.
@@ -56,4 +59,4 @@ mkdir -p local
 build/b1/pet_explore assets/original/exploration/dungeon-0/exploration.mdpe 42 local/day.mdes --gameplay
 ```
 
-`pet_explore --gameplay`는 clip 완료를 공급하는 headless 시간 시뮬레이션이며 하루의 Ready까지만 실행한다. 같은 Ready 저장을 재실행하면 transaction을 반복하지 않는다. 실제 Windows 앱은 실시간 UTC·Animator 완료로 생활을 진행하고 Ready 이후 새날 탐험까지 이어간다. Windows는 설치물의 `Run-B1.ps1`로 실행한다. 자동 Windows 검사는 `tests/gameplay_windows_tests.ps1`을 사용한다.
+`pet_explore --gameplay`는 clip 완료를 공급하는 headless 시간 시뮬레이션이며 하루의 Ready까지만 실행한다. 같은 Ready 저장을 재실행하면 transaction을 반복하지 않는다. 실제 Windows 앱은 실시간 UTC·Animator 완료로 생활을 진행하고 Ready 이후 새날 탐험까지 이어간다. Windows는 설치물의 `MysteryDungeonPet.exe` 더블클릭으로 자동 실행한다. `Run-B1.ps1`도 호환 유지한다. 자동 Windows 검사는 `tests/gameplay_windows_tests.ps1`을 사용한다.

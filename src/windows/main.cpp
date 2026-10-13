@@ -115,6 +115,7 @@ unsigned number(const std::wstring& s, unsigned max) {
 }
 Options options() {
     Options o;
+    bool animationTest = false;
     int count = 0;
     auto args = CommandLineToArgvW(GetCommandLineW(), &count);
     winCheck(args != nullptr, "CommandLineToArgv");
@@ -122,7 +123,8 @@ Options options() {
     for (int i = 1; i < count; ++i) {
         std::wstring arg = args[i];
         auto value = [&]() -> std::wstring { if (++i == count) throw std::runtime_error("missing option value"); return args[i]; };
-        if (arg == L"--package") o.package = value();
+        if (arg == L"--package") { o.package = value(); animationTest = true; }
+        else if (arg == L"--diagnostics") animationTest = true;
         else if (arg == L"--explore") o.exploration = value();
         else if (arg == L"--gameplay-assets") o.gameplayAssets = value();
         else if (arg == L"--snapshot") o.snapshot = value();
@@ -130,16 +132,20 @@ Options options() {
         else if (arg == L"--new-run") o.newRun = true;
         else if (arg == L"--metrics") o.metrics = value();
         else if (arg == L"--report") o.report = value();
-        else if (arg == L"--clip") o.clip = number(value(), INT32_MAX);
-        else if (arg == L"--direction") o.direction = number(value(), 7);
+        else if (arg == L"--clip") { o.clip = number(value(), INT32_MAX); animationTest = true; }
+        else if (arg == L"--direction") { o.direction = number(value(), 7); animationTest = true; }
         else if (arg == L"--size") { if (number(value(), PhysicalSize) != PhysicalSize) throw std::runtime_error("physical window size is fixed at 200"); }
         else if (arg == L"--scale") { o.scale = number(value(), 8); o.scaleExplicit = true; }
         else if (arg == L"--duration") o.duration = number(value(), 86400);
-        else if (arg == L"--scenario") o.scenario = value();
-        else if (arg == L"--finite") o.loop = false;
-        else if (arg == L"--validate-package") o.validate = true;
+        else if (arg == L"--scenario") { o.scenario = value(); animationTest = true; }
+        else if (arg == L"--finite") { o.loop = false; animationTest = true; }
+        else if (arg == L"--validate-package") { o.validate = true; animationTest = true; }
         else throw std::runtime_error("unknown command-line option");
     }
+    // A normal desktop launch owns exploration. Keep explicit A diagnostics compatible;
+    // an explicit --explore still wins over their legacy --package selector.
+    if (o.exploration.empty() && !animationTest)
+        o.exploration = executableDir() / L"assets/exploration/dungeon-0/exploration.mdpe";
     if (!o.scale) throw std::runtime_error("scale must be 1..8");
     if (!o.exploration.empty() && (o.validate || o.scenario != L"manual"))
         throw std::runtime_error("exploration requires manual scenario");
@@ -311,27 +317,31 @@ class App {
         log(hide ? "hide" : "show");
     }
     void popup() {
-        HMENU menu = CreatePopupMenu(), clips = CreatePopupMenu(), directions = CreatePopupMenu();
-        if (!menu || !clips || !directions) {
+        HMENU menu = CreatePopupMenu();
+        HMENU clips = explorer_ ? nullptr : CreatePopupMenu();
+        HMENU directions = explorer_ ? nullptr : CreatePopupMenu();
+        if (!menu || (!explorer_ && (!clips || !directions))) {
             if (menu) DestroyMenu(menu);
             if (clips) DestroyMenu(clips);
             if (directions) DestroyMenu(directions);
             winCheck(false, "CreatePopupMenu");
         }
-        for (size_t i = 0; i < assets_.package.clips.size(); ++i) {
-            const auto& c = assets_.package.clips[i];
-            AppendMenuW(clips, MF_STRING | (c.id == clip_ ? MF_CHECKED : 0), ClipBase + i, wide(c.name).c_str());
+        if (!explorer_) {
+            for (size_t i = 0; i < assets_.package.clips.size(); ++i) {
+                const auto& c = assets_.package.clips[i];
+                AppendMenuW(clips, MF_STRING | (c.id == clip_ ? MF_CHECKED : 0), ClipBase + i, wide(c.name).c_str());
+            }
+            const wchar_t* names[] = {L"Down", L"DownRight", L"Right", L"UpRight", L"Up", L"UpLeft", L"Left", L"DownLeft"};
+            for (unsigned i = 0; i < 8; ++i) AppendMenuW(directions, MF_STRING | (i == direction_ ? MF_CHECKED : 0), DirectionBase + i, names[i]);
+            AppendMenuW(menu, MF_POPUP, reinterpret_cast<UINT_PTR>(clips), L"Animation");
+            AppendMenuW(menu, MF_POPUP, reinterpret_cast<UINT_PTR>(directions), L"Direction");
         }
-        const wchar_t* names[] = {L"Down", L"DownRight", L"Right", L"UpRight", L"Up", L"UpLeft", L"Left", L"DownLeft"};
-        for (unsigned i = 0; i < 8; ++i) AppendMenuW(directions, MF_STRING | (i == direction_ ? MF_CHECKED : 0), DirectionBase + i, names[i]);
-        AppendMenuW(menu, MF_POPUP, reinterpret_cast<UINT_PTR>(clips), L"Animation");
-        AppendMenuW(menu, MF_POPUP, reinterpret_cast<UINT_PTR>(directions), L"Direction");
         auto add = [&](UINT id, const wchar_t* text, bool checked = false) { AppendMenuW(menu, MF_STRING | (checked ? MF_CHECKED : 0), id, text); };
-        add(Loop, L"Loop", loop_); add(Finite, L"Finite", !loop_); add(Stop, L"Stop (explicit Sleep end)");
+        if (!explorer_) { add(Loop, L"Loop", loop_); add(Finite, L"Finite", !loop_); add(Stop, L"Stop (explicit Sleep end)"); }
         add(Hide, hidden_ ? L"Show" : L"Hide"); add(Top, L"Always on top", topmost_);
         add(Scale1, L"Scale 1", scale_ == 1); add(Scale2, L"Scale 2", scale_ == 2); add(Scale3, L"Scale 3", scale_ == 3);
-        add(Background, L"Test background", backgroundOn_);
-        add(Reload, L"Reload package"); add(Quit, L"Exit");
+        if (!explorer_) { add(Background, L"Test background", backgroundOn_); add(Reload, L"Reload package"); }
+        add(Quit, L"Exit");
         POINT cursor{}; GetCursorPos(&cursor);
         // Foreground is needed for tray menus to dismiss correctly; window remains NOACTIVATE.
         SetForegroundWindow(window_);
@@ -717,7 +727,8 @@ public:
                 decodes_ += tiles.decoded ? 1 : 0; tiles_.emplace(tileset.id, std::move(tiles));
             }
             if (options_.snapshot.empty()) options_.snapshot = directory_ / L"exploration.mdes";
-            if (!options_.newRun && std::filesystem::exists(options_.snapshot))
+            const bool restoring = !options_.newRun && std::filesystem::exists(options_.snapshot);
+            if (restoring)
                 explorer_ = std::make_unique<Explorer>(loadSnapshot(options_.snapshot, explorationPackage_->assetVersion));
             else {
                 explorer_ = std::make_unique<Explorer>(static_cast<uint64_t>(nowUs()), options_.seed,
@@ -726,6 +737,9 @@ public:
             }
             explorer_->enableGameplay(utcMs());
             saveSnapshot(options_.snapshot, explorer_->state());
+            log(std::string("exploration snapshot=") + (restoring ? "restored" : "new") +
+                " day=" + std::to_string(explorer_->state().gameplay.day) +
+                " runId=" + std::to_string(explorer_->state().runId));
             assets_.package.frames(0, 0); assets_.package.frames(7, 0); assets_.package.frames(17, 0);
             if (!options_.scaleExplicit) scale_ = 1;
             clip_ = gameplayClip(explorer_->state().gameplay);
@@ -763,7 +777,8 @@ public:
         wc.lpszClassName = L"MysteryDungeonPet.A2"; wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
         winCheck(RegisterClassExW(&wc) != 0, "RegisterClass");
         POINT position = restoredPosition();
-        window_ = CreateWindowExW(WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE, wc.lpszClassName, L"MysteryDungeonPet A-3", WS_POPUP,
+        window_ = CreateWindowExW(WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE, wc.lpszClassName,
+            explorer_ ? L"MysteryDungeonPet" : L"MysteryDungeonPet A-3", WS_POPUP,
             position.x, position.y, int(size_), int(size_), nullptr, nullptr, instance_, this);
         winCheck(window_ != nullptr, "CreateWindow");
         clamp(position);
@@ -781,10 +796,11 @@ public:
         NOTIFYICONDATAW icon{}; icon.cbSize = sizeof(icon); icon.hWnd = window_; icon.uID = 1;
         icon.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP; icon.uCallbackMessage = TrayMessage;
         icon.hIcon = LoadIconW(nullptr, IDI_APPLICATION);
-        wcscpy_s(icon.szTip, L"MysteryDungeonPet A-3: right click for controls");
+        wcscpy_s(icon.szTip, explorer_ ? L"MysteryDungeonPet: automatic exploration" : L"MysteryDungeonPet A-3: right click for controls");
         tray_ = Shell_NotifyIconW(NIM_ADD, &icon) != 0;
         winCheck(tray_, "tray icon (required to restore hidden window)");
         log("start assetKey=" + assets_.package.assetKey + " atlasSha256=" + assets_.package.pngSha256 + " testTimingHz=" + std::to_string(assets_.package.tickHz));
+        log(explorer_ ? "mode=automatic-exploration" : "mode=animation-diagnostics");
         startClip(nowUs(), true);
         if (explorer_) exploreDeadline_ = nowUs() + 350000;
         synchronizePause(nowUs());

@@ -1,4 +1,4 @@
-> 2026-10-13 최신 실행 범위: Run-B1.ps1은 기본공격 전투와 귀가·식사·수면·기상·다음날 탐험을 포함한다. 최신 완료·미완료 항목과 규칙은 [B1_GAMEPLAY_TASK.md](B1_GAMEPLAY_TASK.md)를 따른다. 아래 B-1 독립 코어의 과거 비전투 설명과 실제 앱의 현재 범위를 구분한다.
+> 2026-10-13 최신 실행 범위: ZIP 전체 해제 후 `MysteryDungeonPet.exe`를 더블클릭하면 자동 탐험·기본공격 전투·길드 공동 식사·침실 수면·기상·다음날 탐험을 시작한다. `Run-B1.ps1`도 호환 유지한다. 방향·애니메이션 검사에는 `--diagnostics`를 명시한다. 현재 실행 안내는 [WINDOWS_QUICKSTART.md](WINDOWS_QUICKSTART.md), 완료·미완료 항목은 [B1_GAMEPLAY_TASK.md](B1_GAMEPLAY_TASK.md)를 따른다. 아래 본문은 B-1 독립 코어의 과거 비전투 체크포인트다.
 
 # B-1 비전투 탐험 코어와 원작 타일
 
@@ -47,7 +47,7 @@ build/b1/pet_explore assets/original/exploration/dungeon-0/exploration.mdpe 42 l
 
 마지막 명령을 다시 실행하면 저장된 run을 복원한다. Home이면 획득·클리어를 재실행하지 않는다.
 
-Windows 설치물에서는 다음 명령으로 탐험한다. 검증된 A 패키지를 계속 사용하며 기존 A 재생·계측 옵션도 유지한다.
+Windows 설치물은 더블클릭으로 탐험한다. 아래 명시적 탐험 명령도 호환 유지한다. 기존 A 재생·계측 옵션은 명시적으로 선택한 진단 모드에서 유지한다.
 
 ```powershell
 .\MysteryDungeonPet.exe --explore assets\exploration\dungeon-0\exploration.mdpe --seed 42
@@ -55,7 +55,7 @@ Windows 설치물에서는 다음 명령으로 탐험한다. 검증된 A 패키�
 
 기본 저장 위치는 `%LOCALAPPDATA%\MysteryDungeonPet\exploration.mdes`다. `--snapshot 경로`로 별도 저장 위치를 지정하고 `--new-run`으로 해당 위치에 새 run을 시작한다. 다른 던전/변환 버전의 snapshot은 임의 해석하지 않고 assetVersion 불일치로 거부한다. 던전15를 시작하려면 다른 snapshot 경로를 사용한다.
 
-UI thread는 350ms action deadline에 한 번 진행한다. 지도 이동은 창 내부 카메라로 표시하고 창의 화면 위치를 바꾸지 않는다. 원작 타일과 몸체 atlas는 최초 로드 후 캐시하며 표시 영역과 교차하는 레이어만 합성한다. Hide/lock/display/suspend 중 탐험도 멈추고 복귀 시 과거 action을 폭주 재생하지 않는다. 메뉴의 수동 동작/방향 조작은 탐험 중 무시한다. Windows 탐험 연결 검사기는 `tests/exploration_windows_tests.ps1`이며 CI의 기존 Windows 검사와 함께 실행한다. run38367994286의Windows Server2025/MSVC Release에서UI이동/타일WIC·decode2회/창고정/저장복원 검사가pass했다. 사용자Windows11·실제OS사건 검증과구분한다.
+UI thread는 350ms action deadline에 한 번 진행한다. 지도 이동은 창 내부 카메라로 표시하고 창의 화면 위치를 바꾸지 않는다. 원작 타일과 몸체 atlas는 최초 로드 후 캐시하며 표시 영역과 교차하는 레이어만 합성한다. Hide/lock/display/suspend 중 탐험도 멈추고 복귀 시 과거 action을 폭주 재생하지 않는다. 메뉴의 수동 동작/방향 조작은 탐험 중 표시하지 않는다. Windows 탐험 연결 검사기는 `tests/exploration_windows_tests.ps1`이며 CI의 기존 Windows 검사와 함께 실행한다. run38367994286의Windows Server2025/MSVC Release에서UI이동/타일WIC·decode2회/창고정/저장복원 검사가pass했다. 사용자Windows11·실제OS사건 검증과구분한다.
 
 ## snapshot 계약과 중단 복원
 

@@ -28,7 +28,7 @@ if ($Measure) {
     Write-Output "Measurements saved: $Results"
     Write-Output 'Actual drag/DPI/Win+L/display-off/suspend checks still require manual interaction.'
 } else {
-    Start-Process -FilePath $Exe -ArgumentList @('--metrics',"`"$Results/manual.csv`"") | Out-Null
+    Start-Process -FilePath $Exe -ArgumentList @('--diagnostics','--metrics',"`"$Results/manual.csv`"") | Out-Null
     Write-Output "A-2 running. Right-click the pet or its tray icon for controls. Results: $Results"
     Write-Output 'Double-click the tray icon to restore a hidden window. Choose Exit to flush final metrics.'
 }

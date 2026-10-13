@@ -42,4 +42,5 @@ jobs:
             build/windows/playback-results/**/*.json
             build/windows/exploration-results/*
             build/windows/exploration-results/gameplay/*
+            build/windows/exploration-results/default-launch/*
           if-no-files-found: warn

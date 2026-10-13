@@ -92,3 +92,9 @@
 - 타일 청크는 기존 MDPA/WIC 계약, 지도·분포·DMA 규칙은 작은 MDPE1, 저장은 CRC32를 포함한 MDES1이다. JSON 파서는 runtime에 추가하지 않는다. schema와 assetVersion 불일치는 거부한다.
 - onceKey·인벤토리·entity 결과·층/Pose·RNG를 같은 durable snapshot에 commit한 뒤 UI 효과를 공개한다. interrupted tmp는 읽지 않는다. 외부 렌더/로그의 exactly-once나 실제 정전 내구성까지 성공으로 보고하지 않는다.
 - 원작 DPC 청크와 DMA3variation을 보존하되 현재 표시 variation0·정적 DPL을 사용한다. 미연결 아이템/친구/계단 그림은 검증 표시로 구분한다. B-1 전체 완료·Windows11 탐험/최종 성능은 아직 판정하지 않으며 B-2 전투는 미착수다.
+
+## 2026-10-13 — 제품 기본 실행은 자동 탐험
+
+- ZIP의 EXE 더블클릭은 dungeon0 탐험·최소 전투·길드 생활을 시작하고 기존 저장이 있으면 이어간다. 별도 스크립트 실행을 제품 진입 조건으로 두지 않는다.
+- A 방향·애니메이션 검사는 `--diagnostics` 또는 기존 명시적 selectors로 선택한다. `--explore` 기존 명령은 호환 유지하며 탐험 메뉴에서 시험 항목을 제거한다.
+- 설치 후 인자 없이 다른 CWD에서 실행하고 실제 진행·저장 복원·메뉴를 Windows CI에서 확인한다. 기존 명시적 `--explore` 검사만으로 더블클릭 진입을 완료 판정한 이전 검증의 누락을 보완한다.

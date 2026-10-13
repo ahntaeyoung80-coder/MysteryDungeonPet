@@ -1,5 +1,7 @@
 # MysteryDungeonPet
 
+현재 Windows 설치본은 `MysteryDungeonPet.exe`를 더블클릭하면 자동 탐험·최소 전투·길드 공동 식사·주인공 방 취침·기상·다음날 탐험을 시작한다. [실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 방향·애니메이션 검사는 `--diagnostics`로 명시한다. 아래 개발 이력의 이전 단계와 현재 범위는 [PROJECT_STATE.md](PROJECT_STATE.md)에서 구분한다.
+
 『포켓몬 불가사의 던전: 하늘의 탐험대』의 데이터와 리소스를 재활용하는 Windows용 초경량 데스크톱 펫 프로젝트.
 원작 동작·출현 분포를 우선하며, 던전은 시작방·이동방·계단방의 2~3개 방으로 단순화한다.
 

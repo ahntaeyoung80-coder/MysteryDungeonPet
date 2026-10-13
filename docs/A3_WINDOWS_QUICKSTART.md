@@ -1,5 +1,7 @@
 # Windows A-3 원작 패키지 실행
 
+> 현재 제품의 기본 실행은 자동 탐험이다. 이 문서는 A-3 진단용이며 아래 기본 EXE 실행은 `MysteryDungeonPet.exe --diagnostics`로 읽는다. 현재 제품 실행 안내는 [WINDOWS_QUICKSTART.md](WINDOWS_QUICKSTART.md)를 따른다.
+
 2026-10-13 KST. 이 설치물은 이전 A-2 시험 빌드와 다르다. 선택 원작2개 자산을 포함하며 기본 EXE는 MD1/sprite0을 재생한다. 원본 ROM·전체 내부 파일·Python·개발 서버는 필요 없다.
 
 ## 실행
