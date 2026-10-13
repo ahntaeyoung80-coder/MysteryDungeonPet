@@ -70,7 +70,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(1); // MDES, schema 1
+    w.u32(0x5345444d); w.u32(2); // MDES2; the reader also accepts existing MDES1 saves.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -100,13 +100,25 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u32(static_cast<std::uint32_t>(s.onceKeys.size()));
     for (const auto& key : s.onceKeys) w.str(key);
     w.u32(static_cast<std::uint32_t>(s.target + 1)); w.u32(static_cast<unsigned>(s.goalKind));
+    const auto& g = s.gameplay;
+    w.u32(g.enabled); w.u32(g.defeated); w.u32(g.homeScene);
+    w.u32(static_cast<unsigned>(g.life)); w.u32(static_cast<unsigned>(g.combat));
+    w.u32(g.hearts); w.u32(g.oran); w.u32(g.enemyHits); w.u32(g.enemyInstance); w.u32(g.turn);
+    w.u32(g.damage); w.u32(g.meals); w.u32(g.day); w.u32(g.hit); w.u32(g.critical);
+    w.u64(g.phaseStartedMs); w.u64(g.deadlineMs);
+    w.u32(static_cast<std::uint32_t>(g.hostile.size()));
+    for (auto id : g.hostile) w.u32(id);
+    w.u32(static_cast<std::uint32_t>(g.onceKeys.size()));
+    for (const auto& once : g.onceKeys) w.str(once);
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
 }
 ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const std::string& expected) {
     detail::Reader r(bytes);
-    if (r.u32() != 0x5345444d || r.u32() != 1) throw std::runtime_error("unknown snapshot schema");
+    if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
+    const auto schema = r.u32();
+    if (schema != 1 && schema != 2) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -148,6 +160,19 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     for (std::uint32_t i = 0; i < n; ++i)
         if (!s.onceKeys.insert(r.str()).second) throw std::runtime_error("duplicate onceKey");
     s.target = static_cast<int>(r.count(kTiles)) - 1; s.goalKind = static_cast<GoalKind>(r.count(4));
+    if (schema == 2) {
+        auto& g = s.gameplay;
+        g.enabled = r.boolean(); g.defeated = r.boolean(); g.homeScene = r.boolean();
+        g.life = static_cast<LifePhase>(r.count(8)); g.combat = static_cast<CombatPhase>(r.count(9));
+        g.hearts = r.count(3); g.oran = r.count(1); g.enemyHits = r.count(2); g.enemyInstance = r.count(kTiles); g.turn = r.u32();
+        g.damage = r.count(2); g.meals = r.u32(); g.day = r.u32(); g.hit = r.boolean(); g.critical = r.boolean();
+        g.phaseStartedMs = r.u64(); g.deadlineMs = r.u64();
+        n = r.count(kTiles);
+        for (std::uint32_t i = 0; i < n; ++i) g.hostile.push_back(r.u32());
+        n = r.count(4096);
+        for (std::uint32_t i = 0; i < n; ++i)
+            if (!g.onceKeys.insert(r.str()).second) throw std::runtime_error("duplicate gameplay transaction");
+    }
     r.u32(); r.end();
     validateState(s);
     return s;

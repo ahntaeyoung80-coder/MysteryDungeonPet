@@ -41,4 +41,5 @@ jobs:
             build/windows/playback-results/**/*.csv
             build/windows/playback-results/**/*.json
             build/windows/exploration-results/*
+            build/windows/exploration-results/gameplay/*
           if-no-files-found: warn

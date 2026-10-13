@@ -117,13 +117,14 @@ class Atlas:
                 "byteSize": path.stat().st_size, "format": "straight_rgba8"}
 
 
-def pack_asset(sheets: Path, output: Path, asset_key: str, provenance: dict, raw_wan=None) -> tuple[dict, dict]:
+def pack_asset(sheets: Path, output: Path, asset_key: str, provenance: dict, raw_wan=None, extra_animations=None) -> tuple[dict, dict]:
     provenance = {**provenance, "transform": transform_identity()}
     shadow_size, nodes = nodes_from_xml(sheets / "AnimData.xml")
     # 전체 alias graph는 선택 범위 바깥에도 검사한다.
     for name in nodes:
         resolve_alias(nodes, name)
-    selected = [name for name in {**REQUIRED, **OPTIONAL} if name in nodes]
+    requested = {**REQUIRED, **OPTIONAL, **(extra_animations or {})}
+    selected = [name for name in requested if name in nodes]
     for name in list(selected):
         target = nodes[name].findtext("CopyOf")
         while target:
@@ -141,7 +142,7 @@ def pack_asset(sheets: Path, output: Path, asset_key: str, provenance: dict, raw
     for name in selected:
         node = nodes[name]
         wan_id = int(node.findtext("Index")) if node.find("Index") is not None else None
-        if name in {**REQUIRED, **OPTIONAL} and wan_id != {**REQUIRED, **OPTIONAL}[name]:
+        if name in requested and wan_id != requested[name]:
             raise ValueError(f"unexpected WAN id: {name}: {wan_id}")
         target = node.findtext("CopyOf")
         clip = {"name": name, "wanId": wan_id, "aliasOf": target, "directions": [],

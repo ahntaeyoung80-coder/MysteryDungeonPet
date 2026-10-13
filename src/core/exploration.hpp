@@ -93,6 +93,36 @@ struct InventoryEntry {
     std::string onceKey;
     std::uint32_t originalId = 0;
 };
+constexpr std::uint32_t MOVE_REGULAR_ATTACK = 355, ITEM_ORAN_BERRY = 70;
+enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat };
+enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat };
+struct GameplayState {
+    bool enabled = false, defeated = false, homeScene = false;
+    LifePhase life = LifePhase::Explore;
+    CombatPhase combat = CombatPhase::PlayerTurn;
+    std::uint32_t hearts = 3, oran = 0, enemyHits = 2, enemyInstance = 0, turn = 0;
+    std::uint32_t damage = 0, meals = 0, day = 1;
+    bool hit = false, critical = false;
+    std::uint64_t phaseStartedMs = 0, deadlineMs = 0;
+    std::vector<std::uint32_t> hostile;
+    std::set<std::string> onceKeys;
+};
+enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
+    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged };
+struct GameplayUpdate {
+    GameplayEvent event = GameplayEvent::None;
+    std::string onceKey;
+    std::uint32_t damage = 0;
+    bool critical = false;
+};
+const char* lifeName(LifePhase);
+const char* combatName(CombatPhase);
+bool dungeonScene(const GameplayState&);
+std::uint32_t gameplayClip(const GameplayState&);
+bool gameplayLoop(const GameplayState&);
+// Shared attack roll: both sides hit 80%; only critical chance differs.
+struct AttackRoll { bool hit = false, critical = false; std::uint32_t damage = 0; };
+AttackRoll rollBasicAttack(Rng&, bool player);
 struct ExplorationState {
     std::string assetVersion;
     std::uint64_t runId = 0, mapSeed = 0;
@@ -112,6 +142,7 @@ struct ExplorationState {
     std::set<std::string> onceKeys;
     int target = -1;
     GoalKind goalKind = GoalKind::None;
+    GameplayState gameplay;
 };
 class Explorer {
 public:
@@ -125,6 +156,8 @@ public:
     void setBlocked(int tile, bool value);
     GoalKind goal() const { return state_.goalKind; }
     std::uint64_t bfsCalls() const { return bfsCalls_; }
+    void enableGameplay(std::uint64_t utcMs);
+    GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
 private:
     ExplorationState state_;
     std::vector<int> path_;
@@ -134,6 +167,9 @@ private:
     void plan();
     void invalidate();
     std::string key(const std::string& action, std::uint32_t instance = 0) const;
+    void assignRelationships();
+    GameplayUpdate beginReturn(std::uint64_t now, bool defeated);
+    void completeEncounter();
 };
 
 void validateState(const ExplorationState&);

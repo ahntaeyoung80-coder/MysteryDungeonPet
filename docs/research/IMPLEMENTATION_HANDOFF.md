@@ -4,6 +4,8 @@
 
 현재 실행 순서·범위·단계별 완료 판정은 [DEVELOPMENT_PIPELINE.md](../DEVELOPMENT_PIPELINE.md)를 따른다. 이 인수인계는 상세 계약과 조사 근거를 제공한다. A의 대표 샘플 검증과 G1/G2의 전체 지원 검증은 구분한다.
 
+2026-10-13 실행 계약 보완: 실제 B-1 코드는 origin/work3cbb95b에서 확인했다. 현재 구현은 `Explorer::advanceGameplay`가 생활·전투의 단일 소유자로 탐험 `advance` 호출을 제한한다. 별도 EventPlayer/Lifecycle 클래스를 추측해 새로 만들지 않고 기존 Explorer/Animator/StateStore에 유한 cue와 UTC deadline을 연결했다. ReturnHome은 월드 경로 없이 원작 집 장면으로 전환한다. MDES2는 생활·전투 phase/결과/RNG/onceKeys를 atomic 저장하고 MDES1 읽기를 유지한다. 관계는 사용자 확정3:1로 확장했으므로 아래 과거의 모든 개체 우호 가정은 현행 정책이 아니다. 최소 전투·오랭열매 계약과 실행 검증은 [B1_GAMEPLAY_TASK.md](../B1_GAMEPLAY_TASK.md)를 따른다.
+
 ## 1. 확정 기술 결정
 
 | 영역 | 최종안 | 가져오는 코드·데이터 | 최소 신규 구현 |

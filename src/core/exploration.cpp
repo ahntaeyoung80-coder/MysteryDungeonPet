@@ -233,7 +233,7 @@ Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVer
 }
 Explorer::Explorer(ExplorationState state) : state_(std::move(state)) {
     validateState(state_);
-    if (state_.target != -1) {
+    if (state_.target != -1 && (!state_.gameplay.enabled || state_.gameplay.life == LifePhase::Explore)) {
         path_ = bfs(state_.world, state_.position, state_.blocked).pathTo(state_.target);
         ++bfsCalls_;
         cachedWorld_ = state_.world.version;
@@ -257,6 +257,7 @@ void Explorer::enterFloor() {
     state_.occupancyVersion = 0;
     state_.floorSteps = 0;
     invalidate();
+    if (state_.gameplay.enabled) assignRelationships();
 }
 void Explorer::setBlocked(int tile, bool value) {
     require(state_.world.walkable(tile) && tile != state_.position, "invalid blocker tile");
@@ -272,17 +273,22 @@ void Explorer::plan() {
     const auto search = bfs(state_.world, state_.position, state_.blocked);
     ++bfsCalls_;
     invalidate();
-    auto selectEntities = [&](EntityKind kind, GoalKind goal) {
+    auto selectEntities = [&](EntityKind kind, GoalKind goal, bool berryOnly = false) {
         int best = kTiles + 1;
         for (const auto& e : state_.population.entities) {
             const int distance = search.distance[e.tile];
+            if (state_.gameplay.enabled && kind == EntityKind::Item &&
+                ((berryOnly && e.originalId != ITEM_ORAN_BERRY) ||
+                 (state_.gameplay.oran && e.originalId == ITEM_ORAN_BERRY))) continue;
             if (!e.done && e.kind == kind && distance >= 0 && distance < best) {
                 best = distance; state_.target = e.tile; state_.goalKind = goal;
             }
         }
     };
     if (state_.floorSteps < kFloorStepLimit) {
-        selectEntities(EntityKind::Item, GoalKind::Item);
+        if (state_.gameplay.enabled && state_.gameplay.hearts < 3 && !state_.gameplay.oran)
+            selectEntities(EntityKind::Item, GoalKind::Item, true);
+        if (state_.target == -1) selectEntities(EntityKind::Item, GoalKind::Item);
         if (state_.target == -1) selectEntities(EntityKind::Friend, GoalKind::Friend);
         if (state_.target == -1) {
             int best = kTiles + 1;
@@ -300,6 +306,8 @@ void Explorer::plan() {
     cachedOccupancy_ = state_.occupancyVersion;
 }
 Event Explorer::advance(bool poseFinished) {
+    if (state_.gameplay.enabled && state_.gameplay.life != LifePhase::Explore &&
+        !(state_.gameplay.life == LifePhase::Pose && poseFinished)) return {};
     if (state_.phase == Phase::Home) return {};
     if (state_.phase == Phase::Pose) {
         if (poseFinished || ++state_.poseSteps >= kPoseTimeout) {
@@ -354,6 +362,31 @@ Event Explorer::advance(bool poseFinished) {
     return event;
 }
 void validateState(const ExplorationState& s) {
+    const auto& g = s.gameplay;
+    require(static_cast<unsigned>(g.life) <= 8 && static_cast<unsigned>(g.combat) <= 9 &&
+            g.hearts <= 3 && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
+            g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
+    if (g.enabled) {
+        require(g.deadlineMs >= g.phaseStartedMs, "invalid gameplay deadline");
+        require(g.life != LifePhase::Combat || (s.phase == Phase::Explore && s.target == -1 && g.enemyInstance > 0 &&
+            std::any_of(s.population.entities.begin(), s.population.entities.end(), [&](const auto& e) {
+                return e.instanceId == g.enemyInstance && e.kind == EntityKind::Friend &&
+                    (!e.done || g.combat == CombatPhase::Victory);
+            })), "invalid combat owner");
+        require((g.life == LifePhase::Explore || g.life == LifePhase::Combat) ? s.phase == Phase::Explore :
+            (g.life == LifePhase::Pose ? s.phase == Phase::Pose : s.phase == Phase::Home), "lifecycle/explorer mismatch");
+        require(!g.homeScene || (g.life != LifePhase::Explore && g.life != LifePhase::Pose && g.life != LifePhase::Combat), "home in dungeon state");
+        require(g.life == LifePhase::Explore || g.life == LifePhase::Pose || g.life == LifePhase::Combat ||
+                g.life == LifePhase::ReturnHome || g.homeScene, "life event without home scene");
+        if (g.life == LifePhase::ReturnHome || g.homeScene)
+            require(g.onceKeys.count("return:" + std::to_string(s.runId)) != 0, "return transaction missing");
+        if (g.life == LifePhase::Eat || g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready)
+            require(g.onceKeys.count("meal:" + std::to_string(s.runId)) && g.meals > 0, "meal transaction missing");
+        std::set<std::uint32_t> unique;
+        for (auto id : g.hostile) require(unique.insert(id).second &&
+            std::any_of(s.population.entities.begin(), s.population.entities.end(), [&](const auto& e) { return e.instanceId == id && e.kind == EntityKind::Friend; }), "invalid hostile catalogue");
+        for (const auto& once : g.onceKeys) require(!once.empty() && once.size() <= 256, "invalid gameplay journal");
+    }
     require(!s.assetVersion.empty() && s.assetVersion.size() <= 256, "invalid asset version");
     require(s.runId != 0 && !s.floors.empty() && s.floors.size() <= 128 &&
             s.floorIndex < s.floors.size(), "invalid run/floor");

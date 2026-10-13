@@ -2,6 +2,12 @@
 
 > 이 문서는 다음 세션에서 문제를 수정하기 위한 임시 작업 지시서다. 아래 조치를 완료하고 검증한 뒤 이 파일을 삭제한다.
 
+## 2026-10-13 처리 상태
+
+실제 B-1 코드는 main에 없고 origin/work의3cbb95b에 있었다. `fix/b1-life-combat`에서 기존 코드를 재사용했다. 귀가 중 이동·경로 재계획 중단, Pose17/귀가 once, 원작 집 장면 fade 전환, Eat→Sleep→Wake→다음날 Explore, 패배 공통 파이프라인과 최소 전투를 구현했다. 코어12개 시나리오는 pass이며 실제 Windows CI는 결과 수집 중이다. [완료·미완료 목록](B1_GAMEPLAY_TASK.md)을 따른다.
+
+이 파일의 이동 보간·방향 전환·배경 스크롤 문제 전체는 아직 해결·사용자 화면 검증을 마치지 않았다. 임시 문서 삭제 조건이 충족되지 않아 보존한다. 아래 과거 체감 기록은 코드 추적 증거와 구분한다.
+
 ## 확인된 사용자 체감 문제
 
 1. 캐릭터가 목적지를 향하지 않고 무작위 이동을 반복한다.
@@ -88,9 +94,12 @@ Explore
 → FadeIn
 → Eat
 → Sleep
+→ Wake
+→ Ready/Idle
+→ 다음날 Explore
 ```
 
-`ReturnHome` 진입 이후 `Navigator.plan` 또는 이동 tick이 호출되면 실패로 기록한다. `Home` 전환 없이 `ReturnHome`이 5초 이상 지속되면 실패로 기록한다.
+`ReturnHome` 진입 이후 `Navigator.plan` 또는 이동 tick이 호출되면 실패로 기록한다. 최신 사용자 기준은 ReturnHome이1~2초 안에 끝나고 Eat/Sleep/Wake/다음날 Explore로 이어져야 한다. 예전5초 한도 대신1500ms 구현·2초 실행 gate를 적용한다.
 
 ## 완료 후 처리
 

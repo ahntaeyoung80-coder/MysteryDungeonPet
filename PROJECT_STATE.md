@@ -1,6 +1,21 @@
 # 현재 상태
 
-## 현재 단계
+## 최신 작업 — B-1 생활 연결·최소 B-2 (2026-10-13)
+
+최초 체크아웃 `/workspace/MysteryDungeonPet`, `work=70eb4cf`는 문서만 있었다. 원격 조회·fetch 후 실제 B-1 코드가 `origin/work=3cbb95b`에 있음을 확인했다. 별도 워크트리 `/workspace/MysteryDungeonPet-b1`, 브랜치 `fix/b1-life-combat`에서 기존 코드·자산을 재사용하고 최신 main의 임시 문제 문서를 병합했다. 기존 체크아웃은 보존했다.
+
+- 구현: 마지막 계단의 once Pose17 → ReturnHome(750ms fade-out + 원작 집 장면 교체 + 750ms fade-in) → Eat15(식사 once) → Sleep5(deadline) → Wake14(유한) → Idle → 다음날 Explore. 귀가·전투 동안 Explorer 이동 및 경로 계산을 차단한다. 패배는 같은 파이프라인에 Hurt6 기반 신규 감정표현 cue를 추가한다.
+- 최소 전투: 기본공격355만 사용, 플레이어 선공·3하트, 내부 적중 카운터2, 양쪽 명중80%, 플레이어/적 치명타20%/5%, 피해2배. Attack1/Hurt6/Faint33을 연결했다. 승리는 Faint 완료 뒤 같은 층·위치에서 재개한다. 기술·레벨·적 HP 표시·가방은 추가하지 않았다.
+- 조우: 고정된 RNG로 적대/우호3:1, 인접 칸 인식·전투 또는 인사. 오랭열매70은 실제 소지1개로 제한하고, 부족한 체력에서 목표 우선도를 올린다. 전투 중 자동 사용은 텍스트만 표시하며 2하트 회복(최대3) 후 적 턴이다. 기존 inventory는 B-1 획득 감사 기록이며 가방 UI가 아니다.
+- 저장: MDES2에 생활·전투 phase/deadline/피해/소지 수/RNG/transaction을 함께 저장한다. MDES1 위치·기존 once 기록을 보존해 업그레이드한다. 상태를 durable commit한 후 화면·텍스트를 공개한다.
+- 원작 자산: 보관된 WAN 시트 두 종에서 Attack/Hurt/Faint/Nod/HitGround를 선택하고 원작 G01P06B/G01P07A map을 추출했다. ROM hash 불변. 실행 자산은 `assets/original/gameplay/`. `tools/prepare_gameplay_assets.py`로 새 출력에 재현 가능하다.
+- 실행 검증: Linux Release CTest4개, Python23개, Windows x64 MinGW compile/link 통과. 요청된12개 시나리오와20시드×2일,12,031회 상태 복원·24,235 checks 통과. 100,000회 양쪽 공격/2,000개 조우 통계 통과. 초기 checkpoint 강제 kill→복원→Ready 재실행 시 journal 불변 통과. 상세: `docs/validation/2026-10-13-b1-gameplay-scenarios.jsonl`, `2026-10-13-b1-gameplay-kill.json`.
+- 검증 중: ASan/UBSan 최종 결과와 Windows CI 실행. 실제 Windows11, OS 잠금·절전·장기 성능은 계속 pending이며 크로스 빌드를 실제 실행으로 판정하지 않는다.
+- 한계: 최소 실행 주기는 수면10초이며 원작 하루 시간 재현이 아니다. 감정표현은 Hurt6을 재사용한 신규 cue다. 적 표시는 선택된 MD4 대표 몸체로 제한하며 전체 출현 종의 몸체 매핑은 pending. 계단·아이템 검증 표시 및 기존 이동 보간 문제는 별도 잔여 작업이다.
+
+재개: `docs/B1_GAMEPLAY_TASK.md`의 완료·미완료 목록과 실행 명령을 확인한다. B-2는 이번 사용자 요구로 최소 범위가 승인됐으며 과거의 선택 단계 승인 대기를 다시 요구하지 않는다.
+
+## 이전 B-1 체크포인트
 B-1 비전투 코어·선택 원작 타일 변환 구현 및 Linux/native 검증 통과. 사용자 최신 지시로 `origin/work` 기준 `19ea3a1`을 명시 fetch/fast-forward해 기존 A를 재사용했다. A-3 잔여 gate는 pending, B-1 제품 전체/Windows11 탐험·미연결 원작 그림은 pending, B-2는 미착수다. 사용법은 `docs/B1_USAGE.md`.
 
 이전 A 체크포인트: A-3 착수: 최신 origin/work `3097aa6`의 A-1/A-2와 사용자 Windows11 기록을 재사용해 계측·200px 고정 요구를 구현했다. A-1은 대표 범위 완료, A 전체/B/C는 미완료다. 첨부/공유 원작 package의 native 연결과 MSVC Windows CI의 원작 WIC·단기 재생 로그는 pass다. 실제 사용자 OS 사건·원작 시간/그림자·육안 anchor는 pending이다. 추가 수동 테스트를 요청하지 않는다.

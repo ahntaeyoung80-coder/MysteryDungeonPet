@@ -16,7 +16,7 @@ if (-not (Test-Path $Snapshot)) { throw 'exploration snapshot absent' }
 $rows = @(Import-Csv $Csv)
 if ($rows.Count -lt 3) { throw 'missing exploration metrics' }
 foreach ($r in $rows) {
-    if ([int]$r.decode_count -ne 2) { throw 'actor/tileset decode cache changed' }
+    if ([int]$r.decode_count -ne 4) { throw 'player/enemy/home/tileset decode cache changed' }
     if ([int]$r.physical_size -ne 200) { throw 'exploration resized viewport' }
 }
 $positions = @($rows | ForEach-Object { "$($_.scene_x),$($_.scene_y)" } | Sort-Object -Unique)
@@ -28,11 +28,11 @@ if (@($rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     $movement = 'pass'
 }
 $finish = (& $Explorer $Package 42 $Snapshot | ConvertFrom-Json)
-if ($LASTEXITCODE -ne 0 -or -not $finish.completed) { throw 'Windows snapshot cannot complete natively' }
+if ($LASTEXITCODE -ne 0 -or $finish.hearts -ne 3) { throw 'Windows gameplay snapshot cannot finish its rest cycle natively' }
 $restoredRun = (& $Explorer $Package 99 $Snapshot | ConvertFrom-Json)
 if ($LASTEXITCODE -ne 0 -or $restoredRun.newClears -ne 0 -or $restoredRun.newPickups -ne 0 -or $restoredRun.inventory -ne $finish.inventory) {
     throw 'Windows restored home replayed transaction'
 }
-@{status='pass'; uiMovement=$movement; decodeCount=2; physicalSize=200; snapshotRestore='pass';
+@{status='pass'; uiMovement=$movement; decodeCount=4; physicalSize=200; snapshotRestore='pass';
   desktopWindowFixed='pass'; a3Remaining='pending'; actualWindows11Exploration='pending'} |
     ConvertTo-Json | Set-Content "$Output/exploration.json"

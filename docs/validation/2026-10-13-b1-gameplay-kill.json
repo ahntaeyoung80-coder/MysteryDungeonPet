@@ -1,0 +1,17 @@
+{
+  "processKillRestore": "pass",
+  "repeatReadyJournalUnchanged": "pass",
+  "result": {
+    "completed": false,
+    "ticks": 336,
+    "newPickups": 6,
+    "newGreetings": 0,
+    "newClears": 0,
+    "inventory": 6,
+    "rngState": 8409404243176014212,
+    "day": 1,
+    "hearts": 3,
+    "oran": 0,
+    "gameplayTransactions": 24
+  }
+}
