@@ -6,6 +6,7 @@ Codex 개발 파이프라인과 1차(A) 실행 명세 작성 완료. 제품 구�
 ## 현재 구현 상태
 저장소: https://github.com/ahntaeyoung80-coder/MysteryDungeonPet
 개발 진입점: docs/DEVELOPMENT_PIPELINE.md. 전체 A/B/C 개요와 A-1/A-2/A-3 작업·산출물·검증·완료 조건을 정의했다.
+B-2 자동 전투는 선택 검토 단계다. B-1 완료 시 사용자와 추가 여부·범위를 확정하기 전에는 구현하지 않는다.
 조사 보고서 9개: docs/research/. 과거 검사 자료 9개: docs/research/checks/.
 이전 개발 명세: docs/archive/ (현재 실행 기준과 구분).
 제품 코드·추출기·packer·Windows 실행 파일은 아직 없다. 실제 ROM 전체 추출·전체 종/폼 및 Windows 성능은 미검증이다.
