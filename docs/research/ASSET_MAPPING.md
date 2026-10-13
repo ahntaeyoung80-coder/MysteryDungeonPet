@@ -36,7 +36,7 @@
 | BALANCE/item_p.bin | item_id,category,sprite,palette,is_valid | ItemRecord+iconKey+foodKind | 수집 icon/생활 음식 분류 |
 | MONSTER/monster.bin | BIN_PACK spriteIndex,PKDPX WAN | original dungeon motions | Walk/Idle/Pose 등; ground/attack과 통합 |
 | MONSTER/m_ground.bin | 같은 index의 raw WAN | 생활 동작 | Eat/Sleep/EventSleep/Wake/Nod 등 실제 지원된 항목 |
-| MONSTER/m_attack.bin | 같은 index의 PKDPX WAN | 통합 reference,선택 동작만 | 전투 제거,필요한 시각 clip만 유지 |
+| MONSTER/m_attack.bin | 같은 index의 PKDPX WAN | 통합 reference,선택 동작만 | 최소 B-2 Attack/Hurt/Faint 선택,나머지 기술은 보류 |
 | DUNGEON/dungeon.bin | logical files는 pmd2dungeondata.xml로 복원 | tileset/item atlas+DMA rule/palette ticks | 새 terrain grid→원작 chunk; item sprite/palette |
 | MAP_BG/bg_list.dat+*.bma/bpc/bpl/bpa | BgListEntryProtocol+MapBgModule/BMA | selected background/layer frames | 생활 장면 backgroundKey |
 | GROUND/{object-name}.wan | script_data.objects에서 name 연결 | object sprite+anchor/tick | 식사/수면 소품 |

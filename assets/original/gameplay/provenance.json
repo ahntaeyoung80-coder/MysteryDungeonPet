@@ -88,6 +88,24 @@
       ]
     }
   ],
+  "originalWANChecks": [
+    {
+      "comparedFrames": 358,
+      "mdIndex": 1,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "originalSourceFrames": 534,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "status": "pass"
+    },
+    {
+      "comparedFrames": 326,
+      "mdIndex": 4,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "originalSourceFrames": 494,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "status": "pass"
+    }
+  ],
   "originalWallTime": "pending",
   "romHashUnchanged": true,
   "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf"

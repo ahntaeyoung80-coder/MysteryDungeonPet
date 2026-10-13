@@ -1,3 +1,5 @@
+> 2026-10-13 최신 실행 범위: Run-B1.ps1은 기본공격 전투와 귀가·식사·수면·기상·다음날 탐험을 포함한다. 최신 완료·미완료 항목과 규칙은 [B1_GAMEPLAY_TASK.md](B1_GAMEPLAY_TASK.md)를 따른다. 아래 B-1 독립 코어의 과거 비전투 설명과 실제 앱의 현재 범위를 구분한다.
+
 # B-1 비전투 탐험 코어와 원작 타일
 
 2026-10-13 KST. 최신 `origin/work`의 기준 커밋 `19ea3a1e34b9d157c9a04fef460ddff5ede324b3`에서 A의 Extractor/정규화·MDPA·Animator·WIC·Surface·200px 창을 재사용했다. 사용자 최신 지시로 A-3 잔여 검증을 pending으로 유지하면서 B-1 독립 작업을 진행했다. 전투는 구현하지 않았다.

@@ -1,5 +1,6 @@
 """Reuse retained original WAN sheets and ROM map parsers for the minimum gameplay pack."""
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -20,11 +21,17 @@ EXTRA = {'Attack': 1, 'Hurt': 6, 'Nod': 22, 'Faint': 33, 'HitGround': 34}
 def prepare(root, output):
     from ndspy.rom import NintendoDSRom
     from skytemple_files.common.types.file_types import FileType
+    from skytemple_files.graphics.chara_wan.handler import CharaWanHandler
+    from tools.mdpet.extractor import checked_pack
+    from tools.mdpet.wan_verify import verify_wan_asset
     if output.exists():
         raise ValueError('choose a new output directory')
     original = root / 'assets/original'
     rom_path = original / 'source/user-supplied.nds'
     before = file_hash(rom_path)
+    rom = NintendoDSRom.fromFile(str(rom_path))
+    packs = {p: checked_pack(rom.getFileByName(p)) for p in
+             ('MONSTER/monster.bin', 'MONSTER/m_ground.bin', 'MONSTER/m_attack.bin')}
     with tempfile.TemporaryDirectory() as workspace:
         temp = Path(workspace)
         with zipfile.ZipFile(original / 'a1-original-package.zip') as archive:
@@ -37,6 +44,7 @@ def prepare(root, output):
         manifest = read_json(source / 'manifest.json')
         audit = temp / 'audit'; audit.mkdir()
         assets, reports = [], []
+        original_checks = []
         for index, previous in enumerate(manifest['assets']):
             md = previous['source']['mdIndex']
             destination = audit / f'assets/{md}'; destination.mkdir(parents=True)
@@ -46,12 +54,22 @@ def prepare(root, output):
             available = {a['wanId'] for a in asset['animations']}
             if not set(EXTRA.values()).issubset(available):
                 raise ValueError(f'missing gameplay WAN animations for MD {md}')
+            wans = []
+            for path, pack in packs.items():
+                data = pack[previous['source']['spriteIndex']]
+                if 'ground' not in path:
+                    data = FileType.PKDPX.deserialize(data).decompress()
+                wans.append(CharaWanHandler.deserialize(data))
+            originals = deepcopy(wans)
+            merged = CharaWanHandler.merge_wan(*wans)
+            verification = verify_wan_asset(merged, asset, destination, originals)
+            original_checks.append({'mdIndex': md, **verification})
+            report['romPixelMatch'] = 'pass'
             asset['atlas']['file'] = f'assets/{md}/atlas.png'
             assets.append(asset); reports.append(report)
         write_package(audit, assets, reports)
         generated = temp / 'gameplay'; generated.mkdir()
         actor_report = compile_package(audit, generated / 'actors')
-        rom = NintendoDSRom.fromFile(str(rom_path))
         backgrounds = FileType.BG_LIST_DAT.deserialize(rom.getFileByName('MAP_BG/bg_list.dat'))
         from PIL import Image
         atlas = Image.new('RGBA', (200, 400))
@@ -91,7 +109,7 @@ def prepare(root, output):
         (scene / 'CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; user-provided original assets\n', encoding='utf-8')
         if file_hash(rom_path) != before:
             raise ValueError('ROM modified')
-        report = {'romHashUnchanged': True, 'romSha256': before, 'extraWAN': EXTRA,
+        report = {'romHashUnchanged': True, 'romSha256': before, 'extraWAN': EXTRA, 'originalWANChecks': original_checks,
                   'actors': actor_report, 'home': maps, 'originalWallTime': 'pending'}
         write_json(generated / 'provenance.json', report)
         output.parent.mkdir(parents=True, exist_ok=True)

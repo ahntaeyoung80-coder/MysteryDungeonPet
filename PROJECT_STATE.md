@@ -10,7 +10,7 @@
 - 저장: MDES2에 생활·전투 phase/deadline/피해/소지 수/RNG/transaction을 함께 저장한다. MDES1 위치·기존 once 기록을 보존해 업그레이드한다. 상태를 durable commit한 후 화면·텍스트를 공개한다.
 - 원작 자산: 보관된 WAN 시트 두 종에서 Attack/Hurt/Faint/Nod/HitGround를 선택하고 원작 G01P06B/G01P07A map을 추출했다. ROM hash 불변. 실행 자산은 `assets/original/gameplay/`. `tools/prepare_gameplay_assets.py`로 새 출력에 재현 가능하다.
 - 실행 검증: Linux Release CTest4개, Python23개, Windows x64 MinGW compile/link 통과. 요청된12개 시나리오와20시드×2일,12,031회 상태 복원·24,235 checks 통과. 100,000회 양쪽 공격/2,000개 조우 통계 통과. 초기 checkpoint 강제 kill→복원→Ready 재실행 시 journal 불변 통과. 상세: `docs/validation/2026-10-13-b1-gameplay-scenarios.jsonl`, `2026-10-13-b1-gameplay-kill.json`.
-- 검증 중: ASan/UBSan 최종 결과와 Windows CI 실행. 실제 Windows11, OS 잠금·절전·장기 성능은 계속 pending이며 크로스 빌드를 실제 실행으로 판정하지 않는다.
+- 추가 검증: ASan/UBSan4CTests와 최신 gameplay 재검사 pass. Windows Server2025/MSVC19.51 CI38393535265의 core/windows jobs 모두 success. 네이티브4CTests와 실제 GUI의 Pose→귀가→Eat→Sleep→Wake→day2 Explore 및 Attack/Hurt/Faint→승리→Explore pass. 귀가→식사 실측1532.942ms. 선택 설치물1,327,754bytes(ROM 제외). 실제 Windows11, OS 잠금·절전·장기 성능은 계속 pending이다.
 - 한계: 최소 실행 주기는 수면10초이며 원작 하루 시간 재현이 아니다. 감정표현은 Hurt6을 재사용한 신규 cue다. 적 표시는 선택된 MD4 대표 몸체로 제한하며 전체 출현 종의 몸체 매핑은 pending. 계단·아이템 검증 표시 및 기존 이동 보간 문제는 별도 잔여 작업이다.
 
 재개: `docs/B1_GAMEPLAY_TASK.md`의 완료·미완료 목록과 실행 명령을 확인한다. B-2는 이번 사용자 요구로 최소 범위가 승인됐으며 과거의 선택 단계 승인 대기를 다시 요구하지 않는다.
