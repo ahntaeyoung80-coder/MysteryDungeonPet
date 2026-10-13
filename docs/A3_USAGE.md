@@ -65,3 +65,5 @@ PET_PACKAGE_INSPECT=$PWD/build/linux/pet_package_inspect .venv/bin/python -m uni
 ```
 
 위는 사용 예이며 추가 사용자 수동 테스트 요청이 아니다.
+
+Windows CI run38358343599(소스8406b2e)의 MSVC Release·원작WIC/cache·native재생·CSV15개가 pass했다. 실제 원작10개 시나리오는 sourceKind1이며 프레임 진전과 final DPI96/200px를 확인했다. CI 설치물642,575bytes, 원작/fixture를 포함하며 원본ROM은 없다. 현재 [실행 안내](A3_WINDOWS_QUICKSTART.md)와 최종 문서로 묶은 별도 ZIP은 같은 EXE를 사용한다. [검증 요약](validation/2026-10-13-a3-summary.json)을 따른다.

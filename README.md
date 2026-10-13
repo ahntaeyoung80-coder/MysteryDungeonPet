@@ -7,6 +7,7 @@ A-1 대표 원작 데이터·자산 준비를 완료했고, A-2 Windows 시험 �
 
 - [Codex 개발 파이프라인·1차 실행 명세](docs/DEVELOPMENT_PIPELINE.md)
 - [A-3 착수·자동 검사·원작 연결 재개](docs/A3_USAGE.md)
+- [A-3 Windows 원작 패키지 실행](docs/A3_WINDOWS_QUICKSTART.md)
 - [A-2 사용자 실행 점검·A-3 재개](docs/logs/2026-10-13-a2-user-review.md)
 - [A-2 빌드·패키지 연결](docs/A2_USAGE.md)
 - [Windows 11 빠른 실행](docs/A2_WINDOWS_QUICKSTART.md)
