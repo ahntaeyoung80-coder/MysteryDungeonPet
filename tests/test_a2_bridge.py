@@ -3,12 +3,15 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import hashlib
+import struct
 import tempfile
 import unittest
 from tools.compile_runtime_package import compile_package, convert_asset, POINTS, EVENTS
 from tools.mdpet.common import read_json, write_json
 from tools.mdpet.fixture import create_sheets, provenance
 from tools.mdpet.packer import pack_asset, write_package
+from tools.verify_a3_package import verify
 
 
 class A2Bridge(unittest.TestCase):
@@ -74,6 +77,24 @@ class A2Bridge(unittest.TestCase):
             self.assertEqual(by_id[7]['rows'][0][0]['ticks'], 41)
             self.assertEqual(by_id[7]['rows'][0][0]['events'], 5)
             self.assertGreater(compared, 100)
+            native_path = Path(inspector)
+            replay_path = native_path.with_name('pet_package_playback' + native_path.suffix)
+            verified = verify(original, root / 'a2', native_path, replay_path)
+            self.assertEqual(verified['framesCompared'], compared)
+            self.assertFalse(verified['aComplete'])
+            self.assertEqual(verified['assets'][0]['nativePlayback']['status'], 'pass')
+            runtime_file = root / 'a2/asset-0/asset.mdpa'
+            original_bytes = runtime_file.read_bytes()
+            changed = bytearray(original_bytes)
+            struct.pack_into('<I', changed, 12, 61)
+            runtime_file.write_bytes(changed)
+            changed_index = copy.deepcopy(result)
+            changed_index['assets'][0]['sha256'] = hashlib.sha256(changed).hexdigest()
+            write_json(root / 'a2/runtime-index.json', changed_index)
+            with self.assertRaisesRegex(ValueError, 'tickHz'):
+                verify(original, root / 'a2', native_path, replay_path)
+            runtime_file.write_bytes(original_bytes)
+            write_json(root / 'a2/runtime-index.json', result)
             second = compile_package(original, root / 'a2-again')
             self.assertEqual(result, second)
             self.assertEqual((root/'a2/asset-0/asset.mdpa').read_bytes(), (root/'a2-again/asset-0/asset.mdpa').read_bytes())

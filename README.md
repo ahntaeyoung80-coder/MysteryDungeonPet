@@ -6,6 +6,7 @@
 A-1 대표 원작 데이터·자산 준비를 완료했고, A-2 Windows 시험 런타임과 공유 패키지 소비를 구현했다. 사용자 Windows11 실행 기록을 점검했으며 다음 작업은 A-3 통합과 계측 보완이다. 추가 수동 테스트 없이 기존 결과를 재사용하고 미검증 항목은 유지한다. 작업 재개 시 [PROJECT_STATE.md](PROJECT_STATE.md)를 먼저 읽는다.
 
 - [Codex 개발 파이프라인·1차 실행 명세](docs/DEVELOPMENT_PIPELINE.md)
+- [A-3 착수·자동 검사·원작 연결 재개](docs/A3_USAGE.md)
 - [A-2 사용자 실행 점검·A-3 재개](docs/logs/2026-10-13-a2-user-review.md)
 - [A-2 빌드·패키지 연결](docs/A2_USAGE.md)
 - [Windows 11 빠른 실행](docs/A2_WINDOWS_QUICKSTART.md)

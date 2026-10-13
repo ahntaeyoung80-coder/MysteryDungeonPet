@@ -17,13 +17,18 @@ int main(int argc, char** argv) {
         auto p = pet::loadPackage(std::filesystem::u8path(argv[1]));
         std::cout << "{\"assetKeyHex\":"; hex(p.assetKey);
         std::cout << ",\"provenanceHex\":"; hex(p.provenance);
+        std::cout << ",\"assetVersion\":" << p.assetVersion << ",\"tickHz\":" << p.tickHz << ",\"width\":" << p.width
+                  << ",\"height\":" << p.height << ",\"pngBytes\":" << p.pngBytes << ",\"pngSha256\":\"" << p.pngSha256 << "\",\"atlasNameHex\":";
+        hex(p.atlasName);
         std::cout << ",\"sourceKind\":" << p.sourceKind << ",\"shadowSize\":" << p.shadowSize << ",\"clips\":[";
         bool firstClip = true;
         for (const auto& c : p.clips) {
             if (!firstClip) std::cout << ',';
             firstClip = false;
             std::cout << "{\"id\":" << c.id << ",\"aliasOf\":" << c.aliasOf << ",\"sourceWanId\":" << c.sourceWanId << ",\"sourceMetadataHex\":";
-            hex(c.sourceMetadata); std::cout << ",\"rows\":[";
+            hex(c.sourceMetadata); std::cout << ",\"nameHex\":"; hex(c.name);
+            std::cout << ",\"speedNumerator\":" << c.speedNumerator << ",\"speedDenominator\":" << c.speedDenominator << ",\"rawFlags\":" << c.rawFlags;
+            std::cout << ",\"rows\":[";
             const auto& actual = c.rows.empty() ? p.resolve(c.id).rows : c.rows;
             for (size_t row = 0; row < actual.size(); ++row) {
                 if (row) std::cout << ',';

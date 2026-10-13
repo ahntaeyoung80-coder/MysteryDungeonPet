@@ -13,6 +13,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'core tests failed' }
     $Exe = "$BuildDir/Release/MysteryDungeonPet.exe"
     & tests/wic_tests.ps1 -Exe $Exe -Output "$BuildDir/wic-results"
+    & tests/playback_metrics_tests.ps1 -Exe $Exe -Inspector "$BuildDir/Release/pet_package_inspect.exe" -Output "$BuildDir/playback-results"
     cmake --install $BuildDir --config Release --prefix "$BuildDir/package"
     if ($LASTEXITCODE -ne 0) { throw 'package failed' }
     $bytes = (Get-ChildItem "$BuildDir/package" -Recurse -File | Measure-Object Length -Sum).Sum

@@ -1,6 +1,6 @@
 # Windows 11에서 A-2 실행
 
-**2026-10-13 최신 재개 기준:** 사용자 실행 결과를 수집·점검했다. 사용자는 추가 수동 테스트를 진행하지 않기로 했으며, A-3는 기존 기록을 재사용해 시작한다. 아래 수동 확인 절차는 이전 빌드의 사용 안내이며 이번 작업의 재개 요구가 아니다. 현재 제품의100/200 선택·카메라 메뉴는 아직 남아 있고,200px 고정·카메라 제외는 A-3 반영 예정이다. [점검·재개 기록](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/docs/logs/2026-10-13-a2-user-review.md)을 우선한다.
+**2026-10-13 최신 재개 기준:** 사용자 실행 결과를 수집·점검했다. 사용자는 추가 수동 테스트를 진행하지 않기로 했으며, A-3는 기존 기록을 재사용해 시작한다. 아래 수동 확인 절차는 이전 빌드의 사용 안내이며 이번 작업의 재개 요구가 아니다. 현재 소스에는200px 고정·카메라 메뉴 제외와 계측 수정을 반영했다. 아래 다운로드 링크의 과거 A-2 EXE와 수정본을 구분하며 최신 [A-3 사용법](A3_USAGE.md)을 따른다. [점검·재개 기록](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/docs/logs/2026-10-13-a2-user-review.md)을 우선한다.
 
 이 패키지는 합성 시험 자산으로 Windows 창·재생을 검사한다. 원작 ROM·원작 시간 검증은 포함하지 않는다. Python·개발 서버·ROM 없이 실행된다.
 
@@ -16,10 +16,10 @@
 
 1. ZIP 전체를 한 폴더에 해제한다. `MysteryDungeonPet.exe`, `assets/fixture/`, `licenses/`, `Run-A2.ps1`을 함께 둔다.
 2. `MysteryDungeonPet.exe`를 더블클릭한다. 펫을 우클릭하거나 작업 표시줄의 숨겨진 아이콘에서 앱 아이콘을 우클릭하면 검사 메뉴가 열린다.
-3. 몸체를 드래그한다. `Animation`, `Direction`, `Loop/Finite`, `100/200 physical pixels`, `Always on top`, `Test background`, `Camera`를 선택해 확인한다.
+3. 몸체를 드래그한다. `Animation`, `Direction`, `Loop/Finite`, `Always on top`, `Test background`를 선택해 확인한다.
 4. `Hide` 후에는 트레이 아이콘을 더블클릭해 복원한다. `Sleep`의 명시적 종료는 `Stop` 또는 다른 동작 선택이다. `Exit`로 종료한다.
 
-창은 100/200 **실제 픽셀** 크기를 유지한다. DPI가 바뀌어도 정수 확대만 사용하며 장면은 창 내부에서 이동한다. 배경을 켜면 배경의 반투명 영역도 클릭 가능한 검사 영역이 된다.
+현재 소스의 창은200×200 **실제 픽셀** 크기를 유지한다. 링크의 과거 A-2 빌드에는 이전 크기/카메라 메뉴가 남아 있다. DPI가 바뀌어도 정수 확대만 사용하며 장면은 창 내부에서 이동한다. 배경을 켜면 배경의 반투명 영역도 클릭 가능한 검사 영역이 된다.
 
 ## 결과를 남기며 실행
 
@@ -41,10 +41,10 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-A2.ps1 -Measure
 
 빈 창·Idle·Walk·Hide 각 90초, 100회 동작/방향 전환 165초를 실행한다. CLI 크기 기본값은 200px/배율3이다. 원작·전 종 설치 크기나 최종 생활·탐험 성능의 결과로 확대하지 않는다.
 
-## 사용자 PC에서 필요한 확인
+## 참고용 수동 확인(이번 재개 요구 아님)
 
 - 몸체 클릭·드래그가 되고 alpha0 영역은 아래 창의 클릭을 방해하지 않는지 확인한다. 창 표시·복원 시 다른 앱의 포커스를 뺏지 않는지 확인한다.
-- 100/200px, 항상 위 토글, 배경·카메라 경계, 8방향 및 1행 Eat/Sleep을 확인한다. 재실행하면 위치·크기·배율·항상 위 상태가 복원돼야 한다.
+- 200px 고정, 항상 위 토글, 배경 경계, 8방향 및 1행 Eat/Sleep을 확인한다. 재실행하면 위치·크기·배율·항상 위 상태가 복원돼야 한다.
 - 모니터 간 이동 또는 Windows 배율 변경 후 화면 밖으로 사라지지 않고 픽셀 경계가 흐려지지 않는지 확인한다.
 - 실제 `Win+L` 후 해제, 디스플레이 끄기/켜기, 시작 메뉴의 절전 후 복귀를 수행한다. 중단 동안 렌더 제출이 증가하지 않고 복귀 후 프레임 폭주가 없어야 한다. 자동 복귀는 사용자 활동으로 분류하지 않는다.
 - 앱 메뉴 `Exit`로 종료한 뒤 결과 폴더의 `*.csv`, `wic.txt`, `environment.json`과 `%LOCALAPPDATA%\MysteryDungeonPet\events.log`를 전달한다. 육안 확인 결과도 함께 알려준다.
@@ -75,8 +75,8 @@ New-Item -ItemType Directory -Force "$env:USERPROFILE\Desktop\A2-results" | Out-
 | 3 | Eat/Sleep에서 방향 변경 | 원본 계약이 1행인 시험 동작을 같은 행으로 재생함; 8방향 자산을 만든 것처럼 표시하지 않음 |
 | 4 | Wake/Pose, Finite 선택 | 마지막 프레임에서 멈추고 finite_finish_count가 한 번 증가함 |
 | 5 | Sleep, Loop → Stop | 계속 반복하다 명시적으로 정지함 |
-| 6 | 100/200px와 Scale1/2/3 | 창 실제 크기와 도형 정수 확대가 각각 변경됨 |
-| 7 | Test background, Camera ±8px | 장면만 이동하고 창 화면 위치는 유지됨; 가장자리에서 잘림 처리됨 |
+| 6 | Scale1/2/3 | 창200px는 유지하고 도형 정수 확대가 변경됨 |
+| 7 | Test background | 작은 검사 배경을 토글함; 현재 소스에는 카메라 조작 메뉴 없음 |
 | 8 | Always on top 토글 | 다른 창과 겹칠 때 설정에 맞게 동작함 |
 | 9 | 몸체 드래그 후 Exit·재실행 | 화면 안 위치, 크기·배율·topmost가 복원됨 |
 | 10 | Hide·트레이 더블클릭 | 숨김 중 렌더가 중단되고 같은 장면으로 복원됨 |
@@ -104,9 +104,9 @@ New-Item -ItemType Directory -Force "$env:USERPROFILE\Desktop\A2-results" | Out-
 | --- | --- | --- |
 | 실행/WIC report |  |  |
 | alpha0 클릭 통과·몸체 드래그·포커스 |  |  |
-| 100/200px·topmost·저장/복원 |  |  |
+| 200px 고정·topmost·저장/복원 |  |  |
 | 동작/방향·Finite·Sleep Stop |  |  |
-| 배경/카메라 clipping |  |  |
+| 배경 clipping |  |  |
 | 실제 DPI/모니터 변경 |  |  |
 | 실제 Win+L·해제 |  |  |
 | 실제 display off/on |  |  |

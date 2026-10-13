@@ -1,0 +1,99 @@
+{
+  "WindowsModifiedBuildAndMetrics": "pending CI",
+  "aComplete": false,
+  "baseCommit": "3097aa6f45284c447bc3ba8082d2f8796e6db782",
+  "dateKST": "2026-10-13",
+  "environment": {
+    "cmake": "4.4.4",
+    "compiler": "GNU 14.2.0",
+    "python": "3.12.14",
+    "system": "Linux"
+  },
+  "existingWindows11Evidence": "docs/validation/2026-10-13-a2-user-review.json; preserved, not rerun",
+  "gameAssetsCommitted": false,
+  "originalPackageNative": {
+    "ROMReextraction": "not_performed",
+    "WindowsOriginalIntegration": "pending",
+    "aComplete": false,
+    "assets": [
+      {
+        "MDPASHA256": "48b370cc864366955939e703106e676ee60c1eca6a9068046a069e6b0411ed11",
+        "assetKey": "rom:EoS_NA:md:1",
+        "atlasSHA256": "1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd",
+        "framesCompared": 190,
+        "nativePlayback": {
+          "frameBoundaries": 232,
+          "scope": "native tick/finite/marker/pause/delay only; original wall time and Windows pending",
+          "selections": 64,
+          "status": "pass"
+        },
+        "sourceKind": "rom"
+      },
+      {
+        "MDPASHA256": "13006d9f64b93583ca150a8402b99cd79e5b4ca5ebbb6720ef681220826ea18f",
+        "assetKey": "rom:EoS_NA:md:4",
+        "atlasSHA256": "b446db9bc52015e1c7d0353a1490c7ae53821ebbc73287f2b43f9d8703709959",
+        "framesCompared": 158,
+        "nativePlayback": {
+          "frameBoundaries": 200,
+          "scope": "native tick/finite/marker/pause/delay only; original wall time and Windows pending",
+          "selections": 64,
+          "status": "pass"
+        },
+        "sourceKind": "rom"
+      }
+    ],
+    "framesCompared": 348,
+    "originalWallTime": "pending",
+    "schemaVersion": 1,
+    "scope": "existing A-1 RGBA reassembly, A-1/MDPA/native metadata and native tick playback",
+    "sourceManifestSHA256": "c657d24ce3da04c8c20a289c9a2f5ee493838a9ab2471ad31723406b7b294c8d",
+    "status": "pass"
+  },
+  "pending": [
+    "original package Windows execution",
+    "original wall time comparison",
+    "original shadow rendering/visual anchor verification",
+    "actual lock/display-off/suspend/DPI change",
+    "long resource lifetime and final performance"
+  ],
+  "phase": "A-3 in progress",
+  "reproducibility": {
+    "runtimeFilesCompared": 7,
+    "runtimeHashes": {
+      "asset-0/CREDITS.txt": "712bfe9e61241a4dffc2e432c7177e6bd1d18a7dd45b822d6cc365adf53685a0",
+      "asset-0/asset.mdpa": "48b370cc864366955939e703106e676ee60c1eca6a9068046a069e6b0411ed11",
+      "asset-0/atlas.png": "1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd",
+      "asset-1/CREDITS.txt": "08da9190c4cc6083baeb65a628aab848052b26ff7b1c8b06199b7e5c69c84e35",
+      "asset-1/asset.mdpa": "13006d9f64b93583ca150a8402b99cd79e5b4ca5ebbb6720ef681220826ea18f",
+      "asset-1/atlas.png": "b446db9bc52015e1c7d0353a1490c7ae53821ebbc73287f2b43f9d8703709959",
+      "runtime-index.json": "237293bf88bdd4684fc3f62cda38f2433e244825e20925ff1c06f38321e69f7a"
+    },
+    "status": "pass"
+  },
+  "tests": {
+    "ASanUBSan": {
+      "ctestCount": 2,
+      "originalPackageVerify": "pass",
+      "status": "pass"
+    },
+    "Python": {
+      "count": 18,
+      "status": "pass"
+    },
+    "ReleaseNative": {
+      "coreChecks": 10725,
+      "ctestCount": 2,
+      "status": "pass"
+    },
+    "fixtureReproducibility": "pass"
+  },
+  "uploadedInput": {
+    "allExtractedBytesMatchArchive": true,
+    "bytes": 587906,
+    "fileName": "a1-original-package.zip",
+    "files": 219,
+    "sha256": "834786ad283bc5980333867988192522891ca3323a996b05b6c6a1ee2ae27bb4",
+    "uncompressedBytes": 2545708
+  }
+}

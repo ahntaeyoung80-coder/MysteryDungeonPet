@@ -1,10 +1,12 @@
 #include "core/package.hpp"
 #include "core/animator.hpp"
 #include "core/surface.hpp"
+#include "core/playback_sample.hpp"
 #include <functional>
 #include <iostream>
 #include <random>
 #include <stdexcept>
+#include <sstream>
 using namespace pet;
 namespace {
 unsigned checks = 0;
@@ -135,6 +137,29 @@ void surfaceTests() {
     rejects([&] { compose(out, layers, {0,0}, 0); }, "zero scale");
     source.pixels.pop_back(); rejects([&] { compose(out, layers, {0,0}, 1); }, "invalid source stride");
 }
+void playbackSampleTests(const Package& p) {
+    Animator animator;
+    animator.start(p, 0, 5, true, 0);
+    const auto result = animator.advance(133334);
+    const auto sample = playbackSample(p, 0, 5, result.frame, animator.active(), {33, 33});
+    check(sample.frame == &p.frames(0, 5)[result.frame] && sample.frameIndex == 1, "record uses Animator/Renderer frame");
+    check(sample.direction == 5 && sample.resolvedDirection == 5 && sample.animationId == 0, "record selectors");
+    std::ostringstream csv; sample.writeCsv(csv);
+    check(csv.str() == "0,5,5,1,1,33,33,10,4294967295,8,16,16,100,16,20", "record fields match package frame");
+    auto oneRow = playbackSample(p, 15, 7, 0, true, {33,33});
+    check(oneRow.direction == 7 && oneRow.resolvedDirection == 0 && oneRow.frame == &p.frames(15, 0)[0], "one row recorded without fake direction");
+    auto alias = playbackSample(p, 107, 4, 0, true, {33,33});
+    check(alias.animationId == 107 && alias.frame == &p.frames(7,4)[0], "alias selector and resolved frame");
+    auto ownAlias = p;
+    ownAlias.clips.back().rows = ownAlias.clips[1].rows;
+    ownAlias.clips.back().rows[0][0].ticks = 41;
+    check(playbackSample(ownAlias, 107, 0, 0, true, {33,33}).frame->ticks == 41, "alias own timing kept in record");
+    animator.stop();
+    check(!playbackSample(p, 0, 5, result.frame, animator.active(), {33,33}).active, "explicit stop visible in record");
+    auto empty = playbackSample(p, 999, 8, 999, false, {33,33}, false);
+    check(!empty.frame && !empty.active && empty.animationId == -1 && empty.frameIndex == -1 && empty.scenePosition.x == 0, "empty baseline has no playback");
+    rejects([&] { playbackSample(p, 0, 0, 99, true, {33,33}); }, "out of bounds playback record");
+}
 void mutationSafety(const std::vector<uint8_t>& fixture) {
     std::mt19937 rng(0xA2);
     for (unsigned iteration = 0; iteration < 10000; ++iteration) {
@@ -154,7 +179,7 @@ int main(int argc, char** argv) {
     try {
         if (argc != 2) throw std::runtime_error("expected fixture path");
         auto bytes = readFile(std::filesystem::u8path(argv[1]), 2*1024*1024);
-        packageTests(bytes); animationTests(parsePackage(bytes)); surfaceTests(); mutationSafety(bytes);
+        packageTests(bytes); animationTests(parsePackage(bytes)); playbackSampleTests(parsePackage(bytes)); surfaceTests(); mutationSafety(bytes);
         std::cout << "PASS " << checks << " checks; all truncated prefixes, 10000 seeded mutations\n";
         return 0;
     } catch (const std::exception& e) { std::cerr << "FAIL " << e.what() << '\n'; return 1; }

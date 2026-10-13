@@ -1,4 +1,4 @@
-name: A2 core and Windows package
+name: A core and Windows package
 on:
   push:
   pull_request:
@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: MSVC Release, native core and WIC, package
+      - name: MSVC Release, native core, WIC and playback metrics, package
         shell: pwsh
         run: ./tools/run_windows_checks.ps1
       - uses: actions/upload-artifact@v4
@@ -37,4 +37,6 @@ jobs:
           path: |
             build/windows/package/
             build/windows/wic-results/*.txt
+            build/windows/playback-results/*.csv
+            build/windows/playback-results/*.json
           if-no-files-found: warn

@@ -4,13 +4,15 @@
 
 C++17/Win32/WIC 기반 시험 런타임이다. A-1의 대표 원작 준비 완료 판정은 유지하며, A-2의 실제 Windows UI·전원·성능 완료 판정은 대기 상태다. 최신 원격 A-1 구현 `4d6ed6b`를 받아 기존 Extractor/Packer를 재사용했다.
 
+현재 A-3 착수 수정과 원작 연결·계측 검사 명령은 [A3_USAGE.md](A3_USAGE.md)를 따른다. 기존 Windows 실행 기록은 보존하고 새 수동 검사를 요구하지 않는다.
+
 ## 실행 범위
 
 - `src/core/`: MDPA 패키지 검증, alias 참조/개별 WAN 메타데이터, 정수 tick·monotonic deadline Animator, 카메라·nearest·PBGRA 합성.
-- `src/windows/`: SHA-256/바이트/크기 검증 후 WIC 32bppPBGRA 디코드·단일 atlas 캐시, top-down DIB/UpdateLayeredWindow, 투명 hit test·드래그·topmost·100/200 실제 px·PMv2 DPI·화면 내 위치, 트레이와 검사 메뉴.
+- `src/windows/`: SHA-256/바이트/크기 검증 후 WIC 32bppPBGRA 디코드·단일 atlas 캐시, top-down DIB/UpdateLayeredWindow, 투명 hit test·드래그·topmost·200×200 실제 px 고정·PMv2 DPI·화면 내 위치, 트레이와 검사 메뉴.
 - 숨김/세션 잠금·연결 해제/디스플레이 off/절전 때 렌더 중단. 초기 WTS 잠금 상태 조회와 최대3회 알림 등록 재시도. 절전 복귀는 디스플레이 on 알림과 잠금 해제 조건을 따른다. 자동 복귀를 사용자 활동으로 분류하는 코드가 없다.
 - 1 UI 스레드, one-shot waitable timer와 메시지 대기. 캐시 miss만 디코드하고 동일 합성 픽셀은 재제출하지 않는다. PNG 재디코드·BFS·게임 엔진·Python 상주 없음.
-- `%LOCALAPPDATA%/MysteryDungeonPet/window.state`: 버전1, 창 위치·크기·배율·topmost. 임시 파일/flush/교체, 손상 파일 거부. 명시 CLI 크기/배율이 저장값보다 우선한다.
+- `%LOCALAPPDATA%/MysteryDungeonPet/window.state`: 버전1, 창 위치·배율·topmost(크기는200px 고정). 임시 파일/flush/교체, 손상 파일 거부. 명시 CLI 배율이 저장값보다 우선한다. 이전100px 저장값은 창 크기에 적용하지 않는다.
 - CSV: 한 코어/전체 코어 CPU, working set/private/peak, 제출/디코드/marker/finite finish/건너뛴 loop cycle, handle/GDI 수, 중단 상태, DPI·위치·전환 수. 사건/HRESULT/OS 오류는 `events.log`.
 
 그림자 mask·size·원본 offset·marker는 패키지에 보존한다. 현재 표시기는 몸체와 작은 검사 배경을 합성한다. SkyTemple의 RGB 크기 mask와 흰 원점 픽셀을 실제 그림자로 그리지 않는다. 원작 그림자 표시·wall time 정확성은 A-3에서 별도 확인한다.
@@ -58,7 +60,7 @@ A-1 `manifest.json`이 의미 계약의 원본이다. 같은 계약을 런타임
 .\MysteryDungeonPet.exe --package C:\path\a2-rom-runtime-01\asset-0\asset.mdpa --clip 17 --direction 0 --finite
 ```
 
-`--clip`, `--direction 0..7`, `--finite`, `--size 100|200`, `--scale 1..8`, `--metrics 경로`, `--duration 초`, `--scenario manual|empty|idle|walk|hide|switch`, `--validate-package`, `--report 경로`를 지원한다. CLI size/scale을 지정하지 않은 manual 실행에서는 저장값을 사용한다. Sleep loop는 Stop/다른 clip 선택으로 종료한다.
+`--clip`, `--direction 0..7`, `--finite`, `--size 200`(호환용;100px 거부), `--scale 1..8`, `--metrics 경로`, `--duration 초`, `--scenario manual|empty|idle|walk|hide|switch`, `--validate-package`, `--report 경로`를 지원한다. CLI scale을 지정하지 않은 manual 실행에서는 저장 배율을 사용한다. 창 크기는 항상200px다. Sleep loop는 Stop/다른 clip 선택으로 종료한다.
 
 A-1 alias의 `rawDirections`는 대상 atlas를 공유하되 자기 tick/flag/marker/프레임 수를 가진다. 원본 geometry가 다른 alias는 임의 이동·대체하지 않고 변환을 거부한다. 원본 tickHz 미확정이면 A-1의 provisional60Hz를 그대로 보존하며 원작 시간 검증 성공으로 표기하지 않는다. rawSpeed 의미가 지정되지 않은 값은 임의 적용하지 않고 거부한다.
 

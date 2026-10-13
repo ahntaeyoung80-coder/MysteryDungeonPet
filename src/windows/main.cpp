@@ -7,6 +7,7 @@
 #include <psapi.h>
 #include "windows/assets.hpp"
 #include "core/animator.hpp"
+#include "core/playback_sample.hpp"
 #include <algorithm>
 #include <chrono>
 #include <cstring>
@@ -21,8 +22,9 @@ namespace {
 using namespace pet;
 constexpr UINT TrayMessage = WM_APP + 1;
 constexpr UINT ClipBase = 100, DirectionBase = 500;
-constexpr UINT Loop = 600, Finite = 601, Stop = 602, Hide = 603, Top = 604, Size100 = 605, Size200 = 606;
-constexpr UINT Scale1 = 610, Scale2 = 611, Scale3 = 612, Background = 620, CameraLeft = 621, CameraRight = 622, Reload = 623, Quit = 624;
+constexpr UINT Loop = 600, Finite = 601, Stop = 602, Hide = 603, Top = 604;
+constexpr UINT Scale1 = 610, Scale2 = 611, Scale3 = 612, Background = 620, Reload = 623, Quit = 624;
+constexpr unsigned PhysicalSize = 200;
 const GUID SessionDisplayGuid{0x2b84c20e, 0xad23, 0x4ddf, {0x93, 0xdb, 0x05, 0xff, 0xbd, 0x7e, 0xfc, 0xa5}};
 int64_t nowUs() { return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count(); }
 void winCheck(bool ok, const char* operation) {
@@ -90,9 +92,9 @@ std::filesystem::path appDir() {
 struct Options {
     std::filesystem::path package = executableDir() / L"assets/fixture/fixture.mdpa";
     std::filesystem::path metrics, report;
-    unsigned size = 200, scale = 3, direction = 0;
+    unsigned scale = 3, direction = 0;
     uint32_t clip = 0;
-    bool loop = true, validate = false, sizeExplicit = false, scaleExplicit = false;
+    bool loop = true, validate = false, scaleExplicit = false;
     unsigned duration = 0;
     std::wstring scenario = L"manual";
 };
@@ -116,7 +118,7 @@ Options options() {
         else if (arg == L"--report") o.report = value();
         else if (arg == L"--clip") o.clip = number(value(), INT32_MAX);
         else if (arg == L"--direction") o.direction = number(value(), 7);
-        else if (arg == L"--size") { o.size = number(value(), 200); o.sizeExplicit = true; }
+        else if (arg == L"--size") { if (number(value(), PhysicalSize) != PhysicalSize) throw std::runtime_error("physical window size is fixed at 200"); }
         else if (arg == L"--scale") { o.scale = number(value(), 8); o.scaleExplicit = true; }
         else if (arg == L"--duration") o.duration = number(value(), 86400);
         else if (arg == L"--scenario") o.scenario = value();
@@ -124,7 +126,7 @@ Options options() {
         else if (arg == L"--validate-package") o.validate = true;
         else throw std::runtime_error("unknown command-line option");
     }
-    if ((o.size != 100 && o.size != 200) || !o.scale) throw std::runtime_error("size must be 100/200, scale 1..8");
+    if (!o.scale) throw std::runtime_error("scale must be 1..8");
     if (o.scenario != L"manual" && o.scenario != L"idle" && o.scenario != L"walk" && o.scenario != L"empty" && o.scenario != L"switch" && o.scenario != L"hide")
         throw std::runtime_error("scenario must be manual/idle/walk/empty/switch/hide");
     return o;
@@ -149,11 +151,13 @@ class App {
     bool session_ = false, tray_ = false, hidden_ = false, locked_ = false, displayOff_ = false, suspended_ = false, paused_ = false;
     bool topmost_ = true, backgroundOn_ = false, dragging_ = false, dirty_ = true, submitted_ = false, running_ = true;
     POINT dragCursor_{}, dragWindow_{};
-    Point camera_{};
     uint32_t clip_;
-    unsigned direction_, scale_, size_;
+    unsigned direction_, scale_;
+    const unsigned size_ = PhysicalSize;
     bool loop_;
     size_t frame_ = 0;
+    std::optional<int64_t> nextFrameDeadline_;
+    bool finalSampled_ = false;
     uint64_t submissions_ = 0, decodes_ = 0, markers_ = 0, finishes_ = 0, skippedCycles_ = 0, switches_ = 0;
     uint64_t hiddenSubmissions_ = 0;
     int64_t start_ = 0, metricDeadline_ = 0, stopDeadline_ = 0, scenarioDeadline_ = 0, sessionRetry_ = 0;
@@ -186,9 +190,18 @@ class App {
         // Hidden window keeps its last submitted pixels; do not resubmit them on restore.
     }
     void startClip(int64_t now) {
-        animator_.start(assets_.package, clip_, direction_, loop_, now);
-        if (paused_) animator_.pause(now);
+        frame_ = 0; nextFrameDeadline_.reset();
+        if (options_.scenario == L"empty") animator_.stop();
+        else {
+            animator_.start(assets_.package, clip_, direction_, loop_, now);
+            if (paused_) animator_.pause(now);
+        }
         dirty_ = true;
+        log("select clip=" + std::to_string(clip_) + " direction=" + std::to_string(direction_) + " loop=" + std::to_string(loop_));
+    }
+    PlaybackSample currentPlayback() const {
+        const Point scene{int32_t(size_ / (2 * scale_)), int32_t(size_ / (2 * scale_))};
+        return playbackSample(assets_.package, clip_, direction_, frame_, animator_.active(), scene, options_.scenario != L"empty");
     }
     void clamp(POINT desired) {
         RECT target{desired.x, desired.y, desired.x + LONG(size_), desired.y + LONG(size_)};
@@ -226,18 +239,11 @@ class App {
             if (!(f >> magic >> version >> x >> y >> size >> scale >> top) || (f >> trailing) || magic != "MDPS" || version != 1 ||
                 x < -1000000 || x > 1000000 || y < -1000000 || y > 1000000 || (size != 100 && size != 200) || scale < 1 || scale > 8 || (top != 0 && top != 1))
                 throw std::runtime_error("invalid window state/version");
-            if (!options_.sizeExplicit && options_.scenario == L"manual") { size_ = unsigned(size); surface_ = Surface(size_, size_); }
+            // Version 1's 100px state remains readable, but cannot resize the fixed viewport.
             if (!options_.scaleExplicit && options_.scenario == L"manual") scale_ = unsigned(scale);
             position = {x, y}; topmost_ = top != 0;
         } catch (const std::exception& e) { log(std::string("state ignored: ") + e.what()); }
         return position;
-    }
-    void resize(unsigned size) {
-        Surface candidate(size, size);
-        auto dib = std::make_unique<Dib>(size);
-        surface_ = std::move(candidate); dib_ = std::move(dib); size_ = size;
-        RECT rect{}; winCheck(GetWindowRect(window_, &rect) != 0, "resize rect");
-        clamp({rect.left, rect.top}); dirty_ = true; submitted_ = false;
     }
     void show(bool hide) {
         hidden_ = hide;
@@ -264,9 +270,8 @@ class App {
         auto add = [&](UINT id, const wchar_t* text, bool checked = false) { AppendMenuW(menu, MF_STRING | (checked ? MF_CHECKED : 0), id, text); };
         add(Loop, L"Loop", loop_); add(Finite, L"Finite", !loop_); add(Stop, L"Stop (explicit Sleep end)");
         add(Hide, hidden_ ? L"Show" : L"Hide"); add(Top, L"Always on top", topmost_);
-        add(Size100, L"100 physical pixels", size_ == 100); add(Size200, L"200 physical pixels", size_ == 200);
         add(Scale1, L"Scale 1", scale_ == 1); add(Scale2, L"Scale 2", scale_ == 2); add(Scale3, L"Scale 3", scale_ == 3);
-        add(Background, L"Test background", backgroundOn_); add(CameraLeft, L"Camera -8px"); add(CameraRight, L"Camera +8px");
+        add(Background, L"Test background", backgroundOn_);
         add(Reload, L"Reload package"); add(Quit, L"Exit");
         POINT cursor{}; GetCursorPos(&cursor);
         // Foreground is needed for tray menus to dismiss correctly; window remains NOACTIVATE.
@@ -283,17 +288,13 @@ class App {
         else switch (id) {
             case Loop: loop_ = true; startClip(now); break;
             case Finite: loop_ = false; startClip(now); break;
-            case Stop: animator_.stop(); log("explicit stop"); break;
+            case Stop: animator_.stop(); nextFrameDeadline_.reset(); log("explicit stop"); break;
             case Hide: show(!hidden_); break;
             case Top:
                 topmost_ = !topmost_;
                 winCheck(SetWindowPos(window_, topmost_ ? HWND_TOPMOST : HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE) != 0, "topmost"); break;
-            case Size100: resize(100); break;
-            case Size200: resize(200); break;
             case Scale1: case Scale2: case Scale3: scale_ = id - Scale1 + 1; dirty_ = true; break;
             case Background: backgroundOn_ = !backgroundOn_; dirty_ = true; break;
-            case CameraLeft: camera_.x = std::max(-1000, camera_.x - 8); dirty_ = true; break;
-            case CameraRight: camera_.x = std::min(1000, camera_.x + 8); dirty_ = true; break;
             case Reload: {
                 Assets candidate = Assets::load(options_.package, &assets_);
                 candidate.package.frames(clip_, direction_); // Reject before replacing the last good state.
@@ -360,9 +361,11 @@ class App {
             case WM_ERASEBKGND: return 1;
             case WM_PAINT: { PAINTSTRUCT p{}; BeginPaint(window_, &p); EndPaint(window_, &p); return 0; }
             case WM_CLOSE:
+                finalSample(); // HWND와 DPI가 유효할 때 마지막 행을 기록한다.
                 try { save(); } catch (const std::exception& e) { log(std::string("state save failed: ") + e.what()); }
                 DestroyWindow(window_); return 0;
             case WM_DESTROY:
+                if (!finalSampled_ && start_) finalSample();
                 if (session_) { WTSUnRegisterSessionNotification(window_); session_ = false; }
                 if (power_) { UnregisterPowerSettingNotification(power_); power_ = nullptr; }
                 if (tray_) { NOTIFYICONDATAW icon{}; icon.cbSize = sizeof(icon); icon.hWnd = window_; icon.uID = 1; Shell_NotifyIconW(NIM_DELETE, &icon); tray_ = false; }
@@ -370,7 +373,12 @@ class App {
             default: return DefWindowProcW(window_, msg, w, l);
         }
     }
-    void sample(int64_t now) {
+    void finalSample() {
+        if (finalSampled_) return;
+        sample(nowUs(), true);
+        finalSampled_ = true;
+    }
+    void sample(int64_t now, bool final = false) {
         PROCESS_MEMORY_COUNTERS_EX mem{}; mem.cb = sizeof(mem);
         winCheck(GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&mem), sizeof(mem)) != 0, "memory metrics");
         uint64_t cpu = cpuTime();
@@ -380,13 +388,20 @@ class App {
         if (!cores) throw std::runtime_error("logical core count unavailable");
         DWORD handles = 0;
         winCheck(GetProcessHandleCount(GetCurrentProcess(), &handles) != 0, "handle count");
-        RECT rect{}; GetWindowRect(window_, &rect);
+        RECT rect{};
+        winCheck(GetWindowRect(window_, &rect) != 0, "metrics window rect");
+        if (rect.right - rect.left != LONG(size_) || rect.bottom - rect.top != LONG(size_))
+            throw std::runtime_error("metrics physical window size differs from fixed viewport");
+        const auto dpi = GetDpiForWindow(window_);
+        winCheck(dpi != 0, "metrics DPI");
         if (metrics_) {
             metrics_ << (now - start_) / 1000000.0 << ',' << oneCore << ',' << oneCore / cores << ',' << cores << ','
                 << mem.WorkingSetSize << ',' << mem.PrivateUsage << ',' << mem.PeakWorkingSetSize << ',' << submissions_ << ',' << decodes_ << ','
                 << markers_ << ',' << finishes_ << ',' << skippedCycles_ << ',' << handles << ',' << GetGuiResources(GetCurrentProcess(), GR_GDIOBJECTS) << ','
-                << blocked() << ',' << hiddenSubmissions_ << ',' << GetDpiForWindow(window_) << ',' << size_ << ',' << scale_ << ','
-                << rect.left << ',' << rect.top << ',' << switches_ << '\n';
+                << blocked() << ',' << hiddenSubmissions_ << ',' << dpi << ',' << size_ << ',' << scale_ << ','
+                << rect.left << ',' << rect.top << ',' << switches_ << ',' << final << ',';
+            currentPlayback().writeCsv(metrics_);
+            metrics_ << '\n';
             metrics_.flush();
         }
         previousMetric_ = now; previousCpu_ = cpu;
@@ -422,17 +437,18 @@ class App {
             auto result = animator_.advance(now);
             dirty_ = dirty_ || frame_ != result.frame; frame_ = result.frame;
             markers_ += result.markers.size(); finishes_ += result.finishedEvent ? 1 : 0; skippedCycles_ += result.skippedCycles;
+            nextFrameDeadline_ = result.nextDeadlineUs;
             if (result.finishedEvent) log("finite finished assetKey=" + assets_.package.assetKey);
         }
         if (!dirty_) return;
         std::vector<Layer> layers;
-        if (backgroundOn_) layers.push_back({&background_, {0, 0, 32, 24}, {0, 0}, {0, 0}});
-        if (options_.scenario != L"empty") {
-            const auto& frames = assets_.package.frames(clip_, direction_);
-            const auto& f = frames[std::min(frame_, frames.size() - 1)];
-            layers.push_back({assets_.atlas.get(), f.rect, f.anchor, {int32_t(size_ / (2 * scale_)), int32_t(size_ / (2 * scale_))}});
+        if (backgroundOn_ && options_.scenario != L"empty") layers.push_back({&background_, {0, 0, 32, 24}, {0, 0}, {0, 0}});
+        const auto playback = currentPlayback();
+        if (playback.frame) {
+            const auto& f = *playback.frame;
+            layers.push_back({assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition});
         }
-        bool changed = compose(surface_, layers, camera_, scale_);
+        bool changed = compose(surface_, layers, {0, 0}, scale_);
         dirty_ = false;
         if (!changed && submitted_) return;
         std::memcpy(dib_->bits, surface_.pixels.data(), surface_.pixels.size());
@@ -445,8 +461,8 @@ class App {
     }
 public:
     App(HINSTANCE instance, Options o) : instance_(instance), options_(std::move(o)), directory_(appDir()),
-        assets_(Assets::load(options_.package)), surface_(options_.size, options_.size),
-        clip_(options_.clip), direction_(options_.direction), scale_(options_.scale), size_(options_.size), loop_(options_.loop) {
+        assets_(Assets::load(options_.package)), surface_(PhysicalSize, PhysicalSize),
+        clip_(options_.clip), direction_(options_.direction), scale_(options_.scale), loop_(options_.loop) {
         assets_.package.frames(clip_, direction_);
         if (options_.scenario == L"idle") clip_ = 7;
         if (options_.scenario == L"walk") clip_ = 0;
@@ -456,7 +472,7 @@ public:
         if (!metrics_) throw std::runtime_error("cannot open metrics file");
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
-        metrics_ << "elapsed_seconds,cpu_one_core_percent,cpu_all_cores_percent,logical_cores,working_set_bytes,private_bytes,peak_working_set_bytes,render_submissions,decode_count,marker_count,finite_finish_count,skipped_cycles,process_handles,gdi_objects,render_paused,submissions_while_paused,dpi,physical_size,integer_scale,window_x,window_y,switch_count\n";
+        metrics_ << "elapsed_seconds,cpu_one_core_percent,cpu_all_cores_percent,logical_cores,working_set_bytes,private_bytes,peak_working_set_bytes,render_submissions,decode_count,marker_count,finite_finish_count,skipped_cycles,process_handles,gdi_objects,render_paused,submissions_while_paused,dpi,physical_size,integer_scale,window_x,window_y,switch_count,final_sample," << PlaybackSample::columns << '\n';
         decodes_ = assets_.decoded ? 1 : 0;
         for (unsigned y = 0; y < background_.height; ++y) for (unsigned x = 0; x < background_.width; ++x) {
             auto offset = (y * background_.width + x) * 4;
@@ -529,10 +545,7 @@ public:
             if (stopDeadline_) deadline = std::min(deadline, stopDeadline_);
             if (sessionRetry_) deadline = std::min(deadline, sessionRetry_);
             if (scenarioDeadline_) deadline = std::min(deadline, scenarioDeadline_);
-            if (!blocked() && animator_.active()) {
-                auto next = animator_.advance(now);
-                if (next.nextDeadlineUs) deadline = std::min(deadline, *next.nextDeadlineUs);
-            }
+            if (!blocked() && animator_.active() && nextFrameDeadline_) deadline = std::min(deadline, *nextFrameDeadline_);
             // Relative timer, one shot; no high-resolution request or 1ms polling.
             LARGE_INTEGER due{}; due.QuadPart = -std::max<int64_t>(1, deadline - nowUs()) * 10;
             winCheck(SetWaitableTimerEx(timer_.value, &due, 0, nullptr, nullptr, nullptr, 10) != 0, "SetWaitableTimer");
@@ -540,7 +553,7 @@ public:
             DWORD result = MsgWaitForMultipleObjectsEx(1, &handle, INFINITE, QS_ALLINPUT, MWMO_INPUTAVAILABLE);
             winCheck(result != WAIT_FAILED, "MsgWaitForMultipleObjectsEx");
         }
-        sample(nowUs());
+        if (!finalSampled_ && IsWindow(window_)) finalSample();
         log("exit submissions=" + std::to_string(submissions_) + " decodes=" + std::to_string(decodes_) + " switches=" + std::to_string(switches_));
         return 0;
     }
