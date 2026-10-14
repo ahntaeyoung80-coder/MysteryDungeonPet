@@ -27,6 +27,9 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'package failed' }
     & tests/default_launch_windows_tests.ps1 -Exe "$BuildDir/package/MysteryDungeonPet.exe" -Output "$BuildDir/exploration-results/default-launch"
     & tests/default_launch_windows_tests.ps1 -Exe "MysteryDungeonPet.exe" -Output "$BuildDir/exploration-results/pull-launch"
+    foreach ($Report in @("$BuildDir/exploration-results/exploration.json", "$BuildDir/exploration-results/gameplay/life-result.json", "$BuildDir/exploration-results/gameplay/combat-result.json", "$BuildDir/exploration-results/default-launch/default-launch.json", "$BuildDir/exploration-results/pull-launch/default-launch.json")) {
+        Write-Output (Get-Content -Raw $Report)
+    }
     $bytes = (Get-ChildItem "$BuildDir/package" -Recurse -File | Measure-Object Length -Sum).Sum
     Write-Output "Installed selected package bytes: $bytes (selected runtime only; ROM excluded)"
     if ($Interactive) {

@@ -340,6 +340,23 @@ bool Explorer::selectPriority(const Search& search,bool items,bool frontiers) {
     }
     return state_.target>=0;
 }
+void Explorer::reevaluateStairs() {
+    if(state_.goalKind!=GoalKind::Stairs || state_.position==state_.world.stairs) return;
+    const bool items=std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e) {
+        return e.kind==EntityKind::Item && !e.done && e.visible && state_.discovered[e.tile] && state_.failedTargets[e.tile]<3;
+    });
+    bool frontiers=false;
+    for(int tile=0;!frontiers && tile<kTiles;++tile) frontiers=state_.failedTargets[tile]<3 && frontier(tile);
+    if(!items && !frontiers) return;
+    auto occupied=occupancy();occupied[state_.world.stairs]=1;
+    const auto reach=bfs(state_.world,state_.position,occupied);++bfsCalls_;
+    const int previousTarget=state_.target;
+    state_.target=-1;state_.goalKind=GoalKind::None;state_.targetInstance=0;
+    if(selectPriority(reach,items,frontiers)) {
+        invalidate(false);path_=reach.pathTo(state_.target);
+        cachedWorld_=state_.world.version;cachedOccupancy_=state_.occupancyVersion;
+    } else {state_.target=previousTarget;state_.goalKind=GoalKind::Stairs;} // Keep the existing stairs route/cache.
+}
 void Explorer::plan() {
     auto occupied=occupancy();
     // A discovered staircase is not a shortcut through unfinished exploration.
@@ -379,16 +396,8 @@ Event Explorer::advance(bool poseFinished) {
         }
         return {};
     }
-    const auto discoveredBefore=state_.discovered;
     discover();
-    if(state_.goalKind==GoalKind::Stairs && discoveredBefore!=state_.discovered) {
-        auto occupied=occupancy();occupied[state_.world.stairs]=1;
-        const auto reach=bfs(state_.world,state_.position,occupied);++bfsCalls_;
-        const auto previousTarget=state_.target;
-        invalidate();
-        if(selectPriority(reach,true,true)) {path_=reach.pathTo(state_.target);cachedWorld_=state_.world.version;cachedOccupancy_=state_.occupancyVersion;}
-        else {state_.target=previousTarget;state_.goalKind=GoalKind::Stairs;invalidate(false);}
-    }
+    reevaluateStairs();
     if(state_.position==state_.world.stairs) {invalidate();state_.target=state_.world.stairs;state_.goalKind=GoalKind::Stairs;}
     else for(unsigned attempt=0;attempt<4;++attempt) {
         if(state_.target>=0 && state_.position==state_.target) {

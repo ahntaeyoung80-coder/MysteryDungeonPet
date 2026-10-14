@@ -1,4 +1,4 @@
-name: A core and Windows package
+name: Core and Windows runtime checks
 on:
   push:
   pull_request:
@@ -35,9 +35,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: a2-windows-fixture
+          name: windows-check-results
           path: |
-            build/windows/package/
             build/windows/wic-results/*.txt
             build/windows/playback-results/**/*.csv
             build/windows/playback-results/**/*.json

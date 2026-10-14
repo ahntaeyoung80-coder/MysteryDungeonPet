@@ -4,21 +4,21 @@
   "release": {
     "passed": 6,
     "tests": 6,
-    "seconds": 9.76,
+    "seconds": 10.24,
     "log": "2026-10-14-runtime-revision-release.txt"
   },
   "asan_ubsan": {
     "passed": 6,
     "tests": 6,
     "detect_leaks": true,
-    "seconds": 68.17,
+    "seconds": 70.27,
     "log": "2026-10-14-runtime-revision-sanitize.txt"
   },
   "python": {
     "passed": 25,
     "tests": 25,
     "skipped": 0,
-    "seconds": 5.316,
+    "seconds": 4.602,
     "log": "2026-10-14-runtime-revision-python.txt"
   },
   "scenario_save_restore": {
@@ -34,8 +34,8 @@
   },
   "direct_runtime": {
     "path": "MysteryDungeonPet.exe",
-    "sha256": "0b18c4695753ec26bc462fd4131951272dd35f93f82d42b8a97b54c91242ede3",
-    "bytes": 1684992,
+    "sha256": "ad67b2b3f93b16e12d50493d3505b239d0693b6b70cea0cf21aeb7a65571bfcb",
+    "bytes": 1686016,
     "manifest": "windows-runtime.json",
     "source_asset_hash_check": "passed",
     "zip_created": false,
@@ -51,5 +51,11 @@
     "Current code native Windows CI and root EXE GUI execution",
     "User Windows11 visual acceptance",
     "Windows lock/suspend/resume and long duration CPU/memory"
-  ]
+  ],
+  "prior_windows_ci": {
+    "run_id": 38516554129,
+    "commit": "f470fcd",
+    "native_ctest": "6/6 passed",
+    "failure": "legacy exploration Windows check expected HP refresh before RoomExit; corrected to assert Ready/RoomExit and unchanged restored HP/RNG/day/inventory/journals"
+  }
 }

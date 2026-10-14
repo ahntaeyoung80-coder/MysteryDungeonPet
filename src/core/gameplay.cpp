@@ -341,8 +341,7 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         g.sceneBeat=SceneBeat::FloorFadeOut;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
         return {};
     }
-    const auto discovery=state_.discovered;discover();
-    if(state_.goalKind==GoalKind::Stairs && discovery!=state_.discovered) plan();
+    discover();
     auto hostile=[&](const Entity& e){return std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end();};
     auto visible=[&](int a,int b){
         const int room=state_.world.room[a];

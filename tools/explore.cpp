@@ -28,6 +28,7 @@ int main(int argc, char** argv) {
         auto time = static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
         if (std::string(argv[argc - 1]) == "--gameplay") explorer.enableGameplay(time);
         if (explorer.state().gameplay.enabled) time = std::max(time, explorer.state().gameplay.phaseStartedMs);
+        // Headless acceptance stops at Ready/RoomExit, before the next-day transaction.
         while (explorer.state().gameplay.enabled ? explorer.state().gameplay.life != pet::LifePhase::Ready : explorer.state().phase != pet::Phase::Home) {
             auto candidate = explorer;
             pet::Event event;
@@ -52,6 +53,8 @@ int main(int argc, char** argv) {
                   << ",\"newClears\":" << clears << ",\"inventory\":" << explorer.state().inventory.size()
                   << ",\"rngState\":" << explorer.state().rng.state
                   << ",\"day\":" << explorer.state().gameplay.day << ",\"hearts\":" << explorer.state().gameplay.hearts
+                  << ",\"life\":\"" << pet::lifeName(explorer.state().gameplay.life) << "\""
+                  << ",\"sceneBeat\":" << static_cast<unsigned>(explorer.state().gameplay.sceneBeat)
                   << ",\"oran\":" << explorer.state().gameplay.oran << ",\"gameplayTransactions\":" << explorer.state().gameplay.onceKeys.size() << "}\n";
     } catch (const std::exception& e) { std::cerr << e.what() << '\n'; return 1; }
 }

@@ -28,7 +28,7 @@ test_mismatched_direction_frame_anchor_and_timing_are_rejected (test_playback_me
 test_native_metadata_alias_and_one_row_and_final_live_window (test_playback_metrics.PlaybackMetricsTests.test_native_metadata_alias_and_one_row_and_final_live_window) ... ok
 
 ----------------------------------------------------------------------
-Ran 25 tests in 5.316s
+Ran 25 tests in 4.602s
 
 OK
 A1->MDPA->native: 144 frames (including aliases), points, flags, markers, ticks, hashes pass

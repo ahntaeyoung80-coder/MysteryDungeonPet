@@ -31,10 +31,11 @@ if (@($rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     }
 }
 $finish = (& $Explorer $Package 42 $Snapshot | ConvertFrom-Json)
-if ($LASTEXITCODE -ne 0 -or $finish.hearts -ne 5) { throw 'Windows gameplay snapshot cannot finish its rest cycle natively' }
+if ($LASTEXITCODE -ne 0 -or $finish.life -ne 'Ready' -or $finish.sceneBeat -ne 16 -or $finish.hearts -gt 5) { throw 'Windows gameplay snapshot cannot reach the pending bedroom exit natively' }
 $restoredRun = (& $Explorer $Package 99 $Snapshot | ConvertFrom-Json)
-if ($LASTEXITCODE -ne 0 -or $restoredRun.newClears -ne 0 -or $restoredRun.newPickups -ne 0 -or $restoredRun.inventory -ne $finish.inventory) {
-    throw 'Windows restored home replayed transaction'
+if ($LASTEXITCODE -ne 0 -or $restoredRun.newClears -ne 0 -or $restoredRun.newPickups -ne 0 -or $restoredRun.inventory -ne $finish.inventory -or $restoredRun.hearts -ne $finish.hearts -or
+    $restoredRun.day -ne $finish.day -or $restoredRun.rngState -ne $finish.rngState -or $restoredRun.gameplayTransactions -ne $finish.gameplayTransactions) {
+    throw 'Windows restored pending exit replayed a transaction'
 }
 @{status='pass'; uiMovement=$movement; minimumDecodeCount=5; physicalSize=200; snapshotRestore='pass';
   desktopWindowFixed='pass'; a3Remaining='pending'; actualWindows11Exploration='pending'} |

@@ -30,6 +30,8 @@ int main() {try {
     s.discovered=s.world.terrain;Explorer stairs(s);stairs.advance();check(stairs.goal()==GoalKind::Stairs,"completed exploration missing stairs goal");
     const auto target=stairs.state().target;auto consistent=restored(stairs);consistent.advance();check(consistent.state().target==target && consistent.goal()==GoalKind::Stairs,"stairs route changed without new goals");
     pending=stairs.state();pending.population.entities={{1,10,EntityKind::Item,3*kWidth+5,false}};pending.discovered[3*kWidth+5]=0;
+    auto alreadySeen=pending;alreadySeen.discovered=alreadySeen.world.terrain;
+    Explorer newItem(alreadySeen);newItem.advance();check(newItem.goal()==GoalKind::Item,"new item in already discovered room did not re-evaluate stairs");
     Explorer reevaluate(pending);reevaluate.advance();check(reevaluate.goal()==GoalKind::Item,"newly revealed item did not re-evaluate stairs");
     s.population.entities={{1,10,EntityKind::Item,3*kWidth+6,false}};Explorer failed(s);failed.advance();
     failed.setBlocked(3*kWidth+6,true);failed=restored(failed);failed.advance();
