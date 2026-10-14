@@ -84,21 +84,23 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     check(e.state().gameplay.meals == meals && meals == 1, "meal consumed twice");
     advance(e, e.state().gameplay.phaseStartedMs+1000, true);
     check(e.state().gameplay.life == LifePhase::Eat && gameplayLoop(e.state().gameplay), "communal meal ended after one Eat clip");
+    check(e.state().gameplay.deadlineMs-e.state().gameplay.phaseStartedMs==7000,"meal not shortened by one second");
     check(next(e).event==GameplayEvent::Sleep && e.state().gameplay.sceneBeat==SceneBeat::DiningExit,"meal exit fade missing");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeIn && bedroomScene(e.state().gameplay),"bedroom swap missing");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFace && gameplayClip(e.state().gameplay)==22,"bed face Nod missing");
-    e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{true,false,false});check(e.state().gameplay.sceneBeat==SceneBeat::BedFace,"partner Nod skipped");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedLay && gameplayClip(e.state().gameplay)==27,"original Laying missing");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeOut,"night fade-out missing");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::NightFadeIn && nightScene(e.state().gameplay),"night swap not at black");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::NightFadeIn && bedroomScene(e.state().gameplay) && nightScene(e.state().gameplay),"bedtime exposed day background");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Sleeping && gameplayClip(e.state().gameplay)==13,"sleep missing");
     const auto sleepEnd=e.state().gameplay.deadlineMs;e.shiftPausedClocks(5000,e.state().gameplay.phaseStartedMs+1);check(e.state().gameplay.deadlineMs==sleepEnd,"sleep UTC deadline shifted");advance(e,sleepEnd-1,true);check(e.state().gameplay.life==LifePhase::Sleep,"sleep ended early");
-    check(advance(e,sleepEnd).event==GameplayEvent::Wake,"sleep deadline stuck");
-    e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{true,false,false});check(e.state().gameplay.life==LifePhase::Wake,"partner Wake skipped");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::MorningFace && gameplayClip(e.state().gameplay)==22,"morning Nod missing");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::MorningFadeOut,"morning fade missing");
-    next(e);check(e.state().gameplay.day==2 && e.state().gameplay.hearts==kMaxHp && e.state().gameplay.sceneBeat==SceneBeat::ExploreFadeIn,"next day not committed once");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::None && e.state().gameplay.life==LifePhase::Explore,"exploration fade-in stuck");
+    check(advance(e,sleepEnd).event==GameplayEvent::Wake && e.state().gameplay.sceneBeat==SceneBeat::WakeDelay,"sleep deadline stuck");
+    check(nightScene(e.state().gameplay) && gameplayClip(e.state().gameplay)==13,"wake delay exposed day or Wake early");
+    advance(e,sleepEnd+1999,true);check(e.state().gameplay.sceneBeat==SceneBeat::WakeDelay,"two second wake delay shortened");
+    next(e);check(!nightScene(e.state().gameplay) && gameplayClip(e.state().gameplay)==14,"Wake14 daylight missing");
+    const auto oldDay=e.state().gameplay.day;const auto oldHearts=e.state().gameplay.hearts;
+    e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{false,true,true});check(e.state().gameplay.life==LifePhase::Wake,"other actor finished player Wake");
+    e.advanceGameplay(e.state().gameplay.phaseStartedMs+2,ActorCompletion{true,false,false});check(e.state().gameplay.sceneBeat==SceneBeat::RoomExit && gameplayClip(e.state().gameplay)==0,"solo Wake did not start Walk0 exit");
+    const auto exitPlans=e.bfsCalls(),exitRng=e.state().rng.state;const auto exitInventory=e.state().inventory.size();
+    advance(e,e.state().gameplay.deadlineMs-1,true);check(e.state().gameplay.day==oldDay && e.state().gameplay.hearts==oldHearts && e.bfsCalls()==exitPlans && e.state().rng.state==exitRng && e.state().inventory.size()==exitInventory,"room exit advanced dungeon or refreshed state early");
+    advance(e,e.state().gameplay.deadlineMs,false);check(e.state().gameplay.sceneBeat==SceneBeat::RoomExit,"exit ignored completion");
+    next(e);check(e.state().gameplay.day==oldDay+1 && e.state().gameplay.hearts==kMaxHp && e.state().gameplay.sceneBeat==SceneBeat::None && e.state().gameplay.life==LifePhase::Explore,"next day not committed once after exit");
+
 
 }
 }
@@ -122,6 +124,9 @@ int main(int argc, char** argv) {
         for (const auto& actor : rooms[0].actors) if (actor.kind == GuildActorKind::GuildMember || actor.kind == GuildActorKind::Object) {
             const auto asset = loadPackage(std::filesystem::path(argv[1]) / actor.assetFile);
             check(!asset.frames(actor.actionClip, actor.direction).empty(), "guild original clip missing");
+            std::uint64_t ticks=0;for(const auto& frame:asset.frames(actor.actionClip,actor.direction)) ticks+=frame.ticks;
+            const auto& rate=asset.resolve(actor.actionClip);
+            check(ticks*1000*rate.speedDenominator <= 7000ULL*asset.tickHz*rate.speedNumerator,"meal cuts a communal animation cycle");
             Animator animation; animation.start(asset, actor.actionClip, actor.direction, true, 0);
             const auto initial = animation.advance(0).frame;
             bool changed = false;
@@ -135,12 +140,13 @@ int main(int argc, char** argv) {
         auto clear = empty(); auto s = clear.state();
         s.position = s.world.stairs; s.visited = s.world.terrain;
         clear = Explorer(s);
-        check(advance(clear,1000).event == GameplayEvent::Pose && gameplayClip(clear.state().gameplay) == 17, "stairs missing Pose17");
-        advance(clear,1001); check(clear.state().gameplay.life == LifePhase::Pose, "Pose repeated");
+        advance(clear,1000);
+        check(advance(clear,2000).event == GameplayEvent::Pose && gameplayClip(clear.state().gameplay) == 17, "stairs missing Pose17");
+        advance(clear,2001); check(clear.state().gameplay.life == LifePhase::Pose, "Pose repeated");
         Animator pose; pose.start(player,17,0,false,0);
         std::int64_t at = 0; Advance result;
         do { result = pose.advance(at); if (result.nextDeadlineUs) at = *result.nextDeadlineUs; } while (!result.finished);
-        check(advance(clear,1000+static_cast<std::uint64_t>(at/1000),true).event == GameplayEvent::ReturnHome, "Pose completion missing return");
+        check(advance(clear,2000+static_cast<std::uint64_t>(at/1000),true).event == GameplayEvent::ReturnHome, "Pose completion missing return");
         homePipeline(clear,false);
         pass(1,"actual Pose17 and communal Eat15 EventSleep13 Wake14; next day Explore");
         pass(2,"return 1500ms; zero position/floorStep/BFS change; cached target cleared");
@@ -193,8 +199,8 @@ int main(int argc, char** argv) {
         s.population.entities = {{1,10,EntityKind::Item,near,false}, {2,70,EntityKind::Item,far,false}};
         s.knownStairs=s.world.stairs;s.discovered[s.world.stairs]=1;
         berries=Explorer(s);advance(berries,1000);
-        check(berries.goal()==GoalKind::Stairs,"known stairs lose to berry");
-        pass(8,"known reachable stairs take priority over low-HP berry target");
+        check(berries.goal()==GoalKind::Item,"known stairs displace berry");
+        pass(8,"items take priority over known reachable stairs");
         auto heal = encounter(); advance(heal,1000); s = heal.state(); s.gameplay.hearts = 1; s.gameplay.oran = 1; heal = Explorer(s);
         check(next(heal).event == GameplayEvent::UseOranBerry && heal.state().gameplay.hearts == 3 && heal.state().gameplay.oran == 0, "Oran did not heal two/cap/consume");
         check(gameplayClip(heal.state().gameplay) == 7 && heal.state().gameplay.combat == CombatPhase::BerryText, "berry plays use animation");
@@ -204,7 +210,7 @@ int main(int argc, char** argv) {
         next(heal); forceRoll(heal,false,true,false); next(heal);
         check(heal.state().gameplay.combat == CombatPhase::EnemyAttack && heal.state().gameplay.hearts == 2, "Oran skipped enemy turn");
         pass(9,"text only; one berry consumed; 1->3 hearts; enemy turn follows");
-        auto friendly = encounter(false); const auto friendlyPosition = friendly.state().position;
+        auto friendly = encounter(false);auto onlyContact=friendly.state();onlyContact.discovered=onlyContact.world.terrain;onlyContact.knownStairs=onlyContact.world.stairs;onlyContact.blocked[onlyContact.world.stairs]=1;friendly=Explorer(onlyContact); const auto friendlyPosition = friendly.state().position;
         check(advance(friendly,1000).event==GameplayEvent::DialoguePlayer && friendly.state().gameplay.life==LifePhase::Dialogue && !friendly.state().population.entities[0].done,"friendly dialogue starts done/overlapped");
         auto dialogSave=encodeSnapshot(friendly.state());advance(friendly,1100,true);check(encodeSnapshot(friendly.state())==dialogSave,"dialogue pacing skipped");
         check(next(friendly).event==GameplayEvent::DialogueNpc && !friendly.state().population.entities[0].done,"NPC response skipped");
@@ -251,7 +257,7 @@ int main(int argc, char** argv) {
         if (argc == 4) {
             const auto package = loadExplorationPackage(argv[2]);
             Explorer scenario(900,42,package.assetVersion,package.floors,{0,0,0,0});
-            while (scenario.state().phase != Phase::Pose) scenario.advance();
+            while (scenario.state().floorIndex+1<scenario.state().floors.size() || scenario.state().position!=scenario.state().world.stairs) scenario.advance();
             const auto now=static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
             scenario.enableGameplay(now);
             std::filesystem::create_directories(argv[3]);

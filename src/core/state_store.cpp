@@ -78,7 +78,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(3); // MDES3; the reader also accepts MDES1 and MDES2.
+    w.u32(0x5345444d); w.u32(4); // MDES4; preserves the MDES3 layout and accepts schemas 1..3.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -137,7 +137,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema != 1 && schema != 2 && schema != 3) throw std::runtime_error("unknown snapshot schema");
+    if (schema != 1 && schema != 2 && schema != 3 && schema != 4) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -178,7 +178,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     n = r.count(128 * (kTiles + 2));
     for (std::uint32_t i = 0; i < n; ++i)
         if (!s.onceKeys.insert(r.str()).second) throw std::runtime_error("duplicate onceKey");
-    s.target = static_cast<int>(r.count(kTiles)) - 1; s.goalKind = static_cast<GoalKind>(r.count(4));
+    s.target = static_cast<int>(r.count(kTiles)) - 1; s.goalKind = static_cast<GoalKind>(r.count(schema>=4?5:4));
     if (schema >= 2) {
         auto& g = s.gameplay;
         g.enabled = r.boolean(); g.defeated = r.boolean(); g.homeScene = r.boolean();
@@ -198,7 +198,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         s.visitedRooms=r.count(7);s.stalledActions=r.count(Explorer::kFloorStepLimit+kTiles+1);s.targetFailures=r.u32();
         s.knownStairs=static_cast<int>(r.count(kTiles))-1;s.targetInstance=r.count(kTiles);
         auto& g=s.gameplay;g.actionRound=r.u64();g.playerActionRound=r.u64();g.playerDirection=r.count(7);
-        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));g.sceneBeat=static_cast<SceneBeat>(r.count(12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
+        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
         for(auto& e:s.population.entities) {
             e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
             e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();

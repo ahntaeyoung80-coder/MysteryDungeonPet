@@ -3,6 +3,8 @@ $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $PSScriptRoot
 Push-Location $Root
 try {
+    python tools/check_windows_runtime.py
+    if ($LASTEXITCODE -ne 0) { throw 'tracked runtime is stale' }
     python tools/make_fixture.py --check
     if ($LASTEXITCODE -ne 0) { throw 'fixture check failed' }
     cmake -S . -B $BuildDir -A x64
@@ -24,6 +26,7 @@ try {
     cmake --install $BuildDir --config Release --prefix "$BuildDir/package"
     if ($LASTEXITCODE -ne 0) { throw 'package failed' }
     & tests/default_launch_windows_tests.ps1 -Exe "$BuildDir/package/MysteryDungeonPet.exe" -Output "$BuildDir/exploration-results/default-launch"
+    & tests/default_launch_windows_tests.ps1 -Exe "MysteryDungeonPet.exe" -Output "$BuildDir/exploration-results/pull-launch"
     $bytes = (Get-ChildItem "$BuildDir/package" -Recurse -File | Measure-Object Length -Sum).Sum
     Write-Output "Installed selected package bytes: $bytes (selected runtime only; ROM excluded)"
     if ($Interactive) {

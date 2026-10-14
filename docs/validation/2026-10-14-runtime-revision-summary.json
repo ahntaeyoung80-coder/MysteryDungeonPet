@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-14",
+  "baseline_commit": "04082dbcda537edae05236d6c28851dd6c94340a",
+  "release": {
+    "passed": 6,
+    "tests": 6,
+    "seconds": 9.76,
+    "log": "2026-10-14-runtime-revision-release.txt"
+  },
+  "asan_ubsan": {
+    "passed": 6,
+    "tests": 6,
+    "detect_leaks": true,
+    "seconds": 68.17,
+    "log": "2026-10-14-runtime-revision-sanitize.txt"
+  },
+  "python": {
+    "passed": 25,
+    "tests": 25,
+    "skipped": 0,
+    "seconds": 5.316,
+    "log": "2026-10-14-runtime-revision-python.txt"
+  },
+  "scenario_save_restore": {
+    "checks": 10701,
+    "restores": 5239,
+    "log": "2026-10-14-runtime-revision-scenarios.jsonl"
+  },
+  "windows_cross": {
+    "compile_link": "passed",
+    "compiler": "MinGW GCC 14-posix x64",
+    "log": "2026-10-14-runtime-revision-windows.txt",
+    "native_execution": false
+  },
+  "direct_runtime": {
+    "path": "MysteryDungeonPet.exe",
+    "sha256": "0b18c4695753ec26bc462fd4131951272dd35f93f82d42b8a97b54c91242ede3",
+    "bytes": 1684992,
+    "manifest": "windows-runtime.json",
+    "source_asset_hash_check": "passed",
+    "zip_created": false,
+    "cwd_independent_paths": "implemented; Windows CI execution pending"
+  },
+  "assets_changed": false,
+  "new_original_asset_research_or_extraction": false,
+  "original_sha256": {
+    "user-supplied.nds": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "rom-files.zip": "cc9d113ea4b438d8b8895a30c3d47863dc99cdb1e1381ce8c029aeeb8d748b54"
+  },
+  "pending": [
+    "Current code native Windows CI and root EXE GUI execution",
+    "User Windows11 visual acceptance",
+    "Windows lock/suspend/resume and long duration CPU/memory"
+  ]
+}

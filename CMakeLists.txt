@@ -14,6 +14,9 @@ add_library(pet_core src/core/package.cpp src/core/animator.cpp src/core/surface
 target_include_directories(pet_core PUBLIC src)
 include(CTest)
 if(BUILD_TESTING)
+  add_executable(pet_revision_tests tests/revision_tests.cpp)
+  target_link_libraries(pet_revision_tests PRIVATE pet_core)
+  add_test(NAME pet_revision_tests COMMAND pet_revision_tests)
   add_executable(pet_improvement_tests tests/improvement_tests.cpp)
   target_link_libraries(pet_improvement_tests PRIVATE pet_core)
   add_test(NAME pet_improvement_tests COMMAND pet_improvement_tests "${CMAKE_CURRENT_SOURCE_DIR}/assets/original/gameplay/actors/asset-0/asset.mdpa")
@@ -47,7 +50,7 @@ if(WIN32)
     target_link_options(MysteryDungeonPet PRIVATE /MANIFEST:NO)
   endif()
   if(MINGW)
-    target_link_options(MysteryDungeonPet PRIVATE -municode -static -static-libgcc -static-libstdc++)
+    target_link_options(MysteryDungeonPet PRIVATE -municode -static -static-libgcc -static-libstdc++ $<$<CONFIG:Release>:-s>)
   endif()
   add_custom_command(TARGET MysteryDungeonPet POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/fixture" "$<TARGET_FILE_DIR:MysteryDungeonPet>/assets/fixture"

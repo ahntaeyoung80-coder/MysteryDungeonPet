@@ -49,12 +49,14 @@ int main(int argc,char** argv) { try {
     for(int q=0;q<kTiles;++q) if(reachable.distance[q]==1 && state.world.room[q]==state.world.room[state.world.stairs]) {near=q;break;}
     check(near>=0,"stairs test room");state.position=near;state.visited[near]=1;
     state.population.entities.push_back({1,70,EntityKind::Item,near,false});
-    e=Explorer(state);auto move=e.advance();check(move.kind==EventKind::Move && e.state().position==state.world.stairs,"visible stairs lose to item");
+    e=Explorer(state);auto move=e.advance();check(move.kind==EventKind::Pickup && e.state().position==near,"visible stairs displace item");
+    auto complete=e.state();complete.discovered=complete.world.terrain;complete.knownStairs=complete.world.stairs;e=Explorer(complete);
+    check(e.advance().kind==EventKind::Move && e.state().position==state.world.stairs,"stairs missing after item/frontier completion");
     check(e.state().knownStairs==state.world.stairs,"stairs not remembered");
     auto blocked=e.state();blocked.position=near;blocked.visited[near]=1;blocked.target=-1;blocked.goalKind=GoalKind::None;blocked.targetInstance=0;
     Explorer temporary(blocked);temporary.setBlocked(state.world.stairs,true);temporary.advance();check(temporary.state().knownStairs==state.world.stairs,"occupancy erased stairs");
     check(e.advance().kind==EventKind::Pose && e.state().completed,"arrival does not clear");
-    auto bytes=encodeSnapshot(e.state());check(bytes[4]==3,"writer not MDES3");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
+    auto bytes=encodeSnapshot(e.state());check(bytes[4]==4,"writer not MDES4");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
     auto turnFixture=[](int player,int enemy,bool playerMoved,bool enemyMoved) {
         Explorer initial(400,42,"turns",fixtureProfiles(1),{0,0,0,0});auto s=initial.state();
         s.world.terrain.fill(0);s.world.room.fill(-1);
@@ -99,12 +101,8 @@ int main(int argc,char** argv) { try {
     auto stairEnemy=turnFixture(3*kWidth+3,3*kWidth+4,true,false);auto stairState=stairEnemy.state();
     stairState.position=stairState.world.stairs;stairState.visited[stairState.position]=1;
     stairState.population.entities[0].tile=stairState.position-1;stairEnemy=Explorer(stairState);
-    check(stairEnemy.advanceGameplay(1000).event==GameplayEvent::Pose,"enemy overrides stairs arrival");
-    auto stairsAndNpc=turnFixture(4*kWidth+11,4*kWidth+10,false,false);
-    auto priorityState=stairsAndNpc.state();priorityState.gameplay.hostile.clear();stairsAndNpc=Explorer(priorityState);
-    check(stairsAndNpc.advanceGameplay(1000).event==GameplayEvent::Move &&
-        stairsAndNpc.state().position==priorityState.world.stairs,"adjacent friendly dialogue preempts visible stairs");
-    check(stairsAndNpc.advanceGameplay(1400).event==GameplayEvent::Pose,"remembered stairs transition lost after NPC contact");
+    stairEnemy.advanceGameplay(1000);check(stairEnemy.state().gameplay.sceneBeat==SceneBeat::FloorFadeOut,"enemy overrides stairs arrival");
+    check(stairEnemy.advanceGameplay(2000).event==GameplayEvent::Pose,"stairs fade did not clear last floor");
     auto berry=turnFixture(3*kWidth+3,3*kWidth+6,false,false);auto berryState=berry.state();
     berryState.population.entities={{1,10,EntityKind::Item,3*kWidth+4,false},{2,ITEM_ORAN_BERRY,EntityKind::Item,3*kWidth+6,false}};
     berryState.gameplay.hostile.clear();berryState.gameplay.hearts=1;berryState.discovered=berryState.world.terrain;

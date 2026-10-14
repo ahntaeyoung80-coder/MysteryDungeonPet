@@ -95,7 +95,7 @@ Population populate(const World&, const FloorProfile&, Rng&, const SpawnPolicy&,
 enum class EncounterAction { Greet };
 EncounterAction encounterPolicy(const Entity&);
 enum class Phase : std::uint8_t { Explore, Pose, Home };
-enum class GoalKind : std::uint8_t { None, Item, Friend, Frontier, Stairs };
+enum class GoalKind : std::uint8_t { None, Item, Friend, Frontier, Stairs, Auxiliary };
 enum class EventKind { None, Move, Pickup, Greeting, FloorChanged, Pose, ReturnedHome };
 struct Event {
     EventKind kind = EventKind::None;
@@ -110,7 +110,7 @@ constexpr std::uint32_t kMaxHp=5;
 constexpr std::uint32_t MOVE_REGULAR_ATTACK = 355, ITEM_ORAN_BERRY = 70;
 enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat, Death, Dialogue };
 enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat, PlayerFaint };
-enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn };
+enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit };
 enum class DialogueStage : std::uint8_t { Player, Npc };
 enum class DeathStage : std::uint8_t { FadeOut, Blackout };
 struct ActorCompletion { bool player=false, enemy=false, partner=false; };
@@ -147,6 +147,8 @@ const char* combatName(CombatPhase);
 bool dungeonScene(const GameplayState&);
 bool bedroomScene(const GameplayState&);
 bool nightScene(const GameplayState&);
+bool showFriendlyDisc(const GameplayState&, bool friendly, bool player);
+constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=1200;
 std::uint32_t gameplayClip(const GameplayState&);
 bool gameplayLoop(const GameplayState&);
 // Shared attack roll: both sides hit 80%; only critical chance differs.
@@ -201,7 +203,9 @@ private:
     void plan();
     void discover();
     Mask occupancy() const;
-    void invalidate();
+    void invalidate(bool clearTarget = true);
+    bool selectPriority(const Search&, bool items, bool frontiers);
+    bool frontier(int tile) const;
     std::string key(const std::string& action, std::uint32_t instance = 0) const;
     void assignRelationships();
     GameplayUpdate beginReturn(std::uint64_t now, bool defeated);

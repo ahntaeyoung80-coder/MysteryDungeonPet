@@ -95,11 +95,16 @@ std::filesystem::path appDir() {
     std::filesystem::path result = std::filesystem::path(raw) / L"MysteryDungeonPet";
     CoTaskMemFree(raw); std::filesystem::create_directories(result); return result;
 }
+std::filesystem::path runtimePath(const wchar_t* installed,const wchar_t* repository) {
+    const auto root=executableDir();
+    const auto path=root/installed;
+    return std::filesystem::exists(path)?path:root/repository;
+}
 struct Options {
-    std::filesystem::path package = executableDir() / L"assets/original/asset-0/asset.mdpa";
+    std::filesystem::path package = runtimePath(L"assets/original/asset-0/asset.mdpa",L"assets/original/runtime/asset-0/asset.mdpa");
     std::filesystem::path metrics, report;
     std::filesystem::path exploration, snapshot;
-    std::filesystem::path gameplayAssets = executableDir() / L"assets/gameplay";
+    std::filesystem::path gameplayAssets = runtimePath(L"assets/gameplay",L"assets/original/gameplay");
     unsigned seed = 1;
     bool newRun = false;
     unsigned scale = 3, direction = 0;
@@ -146,7 +151,7 @@ Options options() {
     // A normal desktop launch owns exploration. Keep explicit A diagnostics compatible;
     // an explicit --explore still wins over their legacy --package selector.
     if (o.exploration.empty() && !animationTest)
-        o.exploration = executableDir() / L"assets/exploration/dungeon-0/exploration.mdpe";
+        o.exploration = runtimePath(L"assets/exploration/dungeon-0/exploration.mdpe",L"assets/original/exploration/dungeon-0/exploration.mdpe");
     if (!o.scale) throw std::runtime_error("scale must be 1..8");
     if (!o.exploration.empty() && (o.validate || o.scenario != L"manual"))
         throw std::runtime_error("exploration requires manual scenario");
@@ -322,6 +327,12 @@ class App {
             (void)tile;
         } else if (explorer_ && !guildRooms_.empty()) {
             scene = guildRooms_[bedroomScene(explorer_->state().gameplay) ? 1 : 0].player().position;
+            const auto& g=explorer_->state().gameplay;
+            if(g.sceneBeat==SceneBeat::RoomExit) {
+                const auto utc=utcMs();
+                const auto elapsed=utc>g.phaseStartedMs?utc-g.phaseStartedMs:0;
+                scene.y+=int32_t((guildRooms_[1].height+64-scene.y)*std::min<uint64_t>(elapsed,kRoomExitMs)/kRoomExitMs);
+            }
         }
         return playbackSample(assets_.package, clip_, direction_, frame_, animator_.active(), scene, options_.scenario != L"empty");
     }
@@ -607,12 +618,12 @@ class App {
             (void)dx; (void)dy;
             enemyDirection_ = (direction_ + 4) % 8;
         }
-        if (g.homeScene) direction_ = guildRooms_[bedroomScene(g)?1:0].player().direction;
+        if (g.homeScene) direction_ = g.sceneBeat==SceneBeat::RoomExit?0:guildRooms_[bedroomScene(g)?1:0].player().direction;
         if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace || g.sceneBeat==SceneBeat::MorningFadeOut) direction_=6;
         if(g.sceneBeat==SceneBeat::DiningPan && oldBeat!=g.sceneBeat) guildCamera_.begin(UINT32_MAX,g.day,{368,212},{168,212},now,6,4000000);
         if (clip_ == 0 && nextClip == 0 && loop_ && oldLife == g.life && oldCombat == g.combat) {
             if(oldDirection != direction_) animator_.changeDirection(assets_.package,0,direction_);
-        } else if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
+        } else if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage || oldBeat!=g.sceneBeat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
         if(event.event == GameplayEvent::FloorChanged || (event.event == GameplayEvent::Explore && oldLife==LifePhase::Ready)) {playerMotion_.reset(tilePoint(explorer_->state().position));actorMotions_.clear();actorAnimators_.clear();}
         if ((g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && (oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage)) {
             enemyClip_ = g.life==LifePhase::Dialogue ? (g.dialogueStage==DialogueStage::Npc?22:7) : g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? 33 : 7;
@@ -635,7 +646,7 @@ class App {
         if (guildRoom_ != room || guildLife_ != g.life || guildBeat_!=g.sceneBeat) {
             guildLive_.clear(); guildRoom_ = room; guildLife_ = g.life;guildBeat_=g.sceneBeat;
             for (const auto& cue : guildRooms_[room].actors) {
-                if (cue.kind == GuildActorKind::Player) continue;
+                if (cue.kind == GuildActorKind::Player || (room==1 && cue.kind==GuildActorKind::Partner)) continue;
                 const Assets* source = nullptr;
                 if (cue.kind == GuildActorKind::Partner) source = &*enemyAssets_;
                 else {
@@ -655,7 +666,7 @@ class App {
                 actor.animator.start(source->package, actor.clip, actor.direction, room==1?gameplayLoop(g):true, sceneClipStart(now));
                 guildLive_.push_back(std::move(actor));
             }
-            log("guild room=" + guildRooms_[room].name + " characters=" + std::to_string(guildRooms_[room].actors.size() - (room == 0 ? 1 : 0)) + " objectCount=" + std::to_string(room == 0 ? 1 : 0));
+            log("guild room=" + guildRooms_[room].name + " characters=" + std::to_string(1+std::count_if(guildLive_.begin(),guildLive_.end(),[](const auto& actor){return actor.cue->kind!=GuildActorKind::Object;})) + " objectCount=" + std::to_string(room == 0 ? 1 : 0));
             dirty_ = true;
         }
         for (auto& actor : guildLive_) {
@@ -709,11 +720,15 @@ class App {
         if(explorer_) {
             const auto& g=explorer_->state().gameplay;
             const bool enemy=g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint);
-            const bool joint=g.life==LifePhase::Wake || g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace;
-            const bool body=g.life==LifePhase::Pose || g.life==LifePhase::Emotion || (g.life==LifePhase::Combat &&
+            const bool joint=g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace;
+            const bool body=(g.life==LifePhase::Wake && g.sceneBeat!=SceneBeat::WakeDelay) || g.life==LifePhase::Pose || g.life==LifePhase::Emotion || (g.life==LifePhase::Combat &&
                 (g.combat==CombatPhase::PlayerAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::PlayerFaint || enemy));
             poseFinished_=joint?(completion_.player&&completion_.partner):body?(enemy?completion_.enemy:completion_.player):false;
             if(g.life==LifePhase::Death || g.life==LifePhase::ReturnHome || g.sceneBeat!=SceneBeat::None) dirty_=true;
+        }
+        if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
+            completion_.player=utcMs()>=explorer_->state().gameplay.deadlineMs;
+            poseFinished_=completion_.player;
         }
         (void)playerFinished;
         if (!dirty_) return;
@@ -748,7 +763,7 @@ class App {
                     const bool moving=actorMotions_.count(e.instanceId)&&actorMotions_.at(e.instanceId).active(now);
                     const auto& f = enemyAssets_->package.frames(active ? enemyClip_ : moving?0:7, active ? enemyDirection_ : e.direction)[active ? enemyFrame_ : moving?actorFrames_[e.instanceId]:0];
                     const auto world=actorMotions_.count(e.instanceId)?raster(actorMotions_.at(e.instanceId).sample(now)):raster(tilePoint(e.tile));
-                    if(std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end()) addDisc(layers,f,world);
+                    if(showFriendlyDisc(g,std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end(),false)) addDisc(layers,f,world);
                     layers.push_back({enemyAssets_->atlas.get(), f.rect, f.anchor, world});
                     continue;
                 }
@@ -769,11 +784,11 @@ class App {
             for (const auto& cue : guildRooms_[bedroom ? 1 : 0].actors) {
                 if (cue.kind == GuildActorKind::Player) {
                     const auto sample = currentPlayback();
-                    if (sample.frame) {addDisc(layers,*sample.frame,cue.position);layers.push_back({assets_.atlas.get(), sample.frame->rect, sample.frame->anchor, cue.position});}
+                    if (sample.frame) layers.push_back({assets_.atlas.get(), sample.frame->rect, sample.frame->anchor, sample.scenePosition});
                 } else {
                     const auto it = std::find_if(guildLive_.begin(), guildLive_.end(), [&](const auto& a) { return a.cue->id == cue.id; });
+                    if(it==guildLive_.end()) continue;
                     const auto& frame = it->assets->package.frames(it->clip, it->direction)[it->frame];
-                    if(cue.kind!=GuildActorKind::Object) addDisc(layers,frame,cue.position);
                     layers.push_back({it->assets->atlas.get(), frame.rect, frame.anchor, cue.position});
                 }
             }
@@ -782,7 +797,6 @@ class App {
         const auto playback = currentPlayback();
         if (playback.frame && (!explorer_ || (!explorer_->state().gameplay.playerHidden && dungeonScene(explorer_->state().gameplay)))) {
             const auto& f = *playback.frame;
-            if(explorer_) addDisc(layers,f,playback.scenePosition);
             layers.push_back({assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition});
         }
         const auto previous = surface_.pixels;
@@ -878,7 +892,7 @@ public:
             if(explorer_->state().gameplay.life==LifePhase::Explore && playerMotion_.active(nowUs())) {clip_=0;loop_=true;}
             const auto& g = explorer_->state().gameplay;
             direction_=g.playerDirection;
-            if(g.homeScene) direction_=guildRooms_[bedroomScene(g)?1:0].player().direction;
+            if(g.homeScene) direction_=g.sceneBeat==SceneBeat::RoomExit?0:guildRooms_[bedroomScene(g)?1:0].player().direction;
             if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace || g.sceneBeat==SceneBeat::MorningFadeOut) direction_=6;
             if(g.life==LifePhase::Combat || g.life==LifePhase::Dialogue) {
                 enemyDirection_=(g.playerDirection+4)%8;
@@ -973,7 +987,8 @@ public:
                 const auto& g=explorer_->state().gameplay;
                 if(g.life==LifePhase::ReturnHome || (g.life==LifePhase::Death && g.deathStage==DeathStage::FadeOut) ||
                    g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::BedFadeIn ||
-                   g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::ExploreFadeIn) deadline=std::min(deadline,now+16667);
+                   g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::ExploreFadeIn ||
+                   g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn || g.sceneBeat==SceneBeat::RoomExit) deadline=std::min(deadline,now+16667);
                 if(auto cameraDeadline=guildCamera_.nextDeadline(now)) deadline=std::min(deadline,*cameraDeadline);
                 if(auto motionDeadline=playerMotion_.nextDeadline(now)) deadline=std::min(deadline,*motionDeadline);
                 for(const auto& entry:actorMotions_) if(auto d=entry.second.nextDeadline(now)) deadline=std::min(deadline,*d);

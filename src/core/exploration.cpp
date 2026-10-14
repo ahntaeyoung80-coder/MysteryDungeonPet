@@ -251,13 +251,17 @@ Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVer
 Explorer::Explorer(ExplorationState state) : state_(std::move(state)) {
     validateState(state_);
     if (state_.target != -1 && (!state_.gameplay.enabled || state_.gameplay.life == LifePhase::Explore)) {
-        path_ = bfs(state_.world, state_.position, occupancy()).pathTo(state_.target);
+        auto occupied=occupancy();if(state_.goalKind!=GoalKind::Stairs) occupied[state_.world.stairs]=1;
+        path_ = bfs(state_.world, state_.position, occupied).pathTo(state_.target);
         ++bfsCalls_;
         cachedWorld_ = state_.world.version;
         cachedOccupancy_ = state_.occupancyVersion;
     }
 }
-void Explorer::invalidate() { path_.clear(); pathIndex_ = 0; state_.target = -1; state_.goalKind = GoalKind::None; state_.targetInstance=0; }
+void Explorer::invalidate(bool clearTarget) {
+    path_.clear(); pathIndex_=0; cachedWorld_=cachedOccupancy_=UINT64_MAX;
+    if(clearTarget) {state_.target=-1;state_.goalKind=GoalKind::None;state_.targetInstance=0;}
+}
 std::string Explorer::key(const std::string& action, std::uint32_t instance) const {
     return action + ":" + std::to_string(state_.runId) + ":" +
            std::to_string(state_.floorIndex) + ":" + std::to_string(instance);
@@ -287,7 +291,7 @@ void Explorer::setBlocked(int tile, bool value) {
                 "occupancy version exhausted");
         state_.blocked[tile] = value;
         ++state_.occupancyVersion;
-        invalidate();
+        invalidate(false);
     }
 }
 Mask Explorer::occupancy() const {
@@ -307,44 +311,65 @@ void Explorer::discover() {
     if(state_.discovered[state_.world.stairs]) state_.knownStairs=state_.world.stairs;
     if(std::count(state_.discovered.begin(),state_.discovered.end(),1)>before) state_.stalledActions=0;
 }
+bool Explorer::frontier(int tile) const {
+    if(!state_.discovered[tile]) return false;
+    for(auto [dx,dy]:kDirections) {
+        const int x=tile%kWidth+dx,y=tile/kWidth+dy;
+        if(x>=0&&x<kWidth&&y>=0&&y<kHeight) {
+            const int next=y*kWidth+x;
+            if(!state_.discovered[next] && canMove(state_.world,tile,next)) return true;
+        }
+    }
+    return false;
+}
+bool Explorer::selectPriority(const Search& search,bool items,bool frontiers) {
+    if(state_.floorSteps>=kFloorStepLimit || state_.stalledActions>=kTiles*2) return false;
+    int best=3*(kTiles+1);
+    if(items) for(const auto& e:state_.population.entities) {
+        if(e.kind!=EntityKind::Item || e.done || !e.visible || !state_.discovered[e.tile] || state_.failedTargets[e.tile]>=3) continue;
+        const int distance=search.distance[e.tile];
+        const int priority=state_.gameplay.enabled && state_.gameplay.hearts<kMaxHp && !state_.gameplay.oran && e.originalId==ITEM_ORAN_BERRY?0:1;
+        const int score=priority*(kTiles+1)+distance;
+        if(distance>=0 && score<best) {best=score;state_.target=e.tile;state_.goalKind=GoalKind::Item;state_.targetInstance=e.instanceId;}
+    }
+    if(state_.target>=0) return true;
+    if(frontiers) for(int tile=0;tile<kTiles;++tile) {
+        if(search.distance[tile]>0 && state_.failedTargets[tile]<3 && frontier(tile) && search.distance[tile]<best) {
+            best=search.distance[tile];state_.target=tile;state_.goalKind=GoalKind::Frontier;
+        }
+    }
+    return state_.target>=0;
+}
 void Explorer::plan() {
-    const auto search=bfs(state_.world,state_.position,occupancy());++bfsCalls_;invalidate();
-    if(state_.knownStairs>=0 && search.distance[state_.knownStairs]>=0) {
-        state_.target=state_.knownStairs;state_.goalKind=GoalKind::Stairs;
-    }
-    if(state_.target==-1 && state_.floorSteps<kFloorStepLimit && state_.stalledActions<kTiles*2) {
+    auto occupied=occupancy();
+    // A discovered staircase is not a shortcut through unfinished exploration.
+    if(state_.position!=state_.world.stairs) occupied[state_.world.stairs]=1;
+    const auto explore=bfs(state_.world,state_.position,occupied);++bfsCalls_;invalidate();
+    selectPriority(explore,true,true);
+    if(state_.target<0) {
+        const auto reach=bfs(state_.world,state_.position,occupancy());++bfsCalls_;
+        if(state_.knownStairs>=0 && state_.failedTargets[state_.knownStairs]<3 && reach.distance[state_.knownStairs]>=0) {
+            state_.target=state_.knownStairs;state_.goalKind=GoalKind::Stairs;path_=reach.pathTo(state_.target);
+        }
+    } else path_=explore.pathTo(state_.target);
+    if(state_.target<0 && state_.stalledActions<kTiles*2 && state_.floorSteps<kFloorStepLimit) {
+        // Friendly contact is auxiliary too; it cannot displace a regular goal.
         int best=kTiles+1;
-        // Reach the boundary of discovered space rather than visiting every floor tile.
-        for(int p=0;p<kTiles;++p) if(state_.discovered[p] && search.distance[p]>0 && state_.failedTargets[p]<3) {
-            bool frontier=false;
-            for(auto [dx,dy]:kDirections) {
-                const int x=p%kWidth+dx,y=p/kWidth+dy;
-                if(x>=0&&x<kWidth&&y>=0&&y<kHeight) {const int q=y*kWidth+x;
-                    if(!state_.discovered[q] && canMove(state_.world,p,q)) frontier=true;}
-            }
-            if(frontier && search.distance[p]<best) {best=search.distance[p];state_.target=p;state_.goalKind=GoalKind::Frontier;}
-        }
-    }
-    if(state_.target==-1 && state_.floorSteps<kFloorStepLimit && state_.stalledActions<kTiles*2) {
-        int best=3*(kTiles+1);
-        for(const auto& e:state_.population.entities) if(!e.done && e.visible && state_.discovered[e.tile]) {
-            if(e.kind==EntityKind::Item) {
-                if(state_.gameplay.enabled && state_.gameplay.oran && e.originalId==ITEM_ORAN_BERRY) continue;
-                const int d=search.distance[e.tile];
-                const int priority=state_.gameplay.enabled && state_.gameplay.hearts<kMaxHp && !state_.gameplay.oran && e.originalId==ITEM_ORAN_BERRY?0:1;
-                const int score=priority*(kTiles+1)+d;
-                if(d>=0 && score<best) {best=score;state_.target=e.tile;state_.goalKind=GoalKind::Item;state_.targetInstance=e.instanceId;}
-            } else for(int p=0;p<kTiles;++p) if(canAttack(state_.world,p,e.tile) && search.distance[p]>=0) {
-                const int score=2*(kTiles+1)+search.distance[p];
-                if(score<best) {best=score;state_.target=p;state_.goalKind=GoalKind::Friend;state_.targetInstance=e.instanceId;}
+        for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && !e.done && e.visible &&
+            (!state_.gameplay.enabled || std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end())) {
+            for(int tile=0;tile<kTiles;++tile) if(canAttack(state_.world,tile,e.tile) && explore.distance[tile]>=0 && explore.distance[tile]<best && state_.failedTargets[tile]<3) {
+                best=explore.distance[tile];state_.target=tile;state_.targetInstance=e.instanceId;state_.goalKind=GoalKind::Friend;path_=explore.pathTo(tile);
             }
         }
+        // A bounded, deterministic probe only when every regular goal is unavailable.
+        if(state_.target<0 && state_.stalledActions<8) for(int tile=0;tile<kTiles;++tile) if(explore.distance[tile]>0 && explore.distance[tile]<=2 && !state_.visited[tile] && state_.failedTargets[tile]<3) {
+            state_.target=tile;state_.goalKind=GoalKind::Auxiliary;path_=explore.pathTo(tile);break;
+        }
     }
-    if(state_.target!=-1) path_=search.pathTo(state_.target);
     cachedWorld_=state_.world.version;cachedOccupancy_=state_.occupancyVersion;
 }
 Event Explorer::advance(bool poseFinished) {
-    if (state_.gameplay.enabled && state_.gameplay.life != LifePhase::Explore &&
+    if (state_.gameplay.enabled && (state_.gameplay.life!=LifePhase::Explore || state_.gameplay.sceneBeat!=SceneBeat::None) &&
         !(state_.gameplay.life == LifePhase::Pose && poseFinished)) return {};
     if (state_.phase == Phase::Home) return {};
     if (state_.phase == Phase::Pose) {
@@ -354,32 +379,43 @@ Event Explorer::advance(bool poseFinished) {
         }
         return {};
     }
+    const auto discoveredBefore=state_.discovered;
     discover();
-    // Arriving on stairs always owns the existing transition, regardless of the previous target.
+    if(state_.goalKind==GoalKind::Stairs && discoveredBefore!=state_.discovered) {
+        auto occupied=occupancy();occupied[state_.world.stairs]=1;
+        const auto reach=bfs(state_.world,state_.position,occupied);++bfsCalls_;
+        const auto previousTarget=state_.target;
+        invalidate();
+        if(selectPriority(reach,true,true)) {path_=reach.pathTo(state_.target);cachedWorld_=state_.world.version;cachedOccupancy_=state_.occupancyVersion;}
+        else {state_.target=previousTarget;state_.goalKind=GoalKind::Stairs;invalidate(false);}
+    }
     if(state_.position==state_.world.stairs) {invalidate();state_.target=state_.world.stairs;state_.goalKind=GoalKind::Stairs;}
-    else {
-        for(unsigned attempt=0;attempt<4;++attempt) {
-            if(state_.target==-1 || cachedWorld_!=state_.world.version || cachedOccupancy_!=state_.occupancyVersion ||
-               (state_.knownStairs>=0 && state_.goalKind!=GoalKind::Stairs) || pathIndex_>=path_.size()) {
-                if(pathIndex_>=path_.size() && (state_.goalKind==GoalKind::Item || state_.goalKind==GoalKind::Friend) && state_.position==state_.target && !(state_.knownStairs>=0 && state_.goalKind!=GoalKind::Stairs)) break;
-                plan();
-            }
-            if(state_.target==-1 || state_.floorSteps>kFloorStepLimit+kTiles) {
-                state_.phase=Phase::Home;invalidate();return {EventKind::ReturnedHome,{},0};
-            }
-            if(pathIndex_<path_.size()) {
-                const int next=path_[pathIndex_];
-                if(!canMove(state_.world,state_.position,next,occupancy())) {
-                    ++state_.targetFailures;if(state_.target>=0) state_.failedTargets[state_.target]=std::min(3,int(state_.failedTargets[state_.target])+1);
-                    invalidate();continue;
-                }
-                state_.position=next;++pathIndex_;++state_.floorSteps;++state_.stalledActions;
-                state_.visited[next]=1;discover();return {EventKind::Move,{},0};
-            }
+    else for(unsigned attempt=0;attempt<4;++attempt) {
+        if(state_.target>=0 && state_.position==state_.target) {
             if(state_.goalKind==GoalKind::Item || state_.goalKind==GoalKind::Friend) break;
             invalidate();
         }
+        if(state_.target<0) plan();
+        if(state_.target<0 || state_.floorSteps>kFloorStepLimit+kTiles) {
+            state_.phase=Phase::Home;invalidate();return {EventKind::ReturnedHome,{},0};
+        }
+        if(cachedWorld_!=state_.world.version || cachedOccupancy_!=state_.occupancyVersion || pathIndex_>=path_.size()) {
+            auto occupied=occupancy();if(state_.goalKind!=GoalKind::Stairs) occupied[state_.world.stairs]=1;
+            path_=bfs(state_.world,state_.position,occupied).pathTo(state_.target);++bfsCalls_;pathIndex_=0;
+            cachedWorld_=state_.world.version;cachedOccupancy_=state_.occupancyVersion;
+        }
+        if(pathIndex_<path_.size() && canMove(state_.world,state_.position,path_[pathIndex_],occupancy())) {
+            state_.position=path_[pathIndex_++];++state_.floorSteps;++state_.stalledActions;
+            state_.visited[state_.position]=1;
+            // Discover on the next tick so a stairs route can notice newly revealed goals.
+            return {EventKind::Move,{},0};
+        }
+        ++state_.targetFailures;
+        auto& failures=state_.failedTargets[state_.target];failures=std::min(3,int(failures)+1);
+        if(failures>=3) invalidate();
+        else invalidate(false);
     }
+    if(state_.target>=0 && state_.position!=state_.target) return {};
     Event event;
     if (state_.goalKind == GoalKind::Item || state_.goalKind == GoalKind::Friend) {
         for (auto& entity : state_.population.entities) {
@@ -413,7 +449,13 @@ Event Explorer::advance(bool poseFinished) {
 }
 void validateState(const ExplorationState& s) {
     const auto& g = s.gameplay;
-    require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=12 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
+    require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=16 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
+    if(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn) {
+        require(g.enabled && g.life==LifePhase::Explore && !g.homeScene && s.target==-1 && !g.movement.actionId,"invalid floor presentation");
+        require(g.sceneBeat==SceneBeat::FloorFadeOut ? s.position==s.world.stairs : (s.floorIndex>0 && s.position==s.world.start),"invalid floor transition position");
+    }
+    if(g.sceneBeat==SceneBeat::WakeDelay) require(g.life==LifePhase::Wake && g.homeScene,"invalid wake delay");
+    if(g.sceneBeat==SceneBeat::RoomExit) require(g.life==LifePhase::Ready && g.homeScene,"invalid bedroom exit");
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
     require(g.walkStartedMs<=g.phaseStartedMs,"invalid saved walking clock");
     require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 10 &&
@@ -422,7 +464,7 @@ void validateState(const ExplorationState& s) {
     if(g.life==LifePhase::Dialogue) require(std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && e.kind==EntityKind::Friend && !e.done;}),"invalid dialogue owner");
     if (g.enabled) {
         require(g.deadlineMs >= g.phaseStartedMs, "invalid gameplay deadline");
-        require(g.life != LifePhase::Combat || (s.phase == Phase::Explore && s.target == -1 && g.enemyInstance > 0 &&
+        require(g.life != LifePhase::Combat || (s.phase == Phase::Explore && g.enemyInstance > 0 &&
             std::any_of(s.population.entities.begin(), s.population.entities.end(), [&](const auto& e) {
                 return e.instanceId == g.enemyInstance && e.kind == EntityKind::Friend &&
                     (!e.done || g.combat == CombatPhase::Victory);
@@ -463,11 +505,11 @@ void validateState(const ExplorationState& s) {
     require(s.world.walkable(s.position) && !s.blocked[s.position] && s.visited[s.position],
             "invalid explorer position");
     require(static_cast<unsigned>(s.phase) <= static_cast<unsigned>(Phase::Home), "invalid phase");
-    require(static_cast<unsigned>(s.goalKind) <= static_cast<unsigned>(GoalKind::Stairs) &&
+    require(static_cast<unsigned>(s.goalKind) <= static_cast<unsigned>(GoalKind::Auxiliary) &&
             ((s.target == -1) == (s.goalKind == GoalKind::None)), "invalid goal");
     if (s.target != -1) {
         require(s.phase == Phase::Explore && s.world.walkable(s.target) &&
-                bfs(s.world, s.position, s.blocked).distance[s.target] >= 0, "invalid goal tile");
+                bfs(s.world, s.position).distance[s.target] >= 0, "invalid goal tile");
         if (s.goalKind == GoalKind::Stairs) require(s.target == s.world.stairs, "invalid stairs goal");
         if (s.goalKind == GoalKind::Item || s.goalKind == GoalKind::Friend)
             require(std::any_of(s.population.entities.begin(), s.population.entities.end(), [&](const auto& e) {
@@ -541,7 +583,12 @@ void validateState(const ExplorationState& s) {
             require(result.ec == std::errc{} && result.ptr == onceKey.data() + end, "invalid journal key number");
             return n;
         };
-        require(parse(a + 1, b) == s.runId, "journal run mismatch");
+        const auto run=parse(a + 1, b);
+        if(run<s.runId && action=="pickup" && inventoryKeys.count(onceKey)) {
+            require(run>0 && parse(b+1,c)<s.floors.size() && parse(c+1,onceKey.size())>0 && parse(c+1,onceKey.size())<=kTiles,"invalid historical pickup");
+            continue;
+        }
+        require(run == s.runId, "journal run mismatch");
         const auto floor = parse(b + 1, c); const auto instance = parse(c + 1, onceKey.size());
         require(floor <= s.floorIndex && instance <= kTiles &&
                 onceKey == prefix(action, static_cast<std::uint32_t>(floor), static_cast<std::uint32_t>(instance)),

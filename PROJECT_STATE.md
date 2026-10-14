@@ -1,5 +1,17 @@
 # 현재 상태
 
+## 즉시 구현 명세 반영 — 2026-10-14
+
+노란 원반은 던전 우호 NPC에만 표시하며 플레이어·적·대화·생활 장면에서 제거했다. 탐험은 아이템 → 미탐색 영역/frontier → 발견된 계단 순서이며 현재 목표는 완료/실패까지 유지한다. 실패3회 타일은 재선택하지 않으며 일반 목표가 없을 때만 제한적 보조 이동/기존 우호 접촉을 허용한다.
+
+계단 도착 후1000ms fade-out → 검정 화면에서 층을 한 번 commit →1000ms fade-in으로 진행한다. 새 층의 위치·이동 표시·카메라·목표를 초기화하고 fade 동안 탐험/전투/재계획을 멈춘다. 취침은 바로 밤 배경·기존 Sleep13/10초 마감으로 연결한다. 식사는8초에서7초로 줄였다. 기상은2초 대기 → 낮 배경·주인공 Wake14 → Walk0/1200ms 방 이탈 → 다음날 초기화/HP회복·탐험이다. 침실 동료와 아침 Nod/중복 fade는 실행하지 않는다.
+
+새 저장은 [MDES4](docs/implementation/MDES4_FORMAT.md)이고 MDES1·2·3 읽기를 유지한다. 수집 inventory/pickup 기록은 다음날에도 보존한다. 기존 런타임·연결된 자산만 사용했으며 새 원작 자산 조사/추출은 없다.
+
+배포 진입점은 저장소 루트 `MysteryDungeonPet.exe`다. GitHub Desktop에서 work를 pull 후 더블클릭한다. `windows-runtime.json`으로 EXE·소스·사용 자산 hash를 연결하고 CI에서 일치 여부 및 루트 EXE의 기본 실행/복원을 검사한다. ZIP은 생성하지 않는다. 상세 실행은 [Windows 안내](docs/WINDOWS_QUICKSTART.md)를 따른다.
+
+검증: Release6/6(9.76초)·ASan/UBSan6/6(68.17초, leak검사 포함)·Python25/25(5.316초, skip없음)·Windows x64 교차 compile/link·루트 EXE/소스/자산 hash 일치 통과. 실제 새 Windows GUI·육안/OS 사건·장기 성능은 아직 별도 확인이다. 검증 결과와 남은 실제 Windows 확인은 `docs/validation/2026-10-14-runtime-revision-summary.json`을 따른다. 아래 상태는 이전 체크포인트 이력이다.
+
 ## 개선 제작 — 2026-10-14
 
 사용자 확정 P0/P1/P2 개선의 단계0~7 구현과 이 환경에서 가능한 통합 회귀를 완료하고 work에 단계별 로컬 커밋을 남겼다. 마지막 구현 커밋은 97cfb8b다. Push는 하지 않았다.

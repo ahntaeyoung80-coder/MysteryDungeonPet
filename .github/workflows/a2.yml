@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python tools/check_windows_runtime.py
       - run: python tools/make_fixture.py --check
       - run: cmake -S . -B build/linux -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
       - run: cmake --build build/linux
@@ -43,4 +44,5 @@ jobs:
             build/windows/exploration-results/*
             build/windows/exploration-results/gameplay/*
             build/windows/exploration-results/default-launch/*
+            build/windows/exploration-results/pull-launch/*
           if-no-files-found: warn

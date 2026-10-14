@@ -1,0 +1,8 @@
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/MysteryDungeonPet/build/revision-windows
+[  7%] Building CXX object CMakeFiles/pet_core.dir/src/core/exploration.cpp.obj
+[ 14%] Linking CXX static library libpet_core.a
+[ 71%] Built target pet_core
+[ 78%] Linking CXX executable MysteryDungeonPet.exe
+[100%] Built target MysteryDungeonPet
