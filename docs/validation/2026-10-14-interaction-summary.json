@@ -17,16 +17,28 @@
     "rootRuntimeHashes": "pass"
   },
   "windowsCI": {
-    "status": "pending after push",
-    "newNativeTextTest": "production GDI renderer: six Korean text scenes, real ink and alpha255",
-    "gui": "bedtime and morning beat ordering, finite sleep duration, short exit plus prior lifecycle/combat/root-launch checks"
+    "status": "success",
+    "run": 38530667338,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38530667338",
+    "windowsJob": 115741517320,
+    "coreJob": 115741517846,
+    "platform": "Windows Server 2025 / MSVC 19.51.36260.0",
+    "nativeCTest": "8/8 pass, 16.34s",
+    "nativeText": "pass: production GDI renderer, six Korean text scenes, actual ink with alpha255",
+    "guiLife": "pass: bedroom2, beat order 2->6->3->4->7->5->12->8->9->16, finite sleep onset under6s, in-map exit duration 1.8~3s, Explore day2",
+    "guiCombat": "pass: Attack/Hurt/Faint/victory then Explore",
+    "rootAndInstalledZeroArgLaunch": "pass: another CWD, same runId restored, 200px, diagnostics menu absent, explicit diagnostics preserve save",
+    "shortDungeonMovementObservation": "pending: dialogue/combat held player during four-second observation; five continuous retreat steps validated in native core",
+    "linuxCI": "ASan/UBSan7/7 pass, 171.74s; Python26/26 pass, 16.561s"
   },
   "actualUserWindows11": "not observed",
   "logs": [
     "2026-10-14-interaction-release.txt",
     "2026-10-14-interaction-sanitize.txt",
     "2026-10-14-interaction-python.txt",
-    "2026-10-14-interaction-windows.txt"
+    "2026-10-14-interaction-windows.txt",
+    "2026-10-14-interaction-windows-ci.txt",
+    "2026-10-14-interaction-core-ci.txt"
   ],
   "runtime": {
     "compiler": "MinGW GCC 14-posix x64 Release / static libgcc and libstdc++",
@@ -128,5 +140,6 @@
     },
     "entrypoint": "MysteryDungeonPet.exe",
     "native_windows_execution": "see validation records"
-  }
+  },
+  "implementationCommit": "2f2530d5be2bab843f9005349b87db3a45b5465f"
 }

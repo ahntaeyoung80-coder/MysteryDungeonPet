@@ -1,0 +1,61 @@
+CI run: 38530667338
+Implementation: 2f2530d5be2bab843f9005349b87db3a45b5465f
+Windows Server 2025 / MSVC 19.51.36260.0
+Windows x64 runtime/source/assets hashes match; no ZIP required
+1/8 Test #1: pet_survival_tests ...............   Passed    0.03 sec
+2/8 Test #2: pet_revision_tests ...............   Passed    0.02 sec
+3/8 Test #3: pet_improvement_tests ............   Passed    0.02 sec
+4/8 Test #4: pet_gameplay_tests ...............   Passed    5.97 sec
+5/8 Test #5: pet_exploration_tests ............   Passed    9.54 sec
+6/8 Test #6: pet_core_tests ...................   Passed    0.42 sec
+7/8 Test #7: pet_package_playback .............   Passed    0.01 sec
+8/8 Test #8: pet_text_overlay_tests ...........   Passed    0.23 sec
+100% tests passed out of 8
+Total Test time (real) =  16.34 sec
+
+{
+  "desktopWindowFixed": "pass",
+  "a3Remaining": "pending",
+  "minimumDecodeCount": 5,
+  "snapshotRestore": "pass",
+  "physicalSize": 200,
+  "uiMovement": "pending: dialogue/combat held player during the observation window",
+  "status": "pass",
+  "actualWindows11Exploration": "pending"
+}
+
+{
+  "actualWindows11": "pending",
+  "guildMembers": 10,
+  "status": "pass",
+  "bedroomCharacters": 2,
+  "coreScenarios": 12,
+  "test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+  "guildDiningCharacters": 12
+}
+
+{
+  "actualWindows11": "pending",
+  "test": "production player first Attack1 Hurt6 Faint33 victory resumes dungeon",
+  "status": "pass"
+}
+
+{
+  "physicalSize": 200,
+  "explicitDiagnostics": "pass, exploration save unchanged",
+  "snapshot": "new then restored same runId",
+  "status": "pass",
+  "launch": "installed EXE with zero arguments from another directory",
+  "diagnosticsMenu": "absent",
+  "actualWindows11": "pending"
+}
+
+{
+  "physicalSize": 200,
+  "explicitDiagnostics": "pass, exploration save unchanged",
+  "snapshot": "new then restored same runId",
+  "status": "pass",
+  "launch": "installed EXE with zero arguments from another directory",
+  "diagnosticsMenu": "absent",
+  "actualWindows11": "pending"
+}

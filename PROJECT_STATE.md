@@ -6,7 +6,7 @@
 
 취침은 밤 배경/동료와 Nod22 인사 → Laying27 → EventSleep13 한 번 →750ms fade-out → 낮 배경750ms fade-in → 두 배우 Wake14 → 아침 인사 → 왼쪽 통로 입구까지1870ms Walk0 → 다음날 탐험이다. 이전10초 수면 정지와2초 기상 대기는 생략하고, 동료 침상을 피해 맵 안(104,184)에서 퇴실을 끝낸다. 원본/연결 자산 변경·새 조사·ZIP 없이 루트 EXE를 갱신한다. MDES5와1~4 읽기를 유지하며 상세 복원 계약은 docs/implementation/MDES5_FORMAT.md를 따른다.
 
-Release7/7(13.36초)·ASan/UBSan7/7(77.09초)·Python26/26(4.450초, skip없음)·Windows x64 교차 compile/link·루트 EXE hash 일치 통과. 현재 코드 Windows CI 확인 중이며 완료 증거는 docs/validation/2026-10-14-interaction-summary.json에 갱신한다. 다음 실행은 현재 구현의 Windows CTest(실제 GDI text 검사 포함)/생활·전투 GUI/루트 EXE 실행 검사 확인과 work 반영이다. 사용자 Windows11 육안·OS 사건·장기 성능은 별도 확인이다. 아래는 이전 이력이다.
+Release7/7(13.36초)·ASan/UBSan7/7(77.09초)·Python26/26(4.450초, skip없음)·Windows x64 교차 compile/link·루트 EXE hash 일치 통과. 구현2f2530d의 CI38530667338 core/windows success다. Windows Server2025/MSVC19.51에서 실제 GDI text 검사 포함8/8(16.34초), 두 배우 취침/기상 순서·짧은 퇴실/다음날·전투·루트 EXE 무인자 다른 CWD 실행/저장 복원이 통과했다. CI Linux ASan7/7(171.74초)/Python26/26(16.561초)도 통과했다. 증거는 docs/validation/2026-10-14-interaction-summary.json을 따른다. 다음 실행은 work pull 후 루트 EXE로 이어가기다. 짧은 던전 이동 GUI 관찰은 대화/전투로 보류였으며 도주5연속 이동은 native core에서 검증했다. 사용자 Windows11 육안·OS 사건·장기 성능은 별도 확인이다. 아래는 이전 이력이다.
 
 ## 기상·생존·자리 교환 수정 — 2026-10-14
 
