@@ -10,7 +10,7 @@
 
 배포 진입점은 저장소 루트 `MysteryDungeonPet.exe`다. GitHub Desktop에서 work를 pull 후 더블클릭한다. `windows-runtime.json`으로 EXE·소스·사용 자산 hash를 연결하고 CI에서 일치 여부 및 루트 EXE의 기본 실행/복원을 검사한다. ZIP은 생성하지 않는다. 상세 실행은 [Windows 안내](docs/WINDOWS_QUICKSTART.md)를 따른다.
 
-검증: Release6/6(10.24초)·ASan/UBSan6/6(70.27초, leak검사 포함)·Python25/25(4.602초, skip없음)·Windows x64 교차 compile/link·루트 EXE/소스/자산 hash 일치 통과. 실제 새 Windows GUI·육안/OS 사건·장기 성능은 아직 별도 확인이다. 검증 결과와 남은 실제 Windows 확인은 `docs/validation/2026-10-14-runtime-revision-summary.json`을 따른다. 아래 상태는 이전 체크포인트 이력이다.
+검증: Release6/6(10.24초)·ASan/UBSan6/6(70.27초, leak검사 포함)·Python25/25(4.602초, skip없음)·Windows x64 교차 compile/link·루트 EXE/소스/자산 hash 일치 통과. 구현5643e8e의 Windows CI38517206000에서 MSVC CTest6/6(14.52초)·기존 WIC/재생·생활/전투 GUI·루트 EXE 무인자 다른 CWD 실행/복원/진단이 통과했다. Linux CI도 success다. 실제 사용자 Windows11의 육안/OS 사건·장기 성능은 별도 확인이다. 검증 결과와 남은 실제 Windows 확인은 `docs/validation/2026-10-14-runtime-revision-summary.json`을 따른다. 아래 상태는 이전 체크포인트 이력이다.
 
 ## 개선 제작 — 2026-10-14
 

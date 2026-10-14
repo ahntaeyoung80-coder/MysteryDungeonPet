@@ -9,3 +9,5 @@ ZIP은 만들지 않았다. 루트 MysteryDungeonPet.exe와 소스·사용 자�
 계단 경로에서는 새로 발견된 목표뿐 아니라 이미 발견된 공간의 새 아이템·새로 도달 가능한 우선 목표도 재평가한다. 우선 목표가 없으면 기존 계단 경로/cache를 유지한다. 추가 회귀를 통과하고 루트 EXE/hash를 재생성했다.
 
 첫 Windows CI38516554129에서 MSVC CTest6/6와 WIC·재생 검사는 통과했다. 이전 탐험 검사만 기상 직후/방 이탈 전 HP5를 가정해 실패했다. headless 드라이버의 종료점은 Ready/RoomExit이며 실제 다음날 회복 전이므로, 검사에서 이 단계와 복원 전후 HP·day·RNG·inventory·transaction의 동일성을 확인하도록 수정했다. Windows GUI는 실제 방 이탈 뒤 다음날을 시작한다. CI 결과를 로그에 출력하고 배포 바이너리 ZIP 대신 검사 결과만 artifact로 남긴다.
+
+최종 구현5643e8e의 CI38517206000는 core/windows 모두success다. Windows Server2025/MSVC19.51 x64에서 CTest6/6(14.52초), WIC·원작 재생, 갱신한 생활/전투 GUI, 침실 배우1명, 기존 설치 EXE와 루트 EXE의 무인자 다른 CWD 실행/저장 복원/진단을 통과했다. 탐험 이동만 보는4초 창은 대화/전투로 위치가 유지되어 이동 육안 증거로 쓰지 않는다. 루트 EXE는 MinGW 빌드 자체를 Windows에서 실행해 확인했다. 사용자 Windows11의 이동/fade/원반 육안·OS 사건·장기 성능은 pending이다. 상세는 최종 검증 summary와 windows-ci.txt이다.

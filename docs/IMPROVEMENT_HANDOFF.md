@@ -2,7 +2,7 @@
 
 ## 최신 인수인계 — 즉시 구현 명세
 
-이번 기준은 `PROJECT_STATE.md`의 즉시 구현 명세 반영과 [MDES4](implementation/MDES4_FORMAT.md)다. 소스/기존 자산과 함께 루트 EXE를 커밋하며 ZIP은 만들지 않는다. 실행은 [Windows 안내](WINDOWS_QUICKSTART.md)를 따른다. 목표 정책·층 fade·밤 취침·주인공만 기상/이탈·식사7초를 코어 회귀에 포함했다. 다음 확인은 Windows CI의 네이티브/루트 EXE 검사와 사용자 Windows11의 육안·OS 사건·장기 성능이다. 아래 계단 최우선·두 배우 기상·ZIP 설명은 이전 이력이다.
+이번 기준은 `PROJECT_STATE.md`의 즉시 구현 명세 반영과 [MDES4](implementation/MDES4_FORMAT.md)다. 소스/기존 자산과 함께 루트 EXE를 커밋하며 ZIP은 만들지 않는다. 실행은 [Windows 안내](WINDOWS_QUICKSTART.md)를 따른다. 목표 정책·층 fade·밤 취침·주인공만 기상/이탈·식사7초를 코어 회귀에 포함했다. 구현5643e8e의 Windows CI38517206000와 Linux CI가 success다. MSVC CTest6/6·생활/전투 GUI·루트 EXE 다른 CWD 무인자 실행/복원/진단을 통과했다. 다음 확인은 사용자 Windows11의 육안·OS 사건·장기 성능이다. 아래 계단 최우선·두 배우 기상·ZIP 설명은 이전 이력이다.
 
 ## 최종 체크포인트 — 2026-10-14
 

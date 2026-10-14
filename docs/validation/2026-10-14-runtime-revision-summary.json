@@ -39,7 +39,7 @@
     "manifest": "windows-runtime.json",
     "source_asset_hash_check": "passed",
     "zip_created": false,
-    "cwd_independent_paths": "implemented; Windows CI execution pending"
+    "cwd_independent_paths": "Windows CI passed for root EXE with zero arguments from another working directory"
   },
   "assets_changed": false,
   "new_original_asset_research_or_extraction": false,
@@ -48,8 +48,7 @@
     "rom-files.zip": "cc9d113ea4b438d8b8895a30c3d47863dc99cdb1e1381ce8c029aeeb8d748b54"
   },
   "pending": [
-    "Current code native Windows CI and root EXE GUI execution",
-    "User Windows11 visual acceptance",
+    "User Windows11 visual acceptance, including continuous movement/floor fades/disc appearance",
     "Windows lock/suspend/resume and long duration CPU/memory"
   ],
   "prior_windows_ci": {
@@ -57,5 +56,27 @@
     "commit": "f470fcd",
     "native_ctest": "6/6 passed",
     "failure": "legacy exploration Windows check expected HP refresh before RoomExit; corrected to assert Ready/RoomExit and unchanged restored HP/RNG/day/inventory/journals"
+  },
+  "implementation_commit": "5643e8eeb8f9ccb4ab5875b9f56121ed06706157",
+  "github_ci": {
+    "run_id": 38517206000,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38517206000",
+    "core": "success",
+    "windows": "success",
+    "windows_os": "Windows Server 2025",
+    "compiler": "MSVC 19.51 x64 Release",
+    "native_ctest": {
+      "passed": 6,
+      "tests": 6,
+      "seconds": 14.52
+    },
+    "gui_lifecycle": "pass",
+    "bedroom_characters": 1,
+    "gui_combat": "pass",
+    "installed_default_launch_restore": "pass",
+    "root_exe_default_launch_restore": "pass",
+    "root_exe_diagnostics": "pass; exploration save unchanged",
+    "exploration_movement_window": "pending: dialogue/combat held player in four-second window",
+    "log": "2026-10-14-runtime-revision-windows-ci.txt"
   }
 }
