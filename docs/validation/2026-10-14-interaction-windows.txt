@@ -1,0 +1,17 @@
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/MysteryDungeonPet/build/revision-windows
+[  6%] Building CXX object CMakeFiles/pet_text_overlay.dir/src/windows/text_overlay.cpp.obj
+[ 12%] Building CXX object CMakeFiles/pet_core.dir/src/core/exploration.cpp.obj
+[ 18%] Building CXX object CMakeFiles/pet_core.dir/src/core/gameplay.cpp.obj
+[ 25%] Building CXX object CMakeFiles/pet_core.dir/src/core/gameplay_scene.cpp.obj
+[ 31%] Building CXX object CMakeFiles/pet_core.dir/src/core/guild_scene.cpp.obj
+[ 37%] Linking CXX static library libpet_text_overlay.a
+[ 37%] Built target pet_text_overlay
+[ 43%] Building CXX object CMakeFiles/pet_core.dir/src/core/state_store.cpp.obj
+[ 50%] Building CXX object CMakeFiles/pet_core.dir/src/core/exploration_package.cpp.obj
+[ 56%] Linking CXX static library libpet_core.a
+[ 75%] Built target pet_core
+[ 81%] Building CXX object CMakeFiles/MysteryDungeonPet.dir/src/windows/main.cpp.obj
+[ 87%] Linking CXX executable MysteryDungeonPet.exe
+[100%] Built target MysteryDungeonPet

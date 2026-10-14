@@ -241,8 +241,8 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     else {
         const bool oran=std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.kind==EntityKind::Item && e.originalId==ITEM_ORAN_BERRY && !e.done && s.discovered[e.tile];});
         s.survivalFirst=s.knownStairs>=0?SurvivalFirst::Stairs:oran?SurvivalFirst::Oran:SurvivalFirst::None;
-        if(s.gameplay.sceneBeat==SceneBeat::RoomExit) s.gameplay.deadlineMs=s.gameplay.phaseStartedMs+kRoomExitMs;
     }
+    if(s.gameplay.sceneBeat==SceneBeat::RoomExit) s.gameplay.deadlineMs=s.gameplay.phaseStartedMs+kRoomExitMs;
     r.u32(); r.end();
     validateState(s);
     return s;

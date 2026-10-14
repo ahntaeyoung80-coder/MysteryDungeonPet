@@ -10,10 +10,16 @@
 - 플레이어의 경로에서 우호 NPC 타일은 통과 가능하다. 그 타일로 이동하는 순간 NPC를 플레이어의 이전 타일로 옮기는 원자적 자리 교환을 수행한다. 플레이어/NPC의 반대 방향 MoveRecord를 같은 round·시각·400ms로 저장한다. 적 경로에는 일반 점유 규칙을 유지한다. 교환으로 NPC의 done·인사 onceKey를 바꾸지 않는다.
 - SceneBeat의 기존0~16을 유지하고 ExplorationBerryText17을 추가했다. 기존 열매 메시지와1000ms 대기를 탐험에서도 재사용하며 이 동안 추가 탐험 행동을 실행하지 않는다.
 
+## 피격·도주·NPC 대화 보정 (2026-10-14)
+
+바이너리 배치·schema5·enum 번호를 유지한다. EnemyTurn에서 RNG와 공격권·roll을 commit하고 gameplay.onceKeys에 `pending-hit:<run>:<floor>:<enemy>:<round>`를 저장한다. EnemyAttack의 완료 신호/기존 유한 animation timeout 이후에만 이 키를 제거하면서 HP를 차감하고 PlayerHurt로 진행한다. 키가 없는 이전 EnemyAttack 저장은 HP가 이미 반영된 것으로 처리한다. 공격 중 복원해도 RNG/HP를 다시 판정하지 않으며 완료 후 복원해도 HP가 두 번 차감되지 않는다.
+
+저체력에서 적의 잔여 이동과 다음 플레이어 이동을 한 snapshot에 commit하고 같은400ms에 표시한다. 적의 공격권은 유지하고, 실제 피격 연출 이후에만 필요한 정지가 생긴다. 길의 미인사 우호 NPC가 다음 경로 타일을 차지하면 Player/Npc 대화를 순서대로 재생한다. item/stairs 목표는 유지하며 인사 후 첫 이동으로 자리 교환한다. 인사 자체가 추가 이동 턴을 소비하지 않는다. onceKey와 done으로 같은 NPC 인사를 반복하지 않는다.
+
 ## 취침·기상·방 이탈
 
-동료를 같은 침실에 다시 표시하고 기존 Sleep13·Wake14·Nod22를 사용한다. 수면 종료 후2초 대기 → 두 배우 Wake 완료 → 마주보는 두 배우 Nod 완료 → 주인공 Walk0 방 이탈 → 다음날 갱신이다. 동료에게 새 퇴장 이벤트를 만들지 않는다.
+동료와 밤 침실에서 마주보는 Nod22(BedFace3) → Laying27(BedLay4, 최소400ms) → EventSleep13(Sleeping7, 두 배우가 한 번 재생) →750ms BedFadeOut5 → 낮 배경750ms BedFadeIn12(Wake) → 두 배우 Wake14(Waking8) → 아침 Nod22(MorningFace9) → 주인공 Walk0(RoomExit16) → 다음날 갱신이다. 수면 정지10초와 WakeDelay2초는 새 경로에서 실행하지 않는다. fade-out에는 잠들기 마지막 프레임을 유지한다. 원작에 없는 Laying 전환 프레임을 만들지 않으며 동료의 별도 퇴장도 없다.
 
-방 이탈은 기존 오른쪽 침상(204,184) → 바닥(204,208) → 침상 아래(120,208) → 왼쪽 통로(120,184) → 방 밖(-24,184)이다. 기존 이동 속도24px/400ms를 적용해 총4600ms다. 방향 전환과 카메라는 같은 경로 표본을 사용한다. UTC phaseStartedMs로 재실행 위치와 남은 구간을 복원하고, pause 시 장면 시계를 보정한다. 방 밖으로 나간 뒤에만 HP 회복·새 run/RNG·탐험을 한 번 시작한다.
+퇴실은 기존 침상(204,184) → 침상 가장자리(184,200) → 동료 침상 아래(128,200) → 통로(112,184) → 왼쪽 통로 입구(104,184)다. 총1870ms이며 동료 침상과 맵 경계를 넘지 않는다. 방향·카메라는 공통 경로 표본을 사용한다. UTC phaseStartedMs로 남은 구간을 복원하고 pause 시 finite animation 시계를 보정한다. 모든 schema의 RoomExit 복원 마감은 phaseStartedMs+1870ms로 바꿔 이전 긴 경로도 새 경로로 끝낸다. 퇴실 완료 후에만 HP·새 run/RNG·탐험을 한 번 갱신한다.
 
-이전 저장에는 발견 순서가 없으므로 이미 알려진 계단을 우선하고, 계단이 없으면 알려진 열매에서 시작한다. 이전 RoomExit 저장의 마감은 phaseStartedMs+4600ms로 확장하여 새 왼쪽 경로를 사용한다. MDES5를 이전 EXE로 열지 않는다. 원본 자산·배경·cue 파일은 변경하지 않는다.
+이전 발견 순서가 없으면 알려진 계단, 없으면 알려진 열매를 우선한다. 새 pending-hit 저장은 갱신된 EXE로 열어야 한다. 원본 자산·배경·cue 파일은 변경하지 않는다.

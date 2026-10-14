@@ -1,15 +1,25 @@
 #include "core/gameplay_scene.hpp"
 #include <algorithm>
 #include <cstdlib>
+#include <cmath>
 namespace pet {
+std::wstring gameplayText(const GameplayState& g) {
+    if((g.life==LifePhase::Combat && g.combat==CombatPhase::BerryText) || g.sceneBeat==SceneBeat::ExplorationBerryText) return L"오랭열매! 2하트 회복";
+    if(g.life==LifePhase::Dialogue) return g.dialogueStage==DialogueStage::Player?L"안녕! 같이 탐험하자.":L"조심해서 다녀와!";
+    if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) return L"잘 자! 내일도 같이 탐험하자.";
+    if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace) return L"좋은 아침! 다녀올게.";
+    if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout) return L"눈앞이 깜깜해졌다";
+    return {};
+}
 BedroomExitSample bedroomExit(Point start,const GameplayState& g,std::uint64_t now) {
-    const std::array<Point,5> path{{start,{204,208},{120,208},{120,184},{-24,184}}};
+    // Skirt the occupied partner bed, then stop at the left corridor entrance inside the map.
+    const std::array<Point,5> path{{start,{184,200},{128,200},{112,184},{104,184}}};
     std::uint64_t elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
     for(unsigned i=1;i<path.size();++i) {
         const auto from=path[i-1],to=path[i];
         const auto dx=to.x-from.x,dy=to.y-from.y;
-        const auto duration=std::uint64_t(std::abs(dx)+std::abs(dy))*400/24;
-        const unsigned direction=dx<0?6:dx>0?2:dy<0?4:0;
+        const auto duration=std::uint64_t(std::lround(std::hypot(dx,dy)*400/24));
+        const unsigned direction=dx<0?(dy<0?5:dy>0?7:6):dx>0?(dy<0?3:dy>0?1:2):dy<0?4:0;
         if(elapsed<duration) return {{from.x+int32_t(dx*int64_t(elapsed)/int64_t(duration)),from.y+int32_t(dy*int64_t(elapsed)/int64_t(duration))},direction,false};
         elapsed-=duration;
     }
@@ -47,7 +57,8 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now) {
         const auto opacity=out?std::min<uint64_t>(255,elapsed*255/duration):elapsed>=duration?0:(duration-elapsed)*255/duration;
         for(size_t i=0;i<s.pixels.size();i+=4) {for(unsigned ch=0;ch<3;++ch) s.pixels[i+ch]=static_cast<uint8_t>(s.pixels[i+ch]*(255-opacity)/255);s.pixels[i+3]=255;}
     }
-    if(g.life==LifePhase::Dialogue) for(unsigned y=150;y<190;++y) for(unsigned x=8;x<192;++x) pixel(x,y,40,30,20);
+    if(g.life==LifePhase::Dialogue || (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) || (g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace))
+        for(unsigned y=150;y<190;++y) for(unsigned x=8;x<192;++x) pixel(x,y,40,30,20);
     if (g.life == LifePhase::ReturnHome) {
         const auto elapsed = now > g.phaseStartedMs ? now - g.phaseStartedMs : 0;
         const auto opacity = g.fadeInOnly ? (elapsed>=750?0:(750-elapsed)*255/750) : g.homeScene ? (elapsed >= 1500 ? 0 : std::min<std::uint64_t>(255, (1500-elapsed)*255/750)) : std::min<std::uint64_t>(255, elapsed*255/750);

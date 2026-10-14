@@ -6,7 +6,12 @@
 
 namespace pet {
 namespace {
-constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750, kSleepMs = 10000, kMealMs = 7000;
+constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750, kMealMs = 7000;
+std::string pendingHit(const ExplorationState& s) {
+    const auto& g=s.gameplay;
+    return "pending-hit:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
+        std::to_string(g.enemyInstance)+":"+std::to_string(g.actionRound);
+}
 }
 const char* lifeName(LifePhase phase) {
     static const char* names[]{"Explore", "Pose", "ReturnHome", "Emotion", "Eat", "Sleep", "Wake", "Ready", "Combat", "Death", "Dialogue"};
@@ -22,7 +27,7 @@ bool bedroomScene(const GameplayState& g) {
         g.life==LifePhase::Wake || g.life==LifePhase::Ready);
 }
 bool nightScene(const GameplayState& g) {
-    return bedroomScene(g) && !(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) && g.life!=LifePhase::Ready;
+    return bedroomScene(g) && !(g.life==LifePhase::Wake && (g.sceneBeat==SceneBeat::Waking || g.sceneBeat==SceneBeat::BedFadeIn)) && g.life!=LifePhase::Ready;
 }
 bool showFriendlyDisc(const GameplayState& g,bool friendly,bool player) {
     return dungeonScene(g) && g.life!=LifePhase::Dialogue && friendly && !player;
@@ -33,14 +38,14 @@ std::uint32_t gameplayClip(const GameplayState& g) {
     case LifePhase::Emotion: return 6; // New defeat expression cue using the supported Hurt body clip.
     case LifePhase::Eat: return 15;
     case LifePhase::Sleep:
-        if(g.sceneBeat==SceneBeat::BedFadeIn) return 7;
+        if(g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::NightFadeIn) return 7;
         if(g.sceneBeat==SceneBeat::DiningExit) return 15;
         if(g.sceneBeat==SceneBeat::BedFace) return 22;
-        if(g.sceneBeat==SceneBeat::BedLay || g.sceneBeat==SceneBeat::BedFadeOut) return 27;
+        if(g.sceneBeat==SceneBeat::BedLay) return 27;
         return 13;
     case LifePhase::Ready: if(g.sceneBeat==SceneBeat::RoomExit) return 0; return g.sceneBeat==SceneBeat::MorningFace || g.sceneBeat==SceneBeat::MorningFadeOut ? 22:7;
     case LifePhase::Dialogue:return g.dialogueStage==DialogueStage::Player?22:7;
-    case LifePhase::Wake: return g.sceneBeat==SceneBeat::WakeDelay?13:14;
+    case LifePhase::Wake: return g.sceneBeat==SceneBeat::WakeDelay?13:g.sceneBeat==SceneBeat::BedFadeIn?7:14;
     case LifePhase::Combat:
         if (g.combat == CombatPhase::PlayerAttack) return 1;
         if (g.combat == CombatPhase::PlayerHurt) return 6;
@@ -51,6 +56,7 @@ std::uint32_t gameplayClip(const GameplayState& g) {
 }
 bool gameplayLoop(const GameplayState& g) {
     const auto clip = gameplayClip(g);
+    if(g.life==LifePhase::Sleep && (g.sceneBeat==SceneBeat::Sleeping || g.sceneBeat==SceneBeat::BedFadeOut)) return false;
     return clip == 0 || clip == 7 || clip == 5 || clip == 13 || g.life == LifePhase::Eat || g.sceneBeat==SceneBeat::DiningExit;
 }
 AttackRoll rollBasicAttack(Rng& rng, bool player) {
@@ -187,7 +193,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         }
         if(!completed.enemy) return {};
         auto& e=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){return x.instanceId==g.enemyInstance;});
-        const auto once=key("greet",e.instanceId);e.done=true;state_.onceKeys.insert(once);invalidate();
+        const auto once=key("greet",e.instanceId);e.done=true;state_.onceKeys.insert(once);
+        if(state_.goalKind==GoalKind::Friend) invalidate();
         return life(LifePhase::Explore,GameplayEvent::Explore,0);
     }
     if(g.life==LifePhase::Explore && g.sceneBeat==SceneBeat::ExploreFadeIn) {
@@ -199,20 +206,31 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         g.sceneBeat=SceneBeat::DiningExit;return life(LifePhase::Sleep,GameplayEvent::Sleep,750);
     }
     if(g.life==LifePhase::Sleep) {
-        if(now<g.deadlineMs) return {};
         switch(g.sceneBeat) {
         case SceneBeat::DiningExit:
+            if(now<g.deadlineMs) return {};
             g.sceneBeat=SceneBeat::NightFadeIn;return life(LifePhase::Sleep,GameplayEvent::HomeScene,kFadeMs);
-        case SceneBeat::NightFadeIn:
-            g.sceneBeat=SceneBeat::Sleeping;return life(LifePhase::Sleep,GameplayEvent::Sleep,kSleepMs);
+        case SceneBeat::NightFadeIn: case SceneBeat::BedFadeIn:
+            if(now<g.deadlineMs) return {};
+            g.sceneBeat=SceneBeat::BedFace;return life(LifePhase::Sleep,GameplayEvent::Sleep,kFiniteTimeoutMs);
+        case SceneBeat::BedFace:
+            if(!(completed.player&&completed.partner)) return {};
+            g.sceneBeat=SceneBeat::BedLay;return life(LifePhase::Sleep,GameplayEvent::Sleep,400);
+        case SceneBeat::BedLay:
+            if(now<g.deadlineMs || !(completed.player&&completed.partner)) return {};
+            g.sceneBeat=SceneBeat::Sleeping;return life(LifePhase::Sleep,GameplayEvent::Sleep,kFiniteTimeoutMs);
         case SceneBeat::Sleeping: case SceneBeat::None:
-            g.sceneBeat=SceneBeat::WakeDelay;return life(LifePhase::Wake,GameplayEvent::Wake,kWakeDelayMs);
+            if(!(completed.player&&completed.partner) && now<g.deadlineMs) return {};
+            g.sceneBeat=SceneBeat::BedFadeOut;return life(LifePhase::Sleep,GameplayEvent::Sleep,kFadeMs);
+        case SceneBeat::BedFadeOut:
+            if(now<g.deadlineMs) return {};
+            g.sceneBeat=SceneBeat::BedFadeIn;return life(LifePhase::Wake,GameplayEvent::HomeScene,kFadeMs);
         default: // Import a previous bedtime substage without flashing the day background.
             g.sceneBeat=SceneBeat::NightFadeIn;return life(LifePhase::Sleep,GameplayEvent::HomeScene,kFadeMs);
         }
     }
     if(g.life==LifePhase::Wake) {
-        if(g.sceneBeat==SceneBeat::WakeDelay) {
+        if(g.sceneBeat==SceneBeat::WakeDelay || g.sceneBeat==SceneBeat::BedFadeIn) {
             if(now<g.deadlineMs) return {};
             g.sceneBeat=SceneBeat::Waking;return life(LifePhase::Wake,GameplayEvent::Wake,kFiniteTimeoutMs);
         }
@@ -279,12 +297,14 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate enemy turn");
             const auto roll = rollBasicAttack(state_.rng, false);
             g.hit = roll.hit; g.critical = roll.critical; g.damage = roll.damage;
-            g.hearts -= std::min(g.hearts, roll.damage);
+            // The rolled attack and pending impact are durable; damage commits only after Attack1 finishes.
+            if(roll.hit) g.onceKeys.insert(pendingHit(state_));
             auto update = combat(CombatPhase::EnemyAttack, GameplayEvent::EnemyAttack); update.onceKey = once; update.damage = roll.damage; update.critical = roll.critical;
             return update;
         }
         case CombatPhase::EnemyAttack:
             if (!finiteDone) return {};
+            if(g.onceKeys.erase(pendingHit(state_))) g.hearts-=std::min(g.hearts,g.damage);
             return g.hit ? combat(CombatPhase::PlayerHurt, GameplayEvent::Hurt) : afterCombatAction(now);
         case CombatPhase::PlayerHurt:
             if (!finiteDone) return {};
@@ -311,7 +331,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
 }
 void Explorer::shiftPausedClocks(std::uint64_t delta,std::uint64_t pausedAt) {
     auto& g=state_.gameplay;
-    if(g.sceneBeat!=SceneBeat::Sleeping && !(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::None)) {
+    {
         if(g.deadlineMs>UINT64_MAX-delta) throw std::runtime_error("pause clock overflow");
         g.phaseStartedMs+=delta;g.deadlineMs+=delta;
         if(g.walkStartedMs) g.walkStartedMs+=delta;
@@ -336,7 +356,7 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
     auto& e=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){return x.instanceId==g.enemyInstance;});
     g.phaseStartedMs=now;g.deadlineMs=now+350;
     if(g.playerActionRound!=g.actionRound) {
-        if(lowHealth() && !g.oran) {g.life=LifePhase::Explore;invalidate();return {GameplayEvent::Explore,{}};}
+        if(lowHealth() && !g.oran) {g.life=LifePhase::Explore;g.deadlineMs=now;invalidate();return {GameplayEvent::Explore,{}};}
         g.combat=CombatPhase::PlayerTurn;return {};
     }
     if(e.actionRound!=g.actionRound) {g.combat=CombatPhase::EnemyTurn;return {};}
@@ -346,7 +366,7 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
     if(pending) {g.life=LifePhase::Explore;return {GameplayEvent::Explore,{}};}
     if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
     ++g.actionRound;
-    if(lowHealth() && !g.oran) {g.life=LifePhase::Explore;invalidate();return {GameplayEvent::Explore,{}};}
+    if(lowHealth() && !g.oran) {g.life=LifePhase::Explore;g.deadlineMs=now;invalidate();return {GameplayEvent::Explore,{}};}
     g.combat=CombatPhase::PlayerTurn;return {};
 }
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
@@ -381,7 +401,9 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
                 }
                 if(goal>=0) {
                     const auto path=reach.pathTo(goal);const int old=e.tile;e.tile=path.front();
-                    g.walkStartedMs=0;e.direction=directionBetween(old,e.tile);e.movement={g.actionRound,now,400,e.direction,old,e.tile};e.blockedTurns=0;++state_.occupancyVersion;invalidate(false);
+                    if(!lowHealth()) g.walkStartedMs=0;
+                    e.direction=directionBetween(old,e.tile);e.movement={g.actionRound,now,400,e.direction,old,e.tile};e.blockedTurns=0;++state_.occupancyVersion;invalidate(false);
+                    if(lowHealth()) continue; // Retreat and hostile movement share one 400ms presentation.
                     g.phaseStartedMs=now;g.deadlineMs=now+400;
                     return {GameplayEvent::ActorMove,{},0,false,e.instanceId};
                 }
@@ -399,13 +421,21 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         return {GameplayEvent::UseOranBerry,once};
     }
     if(state_.target<0 || lowHealth()) plan();
+    int nextTile=-1;
+    if(state_.target>=0 && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e) {
+        return friendly(e) && !e.done && canAttack(state_.world,state_.position,e.tile);
+    })) {
+        auto occupied=playerOccupancy();if(state_.goalKind!=GoalKind::Stairs) occupied[state_.world.stairs]=1;
+        const auto route=bfs(state_.world,state_.position,occupied).pathTo(state_.target);++bfsCalls_;
+        if(!route.empty()) nextTile=route.front();
+    }
     for(auto& e:state_.population.entities) {
         if(e.done||!e.visible||e.kind!=EntityKind::Friend||!canAttack(state_.world,state_.position,e.tile)||state_.blocked[e.tile]) continue;
         if(hostile(e)) {if(!lowHealth()) return beginCombat(e,now,CombatPhase::PlayerTurn);continue;}
-        if(state_.goalKind!=GoalKind::Friend || state_.targetInstance!=e.instanceId) continue; // Friendly dialogue is only an explicit auxiliary encounter.
-        invalidate();g.enemyInstance=e.instanceId;g.dialogueStage=DialogueStage::Player;
+        if(e.tile!=nextTile && (state_.goalKind!=GoalKind::Friend || state_.targetInstance!=e.instanceId)) continue;
+        g.enemyInstance=e.instanceId;g.dialogueStage=DialogueStage::Player;
         g.playerDirection=directionBetween(state_.position,e.tile);e.direction=directionBetween(e.tile,state_.position);
-        g.walkStartedMs=0;g.playerActionRound=g.actionRound;g.life=LifePhase::Dialogue;g.phaseStartedMs=now;g.deadlineMs=now+1200;
+        g.walkStartedMs=0;g.life=LifePhase::Dialogue;g.phaseStartedMs=now;g.deadlineMs=now+1200;
         return {GameplayEvent::DialoguePlayer,{}};
     }
     const int old=state_.position;

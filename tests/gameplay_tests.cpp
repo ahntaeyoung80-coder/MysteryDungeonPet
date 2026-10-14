@@ -87,12 +87,13 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     check(e.state().gameplay.deadlineMs-e.state().gameplay.phaseStartedMs==7000,"meal not shortened by one second");
     check(next(e).event==GameplayEvent::Sleep && e.state().gameplay.sceneBeat==SceneBeat::DiningExit,"meal exit fade missing");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::NightFadeIn && bedroomScene(e.state().gameplay) && nightScene(e.state().gameplay),"bedtime exposed day background");
-    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Sleeping && gameplayClip(e.state().gameplay)==13,"sleep missing");
-    const auto sleepEnd=e.state().gameplay.deadlineMs;e.shiftPausedClocks(5000,e.state().gameplay.phaseStartedMs+1);check(e.state().gameplay.deadlineMs==sleepEnd,"sleep UTC deadline shifted");advance(e,sleepEnd-1,true);check(e.state().gameplay.life==LifePhase::Sleep,"sleep ended early");
-    check(advance(e,sleepEnd).event==GameplayEvent::Wake && e.state().gameplay.sceneBeat==SceneBeat::WakeDelay,"sleep deadline stuck");
-    check(nightScene(e.state().gameplay) && gameplayClip(e.state().gameplay)==13,"wake delay exposed day or Wake early");
-    advance(e,sleepEnd+1999,true);check(e.state().gameplay.sceneBeat==SceneBeat::WakeDelay,"two second wake delay shortened");
-    next(e);check(!nightScene(e.state().gameplay) && gameplayClip(e.state().gameplay)==14,"Wake14 daylight missing");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFace && gameplayClip(e.state().gameplay)==22,"bedtime greeting missing");
+    e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{true,false,false});check(e.state().gameplay.sceneBeat==SceneBeat::BedFace,"bedtime greeting skipped partner");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedLay && gameplayClip(e.state().gameplay)==27,"laying animation missing");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Sleeping && gameplayClip(e.state().gameplay)==13 && !gameplayLoop(e.state().gameplay),"sleep onset must be one finite animation");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeOut && nightScene(e.state().gameplay),"sleep onset did not fade directly");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeIn && !nightScene(e.state().gameplay),"morning fade-in exposed night");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Waking && gameplayClip(e.state().gameplay)==14,"Wake14 daylight missing");
     const auto oldDay=e.state().gameplay.day;const auto oldHearts=e.state().gameplay.hearts;
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{false,true,true});check(e.state().gameplay.life==LifePhase::Wake,"other actor finished player Wake");
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+2,ActorCompletion{true,false,false});check(e.state().gameplay.life==LifePhase::Wake,"partner Wake skipped");
@@ -215,7 +216,7 @@ int main(int argc, char** argv) {
         advance(heal,heal.state().gameplay.phaseStartedMs+1,true);
         check(heal.state().rng.state == rng && heal.state().gameplay.combat == CombatPhase::BerryText, "berry text consumed second turn");
         next(heal); forceRoll(heal,false,true,false); next(heal);
-        check(heal.state().gameplay.combat == CombatPhase::EnemyAttack && heal.state().gameplay.hearts == 2, "Oran skipped enemy turn");
+        check(heal.state().gameplay.combat == CombatPhase::EnemyAttack && heal.state().gameplay.hearts == 3, "Oran skipped enemy turn or damage preceded attack completion");
         pass(9,"text only; one berry consumed; 1->3 hearts; enemy turn follows");
         auto friendly = encounter(false);auto onlyContact=friendly.state();onlyContact.discovered=onlyContact.world.terrain;onlyContact.knownStairs=onlyContact.world.stairs;onlyContact.blocked[onlyContact.world.stairs]=1;friendly=Explorer(onlyContact); const auto friendlyPosition = friendly.state().position;
         check(advance(friendly,1000).event==GameplayEvent::DialoguePlayer && friendly.state().gameplay.life==LifePhase::Dialogue && !friendly.state().population.entities[0].done,"friendly dialogue starts done/overlapped");

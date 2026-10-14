@@ -18,10 +18,13 @@ Explorer restore(const Explorer& e) {return Explorer(decodeSnapshot(encodeSnapsh
 int main() {try {
     GameplayState g;g.sceneBeat=SceneBeat::RoomExit;g.phaseStartedMs=1000;
     auto bed=bedroomExit({204,184},g,1000);check(bed.position.x==204&&bed.position.y==184&&!bed.finished,"exit start teleport");
-    auto floor=bedroomExit({204,184},g,1400);check(floor.position.x==204&&floor.position.y==208&&floor.direction==6,"bed did not join left floor route");
-    auto bend=bedroomExit({204,184},g,2800);check(bend.position.x==120&&bend.position.y==208&&bend.direction==4,"exit cuts over other bed");
-    auto hall=bedroomExit({204,184},g,3200);check(hall.position.x==120&&hall.position.y==184&&hall.direction==6,"exit missed left hall");
-    auto outside=bedroomExit({204,184},g,1000+kRoomExitMs);check(outside.position.x<0&&outside.position.y==184&&outside.finished,"exit went through bottom wall");
+    auto outside=bedroomExit({204,184},g,1000+kRoomExitMs);check(outside.position.x==104&&outside.position.y==184&&outside.finished,"exit did not stop at left corridor entrance");
+    int previousX=204;
+    for(uint64_t time=1000;time<=1000+kRoomExitMs;time+=10) {
+        const auto p=bedroomExit({204,184},g,time).position;
+        check(p.x<=previousX && p.x>=104 && p.y>=184 && p.y<=200,"exit detoured or crossed map boundary");
+        check(!(p.x>=136&&p.x<=176&&p.y<200),"exit crossed partner bed");previousX=p.x;
+    }
     auto s=fixture();s.gameplay.oran=1;s.gameplay.hearts=4;Explorer one(s);
     check(one.advanceGameplay(1000).event!=GameplayEvent::UseOranBerry&&one.state().gameplay.oran==1&&one.state().gameplay.hearts==4,"one missing heart wastes berry");
     s.gameplay.hearts=3;Explorer two(s);check(two.advanceGameplay(1000).event==GameplayEvent::UseOranBerry&&two.state().gameplay.hearts==5&&two.state().gameplay.oran==0,"two missing hearts did not heal outside combat");
@@ -46,12 +49,51 @@ int main() {try {
         s=fixture();s.population.entities={{1,4,EntityKind::Friend,3*kWidth+4,done},{2,10,EntityKind::Item,3*kWidth+6,false}};
         if(done) s.onceKeys.insert("greet:910:0:1");
         for(int tile=0;tile<kTiles;++tile) if(s.world.walkable(tile)&&tile!=s.position&&tile/kWidth!=3) s.blocked[tile]=1;
-        Explorer swap(s);check(swap.advanceGameplay(1000).event==GameplayEvent::Move,"friendly corridor did not permit swap");
-        const auto& after=swap.state();check(after.position==3*kWidth+4&&after.population.entities[0].tile==3*kWidth+3&&after.population.entities[0].done==done,"swap lost actor or completed greeting");
+        Explorer swap(s);uint64_t moveAt=1000;
+        if(!done) {
+            check(swap.advanceGameplay(1000).event==GameplayEvent::DialoguePlayer && swap.state().targetInstance==2,"path NPC skipped greeting or replaced item goal");
+            swap=restore(swap);check(swap.advanceGameplay(2200,true).event==GameplayEvent::DialogueNpc,"path NPC skipped response");
+            swap=restore(swap);check(swap.advanceGameplay(3400,true).event==GameplayEvent::Explore,"path dialogue stuck");
+            check(swap.state().population.entities[0].done && swap.state().gameplay.playerActionRound==0,"greeting consumed walk turn");
+            moveAt=3400;
+        }
+        check(swap.advanceGameplay(moveAt).event==GameplayEvent::Move,"friendly corridor did not permit swap after dialogue");
+        const auto& after=swap.state();check(after.position==3*kWidth+4&&after.population.entities[0].tile==3*kWidth+3&&after.population.entities[0].done,"swap lost actor or completed greeting");
         check(after.gameplay.movement.from==after.population.entities[0].movement.to&&after.gameplay.movement.to==after.population.entities[0].movement.from,"swap presentation is not opposite simultaneous moves");
         check(after.gameplay.playerActionRound==1&&after.gameplay.actionRound==1&&after.goalKind==GoalKind::Item,"swap consumes extra turn or loses goal");
-        saved=encodeSnapshot(after);swap=restore(swap);swap.advanceGameplay(1200,true);check(saved==encodeSnapshot(swap.state()),"swap repeated on restore");
-        swap.advanceGameplay(1400);check(swap.state().position==3*kWidth+5&&swap.state().population.entities[0].tile==3*kWidth+3,"swap did not unblock next step");
+        saved=encodeSnapshot(after);swap=restore(swap);swap.advanceGameplay(moveAt+200,true);check(saved==encodeSnapshot(swap.state()),"swap repeated on restore");
+        swap.advanceGameplay(moveAt+400);check(swap.state().position==3*kWidth+5&&swap.state().population.entities[0].tile==3*kWidth+3,"swap did not unblock next step");
+    }
+    // A chasing hostile must not insert a separate 400ms idle between retreat steps.
+    s=fixture();s.gameplay.hearts=2;s.position=3*kWidth+5;s.visited.fill(0);s.visited[s.position]=1;
+    s.population.entities={{1,4,EntityKind::Friend,3*kWidth+2,false}};s.gameplay.hostile={1};
+    s.discovered=s.world.terrain;s.knownStairs=s.world.stairs;s.survivalFirst=SurvivalFirst::Stairs;
+    Explorer flee(s);unsigned enemyMoves=0;
+    for(uint64_t time=1000;time<3000;time+=400) {
+        const int oldEnemy=flee.state().population.entities[0].tile;
+        check(flee.advanceGameplay(time).event==GameplayEvent::Move,"retreat inserted idle/hostile-only turn");
+        enemyMoves+=flee.state().population.entities[0].tile!=oldEnemy;
+        const auto& current=flee.state();check(current.gameplay.deadlineMs==time+400,"retreat cadence changed");
+        flee=restore(flee);
+        auto before=encodeSnapshot(flee.state());flee.advanceGameplay(time+399,true);check(before==encodeSnapshot(flee.state()),"retreat advanced twice within one movement");
+    }
+    check(enemyMoves>0,"retreat fixture never exercised chasing enemy");
+    for(unsigned hp:{1U,5U}) {
+        s=fixture();s.population.entities={{1,4,EntityKind::Friend,3*kWidth+4,false}};
+        s.gameplay.hostile={1};s.gameplay.life=LifePhase::Combat;s.gameplay.combat=CombatPhase::EnemyTurn;
+        s.gameplay.enemyInstance=1;s.gameplay.hearts=hp;
+        for(uint64_t seed=1;;++seed) {Rng r{seed};const auto roll=rollBasicAttack(r,false);if(roll.critical) {s.rng.state=seed;break;}}
+        Explorer hit(s);check(hit.advanceGameplay(1000).event==GameplayEvent::EnemyAttack && hit.state().gameplay.hearts==hp,"heart removed before enemy attack completion");
+        Surface hearts(200,200);gameplayOverlay(hearts,hit.state().gameplay,1000);
+        check(hearts.pixels[(8*200+8+18*(hp-1)+2)*4+2]==230,"rendered heart removed during attack windup");
+        const auto attackRng=hit.state().rng.state;hit=restore(hit);
+        hit.advanceGameplay(1001,ActorCompletion{true,false,false});check(hit.state().gameplay.hearts==hp,"player completion applied enemy damage");
+        check(hit.advanceGameplay(1002,ActorCompletion{false,true,false}).event==GameplayEvent::Hurt && hit.state().gameplay.hearts==(hp>2?hp-2:0),"completed enemy attack did not apply exact impact");
+        gameplayOverlay(hearts,hit.state().gameplay,1002);
+        check(hearts.pixels[(8*200+8+18*(hp-1)+2)*4+2]==65,"rendered heart retained after completed attack");
+        hit=restore(hit);hit.advanceGameplay(1003,ActorCompletion{});check(hit.state().gameplay.hearts==(hp>2?hp-2:0) && hit.state().rng.state==attackRng,"impact replayed after restore");
+        s=hit.state();s.gameplay.combat=CombatPhase::EnemyAttack;Explorer legacyImpact(s);legacyImpact.advanceGameplay(1004,ActorCompletion{false,true,false});
+        check(legacyImpact.state().gameplay.hearts==s.gameplay.hearts,"legacy committed attack applied damage twice");
     }
     // A saved MDES4 exit must follow the new corridor duration after upgrading.
     s=fixture();s.phase=Phase::Home;s.gameplay.homeScene=true;s.gameplay.life=LifePhase::Ready;

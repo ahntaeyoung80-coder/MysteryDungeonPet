@@ -148,7 +148,7 @@ bool dungeonScene(const GameplayState&);
 bool bedroomScene(const GameplayState&);
 bool nightScene(const GameplayState&);
 bool showFriendlyDisc(const GameplayState&, bool friendly, bool player);
-constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=4600;
+constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=1870;
 std::uint32_t gameplayClip(const GameplayState&);
 bool gameplayLoop(const GameplayState&);
 // Shared attack roll: both sides hit 80%; only critical chance differs.

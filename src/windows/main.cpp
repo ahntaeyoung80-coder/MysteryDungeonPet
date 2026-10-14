@@ -6,6 +6,7 @@
 #include <shlobj.h>
 #include <psapi.h>
 #include "windows/assets.hpp"
+#include "windows/text_overlay.hpp"
 #include "core/animator.hpp"
 #include "core/playback_sample.hpp"
 #include "core/exploration_package.hpp"
@@ -211,6 +212,7 @@ class App {
     Surface surface_, background_{32, 24};
     Surface dungeonBackdrop_{200, 200};
     std::unique_ptr<Dib> dib_;
+    TextOverlay textOverlay_;
     Handle timer_;
     HPOWERNOTIFY power_ = nullptr;
     bool session_ = false, tray_ = false, hidden_ = false, locked_ = false, displayOff_ = false, suspended_ = false, paused_ = false;
@@ -301,7 +303,7 @@ class App {
         frame_ = 0; nextFrameDeadline_.reset();
         if (options_.scenario == L"empty") animator_.stop();
         else {
-            int64_t start=restoring && explorer_ && explorer_->state().gameplay.life!=LifePhase::Explore?sceneClipStart(now):now;
+            int64_t start=holdingScenePose() || (restoring && explorer_ && explorer_->state().gameplay.life!=LifePhase::Explore)?sceneClipStart(now):now;
             if(restoring && explorer_ && clip_==0 && explorer_->state().gameplay.walkStartedMs) {
                 const auto since=explorer_->state().gameplay.walkStartedMs,utc=utcMs();
                 start=std::max<int64_t>(0,now-int64_t(std::min<uint64_t>(utc>since?utc-since:0,60000))*1000);
@@ -592,7 +594,7 @@ class App {
         exploreDeadline_=deadlineFromUtc(now,utcMs(),g.deadlineMs);
         for(const auto& e:explorer_->state().population.entities) {
             const auto old=std::find_if(oldEntities.begin(),oldEntities.end(),[&](const auto& x){return x.instanceId==e.instanceId;});
-            if(old!=oldEntities.end() && old->tile!=e.tile && (event.event==GameplayEvent::ActorMove || event.event==GameplayEvent::Move)) {
+            if(old!=oldEntities.end() && old->tile!=e.tile && e.kind==EntityKind::Friend) {
                 actorMotions_[e.instanceId].begin(e.instanceId,g.actionRound,tilePoint(old->tile),tilePoint(e.tile),now,e.direction);
                 auto& animation=actorAnimators_[e.instanceId];
                 if(animation.active()) animation.changeDirection(enemyAssets_->package,0,e.direction);
@@ -723,8 +725,8 @@ class App {
         if(explorer_) {
             const auto& g=explorer_->state().gameplay;
             const bool enemy=g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint);
-            const bool joint=(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) || g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace;
-            const bool body=(g.life==LifePhase::Wake && g.sceneBeat!=SceneBeat::WakeDelay) || g.life==LifePhase::Pose || g.life==LifePhase::Emotion || (g.life==LifePhase::Combat &&
+            const bool joint=(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) || g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace || (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::Sleeping);
+            const bool body=(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) || g.life==LifePhase::Pose || g.life==LifePhase::Emotion || (g.life==LifePhase::Combat &&
                 (g.combat==CombatPhase::PlayerAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::PlayerFaint || enemy));
             poseFinished_=joint?(completion_.player&&completion_.partner):body?(enemy?completion_.enemy:completion_.player):false;
             if(g.life==LifePhase::Death || g.life==LifePhase::ReturnHome || g.sceneBeat!=SceneBeat::None) dirty_=true;
@@ -806,36 +808,14 @@ class App {
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
         if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs());
-        std::wstring overlayText;
-        if(explorer_) {
-            const auto& g=explorer_->state().gameplay;
-            if((g.life==LifePhase::Combat && g.combat==CombatPhase::BerryText) || g.sceneBeat==SceneBeat::ExplorationBerryText) overlayText=L"오랭열매! 2하트 회복";
-            else if(g.life==LifePhase::Dialogue) overlayText=g.dialogueStage==DialogueStage::Player?L"안녕! 같이 탐험하자.":L"조심해서 다녀와!";
-            else if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout) overlayText=L"눈앞이 깜깜해졌다";
-        }
+        std::wstring overlayText=explorer_?gameplayText(explorer_->state().gameplay):std::wstring{};
         const bool textChanged=overlayText!=submittedText_;
         bool changed = previous != surface_.pixels;
         dirty_ = false;
         if (!changed && !textChanged && submitted_) return;
         std::memcpy(dib_->bits, surface_.pixels.data(), surface_.pixels.size());
-        if (explorer_ && explorer_->state().gameplay.life == LifePhase::Combat && explorer_->state().gameplay.combat == CombatPhase::BerryText) {
-            SetBkMode(dib_->dc, TRANSPARENT); SetTextColor(dib_->dc, RGB(255,255,255));
-            RECT text{12, 155, 188, 188};
-            DrawTextW(dib_->dc, L"오랭열매! 2하트 회복", -1, &text, DT_CENTER | DT_WORDBREAK);
-            auto* pixels = static_cast<uint8_t*>(dib_->bits);
-            for (unsigned y = 150; y < 190; ++y) for (unsigned x = 8; x < 192; ++x) pixels[(y*size_+x)*4+3] = 255;
-        }
-        if(explorer_ && explorer_->state().gameplay.life==LifePhase::Dialogue) {
-            const auto& g=explorer_->state().gameplay;
-            SetBkMode(dib_->dc,TRANSPARENT);SetTextColor(dib_->dc,RGB(255,255,255));RECT text{12,154,188,188};
-            DrawTextW(dib_->dc,g.dialogueStage==DialogueStage::Player?L"안녕! 같이 탐험하자.":L"조심해서 다녀와!",-1,&text,DT_CENTER|DT_WORDBREAK);
-            auto* pixels=static_cast<uint8_t*>(dib_->bits);for(unsigned y=150;y<190;++y) for(unsigned x=8;x<192;++x) pixels[(y*size_+x)*4+3]=255;
-        }
-        if(explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout) {
-            SetBkMode(dib_->dc,TRANSPARENT);SetTextColor(dib_->dc,RGB(255,255,255));RECT text{8,80,192,130};
-            DrawTextW(dib_->dc,L"눈앞이 깜깜해졌다",-1,&text,DT_CENTER|DT_WORDBREAK);
-            auto* pixels=static_cast<uint8_t*>(dib_->bits);for(unsigned y=0;y<size_;++y) for(unsigned x=0;x<size_;++x) pixels[(y*size_+x)*4+3]=255;
-        }
+        textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,
+            explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout);
         RECT rect{}; winCheck(GetWindowRect(window_, &rect) != 0, "submit rect");
         POINT position{rect.left, rect.top}, source{0, 0}; SIZE size{LONG(size_), LONG(size_)};
         BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
