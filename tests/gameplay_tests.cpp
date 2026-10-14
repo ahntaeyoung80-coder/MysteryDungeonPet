@@ -92,7 +92,7 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeOut,"night fade-out missing");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::NightFadeIn && nightScene(e.state().gameplay),"night swap not at black");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Sleeping && gameplayClip(e.state().gameplay)==13,"sleep missing");
-    const auto sleepEnd=e.state().gameplay.deadlineMs;advance(e,sleepEnd-1,true);check(e.state().gameplay.life==LifePhase::Sleep,"sleep ended early");
+    const auto sleepEnd=e.state().gameplay.deadlineMs;e.shiftPausedClocks(5000,e.state().gameplay.phaseStartedMs+1);check(e.state().gameplay.deadlineMs==sleepEnd,"sleep UTC deadline shifted");advance(e,sleepEnd-1,true);check(e.state().gameplay.life==LifePhase::Sleep,"sleep ended early");
     check(advance(e,sleepEnd).event==GameplayEvent::Wake,"sleep deadline stuck");
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{true,false,false});check(e.state().gameplay.life==LifePhase::Wake,"partner Wake skipped");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::MorningFace && gameplayClip(e.state().gameplay)==22,"morning Nod missing");

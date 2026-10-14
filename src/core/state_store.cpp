@@ -56,6 +56,14 @@ std::vector<FloorProfile> readProfiles(Reader& r) {
     }
     return profiles;
 }
+void writeMove(Writer& w,const MoveRecord& m) {
+    w.u64(m.actionId);w.u64(m.startedMs);w.u32(m.durationMs);w.u32(m.direction);w.u32(m.from+1);w.u32(m.to+1);
+}
+MoveRecord readMove(Reader& r) {
+    MoveRecord m;m.actionId=r.u64();m.startedMs=r.u64();m.durationMs=r.count(400);m.direction=r.count(7);
+    m.from=static_cast<int>(r.count(kTiles))-1;m.to=static_cast<int>(r.count(kTiles))-1;return m;
+}
+
 }
 namespace {
 std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) {
@@ -70,7 +78,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(3); // MDES3; the reader also accepts existing MDES1 saves.
+    w.u32(0x5345444d); w.u32(3); // MDES3; the reader also accepts MDES1 and MDES2.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -117,7 +125,10 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u32(g.playerHidden);w.u32(g.fadeInOnly);w.u32(static_cast<unsigned>(g.deathStage));w.u32(static_cast<unsigned>(g.sceneBeat));w.u32(static_cast<unsigned>(g.dialogueStage));
     for(const auto& e:s.population.entities) {
         w.u32(static_cast<unsigned>(e.tracking));w.u32(e.lastSeen+1);w.u32(e.chaseTarget+1);w.u32(e.blockedTurns);w.u32(e.direction);w.u32(e.remainingHits);w.u64(e.actionRound);
+        w.u32(e.visible);
     }
+    w.u64(g.walkStartedMs);detail::writeMove(w,g.movement);
+    for(const auto& e:s.population.entities) detail::writeMove(w,e.movement);
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -191,13 +202,30 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         for(auto& e:s.population.entities) {
             e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
             e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();
+            e.visible=r.boolean();
         }
+        g.walkStartedMs=r.u64();g.movement=detail::readMove(r);
+        for(auto& e:s.population.entities) e.movement=detail::readMove(r);
     } else {
         s.discovered=s.visited;
         s.knownStairs=s.discovered[s.world.stairs]?s.world.stairs:-1;
         for(int p=0;p<kTiles;++p) if(s.visited[p]&&s.world.room[p]>=0) s.visitedRooms|=1U<<s.world.room[p];
         // Old entity goals used the occupied tile. Replan safely without replaying transactions.
         s.target=-1;s.goalKind=GoalKind::None;
+        // Older versions removed completed NPCs and could save on their former tile.
+        // Keep that absence; only newly completed dialogues retain their actors.
+        Mask occupied=s.blocked;occupied[s.position]=1;
+        for(auto& e:s.population.entities) if(e.kind==EntityKind::Friend) {
+            e.visible=!e.done;
+            if(e.visible && e.tile!=s.position) occupied[e.tile]=1;
+        }
+        for(auto& e:s.population.entities) if(e.kind==EntityKind::Friend && e.visible && e.tile==s.position) {
+            const auto reach=bfs(s.world,s.position);int best=-1;
+            for(int tile=0;tile<kTiles;++tile) if(!occupied[tile] && reach.distance[tile]>0 &&
+                (best==-1 || reach.distance[tile]<reach.distance[best])) best=tile;
+            if(best==-1) e.visible=false;
+            else {e.tile=best;occupied[best]=1;}
+        }
         auto& g=s.gameplay;
         if(g.life==LifePhase::Combat) {
             if(g.combat!=CombatPhase::PlayerTurn) g.playerActionRound=g.actionRound;

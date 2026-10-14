@@ -78,7 +78,7 @@ GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     invalidate();
     state_.phase = Phase::Home;
     auto& g = state_.gameplay;
-    g.life = LifePhase::ReturnHome; g.defeated = defeated; g.homeScene = false;g.sceneBeat=SceneBeat::None;g.fadeInOnly=false;
+    g.life = LifePhase::ReturnHome; g.defeated = defeated; g.homeScene = false;g.sceneBeat=SceneBeat::None;g.fadeInOnly=false;g.walkStartedMs=0;
     g.phaseStartedMs = now; g.deadlineMs = now + kFadeMs;
     const auto once = "return:" + std::to_string(state_.runId);
     if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate return transaction");
@@ -266,15 +266,30 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             return life(LifePhase::Death,GameplayEvent::CombatDefeat,750);
         case CombatPhase::Defeat:
             if (now < g.deadlineMs) return {};
-            return beginReturn(now, true);
+            return combat(CombatPhase::PlayerFaint, GameplayEvent::PlayerFaint);
         }
     }
     if (now < g.deadlineMs) return {};
     return scheduleDungeon(now);
 }
+void Explorer::shiftPausedClocks(std::uint64_t delta,std::uint64_t pausedAt) {
+    auto& g=state_.gameplay;
+    if(g.sceneBeat!=SceneBeat::Sleeping && !(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::None)) {
+        if(g.deadlineMs>UINT64_MAX-delta) throw std::runtime_error("pause clock overflow");
+        g.phaseStartedMs+=delta;g.deadlineMs+=delta;
+        if(g.walkStartedMs) g.walkStartedMs+=delta;
+    }
+    auto shift=[&](MoveRecord& move) {
+        if(move.actionId && pausedAt>=move.startedMs && pausedAt-move.startedMs<move.durationMs) {
+            if(delta>UINT64_MAX-move.durationMs || move.startedMs>UINT64_MAX-delta-move.durationMs) throw std::runtime_error("movement clock overflow");
+            move.startedMs+=delta;
+        }
+    };
+    shift(g.movement);for(auto& e:state_.population.entities) shift(e.movement);
+}
 GameplayUpdate Explorer::beginCombat(Entity& e,std::uint64_t now,CombatPhase first) {
     invalidate();auto& g=state_.gameplay;
-    g.life=LifePhase::Combat;g.combat=first;g.enemyInstance=e.instanceId;g.enemyHits=e.remainingHits;
+    g.life=LifePhase::Combat;g.walkStartedMs=0;g.combat=first;g.enemyInstance=e.instanceId;g.enemyHits=e.remainingHits;
     g.playerDirection=directionBetween(state_.position,e.tile);e.direction=directionBetween(e.tile,state_.position);
     g.phaseStartedMs=now;g.deadlineMs=now+350;
     return {GameplayEvent::HostileEncounter,{}};
@@ -286,7 +301,7 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
     if(g.playerActionRound!=g.actionRound) {g.combat=CombatPhase::PlayerTurn;return {};}
     if(e.actionRound!=g.actionRound) {g.combat=CombatPhase::EnemyTurn;return {};}
     const bool pending=std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){
-        return !x.done && x.kind==EntityKind::Friend && x.actionRound!=g.actionRound &&
+        return !x.done && x.visible && x.kind==EntityKind::Friend && x.actionRound!=g.actionRound &&
             std::find(g.hostile.begin(),g.hostile.end(),x.instanceId)!=g.hostile.end();});
     if(pending) {g.life=LifePhase::Explore;return {GameplayEvent::Explore,{}};}
     if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
@@ -294,28 +309,38 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
 }
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;
+    discover();
     auto hostile=[&](const Entity& e){return std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end();};
     auto visible=[&](int a,int b){
         const int room=state_.world.room[a];
-        return (room>=0 && room==state_.world.room[b]) || (bfs(state_.world,a).distance[b]>=0 && bfs(state_.world,a).distance[b]<=2);
+        if(room>=0 && room==state_.world.room[b]) return true;
+        const auto sight=bfs(state_.world,a);return sight.distance[b]>=0 && sight.distance[b]<=2;
     };
+    // Stairs are a tile trigger, not an extra action or an enemy encounter target.
+    if(state_.position==state_.world.stairs) {
+        const auto event=advance();g.phaseStartedMs=now;g.deadlineMs=now;
+        if(event.kind==EventKind::Pose) {g.life=LifePhase::Pose;g.deadlineMs=now+5000;return {GameplayEvent::Pose,event.onceKey};}
+        if(event.kind==EventKind::FloorChanged) return {GameplayEvent::FloorChanged,event.onceKey};
+    }
     // Player then each hostile in stable instance order. A movement completion never grants an action.
     if(g.playerActionRound==g.actionRound) {
         for(auto& e:state_.population.entities) {
-            if(e.kind!=EntityKind::Friend || e.done || !hostile(e) || e.actionRound==g.actionRound) continue;
-            if(visible(e.tile,state_.position)) {e.tracking=Tracking::Chase;e.lastSeen=state_.position;e.chaseTarget=e.lastSeen;}
+            if(e.kind!=EntityKind::Friend || !e.visible || e.done || !hostile(e) || e.actionRound==g.actionRound) continue;
+            const bool inSight=visible(e.tile,state_.position);
+            if(inSight) {e.tracking=Tracking::Chase;e.lastSeen=state_.position;e.chaseTarget=e.lastSeen;}
             if(canAttack(state_.world,e.tile,state_.position)) return beginCombat(e,now,CombatPhase::EnemyTurn);
             e.actionRound=g.actionRound; // a move OR wait, never move followed by attack
             if(e.tracking==Tracking::Chase && e.lastSeen>=0) {
+                if(!inSight && e.tile==e.lastSeen) {e.tracking=Tracking::Idle;e.chaseTarget=-1;e.blockedTurns=0;continue;}
                 auto occupied=occupancy();occupied[e.tile]=0;occupied[state_.position]=1;
                 const auto reach=bfs(state_.world,e.tile,occupied);++bfsCalls_;
                 int goal=-1,best=kTiles+1;
-                for(int p=0;p<kTiles;++p) if((p==e.lastSeen || canAttack(state_.world,p,e.lastSeen)) && reach.distance[p]>0 && reach.distance[p]<best) {
+                for(int p=0;p<kTiles;++p) if((p==e.lastSeen || (inSight && canAttack(state_.world,p,e.lastSeen))) && reach.distance[p]>0 && reach.distance[p]<best) {
                     goal=p;best=reach.distance[p];
                 }
                 if(goal>=0) {
                     const auto path=reach.pathTo(goal);const int old=e.tile;e.tile=path.front();
-                    e.direction=directionBetween(old,e.tile);e.blockedTurns=0;++state_.occupancyVersion;invalidate();
+                    g.walkStartedMs=0;e.direction=directionBetween(old,e.tile);e.movement={g.actionRound,now,400,e.direction,old,e.tile};e.blockedTurns=0;++state_.occupancyVersion;invalidate();
                     g.phaseStartedMs=now;g.deadlineMs=now+400;
                     return {GameplayEvent::ActorMove,{},0,false,e.instanceId};
                 }
@@ -325,18 +350,22 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
         ++g.actionRound;
     }
+    const bool stairsFirst=state_.knownStairs>=0 &&
+        bfs(state_.world,state_.position,occupancy()).distance[state_.knownStairs]>=0;
     for(auto& e:state_.population.entities) {
-        if(e.done||e.kind!=EntityKind::Friend||!canAttack(state_.world,state_.position,e.tile)||state_.blocked[e.tile]) continue;
+        if(e.done||!e.visible||e.kind!=EntityKind::Friend||!canAttack(state_.world,state_.position,e.tile)||state_.blocked[e.tile]) continue;
         if(hostile(e)) return beginCombat(e,now,CombatPhase::PlayerTurn);
+        if(stairsFirst) continue; // Incidental friendly contact cannot preempt remembered stairs.
         invalidate();g.enemyInstance=e.instanceId;g.dialogueStage=DialogueStage::Player;
         g.playerDirection=directionBetween(state_.position,e.tile);e.direction=directionBetween(e.tile,state_.position);
-        g.playerActionRound=g.actionRound;g.life=LifePhase::Dialogue;g.phaseStartedMs=now;g.deadlineMs=now+1200;
+        g.walkStartedMs=0;g.playerActionRound=g.actionRound;g.life=LifePhase::Dialogue;g.phaseStartedMs=now;g.deadlineMs=now+1200;
         return {GameplayEvent::DialoguePlayer,{}};
     }
     const int old=state_.position;
     const auto update=advance();
     g.phaseStartedMs=now;g.deadlineMs=now+(update.kind==EventKind::Move?400:0);
-    if(update.kind==EventKind::Move) {g.playerActionRound=g.actionRound;g.playerDirection=directionBetween(old,state_.position);}
+    if(update.kind==EventKind::Move) {if(!g.walkStartedMs) g.walkStartedMs=now;g.playerActionRound=g.actionRound;g.playerDirection=directionBetween(old,state_.position);g.movement={g.actionRound,now,400,g.playerDirection,old,state_.position};}
+    if(update.kind!=EventKind::Move) g.walkStartedMs=0;
     switch(update.kind) {
     case EventKind::Pose:
         g.life=LifePhase::Pose;g.deadlineMs=now+5000;return {GameplayEvent::Pose,update.onceKey};

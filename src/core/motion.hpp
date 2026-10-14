@@ -6,12 +6,17 @@
 #include <optional>
 namespace pet {
 constexpr int64_t kMoveDurationUs = 400000; // original normal movement: 24 ticks at 60 Hz
+inline int64_t deadlineFromUtc(int64_t nowUs, uint64_t utcMs, uint64_t deadlineMs) {
+    // Read UTC once; a deadline crossed between two reads must not underflow.
+    return nowUs + int64_t(std::min<uint64_t>(60000, deadlineMs>utcMs?deadlineMs-utcMs:0))*1000;
+}
 struct WorldPoint { double x = 0, y = 0; };
 inline WorldPoint tilePoint(int tile, int width = 24) { return {double(tile % width*24+12), double(tile/width*24+12)}; }
 inline Point raster(WorldPoint p) { return {int32_t(std::lround(p.x)), int32_t(std::lround(p.y))}; }
 inline Point cameraFor(WorldPoint p, int width, int height, int viewport) {
-    return raster({std::clamp(p.x-viewport/2.0, 0.0, double(std::max(0,width-viewport))),
-                   std::clamp(p.y-viewport/2.0, 0.0, double(std::max(0,height-viewport)))});
+    const double anchor=viewport/2; // One integer anchor avoids alternating pixels at scale 3.
+    return raster({std::clamp(p.x-anchor, 0.0, double(std::max(0,width-viewport))),
+                   std::clamp(p.y-anchor, 0.0, double(std::max(0,height-viewport)))});
 }
 // Presentation only. Logical actions are committed by Explorer before this segment is published.
 class Motion {

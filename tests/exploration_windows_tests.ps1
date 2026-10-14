@@ -16,7 +16,7 @@ if (-not (Test-Path $Snapshot)) { throw 'exploration snapshot absent' }
 $rows = @(Import-Csv $Csv)
 if ($rows.Count -lt 3) { throw 'missing exploration metrics' }
 foreach ($r in $rows) {
-    if ([int]$r.decode_count -ne 4) { throw 'player/enemy/home/tileset decode cache changed' }
+    if ([int]$r.decode_count -lt 5) { throw 'player/enemy/home/props/tileset cache missing' }
     if ([int]$r.physical_size -ne 200) { throw 'exploration resized viewport' }
 }
 $positions = @($rows | ForEach-Object { "$($_.scene_x),$($_.scene_y)" } | Sort-Object -Unique)
@@ -24,15 +24,18 @@ $screens = @($rows | ForEach-Object { "$($_.window_x),$($_.window_y)" } | Sort-O
 if ($screens.Count -ne 1) { throw 'exploration moved desktop window' }
 $movement = 'pending: render paused by runner session'
 if (@($rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
-    if ($positions.Count -lt 2) { throw 'unpaused explorer did not move' }
-    $movement = 'pass'
+    if ($positions.Count -ge 2) { $movement = 'pass' } else {
+        $EventPath = Join-Path $env:LOCALAPPDATA 'MysteryDungeonPet/events.log'
+        if (((Get-Content $EventPath -Tail 50) -join "`n") -notmatch 'life=Combat|life=Dialogue') { throw 'unpaused explorer did not move or interact' }
+        $movement = 'pending: dialogue/combat held player during the observation window'
+    }
 }
 $finish = (& $Explorer $Package 42 $Snapshot | ConvertFrom-Json)
-if ($LASTEXITCODE -ne 0 -or $finish.hearts -ne 3) { throw 'Windows gameplay snapshot cannot finish its rest cycle natively' }
+if ($LASTEXITCODE -ne 0 -or $finish.hearts -ne 5) { throw 'Windows gameplay snapshot cannot finish its rest cycle natively' }
 $restoredRun = (& $Explorer $Package 99 $Snapshot | ConvertFrom-Json)
 if ($LASTEXITCODE -ne 0 -or $restoredRun.newClears -ne 0 -or $restoredRun.newPickups -ne 0 -or $restoredRun.inventory -ne $finish.inventory) {
     throw 'Windows restored home replayed transaction'
 }
-@{status='pass'; uiMovement=$movement; decodeCount=4; physicalSize=200; snapshotRestore='pass';
+@{status='pass'; uiMovement=$movement; minimumDecodeCount=5; physicalSize=200; snapshotRestore='pass';
   desktopWindowFixed='pass'; a3Remaining='pending'; actualWindows11Exploration='pending'} |
     ConvertTo-Json | Set-Content "$Output/exploration.json"

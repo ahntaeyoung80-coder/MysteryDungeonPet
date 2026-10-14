@@ -63,16 +63,19 @@ struct SpawnPolicy {
     std::uint32_t itemBudget = 8, friendBudget = 4;
 };
 enum class EntityKind : std::uint8_t { Item, Friend };
+struct MoveRecord { std::uint64_t actionId=0,startedMs=0; std::uint32_t durationMs=400,direction=0; int from=-1,to=-1; };
 enum class Tracking : std::uint8_t { Idle, Chase };
 struct Entity {
     std::uint32_t instanceId = 0, originalId = 0;
     EntityKind kind = EntityKind::Item;
     int tile = 0;
     bool done = false;
+    bool visible = true; // Old completed NPCs remain absent when importing MDES1/2.
     Tracking tracking=Tracking::Idle;
     int lastSeen=-1, chaseTarget=-1;
     std::uint32_t blockedTurns=0, direction=0, remainingHits=2;
     std::uint64_t actionRound=0;
+    MoveRecord movement{};
 };
 enum class OmissionReason : std::uint8_t { Budget, Space, EmptyDistribution };
 struct Omission {
@@ -123,6 +126,8 @@ struct GameplayState {
     DeathStage deathStage=DeathStage::FadeOut;
     SceneBeat sceneBeat=SceneBeat::None;
     DialogueStage dialogueStage=DialogueStage::Player;
+    MoveRecord movement{};
+    std::uint64_t walkStartedMs=0;
     std::uint64_t actionRound=1, playerActionRound=0;
     std::uint32_t playerDirection=0;
     std::vector<std::uint32_t> hostile;
@@ -184,6 +189,7 @@ public:
     GoalKind goal() const { return state_.goalKind; }
     std::uint64_t bfsCalls() const { return bfsCalls_; }
     void enableGameplay(std::uint64_t utcMs);
+    void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
 private:

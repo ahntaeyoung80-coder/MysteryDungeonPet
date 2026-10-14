@@ -277,7 +277,8 @@ void Explorer::enterFloor() {
     state_.occupancyVersion = 0;
     state_.floorSteps = 0;
     invalidate();
-    if (state_.gameplay.enabled) assignRelationships();
+    state_.gameplay.movement={};state_.gameplay.walkStartedMs=0;
+    if (state_.gameplay.enabled) {if(state_.gameplay.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");++state_.gameplay.actionRound;assignRelationships();}
 }
 void Explorer::setBlocked(int tile, bool value) {
     require(state_.world.walkable(tile) && tile != state_.position, "invalid blocker tile");
@@ -291,7 +292,7 @@ void Explorer::setBlocked(int tile, bool value) {
 }
 Mask Explorer::occupancy() const {
     auto mask=state_.blocked;
-    for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && (!e.done || (state_.gameplay.enabled && std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end()))) mask[e.tile]=1;
+    for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && e.visible && (!e.done || (state_.gameplay.enabled && std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end()))) mask[e.tile]=1;
     mask[state_.position]=0; return mask;
 }
 void Explorer::discover() {
@@ -325,14 +326,17 @@ void Explorer::plan() {
         }
     }
     if(state_.target==-1 && state_.floorSteps<kFloorStepLimit && state_.stalledActions<kTiles*2) {
-        int best=kTiles+1;
-        for(const auto& e:state_.population.entities) if(!e.done && state_.discovered[e.tile]) {
+        int best=3*(kTiles+1);
+        for(const auto& e:state_.population.entities) if(!e.done && e.visible && state_.discovered[e.tile]) {
             if(e.kind==EntityKind::Item) {
                 if(state_.gameplay.enabled && state_.gameplay.oran && e.originalId==ITEM_ORAN_BERRY) continue;
                 const int d=search.distance[e.tile];
-                if(d>=0 && d<best) {best=d;state_.target=e.tile;state_.goalKind=GoalKind::Item;state_.targetInstance=e.instanceId;}
-            } else for(int p=0;p<kTiles;++p) if(canAttack(state_.world,p,e.tile) && search.distance[p]>=0 && search.distance[p]<best) {
-                best=search.distance[p];state_.target=p;state_.goalKind=GoalKind::Friend;state_.targetInstance=e.instanceId;
+                const int priority=state_.gameplay.enabled && state_.gameplay.hearts<kMaxHp && !state_.gameplay.oran && e.originalId==ITEM_ORAN_BERRY?0:1;
+                const int score=priority*(kTiles+1)+d;
+                if(d>=0 && score<best) {best=score;state_.target=e.tile;state_.goalKind=GoalKind::Item;state_.targetInstance=e.instanceId;}
+            } else for(int p=0;p<kTiles;++p) if(canAttack(state_.world,p,e.tile) && search.distance[p]>=0) {
+                const int score=2*(kTiles+1)+search.distance[p];
+                if(score<best) {best=score;state_.target=p;state_.goalKind=GoalKind::Friend;state_.targetInstance=e.instanceId;}
             }
         }
     }
@@ -411,6 +415,7 @@ void validateState(const ExplorationState& s) {
     const auto& g = s.gameplay;
     require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=12 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
+    require(g.walkStartedMs<=g.phaseStartedMs,"invalid saved walking clock");
     require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 10 &&
             g.hearts <= kMaxHp && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
@@ -446,10 +451,14 @@ void validateState(const ExplorationState& s) {
         require(p.edition == s.floors[0].edition && p.dungeonId == s.floors[0].dungeonId &&
                 p.localFloor == i, "floor sequence is not a complete dungeon");
     }
-    require(s.knownStairs==-1 || s.knownStairs==s.world.stairs,"invalid remembered stairs");
+    validateWorld(s.world);
+    require(s.knownStairs==-1 || (s.knownStairs==s.world.stairs && s.discovered[s.world.stairs]),"invalid remembered stairs");
     require(s.visitedRooms<8 && s.stalledActions<=Explorer::kFloorStepLimit+kTiles+1,"invalid discovery counters");
     for(int p=0;p<kTiles;++p) require(s.discovered[p]<=1 && s.failedTargets[p]<=3 && (!s.discovered[p]||s.world.walkable(p)),"invalid discovery mask");
-    validateWorld(s.world);
+    auto validateMove=[&](const MoveRecord& m,int tile) {
+        require(m.direction<8 && (!m.actionId || (m.actionId<=g.actionRound && m.durationMs==400 && m.startedMs<=UINT64_MAX-400 && m.to==tile && canMove(s.world,m.from,m.to))),"invalid saved movement");
+    };
+    validateMove(g.movement,s.position);for(const auto& e:s.population.entities) validateMove(e.movement,e.tile);
     require(s.world.version == static_cast<std::uint64_t>(s.floorIndex) + 1, "floor/grid version mismatch");
     require(s.world.walkable(s.position) && !s.blocked[s.position] && s.visited[s.position],
             "invalid explorer position");
@@ -462,7 +471,7 @@ void validateState(const ExplorationState& s) {
         if (s.goalKind == GoalKind::Stairs) require(s.target == s.world.stairs, "invalid stairs goal");
         if (s.goalKind == GoalKind::Item || s.goalKind == GoalKind::Friend)
             require(std::any_of(s.population.entities.begin(), s.population.entities.end(), [&](const auto& e) {
-                return (e.kind==EntityKind::Item ? e.tile==s.target : canAttack(s.world,s.target,e.tile)) && !e.done &&
+                return e.instanceId==s.targetInstance && e.visible && (e.kind==EntityKind::Item ? e.tile==s.target : canAttack(s.world,s.target,e.tile)) && !e.done &&
                        e.kind == (s.goalKind == GoalKind::Item ? EntityKind::Item : EntityKind::Friend);
             }), "invalid entity goal");
     }
@@ -487,14 +496,16 @@ void validateState(const ExplorationState& s) {
     } else require(s.phase != Phase::Pose, "pose without clear");
     require(s.population.entities.size() <= kTiles && s.population.omissions.size() <= 16,
             "population count exceeds limit");
-    Mask occupied{};
+    Mask occupied{},itemOccupied{};
     for (std::size_t i = 0; i < s.population.entities.size(); ++i) {
         const auto& e = s.population.entities[i];
+        const bool liveActor=e.kind==EntityKind::Friend && e.visible && (!e.done || (g.enabled && std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end()));
         require(e.instanceId == i + 1 && s.world.walkable(e.tile) &&
                 (e.kind==EntityKind::Friend || (e.tile!=s.world.start && e.tile!=s.world.stairs)) &&
-                (e.kind!=EntityKind::Friend || e.done || (e.tile!=s.position && !occupied[e.tile])) &&
+                (!liveActor || (e.tile!=s.position && !occupied[e.tile])) && (e.kind!=EntityKind::Item || !itemOccupied[e.tile]) &&
                 static_cast<unsigned>(e.kind) <= 1, "invalid entity");
-        if(e.kind==EntityKind::Friend && !e.done) occupied[e.tile]=1;
+        if(liveActor) occupied[e.tile]=1;
+        if(e.kind==EntityKind::Item) itemOccupied[e.tile]=1;
         require(static_cast<unsigned>(e.tracking)<=1 && e.direction<8 && e.remainingHits<=2 && e.actionRound<=g.actionRound &&
             e.blockedTurns<=3 && (e.lastSeen==-1||s.world.walkable(e.lastSeen)) && (e.chaseTarget==-1||s.world.walkable(e.chaseTarget)),"invalid actor tracking");
         const auto onceKey = prefix(e.kind == EntityKind::Item ? "pickup" : "greet",

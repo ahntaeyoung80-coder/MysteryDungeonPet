@@ -11,9 +11,9 @@ if ($LASTEXITCODE -ne 0) { throw 'gameplay scenario setup failed' }
 $EventPath = Join-Path $env:LOCALAPPDATA 'MysteryDungeonPet/events.log'
 $Before = if (Test-Path $EventPath) { @(Get-Content $EventPath).Count } else { 0 }
 $Csv = "$Output/life.csv"
-$argsForApp = @('--explore', "`"$Package`"", '--gameplay-assets', "`"$Assets`"", '--snapshot', "`"$Output/clear.mdes`"", '--duration', '24', '--metrics', "`"$Csv`"")
+$argsForApp = @('--explore', "`"$Package`"", '--gameplay-assets', "`"$Assets`"", '--snapshot', "`"$Output/clear.mdes`"", '--duration', '40', '--metrics', "`"$Csv`"")
 $Process = Start-Process -FilePath $Exe -ArgumentList $argsForApp -PassThru
-if (-not $Process.WaitForExit(45000)) { $Process.Kill(); throw 'life UI timeout' }
+if (-not $Process.WaitForExit(60000)) { $Process.Kill(); throw 'life UI timeout' }
 if ($Process.ExitCode -ne 0) { throw "life UI failed: $($Process.ExitCode)" }
 $Events = @(Get-Content $EventPath | Select-Object -Skip $Before)
 $Events | Set-Content "$Output/life-events.txt"
@@ -21,7 +21,7 @@ $Rows = @(Import-Csv $Csv)
 $Status = 'pending: runner session paused rendering'
 if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     $Joined = $Events -join "`n"
-    foreach ($Pattern in @('select clip=17', 'life=ReturnHome', 'life=HomeScene', 'guild room=GuildDining characters=12 objectCount=1', 'guild room=PlayerRoom characters=2', 'guild partner wake finished', 'life=Eat', 'life=Sleep', 'life=Wake', 'life=Ready', 'life=Explore.*day=2')) {
+    foreach ($Pattern in @('select clip=17', 'life=ReturnHome', 'life=HomeScene', 'guild room=GuildDining characters=12 objectCount=1', 'guild room=PlayerRoom characters=2', 'guild partner wake finished', 'life=Eat', 'life=Sleep', 'life=Wake', 'life=Ready', 'life=Explore.*day=2', 'sceneBeat=2 ', 'sceneBeat=12 ', 'sceneBeat=3 ', 'sceneBeat=4 ', 'sceneBeat=5 ', 'sceneBeat=6 ', 'sceneBeat=7 ', 'sceneBeat=8 ', 'sceneBeat=9 ', 'sceneBeat=10 ', 'sceneBeat=11 ')) {
         if ($Joined -notmatch $Pattern) { throw "missing production life event: $Pattern" }
     }
     $Returning = @($Events | Where-Object { $_ -match 'life=ReturnHome' })[0]

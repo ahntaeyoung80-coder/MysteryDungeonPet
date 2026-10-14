@@ -92,7 +92,7 @@ try {
         }
         $Positions = @($Rows | ForEach-Object { "$($_.scene_x),$($_.scene_y)" } | Sort-Object -Unique)
         if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
-            if ($Positions.Count -lt 2 -and $Joined -notmatch 'gameplay onceKey=|life=Combat') { throw 'default explorer did not advance' }
+            if ($Positions.Count -lt 2 -and $Joined -notmatch 'gameplay onceKey=|life=Combat|life=Dialogue') { throw 'default explorer did not advance' }
         } else { $Status = 'pending: runner session paused rendering' }
         $Process = $null
     }

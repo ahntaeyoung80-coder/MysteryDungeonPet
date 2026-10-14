@@ -26,9 +26,24 @@ int main(int argc,char** argv) { try {
     motion.pause(500000);auto held=motion.sample(900000);motion.resume(900000);check(motion.sample(900000).x==held.x,"resume jump");check(!motion.active(1200000),"resume duration");
     auto camera=cameraFor({575,575},576,576,200);check(camera.x==376&&camera.y==376,"camera edge clamp");
     check(cameraFor({1,1},576,576,200).x==0,"camera negative edge");
+    Motion scaled;scaled.begin(0,1,{300,300},{324,324},0,1);
+    for(auto time:{0LL,8333LL,16667LL,99999LL,200000LL,399999LL}) {
+        const auto world=scaled.sample(time);const auto screen=raster(world);const auto origin=cameraFor(world,576,576,67);
+        check(screen.x-origin.x==33 && screen.y-origin.y==33,"odd viewport makes camera jitter at scale three");
+    }
     if(argc>1) {auto pkg=loadPackage(argv[1]);Animator a;a.start(pkg,0,0,true,0);a.advance(0);
         auto before=a.advance(200000);a.changeDirection(pkg,0,2);auto after=a.advance(200000);
-        check(before.frame==after.frame&&before.nextDeadlineUs==after.nextDeadlineUs&&after.markers.empty(),"direction restarts walking");}
+        check(pkg.frames(27,0).size()==1,"invented Laying transition frames");
+        check(before.frame==after.frame&&before.nextDeadlineUs==after.nextDeadlineUs&&after.markers.empty(),"direction restarts walking");
+        for(const auto& actor:{std::filesystem::path(argv[1]),std::filesystem::path(argv[1]).parent_path().parent_path()/"asset-1/asset.mdpa"}) {
+            auto selected=loadPackage(actor);Animator walking;walking.start(selected,0,0,true,0);walking.advance(0);
+            const auto phase=walking.advance(200000);
+            for(unsigned direction=0;direction<8;++direction) {
+                walking.changeDirection(selected,0,direction);auto sample=walking.advance(200000);
+                check(sample.nextDeadlineUs==phase.nextDeadlineUs && sample.markers.empty(),"actor direction resets walking clock");
+            }
+        }
+    }
     Explorer e(300,42,"improve",fixtureProfiles(1),{0,0,0,0});auto state=e.state();
     const auto reachable=bfs(state.world,state.world.stairs);int near=-1;
     for(int q=0;q<kTiles;++q) if(reachable.distance[q]==1 && state.world.room[q]==state.world.room[state.world.stairs]) {near=q;break;}
@@ -65,6 +80,39 @@ int main(int argc,char** argv) { try {
     auto chaseEvent=chase.advanceGameplay(1000);check(chaseEvent.event==GameplayEvent::ActorMove,"enemy did not chase");
     check(chase.state().population.entities[0].tile==2*kWidth+5&&chase.state().population.entities[0].actionRound==1,"chase wrong step/consumption");
     auto unchanged=encodeSnapshot(chase.state());chase.advanceGameplay(1100,true);check(unchanged==encodeSnapshot(chase.state()),"move completion grants attack early");
+    auto savedChase=decodeSnapshot(encodeSnapshot(chase.state()),"turns");
+    check(savedChase.population.entities[0].movement.from==3*kWidth+6 && savedChase.population.entities[0].movement.to==2*kWidth+5,"saved actor movement endpoints");
+    chase.shiftPausedClocks(500,1100);check(chase.state().population.entities[0].movement.startedMs==1500 && chase.state().gameplay.deadlineMs==1900,"pause movement clock drift");
+    const auto round=chase.state().gameplay.actionRound;chase.advanceGameplay(1600,true);check(chase.state().gameplay.actionRound==round,"pause grants turn");
+    auto lost=turnFixture(3*kWidth+14,3*kWidth+3,true,false);auto lostState=lost.state();
+    lostState.population.entities[0].tracking=Tracking::Chase;
+    lostState.population.entities[0].lastSeen=lostState.population.entities[0].chaseTarget=3*kWidth+5;
+    lost=Explorer(lostState);
+    for(unsigned step=0;step<3;++step) {
+        auto pending=lost.state();
+        if(step) ++pending.gameplay.actionRound;
+        pending.gameplay.playerActionRound=pending.gameplay.actionRound;pending.gameplay.deadlineMs=1000+step*1000;
+        lost=Explorer(pending);lost.advanceGameplay(1000+step*1000);
+    }
+    check(lost.state().population.entities[0].tile==3*kWidth+5 &&
+        lost.state().population.entities[0].tracking==Tracking::Idle,"lost target orbits last seen position");
+    auto stairEnemy=turnFixture(3*kWidth+3,3*kWidth+4,true,false);auto stairState=stairEnemy.state();
+    stairState.position=stairState.world.stairs;stairState.visited[stairState.position]=1;
+    stairState.population.entities[0].tile=stairState.position-1;stairEnemy=Explorer(stairState);
+    check(stairEnemy.advanceGameplay(1000).event==GameplayEvent::Pose,"enemy overrides stairs arrival");
+    auto stairsAndNpc=turnFixture(4*kWidth+11,4*kWidth+10,false,false);
+    auto priorityState=stairsAndNpc.state();priorityState.gameplay.hostile.clear();stairsAndNpc=Explorer(priorityState);
+    check(stairsAndNpc.advanceGameplay(1000).event==GameplayEvent::Move &&
+        stairsAndNpc.state().position==priorityState.world.stairs,"adjacent friendly dialogue preempts visible stairs");
+    check(stairsAndNpc.advanceGameplay(1400).event==GameplayEvent::Pose,"remembered stairs transition lost after NPC contact");
+    auto berry=turnFixture(3*kWidth+3,3*kWidth+6,false,false);auto berryState=berry.state();
+    berryState.population.entities={{1,10,EntityKind::Item,3*kWidth+4,false},{2,ITEM_ORAN_BERRY,EntityKind::Item,3*kWidth+6,false}};
+    berryState.gameplay.hostile.clear();berryState.gameplay.hearts=1;berryState.discovered=berryState.world.terrain;
+    berryState.knownStairs=berryState.world.stairs;berryState.blocked[berryState.world.stairs]=1;berry=Explorer(berryState);
+    berry.advanceGameplay(1000);check(berry.state().targetInstance==2 && berry.goal()==GoalKind::Item,"auxiliary berry priority lost when stairs unavailable");
+    auto capped=turnFixture(3*kWidth+3,3*kWidth+4,false,false);capped.advanceGameplay(1000);auto healing=capped.state();
+    healing.gameplay.hearts=4;healing.gameplay.oran=1;capped=Explorer(healing);
+    check(capped.advanceGameplay(1350).event==GameplayEvent::UseOranBerry && capped.state().gameplay.hearts==5,"berry did not cap at five HP");
     auto death=turnFixture(3*kWidth+3,3*kWidth+4,false,false);auto ds=death.state();
     check(ds.gameplay.hearts==kMaxHp,"default HP not five");
     ds.gameplay.life=LifePhase::Combat;ds.gameplay.combat=CombatPhase::PlayerFaint;ds.gameplay.hearts=0;ds.gameplay.enemyInstance=1;ds.gameplay.deadlineMs=5000;death=Explorer(ds);
@@ -74,6 +122,23 @@ int main(int argc,char** argv) { try {
     Surface blackout(200,200);gameplayOverlay(blackout,death.state().gameplay,1750);
     for(size_t i=0;i<blackout.pixels.size();i+=4) check(blackout.pixels[i]==0&&blackout.pixels[i+3]==255,"blackout transparency");
     death.advanceGameplay(2750);check(death.state().gameplay.fadeInOnly&&death.state().gameplay.homeScene,"blackout target swap");
+    ds.gameplay.combat=CombatPhase::Defeat;ds.gameplay.deadlineMs=1000;
+    Explorer oldDefeat(ds);
+    check(oldDefeat.advanceGameplay(1000).event==GameplayEvent::PlayerFaint &&
+        oldDefeat.state().gameplay.hearts==0 && oldDefeat.state().gameplay.onceKeys.empty(),"legacy defeat skips Faint or replays damage");
+    check(deadlineFromUtc(1000000,1500,1499)==1000000,"expired deadline underflows");
+    check(deadlineFromUtc(1000000,1500,1900)==1400000,"movement deadline drift");
+    check(deadlineFromUtc(0,1,UINT64_MAX)==60000000,"unbounded UTC timer overflow");
+    const auto fixtureRoot=std::filesystem::path(argv[1]).parent_path().parent_path().parent_path().parent_path().parent_path().parent_path()/"tests/fixtures";
+    const auto oldCompleted=decodeSnapshot(readFile(fixtureRoot/"legacy-v2-completed-npc.mdes",1048576),"legacy");
+    const auto absent=std::find_if(oldCompleted.population.entities.begin(),oldCompleted.population.entities.end(),[](const auto& actor){return actor.kind==EntityKind::Friend && actor.done;});
+    check(absent!=oldCompleted.population.entities.end() && !absent->visible && absent->tile==oldCompleted.position,"old completed NPC blocks saved player tile");
+    auto upgradedNpc=decodeSnapshot(encodeSnapshot(oldCompleted),"legacy");check(!upgradedNpc.population.entities[absent->instanceId-1].visible,"NPC migration not durable");
+    for(const auto& name:{"legacy-v1-contact.mdes","legacy-v2-contact.mdes"}) {
+        const auto oldContact=decodeSnapshot(readFile(fixtureRoot/name,1048576),"legacy");
+        for(const auto& actor:oldContact.population.entities) if(actor.kind==EntityKind::Friend) check(actor.tile!=oldContact.position && actor.visible && !actor.done,"legacy unprocessed contact overlaps player or completes dialogue");
+        check(oldContact.onceKeys.empty(),"contact migration created an effect");
+    }
     auto migrated=decodeSnapshot(readFile(std::filesystem::path(argv[1]).parent_path().parent_path().parent_path().parent_path().parent_path().parent_path()/"tests/fixtures/legacy-v2.mdes",1048576),"legacy");
     check(migrated.gameplay.actionRound==1,"MDES2 action defaults");
     if(argc>1) {
