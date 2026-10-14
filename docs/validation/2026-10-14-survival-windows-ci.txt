@@ -1,0 +1,53 @@
+Run: 38521173193
+Commit: 6680f4d8db410820fa1a5397d6d1a33aece86a91
+URL: https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38521173193
+Core job: success (ASan/UBSan CTest7/7; Python26/26)
+Windows job: success
+Root EXE is the second default-launch report (pull-launch); both report pass.
+The movement-only window was held by dialogue/combat, so it is not visual movement acceptance.
+
+Microsoft Windows Server 2025
+Windows x64 runtime/source/assets hashes match; no ZIP required
+-- The CXX compiler identification is MSVC 19.51.36260.0
+100% tests passed out of 7
+Total Test time (real) =  17.19 sec
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+{"status":"pass","selections":64,"frameBoundaries":232,"scope":"native tick/finite/marker/pause/delay only; original wall time and Windows pending"}
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+{"status":"pass","selections":64,"frameBoundaries":200,"scope":"native tick/finite/marker/pause/delay only; original wall time and Windows pending"}
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"uiMovement": "pending: dialogue/combat held player during the observation window",
+"snapshotRestore": "pass",
+"test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+"status": "pass",
+"bedroomCharacters": 2,
+"actualWindows11": "pending"
+"test": "production player first Attack1 Hurt6 Faint33 victory resumes dungeon",
+"actualWindows11": "pending",
+"status": "pass"
+"launch": "installed EXE with zero arguments from another directory",
+"explicitDiagnostics": "pass, exploration save unchanged",
+"status": "pass",
+"snapshot": "new then restored same runId",
+"actualWindows11": "pending",
+"diagnosticsMenu": "absent"
+"launch": "installed EXE with zero arguments from another directory",
+"explicitDiagnostics": "pass, exploration save unchanged",
+"status": "pass",
+"snapshot": "new then restored same runId",
+"actualWindows11": "pending",
+"diagnosticsMenu": "absent"
+

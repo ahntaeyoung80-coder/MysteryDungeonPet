@@ -2,7 +2,7 @@
 
 ## 후속 수정 — 기상·생존·자리 교환
 
-최신 기준은 PROJECT_STATE.md의 기상·생존·자리 교환 수정과 [MDES5](implementation/MDES5_FORMAT.md)다. 동료 취침/기상/인사를 복원하고 주인공이 침상 아래 바닥을 거쳐 왼쪽 통로로 나간다. 열매 손실2칸 기준·HP2 이하 생존 목표·발견 순서·아이템1턴·우호 NPC 원자적 교환을 적용했다. 루트 EXE도 갱신한다. 검증은 docs/validation/2026-10-14-survival-summary.json이며 아래 주인공만 취침/기상·아래 방향 이탈·MDES4 설명은 이전 이력이다.
+최신 기준은 PROJECT_STATE.md의 기상·생존·자리 교환 수정과 [MDES5](implementation/MDES5_FORMAT.md)다. 동료 취침/기상/인사를 복원하고 주인공이 침상 아래 바닥을 거쳐 왼쪽 통로로 나간다. 열매 손실2칸 기준·HP2 이하 생존 목표·발견 순서·아이템1턴·우호 NPC 원자적 교환을 적용했다. 루트 EXE도 갱신했다. 구현6680f4d의 CI38521173193은 core/windows 모두success이며 MSVC CTest7/7·침실2명/기상/인사/이탈 GUI·루트 EXE 다른 CWD 실행/복원/진단을 통과했다. 다음 확인은 사용자 Windows11 육안·OS 사건·장기 성능이다. 검증은 docs/validation/2026-10-14-survival-summary.json이며 아래 주인공만 취침/기상·아래 방향 이탈·MDES4 설명은 이전 이력이다.
 
 ## 최신 인수인계 — 즉시 구현 명세
 

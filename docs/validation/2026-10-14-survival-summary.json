@@ -65,7 +65,7 @@
   "windows_cross": {
     "compile_link": "passed",
     "compiler": "MinGW GCC 14-posix x64",
-    "native_execution": false,
+    "native_execution": true,
     "log": "2026-10-14-survival-windows.txt"
   },
   "direct_runtime": {
@@ -74,18 +74,51 @@
     "sha256": "4157e812adef83d2b00d8480f1b2313aa8eb813b3727d1716d43ea3fe53b3fb9",
     "manifest": "windows-runtime.json",
     "hash_check": "passed",
-    "zip_created": false
+    "zip_created": false,
+    "native_windows_execution": "passed: root EXE launched with zero arguments from another working directory; same save restored; diagnostics did not modify save"
   },
   "assets_changed": false,
   "new_original_asset_research_or_extraction": false,
   "pending": [
-    "Current code native Windows CI and root EXE execution",
-    "User Windows11 visual acceptance, lock/suspend/resume and long duration CPU/memory"
+    "User Windows11 visual acceptance of paired rest/greeting, left corridor exit, survival behavior and NPC swap",
+    "Windows lock/suspend/resume and long duration CPU/memory"
   ],
   "prior_windows_ci": {
     "run_id": 38520663883,
     "commit": "5b7794d",
     "native_ctest": "7/7 passed",
     "failure": "headless driver stopped at Ready/MorningFace after greeting restoration; changed terminal boundary to Ready/RoomExit and added process-level repeated-restore regression"
+  },
+  "implementation_commit": "6680f4d8db410820fa1a5397d6d1a33aece86a91",
+  "github_ci": {
+    "run_id": 38521173193,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38521173193",
+    "core": "success",
+    "windows": "success",
+    "windows_os": "Windows Server 2025",
+    "compiler": "MSVC 19.51 x64 Release",
+    "native_ctest": {
+      "passed": 7,
+      "tests": 7,
+      "seconds": 17.19
+    },
+    "core_asan_ubsan": {
+      "passed": 7,
+      "tests": 7,
+      "seconds": 185.08
+    },
+    "python": {
+      "passed": 26,
+      "tests": 26,
+      "seconds": 16.231
+    },
+    "gui_lifecycle": "pass; paired bedroom/Wake and MorningFace greeting then RoomExit/next-day Explore",
+    "bedroom_characters": 2,
+    "gui_combat": "pass",
+    "installed_default_launch_restore": "pass",
+    "root_exe_default_launch_restore": "pass",
+    "root_exe_diagnostics": "pass; exploration save unchanged",
+    "exploration_movement_window": "pending: dialogue/combat held player in four-second window",
+    "log": "2026-10-14-survival-windows-ci.txt"
   }
 }
