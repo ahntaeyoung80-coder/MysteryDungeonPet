@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-14",
+  "branch": "work",
+  "implementation_commit": "97cfb8b60ecf29703d439192e95f0a58ed4f1277",
+  "baseline_commit": "fa659271",
+  "stages_0_to_7": "implementation and available environment regression completed",
+  "push": false,
+  "release": {
+    "tests": 5,
+    "passed": 5,
+    "seconds": 24.58,
+    "log": "2026-10-14-improvement-release.txt"
+  },
+  "asan_ubsan": {
+    "tests": 5,
+    "passed": 5,
+    "seconds": 272.24,
+    "detect_leaks": true,
+    "log": "2026-10-14-improvement-sanitize.txt"
+  },
+  "python": {
+    "tests": 25,
+    "passed": 25,
+    "skipped": 0,
+    "seconds": 20.091,
+    "log": "2026-10-14-improvement-python.txt"
+  },
+  "windows_cross": {
+    "compile_link": "passed",
+    "compiler": "x86_64-w64-mingw32-g++-posix",
+    "native_execution": false,
+    "log": "2026-10-14-improvement-windows-cross.txt"
+  },
+  "powershell_scripts": "official PowerShell parser passed; Windows GUI tests not executed",
+  "original_sha256": {
+    "user-supplied.nds": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "rom-files.zip": "cc9d113ea4b438d8b8895a30c3d47863dc99cdb1e1381ce8c029aeeb8d748b54"
+  },
+  "code_tests_tools_assets_sha256": "25c6b51fda121c044734bb1178a8c0d0d3b0d87991bbe29d22b8433649fc03c9",
+  "artifact": {
+    "path": "local/MysteryDungeonPet-improved-windows.zip",
+    "sha256": "e4d280cac81479a4b755a044465f99f9c3aa3cdb3f20532ddf43d43aa9a5d955",
+    "bytes": 1598796,
+    "uncompressed_bytes": 5038566,
+    "files": 77,
+    "exe_sha256": "30eaafeeeeba1b45079ab0ec483b5c205ea8f28ccc2a4699555184a8d971cff1",
+    "zip_crc_check": "passed",
+    "contains_original_rom_or_archive": false
+  },
+  "pending": [
+    "New code native Windows GUI and visual acceptance",
+    "Windows lock/suspend/resume behavior",
+    "Long duration memory/CPU measurements"
+  ],
+  "out_of_scope": [
+    "Entire ARM engine, special movement, speed stages, status effects, full move system",
+    "Original dialogue text recovery, extra dining effects, audio"
+  ]
+}

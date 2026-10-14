@@ -1,5 +1,16 @@
 # 현재 상태
 
+## 개선 제작 — 2026-10-14
+
+사용자 확정 P0/P1/P2 개선의 단계0~7 구현과 이 환경에서 가능한 통합 회귀를 완료하고 work에 단계별 로컬 커밋을 남겼다. 마지막 구현 커밋은 97cfb8b다. Push는 하지 않았다.
+
+현재 코드는 8방향400ms 보간/보행 위상·카메라, 계단 기억/frontier 우선, 소비 기반 턴/적 추적, HP5/플레이어 Faint/검정 화면, 원본 계단·열매·원반/하트 확대, 전체 식당 카메라/낮·밤 침실/Nod·Laying/두 배우 Wake, 순서 있는 한국어 NPC 대화를 포함한다. 과거 단계의3하트·4방향·고정 crop·MDES2 쓰기 설명은 아래에 이력으로 보존한다.
+
+재개 시 [개선 인수인계](docs/IMPROVEMENT_HANDOFF.md)와 [MDES3 형식](docs/implementation/MDES3_FORMAT.md)을 우선한다. [최종 검증 요약](docs/validation/2026-10-14-improvement-summary.json)에 검사 로그·실행 ZIP hash를 기록했다. 실행물은 local/MysteryDungeonPet-improved-windows.zip이며 기존 ROM과 rom-files.zip의 SHA256은 기준과 동일하다.
+
+검증: 최종 Release CTest5/5(24.58초)·ASan/UBSan5/5(272.24초)·Python25/25(20.091초, skip 없음)·Windows x64 MinGW compile/link·PowerShell 문법 검사 통과. 실제 새 코드의 Windows11/Server GUI·잠금/절전·장기 성능·원작 연출 육안은 미실행이다. 과거 CI 성공을 새 코드의 Windows 실행 증거로 확대하지 않는다.
+
+
 ## 기본 실행 오류 수정 (2026-10-13)
 
 사용자가 ZIP의 EXE를 직접 실행했을 때 A-3 방향·동작 시험만 켜지는 문제를 보고했다. `--explore` 없는 기본 Options가 빈 exploration 경로를 사용한 것이 원인이다. 기본 EXE 실행을 dungeon0 자동 탐험·전투·길드 생활 및 기존 저장 복원으로 변경했다. 진단은 `--diagnostics` 또는 기존 명시적 A selectors로 선택한다. 탐험 중에는 방향·동작·Loop/Finite/Stop 등 시험 메뉴를 표시하지 않는다. `Run-A2.ps1`에는 진단 인자를 추가했고 설치본 기본 안내도 교체했다. Linux Release4CTests·MinGW 빌드 pass. 런타임8decf4f의 Windows CI38411109815 core/windows 모두success: ASan/UBSan4CTests·Python23tests 및 MSVC4CTests·기존 전투/길드 생활 GUI 검사 통과. 실제 설치 EXE를 인자 없이 다른 CWD에서 실행해 자동 탐험→전투, 저장 복원→승리→탐험 재개를 확인했다. 실제 우클릭 메뉴는 Hide/Always on top/Scale1..3/Exit만 표시한다. 명시적 진단도 pass이고 탐험 저장 hash 불변이다. 새 설치 안내는 docs/WINDOWS_QUICKSTART.md, 증거는 docs/validation/2026-10-13-default-launch-summary.json이다. 실제 사용자 Windows11·장기/OS 사건·원작 식사 효과 등의 기존 미완료 항목은 유지한다.

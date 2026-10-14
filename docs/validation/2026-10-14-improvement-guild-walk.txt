@@ -1,0 +1,1 @@
+Original guild actor79 Walk directions share cycle duration: [36, 36, 36, 36, 36, 36, 36, 36]
