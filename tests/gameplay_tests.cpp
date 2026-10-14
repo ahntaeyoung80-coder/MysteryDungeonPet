@@ -95,7 +95,10 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     next(e);check(!nightScene(e.state().gameplay) && gameplayClip(e.state().gameplay)==14,"Wake14 daylight missing");
     const auto oldDay=e.state().gameplay.day;const auto oldHearts=e.state().gameplay.hearts;
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{false,true,true});check(e.state().gameplay.life==LifePhase::Wake,"other actor finished player Wake");
-    e.advanceGameplay(e.state().gameplay.phaseStartedMs+2,ActorCompletion{true,false,false});check(e.state().gameplay.sceneBeat==SceneBeat::RoomExit && gameplayClip(e.state().gameplay)==0,"solo Wake did not start Walk0 exit");
+    e.advanceGameplay(e.state().gameplay.phaseStartedMs+2,ActorCompletion{true,false,false});check(e.state().gameplay.life==LifePhase::Wake,"partner Wake skipped");
+    e.advanceGameplay(e.state().gameplay.phaseStartedMs+3,ActorCompletion{true,false,true});check(e.state().gameplay.sceneBeat==SceneBeat::MorningFace && gameplayClip(e.state().gameplay)==22,"morning greeting missing");
+    e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{true,false,false});check(e.state().gameplay.sceneBeat==SceneBeat::MorningFace,"greeting did not wait for partner");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::RoomExit && gameplayClip(e.state().gameplay)==0,"greeting did not lead to Walk0 exit");
     const auto exitPlans=e.bfsCalls(),exitRng=e.state().rng.state;const auto exitInventory=e.state().inventory.size();
     advance(e,e.state().gameplay.deadlineMs-1,true);check(e.state().gameplay.day==oldDay && e.state().gameplay.hearts==oldHearts && e.bfsCalls()==exitPlans && e.state().rng.state==exitRng && e.state().inventory.size()==exitInventory,"room exit advanced dungeon or refreshed state early");
     advance(e,e.state().gameplay.deadlineMs,false);check(e.state().gameplay.sceneBeat==SceneBeat::RoomExit,"exit ignored completion");
@@ -177,7 +180,11 @@ int main(int argc, char** argv) {
 
         auto dead = encounter(); {auto start=dead.state();start.gameplay.hearts=3;dead=Explorer(start);} advance(dead,1000);
         for (unsigned i = 0; i < 3; ++i) {
-            forceRoll(dead,true,false,false); next(dead); enemyTurn(dead,true);
+            // Force an unavoidable enemy attack to test death playback independently of low-HP escape AI.
+            auto attacked=dead.state();attacked.gameplay.life=LifePhase::Combat;attacked.gameplay.combat=CombatPhase::EnemyTurn;
+            attacked.gameplay.enemyInstance=1;attacked.gameplay.playerActionRound=attacked.gameplay.actionRound;
+            attacked.population.entities[0].actionRound=attacked.gameplay.actionRound-1;dead=Explorer(attacked);
+            enemyTurn(dead,true);
             check(dead.state().gameplay.hearts == 2-i, "normal enemy hit not one heart");
         }
         check(dead.state().gameplay.combat == CombatPhase::PlayerFaint, "third enemy hit missing death");
@@ -199,8 +206,8 @@ int main(int argc, char** argv) {
         s.population.entities = {{1,10,EntityKind::Item,near,false}, {2,70,EntityKind::Item,far,false}};
         s.knownStairs=s.world.stairs;s.discovered[s.world.stairs]=1;
         berries=Explorer(s);advance(berries,1000);
-        check(berries.goal()==GoalKind::Item,"known stairs displace berry");
-        pass(8,"items take priority over known reachable stairs");
+        check(berries.goal()==GoalKind::Stairs,"low HP did not escape to stairs discovered before berry");
+        pass(8,"low HP retreats to previously discovered stairs before searching for an unseen berry");
         auto heal = encounter(); advance(heal,1000); s = heal.state(); s.gameplay.hearts = 1; s.gameplay.oran = 1; heal = Explorer(s);
         check(next(heal).event == GameplayEvent::UseOranBerry && heal.state().gameplay.hearts == 3 && heal.state().gameplay.oran == 0, "Oran did not heal two/cap/consume");
         check(gameplayClip(heal.state().gameplay) == 7 && heal.state().gameplay.combat == CombatPhase::BerryText, "berry plays use animation");

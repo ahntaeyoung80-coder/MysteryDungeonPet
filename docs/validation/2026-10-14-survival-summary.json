@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-14",
+  "baseline_commit": "eb3bc1bc404d8c1e9d096cd7f37f86b3fd775d09",
+  "low_hp_threshold": 2,
+  "berry_use_max_hp": 3,
+  "pickup_player_actions": 1,
+  "friendly_swap_player_actions": 1,
+  "paired_sleep_wake_greeting": true,
+  "bedroom_exit_route": [
+    [
+      204,
+      184
+    ],
+    [
+      204,
+      208
+    ],
+    [
+      120,
+      208
+    ],
+    [
+      120,
+      184
+    ],
+    [
+      -24,
+      184
+    ]
+  ],
+  "bedroom_exit_ms": 4600,
+  "snapshot_schema": 5,
+  "read_schemas": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "release": {
+    "passed": 7,
+    "tests": 7,
+    "seconds": 19.86,
+    "log": "2026-10-14-survival-release.txt"
+  },
+  "asan_ubsan": {
+    "passed": 7,
+    "tests": 7,
+    "seconds": 84.66,
+    "log": "2026-10-14-survival-sanitize.txt",
+    "detect_leaks": true
+  },
+  "python": {
+    "passed": 25,
+    "tests": 25,
+    "skipped": 0,
+    "seconds": 4.49,
+    "log": "2026-10-14-survival-python.txt"
+  },
+  "scenario_restore": {
+    "checks": 16733,
+    "restores": 8250,
+    "log": "2026-10-14-survival-scenarios.jsonl"
+  },
+  "windows_cross": {
+    "compile_link": "passed",
+    "compiler": "MinGW GCC 14-posix x64",
+    "native_execution": false,
+    "log": "2026-10-14-survival-windows.txt"
+  },
+  "direct_runtime": {
+    "path": "MysteryDungeonPet.exe",
+    "bytes": 1697280,
+    "sha256": "4157e812adef83d2b00d8480f1b2313aa8eb813b3727d1716d43ea3fe53b3fb9",
+    "manifest": "windows-runtime.json",
+    "hash_check": "passed",
+    "zip_created": false
+  },
+  "assets_changed": false,
+  "new_original_asset_research_or_extraction": false,
+  "pending": [
+    "Current code native Windows CI and root EXE execution",
+    "User Windows11 visual acceptance, lock/suspend/resume and long duration CPU/memory"
+  ]
+}

@@ -329,9 +329,7 @@ class App {
             scene = guildRooms_[bedroomScene(explorer_->state().gameplay) ? 1 : 0].player().position;
             const auto& g=explorer_->state().gameplay;
             if(g.sceneBeat==SceneBeat::RoomExit) {
-                const auto utc=utcMs();
-                const auto elapsed=utc>g.phaseStartedMs?utc-g.phaseStartedMs:0;
-                scene.y+=int32_t((guildRooms_[1].height+64-scene.y)*std::min<uint64_t>(elapsed,kRoomExitMs)/kRoomExitMs);
+                scene=bedroomExit(scene,g,utcMs()).position;
             }
         }
         return playbackSample(assets_.package, clip_, direction_, frame_, animator_.active(), scene, options_.scenario != L"empty");
@@ -594,7 +592,7 @@ class App {
         exploreDeadline_=deadlineFromUtc(now,utcMs(),g.deadlineMs);
         for(const auto& e:explorer_->state().population.entities) {
             const auto old=std::find_if(oldEntities.begin(),oldEntities.end(),[&](const auto& x){return x.instanceId==e.instanceId;});
-            if(old!=oldEntities.end() && old->tile!=e.tile && event.event==GameplayEvent::ActorMove) {
+            if(old!=oldEntities.end() && old->tile!=e.tile && (event.event==GameplayEvent::ActorMove || event.event==GameplayEvent::Move)) {
                 actorMotions_[e.instanceId].begin(e.instanceId,g.actionRound,tilePoint(old->tile),tilePoint(e.tile),now,e.direction);
                 auto& animation=actorAnimators_[e.instanceId];
                 if(animation.active()) animation.changeDirection(enemyAssets_->package,0,e.direction);
@@ -632,7 +630,7 @@ class App {
         }
         if (!event.onceKey.empty()) log("gameplay onceKey=" + event.onceKey);
         if (oldLife != g.life || oldCombat != g.combat || oldBeat!=g.sceneBeat || oldDialogue!=g.dialogueStage) log(std::string("life=") + lifeName(g.life) + " combat=" + combatName(g.combat) + " day=" + std::to_string(g.day) + " hearts=" + std::to_string(g.hearts) + " sceneBeat=" + std::to_string(static_cast<unsigned>(g.sceneBeat)) + " dialogueStage=" + std::to_string(static_cast<unsigned>(g.dialogueStage)));
-        if (event.event == GameplayEvent::UseOranBerry) log("OranBerry70 text: healed 2 hearts (capped at 5); enemy turn follows");
+        if (event.event == GameplayEvent::UseOranBerry) log("OranBerry70 text: healed 2 hearts (capped at 5); consumes one player action");
         if (event.event == GameplayEvent::PlayerAttack || event.event == GameplayEvent::EnemyAttack)
             log("move355 damage=" + std::to_string(event.damage) + " critical=" + std::to_string(event.critical));
         if (event.event == GameplayEvent::HomeScene) log(std::string("life=HomeScene opaque original ")+(bedroomScene(g)?(nightScene(g)?"night bedroom":"day bedroom"):"dining map"));
@@ -646,7 +644,7 @@ class App {
         if (guildRoom_ != room || guildLife_ != g.life || guildBeat_!=g.sceneBeat) {
             guildLive_.clear(); guildRoom_ = room; guildLife_ = g.life;guildBeat_=g.sceneBeat;
             for (const auto& cue : guildRooms_[room].actors) {
-                if (cue.kind == GuildActorKind::Player || (room==1 && cue.kind==GuildActorKind::Partner)) continue;
+                if (cue.kind == GuildActorKind::Player) continue;
                 const Assets* source = nullptr;
                 if (cue.kind == GuildActorKind::Partner) source = &*enemyAssets_;
                 else {
@@ -663,7 +661,8 @@ class App {
                 actor.clip = cue.kind == GuildActorKind::Object ? cue.actionClip :
                     cue.kind == GuildActorKind::Partner ? (room == 1 ? gameplayClip(g) : g.life == LifePhase::Eat ? 15U : 7U) :
                     g.life == LifePhase::Eat ? cue.actionClip : 7U;
-                actor.animator.start(source->package, actor.clip, actor.direction, room==1?gameplayLoop(g):true, sceneClipStart(now));
+                if(room==1 && cue.kind==GuildActorKind::Partner && g.sceneBeat==SceneBeat::RoomExit) actor.clip=7;
+                actor.animator.start(source->package, actor.clip, actor.direction, room==1?(cue.kind==GuildActorKind::Partner && g.sceneBeat==SceneBeat::RoomExit?true:gameplayLoop(g)):true, sceneClipStart(now));
                 guildLive_.push_back(std::move(actor));
             }
             log("guild room=" + guildRooms_[room].name + " characters=" + std::to_string(1+std::count_if(guildLive_.begin(),guildLive_.end(),[](const auto& actor){return actor.cue->kind!=GuildActorKind::Object;})) + " objectCount=" + std::to_string(room == 0 ? 1 : 0));
@@ -698,6 +697,10 @@ class App {
             else if(actorAnimators_[entry.first].active()) {actorAnimators_[entry.first].stop();dirty_=true;}
         }
         advanceExploration(now);
+        if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
+            const auto sample=bedroomExit(guildRooms_[1].player().position,explorer_->state().gameplay,utcMs());
+            if(direction_!=sample.direction) {direction_=sample.direction;animator_.changeDirection(assets_.package,0,direction_);dirty_=true;}
+        }
         bool playerFinished = false;
         if (animator_.active()) {
             auto result = animator_.advance(now);
@@ -720,14 +723,14 @@ class App {
         if(explorer_) {
             const auto& g=explorer_->state().gameplay;
             const bool enemy=g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint);
-            const bool joint=g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace;
+            const bool joint=(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) || g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace;
             const bool body=(g.life==LifePhase::Wake && g.sceneBeat!=SceneBeat::WakeDelay) || g.life==LifePhase::Pose || g.life==LifePhase::Emotion || (g.life==LifePhase::Combat &&
                 (g.combat==CombatPhase::PlayerAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::PlayerFaint || enemy));
             poseFinished_=joint?(completion_.player&&completion_.partner):body?(enemy?completion_.enemy:completion_.player):false;
             if(g.life==LifePhase::Death || g.life==LifePhase::ReturnHome || g.sceneBeat!=SceneBeat::None) dirty_=true;
         }
         if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
-            completion_.player=utcMs()>=explorer_->state().gameplay.deadlineMs;
+            completion_.player=bedroomExit(guildRooms_[1].player().position,explorer_->state().gameplay,utcMs()).finished;
             poseFinished_=completion_.player;
         }
         (void)playerFinished;
@@ -779,6 +782,7 @@ class App {
             const auto& f = homeAssets_->package.frames(bedroom ? (nightScene(g)?2:1) : 0, 0).front();
             const auto& room=guildRooms_[bedroom?1:0];
             WorldPoint center=bedroom?WorldPoint{180,184}:g.sceneBeat==SceneBeat::DiningPan?guildCamera_.sample(now):g.sceneBeat==SceneBeat::DiningExit?WorldPoint{168,212}:WorldPoint{368,212};
+            if(g.sceneBeat==SceneBeat::RoomExit) {const auto p=bedroomExit(room.player().position,g,utcMs()).position;center={double(p.x),double(p.y)};}
             camera=cameraFor(center,room.width,room.height,int((size_+scale_-1)/scale_));
             layers.push_back({homeAssets_->atlas.get(), f.rect, f.anchor, {0, 0}});
             for (const auto& cue : guildRooms_[bedroom ? 1 : 0].actors) {
@@ -805,7 +809,7 @@ class App {
         std::wstring overlayText;
         if(explorer_) {
             const auto& g=explorer_->state().gameplay;
-            if(g.life==LifePhase::Combat && g.combat==CombatPhase::BerryText) overlayText=L"오랭열매! 2하트 회복";
+            if((g.life==LifePhase::Combat && g.combat==CombatPhase::BerryText) || g.sceneBeat==SceneBeat::ExplorationBerryText) overlayText=L"오랭열매! 2하트 회복";
             else if(g.life==LifePhase::Dialogue) overlayText=g.dialogueStage==DialogueStage::Player?L"안녕! 같이 탐험하자.":L"조심해서 다녀와!";
             else if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout) overlayText=L"눈앞이 깜깜해졌다";
         }

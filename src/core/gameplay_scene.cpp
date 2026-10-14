@@ -1,6 +1,20 @@
 #include "core/gameplay_scene.hpp"
 #include <algorithm>
+#include <cstdlib>
 namespace pet {
+BedroomExitSample bedroomExit(Point start,const GameplayState& g,std::uint64_t now) {
+    const std::array<Point,5> path{{start,{204,208},{120,208},{120,184},{-24,184}}};
+    std::uint64_t elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
+    for(unsigned i=1;i<path.size();++i) {
+        const auto from=path[i-1],to=path[i];
+        const auto dx=to.x-from.x,dy=to.y-from.y;
+        const auto duration=std::uint64_t(std::abs(dx)+std::abs(dy))*400/24;
+        const unsigned direction=dx<0?6:dx>0?2:dy<0?4:0;
+        if(elapsed<duration) return {{from.x+int32_t(dx*int64_t(elapsed)/int64_t(duration)),from.y+int32_t(dy*int64_t(elapsed)/int64_t(duration))},direction,false};
+        elapsed-=duration;
+    }
+    return {path.back(),6,true};
+}
 void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now) {
     auto pixel = [&](unsigned x, unsigned y, unsigned blue, unsigned green, unsigned red) {
         if (x >= s.width || y >= s.height) return;
@@ -14,7 +28,7 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now) {
             if (heart[y][x] == '1') for(unsigned yy=0;yy<2;++yy) for(unsigned xx=0;xx<2;++xx)
                 pixel(8 + 18*h + 2*x+xx,8+2*y+yy,35,35,h<g.hearts?230:65);
     }
-    if (g.life == LifePhase::Combat && g.combat == CombatPhase::BerryText)
+    if ((g.life == LifePhase::Combat && g.combat == CombatPhase::BerryText) || g.sceneBeat==SceneBeat::ExplorationBerryText)
         for (unsigned y = 150; y < std::min(190U, s.height); ++y)
             for (unsigned x = 8; x < std::min(192U, s.width); ++x) pixel(x, y, 40, 30, 20);
     if(g.life==LifePhase::Death) {

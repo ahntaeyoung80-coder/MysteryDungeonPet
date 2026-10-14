@@ -145,6 +145,11 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         g.sceneBeat=SceneBeat::FloorFadeIn;g.deadlineMs=now+kFloorFadeMs;
         return {GameplayEvent::FloorChanged,event.onceKey};
     }
+    if(g.life==LifePhase::Explore && g.sceneBeat==SceneBeat::ExplorationBerryText) {
+        if(now<g.deadlineMs) return {};
+        g.sceneBeat=SceneBeat::None;g.phaseStartedMs=g.deadlineMs=now;
+        return {GameplayEvent::Explore,{}};
+    }
     if (g.life == LifePhase::Pose) {
         if (!finiteDone) return {};
         (void)advance(true);
@@ -211,11 +216,12 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             if(now<g.deadlineMs) return {};
             g.sceneBeat=SceneBeat::Waking;return life(LifePhase::Wake,GameplayEvent::Wake,kFiniteTimeoutMs);
         }
-        if(!completed.player) return {};
-        g.sceneBeat=SceneBeat::RoomExit;g.playerDirection=0;
-        return life(LifePhase::Ready,GameplayEvent::Ready,kRoomExitMs);
+        if(!(completed.player&&completed.partner)) return {};
+        g.sceneBeat=SceneBeat::MorningFace;
+        return life(LifePhase::Ready,GameplayEvent::Ready,kFiniteTimeoutMs);
     }
     if(g.life==LifePhase::Ready) {
+        if(g.sceneBeat==SceneBeat::MorningFace && !(completed.player&&completed.partner)) return {};
         if(g.sceneBeat!=SceneBeat::RoomExit) { // Resume old morning saves through the new exit.
             g.sceneBeat=SceneBeat::RoomExit;g.playerDirection=0;
             return life(LifePhase::Ready,GameplayEvent::Ready,kRoomExitMs);
@@ -235,10 +241,14 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         case CombatPhase::PlayerTurn: {
             if (now < g.deadlineMs) return {};
             if(g.playerActionRound==g.actionRound) return afterCombatAction(now);
+            if(lowHealth() && !g.oran) {
+                g.life=LifePhase::Explore;invalidate();
+                return scheduleDungeon(now);
+            }
             g.playerActionRound=g.actionRound;
             const auto once = "turn:" + std::to_string(state_.runId) + ":" + std::to_string(state_.floorIndex) + ":" + std::to_string(g.enemyInstance) + ":" + std::to_string(++g.turn);
             if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate combat turn");
-            if (g.oran && g.hearts < kMaxHp) {
+            if (g.oran && g.hearts+2 <= kMaxHp) {
                 --g.oran; g.hearts = std::min(kMaxHp, g.hearts + 2);
                 auto update = combat(CombatPhase::BerryText, GameplayEvent::UseOranBerry, 1000); update.onceKey = once;
                 return update;
@@ -325,14 +335,19 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
     auto& g=state_.gameplay;
     auto& e=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){return x.instanceId==g.enemyInstance;});
     g.phaseStartedMs=now;g.deadlineMs=now+350;
-    if(g.playerActionRound!=g.actionRound) {g.combat=CombatPhase::PlayerTurn;return {};}
+    if(g.playerActionRound!=g.actionRound) {
+        if(lowHealth() && !g.oran) {g.life=LifePhase::Explore;invalidate();return {GameplayEvent::Explore,{}};}
+        g.combat=CombatPhase::PlayerTurn;return {};
+    }
     if(e.actionRound!=g.actionRound) {g.combat=CombatPhase::EnemyTurn;return {};}
     const bool pending=std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){
         return !x.done && x.visible && x.kind==EntityKind::Friend && x.actionRound!=g.actionRound &&
             std::find(g.hostile.begin(),g.hostile.end(),x.instanceId)!=g.hostile.end();});
     if(pending) {g.life=LifePhase::Explore;return {GameplayEvent::Explore,{}};}
     if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
-    ++g.actionRound;g.combat=CombatPhase::PlayerTurn;return {};
+    ++g.actionRound;
+    if(lowHealth() && !g.oran) {g.life=LifePhase::Explore;invalidate();return {GameplayEvent::Explore,{}};}
+    g.combat=CombatPhase::PlayerTurn;return {};
 }
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;
@@ -376,10 +391,17 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
         ++g.actionRound;
     }
-    if(state_.target<0) plan();
+    if(g.oran && g.hearts+2<=kMaxHp && g.playerActionRound!=g.actionRound) {
+        --g.oran;g.hearts+=2;g.playerActionRound=g.actionRound;g.walkStartedMs=0;
+        const auto once="heal:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.actionRound);
+        if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate exploration berry use");
+        invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+1000;
+        return {GameplayEvent::UseOranBerry,once};
+    }
+    if(state_.target<0 || lowHealth()) plan();
     for(auto& e:state_.population.entities) {
         if(e.done||!e.visible||e.kind!=EntityKind::Friend||!canAttack(state_.world,state_.position,e.tile)||state_.blocked[e.tile]) continue;
-        if(hostile(e)) return beginCombat(e,now,CombatPhase::PlayerTurn);
+        if(hostile(e)) {if(!lowHealth()) return beginCombat(e,now,CombatPhase::PlayerTurn);continue;}
         if(state_.goalKind!=GoalKind::Friend || state_.targetInstance!=e.instanceId) continue; // Friendly dialogue is only an explicit auxiliary encounter.
         invalidate();g.enemyInstance=e.instanceId;g.dialogueStage=DialogueStage::Player;
         g.playerDirection=directionBetween(state_.position,e.tile);e.direction=directionBetween(e.tile,state_.position);
@@ -389,13 +411,19 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     const int old=state_.position;
     const auto update=advance();
     g.phaseStartedMs=now;g.deadlineMs=now+(update.kind==EventKind::Move?400:0);
-    if(update.kind==EventKind::Move) {if(!g.walkStartedMs) g.walkStartedMs=now;g.playerActionRound=g.actionRound;g.playerDirection=directionBetween(old,state_.position);g.movement={g.actionRound,now,400,g.playerDirection,old,state_.position};}
+    if(update.kind==EventKind::Move) {
+        for(auto& e:state_.population.entities) if(friendly(e) && e.tile==old && e.direction==directionBetween(state_.position,old)) {
+            e.movement={g.actionRound,now,400,e.direction,state_.position,old};
+        }
+        if(!g.walkStartedMs) g.walkStartedMs=now;
+        g.playerActionRound=g.actionRound;g.playerDirection=directionBetween(old,state_.position);g.movement={g.actionRound,now,400,g.playerDirection,old,state_.position};}
     if(update.kind!=EventKind::Move) g.walkStartedMs=0;
     switch(update.kind) {
     case EventKind::Pose:
         g.life=LifePhase::Pose;g.deadlineMs=now+5000;return {GameplayEvent::Pose,update.onceKey};
     case EventKind::ReturnedHome:return beginReturn(now,false);
     case EventKind::Pickup:
+        g.playerActionRound=g.actionRound;g.deadlineMs=now+400;
         if(update.originalId==ITEM_ORAN_BERRY && !g.oran) ++g.oran;
         return {GameplayEvent::Pickup,update.onceKey};
     case EventKind::Move:return {GameplayEvent::Move,{}};

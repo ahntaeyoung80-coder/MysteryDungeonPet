@@ -106,11 +106,11 @@ struct InventoryEntry {
     std::string onceKey;
     std::uint32_t originalId = 0;
 };
-constexpr std::uint32_t kMaxHp=5;
+constexpr std::uint32_t kMaxHp=5, kLowHp=2;
 constexpr std::uint32_t MOVE_REGULAR_ATTACK = 355, ITEM_ORAN_BERRY = 70;
 enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat, Death, Dialogue };
 enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat, PlayerFaint };
-enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit };
+enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit, ExplorationBerryText };
 enum class DialogueStage : std::uint8_t { Player, Npc };
 enum class DeathStage : std::uint8_t { FadeOut, Blackout };
 struct ActorCompletion { bool player=false, enemy=false, partner=false; };
@@ -148,12 +148,13 @@ bool dungeonScene(const GameplayState&);
 bool bedroomScene(const GameplayState&);
 bool nightScene(const GameplayState&);
 bool showFriendlyDisc(const GameplayState&, bool friendly, bool player);
-constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=1200;
+constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=4600;
 std::uint32_t gameplayClip(const GameplayState&);
 bool gameplayLoop(const GameplayState&);
 // Shared attack roll: both sides hit 80%; only critical chance differs.
 struct AttackRoll { bool hit = false, critical = false; std::uint32_t damage = 0; };
 AttackRoll rollBasicAttack(Rng&, bool player);
+enum class SurvivalFirst : std::uint8_t { None, Oran, Stairs };
 struct ExplorationState {
     std::string assetVersion;
     std::uint64_t runId = 0, mapSeed = 0;
@@ -167,6 +168,7 @@ struct ExplorationState {
     Mask visited{}, blocked{}, discovered{}, failedTargets{};
     std::uint32_t visitedRooms = 0, stalledActions = 0, targetFailures = 0;
     int knownStairs = -1;
+    SurvivalFirst survivalFirst=SurvivalFirst::None;
     std::uint32_t targetInstance = 0;
     std::uint64_t occupancyVersion = 0;
     std::uint32_t floorSteps = 0, poseSteps = 0;
@@ -202,7 +204,11 @@ private:
     void enterFloor();
     void plan();
     void discover();
-    Mask occupancy() const;
+    Mask occupancy(bool playerPath = false) const;
+    bool friendly(const Entity&) const;
+    bool lowHealth() const;
+    bool selectSurvival(const Search&);
+    Mask playerOccupancy() const;
     void invalidate(bool clearTarget = true);
     bool selectPriority(const Search&, bool items, bool frontiers);
     bool frontier(int tile) const;

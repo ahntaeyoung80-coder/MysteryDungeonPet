@@ -1,6 +1,6 @@
 # MysteryDungeonPet
 
-GitHub Desktop에서 `work`를 pull한 뒤 루트의 **MysteryDungeonPet.exe**를 더블클릭한다. ZIP 과정은 없다. 최신 동작·MDES4·남은 검증은 [현재 상태](PROJECT_STATE.md), [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 아래 설명은 이전 체크포인트 이력이다.
+GitHub Desktop에서 `work`를 pull한 뒤 루트의 **MysteryDungeonPet.exe**를 더블클릭한다. ZIP 과정은 없다. 최신 동작·MDES5·남은 검증은 [현재 상태](PROJECT_STATE.md), [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 아래 설명은 이전 체크포인트 이력이다.
 
 2026-10-14 개선 제작: 8방향 연속 이동·계단 우선 탐험·적 추적/소비 기반 턴·HP5·사망 연출·원본 소품·전체 식당/낮밤 침실·NPC 대화를 구현했다. [현재 상태](PROJECT_STATE.md)와 [개선 인수인계](docs/IMPROVEMENT_HANDOFF.md)를 우선한다. 새 코드의 실제 Windows GUI·OS 사건·장기 성능 검증은 아직 남아 있다. 아래 A/B 단계 설명은 이전 개발 이력이다.
 

@@ -21,10 +21,10 @@ $Rows = @(Import-Csv $Csv)
 $Status = 'pending: runner session paused rendering'
 if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     $Joined = $Events -join "`n"
-    foreach ($Pattern in @('select clip=17', 'life=ReturnHome', 'life=HomeScene', 'guild room=GuildDining characters=12 objectCount=1', 'guild room=PlayerRoom characters=1', 'life=Eat', 'life=Sleep', 'life=Wake', 'life=Ready', 'life=Explore.*day=2', 'sceneBeat=13 ', 'sceneBeat=2 ', 'sceneBeat=6 ', 'sceneBeat=7 ', 'sceneBeat=15 ', 'sceneBeat=8 ', 'sceneBeat=16 ')) {
+    foreach ($Pattern in @('select clip=17', 'life=ReturnHome', 'life=HomeScene', 'guild room=GuildDining characters=12 objectCount=1', 'guild room=PlayerRoom characters=2', 'guild partner wake finished', 'life=Eat', 'life=Sleep', 'life=Wake', 'life=Ready', 'life=Explore.*day=2', 'sceneBeat=13 ', 'sceneBeat=2 ', 'sceneBeat=6 ', 'sceneBeat=7 ', 'sceneBeat=15 ', 'sceneBeat=8 ', 'sceneBeat=9 ', 'sceneBeat=16 ')) {
         if ($Joined -notmatch $Pattern) { throw "missing production life event: $Pattern" }
     }
-    if ($Joined -match 'guild partner wake finished|sceneBeat=(3|4|5|9|10|11|12) ') { throw 'old bedroom interaction/fades replayed' }
+    if ($Joined -match 'sceneBeat=(3|4|5|10|11|12) ') { throw 'old bedroom interaction/fades replayed' }
     $Returning = @($Events | Where-Object { $_ -match 'life=ReturnHome' })[0]
     $Eating = @($Events | Where-Object { $_ -match 'life=Eat' })[0]
     $ReturnUs = [long]($Returning -split ' ')[0]
@@ -35,7 +35,7 @@ if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     $Status = 'pass'
 }
 @{ status=$Status; test='production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore';
-   coreScenarios=12; guildDiningCharacters=12; guildMembers=10; bedroomCharacters=1; actualWindows11='pending' } | ConvertTo-Json | Set-Content "$Output/life-result.json"
+   coreScenarios=12; guildDiningCharacters=12; guildMembers=10; bedroomCharacters=2; actualWindows11='pending' } | ConvertTo-Json | Set-Content "$Output/life-result.json"
 $Before = @(Get-Content $EventPath).Count
 $CombatCsv = "$Output/combat.csv"
 $CombatArgs = @('--explore', "`"$Package`"", '--gameplay-assets', "`"$Assets`"", '--snapshot', "`"$Output/combat.mdes`"", '--duration', '12', '--metrics', "`"$CombatCsv`"")

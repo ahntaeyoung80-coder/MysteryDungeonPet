@@ -56,7 +56,7 @@ int main(int argc,char** argv) { try {
     auto blocked=e.state();blocked.position=near;blocked.visited[near]=1;blocked.target=-1;blocked.goalKind=GoalKind::None;blocked.targetInstance=0;
     Explorer temporary(blocked);temporary.setBlocked(state.world.stairs,true);temporary.advance();check(temporary.state().knownStairs==state.world.stairs,"occupancy erased stairs");
     check(e.advance().kind==EventKind::Pose && e.state().completed,"arrival does not clear");
-    auto bytes=encodeSnapshot(e.state());check(bytes[4]==4,"writer not MDES4");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
+    auto bytes=encodeSnapshot(e.state());check(bytes[4]==5,"writer not MDES5");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
     auto turnFixture=[](int player,int enemy,bool playerMoved,bool enemyMoved) {
         Explorer initial(400,42,"turns",fixtureProfiles(1),{0,0,0,0});auto s=initial.state();
         s.world.terrain.fill(0);s.world.room.fill(-1);
@@ -110,7 +110,7 @@ int main(int argc,char** argv) { try {
     berry.advanceGameplay(1000);check(berry.state().targetInstance==2 && berry.goal()==GoalKind::Item,"auxiliary berry priority lost when stairs unavailable");
     auto capped=turnFixture(3*kWidth+3,3*kWidth+4,false,false);capped.advanceGameplay(1000);auto healing=capped.state();
     healing.gameplay.hearts=4;healing.gameplay.oran=1;capped=Explorer(healing);
-    check(capped.advanceGameplay(1350).event==GameplayEvent::UseOranBerry && capped.state().gameplay.hearts==5,"berry did not cap at five HP");
+    check(capped.advanceGameplay(1350).event==GameplayEvent::PlayerAttack && capped.state().gameplay.hearts==4 && capped.state().gameplay.oran==1,"berry wasted at one missing HP");
     auto death=turnFixture(3*kWidth+3,3*kWidth+4,false,false);auto ds=death.state();
     check(ds.gameplay.hearts==kMaxHp,"default HP not five");
     ds.gameplay.life=LifePhase::Combat;ds.gameplay.combat=CombatPhase::PlayerFaint;ds.gameplay.hearts=0;ds.gameplay.enemyInstance=1;ds.gameplay.deadlineMs=5000;death=Explorer(ds);

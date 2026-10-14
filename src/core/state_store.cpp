@@ -1,6 +1,7 @@
 #include "core/exploration_io.hpp"
 #include "core/package.hpp"
 #include <cstdio>
+#include <algorithm>
 #include <limits>
 #include <system_error>
 #ifdef _WIN32
@@ -78,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(4); // MDES4; preserves the MDES3 layout and accepts schemas 1..3.
+    w.u32(0x5345444d); w.u32(5); // MDES5 appends the survival discovery order; reads schemas 1..4.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -129,6 +130,7 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     }
     w.u64(g.walkStartedMs);detail::writeMove(w,g.movement);
     for(const auto& e:s.population.entities) detail::writeMove(w,e.movement);
+    w.u32(static_cast<unsigned>(s.survivalFirst));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -137,7 +139,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema != 1 && schema != 2 && schema != 3 && schema != 4) throw std::runtime_error("unknown snapshot schema");
+    if (schema != 1 && schema != 2 && schema != 3 && schema != 4 && schema != 5) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -198,7 +200,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         s.visitedRooms=r.count(7);s.stalledActions=r.count(Explorer::kFloorStepLimit+kTiles+1);s.targetFailures=r.u32();
         s.knownStairs=static_cast<int>(r.count(kTiles))-1;s.targetInstance=r.count(kTiles);
         auto& g=s.gameplay;g.actionRound=r.u64();g.playerActionRound=r.u64();g.playerDirection=r.count(7);
-        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
+        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=5?17:schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
         for(auto& e:s.population.entities) {
             e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
             e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();
@@ -234,6 +236,12 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
                 if(g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::Defeat) e.actionRound=g.actionRound;
             }
         }
+    }
+    if(schema>=5) s.survivalFirst=static_cast<SurvivalFirst>(r.count(2));
+    else {
+        const bool oran=std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.kind==EntityKind::Item && e.originalId==ITEM_ORAN_BERRY && !e.done && s.discovered[e.tile];});
+        s.survivalFirst=s.knownStairs>=0?SurvivalFirst::Stairs:oran?SurvivalFirst::Oran:SurvivalFirst::None;
+        if(s.gameplay.sceneBeat==SceneBeat::RoomExit) s.gameplay.deadlineMs=s.gameplay.phaseStartedMs+kRoomExitMs;
     }
     r.u32(); r.end();
     validateState(s);
