@@ -8,7 +8,7 @@
 
 우호 NPC 타일로 이동할 수 있으며 플레이어의 이전 타일로 NPC를 옮기는 자리 교환을 한 행동에 commit한다. 양쪽400ms 이동을 저장/복원하고 인사 완료/onceKey를 바꾸지 않는다. 적·외부 blocker의 점유는 유지한다. 새 저장은 [MDES5](docs/implementation/MDES5_FORMAT.md)이며 MDES1~4를 읽는다. 새 원작 자산 조사/추출 없이 기존 자산만 사용했다.
 
-실행은 work pull 후 루트 EXE 더블클릭이다. Release7/7·ASan/UBSan7/7·Python25/25(skip없음)·Windows x64 교차 compile/link·루트 EXE/소스/자산 hash 일치를 확인했다. 검증·남은 Windows 확인은 `docs/validation/2026-10-14-survival-summary.json`에 기록한다. 아래 명세/검증은 이전 이력이다.
+실행은 work pull 후 루트 EXE 더블클릭이다. Release7/7·ASan/UBSan7/7·Python26/26(skip없음)·Windows x64 교차 compile/link·루트 EXE/소스/자산 hash 일치를 확인했다. 검증·남은 Windows 확인은 `docs/validation/2026-10-14-survival-summary.json`에 기록한다. 아래 명세/검증은 이전 이력이다.
 
 ## 즉시 구현 명세 반영 — 2026-10-14
 

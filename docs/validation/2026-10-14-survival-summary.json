@@ -51,10 +51,10 @@
     "detect_leaks": true
   },
   "python": {
-    "passed": 25,
-    "tests": 25,
+    "passed": 26,
+    "tests": 26,
     "skipped": 0,
-    "seconds": 4.49,
+    "seconds": 4.645,
     "log": "2026-10-14-survival-python.txt"
   },
   "scenario_restore": {
@@ -81,5 +81,11 @@
   "pending": [
     "Current code native Windows CI and root EXE execution",
     "User Windows11 visual acceptance, lock/suspend/resume and long duration CPU/memory"
-  ]
+  ],
+  "prior_windows_ci": {
+    "run_id": 38520663883,
+    "commit": "5b7794d",
+    "native_ctest": "7/7 passed",
+    "failure": "headless driver stopped at Ready/MorningFace after greeting restoration; changed terminal boundary to Ready/RoomExit and added process-level repeated-restore regression"
+  }
 }

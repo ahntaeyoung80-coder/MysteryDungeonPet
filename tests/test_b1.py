@@ -52,6 +52,20 @@ class B1BridgeTests(unittest.TestCase):
             write_profiles([floor])
 
     @unittest.skipUnless(NATIVE.is_file(), 'native explorer unavailable')
+    def test_gameplay_greeting_terminal_restore(self):
+        package = ROOT / 'assets/original/exploration/dungeon-0/exploration.mdpe'
+        with tempfile.TemporaryDirectory() as d:
+            snapshot = Path(d) / 'greeting.mdes'
+            first = json.loads(subprocess.check_output([str(NATIVE), str(package), '42', str(snapshot), '--gameplay']))
+            self.assertEqual((first['life'], first['sceneBeat']), ('Ready', 16))
+            before = snapshot.read_bytes()
+            restored = json.loads(subprocess.check_output([str(NATIVE), str(package), '99', str(snapshot), '--gameplay']))
+            self.assertEqual(restored['ticks'], 0)
+            self.assertEqual(snapshot.read_bytes(), before)
+            for field in ('hearts', 'day', 'rngState', 'inventory', 'gameplayTransactions'):
+                self.assertEqual(restored[field], first[field])
+
+    @unittest.skipUnless(NATIVE.is_file(), 'native explorer unavailable')
     def test_native_autotile_matches_skytemple_drawer(self):
         from tools.mdpet.extractor import smoke
         from ndspy.rom import NintendoDSRom

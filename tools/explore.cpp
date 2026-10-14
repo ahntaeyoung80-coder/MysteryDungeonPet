@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
         if (std::string(argv[argc - 1]) == "--gameplay") explorer.enableGameplay(time);
         if (explorer.state().gameplay.enabled) time = std::max(time, explorer.state().gameplay.phaseStartedMs);
         // Headless acceptance stops at Ready/RoomExit, before the next-day transaction.
-        while (explorer.state().gameplay.enabled ? explorer.state().gameplay.life != pet::LifePhase::Ready : explorer.state().phase != pet::Phase::Home) {
+        while (explorer.state().gameplay.enabled ? (explorer.state().gameplay.life != pet::LifePhase::Ready || explorer.state().gameplay.sceneBeat != pet::SceneBeat::RoomExit) : explorer.state().phase != pet::Phase::Home) {
             auto candidate = explorer;
             pet::Event event;
             if (candidate.state().gameplay.enabled) {

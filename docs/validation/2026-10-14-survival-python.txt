@@ -14,6 +14,7 @@ test_pixels_markers_alias_rows_ticks_and_reproducibility (test_a1.Packages.test_
 test_a1_to_native_preserves_every_frame_and_alias_timing (test_a2_bridge.A2Bridge.test_a1_to_native_preserves_every_frame_and_alias_timing) ... ok
 test_unsupported_budget_and_alias_geometry_are_explicit (test_a2_bridge.A2Bridge.test_unsupported_budget_and_alias_geometry_are_explicit) ... ok
 test_durable_home_does_not_replay_pickup_or_clear (test_b1.B1BridgeTests.test_durable_home_does_not_replay_pickup_or_clear) ... ok
+test_gameplay_greeting_terminal_restore (test_b1.B1BridgeTests.test_gameplay_greeting_terminal_restore) ... ok
 test_native_autotile_matches_skytemple_drawer (test_b1.B1BridgeTests.test_native_autotile_matches_skytemple_drawer) ... ok
 test_normal_and_floor_items_only (test_b1.B1BridgeTests.test_normal_and_floor_items_only) ... ok
 test_original_conversion_reproducible_and_closed (test_b1.B1BridgeTests.test_original_conversion_reproducible_and_closed) ... ok
@@ -28,7 +29,7 @@ test_mismatched_direction_frame_anchor_and_timing_are_rejected (test_playback_me
 test_native_metadata_alias_and_one_row_and_final_live_window (test_playback_metrics.PlaybackMetricsTests.test_native_metadata_alias_and_one_row_and_final_live_window) ... ok
 
 ----------------------------------------------------------------------
-Ran 25 tests in 4.490s
+Ran 26 tests in 4.645s
 
 OK
 A1->MDPA->native: 144 frames (including aliases), points, flags, markers, ticks, hashes pass
