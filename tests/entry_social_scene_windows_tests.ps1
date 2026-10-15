@@ -13,7 +13,7 @@ function Inspect([string]$Name){
  return $Result
 }
 function Run([string]$Name,[int]$Seconds){
- $ArgsForApp=@('--explore',"`"$Package`"",'--snapshot',"`"$Output/$Name.mdes`"",'--duration',$Seconds,
+ $ArgsForApp=@('--solo','--explore',"`"$Package`"",'--snapshot',"`"$Output/$Name.mdes`"",'--duration',$Seconds,
   '--metrics',"`"$Output/$Name-metrics.csv`"",'--movement-trace',"`"$Output/$Name.csv`"")
  $Process=Start-Process $Exe -ArgumentList $ArgsForApp -PassThru
  if(-not $Process.WaitForExit(30000)){$Process.Kill();throw 'entry/social app timeout'}

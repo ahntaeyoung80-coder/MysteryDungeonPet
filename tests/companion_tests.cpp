@@ -1,5 +1,10 @@
 #include "core/exploration.hpp"
 #include "legacy_snapshot.hpp"
+#include "core/exploration_package.hpp"
+#include "core/package.hpp"
+#include "core/gameplay_scene.hpp"
+#include <chrono>
+#include <fstream>
 #include <iostream>
 #include <stdexcept>
 using namespace pet;
@@ -62,7 +67,45 @@ void combatCases(){
   check(e.state().gameplay.day==2 && e.state().gameplay.hearts==5 && e.state().gameplay.companion.hearts==5 && !e.state().gameplay.companion.hidden,"party next day recovery failed");
  }
 }
-int main(){try{
+int main(int argc,char** argv){try{
+ if(argc==4 && std::string(argv[1])=="--fixtures") {
+  const auto package=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];std::filesystem::create_directories(out);
+  const auto now=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+  for(const std::string name:{"follow","attack","target","room","corridor","faint"}) {
+   auto s=companionFixture();s.assetVersion=package.assetVersion;s.floors=package.floors;auto& g=s.gameplay;
+   g.actionRound=1;g.phaseStartedMs=now;g.deadlineMs=now+1000;g.companion.enabled=true;g.companion.tile=124;
+   if(name=="follow") s.population.entities={{1,10,EntityKind::Item,129,false}};
+   else {
+    const bool target=name=="target" || name=="faint";
+    s.population.entities={{1,4,EntityKind::Friend,target?123:126,false}};g.hostile={1};g.life=LifePhase::Combat;g.enemyInstance=1;g.enemyHits=2;
+    if(target) {g.combat=CombatPhase::EnemyTurn;g.playerActionRound=g.companion.actionRound=1;g.enemyTargetsCompanion=true;}
+    else if(name=="attack") {g.companion.tile=150;g.combat=CombatPhase::CompanionTurn;g.playerActionRound=1;}
+    else {g.combat=CombatPhase::CompanionTurn;g.playerActionRound=1;s.population.entities[0].actionRound=1;}
+    if(name=="corridor")s.world.room[124]=s.world.room[125]=-1;
+    if(name=="faint")g.companion.hearts=1;
+    Explorer e(s);forceHit(e,!target);s=e.state();
+   }
+   saveSnapshot(out/(name+".mdes"),s);
+  }
+  return 0;
+ }
+ if(argc==4 && std::string(argv[1])=="--inspect") {
+  const auto p=loadExplorationPackage(argv[2]);const auto s=loadSnapshot(argv[3],p.assetVersion);const auto& g=s.gameplay;
+  std::cout<<"{\"runId\":"<<s.runId<<",\"day\":"<<g.day<<",\"life\":\""<<lifeName(g.life)<<"\",\"player\":"<<s.position
+   <<",\"companionEnabled\":"<<g.companion.enabled<<",\"companion\":"<<g.companion.tile<<",\"playerHp\":"<<g.hearts<<",\"companionHp\":"<<g.companion.hearts<<"}\n";
+  return 0;
+ }
+
+ const auto actors=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original/gameplay/actors";
+ const auto partner=loadPackage(actors/"asset-1/asset.mdpa"),npc=loadPackage(actors/"asset-2/asset.mdpa");
+ for(unsigned direction=0;direction<8;++direction){
+  for(auto clip:{0U,1U,6U,7U,13U,14U,15U,17U,22U,27U,33U})check(!partner.frames(clip,direction).empty(),"companion player-equivalent clip absent");
+  for(auto clip:{0U,1U,6U,7U})check(!npc.frames(clip,direction).empty(),"Kecleon dungeon clip absent");
+ }
+ check(partner.assetKey!=npc.assetKey && npc.provenance.find("383")!=std::string::npos,"companion and Kecleon assets not separated");
+ GameplayState hud;hud.enabled=true;hud.companion.enabled=true;Surface full(200,200),hurt(200,200);
+ gameplayOverlay(full,hud,0);hud.companion.hearts=4;gameplayOverlay(hurt,hud,0);
+ check(full.pixels!=hurt.pixels,"independent companion hearts not displayed");
  combatCases();
  for(unsigned dir=0;dir<8;++dir)for(bool reverse:{false,true}){
   auto s=companionFixture();auto [dx,dy]=kDirections[dir];const int next=s.position+dy*24+dx;

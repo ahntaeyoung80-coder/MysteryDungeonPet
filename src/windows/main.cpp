@@ -108,7 +108,7 @@ struct Options {
     std::filesystem::path exploration, snapshot;
     std::filesystem::path gameplayAssets = runtimePath(L"assets/gameplay",L"assets/original/gameplay");
     unsigned seed = 1;
-    bool newRun = false;
+    bool newRun = false, solo = false;
     unsigned scale = 3, direction = 0;
     uint32_t clip = 0;
     bool loop = true, validate = false, scaleExplicit = false;
@@ -137,6 +137,7 @@ Options options() {
         else if (arg == L"--gameplay-assets") o.gameplayAssets = value();
         else if (arg == L"--snapshot") o.snapshot = value();
         else if (arg == L"--seed") o.seed = number(value(), UINT32_MAX);
+        else if (arg == L"--solo") o.solo = true;
         else if (arg == L"--new-run") o.newRun = true;
         else if (arg == L"--metrics") o.metrics = value();
         else if (arg == L"--movement-trace") o.movementTrace = value();
@@ -174,7 +175,7 @@ class App {
     Options options_;
     std::filesystem::path directory_;
     Assets assets_;
-    std::optional<Assets> enemyAssets_, homeAssets_, propsAssets_;
+    std::optional<Assets> enemyAssets_, companionAssets_, homeAssets_, propsAssets_;
     std::vector<GuildRoom> guildRooms_;
     std::map<std::string, Assets> guildAssets_;
     struct GuildLiveActor {
@@ -190,6 +191,13 @@ class App {
     int guildRoom_ = -1;
     LifePhase guildLife_ = LifePhase::Explore;
     SceneBeat guildBeat_=SceneBeat::None;
+    Animator companionAnimator_;
+    Motion companionMotion_;
+    uint32_t companionClip_=7;
+    unsigned companionDirection_=0;
+    size_t companionFrame_=0;
+    uint64_t companionPhaseStarted_=UINT64_MAX;
+    Point lastCompanionDraw_{-1,-1};
     Animator enemyAnimator_;
     uint32_t enemyClip_ = 7;
     size_t enemyFrame_ = 0;
@@ -272,7 +280,10 @@ class App {
             << state.floorIndex << ',' << state.world.start << ',' << state.world.stairs << ',' << state.position << ','
             << std::count_if(state.population.entities.begin(),state.population.entities.end(),[&](const auto& e){return e.tile==state.world.start;}) << ',' << holdingScenePose();
         const auto partner=std::find_if(guildLive_.begin(),guildLive_.end(),[](const auto& a){return a.cue->kind==GuildActorKind::Partner;});
-        movementTrace_ << ',' << (partner==guildLive_.end()?0:partner->clip) << ',' << (partner==guildLive_.end()?0:partner->frame) << ',' << light << '\n';
+        movementTrace_ << ',' << (partner==guildLive_.end()?0:partner->clip) << ',' << (partner==guildLive_.end()?0:partner->frame) << ',' << light;
+        const auto& p=g.companion;const auto point=companionMotion_.sample(now);
+        movementTrace_ << ',' << p.enabled << ',' << p.tile << ',' << point.x << ',' << point.y << ',' << companionClip_ << ',' << companionFrame_ << ',' << companionMotion_.active(now)
+            << ',' << g.hearts << ',' << p.hearts << ',' << g.actionRound << ',' << g.playerActionRound << ',' << p.actionRound << ',' << g.enemyTargetsCompanion << ',' << static_cast<unsigned>(g.combat) << '\n';
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
     }
@@ -295,7 +306,7 @@ class App {
     void synchronizePause(int64_t now) {
         const bool p=blocked();if(p==paused_) return;
         if(p) {
-            pauseUtc_=utcMs();playerMotion_.pause(now);guildCamera_.pause(now);animator_.pause(now);enemyAnimator_.pause(now);
+            pauseUtc_=utcMs();playerMotion_.pause(now);guildCamera_.pause(now);animator_.pause(now);enemyAnimator_.pause(now);companionAnimator_.pause(now);companionMotion_.pause(now);
             for(auto& entry:actorMotions_) entry.second.pause(now);
             for(auto& entry:actorAnimators_) entry.second.pause(now);
             for(auto& actor:guildLive_) actor.animator.pause(now);
@@ -307,7 +318,7 @@ class App {
                 const auto deadline=explorer_->state().gameplay.deadlineMs;
                 exploreDeadline_=deadlineFromUtc(now,utcMs(),deadline);
             }
-            playerMotion_.resume(now);guildCamera_.resume(now);animator_.resume(now);enemyAnimator_.resume(now);
+            playerMotion_.resume(now);guildCamera_.resume(now);animator_.resume(now);enemyAnimator_.resume(now);companionAnimator_.resume(now);companionMotion_.resume(now);
             for(auto& entry:actorMotions_) entry.second.resume(now);
             for(auto& entry:actorAnimators_) entry.second.resume(now);
             for(auto& actor:guildLive_) actor.animator.resume(now);
@@ -323,6 +334,7 @@ class App {
             motion.begin(actor,m.actionId,tilePoint(m.from),tilePoint(m.to),now-int64_t(elapsed*1000),m.direction,int64_t(m.durationMs)*1000);
         };
         restore(playerMotion_,0,state.gameplay.movement);
+        if(state.gameplay.companion.enabled) restore(companionMotion_,kCompanionActorId,state.gameplay.companion.movement);
         for(const auto& e:state.population.entities) if(e.movement.actionId) {
             restore(actorMotions_[e.instanceId],e.instanceId,e.movement);
             if(actorMotions_[e.instanceId].active(now)) actorAnimators_[e.instanceId].start(enemyAssets_->package,0,e.movement.direction, true,now-int64_t(std::min<uint64_t>(400,utc>e.movement.startedMs?utc-e.movement.startedMs:0))*1000);
@@ -628,8 +640,24 @@ class App {
         log("WTSRegisterSessionNotification OS=" + std::to_string(GetLastError()));
         sessionRetry_ = sessionAttempts_ < 3 ? now + 5000000 : 0;
     }
+    uint32_t npcClip(uint32_t requested) const {
+        const auto& clips=enemyAssets_->package.clips;
+        return std::any_of(clips.begin(),clips.end(),[&](const auto& c){return c.id==requested;})?requested:requested==33?6:7;
+    }
+    void syncCompanion(int64_t now) {
+        const auto& g=explorer_->state().gameplay;
+        if(!g.companion.enabled || !dungeonScene(g)) {companionAnimator_.stop();return;}
+        const auto clip=companionClip(g);const auto dir=g.companion.direction;
+        const bool loop=companionLoop(g);
+        if(!companionAnimator_.active() || clip!=companionClip_ || (!loop && companionPhaseStarted_!=g.phaseStartedMs) || (dir!=companionDirection_ && clip!=0)) {
+            auto utc=utcMs();auto started=clip==0?g.companion.walkStartedMs:g.phaseStartedMs;
+            const auto elapsed=std::min<uint64_t>(60000,utc>started?utc-started:0);
+            companionAnimator_.start(companionAssets_->package,clip,dir,loop,std::max<int64_t>(0,now-int64_t(elapsed)*1000));companionFrame_=0;
+        } else if(dir!=companionDirection_) companionAnimator_.changeDirection(companionAssets_->package,clip,dir);
+        companionClip_=clip;companionDirection_=dir;companionPhaseStarted_=g.phaseStartedMs;
+    }
     void settleNavigationReset(int64_t now) {
-        playerMotion_.reset(playerMotion_.sample(now));
+        playerMotion_.reset(playerMotion_.sample(now));companionMotion_.reset(companionMotion_.sample(now));companionAnimator_.stop();
         actorMotions_.clear();actorAnimators_.clear();actorFrames_.clear();enemyAnimator_.stop();
         completion_={};poseFinished_=false;clip_=gameplayClip(explorer_->state().gameplay);loop_=gameplayLoop(explorer_->state().gameplay);
         exploreDeadline_=deadlineFromUtc(now,utcMs(),explorer_->state().gameplay.deadlineMs);
@@ -638,6 +666,7 @@ class App {
     void advanceExploration(int64_t now) {
         if (!explorer_ || blocked() || (now < exploreDeadline_ && !poseFinished_)) return;
         const int oldPosition = explorer_->state().position;
+        const auto oldCompanion=explorer_->state().gameplay.companion;
         const auto oldEntities=explorer_->state().population.entities;
         const unsigned oldDirection = direction_;
         const auto oldLife = explorer_->state().gameplay.life;
@@ -645,6 +674,7 @@ class App {
         const auto oldBeat=explorer_->state().gameplay.sceneBeat;
         const auto oldDialogue=explorer_->state().gameplay.dialogueStage;
         auto candidate = *explorer_;
+        if(!options_.solo && candidate.state().gameplay.life==LifePhase::Explore) candidate.enableCompanion();
         const auto event = candidate.advanceGameplay(utcMs(), completion_);
         poseFinished_ = false; completion_={};
         if (encodeSnapshot(candidate.state()) == encodeSnapshot(explorer_->state())) {
@@ -655,6 +685,12 @@ class App {
         saveSnapshot(options_.snapshot, candidate.state());
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
         const auto& g = explorer_->state().gameplay;
+        const bool newFloor=event.event==GameplayEvent::FloorChanged || (event.event==GameplayEvent::Explore && oldLife==LifePhase::Ready);
+        if(g.companion.enabled) {
+            if(newFloor || !oldCompanion.enabled) companionMotion_.reset(tilePoint(g.companion.tile));
+            else if(oldCompanion.tile!=g.companion.tile) companionMotion_.begin(kCompanionActorId,g.companion.movement.actionId,tilePoint(oldCompanion.tile),tilePoint(g.companion.tile),now,g.companion.direction);
+        }
+        syncCompanion(now);
         exploreDeadline_=deadlineFromUtc(now,utcMs(),g.deadlineMs);
         for(const auto& e:explorer_->state().population.entities) {
             const auto old=std::find_if(oldEntities.begin(),oldEntities.end(),[&](const auto& x){return x.instanceId==e.instanceId;});
@@ -678,9 +714,9 @@ class App {
         if (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) {
             const auto entity = std::find_if(explorer_->state().population.entities.begin(), explorer_->state().population.entities.end(), [&](const auto& e) { return e.instanceId == g.enemyInstance; });
             const int dx = entity->tile % kWidth - oldPosition % kWidth, dy = entity->tile / kWidth - oldPosition / kWidth;
-            direction_ = directionBetween(explorer_->state().position,entity->tile);
+            if(g.combat!=CombatPhase::PlayerApproach || g.life!=LifePhase::Combat) direction_ = directionBetween(explorer_->state().position,entity->tile);
             (void)dx; (void)dy;
-            enemyDirection_ = (direction_ + 4) % 8;
+            enemyDirection_ = entity->direction;
         }
         if (g.homeScene) direction_ = g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
             bedroomExit(guildRooms_[1].player().position,g,utcMs()).direction:guildRooms_[bedroomScene(g)?1:0].player().direction;
@@ -691,9 +727,9 @@ class App {
         } else if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage || oldBeat!=g.sceneBeat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
         if(event.event == GameplayEvent::FloorChanged || (event.event == GameplayEvent::Explore && oldLife==LifePhase::Ready)) {playerMotion_.reset(tilePoint(explorer_->state().position));actorMotions_.clear();actorAnimators_.clear();}
         if ((g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && (oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage)) {
-            enemyClip_ = g.life==LifePhase::Dialogue ? (g.dialogueStage==DialogueStage::Npc?22:7) : g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? 33 : 7;
+            enemyClip_ = g.life==LifePhase::Dialogue ? (g.dialogueStage==DialogueStage::Npc?npcClip(22):7) : g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? npcClip(33) : 7;
             enemyFrame_ = 0;
-            enemyAnimator_.start(enemyAssets_->package, enemyClip_, enemyDirection_, enemyClip_ == 7, now);
+            enemyAnimator_.start(enemyAssets_->package, enemyClip_, enemyDirection_, enemyClip_ == 7 && !(g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc), now);
         }
         if (!event.onceKey.empty()) log("gameplay onceKey=" + event.onceKey);
         if (oldLife != g.life || oldCombat != g.combat || oldBeat!=g.sceneBeat || oldDialogue!=g.dialogueStage) log(std::string("life=") + lifeName(g.life) + " combat=" + combatName(g.combat) + " day=" + std::to_string(g.day) + " hearts=" + std::to_string(g.hearts) + " sceneBeat=" + std::to_string(static_cast<unsigned>(g.sceneBeat)) + " dialogueStage=" + std::to_string(static_cast<unsigned>(g.dialogueStage)));
@@ -714,7 +750,7 @@ class App {
             for (const auto& cue : guildRooms_[room].actors) {
                 if (cue.kind == GuildActorKind::Player) continue;
                 const Assets* source = nullptr;
-                if (cue.kind == GuildActorKind::Partner) source = &*enemyAssets_;
+                if (cue.kind == GuildActorKind::Partner) source = &*companionAssets_;
                 else {
                     auto it = guildAssets_.find(cue.assetFile);
                     if (it == guildAssets_.end()) {
@@ -785,16 +821,24 @@ class App {
             if (result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs < *nextFrameDeadline_)) nextFrameDeadline_ = result.nextDeadlineUs;
             completion_.enemy=result.finished;
         }
+        if(explorer_ && dungeonScene(explorer_->state().gameplay) && companionAnimator_.active()) {
+            const auto point=raster(companionMotion_.sample(now));
+            dirty_=dirty_ || point.x!=lastCompanionDraw_.x || point.y!=lastCompanionDraw_.y;lastCompanionDraw_=point;
+            const auto result=companionAnimator_.advance(now);dirty_=dirty_ || companionFrame_!=result.frame;companionFrame_=result.frame;
+            completion_.partner=result.finished;
+            if(result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs<*nextFrameDeadline_)) nextFrameDeadline_=result.nextDeadlineUs;
+        }
         advanceGuildActors(now);
         if (explorer_ && bedroomScene(explorer_->state().gameplay))
             completion_.partner = std::all_of(guildLive_.begin(), guildLive_.end(), [](const auto& actor) { return actor.cue->kind != GuildActorKind::Partner || actor.finished; });
         if(explorer_) {
             const auto& g=explorer_->state().gameplay;
             const bool enemy=g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint);
-            const bool joint=(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) || g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace || (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::Sleeping);
+            const bool partner=g.life==LifePhase::Combat && (g.combat==CombatPhase::CompanionAttack || g.combat==CombatPhase::CompanionHurt || g.combat==CombatPhase::CompanionFaint);
+            const bool joint=(g.life==LifePhase::Pose && g.companion.enabled) || (g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) || g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace || (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::Sleeping);
             const bool body=(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) || g.life==LifePhase::Pose || g.life==LifePhase::Emotion || (g.life==LifePhase::Combat &&
-                (g.combat==CombatPhase::PlayerAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::PlayerFaint || enemy));
-            poseFinished_=joint?(completion_.player&&completion_.partner):body?(enemy?completion_.enemy:completion_.player):false;
+                (g.combat==CombatPhase::PlayerAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::PlayerFaint || enemy || partner));
+            poseFinished_=joint?(completion_.player&&completion_.partner):body?(enemy?completion_.enemy:partner?completion_.partner:completion_.player):false;
             if(g.life==LifePhase::Death || g.life==LifePhase::ReturnHome || g.sceneBeat!=SceneBeat::None) dirty_=true;
         }
         if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
@@ -868,6 +912,13 @@ class App {
             const auto& f = *playback.frame;
             layers.push_back({assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition});
         }
+        if(explorer_ && dungeonScene(explorer_->state().gameplay)) {
+            const auto& p=explorer_->state().gameplay.companion;
+            if(p.enabled && !p.hidden) {
+                const auto& f=companionAssets_->package.frames(companionClip_,companionDirection_)[companionFrame_];
+                layers.push_back({companionAssets_->atlas.get(),f.rect,f.anchor,raster(companionMotion_.sample(now))});
+            }
+        }
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
         if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs());
@@ -901,14 +952,16 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
         metrics_ << "elapsed_seconds,cpu_one_core_percent,cpu_all_cores_percent,logical_cores,working_set_bytes,private_bytes,peak_working_set_bytes,render_submissions,decode_count,marker_count,finite_finish_count,skipped_cycles,process_handles,gdi_objects,render_paused,submissions_while_paused,dpi,physical_size,integer_scale,window_x,window_y,switch_count,final_sample," << PlaybackSample::columns << '\n';
         decodes_ = assets_.decoded ? 1 : 0;
         if (!options_.exploration.empty()) {
-            enemyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-1/asset.mdpa");
+            companionAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-1/asset.mdpa");
+            enemyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-2/asset.mdpa");
+            decodes_+=companionAssets_->decoded?1:0;
             homeAssets_ = Assets::load(options_.gameplayAssets / L"home/home.mdpa");
             propsAssets_=Assets::load(options_.gameplayAssets / L"props/props.mdpa");
             decodes_+=propsAssets_->decoded?1:0;
@@ -932,8 +985,11 @@ public:
             }
             playerMotion_.reset(tilePoint(explorer_->state().position));
             explorer_->enableGameplay(utcMs());
+            if(!options_.solo) explorer_->enableCompanion();
+            if(explorer_->state().gameplay.companion.enabled)companionMotion_.reset(tilePoint(explorer_->state().gameplay.companion.tile));
             restoreMovement(nowUs());
             if(explorer_->state().gameplay.sceneBeat==SceneBeat::DiningPan) guildCamera_.begin(UINT32_MAX,explorer_->state().gameplay.day,{368,212},{168,212},restoredClipStart(nowUs()),6,4000000);
+            syncCompanion(nowUs());
             saveSnapshot(options_.snapshot, explorer_->state());
             log(std::string("exploration snapshot=") + (restoring ? "restored" : "new") +
                 " day=" + std::to_string(explorer_->state().gameplay.day) +
@@ -949,10 +1005,11 @@ public:
                 bedroomExit(guildRooms_[1].player().position,g,utcMs()).direction:guildRooms_[bedroomScene(g)?1:0].player().direction;
             if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace) direction_=6;
             if(g.life==LifePhase::Combat || g.life==LifePhase::Dialogue) {
-                enemyDirection_=(g.playerDirection+4)%8;
-                enemyClip_=g.life==LifePhase::Dialogue?(g.dialogueStage==DialogueStage::Npc?22:7):g.combat==CombatPhase::EnemyAttack?1:g.combat==CombatPhase::EnemyHurt?6:g.combat==CombatPhase::Faint?33:7;
+                const auto enemy=std::find_if(explorer_->state().population.entities.begin(),explorer_->state().population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance;});
+                enemyDirection_=enemy->direction;
+                enemyClip_=g.life==LifePhase::Dialogue?(g.dialogueStage==DialogueStage::Npc?npcClip(22):7):g.combat==CombatPhase::EnemyAttack?1:g.combat==CombatPhase::EnemyHurt?6:g.combat==CombatPhase::Faint?npcClip(33):7;
                 const auto restoredNow=nowUs();
-                enemyAnimator_.start(enemyAssets_->package,enemyClip_,enemyDirection_,enemyClip_==7,enemyClip_==7?restoredNow:restoredClipStart(restoredNow));
+                enemyAnimator_.start(enemyAssets_->package,enemyClip_,enemyDirection_,enemyClip_==7 && !(g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc),enemyClip_==7?restoredNow:restoredClipStart(restoredNow));
             }
             auto marker = [](Surface& s, uint8_t blue, uint8_t green, uint8_t red) {
                 for (size_t offset = 0; offset < s.pixels.size(); offset += 4) {
@@ -1044,6 +1101,7 @@ public:
                    g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::ExploreFadeIn ||
                    g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn || g.sceneBeat==SceneBeat::RoomExit) deadline=std::min(deadline,now+16667);
                 if(auto cameraDeadline=guildCamera_.nextDeadline(now)) deadline=std::min(deadline,*cameraDeadline);
+                if(auto d=companionMotion_.nextDeadline(now)) deadline=std::min(deadline,*d);
                 if(auto motionDeadline=playerMotion_.nextDeadline(now)) deadline=std::min(deadline,*motionDeadline);
                 for(const auto& entry:actorMotions_) if(auto d=entry.second.nextDeadline(now)) deadline=std::min(deadline,*d);
             }

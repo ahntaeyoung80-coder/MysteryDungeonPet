@@ -3,6 +3,8 @@ $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $PSScriptRoot
 Push-Location $Root
 try {
+    python -m pip install Pillow==12.3.0
+    if ($LASTEXITCODE -ne 0) { throw 'offline render verifier dependency install failed' }
     python tools/check_windows_runtime.py
     if ($LASTEXITCODE -ne 0) { throw 'tracked runtime is stale' }
     python tools/make_fixture.py --check
@@ -18,6 +20,7 @@ try {
     & tests/playback_metrics_tests.ps1 -Exe $Exe -Inspector "$BuildDir/Release/pet_package_inspect.exe" -Output "$BuildDir/playback-results"
     & tests/exploration_windows_tests.ps1 -Exe $Exe -Explorer "$BuildDir/Release/pet_explore.exe" -Output "$BuildDir/exploration-results"
     & tests/navigation_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_navigation_recovery_tests.exe" -Output "$BuildDir/navigation-results"
+    & tests/companion_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_companion_tests.exe" -Inspector "$BuildDir/Release/pet_package_inspect.exe" -Output "$BuildDir/companion-results"
     & tests/entry_social_scene_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_entry_social_scene_tests.exe" -Output "$BuildDir/entry-results"
     & tests/movement_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_movement_tests.exe" -Output "$BuildDir/movement-results"
     & tests/gameplay_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_gameplay_tests.exe" -Output "$BuildDir/exploration-results/gameplay"

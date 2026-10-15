@@ -11,7 +11,7 @@ if ($LASTEXITCODE -ne 0) { throw 'gameplay scenario setup failed' }
 $EventPath = Join-Path $env:LOCALAPPDATA 'MysteryDungeonPet/events.log'
 $Before = if (Test-Path $EventPath) { @(Get-Content $EventPath).Count } else { 0 }
 $Csv = "$Output/life.csv"
-$argsForApp = @('--explore', "`"$Package`"", '--gameplay-assets', "`"$Assets`"", '--snapshot', "`"$Output/clear.mdes`"", '--duration', '40', '--metrics', "`"$Csv`"")
+$argsForApp = @('--solo','--explore', "`"$Package`"", '--gameplay-assets', "`"$Assets`"", '--snapshot', "`"$Output/clear.mdes`"", '--duration', '40', '--metrics', "`"$Csv`"")
 $Process = Start-Process -FilePath $Exe -ArgumentList $argsForApp -PassThru
 if (-not $Process.WaitForExit(60000)) { $Process.Kill(); throw 'life UI timeout' }
 if ($Process.ExitCode -ne 0) { throw "life UI failed: $($Process.ExitCode)" }
@@ -51,7 +51,7 @@ if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
    coreScenarios=12; guildDiningCharacters=12; guildMembers=10; bedroomCharacters=2; actualWindows11='pending' } | ConvertTo-Json | Set-Content "$Output/life-result.json"
 $Before = @(Get-Content $EventPath).Count
 $CombatCsv = "$Output/combat.csv"
-$CombatArgs = @('--explore', "`"$Package`"", '--gameplay-assets', "`"$Assets`"", '--snapshot', "`"$Output/combat.mdes`"", '--duration', '12', '--metrics', "`"$CombatCsv`"")
+$CombatArgs = @('--solo','--explore', "`"$Package`"", '--gameplay-assets', "`"$Assets`"", '--snapshot', "`"$Output/combat.mdes`"", '--duration', '12', '--metrics', "`"$CombatCsv`"")
 $CombatProcess = Start-Process -FilePath $Exe -ArgumentList $CombatArgs -PassThru
 if (-not $CombatProcess.WaitForExit(30000)) { $CombatProcess.Kill(); throw 'combat UI timeout' }
 if ($CombatProcess.ExitCode -ne 0) { throw 'combat UI failed' }
@@ -70,5 +70,5 @@ if (@($CombatRows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     if ($BeforeVictory -match 'life=ReturnHome') { throw 'combat victory returned home' }
     $CombatStatus = 'pass'
 }
-@{status=$CombatStatus; test='production player first Attack1 Hurt6 Faint33 victory resumes dungeon'; actualWindows11='pending'} |
+@{status=$CombatStatus; test='production player first Attack1 Hurt6 finite Kecleon exit victory resumes dungeon'; actualWindows11='pending'} |
     ConvertTo-Json | Set-Content "$Output/combat-result.json"

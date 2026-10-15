@@ -25,7 +25,7 @@ function Inspect([string]$Path){
  return $Result
 }
 function Launch([string]$Name,[int]$Seconds){
- $ArgsForApp=@('--explore',"`"$Package`"",'--snapshot',"`"$Output/$Name.mdes`"",'--duration',$Seconds,
+ $ArgsForApp=@('--solo','--explore',"`"$Package`"",'--snapshot',"`"$Output/$Name.mdes`"",'--duration',$Seconds,
   '--metrics',"`"$Output/$Name-metrics.csv`"",'--movement-trace',"`"$Output/$Name.csv`"")
  return Start-Process $Exe -ArgumentList $ArgsForApp -PassThru
 }

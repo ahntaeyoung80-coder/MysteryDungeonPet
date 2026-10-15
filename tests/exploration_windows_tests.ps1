@@ -7,7 +7,7 @@ $Package = (Resolve-Path 'assets/original/exploration/dungeon-0/exploration.mdpe
 $Actor = (Resolve-Path 'assets/original/runtime/asset-0/asset.mdpa').Path
 $Snapshot = [IO.Path]::GetFullPath("$Output/windows-run.mdes")
 $Csv = [IO.Path]::GetFullPath("$Output/exploration.csv")
-$arguments = @('--package', "`"$Actor`"", '--explore', "`"$Package`"", '--snapshot', "`"$Snapshot`"",
+$arguments = @('--solo','--package', "`"$Actor`"", '--explore', "`"$Package`"", '--snapshot', "`"$Snapshot`"",
           '--new-run', '--seed', '42', '--duration', '4', '--metrics', "`"$Csv`"")
 $process = Start-Process -FilePath $Exe -ArgumentList $arguments -PassThru
 if (-not $process.WaitForExit(30000)) { $process.Kill(); throw 'exploration UI timeout' }

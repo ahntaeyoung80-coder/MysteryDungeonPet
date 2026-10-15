@@ -14,7 +14,7 @@ function New-Fixtures {
 function Run-Frames([string]$Name, [string]$Kind, [string]$Snapshot, [int]$Scale, [int]$Seconds) {
     $Trace = Join-Path $Output "$Name.csv"
     $Metrics = Join-Path $Output "$Name-metrics.csv"
-    $Arguments = @('--explore', "`"$Package`"", '--snapshot', "`"$Snapshot`"", '--scale', $Scale,
+    $Arguments = @('--solo','--explore', "`"$Package`"", '--snapshot', "`"$Snapshot`"", '--scale', $Scale,
         '--duration', $Seconds, '--metrics', "`"$Metrics`"", '--movement-trace', "`"$Trace`"")
     $Process = Start-Process -FilePath $Exe -ArgumentList $Arguments -PassThru
     if (-not $Process.WaitForExit(($Seconds+20)*1000)) { $Process.Kill(); throw "$Name timeout" }
@@ -54,7 +54,7 @@ foreach ($Scale in @(1,2,3)) {
 # Interrupt a normal movement, then check the same snapshot through the regular app.
 New-Fixtures
 $Snapshot = "$Fixtures/straight.mdes"
-$KillArgs = @('--explore', "`"$Package`"", '--snapshot', "`"$Snapshot`"", '--scale', '1',
+$KillArgs = @('--solo','--explore', "`"$Package`"", '--snapshot', "`"$Snapshot`"", '--scale', '1',
     '--duration', '10', '--metrics', "`"$Output/interrupted-metrics.csv`"")
 $Process = Start-Process -FilePath $Exe -ArgumentList $KillArgs -PassThru
 if (-not $Process.WaitForInputIdle(10000)) { $Process.Kill(); throw 'interruption app never became ready' }
