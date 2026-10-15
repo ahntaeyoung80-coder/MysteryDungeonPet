@@ -134,7 +134,7 @@ int main(int argc,char** argv){try{
   Explorer e(seed,seed,"companion",fixtureProfiles(3));e.enableGameplay(1000);check(e.enableCompanion(),"populated entry companion failed");
   for(unsigned tick=0;tick<2500 && e.state().gameplay.day==1;++tick){
    e=Explorer(decodeSnapshot(encodeSnapshot(e.state()),"companion"));e.advanceGameplay(1000+tick*1000,true);
-   const auto& s=e.state();if(s.phase!=Phase::Home)check(canAttack(s.world,s.position,s.gameplay.companion.tile),"combat separated party");
+   const auto& s=e.state();if(s.phase!=Phase::Home && !s.gameplay.independentParty)check(canAttack(s.world,s.position,s.gameplay.companion.tile),"combat separated party");
   }
   check(e.state().gameplay.day==2,"populated party failed finite daily loop");
  }

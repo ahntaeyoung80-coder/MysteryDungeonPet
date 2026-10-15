@@ -13,6 +13,7 @@ std::string pendingHit(const ExplorationState& s) {
     return "pending-hit:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
         std::to_string(g.enemyInstance)+":"+std::to_string(g.actionRound);
 }
+}
 uint64_t navigationFingerprint(const ExplorationState& s) {
     uint64_t hash=14695981039346656037ULL;
     auto add=[&](uint64_t value){for(unsigned byte=0;byte<8;++byte){hash^=uint8_t(value>>(byte*8));hash*=1099511628211ULL;}};
@@ -26,7 +27,6 @@ uint64_t navigationFingerprint(const ExplorationState& s) {
         add(static_cast<unsigned>(e.tracking));add(e.lastSeen+1);add(e.chaseTarget+1);add(e.blockedTurns);
         add(e.actionRound==s.gameplay.actionRound);}
     return hash;
-}
 }
 const char* lifeName(LifePhase phase) {
     static const char* names[]{"Explore", "Pose", "ReturnHome", "Emotion", "Eat", "Sleep", "Wake", "Ready", "Combat", "Death", "Dialogue"};
@@ -49,6 +49,7 @@ bool showFriendlyDisc(const GameplayState& g,bool friendly,bool player) {
     return dungeonScene(g) && g.life!=LifePhase::Dialogue && friendly && !player;
 }
 std::uint32_t gameplayClip(const GameplayState& g) {
+    if(g.independentParty && !g.homeScene && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && g.sceneBeat==SceneBeat::None) return partyClip(g,0);
     switch (g.life) {
     case LifePhase::Pose: return 17;
     case LifePhase::Emotion: return 6; // New defeat expression cue using the supported Hurt body clip.
@@ -82,6 +83,7 @@ bool gameplayLoop(const GameplayState& g) {
     return clip == 0 || clip == 7 || clip == 5 || clip == 13 || g.life == LifePhase::Eat || g.sceneBeat==SceneBeat::DiningExit;
 }
 std::uint32_t companionClip(const GameplayState& g) {
+    if(g.independentParty && !g.homeScene && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && g.sceneBeat==SceneBeat::None) return partyClip(g,kCompanionActorId);
     if(g.homeScene) return gameplayClip(g);
     if(g.life==LifePhase::Combat) {
         if(g.combat==CombatPhase::CompanionAttack) return 1;
@@ -130,6 +132,8 @@ GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     auto& g = state_.gameplay;
     g.life = LifePhase::ReturnHome; g.defeated = defeated; g.homeScene = false;g.sceneBeat=SceneBeat::None;g.fadeInOnly=false;g.walkStartedMs=0;
     g.companion.walkStartedMs=0;
+    g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
+    g.companionIntent=CompanionIntent::Follow;g.companionTarget=0;
     g.phaseStartedMs = now; g.deadlineMs = now + kFadeMs;
     const auto once = "return:" + std::to_string(state_.runId);
     if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate return transaction");
@@ -214,6 +218,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         g.sceneBeat=SceneBeat::None;g.phaseStartedMs=g.deadlineMs=now;
         return {GameplayEvent::Explore,{}};
     }
+    if(g.independentParty && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && g.sceneBeat==SceneBeat::None) return advanceParty(now,completed);
     if (g.life == LifePhase::Pose) {
         if (!finiteDone || (g.companion.enabled && !completed.partner && now<g.deadlineMs)) return {};
         (void)advance(true);
@@ -463,6 +468,8 @@ void Explorer::shiftPausedClocks(std::uint64_t delta,std::uint64_t pausedAt) {
     };
     if(g.companion.walkStartedMs) g.companion.walkStartedMs+=delta;
     shift(g.movement);shift(g.companion.movement);for(auto& e:state_.population.entities) shift(e.movement);
+    for(auto& a:g.partyActions){a.startedMs+=delta;a.deadlineMs+=delta;}
+    for(auto& v:g.partyPlaybacks){v.startedMs+=delta;v.deadlineMs+=delta;}
 }
 GameplayUpdate Explorer::beginCombat(Entity& e,std::uint64_t now,CombatPhase first) {
     invalidate(false);auto& g=state_.gameplay;
@@ -506,7 +513,7 @@ int Explorer::detourTile(unsigned repetitions,uint64_t signature) {
         if(x<0 || x>=kWidth || y<0 || y>=kHeight) continue;
         const int tile=y*kWidth+x;
         if(!canMove(state_.world,state_.position,tile,occupied)) continue;
-        if(state_.gameplay.companion.enabled && companionFollowTile(tile)<0) continue;
+        if(state_.gameplay.companion.enabled && !state_.gameplay.independentParty && companionFollowTile(tile)<0) continue;
         int threat=0;
         for(const auto& e:state_.population.entities)
             if(e.kind==EntityKind::Friend && e.visible && !e.done && !friendly(e) && canAttack(state_.world,e.tile,tile)) ++threat;

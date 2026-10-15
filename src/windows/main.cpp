@@ -217,6 +217,9 @@ class App {
     Point lastPlayerDraw_{-1,-1};
     std::map<uint32_t,Animator> actorAnimators_;
     std::map<uint32_t,size_t> actorFrames_;
+    uint64_t partyPlayerToken_=0,partyCompanionToken_=0;
+    std::map<uint32_t,uint64_t> partyActorTokens_;
+    std::map<uint32_t,uint32_t> partyActorClips_,partyActorDirections_;
     Surface itemMarker_{5, 5}, friendMarker_{5, 5}, stairsMarker_{7, 7};
     Animator animator_;
     Surface surface_, background_{32, 24};
@@ -644,7 +647,61 @@ class App {
         const auto& clips=enemyAssets_->package.clips;
         return std::any_of(clips.begin(),clips.end(),[&](const auto& c){return c.id==requested;})?requested:requested==33?6:7;
     }
+    bool partyRendering() const {
+        if(!explorer_)return false;
+        const auto& g=explorer_->state().gameplay;
+        return g.independentParty && !g.homeScene && g.sceneBeat==SceneBeat::None &&
+            (g.life==LifePhase::Explore || g.life==LifePhase::Combat);
+    }
+    void collectPartyCompletion(uint32_t actor,uint64_t action) {
+        if(!partyRendering())return;
+        const auto& s=explorer_->state();const auto* v=partyPlayback(s.gameplay,actor);
+        if(!v || !action || v->id!=action)return;
+        completion_.keyed=true;
+        if(std::none_of(completion_.actions.begin(),completion_.actions.end(),
+            [&](const auto& old){return old.actorId==actor && old.actionId==action;}))
+            completion_.actions.push_back({s.runId,v->round,action,s.floorIndex,actor});
+    }
+    void syncPartyActors(int64_t now) {
+        if(!partyRendering())return;
+        const auto& s=explorer_->state();const auto& g=s.gameplay;
+        const auto utc=utcMs();
+        auto sync=[&](uint32_t actor,const Assets& source,Animator& animator,
+                      auto& clip,auto& facing,auto& frame,auto& token) {
+            const auto* v=partyPlayback(g,actor);
+            const auto wanted=partyClip(g,actor);
+            const auto actual=actor!=0 && actor!=kCompanionActorId?npcClip(wanted):wanted;
+            const unsigned dir=v?v->direction:actor==0?g.playerDirection:
+                actor==kCompanionActorId?g.companion.direction:
+                std::find_if(s.population.entities.begin(),s.population.entities.end(),
+                    [&](const auto& e){return e.instanceId==actor;})->direction;
+            const uint64_t action=v?v->id:0;
+            const bool loop=actual==0 || actual==7;
+            if(!animator.active() || token!=action || clip!=actual || (!loop && facing!=dir)) {
+                uint64_t started=utc;
+                if(v)started=v->startedMs;
+                else if(actual==0)started=actor==0?g.walkStartedMs:
+                    actor==kCompanionActorId?g.companion.walkStartedMs:
+                    std::find_if(s.population.entities.begin(),s.population.entities.end(),
+                        [&](const auto& e){return e.instanceId==actor;})->movement.startedMs;
+                const auto elapsed=std::min<uint64_t>(60000,utc>started?utc-started:0);
+                animator.start(source.package,actual,dir,loop,
+                    std::max<int64_t>(0,now-int64_t(elapsed)*1000));
+                frame=0;dirty_=true;
+            } else if(facing!=dir)animator.changeDirection(source.package,actual,dir);
+            clip=actual;facing=dir;token=action;
+        };
+        sync(0,assets_,animator_,clip_,direction_,frame_,partyPlayerToken_);
+        loop_=clip_==0 || clip_==7;
+        sync(kCompanionActorId,*companionAssets_,companionAnimator_,
+            companionClip_,companionDirection_,companionFrame_,partyCompanionToken_);
+        for(const auto& e:s.population.entities) if(e.kind==EntityKind::Friend && e.visible && (!e.done || std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end()))
+            sync(e.instanceId,*enemyAssets_,actorAnimators_[e.instanceId],
+                partyActorClips_[e.instanceId],partyActorDirections_[e.instanceId],
+                actorFrames_[e.instanceId],partyActorTokens_[e.instanceId]);
+    }
     void syncCompanion(int64_t now) {
+        if(partyRendering())return;
         const auto& g=explorer_->state().gameplay;
         if(!g.companion.enabled || !dungeonScene(g)) {companionAnimator_.stop();return;}
         const auto clip=companionClip(g);const auto dir=g.companion.direction;
@@ -664,7 +721,7 @@ class App {
         startClip(now);dirty_=true;
     }
     void advanceExploration(int64_t now) {
-        if (!explorer_ || blocked() || (now < exploreDeadline_ && !poseFinished_)) return;
+        if (!explorer_ || blocked() || (now < exploreDeadline_ && !poseFinished_ && completion_.actions.empty())) return;
         const int oldPosition = explorer_->state().position;
         const auto oldCompanion=explorer_->state().gameplay.companion;
         const auto oldEntities=explorer_->state().population.entities;
@@ -700,6 +757,20 @@ class App {
                 if(animation.active()) animation.changeDirection(enemyAssets_->package,0,e.direction);
                 else animation.start(enemyAssets_->package,0,e.direction,true,now);
             }
+        }
+        if(partyRendering()) {
+            if(oldPosition!=explorer_->state().position)
+                playerMotion_.begin(0,g.movement.actionId,tilePoint(oldPosition),
+                    tilePoint(explorer_->state().position),now,g.playerDirection);
+            syncPartyActors(now);
+            if(!event.onceKey.empty())log("gameplay onceKey="+event.onceKey);
+            for(const auto& a:event.actors)
+                log("party actor="+std::to_string(a.actorId)+" target="+std::to_string(a.targetId)+
+                    " action="+std::to_string(a.actionId)+" round="+std::to_string(a.round)+
+                    " event="+std::to_string(static_cast<unsigned>(a.event))+" damage="+std::to_string(a.damage));
+            if(oldLife!=g.life)log(std::string("life=")+lifeName(g.life)+" combat="+combatName(g.combat)+
+                " day="+std::to_string(g.day)+" hearts="+std::to_string(g.hearts));
+            dirty_=true;return;
         }
         uint32_t nextClip = gameplayClip(g); bool nextLoop = gameplayLoop(g);
         if (event.event == GameplayEvent::Move) nextClip = 0;
@@ -794,9 +865,11 @@ class App {
         presentationNow_=now;
         synchronizePause(now);
         if (blocked()) return;
+        syncPartyActors(now);
         const auto playerPoint=raster(playerMotion_.sample(now));
         if(playerPoint.x!=lastPlayerDraw_.x||playerPoint.y!=lastPlayerDraw_.y) {dirty_=true;lastPlayerDraw_=playerPoint;}
         for(auto& entry:actorMotions_) {
+            if(partyRendering()){if(entry.second.active(now))dirty_=true;continue;}
             if(entry.second.active(now)) {dirty_=true;auto result=actorAnimators_[entry.first].advance(now);actorFrames_[entry.first]=result.frame;}
             else if(actorAnimators_[entry.first].active()) {actorAnimators_[entry.first].stop();dirty_=true;}
         }
@@ -813,9 +886,10 @@ class App {
             nextFrameDeadline_ = result.nextDeadlineUs;
             if (result.finishedEvent && !holdingScenePose()) log("finite finished assetKey=" + assets_.package.assetKey);
             if(explorer_) completion_.player=result.finished;
+            if(result.finished)collectPartyCompletion(0,partyPlayerToken_);
             playerFinished = result.finished;
         }
-        if (explorer_ && (explorer_->state().gameplay.life == LifePhase::Combat || explorer_->state().gameplay.life==LifePhase::Dialogue) && enemyAnimator_.active()) {
+        if (explorer_ && (explorer_->state().gameplay.life == LifePhase::Combat || explorer_->state().gameplay.life==LifePhase::Dialogue) && !partyRendering() && enemyAnimator_.active()) {
             const auto result = enemyAnimator_.advance(now);
             dirty_ = dirty_ || enemyFrame_ != result.frame; enemyFrame_ = result.frame;
             if (result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs < *nextFrameDeadline_)) nextFrameDeadline_ = result.nextDeadlineUs;
@@ -826,7 +900,22 @@ class App {
             dirty_=dirty_ || point.x!=lastCompanionDraw_.x || point.y!=lastCompanionDraw_.y;lastCompanionDraw_=point;
             const auto result=companionAnimator_.advance(now);dirty_=dirty_ || companionFrame_!=result.frame;companionFrame_=result.frame;
             completion_.partner=result.finished;
+            if(result.finished)collectPartyCompletion(kCompanionActorId,partyCompanionToken_);
             if(result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs<*nextFrameDeadline_)) nextFrameDeadline_=result.nextDeadlineUs;
+        }
+        if(partyRendering()) {
+            completion_.keyed=true;
+            const auto& state=explorer_->state();
+            for(const auto& e:state.population.entities) {
+                auto found=actorAnimators_.find(e.instanceId);
+                if(e.kind!=EntityKind::Friend || found==actorAnimators_.end() || !found->second.active())continue;
+                const auto result=found->second.advance(now);
+                dirty_=dirty_ || actorFrames_[e.instanceId]!=result.frame;
+                actorFrames_[e.instanceId]=result.frame;
+                if(result.finished)collectPartyCompletion(e.instanceId,partyActorTokens_[e.instanceId]);
+                if(result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs<*nextFrameDeadline_))
+                    nextFrameDeadline_=result.nextDeadlineUs;
+            }
         }
         advanceGuildActors(now);
         if (explorer_ && bedroomScene(explorer_->state().gameplay))
@@ -847,6 +936,7 @@ class App {
             completion_.player=bedroomExit(guildRooms_[1].player().position,explorer_->state().gameplay,utcMs()).finished;
             poseFinished_=completion_.player;
         }
+        if(partyRendering())poseFinished_=!completion_.actions.empty();
         (void)playerFinished;
         if (!dirty_) {traceMovement(now,false);return;}
         std::vector<Layer> layers;
@@ -876,9 +966,9 @@ class App {
             for (const auto& e : state.population.entities) if (e.visible && (!e.done || (e.kind==EntityKind::Friend && std::find(state.gameplay.hostile.begin(),state.gameplay.hostile.end(),e.instanceId)==state.gameplay.hostile.end()))) {
                 if (e.kind == EntityKind::Friend) {
                     const auto& g = state.gameplay;
-                    const bool active = (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && e.instanceId == g.enemyInstance;
+                    const bool active = !partyRendering() && (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && e.instanceId == g.enemyInstance;
                     const bool moving=actorMotions_.count(e.instanceId)&&actorMotions_.at(e.instanceId).active(now);
-                    const auto& f = enemyAssets_->package.frames(active ? enemyClip_ : moving?0:7, active ? enemyDirection_ : e.direction)[active ? enemyFrame_ : moving?actorFrames_[e.instanceId]:0];
+                    const auto& f = enemyAssets_->package.frames(partyRendering()?npcClip(partyClip(g,e.instanceId)):active?enemyClip_:moving?0:7, active?enemyDirection_:e.direction)[partyRendering()?actorFrames_[e.instanceId]:active?enemyFrame_:moving?actorFrames_[e.instanceId]:0];
                     const auto world=actorMotions_.count(e.instanceId)?raster(actorMotions_.at(e.instanceId).sample(now)):raster(tilePoint(e.tile));
                     if(showFriendlyDisc(g,std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end(),false)) addDisc(layers,f,world);
                     layers.push_back({enemyAssets_->atlas.get(), f.rect, f.anchor, world});

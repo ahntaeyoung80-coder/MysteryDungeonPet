@@ -318,6 +318,8 @@ void Explorer::enterFloor() {
     state_.floorSteps = 0;
     invalidate();
     state_.gameplay.movement={};state_.gameplay.walkStartedMs=0;state_.gameplay.navigationHistory.clear();
+    state_.gameplay.partyActions.clear();state_.gameplay.partyPlaybacks.clear();state_.gameplay.partyPhase=PartyPhase::Idle;
+    state_.gameplay.companionIntent=CompanionIntent::Follow;state_.gameplay.companionTarget=0;
     if (state_.gameplay.enabled) {if(state_.gameplay.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");++state_.gameplay.actionRound;assignRelationships();}
 }
 void Explorer::setBlocked(int tile, bool value) {
@@ -334,22 +336,34 @@ bool Explorer::friendly(const Entity& e) const {
     return state_.gameplay.enabled && e.kind==EntityKind::Friend && e.visible &&
         std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end();
 }
-bool Explorer::lowHealth() const {const auto& g=state_.gameplay;return g.enabled && (g.hearts<=kLowHp || (g.companion.enabled && g.companion.hearts<=kLowHp));}
-bool Explorer::mustRetreat() const {const auto& g=state_.gameplay;return (g.hearts<=kLowHp && !g.oran) || (g.companion.enabled && g.companion.hearts<=kLowHp && !g.companion.oran);}
+bool Explorer::lowHealth() const {const auto& g=state_.gameplay;return g.enabled && (g.hearts<=kLowHp || (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp));}
+bool Explorer::mustRetreat() const {const auto& g=state_.gameplay;return (g.hearts<=kLowHp && !g.oran) || (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp && !g.companion.oran);}
 Mask Explorer::occupancy(bool playerPath) const {
     auto mask=state_.blocked;
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && e.visible && (!e.done || (state_.gameplay.enabled && std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end()))) if(!playerPath || !friendly(e)) mask[e.tile]=1;
-    if(!playerPath && state_.gameplay.companion.enabled) mask[state_.gameplay.companion.tile]=1;
+    const auto& g=state_.gameplay;
+    if(g.companion.enabled) {
+        const bool swap=g.independentParty && playerPath && g.companionIntent==CompanionIntent::Follow &&
+            g.companion.actionRound<g.actionRound && !partyPlayback(g,kCompanionActorId);
+        if(!playerPath || (g.independentParty && !swap))mask[g.companion.tile]=1;
+    }
     mask[state_.position]=0; return mask;
 }
 bool Explorer::enableCompanion() {
-    auto& g=state_.gameplay;if(g.companion.enabled) return true;
+    auto& g=state_.gameplay;
+    if(g.companion.enabled) {
+        if(!g.independentParty && g.life==LifePhase::Explore) {
+            g.independentParty=true;g.partyPhase=PartyPhase::Idle;invalidate(false);++state_.occupancyVersion;
+        }
+        return true;
+    }
     if(!g.enabled) return false;
     auto occupied=occupancy();
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Item && e.visible && !e.done) occupied[e.tile]=1;
     const int tile=companionSpawn(state_.world,state_.position,g.playerDirection,occupied);
     if(tile<0) return false;
-    g.companion.enabled=true;g.companion.tile=tile;g.companion.direction=directionBetween(tile,state_.position);g.navigationHistory.clear();
+    g.companion.enabled=true;g.companion.tile=tile;
+    if(g.life==LifePhase::Explore)g.independentParty=true;g.companion.direction=directionBetween(tile,state_.position);g.navigationHistory.clear();
     invalidate(false);++state_.occupancyVersion;return true;
 }
 int Explorer::friendlyVacateTile(const Entity& e,int next) const {
@@ -396,7 +410,7 @@ void Explorer::recordCompanionMove(int from,std::uint64_t now) {
 }
 Mask Explorer::playerOccupancy() const {
     auto occupied=occupancy(true);
-    if(state_.gameplay.companion.enabled) for(auto [dx,dy]:kDirections) {
+    if(state_.gameplay.companion.enabled && !state_.gameplay.independentParty) for(auto [dx,dy]:kDirections) {
         const int x=state_.position%kWidth+dx,y=state_.position/kWidth+dy;
         if(x<0 || x>=kWidth || y<0 || y>=kHeight) continue;
         const int tile=y*kWidth+x;
@@ -534,8 +548,15 @@ void Explorer::plan() {
 }
 Event Explorer::moveTo(int next) {
     if(!canMove(state_.world,state_.position,next,occupancy(true))) return {};
-    const int partner=state_.gameplay.companion.enabled?companionFollowTile(next):-1;
-    if(state_.gameplay.companion.enabled && partner<0) return {};
+    auto& g=state_.gameplay;
+    int partner=-1;
+    if(g.companion.enabled && !g.independentParty) {
+        partner=companionFollowTile(next);if(partner<0)return {};
+    } else if(g.companion.enabled && next==g.companion.tile) {
+        if(g.companionIntent!=CompanionIntent::Follow || g.companion.actionRound==g.actionRound ||
+           partyPlayback(g,kCompanionActorId))return {};
+        partner=state_.position;
+    }
     for(auto& e:state_.population.entities) if(e.tile==next && friendly(e)) {
         const int vacant=friendlyVacateTile(e,next);if(vacant<0) return {};
         e.tile=vacant;e.direction=directionBetween(next,vacant);e.movement={};
@@ -543,14 +564,16 @@ Event Explorer::moveTo(int next) {
         ++state_.occupancyVersion;
     }
     state_.position=next;++state_.floorSteps;++state_.stalledActions;
-    if(state_.gameplay.companion.enabled && state_.gameplay.companion.tile!=partner) {state_.gameplay.companion.tile=partner;++state_.occupancyVersion;}
+    if(state_.gameplay.companion.enabled && partner>=0 && state_.gameplay.companion.tile!=partner) {state_.gameplay.companion.tile=partner;++state_.occupancyVersion;}
     if(state_.goalKind==GoalKind::Friend && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e){return e.instanceId==state_.targetInstance && !canAttack(state_.world,state_.target,e.tile);})) invalidate();
     state_.visited[state_.position]=1;
     return {EventKind::Move,{},0};
 }
 Event Explorer::advance(bool poseFinished) {
     if (state_.gameplay.enabled && (state_.gameplay.life!=LifePhase::Explore || state_.gameplay.sceneBeat!=SceneBeat::None) &&
-        !(state_.gameplay.life == LifePhase::Pose && poseFinished)) return {};
+        !(state_.gameplay.life == LifePhase::Pose && poseFinished) &&
+        !(state_.gameplay.independentParty && state_.gameplay.sceneBeat==SceneBeat::None &&
+          (state_.gameplay.life==LifePhase::Explore || state_.gameplay.life==LifePhase::Combat))) return {};
     if (state_.phase == Phase::Home) return {};
     if (state_.phase == Phase::Pose) {
         if (poseFinished || ++state_.poseSteps >= kPoseTimeout) {
@@ -622,6 +645,7 @@ Event Explorer::advance(bool poseFinished) {
 }
 void validateState(const ExplorationState& s) {
     const auto& g = s.gameplay;
+    validatePartyState(s);
     require(g.navigationHistory.size()<=32,"navigation history exceeds bound");
     require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=17 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
     if(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn) {
@@ -638,7 +662,7 @@ void validateState(const ExplorationState& s) {
     if(g.life==LifePhase::Dialogue) require(std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && e.kind==EntityKind::Friend && !e.done;}),"invalid dialogue owner");
     if (g.enabled) {
         require(g.deadlineMs >= g.phaseStartedMs, "invalid gameplay deadline");
-        require(g.life != LifePhase::Combat || (s.phase == Phase::Explore && g.enemyInstance > 0 &&
+        require(g.life != LifePhase::Combat || g.independentParty || (s.phase == Phase::Explore && g.enemyInstance > 0 &&
             std::any_of(s.population.entities.begin(), s.population.entities.end(), [&](const auto& e) {
                 return e.instanceId == g.enemyInstance && e.kind == EntityKind::Friend &&
                     (!e.done || g.combat == CombatPhase::Victory);
@@ -681,7 +705,7 @@ void validateState(const ExplorationState& s) {
         partner.walkStartedMs<=g.phaseStartedMs,"invalid companion stats/clock");
     if(partner.enabled) {
         require(g.enabled && s.world.walkable(partner.tile) && !s.blocked[partner.tile] && partner.tile!=s.position,"invalid companion tile");
-        if(s.phase!=Phase::Home) require(canAttack(s.world,s.position,partner.tile),"companion exceeded one-tile radius");
+        if(s.phase!=Phase::Home && !g.independentParty) require(canAttack(s.world,s.position,partner.tile),"companion exceeded one-tile radius");
         validateMove(partner.movement,partner.tile);
         for(const auto& e:s.population.entities) {
             const bool live=e.kind==EntityKind::Friend && e.visible && (!e.done || std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end());

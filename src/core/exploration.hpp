@@ -114,7 +114,28 @@ enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, Ene
 enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit, ExplorationBerryText };
 enum class DialogueStage : std::uint8_t { Player, Npc };
 enum class DeathStage : std::uint8_t { FadeOut, Blackout };
-struct ActorCompletion { bool player=false, enemy=false, partner=false; };
+struct ActorFinished {
+    std::uint64_t runId=0,round=0,actionId=0;
+    std::uint32_t floorIndex=0,actorId=0;
+};
+struct ActorCompletion {
+    bool player=false,enemy=false,partner=false;
+    std::vector<ActorFinished> actions;
+    bool keyed=false;
+};
+enum class PartyPhase : std::uint8_t { Idle, Allies, Enemies };
+enum class PartyActionKind : std::uint8_t { Wait, Move, Attack, Berry };
+enum class CompanionIntent : std::uint8_t { Follow, Engage, Return };
+struct PartyAction {
+    std::uint64_t id=0,round=0,startedMs=0,deadlineMs=0;
+    std::uint32_t actorId=0,targetId=0,damage=0;
+    PartyActionKind kind=PartyActionKind::Wait;
+    bool hit=false,critical=false,finished=false;
+};
+struct PartyPlayback {
+    std::uint64_t id=0,round=0,startedMs=0,deadlineMs=0;
+    std::uint32_t actorId=0,clip=7,direction=0;
+};
 constexpr std::uint32_t kCompanionActorId=UINT32_MAX-1;
 struct CompanionState {
     bool enabled=false,hidden=false;
@@ -144,10 +165,26 @@ struct GameplayState {
     std::vector<std::uint64_t> navigationHistory; // MDES6: bounded joint-state cycle watch, excluding clocks/round numbers.
     CompanionState companion;
     bool enemyTargetsCompanion=false;
+    bool independentParty=false;
+    std::uint64_t nextPartyId=1;
+    PartyPhase partyPhase=PartyPhase::Idle;
+    CompanionIntent companionIntent=CompanionIntent::Follow;
+    std::uint32_t companionTarget=0;
+    std::vector<PartyAction> partyActions;
+    std::vector<PartyPlayback> partyPlaybacks;
 };
+const PartyPlayback* partyPlayback(const GameplayState&,std::uint32_t actorId);
+std::uint32_t partyClip(const GameplayState&,std::uint32_t actorId);
+
 enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
     HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout, DialoguePlayer, DialogueNpc,
     CompanionMove, CompanionAttack, CompanionFaint };
+struct ActorEvent {
+    GameplayEvent event=GameplayEvent::None;
+    std::uint32_t actorId=0,targetId=0,damage=0;
+    std::uint64_t actionId=0,round=0;
+    bool critical=false;
+};
 struct GameplayUpdate {
     GameplayEvent event = GameplayEvent::None;
     std::string onceKey;
@@ -155,6 +192,7 @@ struct GameplayUpdate {
     bool critical = false;
     std::uint32_t actorId=0;
     bool navigationDetour=false;
+    std::vector<ActorEvent> actors;
 };
 const char* lifeName(LifePhase);
 const char* combatName(CombatPhase);
@@ -197,6 +235,8 @@ struct ExplorationState {
     GoalKind goalKind = GoalKind::None;
     GameplayState gameplay;
 };
+std::uint64_t navigationFingerprint(const ExplorationState&);
+void validatePartyState(const ExplorationState&);
 class Explorer {
 public:
     static constexpr std::uint32_t kFloorStepLimit = kTiles * 8;
@@ -251,6 +291,7 @@ private:
     GameplayUpdate scheduleDungeon(std::uint64_t now);
     GameplayUpdate beginCombat(Entity&, std::uint64_t now, CombatPhase);
     GameplayUpdate afterCombatAction(std::uint64_t now);
+    GameplayUpdate advanceParty(std::uint64_t now,const ActorCompletion&);
 };
 
 void validateState(const ExplorationState&);

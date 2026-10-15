@@ -1,5 +1,6 @@
 #pragma once
 #include "core/exploration.hpp"
+#include "legacy_snapshot.hpp"
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -16,7 +17,7 @@ inline void require(bool value,const char* message) {
 inline ExplorationState party(ExplorationState s) {
     s.population.entities.clear();
     s.gameplay.hostile.clear();
-    s.gameplay.companion.enabled=true;
+    s.gameplay.companion.enabled=true;s.gameplay.independentParty=true;
     s.gameplay.companion.tile=124;
     s.gameplay.companion.actionRound=0;
     s.gameplay.playerActionRound=0;
@@ -60,7 +61,8 @@ inline uint64_t nextTime(const Explorer& e,uint64_t now) {
 inline void forceHit(ExplorationState& s) {
     for(uint64_t seed=0;seed<10000;++seed) {
         Rng rng{seed};const auto attack=rollBasicAttack(rng,true);
-        if(attack.hit && !attack.critical){s.rng.state=seed;return;}
+        const auto second=rollBasicAttack(rng,true);
+        if(attack.hit && !attack.critical && second.hit && !second.critical){s.rng.state=seed;return;}
     }
     throw std::runtime_error("unable to select a deterministic noncritical hit");
 }
@@ -157,13 +159,16 @@ inline unsigned run(const ExplorationState& base) {
         bool leader=false,companion=false;
         for(unsigned tick=0;tick<64 && e.state().gameplay.actionRound==round;++tick) {
             const auto event=restoredStep(e,now);const auto& g=e.state().gameplay;
-            if(event.event==GameplayEvent::PlayerAttack) {
-                leader=leader || g.enemyInstance==2;
+            const auto actions=event.actors.empty()?std::vector<ActorEvent>{{event.event,event.actorId,g.enemyInstance,event.damage,0,g.actionRound,event.critical}}:event.actors;
+            for(const auto& action:actions) {
+            if(action.event==GameplayEvent::PlayerAttack) {
+                leader=leader || action.targetId==2;
                 std::cout<<"PARTY_AI R04 leader target="<<g.enemyInstance<<" round="<<g.actionRound<<std::endl;
             }
-            if(event.event==GameplayEvent::CompanionAttack) {
-                companion=companion || g.enemyInstance==1;
+            if(action.event==GameplayEvent::CompanionAttack) {
+                companion=companion || action.targetId==1;
                 std::cout<<"PARTY_AI R04 companion target="<<g.enemyInstance<<" round="<<g.actionRound<<std::endl;
+            }
             }
             require(e.state().phase==Phase::Explore,"two-sided fight left the dungeon");
             now=nextTime(e,now);
@@ -180,8 +185,9 @@ inline unsigned run(const ExplorationState& base) {
         for(unsigned tick=0;tick<64 && !rightActed;++tick) {
             const auto event=restoredStep(e,now);const auto& after=e.state();
             leftFainted=leftFainted || after.population.entities[0].done;
-            rightActed=leftFainted && event.event==GameplayEvent::PlayerAttack &&
-                       after.gameplay.enemyInstance==2;
+            rightActed=leftFainted && std::any_of(event.actors.begin(),event.actors.end(),[](const auto& a){
+                return a.event==GameplayEvent::PlayerAttack && a.targetId==2;
+            });
             require(after.phase==Phase::Explore,"one victory incorrectly ended the whole exploration");
             now=nextTime(e,now);
         }
@@ -192,8 +198,16 @@ inline unsigned run(const ExplorationState& base) {
         g.hearts=1;g.life=LifePhase::Combat;g.combat=CombatPhase::CompanionTurn;
         g.enemyInstance=1;g.enemyHits=2;forceHit(s);
         Explorer e(s);const auto event=restoredStep(e,1000);
-        require(event.event==GameplayEvent::CompanionAttack && e.state().gameplay.enemyHits==1,
-                "leader low HP canceled the companion's own adjacent combat");
+        const auto action=std::find_if(event.actors.begin(),event.actors.end(),[](const auto& a){
+            return a.event==GameplayEvent::CompanionAttack && a.targetId==1;
+        });
+        require(action!=event.actors.end(),"leader low HP canceled the companion's own adjacent combat");
+        ActorCompletion done;done.keyed=true;
+        done.actions.push_back({s.runId,action->round,action->actionId,s.floorIndex,kCompanionActorId});
+        restoredStep(e,1001,done);
+        require(e.state().population.entities[0].remainingHits==1 &&
+                e.state().population.entities[1].remainingHits==2,
+                "companion completion applied a different actor's impact");
     });
     test("R06_separated_combat_state_roundtrips",[&] {
         auto s=party(base);auto& g=s.gameplay;
@@ -209,6 +223,7 @@ inline unsigned run(const ExplorationState& base) {
     test("R07_R08_owner_and_damage_survive_restore",[&] {
         auto s=party(base);auto& g=s.gameplay;
         s.population.entities={{1,4,EntityKind::Friend,123,false}};g.hostile={1};
+        g.independentParty=false;
         g.life=LifePhase::Combat;g.combat=CombatPhase::EnemyAttack;g.enemyInstance=1;
         g.playerActionRound=g.companion.actionRound=g.actionRound;
         g.hit=true;g.damage=1;g.enemyTargetsCompanion=true;

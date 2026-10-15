@@ -1,8 +1,16 @@
 #pragma once
 #include <cstdint>
+#include <stdexcept>
 #include <vector>
-// MDES7 appends a fixed 76-byte companion block before CRC. Legacy byte-shape
-// fixtures below remove it before applying their existing MDES3/4/5 conversions.
+// MDES8 stores its party payload length before CRC. Remove it before applying
+// the fixed MDES7 companion block and the older byte-shape fixture conversions.
+inline void removePartyBlock(std::vector<std::uint8_t>& bytes) {
+    if(bytes.size()<12 || bytes[4]<8)return;
+    std::uint32_t length=0;
+    for(unsigned b=0;b<4;++b)length|=std::uint32_t(bytes[bytes.size()-8+b])<<(8*b);
+    if(length>bytes.size()-16)throw std::runtime_error("invalid MDES8 test payload");
+    bytes.erase(bytes.end()-8-length,bytes.end()-4);bytes[4]=7;
+}
 inline void removeCompanionBlock(std::vector<std::uint8_t>& bytes) {
-    bytes.erase(bytes.end()-80,bytes.end()-4);
+    removePartyBlock(bytes);bytes.erase(bytes.end()-80,bytes.end()-4);
 }

@@ -3,8 +3,11 @@
 #include <cstdlib>
 #include <cmath>
 namespace pet {
+bool partyHealing(const GameplayState& g) {
+    return g.independentParty && std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return a.kind==PartyActionKind::Berry && !a.finished;});
+}
 std::wstring gameplayText(const GameplayState& g) {
-    if((g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText) return L"오랭열매! 2하트 회복";
+    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText) return L"오랭열매! 2하트 회복";
     if(g.life==LifePhase::Dialogue) return g.dialogueStage==DialogueStage::Player?L"안녕! 같이 탐험하자.":L"조심해서 다녀와!";
     if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) return L"잘 자! 내일도 같이 탐험하자.";
     if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace) return L"좋은 아침! 다녀올게.";
@@ -41,7 +44,7 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now) {
             if(heart[y][x]=='1') for(unsigned yy=0;yy<2;++yy) for(unsigned xx=0;xx<2;++xx)
                 pixel(8+18*h+2*x+xx,24+2*y+yy,35,35,h<g.companion.hearts?230:65);
     }
-    if ((g.life == LifePhase::Combat && (g.combat == CombatPhase::BerryText || g.combat == CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)
+    if (partyHealing(g) || (g.life == LifePhase::Combat && (g.combat == CombatPhase::BerryText || g.combat == CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)
         for (unsigned y = 150; y < std::min(190U, s.height); ++y)
             for (unsigned x = 8; x < std::min(192U, s.width); ++x) pixel(x, y, 40, 30, 20);
     if(g.life==LifePhase::Death) {
