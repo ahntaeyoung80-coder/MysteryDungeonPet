@@ -427,6 +427,19 @@ void Explorer::plan() {
     }
     cachedWorld_=state_.world.version;cachedOccupancy_=state_.occupancyVersion;
 }
+Event Explorer::moveTo(int next) {
+    if(!canMove(state_.world,state_.position,next,occupancy(true))) return {};
+    const int old=state_.position;
+    for(auto& e:state_.population.entities) if(e.tile==next && friendly(e)) {
+        e.tile=old;e.direction=directionBetween(next,old);e.movement={};
+        e.actionRound=state_.gameplay.actionRound;
+        ++state_.occupancyVersion;
+    }
+    state_.position=next;++state_.floorSteps;++state_.stalledActions;
+    if(state_.goalKind==GoalKind::Friend && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e){return e.instanceId==state_.targetInstance && !canAttack(state_.world,state_.target,e.tile);})) invalidate();
+    state_.visited[state_.position]=1;
+    return {EventKind::Move,{},0};
+}
 Event Explorer::advance(bool poseFinished) {
     if (state_.gameplay.enabled && (state_.gameplay.life!=LifePhase::Explore || state_.gameplay.sceneBeat!=SceneBeat::None) &&
         !(state_.gameplay.life == LifePhase::Pose && poseFinished)) return {};
@@ -457,17 +470,8 @@ Event Explorer::advance(bool poseFinished) {
             cachedWorld_=state_.world.version;cachedOccupancy_=state_.occupancyVersion;
         }
         if(pathIndex_<path_.size() && canMove(state_.world,state_.position,path_[pathIndex_],occupancy(true))) {
-            const int old=state_.position,next=path_[pathIndex_++];
-            for(auto& e:state_.population.entities) if(e.tile==next && friendly(e)) {
-                e.tile=old;e.direction=directionBetween(next,old);e.movement={};
-                e.actionRound=state_.gameplay.actionRound;
-                ++state_.occupancyVersion; // Recheck subsequent route occupancy, retaining its goal.
-            }
-            state_.position=next;++state_.floorSteps;++state_.stalledActions;
-            if(state_.goalKind==GoalKind::Friend && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e){return e.instanceId==state_.targetInstance && !canAttack(state_.world,state_.target,e.tile);})) invalidate();
-            state_.visited[state_.position]=1;
             // Discover on the next tick so a stairs route can notice newly revealed goals.
-            return {EventKind::Move,{},0};
+            return moveTo(path_[pathIndex_++]);
         }
         ++state_.targetFailures;
         auto& failures=state_.failedTargets[state_.target];failures=std::min(3,int(failures)+1);

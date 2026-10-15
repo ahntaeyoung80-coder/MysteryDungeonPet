@@ -142,6 +142,7 @@ struct GameplayUpdate {
     std::uint32_t damage = 0;
     bool critical = false;
     std::uint32_t actorId=0;
+    bool navigationDetour=false;
 };
 const char* lifeName(LifePhase);
 const char* combatName(CombatPhase);
@@ -195,7 +196,7 @@ public:
     std::uint64_t bfsCalls() const { return bfsCalls_; }
     void enableGameplay(std::uint64_t utcMs);
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
-    GameplayUpdate resetExploration(std::uint64_t utcMs, bool automatic = false);
+    GameplayUpdate resetExploration(std::uint64_t utcMs);
     bool canResetExploration() const;
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
@@ -207,6 +208,8 @@ private:
     bool retreatProgress_ = false;
     void enterFloor();
     void plan();
+    Event moveTo(int tile);
+    int detourTile(unsigned repetitions, std::uint64_t signature);
     void discover();
     Mask occupancy(bool playerPath = false) const;
     bool friendly(const Entity&) const;

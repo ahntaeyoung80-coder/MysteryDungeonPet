@@ -1,0 +1,9 @@
+0 player=102 enemy=76 life=Explore
+1 player=125 enemy=77 life=Explore
+2 player=102 enemy=100 life=Explore
+3 player=101 enemy=77 life=Explore
+4 player=101 enemy=77 life=Combat
+persisted repeat: from=77 ordinary=102 detour=54 run=900 floor=0 (no return)
+200 restored low-HP geometries escaped without automatic return
+restored detour rotations at HP2/HP5, dead-end waits, single exit, corner and enemy-turn checks pass
+navigation recovery regression pass

@@ -1,0 +1,7 @@
+Test project /workspace/MysteryDungeonPet/build/movement-sanitize
+    Start 1: pet_navigation_recovery_tests
+1/1 Test #1: pet_navigation_recovery_tests ....   Passed    4.68 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =   4.68 sec

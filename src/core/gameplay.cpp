@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <limits>
 #include <stdexcept>
+#include <tuple>
 
 namespace pet {
 namespace {
@@ -112,11 +113,11 @@ bool Explorer::canResetExploration() const {
     return g.enabled && state_.phase==Phase::Explore &&
         (g.life==LifePhase::Explore || g.life==LifePhase::Combat || g.life==LifePhase::Dialogue);
 }
-GameplayUpdate Explorer::resetExploration(std::uint64_t now,bool automatic) {
+GameplayUpdate Explorer::resetExploration(std::uint64_t now) {
     if(!canResetExploration()) return {};
     auto& g=state_.gameplay;
     g.onceKeys.erase(pendingHit(state_)); // Cancel only the attack that has not committed damage yet.
-    g.onceKeys.insert(std::string(automatic?"navigation-reset:":"manual-reset:")+std::to_string(state_.runId));
+    g.onceKeys.insert("manual-reset:"+std::to_string(state_.runId));
     g.movement={};g.walkStartedMs=0;g.navigationHistory.clear();g.playerHidden=false;
     g.damage=0;g.hit=g.critical=false;
     for(auto& e:state_.population.entities){e.movement={};e.tracking=Tracking::Idle;e.lastSeen=e.chaseTarget=-1;e.blockedTurns=0;}
@@ -397,6 +398,46 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
     if(lowHealth() && !g.oran) {g.life=LifePhase::Explore;g.deadlineMs=now;invalidate();return {GameplayEvent::Explore,{}};}
     g.combat=CombatPhase::PlayerTurn;return {};
 }
+int Explorer::detourTile(unsigned repetitions,uint64_t signature) {
+    if(state_.floorSteps>=kFloorStepLimit+kTiles) return -1;
+    auto occupied=occupancy(true);
+    if(state_.goalKind!=GoalKind::Stairs) occupied[state_.world.stairs]=1;
+    const int planned=pathIndex_<path_.size()?path_[pathIndex_]:-1;
+    const auto& previous=state_.gameplay.movement;
+    const int back=previous.actionId && previous.to==state_.position?previous.from:-1;
+    struct Candidate {int tile,threat,visited,distance;};
+    std::vector<Candidate> choices;
+    for(auto [dx,dy]:kDirections) {
+        const int x=state_.position%kWidth+dx,y=state_.position/kWidth+dy;
+        if(x<0 || x>=kWidth || y<0 || y>=kHeight) continue;
+        const int tile=y*kWidth+x;
+        if(!canMove(state_.world,state_.position,tile,occupied)) continue;
+        int threat=0;
+        for(const auto& e:state_.population.entities)
+            if(e.kind==EntityKind::Friend && e.visible && !e.done && !friendly(e) && canAttack(state_.world,e.tile,tile)) ++threat;
+        const auto reach=bfs(state_.world,tile,occupied);++bfsCalls_;
+        const int distance=state_.target>=0 && reach.distance[state_.target]>=0?reach.distance[state_.target]:kTiles+1;
+        choices.push_back({tile,threat,state_.visited[tile],distance});
+    }
+    if(choices.empty()) return -1;
+    // Prefer leaving both ends of the orbit; a corridor may have only one exit.
+    if(std::any_of(choices.begin(),choices.end(),[&](const auto& c){return c.tile!=planned && c.tile!=back;}))
+        choices.erase(std::remove_if(choices.begin(),choices.end(),[&](const auto& c){return c.tile==planned || c.tile==back;}),choices.end());
+    else if(std::any_of(choices.begin(),choices.end(),[&](const auto& c){return c.tile!=planned;}))
+        choices.erase(std::remove_if(choices.begin(),choices.end(),[&](const auto& c){return c.tile==planned;}),choices.end());
+    std::sort(choices.begin(),choices.end(),[](const auto& a,const auto& b){
+        return std::tie(a.threat,a.visited,a.distance,a.tile)<std::tie(b.threat,b.visited,b.distance,b.tile);
+    });
+    const int next=choices[(repetitions-1)%choices.size()].tile;
+    // Keep the current occurrence and restart the candidate rotation after a
+    // full pass. This survives save/restore without saturating the 32-slot FIFO.
+    if(repetitions>=choices.size()) {
+        auto& history=state_.gameplay.navigationHistory;
+        history.erase(std::remove(history.begin(),history.end(),signature),history.end());
+        history.push_back(signature);
+    }
+    return next;
+}
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;
     retreatProgress_=false;
@@ -406,10 +447,10 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         return {};
     }
     discover();
+    unsigned repetitions=0;
+    const auto signature=navigationFingerprint(state_);
     if(g.playerActionRound==g.actionRound) {
-        const auto signature=navigationFingerprint(state_);
-        if(std::find(g.navigationHistory.begin(),g.navigationHistory.end(),signature)!=g.navigationHistory.end())
-            return resetExploration(now,true);
+        repetitions=static_cast<unsigned>(std::count(g.navigationHistory.begin(),g.navigationHistory.end(),signature));
         if(g.navigationHistory.size()==32) g.navigationHistory.erase(g.navigationHistory.begin());
         g.navigationHistory.push_back(signature);
     }
@@ -441,7 +482,7 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
                     hostileReversed=hostileReversed || (e.movement.actionId && e.movement.to==old && e.movement.from==e.tile);
                     if(!lowHealth()) g.walkStartedMs=0;
                     e.direction=directionBetween(old,e.tile);e.movement={g.actionRound,now,400,e.direction,old,e.tile};e.blockedTurns=0;++state_.occupancyVersion;invalidate(false);
-                    if(lowHealth()) continue; // Retreat and hostile movement share one 400ms presentation.
+                    if(lowHealth() || repetitions) continue; // A detour also shares the current hostile movement interval.
                     g.phaseStartedMs=now;g.deadlineMs=now+400;
                     return {GameplayEvent::ActorMove,{},0,false,e.instanceId};
                 }
@@ -466,8 +507,11 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         // attack-zone mask for this step so the goal can make progress.
         retreatProgress_=true;plan();
     }
-    int nextTile=-1;
-    if(state_.target>=0 && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e) {
+    // Complete a pickup underfoot before making any detour.
+    const bool reroute=repetitions && !(state_.target==state_.position && state_.goalKind==GoalKind::Item);
+    const int detour=reroute?detourTile(repetitions,signature):-1;
+    int nextTile=detour;
+    if(!reroute && state_.target>=0 && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e) {
         return friendly(e) && !e.done && canAttack(state_.world,state_.position,e.tile);
     })) {
         auto occupied=playerOccupancy();if(state_.goalKind!=GoalKind::Stairs) occupied[state_.world.stairs]=1;
@@ -484,7 +528,11 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         return {GameplayEvent::DialoguePlayer,{}};
     }
     const int old=state_.position;
-    const auto update=advance();
+    Event update;
+    if(reroute) {
+        if(detour>=0) update=moveTo(detour);
+        invalidate(false); // Resume the same goal from the new location next turn.
+    } else update=advance();
     g.phaseStartedMs=now;g.deadlineMs=now+(update.kind==EventKind::Move?400:0);
     if(update.kind==EventKind::Move) {
         for(auto& e:state_.population.entities) if(friendly(e) && e.tile==old && e.direction==directionBetween(state_.position,old)) {
@@ -501,10 +549,22 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         g.playerActionRound=g.actionRound;g.deadlineMs=now+400;
         if(update.originalId==ITEM_ORAN_BERRY && !g.oran) ++g.oran;
         return {GameplayEvent::Pickup,update.onceKey};
-    case EventKind::Move:return {GameplayEvent::Move,{}};
+    case EventKind::Move:return {GameplayEvent::Move,{},0,false,0,reroute};
     case EventKind::Greeting:return {GameplayEvent::Greeting,update.onceKey};
     case EventKind::FloorChanged:return {GameplayEvent::FloorChanged,update.onceKey};
-    default:g.playerActionRound=g.actionRound;g.deadlineMs=now+400;return {GameplayEvent::Wait,{}};
+    default:
+        g.playerActionRound=g.actionRound;g.deadlineMs=now+400;
+        if(reroute) {
+            // Planning may have dropped an unreachable goal. Keep the waiting
+            // decision detectable as well, so a restored dead end keeps waiting
+            // for an opening instead of taking the no-goal return fallback.
+            const auto waiting=navigationFingerprint(state_);
+            if(std::find(g.navigationHistory.begin(),g.navigationHistory.end(),waiting)==g.navigationHistory.end()) {
+                if(g.navigationHistory.size()==32) g.navigationHistory.erase(g.navigationHistory.begin());
+                g.navigationHistory.push_back(waiting);
+            }
+        }
+        return {GameplayEvent::Wait,{},0,false,0,reroute};
     }
 }
 

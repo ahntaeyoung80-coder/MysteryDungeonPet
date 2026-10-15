@@ -641,9 +641,6 @@ class App {
             if (candidate.state().gameplay.life == LifePhase::ReturnHome) dirty_ = true;
             return;
         }
-        if(event.event==GameplayEvent::ReturnHome && candidate.state().gameplay.onceKeys.count("navigation-reset:"+std::to_string(candidate.state().runId))) {
-            auto backup=options_.snapshot;backup+=L".reset-backup";saveSnapshot(backup,explorer_->state());
-        }
         saveSnapshot(options_.snapshot, candidate.state());
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
         const auto& g = explorer_->state().gameplay;
@@ -692,9 +689,7 @@ class App {
         if (event.event == GameplayEvent::PlayerAttack || event.event == GameplayEvent::EnemyAttack)
             log("move355 damage=" + std::to_string(event.damage) + " critical=" + std::to_string(event.critical));
         if (event.event == GameplayEvent::HomeScene) log(std::string("life=HomeScene opaque original ")+(bedroomScene(g)?(nightScene(g)?"night bedroom":"day bedroom"):"dining map"));
-        if(event.event==GameplayEvent::ReturnHome && g.onceKeys.count("navigation-reset:"+std::to_string(explorer_->state().runId))) {
-            settleNavigationReset(now);log("navigation reset reason=repeated-joint-state");
-        }
+        if(event.navigationDetour) log("navigation detour reason=repeated-joint-state from="+std::to_string(oldPosition)+" to="+std::to_string(explorer_->state().position));
         if(g.life==LifePhase::ReturnHome) dirty_=true;
         dirty_ = true;
     }

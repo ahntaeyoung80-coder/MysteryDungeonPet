@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <map>
+#include <set>
 using namespace pet;
 void check(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 ExplorationState cycleFixture(){
@@ -26,6 +27,7 @@ int main(int argc,char** argv){try{
  if(argc==4 && std::string(argv[1])=="--inspect"){
   const auto p=loadExplorationPackage(argv[2]);const auto s=loadSnapshot(argv[3],p.assetVersion);const auto& g=s.gameplay;
   std::cout<<"{\"runId\":"<<s.runId<<",\"life\":\""<<lifeName(g.life)<<"\",\"day\":"<<g.day<<",\"hearts\":"<<g.hearts
+   <<",\"floor\":"<<s.floorIndex<<",\"position\":"<<s.position
    <<",\"inventory\":"<<s.inventory.size()<<",\"completed\":"<<(s.completed?"true":"false")<<",\"meals\":"<<g.meals
    <<",\"returnCount\":"<<g.onceKeys.count("return:"+std::to_string(s.runId))
    <<",\"manualCount\":"<<g.onceKeys.count("manual-reset:"+std::to_string(s.runId))
@@ -51,8 +53,65 @@ int main(int argc,char** argv){try{
        stuck.state().floorIndex==saved.floorIndex && stuck.state().runId==saved.runId &&
        stuck.state().gameplay.hearts==2 && stuck.state().inventory.empty() && !stuck.state().completed &&
        !stuck.state().gameplay.onceKeys.count("return:900"),"detour repeated the old direction, returned home or changed committed progress");
+ std::cout<<"persisted repeat: from="<<saved.position<<" ordinary="<<observed.state().position<<" detour="<<stuck.state().position
+  <<" run="<<stuck.state().runId<<" floor="<<stuck.state().floorIndex<<" (no return)\n";
  recurring.visited[75]=1;Explorer progress(recurring);
- check(progress.advanceGameplay(1000).event!=GameplayEvent::ReturnHome,"new exploration progress was mistaken for a cycle");
+ check(!progress.advanceGameplay(1000).navigationDetour,"new exploration progress was mistaken for a cycle");
+ auto signatureFor=[](ExplorationState s){
+  s.gameplay.navigationHistory.clear();Explorer sample(s);sample.advanceGameplay(1000);
+  check(!sample.state().gameplay.navigationHistory.empty(),"decision state was not observed");
+  return sample.state().gameplay.navigationHistory.front();
+ };
+ // Revisit the same decision with persisted history to exercise full rotations
+ // at both health levels, including the wraparound of the bounded history.
+ for(unsigned hp:{2U,5U}) {
+  auto s=cycleFixture();s.population.entities.clear();s.gameplay.hostile.clear();s.gameplay.hearts=hp;
+  s.gameplay.movement={1,600,400,directionBetween(78,77),78,77};
+  const auto signature=signatureFor(s);s.gameplay.navigationHistory={signature};
+  std::set<int> alternatives;int last=-1;
+  auto withoutHistory=s;withoutHistory.gameplay.navigationHistory.clear();Explorer ordinary(withoutHistory);ordinary.advanceGameplay(1000);
+  for(unsigned visit=0;visit<16;++visit) {
+   Explorer restored(decodeSnapshot(encodeSnapshot(s),"oscillation"));const auto event=restored.advanceGameplay(1000);
+   const auto& after=restored.state();
+   check(event.event==GameplayEvent::Move && event.navigationDetour && after.position!=ordinary.state().position && after.position!=78 &&
+    after.position!=last && after.phase==Phase::Explore && after.floorIndex==s.floorIndex && after.runId==s.runId &&
+    after.gameplay.hearts==hp && after.gameplay.actionRound==s.gameplay.actionRound+1 &&
+    after.gameplay.playerActionRound==after.gameplay.actionRound && after.gameplay.movement.durationMs==400 &&
+    !after.gameplay.onceKeys.count("return:900"),"persisted detour repeated direction, violated turn/movement or returned home");
+   check(canMove(s.world,s.position,after.position,s.blocked),"detour crossed a wall/corner/blocker");
+   alternatives.insert(after.position);last=after.position;
+   s.gameplay.navigationHistory=after.gameplay.navigationHistory;
+  }
+  check(alternatives.size()>=4,"repeated decisions did not rotate alternate directions");
+ }
+ // Only one exit: use it. No exit: wait for the next actor turn, never return.
+ for(int exit:{-1,78}) {
+  auto s=cycleFixture();s.population.entities.clear();s.gameplay.hostile.clear();
+  s.target=s.world.stairs;s.goalKind=GoalKind::Stairs;
+  s.gameplay.movement={1,600,400,directionBetween(78,77),78,77};
+  for(auto [dx,dy]:kDirections){int tile=s.position+dy*24+dx;if(tile!=exit)s.blocked[tile]=1;}
+  s.gameplay.navigationHistory={signatureFor(s)};
+  Explorer enclosed(decodeSnapshot(encodeSnapshot(s),"oscillation"));const auto event=enclosed.advanceGameplay(1000);
+  check(event.navigationDetour && event.event==(exit<0?GameplayEvent::Wait:GameplayEvent::Move) &&
+   enclosed.state().position==(exit<0?s.position:exit) && enclosed.state().phase==Phase::Explore &&
+   !enclosed.state().gameplay.onceKeys.count("return:900"),"blocked detour teleported, hung or returned home");
+  if(exit<0) for(unsigned tick=1;tick<8;++tick) {
+   enclosed=Explorer(decodeSnapshot(encodeSnapshot(enclosed.state()),"oscillation"));
+   check(enclosed.advanceGameplay(1000+tick*400).event==GameplayEvent::Wait && enclosed.state().phase==Phase::Explore,
+    "blocked restored detour fell back to automatic return");
+  }
+ }
+ auto corner=cycleFixture();corner.population.entities.clear();corner.gameplay.hostile.clear();
+ corner.world.terrain[78]=0;corner.world.room[78]=-1;corner.discovered[78]=0;
+ corner.gameplay.navigationHistory={signatureFor(corner)};Explorer wall(corner);
+ check(wall.advanceGameplay(1000).event==GameplayEvent::Move &&
+  canMove(corner.world,corner.position,wall.state().position) && wall.state().position!=54 && wall.state().position!=102,
+  "detour cut a blocked diagonal corner");
+ auto attacked=cycleFixture();attacked.population.entities[0].tile=78;
+ attacked.gameplay.navigationHistory={signatureFor(attacked)};Explorer attackFirst(attacked);
+ check(attackFirst.advanceGameplay(1000).event==GameplayEvent::HostileEncounter &&
+  attackFirst.state().gameplay.life==LifePhase::Combat && attackFirst.state().position==attacked.position,
+  "detour skipped an adjacent enemy's attack right");
  // MDES5 migration has no history; MDES1..4 retain their existing fixtures/checks.
  auto old=encodeSnapshot(cycleFixture());old.erase(old.end()-8,old.end()-4);old[4]=5;
  uint32_t crc=0xffffffff;
@@ -93,8 +152,10 @@ int main(int argc,char** argv){try{
    sample=Explorer(decodeSnapshot(encodeSnapshot(sample.state()),"oscillation"));
   }
   check(finished,"low HP chase/retreat exceeded bounded liveness sweep");
-  recovered+=sample.state().gameplay.onceKeys.count("navigation-reset:900")!=0;
+  recovered+=sample.state().gameplay.onceKeys.count("return:900")!=0;
  }
- std::cout<<"200 restored low-HP geometries escaped; automatic recoveries="<<recovered<<"\n";
+ check(recovered==0,"low HP sweep ended exploration through automatic return");
+ std::cout<<"200 restored low-HP geometries escaped without automatic return\n";
+ std::cout<<"restored detour rotations at HP2/HP5, dead-end waits, single exit, corner and enemy-turn checks pass\n";
  std::cout<<"navigation recovery regression pass\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
