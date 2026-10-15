@@ -123,7 +123,7 @@ int main(int argc,char** argv) { try {
     ds.gameplay.combat=CombatPhase::Defeat;ds.gameplay.deadlineMs=1000;
     Explorer oldDefeat(ds);
     check(oldDefeat.advanceGameplay(1000).event==GameplayEvent::PlayerFaint &&
-        oldDefeat.state().gameplay.hearts==0 && oldDefeat.state().gameplay.onceKeys.empty(),"legacy defeat skips Faint or replays damage");
+        oldDefeat.state().gameplay.hearts==0 && oldDefeat.state().gameplay.onceKeys==ds.gameplay.onceKeys,"legacy defeat skips Faint or replays damage");
     check(deadlineFromUtc(1000000,1500,1499)==1000000,"expired deadline underflows");
     check(deadlineFromUtc(1000000,1500,1900)==1400000,"movement deadline drift");
     check(deadlineFromUtc(0,1,UINT64_MAX)==60000000,"unbounded UTC timer overflow");

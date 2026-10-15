@@ -103,7 +103,9 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     const auto exitPlans=e.bfsCalls(),exitRng=e.state().rng.state;const auto exitInventory=e.state().inventory.size();
     advance(e,e.state().gameplay.deadlineMs-1,true);check(e.state().gameplay.day==oldDay && e.state().gameplay.hearts==oldHearts && e.bfsCalls()==exitPlans && e.state().rng.state==exitRng && e.state().inventory.size()==exitInventory,"room exit advanced dungeon or refreshed state early");
     advance(e,e.state().gameplay.deadlineMs,false);check(e.state().gameplay.sceneBeat==SceneBeat::RoomExit,"exit ignored completion");
-    next(e);check(e.state().gameplay.day==oldDay+1 && e.state().gameplay.hearts==kMaxHp && e.state().gameplay.sceneBeat==SceneBeat::None && e.state().gameplay.life==LifePhase::Explore,"next day not committed once after exit");
+    next(e);check(e.state().gameplay.day==oldDay && e.state().gameplay.sceneBeat==SceneBeat::MorningFadeOut,"exit skipped fade-out");
+    next(e);check(e.state().gameplay.day==oldDay+1 && e.state().gameplay.hearts==kMaxHp && e.state().gameplay.sceneBeat==SceneBeat::ExploreFadeIn && e.state().gameplay.life==LifePhase::Explore,"next day not committed once at black");
+    next(e);check(e.state().gameplay.day==oldDay+1 && e.state().gameplay.sceneBeat==SceneBeat::None,"next day fade-in repeated day");
 
 
 }

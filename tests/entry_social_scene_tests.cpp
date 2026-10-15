@@ -1,5 +1,7 @@
 #include "core/exploration.hpp"
 #include "core/gameplay_scene.hpp"
+#include "core/animator.hpp"
+#include "core/package.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
@@ -65,10 +67,19 @@ void scenes(){
  auto s=socialFixture();s.phase=Phase::Home;s.gameplay.homeScene=true;s.gameplay.life=LifePhase::Wake;
  s.gameplay.sceneBeat=SceneBeat::BedFadeIn;s.gameplay.phaseStartedMs=1000;s.gameplay.deadlineMs=1750;s.gameplay.meals=1;s.gameplay.onceKeys={"return:920","meal:920"};
  check(gameplayClip(s.gameplay)==13 && !gameplayLoop(s.gameplay),"morning fade-in stands before Wake14");
+ check(holdGameplayPose(s.gameplay),"morning fade replays sleep onset instead of holding its last pose");
+ const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+ for(const auto actor:{"asset-0","asset-1"}){
+  const auto p=loadPackage(root/"assets/original/gameplay/actors"/actor/"asset.mdpa");
+  Animator pose;pose.start(p,13,2,false,0);const auto held=pose.advance(60000000);
+  check(held.finished && held.frame+1==p.frames(13,2).size(),"original sleep clip does not hold final frame");
+ }
  Explorer e(s);e=restore(e);e.advanceGameplay(1750);check(gameplayClip(e.state().gameplay)==14,"Wake14 missing after sleep pose");
  s=e.state();s.gameplay.life=LifePhase::Ready;s.gameplay.sceneBeat=SceneBeat::RoomExit;s.gameplay.phaseStartedMs=2000;s.gameplay.deadlineMs=2000+kRoomExitMs;
  e=Explorer(s);e.advanceGameplay(s.gameplay.deadlineMs,true);
  check(e.state().gameplay.sceneBeat==SceneBeat::MorningFadeOut && e.state().gameplay.day==1 && e.state().gameplay.homeScene,"room exit skipped fade-out");
+ const auto exit=bedroomExit({204,184},e.state().gameplay,e.state().gameplay.phaseStartedMs);
+ check(exit.finished && exit.position.x==104 && exit.position.y==184 && gameplayClip(e.state().gameplay)==7,"fade-out teleported to bed or replayed greeting");
  const auto start=e.state().gameplay.phaseStartedMs;e=restore(e);e.advanceGameplay(start+749,true);check(e.state().gameplay.day==1,"next day committed before blackout");
  e.advanceGameplay(start+750,true);check(e.state().gameplay.sceneBeat==SceneBeat::ExploreFadeIn && e.state().gameplay.day==2 && e.state().gameplay.hearts==kMaxHp,"black frame did not commit next day/fade-in");
  auto bytes=encodeSnapshot(e.state());e=restore(e);e.advanceGameplay(start+1499,true);check(bytes==encodeSnapshot(e.state()),"exploration moved during fade-in");

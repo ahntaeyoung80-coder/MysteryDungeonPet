@@ -56,9 +56,9 @@ std::uint32_t gameplayClip(const GameplayState& g) {
         if(g.sceneBeat==SceneBeat::BedFace) return 22;
         if(g.sceneBeat==SceneBeat::BedLay) return 27;
         return 13;
-    case LifePhase::Ready: if(g.sceneBeat==SceneBeat::RoomExit) return 0; return g.sceneBeat==SceneBeat::MorningFace || g.sceneBeat==SceneBeat::MorningFadeOut ? 22:7;
+    case LifePhase::Ready: if(g.sceneBeat==SceneBeat::RoomExit) return 0; return g.sceneBeat==SceneBeat::MorningFace ? 22:7;
     case LifePhase::Dialogue:return g.dialogueStage==DialogueStage::Player?22:7;
-    case LifePhase::Wake: return g.sceneBeat==SceneBeat::WakeDelay?13:g.sceneBeat==SceneBeat::BedFadeIn?7:14;
+    case LifePhase::Wake: return g.sceneBeat==SceneBeat::WakeDelay || g.sceneBeat==SceneBeat::BedFadeIn?13:14;
     case LifePhase::Combat:
         if (g.combat == CombatPhase::PlayerAttack) return 1;
         if (g.combat == CombatPhase::PlayerHurt) return 6;
@@ -67,7 +67,12 @@ std::uint32_t gameplayClip(const GameplayState& g) {
     default: return 7;
     }
 }
+bool holdGameplayPose(const GameplayState& g) {
+    return (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFadeOut) ||
+        (g.life==LifePhase::Wake && (g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::WakeDelay));
+}
 bool gameplayLoop(const GameplayState& g) {
+    if(holdGameplayPose(g)) return false;
     const auto clip = gameplayClip(g);
     if(g.life==LifePhase::Sleep && (g.sceneBeat==SceneBeat::Sleeping || g.sceneBeat==SceneBeat::BedFadeOut)) return false;
     return clip == 0 || clip == 7 || clip == 5 || clip == 13 || g.life == LifePhase::Eat || g.sceneBeat==SceneBeat::DiningExit;
@@ -269,18 +274,24 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
     }
     if(g.life==LifePhase::Ready) {
         if(g.sceneBeat==SceneBeat::MorningFace && !(completed.player&&completed.partner)) return {};
-        if(g.sceneBeat!=SceneBeat::RoomExit) { // Resume old morning saves through the new exit.
+        if(g.sceneBeat!=SceneBeat::RoomExit && g.sceneBeat!=SceneBeat::MorningFadeOut) { // Resume old morning saves through the exit.
             g.sceneBeat=SceneBeat::RoomExit;g.playerDirection=0;
             return life(LifePhase::Ready,GameplayEvent::Ready,kRoomExitMs);
         }
-        if(now<g.deadlineMs || !completed.player) return {};
+        if(g.sceneBeat==SceneBeat::RoomExit) {
+            if(now<g.deadlineMs || !completed.player) return {};
+            g.sceneBeat=SceneBeat::MorningFadeOut;
+            return life(LifePhase::Ready,GameplayEvent::Ready,kFadeMs);
+        }
+        if(now<g.deadlineMs) return {};
         if(state_.runId==UINT64_MAX || g.day==UINT32_MAX) throw std::runtime_error("day counter exhausted");
         const auto previous=g;const auto inventory=state_.inventory;
         Explorer next(state_.runId+1,state_.rng.state,state_.assetVersion,state_.floors,state_.spawnPolicy);
         next.state_.inventory=inventory;
         for(const auto& entry:inventory) next.state_.onceKeys.insert(entry.onceKey);
         next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+1;next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
-        next.state_.gameplay.phaseStartedMs=next.state_.gameplay.deadlineMs=now;
+        next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+kFadeMs;
+        next.state_.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;
         next.assignRelationships();*this=std::move(next);return {GameplayEvent::Explore,{}};
     }
     if (g.life == LifePhase::Combat) {

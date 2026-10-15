@@ -14,7 +14,7 @@ std::wstring gameplayText(const GameplayState& g) {
 BedroomExitSample bedroomExit(Point start,const GameplayState& g,std::uint64_t now) {
     // Skirt the occupied partner bed, then stop at the left corridor entrance inside the map.
     const std::array<Point,5> path{{start,{184,200},{128,200},{112,184},{104,184}}};
-    std::uint64_t elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
+    std::uint64_t elapsed=g.sceneBeat==SceneBeat::MorningFadeOut?kRoomExitMs:now>g.phaseStartedMs?now-g.phaseStartedMs:0;
     for(unsigned i=1;i<path.size();++i) {
         const auto from=path[i-1],to=path[i];
         const auto dx=to.x-from.x,dy=to.y-from.y;

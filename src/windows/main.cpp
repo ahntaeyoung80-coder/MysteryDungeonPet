@@ -249,17 +249,30 @@ class App {
         out.write(static_cast<const char*>(dib_->bits),size_*size_*4);
         if(!out) throw std::runtime_error("cannot write movement frame image");
     }
+    Point homeCamera(int64_t now) const {
+        const auto& g=explorer_->state().gameplay;const bool bedroom=bedroomScene(g);
+        const auto& room=guildRooms_[bedroom?1:0];
+        WorldPoint center=bedroom?WorldPoint{180,184}:g.sceneBeat==SceneBeat::DiningPan?guildCamera_.sample(now):g.sceneBeat==SceneBeat::DiningExit?WorldPoint{168,212}:WorldPoint{368,212};
+        if(g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut) {const auto p=bedroomExit(room.player().position,g,utcMs()).position;center={double(p.x),double(p.y)};}
+        return cameraFor(center,room.width,room.height,int((size_+scale_-1)/scale_));
+    }
     void traceMovement(int64_t now,bool submitted) {
-        if(!movementTrace_ || !explorer_ || !dungeonScene(explorer_->state().gameplay)) return;
-        const auto& g=explorer_->state().gameplay;const auto world=playerMotion_.sample(now);const auto scene=raster(world);
-        const auto camera=cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_));
+        if(!movementTrace_ || !explorer_) return;
+        const auto& state=explorer_->state();const auto& g=state.gameplay;const bool dungeon=dungeonScene(g);
+        const auto scene=dungeon?raster(playerMotion_.sample(now)):currentPlayback().scenePosition;
+        const auto world=dungeon?playerMotion_.sample(now):WorldPoint{double(scene.x),double(scene.y)};
+        const auto camera=dungeon?cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_)):homeCamera(now);
         uint64_t hash=14695981039346656037ULL;unsigned opaque=0;
         for(size_t i=0;i<surface_.pixels.size();++i) {hash^=surface_.pixels[i];hash*=1099511628211ULL;if(i%4==3 && surface_.pixels[i]==255) ++opaque;}
         movementTrace_ << now-start_ << ',' << g.movement.actionId << ',' << g.movement.startedMs << ',' << g.movement.durationMs << ','
             << g.movement.from << ',' << g.movement.to << ',' << std::setprecision(12) << world.x << ',' << world.y << ','
             << scene.x << ',' << scene.y << ',' << camera.x << ',' << camera.y << ',' << direction_ << ',' << clip_ << ',' << frame_ << ','
             << scale_ << ',' << playerMotion_.active(now) << ',' << opaque << ',' << hash << ',' << submitted << ','
-            << markers_ << ',' << static_cast<unsigned>(g.life) << ',' << static_cast<unsigned>(g.sceneBeat) << ',' << utcMs() << ',' << g.walkStartedMs << '\n';
+            << markers_ << ',' << static_cast<unsigned>(g.life) << ',' << static_cast<unsigned>(g.sceneBeat) << ',' << utcMs() << ',' << g.walkStartedMs << ','
+            << state.floorIndex << ',' << state.world.start << ',' << state.world.stairs << ',' << state.position << ','
+            << std::count_if(state.population.entities.begin(),state.population.entities.end(),[&](const auto& e){return e.tile==state.world.start;}) << ',' << holdingScenePose();
+        const auto partner=std::find_if(guildLive_.begin(),guildLive_.end(),[](const auto& a){return a.cue->kind==GuildActorKind::Partner;});
+        movementTrace_ << ',' << (partner==guildLive_.end()?0:partner->clip) << ',' << (partner==guildLive_.end()?0:partner->frame) << '\n';
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
     }
@@ -321,9 +334,7 @@ class App {
         return std::max<int64_t>(0,now-static_cast<int64_t>(std::min<uint64_t>(utc>started?utc-started:0,60000))*1000);
     }
     bool holdingScenePose() const {
-        if(!explorer_) return false;
-        const auto beat=explorer_->state().gameplay.sceneBeat;
-        return beat==SceneBeat::MorningFadeOut || beat==SceneBeat::BedFadeOut;
+        return explorer_ && holdGameplayPose(explorer_->state().gameplay);
     }
     int64_t sceneClipStart(int64_t now) const {
         // These stages already completed their finite pose before entering the fade.
@@ -360,7 +371,7 @@ class App {
         } else if (explorer_ && !guildRooms_.empty()) {
             scene = guildRooms_[bedroomScene(explorer_->state().gameplay) ? 1 : 0].player().position;
             const auto& g=explorer_->state().gameplay;
-            if(g.sceneBeat==SceneBeat::RoomExit) {
+            if(g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut) {
                 scene=bedroomExit(scene,g,utcMs()).position;
             }
         }
@@ -671,8 +682,9 @@ class App {
             (void)dx; (void)dy;
             enemyDirection_ = (direction_ + 4) % 8;
         }
-        if (g.homeScene) direction_ = g.sceneBeat==SceneBeat::RoomExit?0:guildRooms_[bedroomScene(g)?1:0].player().direction;
-        if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace || g.sceneBeat==SceneBeat::MorningFadeOut) direction_=6;
+        if (g.homeScene) direction_ = g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
+            bedroomExit(guildRooms_[1].player().position,g,utcMs()).direction:guildRooms_[bedroomScene(g)?1:0].player().direction;
+        if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace) direction_=6;
         if(g.sceneBeat==SceneBeat::DiningPan && oldBeat!=g.sceneBeat) guildCamera_.begin(UINT32_MAX,g.day,{368,212},{168,212},now,6,4000000);
         if (clip_ == 0 && nextClip == 0 && loop_ && oldLife == g.life && oldCombat == g.combat) {
             if(oldDirection != direction_) animator_.changeDirection(assets_.package,0,direction_);
@@ -713,7 +725,7 @@ class App {
                     source = &it->second;
                 }
                 GuildLiveActor actor; actor.cue = &cue; actor.assets = source; actor.direction = cue.direction;
-                if(cue.kind==GuildActorKind::Partner && (g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace || g.sceneBeat==SceneBeat::MorningFadeOut)) actor.direction=2;
+                if(cue.kind==GuildActorKind::Partner && (g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace)) actor.direction=2;
                 actor.clip = cue.kind == GuildActorKind::Object ? cue.actionClip :
                     cue.kind == GuildActorKind::Partner ? (room == 1 ? gameplayClip(g) : g.life == LifePhase::Eat ? 15U : 7U) :
                     g.life == LifePhase::Eat ? cue.actionClip : 7U;
@@ -737,7 +749,7 @@ class App {
             }
             const auto result = actor.animator.advance(now);
             actor.finished = result.finished;
-            if (result.finishedEvent && actor.cue->kind == GuildActorKind::Partner && g.life == LifePhase::Wake) log("guild partner wake finished");
+            if (result.finishedEvent && actor.cue->kind == GuildActorKind::Partner && g.life == LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) log("guild partner wake finished");
             dirty_ = dirty_ || actor.frame != result.frame; actor.frame = result.frame;
             if (result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs < *nextFrameDeadline_)) nextFrameDeadline_ = result.nextDeadlineUs;
         }
@@ -836,10 +848,7 @@ class App {
             const auto& g = explorer_->state().gameplay;
             const bool bedroom=bedroomScene(g);
             const auto& f = homeAssets_->package.frames(bedroom ? (nightScene(g)?2:1) : 0, 0).front();
-            const auto& room=guildRooms_[bedroom?1:0];
-            WorldPoint center=bedroom?WorldPoint{180,184}:g.sceneBeat==SceneBeat::DiningPan?guildCamera_.sample(now):g.sceneBeat==SceneBeat::DiningExit?WorldPoint{168,212}:WorldPoint{368,212};
-            if(g.sceneBeat==SceneBeat::RoomExit) {const auto p=bedroomExit(room.player().position,g,utcMs()).position;center={double(p.x),double(p.y)};}
-            camera=cameraFor(center,room.width,room.height,int((size_+scale_-1)/scale_));
+            camera=homeCamera(now);
             layers.push_back({homeAssets_->atlas.get(), f.rect, f.anchor, {0, 0}});
             for (const auto& cue : guildRooms_[bedroom ? 1 : 0].actors) {
                 if (cue.kind == GuildActorKind::Player) {
@@ -892,7 +901,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
@@ -936,8 +945,9 @@ public:
             if(explorer_->state().gameplay.life==LifePhase::Explore && playerMotion_.active(nowUs())) {clip_=0;loop_=true;}
             const auto& g = explorer_->state().gameplay;
             direction_=g.playerDirection;
-            if(g.homeScene) direction_=g.sceneBeat==SceneBeat::RoomExit?0:guildRooms_[bedroomScene(g)?1:0].player().direction;
-            if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace || g.sceneBeat==SceneBeat::MorningFadeOut) direction_=6;
+            if(g.homeScene) direction_=g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
+                bedroomExit(guildRooms_[1].player().position,g,utcMs()).direction:guildRooms_[bedroomScene(g)?1:0].player().direction;
+            if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace) direction_=6;
             if(g.life==LifePhase::Combat || g.life==LifePhase::Dialogue) {
                 enemyDirection_=(g.playerDirection+4)%8;
                 enemyClip_=g.life==LifePhase::Dialogue?(g.dialogueStage==DialogueStage::Npc?22:7):g.combat==CombatPhase::EnemyAttack?1:g.combat==CombatPhase::EnemyHurt?6:g.combat==CombatPhase::Faint?33:7;

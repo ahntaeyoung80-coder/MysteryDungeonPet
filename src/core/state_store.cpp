@@ -244,6 +244,8 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         const bool oran=std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.kind==EntityKind::Item && e.originalId==ITEM_ORAN_BERRY && !e.done && s.discovered[e.tile];});
         s.survivalFirst=s.knownStairs>=0?SurvivalFirst::Stairs:oran?SurvivalFirst::Oran:SurvivalFirst::None;
     }
+    if(schema<5 && s.gameplay.life==LifePhase::Ready && s.gameplay.sceneBeat==SceneBeat::MorningFadeOut)
+        s.gameplay.sceneBeat=SceneBeat::RoomExit; // Old pre-exit fade resumes through the current corridor.
     if(s.gameplay.sceneBeat==SceneBeat::RoomExit) s.gameplay.deadlineMs=s.gameplay.phaseStartedMs+kRoomExitMs;
     if(schema>=6) {
         const auto count=r.count(32);
