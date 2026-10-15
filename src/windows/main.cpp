@@ -175,7 +175,7 @@ class App {
     Options options_;
     std::filesystem::path directory_;
     Assets assets_;
-    std::optional<Assets> enemyAssets_, companionAssets_, homeAssets_, propsAssets_;
+    std::optional<Assets> enemyAssets_, friendlyAssets_, companionAssets_, homeAssets_, propsAssets_;
     std::vector<GuildRoom> guildRooms_;
     std::map<std::string, Assets> guildAssets_;
     struct GuildLiveActor {
@@ -293,9 +293,13 @@ class App {
         for(const auto& e:state.population.entities) if(e.kind==EntityKind::Friend && e.visible &&
             (!e.done || std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end())) {
             if(!firstActor)movementTrace_ << ';';firstActor=false;
+            const bool focused=!partyRendering() && (g.life==LifePhase::Combat || g.life==LifePhase::Dialogue) && e.instanceId==g.enemyInstance;
+            const bool moving=actorMotions_.count(e.instanceId) && actorMotions_.at(e.instanceId).active(now);
             movementTrace_ << e.instanceId << ':' << e.tile << ':'
-                << (partyRendering()?partyActorClips_[e.instanceId]:7) << ':'
-                << actorFrames_[e.instanceId] << ':' << partyActorTokens_[e.instanceId];
+                << (partyRendering()?partyActorClips_[e.instanceId]:focused?enemyClip_:moving?0:7) << ':'
+                << (partyRendering()?actorFrames_[e.instanceId]:focused?enemyFrame_:moving?actorFrames_[e.instanceId]:0) << ':'
+                << partyActorTokens_[e.instanceId] << ':'
+                << (focused?enemyDirection_:e.direction);
         }
         movementTrace_ << ',' << p.movement.startedMs << ',' << p.movement.durationMs << ',';
         bool firstMove=true;
@@ -358,7 +362,7 @@ class App {
         if(state.gameplay.companion.enabled) restore(companionMotion_,kCompanionActorId,state.gameplay.companion.movement);
         for(const auto& e:state.population.entities) if(e.movement.actionId) {
             restore(actorMotions_[e.instanceId],e.instanceId,e.movement);
-            if(actorMotions_[e.instanceId].active(now)) actorAnimators_[e.instanceId].start(enemyAssets_->package,0,e.movement.direction, true,now-int64_t(std::min<uint64_t>(400,utc>e.movement.startedMs?utc-e.movement.startedMs:0))*1000);
+            if(actorMotions_[e.instanceId].active(now)) actorAnimators_[e.instanceId].start(npcAssets(e.instanceId).package,0,e.movement.direction, true,now-int64_t(std::min<uint64_t>(400,utc>e.movement.startedMs?utc-e.movement.startedMs:0))*1000);
         }
     }
     int64_t restoredClipStart(int64_t now) const {
@@ -661,8 +665,13 @@ class App {
         log("WTSRegisterSessionNotification OS=" + std::to_string(GetLastError()));
         sessionRetry_ = sessionAttempts_ < 3 ? now + 5000000 : 0;
     }
-    uint32_t npcClip(uint32_t requested) const {
-        const auto& clips=enemyAssets_->package.clips;
+    const Assets& npcAssets(uint32_t actor) const {
+        if(!explorer_)return *friendlyAssets_;
+        const auto& hostile=explorer_->state().gameplay.hostile;
+        return std::find(hostile.begin(),hostile.end(),actor)!=hostile.end()?*enemyAssets_:*friendlyAssets_;
+    }
+    uint32_t npcClip(uint32_t requested,const Assets& source) const {
+        const auto& clips=source.package.clips;
         return std::any_of(clips.begin(),clips.end(),[&](const auto& c){return c.id==requested;})?requested:requested==33?6:7;
     }
     bool partyRendering() const {
@@ -690,7 +699,7 @@ class App {
             auto wanted=partyClip(g,actor);
             if(!v && actor!=0 && actor!=kCompanionActorId &&
                actorMotions_.count(actor) && actorMotions_.at(actor).active(now))wanted=0;
-            const auto actual=actor!=0 && actor!=kCompanionActorId?npcClip(wanted):wanted;
+            const auto actual=actor!=0 && actor!=kCompanionActorId?npcClip(wanted,source):wanted;
             const unsigned dir=v?v->direction:actor==0?g.playerDirection:
                 actor==kCompanionActorId?g.companion.direction:
                 std::find_if(s.population.entities.begin(),s.population.entities.end(),
@@ -716,7 +725,7 @@ class App {
         sync(kCompanionActorId,*companionAssets_,companionAnimator_,
             companionClip_,companionDirection_,companionFrame_,partyCompanionToken_);
         for(const auto& e:s.population.entities) if(e.kind==EntityKind::Friend && e.visible && (!e.done || std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end()))
-            sync(e.instanceId,*enemyAssets_,actorAnimators_[e.instanceId],
+            sync(e.instanceId,npcAssets(e.instanceId),actorAnimators_[e.instanceId],
                 partyActorClips_[e.instanceId],partyActorDirections_[e.instanceId],
                 actorFrames_[e.instanceId],partyActorTokens_[e.instanceId]);
     }
@@ -779,8 +788,8 @@ class App {
                 // syncPartyActors selects the actual clip after this move.
                 if(!partyRendering()) {
                     if(!g.independentParty && animation.active())
-                        animation.changeDirection(enemyAssets_->package,0,e.direction);
-                    else animation.start(enemyAssets_->package,0,e.direction,true,now);
+                        animation.changeDirection(npcAssets(e.instanceId).package,0,e.direction);
+                    else animation.start(npcAssets(e.instanceId).package,0,e.direction,true,now);
                 }
             }
         }
@@ -824,9 +833,9 @@ class App {
         } else if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage || oldBeat!=g.sceneBeat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
         if(event.event == GameplayEvent::FloorChanged || (event.event == GameplayEvent::Explore && oldLife==LifePhase::Ready)) {playerMotion_.reset(tilePoint(explorer_->state().position));actorMotions_.clear();actorAnimators_.clear();}
         if ((g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && (oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage)) {
-            enemyClip_ = g.life==LifePhase::Dialogue ? (g.dialogueStage==DialogueStage::Npc?npcClip(22):7) : g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? npcClip(33) : 7;
+            enemyClip_ = g.life==LifePhase::Dialogue ? (g.dialogueStage==DialogueStage::Npc?npcClip(22,npcAssets(g.enemyInstance)):7) : g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? npcClip(33,npcAssets(g.enemyInstance)) : 7;
             enemyFrame_ = 0;
-            enemyAnimator_.start(enemyAssets_->package, enemyClip_, enemyDirection_, enemyClip_ == 7 && !(g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc), now);
+            enemyAnimator_.start(npcAssets(g.enemyInstance).package, enemyClip_, enemyDirection_, enemyClip_ == 7 && !(g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc), now);
         }
         if (!event.onceKey.empty()) log("gameplay onceKey=" + event.onceKey);
         if (oldLife != g.life || oldCombat != g.combat || oldBeat!=g.sceneBeat || oldDialogue!=g.dialogueStage) log(std::string("life=") + lifeName(g.life) + " combat=" + combatName(g.combat) + " day=" + std::to_string(g.day) + " hearts=" + std::to_string(g.hearts) + " sceneBeat=" + std::to_string(static_cast<unsigned>(g.sceneBeat)) + " dialogueStage=" + std::to_string(static_cast<unsigned>(g.dialogueStage)));
@@ -994,10 +1003,11 @@ class App {
                     const auto& g = state.gameplay;
                     const bool active = !partyRendering() && (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && e.instanceId == g.enemyInstance;
                     const bool moving=actorMotions_.count(e.instanceId)&&actorMotions_.at(e.instanceId).active(now);
-                    const auto& f = enemyAssets_->package.frames(partyRendering()?partyActorClips_[e.instanceId]:active?enemyClip_:moving?0:7, active?enemyDirection_:e.direction)[partyRendering()?actorFrames_[e.instanceId]:active?enemyFrame_:moving?actorFrames_[e.instanceId]:0];
+                    const auto& body=npcAssets(e.instanceId);
+                    const auto& f = body.package.frames(partyRendering()?partyActorClips_[e.instanceId]:active?enemyClip_:moving?0:7, active?enemyDirection_:e.direction)[partyRendering()?actorFrames_[e.instanceId]:active?enemyFrame_:moving?actorFrames_[e.instanceId]:0];
                     const auto world=actorMotions_.count(e.instanceId)?raster(actorMotions_.at(e.instanceId).sample(now)):raster(tilePoint(e.tile));
                     if(showFriendlyDisc(g,std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end(),false)) addDisc(layers,f,world);
-                    layers.push_back({enemyAssets_->atlas.get(), f.rect, f.anchor, world});
+                    layers.push_back({body.atlas.get(), f.rect, f.anchor, world});
                     continue;
                 }
                 const Point p=raster(tilePoint(e.tile));
@@ -1078,7 +1088,9 @@ public:
         decodes_ = assets_.decoded ? 1 : 0;
         if (!options_.exploration.empty()) {
             companionAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-1/asset.mdpa");
-            enemyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-2/asset.mdpa");
+            friendlyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-2/asset.mdpa");
+            enemyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-3/asset.mdpa");
+            decodes_+=friendlyAssets_->decoded?1:0;
             decodes_+=companionAssets_->decoded?1:0;
             homeAssets_ = Assets::load(options_.gameplayAssets / L"home/home.mdpa");
             propsAssets_=Assets::load(options_.gameplayAssets / L"props/props.mdpa");
@@ -1125,9 +1137,9 @@ public:
             if(g.life==LifePhase::Combat || g.life==LifePhase::Dialogue) {
                 const auto enemy=std::find_if(explorer_->state().population.entities.begin(),explorer_->state().population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance;});
                 enemyDirection_=enemy->direction;
-                enemyClip_=g.life==LifePhase::Dialogue?(g.dialogueStage==DialogueStage::Npc?npcClip(22):7):g.combat==CombatPhase::EnemyAttack?1:g.combat==CombatPhase::EnemyHurt?6:g.combat==CombatPhase::Faint?npcClip(33):7;
+                enemyClip_=g.life==LifePhase::Dialogue?(g.dialogueStage==DialogueStage::Npc?npcClip(22,npcAssets(g.enemyInstance)):7):g.combat==CombatPhase::EnemyAttack?1:g.combat==CombatPhase::EnemyHurt?6:g.combat==CombatPhase::Faint?npcClip(33,npcAssets(g.enemyInstance)):7;
                 const auto restoredNow=nowUs();
-                enemyAnimator_.start(enemyAssets_->package,enemyClip_,enemyDirection_,enemyClip_==7 && !(g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc),enemyClip_==7?restoredNow:restoredClipStart(restoredNow));
+                enemyAnimator_.start(npcAssets(g.enemyInstance).package,enemyClip_,enemyDirection_,enemyClip_==7 && !(g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc),enemyClip_==7?restoredNow:restoredClipStart(restoredNow));
             }
             auto marker = [](Surface& s, uint8_t blue, uint8_t green, uint8_t red) {
                 for (size_t offset = 0; offset < s.pixels.size(); offset += 4) {

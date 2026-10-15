@@ -20,3 +20,10 @@
 08:36:31~08:38:08 KST,1분37초에 초기 자료 확인·동료 HUD 제거·기존 픽셀 회귀 갱신을 마쳤다. 중간 커밋은 `470f30d`이며 아직5단계 완료가 아니다.
 
 관계 자산 생성은 별도 Linux job에서 수행한다. 기존 actor0/1/2 및 ROM hash를 유지하고 기존 prepare_party_actor의 원작 WAN 픽셀 검사를 통과한 MD384/sprite554만 asset-3으로 전달한다. actor runtime-index에 기존 녹색과 새 보라색의 실제 hash/역할·출처를 추가한다. Windows/코어/실행물 반영 job은 같은 artifact를 사용하고, 필수 검증 성공 후에만 asset-3/index와 EXE/manifest를 함께 커밋한다. 아직 실제 추출·표시 통과 결과는 없다.
+
+
+## 녹색/보라색 관계별 renderer 연결 — 검증 전
+
+녹색 asset-2는 우호, 보라색 asset-3은 hostile catalogue에 있는 적의 패키지로 선택한다. 독립 배우·종전 단일 조우·대화·이동 복원·걷기·피격/기절 fallback 모두 같은 선택 경계를 사용한다. guild의 별도 원작 NPC 자산은 재사용한다.
+
+NPC별 실제 clip/frame/direction을 trace에 기록한다. 기존 원작 픽셀 검사의 적 기대 자산을 보라색으로 바꾸고, native에서 두 원작 출처와8방향 필수 clip을 검사한다. 우호·적의 저장 복원 픽셀 검사를 추가할 예정이다. 아직 원작 추출/표시 완료로 보고하지 않는다.

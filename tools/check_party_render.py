@@ -9,7 +9,7 @@ from PIL import Image
 
 def check(inspector, root, output):
     results = []
-    for scenario, asset, tile_field in [('follow','asset-1','companion_tile'), ('attack','asset-2',None)]:
+    for scenario, asset, tile_field in [('follow','asset-1','companion_tile'), ('attack','asset-3',None)]:
         directory = output/scenario
         with (directory/'trace.csv').open(newline='') as stream:
             row = next(r for r in csv.DictReader(stream) if r['submitted']=='1')

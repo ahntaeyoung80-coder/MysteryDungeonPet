@@ -120,12 +120,12 @@ int main(int argc,char** argv){try{
  }
 
  const auto actors=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original/gameplay/actors";
- const auto partner=loadPackage(actors/"asset-1/asset.mdpa"),npc=loadPackage(actors/"asset-2/asset.mdpa");
+ const auto partner=loadPackage(actors/"asset-1/asset.mdpa"),npc=loadPackage(actors/"asset-2/asset.mdpa"),hostile=loadPackage(actors/"asset-3/asset.mdpa");
  for(unsigned direction=0;direction<8;++direction){
   for(auto clip:{0U,1U,6U,7U,13U,14U,15U,17U,22U,27U,33U})check(!partner.frames(clip,direction).empty(),"companion player-equivalent clip absent");
-  for(auto clip:{0U,1U,6U,7U})check(!npc.frames(clip,direction).empty(),"Kecleon dungeon clip absent");
+  for(auto clip:{0U,1U,6U,7U})check(!npc.frames(clip,direction).empty() && !hostile.frames(clip,direction).empty(),"relationship Kecleon dungeon clip absent");
  }
- check(partner.assetKey!=npc.assetKey && npc.provenance.find("383")!=std::string::npos,"companion and Kecleon assets not separated");
+ check(partner.assetKey!=npc.assetKey && npc.assetKey!=hostile.assetKey && npc.provenance.find("383")!=std::string::npos && hostile.provenance.find("384")!=std::string::npos,"friendly and hostile Kecleon provenance not separated");
  GameplayState hud;hud.enabled=true;hud.companion.enabled=true;Surface full(200,200),hurt(200,200);
  gameplayOverlay(full,hud,0);hud.companion.hearts=4;gameplayOverlay(hurt,hud,0);
  check(full.pixels==hurt.pixels,"companion HP leaked into the visible HUD");
