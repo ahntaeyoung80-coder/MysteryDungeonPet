@@ -468,8 +468,14 @@ void Explorer::shiftPausedClocks(std::uint64_t delta,std::uint64_t pausedAt) {
     };
     if(g.companion.walkStartedMs) g.companion.walkStartedMs+=delta;
     shift(g.movement);shift(g.companion.movement);for(auto& e:state_.population.entities) shift(e.movement);
-    for(auto& a:g.partyActions){a.startedMs+=delta;a.deadlineMs+=delta;}
-    for(auto& v:g.partyPlaybacks){v.startedMs+=delta;v.deadlineMs+=delta;}
+    for(auto& a:g.partyActions){
+        if(a.startedMs>UINT64_MAX-delta || a.deadlineMs>UINT64_MAX-delta)throw std::runtime_error("party pause clock overflow");
+        a.startedMs+=delta;a.deadlineMs+=delta;
+    }
+    for(auto& v:g.partyPlaybacks){
+        if(v.startedMs>UINT64_MAX-delta || v.deadlineMs>UINT64_MAX-delta)throw std::runtime_error("party playback pause overflow");
+        v.startedMs+=delta;v.deadlineMs+=delta;
+    }
 }
 GameplayUpdate Explorer::beginCombat(Entity& e,std::uint64_t now,CombatPhase first) {
     invalidate(false);auto& g=state_.gameplay;

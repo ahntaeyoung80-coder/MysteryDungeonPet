@@ -17,3 +17,9 @@
 - 구형 snapshot fixture는 새 블록을 제거한 뒤 종전 byte-shape 변환을 적용한다. 새 명시 회귀는 다중 actor event를 읽도록 연결한다.
 
 이 커밋은 첫 통합 컴파일 전의 구현이다. 빌드·회귀·실제 Windows 표시·MDES8 복원과 이전 저장 이행을 통과했다고 보고하지 않는다. 다음은 CI 실패를 확인해 수정하고, keyed 완료·피해/중단 복원 검사를 보강하는 일이다.
+
+## 첫 CI와 수정
+
+`ad2d49d`의 [CI38733826794](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38733826794)는 Windows compile/link와 실제 EXE refresh에 성공했다. native CTest는12/13(19.19초)이며 companion만 `invalid goal tile`로 실패했다. 새 패배 전환에서 탐험 목표를 비우지 않는 경로를 확인해 기존 invalidate 계약을 적용했다. 실패 때문에 Linux/실행물 반영은 실행되지 않았다.
+
+같은 수정에 R10 keyed 완료 토큰의 다른 run/배우/액션·중복 거부와 R11 실제 MDES7 pending-hit의 완료 후 이행을 추가했다. MDES8 형식 문서와 일시정지 clock overflow 검사를 함께 보강한다. 통과 여부는 다음 CI에서 확인한다.

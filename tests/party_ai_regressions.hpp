@@ -248,7 +248,61 @@ inline unsigned run(const ExplorationState& base) {
             now=nextTime(e,now);
         }
     });
-    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=10"<<std::endl;
+    test("R10_keyed_completion_is_actor_action_and_run_specific",[&] {
+        auto s=corridor(base);forceHit(s);Explorer e(s);
+        const auto event=restoredStep(e,1000);
+        const auto c=std::find_if(event.actors.begin(),event.actors.end(),[](const auto& a){
+            return a.event==GameplayEvent::CompanionAttack;
+        });
+        require(c!=event.actors.end(),"companion attack record absent");
+        const auto token=*c;const auto before=encodeSnapshot(e.state());
+        ActorCompletion wrong;wrong.keyed=true;
+        wrong.actions.push_back({s.runId+1,token.round,token.actionId,s.floorIndex,kCompanionActorId});
+        restoredStep(e,1001,wrong);
+        require(encodeSnapshot(e.state())==before,"completion from another run advanced combat");
+        wrong.actions[0].runId=s.runId;wrong.actions[0].actorId=0;
+        restoredStep(e,1002,wrong);
+        require(encodeSnapshot(e.state())==before,"another actor completed the companion attack");
+        wrong.actions[0].actorId=kCompanionActorId;wrong.actions[0].actionId=token.actionId+100;
+        restoredStep(e,1003,wrong);
+        require(encodeSnapshot(e.state())==before,"stale action ID advanced the active clip");
+        wrong.actions[0].actionId=token.actionId;restoredStep(e,1004,wrong);
+        require(e.state().population.entities[0].remainingHits==1 &&
+                e.state().population.entities[1].remainingHits==2,"keyed completion damaged the wrong enemy");
+        const auto applied=encodeSnapshot(e.state());restoredStep(e,1005,wrong);
+        require(encodeSnapshot(e.state())==applied,"repeated keyed completion replayed damage");
+    });
+    test("R11_mdes7_pending_hit_finishes_before_party_upgrade",[&] {
+        auto s=party(base);auto& g=s.gameplay;g.independentParty=false;
+        s.population.entities={{1,4,EntityKind::Friend,123,false}};s.population.entities[0].remainingHits=1;
+        g.hostile={1};g.life=LifePhase::Combat;g.combat=CombatPhase::EnemyAttack;
+        g.enemyInstance=1;g.enemyHits=1;g.hit=true;g.damage=1;g.enemyTargetsCompanion=true;
+        g.playerActionRound=g.companion.actionRound=g.actionRound;
+        s.population.entities[0].actionRound=g.actionRound;
+        g.phaseStartedMs=1000;g.deadlineMs=6000;
+        g.onceKeys.insert("pending-hit:"+std::to_string(s.runId)+":0:1:1");forceHit(s);
+        auto bytes=encodeSnapshot(s);removePartyBlock(bytes);
+        uint32_t crc=0xffffffff;
+        for(size_t i=0;i<bytes.size()-4;++i) {
+            crc^=bytes[i];for(unsigned bit=0;bit<8;++bit)crc=(crc>>1)^((crc&1)?0xedb88320U:0);
+        }
+        crc=~crc;for(unsigned b=0;b<4;++b)bytes[bytes.size()-4+b]=uint8_t(crc>>(8*b));
+        require(bytes[4]==7,"legacy test is not an MDES7 payload");
+        Explorer e(decodeSnapshot(bytes,s.assetVersion));
+        e.enableCompanion();require(!e.state().gameplay.independentParty,"upgrade canceled a pending legacy encounter");
+        restoredStep(e,1001,{false,true,false});
+        require(e.state().gameplay.companion.hearts==4 && e.state().gameplay.hearts==5,
+                "MDES7 pending damage was lost or applied to the wrong actor");
+        restoredStep(e,1002,{false,true,false});
+        require(e.state().gameplay.companion.hearts==4,"MDES7 hit replayed after restore");
+        uint64_t now=1003;
+        for(unsigned tick=0;tick<64 && e.state().gameplay.life!=LifePhase::Explore;++tick) {
+            restoredStep(e,now);now=nextTime(e,now);
+        }
+        require(e.state().gameplay.life==LifePhase::Explore,"legacy encounter did not finish");
+        e.enableCompanion();require(e.state().gameplay.independentParty,"finished legacy encounter did not upgrade");
+    });
+    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=12"<<std::endl;
     return failures;
 }
 } // namespace party_ai_regression

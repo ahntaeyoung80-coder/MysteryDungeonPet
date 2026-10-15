@@ -175,9 +175,9 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
                 target,a->actorId,a->id,a->damage,a->critical);
         } else if(v.clip==33) {
             if(v.actorId==0 || v.actorId==kCompanionActorId) {
-                g.playerHidden=v.actorId==0;g.companion.hidden=v.actorId==kCompanionActorId;
+                g.playerHidden=!g.hearts;g.companion.hidden=!g.companion.hearts;
                 g.defeated=true;g.life=LifePhase::Death;g.deathStage=DeathStage::FadeOut;
-                g.phaseStartedMs=now;g.deadlineMs=now+750;s.phase=Phase::Home;
+                g.phaseStartedMs=now;g.deadlineMs=now+750;invalidate();s.phase=Phase::Home;
                 g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
                 g.walkStartedMs=g.companion.walkStartedMs=0;defeated=true;
                 event(GameplayEvent::CombatDefeat,v.actorId,0,v.id);break;
