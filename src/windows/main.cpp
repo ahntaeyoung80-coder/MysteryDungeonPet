@@ -839,6 +839,8 @@ class App {
             const bool body=(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::Waking) || g.life==LifePhase::Pose || g.life==LifePhase::Emotion || (g.life==LifePhase::Combat &&
                 (g.combat==CombatPhase::PlayerAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::PlayerFaint || enemy || partner));
             poseFinished_=joint?(completion_.player&&completion_.partner):body?(enemy?completion_.enemy:partner?completion_.partner:completion_.player):false;
+            if(g.life==LifePhase::Dialogue && utcMs()>=g.deadlineMs)
+                poseFinished_=g.dialogueStage==DialogueStage::Player?completion_.player:completion_.enemy;
             if(g.life==LifePhase::Death || g.life==LifePhase::ReturnHome || g.sceneBeat!=SceneBeat::None) dirty_=true;
         }
         if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
@@ -1094,8 +1096,11 @@ public:
             if (sessionRetry_) deadline = std::min(deadline, sessionRetry_);
             if (scenarioDeadline_) deadline = std::min(deadline, scenarioDeadline_);
             if (explorer_ && !blocked()) {
-                deadline = std::min(deadline, poseFinished_ ? now : exploreDeadline_);
                 const auto& g=explorer_->state().gameplay;
+                // A finite NPC idle can outlast the text's minimum duration.
+                // Wait for its animation event instead of spinning on a past text deadline.
+                if(poseFinished_ || exploreDeadline_>now || g.life!=LifePhase::Dialogue)
+                    deadline=std::min(deadline,poseFinished_?now:exploreDeadline_);
                 if(g.life==LifePhase::ReturnHome || (g.life==LifePhase::Death && g.deathStage==DeathStage::FadeOut) ||
                    g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::BedFadeIn ||
                    g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::ExploreFadeIn ||
