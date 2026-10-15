@@ -79,7 +79,17 @@ int main(int argc,char** argv){try{
   s.population.entities[0].remainingHits=1;
   const auto now=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
   g.phaseStartedMs=now;g.deadlineMs=now+1000;party_ai_regression::forceHit(s);
-  saveSnapshot(out/"two-sided.mdes",s);return 0;
+  saveSnapshot(out/"two-sided.mdes",s);
+  for(const unsigned hp:{5U,1U}) {
+   auto chase=party_ai_regression::party(companionFixture());auto& cg=chase.gameplay;
+   chase.assetVersion=package.assetVersion;chase.floors=package.floors;cg.hearts=hp;
+   cg.phaseStartedMs=now;cg.deadlineMs=now+1000;
+   chase.population.entities={{1,10,EntityKind::Item,129,false},{2,4,EntityKind::Friend,260,false}};
+   cg.hostile={2};auto& enemy=chase.population.entities[1];
+   enemy.tracking=Tracking::Chase;enemy.lastSeen=enemy.chaseTarget=chase.position;
+   saveSnapshot(out/("chase"+std::to_string(hp)+".mdes"),chase);
+  }
+  return 0;
  }
  if(argc==4 && std::string(argv[1])=="--fixtures") {
   const auto package=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];std::filesystem::create_directories(out);

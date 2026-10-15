@@ -8,7 +8,7 @@ New-Item -ItemType Directory -Force $Output|Out-Null
 $Output=[IO.Path]::GetFullPath($Output)
 function Run([string]$Name,[int]$Seconds){
  $Dir=Join-Path $Output $Name
- if($Name -eq 'two-sided'){ & $Tests --party-fixtures $Package $Dir }
+ if($Name -in @('two-sided','chase1','chase5')){ & $Tests --party-fixtures $Package $Dir }
  else { & $Tests --fixtures $Package $Dir }
  if($LASTEXITCODE -ne 0){throw 'party fixtures failed'}
  $ArgsForApp=@('--explore',"`"$Package`"",'--snapshot',"`"$Dir/$Name.mdes`"",'--duration',$Seconds,
@@ -65,6 +65,32 @@ if($Surviving.Count -lt 2 -or $Finished.Count -lt 1 -or $PlayerAttacks.Count -lt
 }
 @{status='pass';simultaneousSubmittedFrames=$Both.Count;afterLeftRemovalFrames=$Surviving.Count;bothRemovedFrames=$Finished.Count}|
  ConvertTo-Json|Set-Content -Encoding UTF8 "$Output/two-sided-result.json"
+$ChaseResults=@()
+foreach($Hp in @(5,1)) {
+ $Chase=@(Run "chase$Hp" 4)
+ $Moves=@($Chase|Where-Object {$_.moving -eq '1' -and [long]$_.action_id -gt 0}|Group-Object action_id|Select-Object -First 4)
+ if($Moves.Count -lt 4){throw "HP$Hp chase did not present four player moves"}
+ $Starts=@()
+ foreach($Move in $Moves) {
+  $Row=$Move.Group[0]
+  $Starts += [long]$Row.started_ms
+  if([int]$Row.duration_ms -ne 400 -or [int]$Row.companion_duration_ms -ne 400 -or
+    [long]$Row.companion_started_ms -ne [long]$Row.started_ms){throw "HP$Hp player/companion movement clocks differ"}
+  $Enemy=@($Row.actor_movements -split ';'|Where-Object {$_ -match '^2:'})
+  if($Enemy.Count -ne 1){throw "HP$Hp chasing enemy movement absent"}
+  $Parts=$Enemy[0] -split ':'
+  if([long]$Parts[1] -ne [long]$Row.started_ms -or [int]$Parts[2] -ne 400 -or
+    [long]$Parts[5] -ne [long]$Row.action_id){throw "HP$Hp enemy movement serialized into an extra interval"}
+  if(@($Move.Group|Select-Object -ExpandProperty world_x -Unique).Count -lt 3){throw "HP$Hp player movement lacks intermediate submitted positions"}
+ }
+ $Gaps=@()
+ for($Index=1;$Index -lt $Starts.Count;$Index++) {
+  $Gap=$Starts[$Index]-$Starts[$Index-1];$Gaps += $Gap
+  if($Gap -lt 400 -or $Gap -gt 650){throw "HP$Hp walking gap $Gap ms outside the shared 400ms interval plus runner jitter"}
+ }
+ $ChaseResults += @{hp=$Hp;starts=$Starts;gapsMs=$Gaps;durationMs=400;status='pass'}
+}
+$ChaseResults|ConvertTo-Json -Depth 4|Set-Content "$Output/chase-timing.json"
 python tools/check_party_render.py --inspector $Inspector --output $Output
 if($LASTEXITCODE -ne 0){throw 'party original body pixels differ'}
 @{status='pass';follow='one tile; independent Walk0/motion';combat='Attack1, nearest companion Hurt6, Faint33/death';
