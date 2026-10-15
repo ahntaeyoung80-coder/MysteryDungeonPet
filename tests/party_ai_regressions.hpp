@@ -175,7 +175,7 @@ inline unsigned run(const ExplorationState& base) {
     test("R06_separated_combat_state_roundtrips",[&] {
         auto s=party(base);auto& g=s.gameplay;
         g.companion.tile=122;
-        s.population.entities={{1,4,EntityKind::Friend,121,false}};
+        s.population.entities={{1,4,EntityKind::Friend,123,false}};
         g.hostile={1};g.life=LifePhase::Combat;g.combat=CombatPhase::CompanionTurn;
         g.enemyInstance=1;
         const auto bytes=encodeSnapshot(s);
