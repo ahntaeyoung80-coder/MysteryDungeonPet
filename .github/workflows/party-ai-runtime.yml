@@ -15,9 +15,10 @@ jobs:
         with:
           persist-credentials: false
       - run: cmake -S . -B build/preflight -DCMAKE_BUILD_TYPE=Debug
-      - run: cmake --build build/preflight --target pet_companion_tests pet_gameplay_tests --parallel 2
+      - run: cmake --build build/preflight --target pet_companion_tests pet_gameplay_tests pet_navigation_recovery_tests --parallel 2
       - run: build/preflight/pet_companion_tests --party-ai-followup
       - run: build/preflight/pet_gameplay_tests assets/original/gameplay
+      - run: build/preflight/pet_navigation_recovery_tests
   windows:
     needs: party-preflight
     runs-on: windows-latest

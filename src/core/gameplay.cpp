@@ -700,7 +700,17 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     switch(update.kind) {
     case EventKind::Pose:
         g.life=LifePhase::Pose;g.deadlineMs=now+5000;return {GameplayEvent::Pose,update.onceKey};
-    case EventKind::ReturnedHome:return beginReturn(now,false);
+    case EventKind::ReturnedHome:
+        if(state_.completed)return beginReturn(now,false);
+        // A temporary empty plan is not a completed dungeon or a reset.
+        // Actor occupancy may have made a known goal fail in an earlier round.
+        state_.phase=Phase::Explore;state_.failedTargets.fill(0);invalidate();
+        for(auto& enemy:state_.population.entities)
+            if(enemy.kind==EntityKind::Friend && enemy.visible && !enemy.done &&
+               hostile(enemy) && canAttack(state_.world,state_.position,enemy.tile))
+                return beginCombat(enemy,now,CombatPhase::PlayerTurn);
+        g.playerActionRound=g.actionRound;g.deadlineMs=now+400;
+        return {GameplayEvent::Wait,{}};
     case EventKind::Pickup:
         g.playerActionRound=g.actionRound;g.deadlineMs=now+400;
         if(update.originalId==ITEM_ORAN_BERRY) {

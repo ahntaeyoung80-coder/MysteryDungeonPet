@@ -152,6 +152,13 @@ int main(int argc,char** argv){try{
    if(sample.state().gameplay.life!=LifePhase::Explore || sample.state().gameplay.sceneBeat!=SceneBeat::None){finished=true;break;}
    sample=Explorer(decodeSnapshot(encodeSnapshot(sample.state()),"oscillation"));
   }
+  if(!finished || sample.state().gameplay.onceKeys.count("return:900")) {
+   const auto& stuck=sample.state();
+   std::cerr<<"low HP geometry run="<<run<<" initialP="<<s.position<<" initialE="<<enemy.tile
+    <<" currentP="<<stuck.position<<" currentE="<<stuck.population.entities[0].tile
+    <<" target="<<stuck.target<<" stairsFailed="<<unsigned(stuck.failedTargets[stuck.world.stairs])
+    <<" steps="<<stuck.floorSteps<<" life="<<lifeName(stuck.gameplay.life)<<'\n';
+  }
   check(finished,"low HP chase/retreat exceeded bounded liveness sweep");
   recovered+=sample.state().gameplay.onceKeys.count("return:900")!=0;
  }
