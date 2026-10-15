@@ -41,7 +41,9 @@ function Run-Frames([string]$Name, [string]$Kind, [string]$Snapshot, [int]$Scale
 foreach ($Scale in @(1,2,3)) {
     foreach ($Kind in @('straight','turn')) {
         New-Fixtures
-        $Seconds = if ($Kind -eq 'turn') { 5 } else { 4 }
+        # The deterministic FIFO path turns after step 13 (5.2s); stop before
+        # reaching the stairs at step 17 (6.8s), so fades cannot hide movement.
+        $Seconds = if ($Kind -eq 'turn') { 6 } else { 4 }
         $Results += Run-Frames "$Kind-$Scale" $Kind "$Fixtures/$Kind.mdes" $Scale $Seconds
     }
     foreach ($Edge in @('top-left','top','top-right','left','right','bottom-left','bottom','bottom-right')) {
