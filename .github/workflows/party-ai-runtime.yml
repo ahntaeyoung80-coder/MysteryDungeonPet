@@ -26,6 +26,9 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'runtime build failed' }
           python tools/check_windows_runtime.py --refresh-from build/windows/Release/MysteryDungeonPet.exe --compiler "MSVC x64 Release (GitHub Actions Windows)"
           if ($LASTEXITCODE -ne 0) { throw 'runtime refresh failed' }
+      - name: Probe zero-argument launch before the full regression suite
+        shell: pwsh
+        run: ./tests/default_launch_windows_tests.ps1 -Exe build/windows/Release/MysteryDungeonPet.exe -Output build/windows/default-probe
       - name: Verify native core, GUI, installed and tracked runtime
         shell: pwsh
         run: ./tools/run_windows_checks.ps1
@@ -49,6 +52,8 @@ jobs:
         with:
           name: party-ai-windows-validation
           path: |
+            build/windows/default-probe/**
+            build/windows/default-launch-results/**
             build/windows/Testing/Temporary/LastTest.log
             build/windows/party-ai-followup.txt
             build/windows/wic-results/*

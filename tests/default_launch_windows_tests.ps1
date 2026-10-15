@@ -74,7 +74,7 @@ try {
         }
         [LaunchWindow]::PostMessage($Window, 0x10, [IntPtr]::Zero, [IntPtr]::Zero) | Out-Null # WM_CLOSE
         if (-not $Process.WaitForExit(15000)) { throw 'default launch close timeout' }
-        if ($Process.ExitCode -ne 0) { throw 'default launch failed' }
+        if ($Process.ExitCode -ne 0) { throw "default launch failed: exit code $($Process.ExitCode), run $Run" }
         if (-not (Test-Path $Snapshot)) { throw 'default launch did not save exploration' }
         $Events = @(Get-Content $EventPath | Select-Object -Skip $Before)
         $Events | Set-Content "$Output/launch-$Run-events.txt"
@@ -113,6 +113,19 @@ try {
       snapshot='new then restored same runId'; diagnosticsMenu='absent'; explicitDiagnostics='pass, exploration save unchanged';
       physicalSize=200; actualWindows11='pending'} |
         ConvertTo-Json | Set-Content "$Output/default-launch.json"
+} catch {
+    # Preserve the actual failure before the isolated save/metrics are restored.
+    if ($Process -and -not $Process.HasExited) { $Process.Kill(); $Process.WaitForExit() }
+    $_ | Out-String | Set-Content "$Output/failure.txt"
+    if (Test-Path $EventPath) {
+        $FailureEvents = @(Get-Content $EventPath | Select-Object -Skip $Before)
+        $FailureEvents | Set-Content "$Output/failure-events.txt"
+        $FailureEvents | Select-Object -Last 60 | Write-Host
+    }
+    foreach ($Path in @($Snapshot, $Metrics)) {
+        if (Test-Path $Path) { Copy-Item $Path (Join-Path $Output ("failure-" + [IO.Path]::GetFileName($Path))) }
+    }
+    throw
 } finally {
     if ($Process -and -not $Process.HasExited) { $Process.Kill(); $Process.WaitForExit() }
     foreach ($Name in @('exploration.mdes', 'exploration.mdes.tmp', 'metrics.csv', 'window.state')) {
