@@ -17,6 +17,6 @@
 
 3단계 검증과 실행물 반영을 마쳤다. [전투 계약](docs/PARTY_COMBAT_DESIGN.md), [검증·시간 로그](docs/logs/2026-10-15-party-ai-stage3.md).
 
-다음은4단계 직선 경로·저체력 추적 간격·전투 후 합법 복귀다. 명시 회귀 `pet_companion_tests --party-ai-followup`는15/16 통과이며 직선 우선 R01이 남아 있다. 이어5단계 HP표시/색상/7층/방 중복,6단계 통합·최종 실행물/상태 정리를 진행한다. [항목별 계획](docs/PARTY_AI_WORK_PLAN.md).
+현재4단계에서 직선 경로·저체력 추적 간격·전투 후 합법 복귀를 수정·검증 중이다. [4단계 로그](docs/logs/2026-10-16-party-ai-stage4.md). 명시 회귀 `pet_companion_tests --party-ai-followup`는15/16 통과이며 직선 우선 R01이 남아 있다. 이어5단계 HP표시/색상/7층/방 중복,6단계 통합·최종 실행물/상태 정리를 진행한다. [항목별 계획](docs/PARTY_AI_WORK_PLAN.md).
 
 관리형 실행 환경은 시작 중이며 shell은 아직 없다. 검증된 GitHub Actions 경로로 계속 작업한다.

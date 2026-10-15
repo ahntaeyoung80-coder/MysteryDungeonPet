@@ -283,16 +283,27 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         }
         return best;
     };
+    auto routeRank=[](const Search& reach,int goal) {
+        const auto route=reach.pathTo(goal);
+        int diagonal=0,turns=0,previous=-1,from=reach.parent[route.front()];
+        for(const int to:route) {
+            const int direction=int(directionBetween(from,to));
+            diagonal+=(direction%2)!=0;
+            turns+=previous>=0 && previous!=direction;
+            previous=direction;from=to;
+        }
+        return std::make_tuple(reach.distance[goal],diagonal,turns,goal);
+    };
     auto approach=[&](uint32_t actor,int target)->int {
         const int from=position(actor);
         auto blocked=occupancy();
         for(const auto& npc:s.population.entities)if(friendly(npc) && !s.blocked[npc.tile])blocked[npc.tile]=0;
         blocked[s.position]=1;blocked[g.companion.tile]=1;blocked[from]=0;
         const auto reach=bfs(s.world,from,blocked);
-        int goal=-1,best=kTiles+1;
+        int goal=-1;
         for(int tile=0;tile<kTiles;++tile) {
             if(tile==s.world.stairs || !canAttack(s.world,tile,target) || reach.distance[tile]<=0)continue;
-            if(reach.distance[tile]<best) {goal=tile;best=reach.distance[tile];}
+            if(goal<0 || routeRank(reach,tile)<routeRank(reach,goal))goal=tile;
         }
         if(goal<0)return -1;
         const auto path=reach.pathTo(goal);return path.empty()?-1:path.front();
@@ -450,12 +461,11 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             auto blocked=occupancy();blocked[e.tile]=0;blocked[s.position]=1;
             blocked[g.companion.tile]=1;
             const auto reach=bfs(s.world,e.tile,blocked);
-            int goal=-1,best=kTiles+1;
+            int goal=-1;
             for(int tile=0;tile<kTiles;++tile)
                 if((tile==e.lastSeen || (inSight && canAttack(s.world,tile,e.lastSeen))) &&
-                   reach.distance[tile]>0 && reach.distance[tile]<best) {
-                    best=reach.distance[tile];goal=tile;
-                }
+                   reach.distance[tile]>0 &&
+                   (goal<0 || routeRank(reach,tile)<routeRank(reach,goal)))goal=tile;
             if(goal>=0) {
                 const auto path=reach.pathTo(goal);const int from=e.tile;
                 e.blockedTurns=0;move(e.instanceId,from,path.front());return;

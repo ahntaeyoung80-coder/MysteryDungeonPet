@@ -82,8 +82,9 @@ inline std::vector<uint64_t> walking(ExplorationState s,unsigned hp) {
     return starts;
 }
 inline unsigned run(const ExplorationState& base) {
-    unsigned failures=0;
+    unsigned failures=0,cases=0;
     auto test=[&](const char* name,const auto& body) {
+        ++cases;
         try {body();std::cout<<"PARTY_AI PASS "<<name<<std::endl;}
         catch(const std::exception& error) {
             ++failures;std::cout<<"PARTY_AI FAIL "<<name<<": "<<error.what()<<std::endl;
@@ -355,7 +356,100 @@ inline unsigned run(const ExplorationState& base) {
                 e.state().gameplay.companion.actionRound==e.state().gameplay.actionRound,
                 "companion ignored the threat blocking the leader's safe exploration");
     });
-    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=16"<<std::endl;
+    test("R16_shortest_paths_prefer_axes_and_preserve_corners",[&] {
+        const auto horizontal=bfs(base.world,125).pathTo(129);
+        require(horizontal==std::vector<int>({126,127,128,129}),"same-row BFS is not straight");
+        const auto vertical=bfs(base.world,125).pathTo(221);
+        require(vertical==std::vector<int>({149,173,197,221}),"same-column BFS is not straight");
+        Mask blocked{};blocked[126]=1;
+        const auto detour=bfs(base.world,125,blocked).pathTo(129);
+        require(detour.size()==4,"axis preference sacrificed the shortest legal distance");
+        int from=125;for(int to:detour) {
+            require(canMove(base.world,from,to,blocked),"detour violated occupancy/corner rules");from=to;
+        }
+        auto corner=base.world;corner.terrain.fill(0);
+        corner.terrain[125]=corner.terrain[150]=1;
+        require(bfs(corner,125).distance[150]<0,"blocked diagonal corner became passable");
+        corner.terrain[126]=1;
+        require(bfs(corner,125).distance[150]==2,"one blocked corner side allowed a diagonal shortcut");
+    });
+    test("R17_companion_return_is_straight_or_a_legal_shortest_detour",[&] {
+        for(const bool blockedLine:{false,true}) {
+            auto s=party(base);auto& g=s.gameplay;
+            g.companion.tile=129;g.companionIntent=CompanionIntent::Return;
+            g.playerActionRound=g.actionRound;
+            if(blockedLine)s.blocked[127]=1;
+            Explorer e(s);const auto event=restoredStep(e,1000);
+            const auto& after=e.state();
+            require(after.position==125 && after.gameplay.companion.tile!=129,
+                    "return fixture moved the consumed leader or waited unnecessarily");
+            require(canMove(s.world,129,after.gameplay.companion.tile,s.blocked),
+                    "return cut terrain/occupancy corners");
+            if(!blockedLine)require(after.gameplay.companion.tile==128,
+                    "same-row return chose an unnecessary diagonal");
+            require(std::any_of(event.actors.begin(),event.actors.end(),[](const auto& a) {
+                return a.actorId==kCompanionActorId && a.event==GameplayEvent::CompanionMove;
+            }),"return did not consume the companion's own movement action");
+        }
+    });
+    test("R18_chasing_enemy_shares_hp1_hp5_walking_interval",[&] {
+        std::vector<uint64_t> reference;
+        for(const unsigned hp:{5U,1U}) {
+            auto s=party(base);s.gameplay.hearts=hp;
+            s.population.entities={{1,10,EntityKind::Item,129,false},
+                                   {2,4,EntityKind::Friend,260,false}};
+            s.gameplay.hostile={2};auto& enemy=s.population.entities[1];
+            enemy.tracking=Tracking::Chase;enemy.lastSeen=enemy.chaseTarget=s.position;
+            Explorer e(s);uint64_t now=1000;std::vector<uint64_t> starts;
+            for(unsigned tick=0;tick<16 && starts.size()<4;++tick) {
+                const auto event=restoredStep(e,now);
+                const auto player=std::find_if(event.actors.begin(),event.actors.end(),[](const auto& a) {
+                    return a.actorId==0 && a.event==GameplayEvent::Move;
+                });
+                if(player!=event.actors.end()) {
+                    const auto& state=e.state();const auto& move=state.gameplay.movement;
+                    const auto& chase=state.population.entities[1].movement;
+                    require(move.durationMs==400 && chase.durationMs==400 &&
+                            chase.startedMs==move.startedMs && chase.actionId==move.actionId,
+                            "enemy and leader movement used separate intervals");
+                    starts.push_back(move.startedMs);
+                }
+                now=nextTime(e,now);
+            }
+            require(starts==std::vector<uint64_t>({1000,1400,1800,2200}),
+                    "chasing enemy introduced a wait or low-HP per-tile delay");
+            if(reference.empty())reference=starts;else require(reference==starts,"HP changed chase walking cadence");
+            std::cout<<"PARTY_AI R18 HP"<<hp;for(auto start:starts)std::cout<<' '<<start;std::cout<<std::endl;
+        }
+    });
+    test("R19_companion_finishes_separated_fight_then_returns",[&] {
+        auto s=party(base);auto& g=s.gameplay;
+        s.position=129;s.visited[129]=1;g.hearts=1;g.playerActionRound=g.actionRound;
+        g.companionIntent=CompanionIntent::Engage;g.companionTarget=1;
+        s.population.entities={{1,4,EntityKind::Friend,123,false},{2,10,EntityKind::Item,130,false}};
+        s.population.entities[0].remainingHits=1;g.hostile={1};forceHit(s);
+        Explorer e(s);uint64_t now=1000;bool killed=false,returnMoved=false,followed=false;
+        for(unsigned tick=0;tick<80 && !followed;++tick) {
+            const auto before=e.state();const auto event=restoredStep(e,now);
+            const auto& after=e.state();const auto& partner=after.gameplay.companion;
+            killed=killed || after.population.entities[0].done;
+            const bool moved=std::any_of(event.actors.begin(),event.actors.end(),[](const auto& a) {
+                return a.actorId==kCompanionActorId && a.event==GameplayEvent::CompanionMove;
+            });
+            if(moved && killed) {
+                returnMoved=true;
+                require(canMove(after.world,before.gameplay.companion.tile,partner.tile),
+                        "post-combat return teleported or cut a wall corner");
+            }
+            followed=returnMoved && after.gameplay.companionIntent==CompanionIntent::Follow &&
+                canAttack(after.world,after.position,partner.tile);
+            require(event.event!=GameplayEvent::ReturnHome && !after.gameplay.defeated,
+                    "return fixture ended the run before rejoining");
+            now=nextTime(e,now);
+        }
+        require(killed && returnMoved && followed,"companion did not finish, return and rejoin after its separated fight");
+    });
+    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases="<<cases<<std::endl;
     return failures;
 }
 } // namespace party_ai_regression
