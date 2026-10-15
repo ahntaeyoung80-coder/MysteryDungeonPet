@@ -90,3 +90,25 @@ R15에 자기 시야 밖이지만 저장된 위협에 동료가 접근하는 조
 `2978861`의 [CI38741460793](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38741460793)에서 실제 오류는 `direction phase incompatible`였다. 독립 파티 renderer는 적 Animator를 Idle/Attack/Hurt에도 사용하지만, 종전 이동 연결부는 active이면 항상 Walk→Walk 방향 변경이라고 가정했다. 복원 뒤 대기 중이던 적의 첫 이동에서 Idle→Walk를 changeDirection으로 처리해 주기 길이 계약에 걸렸다.
 
 독립 표시에서는 이동 보간만 등록하고 syncPartyActors가 실제 clip을 선택하도록 연결한다. Dialogue 등 종전 표시 구간으로 넘어간 독립 상태의 이동은 Walk를 새로 시작한다. 종전 단독 경로의 Walk 방향/위상 보존은 유지한다. 무인자 새 실행→저장 복원 probe와 기존 전체 GUI 검사를 다시 실행한다.
+
+
+## 3단계 완료 — 2026-10-16 KST 재개 후 결과 확인
+
+최종 소스 `8c774313ef27d88eb91e1067554147c4be247b55`의 [CI38741809780](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38741809780)는 Windows·core·publish-runtime 모두 성공했다. 검증된 EXE/manifest 반영 커밋은 `7f151b50df762ece6a1946cf620d13ee8d205dd7`다. [구조화 증거](../validation/2026-10-16-party-ai-stage3.json).
+
+- Windows MSVC native13/13,25.88초. 실제 GUI 양방향 독립 공격/한쪽 기절 후 반대편 진행, WIC·playback·exploration·navigation·entry·movement·생활, 설치·루트 실행물 검사를 포함한 필수 스크립트가 성공했다. 무인자 새 실행→닫기→같은 저장 복원도 성공했다.
+- Linux ASan/UBSan native12/12,184.57초. Python26/26,15.121초. source/assets/runtime hash 검사가 성공했다.
+- 명시 후속15/16 통과. R01은125→150→175→152→129로 여전히 실패하며4단계다. 나머지는 포위/대기·같은 라운드 양쪽 공격·한쪽 처치·동료 전투 유지·분리 저장·완료 소유자/피해once·이동 복원·keyed 완료·실제 MDES7 이행·우호 통로·발견 갱신·옛 예산·위협 공유를 통과했다.
+- 필수 CI 성공은4~6단계 요구나 실제 Windows11·24시간 실행 완료를 뜻하지 않는다. 기본3층/녹색/HP HUD는 아직 종전이다.
+
+### 실제 시간
+
+3단계 예상110~180분. 최초 코드/데이터 작업21:01:18 KST부터 검증된 실행물 반영22:33:14 KST까지 **91분56초 경과**다. 아래는 계측한 연속 구간이며 배우별 구현/표시/저장 작업이 섞여 있어 개별 파일 시간을 따로 만들어내지 않았다.
+
+| 계측 구간 | 실제 | 포함 내용 |
+| --- | --- | --- |
+| 21:01:18~21:19:39 KST | 18분21초 | 독립 전투·완료·Windows 표시·MDES8 첫 통합 구현 |
+| 21:19:39~22:20:06 KST | 60분27초 | 반복 CI·진행성/복원/표시 수정·회귀 보강, 분석과 CI 대기 중첩 |
+| 22:20:06~22:33:14 KST | 13분8초 | 마지막 수정의 Windows8분15초·Linux4분31초·실행물 반영13초와 job 전환 |
+
+앞서 기록한 원격 경로 준비12분49초 중4분33초는 첫 구현과 겹치므로 합산하지 않는다.22:33:14 KST부터 다음날07:45:49 KST 결과 확인 전까지9시간12분35초는 사용자 재개 대기로 제외한다. 재개 후 문서 마감·커밋 확인은 별도로 계측한다. 관리형 환경은 다시 시작 중이나 shell은 없으며 GitHub 경로의 성공으로3단계를 마감한다.

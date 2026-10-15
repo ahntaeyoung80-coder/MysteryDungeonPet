@@ -1,0 +1,44 @@
+{
+  "source": "8c774313ef27d88eb91e1067554147c4be247b55",
+  "runtimeCommit": "7f151b50df762ece6a1946cf620d13ee8d205dd7",
+  "run": 38741809780,
+  "windows": {
+    "job": 116445152045,
+    "nativePassed": 13,
+    "nativeSeconds": 25.88,
+    "fullGuiAndInstalledAndRoot": "pass",
+    "zeroArgumentNewAndRestored": "pass",
+    "actualWindows11": "pending"
+  },
+  "linux": {
+    "job": 116449198024,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "nativePassed": 12,
+    "nativeSeconds": 184.57,
+    "pythonPassed": 26
+  },
+  "explicitFollowup": {
+    "passed": 15,
+    "cases": 16,
+    "remaining": [
+      "R01_unobstructed_straight_path"
+    ],
+    "requiredGate": false
+  },
+  "macroStage": "B-1/B-2",
+  "stage3FirstWorkUtc": "2026-10-15T12:01:18Z",
+  "verifiedRuntimePublishedUtc": "2026-10-15T13:33:14Z",
+  "implementationAndVerificationElapsedSeconds": 5516,
+  "scopeExcludes": [
+    "straight-path followup",
+    "companion HP HUD hiding",
+    "relationship colors",
+    "default seven floors",
+    "room duplication",
+    "actual Windows11 session",
+    "24h run"
+  ]
+}

@@ -49,3 +49,8 @@ PROJECT_STATE에는 현재 단계·실행 기준·현재 막힘·바로 다음 �
 현재 `GameplayState`의 단일 적/피해 상태와 Windows 단일 전투 Animator를 배우별 완료 소유자·라운드와 함께 바꿔야 한다. `mustRetreat`, `companionFollowTile`, `combatApproach`, 저장 상태 검증의 거리 제약도 같은 설계로 정리한다. 단순 거리 검증 해제나 HUD 변경만으로 해결하지 않는다.
 
 기존 증거는 [최신 조사](TEMP_HANDOFF_2026-10-15_PARTY_AI.md)에서 재사용한다. 사용자 HP1 포위/저속/방 중복의 정확한 snapshot은 아직 없으므로 고정 fixture 재현과 사용자 장면의 재현을 구분한다.
+
+
+## 3단계 검증 완료·현재 재개 지점
+
+[CI38741809780](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38741809780)에서 Windows/ASan/Python/GUI/설치/복원과 실행물 갱신을 마쳤다. 독립 전투·MDES8 결과는 [3단계 로그](logs/2026-10-15-party-ai-stage3.md)에 기록했다. 명시 회귀15/16 중 남은 R01 직선 우선부터4단계를 진행한다. 원격 빌드·실행물 갱신이 가능하므로 위의 초기 환경 차단 설명은 현재 차단 사유가 아니다.5단계 원작 자산 추출도 같은 검증 경로에 연결한다.
