@@ -601,6 +601,10 @@ Event Explorer::advance(bool poseFinished) {
     discover();
     if(lowHealth()) plan();
     reevaluateStairs();
+    // Runtime paths are transient and are rebuilt by snapshot construction.
+    // Resolve the next step from the same current decision in continuous play.
+    // The standalone explorer retains its across-step path cache.
+    if(state_.gameplay.enabled) invalidate(false);
     if(state_.position==state_.world.stairs) {invalidate();state_.target=state_.world.stairs;state_.goalKind=GoalKind::Stairs;}
     else for(unsigned attempt=0;attempt<4;++attempt) {
         if(state_.target>=0 && state_.position==state_.target) {

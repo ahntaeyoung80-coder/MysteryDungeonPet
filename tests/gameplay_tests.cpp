@@ -15,8 +15,14 @@ void pass(int scenario, const char* message) { std::cout << "{\"scenario\":" << 
 pet::GameplayUpdate advance(pet::Explorer& e, std::uint64_t now, bool done = false) {
     auto copy = pet::Explorer(pet::decodeSnapshot(pet::encodeSnapshot(e.state()), e.state().assetVersion));
     const auto expected = e.advanceGameplay(now, done), actual = copy.advanceGameplay(now, done);
-    check(expected.event == actual.event && expected.onceKey == actual.onceKey &&
-          pet::encodeSnapshot(e.state()) == pet::encodeSnapshot(copy.state()), "restore replay differs");
+    const bool same=expected.event == actual.event && expected.onceKey == actual.onceKey &&
+          pet::encodeSnapshot(e.state()) == pet::encodeSnapshot(copy.state());
+    if(!same)std::cerr<<"restore replay run="<<e.state().runId<<" now="<<now
+        <<" continuous="<<e.state().position<<" restored="<<copy.state().position
+        <<" target="<<e.state().target<<'/'<<copy.state().target
+        <<" life="<<pet::lifeName(e.state().gameplay.life)
+        <<" round="<<e.state().gameplay.actionRound<<'/'<<copy.state().gameplay.actionRound<<'\n';
+    check(same,"restore replay differs");
     ++restores;
     return expected;
 }
