@@ -1,0 +1,19 @@
+{
+  "seeds": [
+    1,
+    10000
+  ],
+  "passed": 10000,
+  "roomCounts": {
+    "3": 5000,
+    "2": 5000
+  },
+  "maxFloorTiles": 105,
+  "maxStartStairsDistance": 50,
+  "status": "pass",
+  "implementation": "existing Python research geometry/LCG",
+  "command": "python docs/research/checks/geometry_check.py",
+  "sourceHash": "53f6f14690aea416286a53f9615ded5ce7b66dc8fdbeb3c1bbd8998e2467c570",
+  "recordedKST": "2026-10-13",
+  "nativeResult": "2026-10-13-b1-native.json"
+}

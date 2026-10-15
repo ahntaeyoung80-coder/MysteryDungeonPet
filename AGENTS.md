@@ -1,5 +1,6 @@
 # 작업 규칙
 
+- 개발·조회 기준 브랜치는 `work`다. 작업 시작 시 `git fetch origin` 후 `origin/work`와 로컬 HEAD를 비교하고, 브랜치 이름만 보고 최신 상태로 판단하지 않는다. `main`의 과거 문서 상태에서 개발을 재시작하지 않는다.
 - 현재 상태는 PROJECT_STATE.md, 설계 결정은 docs/DECISIONS.md, 이력은 docs/logs/에 분리한다.
 - 작업 시작 시 현재 상태를 먼저 읽고 필요한 자료만 추가 확인한다. 제품 개발은 docs/DEVELOPMENT_PIPELINE.md의 현재 단계부터 진행한다.
 - 문서는 한국어로 작성하고 코드 식별자·명령어는 원문을 유지한다.

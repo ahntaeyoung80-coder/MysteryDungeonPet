@@ -1,0 +1,11 @@
+[  7%] Building CXX object CMakeFiles/pet_core.dir/src/core/exploration.cpp.obj
+[ 14%] Building CXX object CMakeFiles/pet_core.dir/src/core/gameplay_scene.cpp.obj
+[ 21%] Building CXX object CMakeFiles/pet_core.dir/src/core/gameplay.cpp.obj
+[ 28%] Building CXX object CMakeFiles/pet_core.dir/src/core/guild_scene.cpp.obj
+[ 35%] Building CXX object CMakeFiles/pet_core.dir/src/core/state_store.cpp.obj
+[ 42%] Building CXX object CMakeFiles/pet_core.dir/src/core/exploration_package.cpp.obj
+[ 50%] Linking CXX static library libpet_core.a
+[ 71%] Built target pet_core
+[ 78%] Building CXX object CMakeFiles/MysteryDungeonPet.dir/src/windows/main.cpp.obj
+[ 85%] Linking CXX executable MysteryDungeonPet.exe
+[100%] Built target MysteryDungeonPet

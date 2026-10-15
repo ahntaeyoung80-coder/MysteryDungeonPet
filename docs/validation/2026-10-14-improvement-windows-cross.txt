@@ -1,0 +1,4 @@
+[ 71%] Built target pet_core
+[ 78%] Building CXX object CMakeFiles/MysteryDungeonPet.dir/src/windows/main.cpp.obj
+[ 85%] Linking CXX executable MysteryDungeonPet.exe
+[100%] Built target MysteryDungeonPet

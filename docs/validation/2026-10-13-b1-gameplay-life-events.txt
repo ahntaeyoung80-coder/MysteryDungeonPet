@@ -1,0 +1,60 @@
+339980719 initial session flags=1
+339986887 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+339986941 select clip=17 direction=0 loop=0
+339986981 power=32787
+339988466 show
+340306885 finite finished assetKey=rom:EoS_NA:md:1
+340323538 select clip=7 direction=0 loop=1
+340323582 gameplay onceKey=return:900
+340323593 life=ReturnHome combat=PlayerTurn day=1 hearts=3
+341097011 life=HomeScene opaque original dining map
+341856447 select clip=15 direction=0 loop=0
+341856524 gameplay onceKey=meal:900
+341856535 life=Eat combat=PlayerTurn day=1 hearts=3
+342327356 finite finished assetKey=rom:EoS_NA:md:1
+342344587 select clip=5 direction=0 loop=1
+342344644 life=Sleep combat=PlayerTurn day=1 hearts=3
+352588502 select clip=14 direction=0 loop=0
+352588580 life=Wake combat=PlayerTurn day=1 hearts=3
+353288167 finite finished assetKey=rom:EoS_NA:md:1
+353296910 select clip=7 direction=0 loop=1
+353296960 life=Ready combat=PlayerTurn day=1 hearts=3
+353659380 select clip=7 direction=0 loop=1
+353659465 life=Explore combat=PlayerTurn day=2 hearts=3
+354019700 select clip=7 direction=4 loop=1
+354019779 select clip=0 direction=4 loop=1
+354381514 select clip=7 direction=4 loop=1
+354733132 select clip=0 direction=4 loop=1
+355090418 select clip=7 direction=4 loop=1
+355454412 select clip=7 direction=6 loop=1
+355454492 select clip=0 direction=6 loop=1
+355816821 select clip=7 direction=6 loop=1
+356167026 select clip=0 direction=6 loop=1
+356523279 select clip=7 direction=6 loop=1
+356874750 select clip=0 direction=6 loop=1
+357235288 select clip=7 direction=6 loop=1
+357585490 select clip=7 direction=0 loop=1
+357585571 select clip=0 direction=0 loop=1
+357946518 select clip=7 direction=0 loop=1
+358296755 select clip=7 direction=2 loop=1
+358296827 select clip=0 direction=2 loop=1
+358656528 select clip=7 direction=2 loop=1
+359019751 select clip=0 direction=2 loop=1
+359383550 select clip=7 direction=2 loop=1
+359734133 select clip=7 direction=0 loop=1
+359734211 select clip=0 direction=0 loop=1
+360093031 select clip=7 direction=0 loop=1
+360444624 select clip=7 direction=6 loop=1
+360444700 select clip=0 direction=6 loop=1
+360804331 select clip=7 direction=6 loop=1
+361155831 select clip=0 direction=6 loop=1
+361513579 select clip=7 direction=6 loop=1
+361864351 select clip=7 direction=0 loop=1
+361864433 select clip=0 direction=0 loop=1
+362221969 select clip=7 direction=0 loop=1
+362573035 select clip=7 direction=2 loop=1
+362573117 select clip=0 direction=2 loop=1
+362933014 select clip=7 direction=2 loop=1
+363284587 select clip=0 direction=2 loop=1
+363642891 select clip=7 direction=2 loop=1
+363992327 exit submissions=179 decodes=4 switches=0

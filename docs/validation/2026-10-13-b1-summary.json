@@ -1,0 +1,107 @@
+{
+  "recordedKST": "2026-10-13",
+  "baseCommit": "19ea3a1e34b9d157c9a04fef460ddff5ede324b3",
+  "sync": {
+    "command": "git fetch origin +refs/heads/work:refs/remotes/origin/work",
+    "remote": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet.git",
+    "branch": "work",
+    "result": "pass; fast-forward to exact base"
+  },
+  "draftPreservation": {
+    "files": 2,
+    "location": "docs/archive/b1-initial-draft",
+    "hashes": "manifest.json"
+  },
+  "scope": "B-1 noncombat core and selected original tiles; reuse existing A",
+  "core": "pass",
+  "B1WholeProduct": "pending",
+  "A3Remaining": "pending",
+  "B2Combat": "not started",
+  "nativeResult": "2026-10-13-b1-native.json",
+  "pythonGeometryResult": "2026-10-13-b1-python-geometry.json",
+  "tests": {
+    "nativeChecks": 8516166,
+    "ctest": {
+      "passed": 3,
+      "failed": 0
+    },
+    "python": {
+      "passed": 23,
+      "skipped": 0
+    },
+    "asanUbsan": "3 CTests passed",
+    "processKillRestore": "pass; committed state continuation equals uninterrupted run",
+    "originalAutotileComparison": {
+      "maps": 200,
+      "tiles": 115200,
+      "reference": "pinned SkyTemple DmaDrawer variation0/outside-wall",
+      "status": "pass"
+    },
+    "originalConversion": {
+      "dungeons": [
+        0,
+        15
+      ],
+      "floors": [
+        3,
+        7
+      ],
+      "tilesets": [
+        0,
+        12
+      ],
+      "chunksPerTileset": 400,
+      "romHashUnchanged": true
+    },
+    "sampling": {
+      "distributions": 76,
+      "drawsPerDistribution": 100000,
+      "maxSigma": 3.56637,
+      "thresholdSigma": 7
+    }
+  },
+  "windows": {
+    "crossBuild": "pass; MinGW GCC14-posix x64 Release compile/link",
+    "nativeCI": {
+      "status": "pass",
+      "runId": 38367994286,
+      "headSha": "3299e3a83551dd033aa9aee8e7d0f0832efb7fbb",
+      "os": "Windows Server 2025",
+      "compiler": "MSVC 19.51.36260",
+      "ctest": 3,
+      "explorationUi": "pass",
+      "scenePositions": 4,
+      "decodeCount": 2,
+      "physicalSize": 200,
+      "desktopPositions": 1,
+      "snapshotRestore": "pass",
+      "priorFailure": "PowerShell HOME variable in run38367620743; renamed and verified"
+    },
+    "Windows11Exploration": "pending"
+  },
+  "package": {
+    "selectedB1DataBytes": 153968,
+    "crossBuildInstalledBytes": 4013149,
+    "crossBuildZipBytes": 1146205,
+    "includesRom": false,
+    "msvcInstalledBytes": 886179,
+    "msvcZipBytes": 364300
+  },
+  "pending": [
+    "original item/friend graphics and encounter animation",
+    "original stairs mapping",
+    "DPLA palette animation",
+    "movement interpolation",
+    "all-dungeon/species audit",
+    "Windows11 exploration and final performance",
+    "A3 original wall time/anchor/shadow and actual OS events"
+  ],
+  "remoteWrite": {
+    "status": "pass",
+    "branch": "work",
+    "implementationCommit": "f16258d794310b9afe68cac6d03c0fe8365a3a12",
+    "verifiedCodeCommit": "3299e3a83551dd033aa9aee8e7d0f0832efb7fbb",
+    "remoteShaMatched": true,
+    "evidenceCommit": "separate documentation-only commit; no code changes"
+  }
+}

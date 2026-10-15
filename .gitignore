@@ -6,4 +6,9 @@ __pycache__/
 .venv/
 dist/
 build/
+local/
+*.nds
+*.srl
+*.dsv
+!assets/original/source/user-supplied.nds
 *.log

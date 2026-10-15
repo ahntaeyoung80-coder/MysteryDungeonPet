@@ -1,0 +1,9 @@
+{
+  "runId": 38367620743,
+  "implementationCommit": "f16258d794310b9afe68cac6d03c0fe8365a3a12",
+  "core": "success; 3 ASan/UBSan CTests and 23 Python tests",
+  "windowsNative": "MSVC build and 3 CTests passed",
+  "windowsScript": "failed: reserved PowerShell HOME variable at exploration_windows_tests.ps1:32",
+  "fixCommit": "3299e3a83551dd033aa9aee8e7d0f0832efb7fbb",
+  "retryRunId": 38367994286
+}

@@ -1,0 +1,6 @@
+Hide
+Always on top
+Scale 1
+Scale 2
+Scale 3
+Exit

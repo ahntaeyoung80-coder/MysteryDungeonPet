@@ -1,0 +1,15 @@
+Test project /workspace/MysteryDungeonPet/build/sanitize
+    Start 1: pet_improvement_tests
+1/5 Test #1: pet_improvement_tests ............   Passed    0.13 sec
+    Start 2: pet_gameplay_tests
+2/5 Test #2: pet_gameplay_tests ...............   Passed   72.79 sec
+    Start 3: pet_exploration_tests
+3/5 Test #3: pet_exploration_tests ............   Passed  185.28 sec
+    Start 4: pet_core_tests
+4/5 Test #4: pet_core_tests ...................   Passed   13.99 sec
+    Start 5: pet_package_playback
+5/5 Test #5: pet_package_playback .............   Passed    0.03 sec
+
+100% tests passed out of 5
+
+Total Test time (real) = 272.24 sec

@@ -1,0 +1,50 @@
+Windows native CI (headless; no actual desktop/power validation)
+run=https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38339188747
+commit=680f4c1f46433242a981b27c248098f51b9ace1b
+OS=Windows Server2025 10.0.26100
+MSVC=19.51.36260.0, Visual Studio18 2026, Release /MT
+native core tests=pass
+
+alias-cycle.txt
+status=fail
+error=package: alias cycle
+
+corrupt-png-valid-hash.txt
+status=fail
+error=PNG decode assetKey=test:synthetic:a2-v1 HRESULT=0x88982f07
+
+dimensions.txt
+status=fail
+error=atlas dimensions assetKey=test:synthetic:a2-v1
+
+hash.txt
+status=fail
+error=atlas size/SHA-256 assetKey=test:synthetic:a2-v1
+
+missing-atlas.txt
+status=fail
+error=cannot open: D:\a\MysteryDungeonPet\MysteryDungeonPet\build\windows\wic-results\negative\missing-atlas\atlas.png
+
+schema.txt
+status=fail
+error=package: magic/schema version
+
+traversal.txt
+status=fail
+error=package: atlas must be a local basename
+
+truncated.txt
+status=fail
+error=package: truncated field
+
+valid.txt
+status=pass
+sourceKind=0
+assetKey=test:synthetic:a2-v1
+atlasSha256=5945a89d49480f90e358596acd9ab1c372159b301e66c6821b045aac68ab145d
+width=48
+height=160
+decodeCount=1
+cacheReuse=pass
+PBGRA=pass
+Windows_UI=not_exercised

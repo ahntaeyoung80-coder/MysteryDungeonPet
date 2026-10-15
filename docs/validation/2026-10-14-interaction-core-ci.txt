@@ -1,0 +1,12 @@
+2026-10-14T07:47:47.1556399Z Windows x64 runtime/source/assets hashes match; no ZIP required
+2026-10-14T07:48:18.3806093Z 1/7 Test #1: pet_survival_tests ...............   Passed    0.24 sec
+2026-10-14T07:48:18.4795005Z 2/7 Test #2: pet_revision_tests ...............   Passed    0.09 sec
+2026-10-14T07:48:18.5551841Z 3/7 Test #3: pet_improvement_tests ............   Passed    0.08 sec
+2026-10-14T07:49:27.9925625Z 4/7 Test #4: pet_gameplay_tests ...............   Passed   69.44 sec
+2026-10-14T07:51:01.6678000Z 5/7 Test #5: pet_exploration_tests ............   Passed   93.67 sec
+2026-10-14T07:51:09.8048681Z 6/7 Test #6: pet_core_tests ...................   Passed    8.14 sec
+2026-10-14T07:51:09.8221992Z 7/7 Test #7: pet_package_playback .............   Passed    0.02 sec
+2026-10-14T07:51:09.8228777Z 100% tests passed, 0 tests failed out of 7
+2026-10-14T07:51:09.8229300Z Total Test time (real) = 171.74 sec
+2026-10-14T07:51:38.7251248Z Ran 26 tests in 16.561s
+2026-10-14T07:51:38.7251593Z OK

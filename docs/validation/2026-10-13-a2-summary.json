@@ -1,0 +1,117 @@
+{
+  "dateKST": "2026-10-13",
+  "scope": "A-2 implementation and independent verification; actual Windows UI/power/performance pending",
+  "baseCommit": "4d6ed6b62a43ffdfaa82cdb980dd091ffbedf2ad",
+  "environment": {
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "nativeCompiler": "GNU C++14.2",
+    "crossCompiler": "MinGW-w64 GCC14-posix / headers12.0",
+    "cmake": "4.4.4",
+    "ninja": "1.13.2",
+    "python": "3.12.14"
+  },
+  "checks": {
+    "pythonA1AndBridge": {
+      "status": "pass",
+      "testCount": 13,
+      "nativeComparedFramesIncludingAliases": 144
+    },
+    "core": {
+      "status": "pass",
+      "checks": 10716,
+      "truncatedPrefixes": 10652,
+      "seededMutations": 10000
+    },
+    "ASanUBSan": {
+      "status": "pass"
+    },
+    "fixtureReproducibility": {
+      "status": "pass"
+    },
+    "MinGWReleaseCompileLink": {
+      "status": "pass"
+    },
+    "MSVCReleaseNativeWICCI": {
+      "status": "pass",
+      "runId": 38339188747,
+      "commit": "680f4c1f46433242a981b27c248098f51b9ace1b",
+      "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38339188747",
+      "environment": "Windows Server2025 build26100 / Visual Studio18 2026 MSVC19.51.36260 / Python3.12.10",
+      "core": "pass",
+      "WIC_PBGRA_Black_Alpha_Cache": "pass",
+      "negativePackages": 8,
+      "Windows11_UI_power_performance": "pending"
+    },
+    "actualWindows11UI_Drag_DPI_Lock_Display_Suspend_Lifetime_Performance": {
+      "status": "pending",
+      "reason": "cloud executor Linux; no local Windows command/GUI tool; user will execute"
+    }
+  },
+  "originalPackageRuntimeConversion": {
+    "status": "pending",
+    "reason": "previous local ROM packages not present in replaced environment; no ROM redownload/re-extraction"
+  },
+  "nativeCompactA1Fixture": {
+    "status": "pass",
+    "manifestBytes": 64298
+  },
+  "resume": "User Windows11 Run-A2.ps1, collect CSV/WIC/environment/events and manual UI/power observations; then actual A-3 integration",
+  "crossBuildInstallation": {
+    "compiler": "MinGW cross build",
+    "files": [
+      {
+        "path": "MysteryDungeonPet.exe",
+        "bytes": 3509461,
+        "sha256": "72a518a3b0b0ea0b8bff114344936a14404cab3fd181048343bb151d47a5c849"
+      },
+      {
+        "path": "Run-A2.ps1",
+        "bytes": 2223,
+        "sha256": "ec62ce54dc0195e289ccade3d6d214c10dba9c56c663a0125f06ad67eeeef5a2"
+      },
+      {
+        "path": "WINDOWS_QUICKSTART.md",
+        "bytes": 10428,
+        "sha256": "c1ff67ac0d53c0bfd02261d006c202bdb4cc39f92018247a8f3435118e9d6c7b"
+      },
+      {
+        "path": "assets/fixture/CREDITS.txt",
+        "bytes": 326,
+        "sha256": "4a080d6d49bb52a6627cd045ca583722466496f8de3ea8710135123d4993ad1e"
+      },
+      {
+        "path": "assets/fixture/atlas.png",
+        "bytes": 917,
+        "sha256": "5945a89d49480f90e358596acd9ab1c372159b301e66c6821b045aac68ab145d"
+      },
+      {
+        "path": "assets/fixture/fixture.mdpa",
+        "bytes": 10652,
+        "sha256": "c4d67b6bcfa9587e943026142a7ef1940cf4c7a059222832203ea72f52f13cd3"
+      },
+      {
+        "path": "licenses/Windows-classic-samples-LICENSE.txt",
+        "bytes": 1231,
+        "sha256": "3645a237b872306e4955bc2ce75783537bd7123bcb57332f8819e4cfbcf50b45"
+      }
+    ],
+    "totalBytes": 3535238,
+    "note": "synthetic A-2 fixture only; not original/full-species installation or measured runtime RAM"
+  },
+  "nativeWindowsCIInstallation": {
+    "compiler": "MSVC19.51.36260 Release /MT",
+    "bytesBeforeDocumentationUpdate": 440673,
+    "exeBytes": 414720,
+    "exeSHA256": "b0ed6953de87b3666990d9a3cf33fa49ce5e73bd95c00ae1598a400a94dbf45b",
+    "artifactId": 11786536952,
+    "artifactSHA256": "ecb78ec1df74f1fa4fe0d9d0432b1c40294d8cfd69983a4d59214b5539bcae65",
+    "originalArtifactBytes": 215451,
+    "bytesWithUpdatedDocumentation": 441383
+  },
+  "userZip": {
+    "file": "MysteryDungeonPet-A2-windows-x64.zip",
+    "bytes": 209312,
+    "sha256": "230db43a75a0c7d84acd3b051cedec97029ad4ba0e3141b972d1d43172342737",
+    "contents": "MSVC CI tested exe unchanged, same fixture and licenses, latest quickstart/PowerShell"
+  }
+}

@@ -1,0 +1,7 @@
+372647608 initial session flags=1
+372652334 start assetKey=rom:EoS_NA:md:1 atlasSha256=1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd testTimingHz=60
+372652374 mode=animation-diagnostics
+372652398 select clip=0 direction=0 loop=1
+372652431 power=32787
+372653223 show
+374663415 exit submissions=30 decodes=1 switches=0

@@ -1,0 +1,517 @@
+{
+  "ROMRecheck": {
+    "WANReassembly": [
+      {
+        "comparedFrames": 190,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "originalSourceFrames": 262,
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+        "status": "pass"
+      },
+      {
+        "comparedFrames": 158,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "originalSourceFrames": 222,
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+        "status": "pass"
+      }
+    ],
+    "matchesPreviousManifest": true,
+    "romVerification": {
+      "afterHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+      "beforeHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+      "fullSpeciesAudit": "pending",
+      "originalWallTime": "pending",
+      "representativeCount": 2,
+      "unchanged": true,
+      "windowsIntegration": "pending"
+    },
+    "source": "assets/original/source/user-supplied.nds",
+    "status": "pass",
+    "validation": {
+      "assetCount": 2,
+      "frameCount": 348,
+      "manifestHash": "c657d24ce3da04c8c20a289c9a2f5ee493838a9ab2471ad31723406b7b294c8d",
+      "romExtraction": "requires_original_check",
+      "status": "pass"
+    }
+  },
+  "WindowsModifiedBuildAndMetrics": {
+    "artifactId": 11793603035,
+    "artifactZipSHA256": "5b2b6e297fe8c086eb036217ade7124c44c518b0d513aa00cf2b25e302a5dbb4",
+    "binarySHA256": "f624861c21315b333a76826dc180007063c5fa00809f05e372370e619bea0f48",
+    "configuration": "MSVC x64 Release",
+    "fixtureAndOriginalScenarioCount": 15,
+    "installedBytesCI": 642575,
+    "nativeOriginalTickPlayback": "pass both packages (CI command exit0)",
+    "originalWIC": {
+      "original-asset-0": {
+        "PBGRA": "pass",
+        "Windows_UI": "not_exercised",
+        "assetKey": "rom:EoS_NA:md:1",
+        "atlasSha256": "1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd",
+        "cacheReuse": "pass",
+        "decodeCount": "1",
+        "height": "278",
+        "sourceKind": "1",
+        "status": "pass",
+        "width": "256"
+      },
+      "original-asset-1": {
+        "PBGRA": "pass",
+        "Windows_UI": "not_exercised",
+        "assetKey": "rom:EoS_NA:md:4",
+        "atlasSha256": "b446db9bc52015e1c7d0353a1490c7ae53821ebbc73287f2b43f9d8703709959",
+        "cacheReuse": "pass",
+        "decodeCount": "1",
+        "height": "219",
+        "sourceKind": "1",
+        "status": "pass",
+        "width": "256"
+      }
+    },
+    "runId": 38358343599,
+    "runnerLabel": "windows-latest",
+    "scenarioChecks": [
+      {
+        "csvSHA256": "48a15fa842a697165ce61ea413f24d8af142969df4cc25aa2250a8ca05d0b4ab",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0,
+          1
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 26,
+        "sampleCount": 3,
+        "scenario": "asset-0/eat.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "1a0e49987768d223d48d4ba6f50f6cf01dc35f4a1caf642efa1736598a3d8d7a",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          -1
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 1,
+        "sampleCount": 3,
+        "scenario": "asset-0/empty.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "983ff80a8828a496865b3bac13371363aefcae9cf88b4cac39a3286f51643935",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 10,
+        "sampleCount": 3,
+        "scenario": "asset-0/idle-or-alias.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "ae5366296932bfe829d71e6926b20ba4371ab47b921096cdede4a5b02fd2071a",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          1,
+          2,
+          4
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 26,
+        "sampleCount": 3,
+        "scenario": "asset-0/wake.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "3755a530876415bd2d87add4eab8d17a870539527b269ded10282285cd926513",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0,
+          2
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 45,
+        "sampleCount": 3,
+        "scenario": "asset-0/walk.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "94111a7e45feb08fa63032050f0db3a1489a36822006c653548962b4e767e169",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0,
+          1
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 26,
+        "sampleCount": 3,
+        "scenario": "asset-1/eat.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "e8e6f7af64f5593b962dd1c7df738001bff6423de07c270f684d26b04ea3a1b9",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          -1
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 1,
+        "sampleCount": 3,
+        "scenario": "asset-1/empty.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "62ace5ab9bba99410d7e8c4d75e6c96517be4d3133f472d88e0691c1682283ed",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0,
+          2,
+          3
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 20,
+        "sampleCount": 3,
+        "scenario": "asset-1/idle-or-alias.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "945e01ee3d81a3c185b565c71245b7e256598e137a0e0b5049ca42a1b38b5f17",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          1,
+          2,
+          4
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 22,
+        "sampleCount": 3,
+        "scenario": "asset-1/wake.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "0d5ba144de787297a4d791ed1ac4869c32220d0c5583dc06a544542236575a32",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0,
+          1
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 26,
+        "sampleCount": 3,
+        "scenario": "asset-1/walk.json",
+        "sourceKind": 1,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "f619bca93f48535c92bad68a5b0bf48e4fe179dda3088bab4ac351d242385a23",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          2
+        ],
+        "markerCount": 18,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 18,
+        "sampleCount": 3,
+        "scenario": "eat.json",
+        "sourceKind": 0,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "22df9d2f91ad96d28a5a201b42b8e8a93c462cd4e311f59dc1e41e933404d83c",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          -1
+        ],
+        "markerCount": 0,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 1,
+        "sampleCount": 3,
+        "scenario": "empty.json",
+        "sourceKind": 0,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "b693490742ebe999b43412c4d914885319ec8e12acda6299ebd50e319bf40bbf",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0
+        ],
+        "markerCount": 3,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 1,
+        "sampleCount": 3,
+        "scenario": "idle-or-alias.json",
+        "sourceKind": 0,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "6030db94718bf2af4246607b181085535f94469cd58cc3e85cd64171ec72d0c4",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0,
+          1,
+          2
+        ],
+        "markerCount": 15,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 15,
+        "sampleCount": 3,
+        "scenario": "wake.json",
+        "sourceKind": 0,
+        "status": "pass"
+      },
+      {
+        "csvSHA256": "f82b7e6d5fa0a5288f56c0cc3cd2e986aad4eda4f7b0c5d52a6e9789e63822f9",
+        "finalWindow": {
+          "dpi": 96.0,
+          "physical_size": 200.0,
+          "window_x": 100.0,
+          "window_y": 100.0
+        },
+        "framesObserved": [
+          0,
+          1,
+          2
+        ],
+        "markerCount": 21,
+        "pausedValues": [
+          0
+        ],
+        "renderSubmissions": 21,
+        "sampleCount": 3,
+        "scenario": "walk.json",
+        "sourceKind": 0,
+        "status": "pass"
+      }
+    ],
+    "scope": "short CI execution/metadata only; not user OS events, original wall time or performance baseline",
+    "sourceCommit": "8406b2e112fb4e281c780947635aa6ea6c9ccc33",
+    "status": "pass",
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38358343599"
+  },
+  "aComplete": false,
+  "baseCommit": "3097aa6f45284c447bc3ba8082d2f8796e6db782",
+  "dateKST": "2026-10-13",
+  "delivery": {
+    "binarySHA256": "f624861c21315b333a76826dc180007063c5fa00809f05e372370e619bea0f48",
+    "installedBytes": 635877,
+    "localPath": "local/MysteryDungeonPet-A3.zip",
+    "scope": "CI executable/runtime bytes unchanged; current usage documents bundled",
+    "zipBytes": 267870,
+    "zipSHA256": "9216e3dd862cf7e2c00e37a75913f60cb0ca14f7b7df1e0e4655e9f7339aaaee"
+  },
+  "environment": {
+    "cmake": "4.4.4",
+    "compiler": "GNU 14.2.0",
+    "python": "3.12.14",
+    "system": "Linux"
+  },
+  "existingWindows11Evidence": "docs/validation/2026-10-13-a2-user-review.json; preserved, not rerun",
+  "gameAssetsCommitted": "no new asset bytes in this A-3 commit; upstream user-authorized original inputs preserved",
+  "implementationCommit": "8406b2e112fb4e281c780947635aa6ea6c9ccc33",
+  "originalPackageNative": {
+    "ROMReextraction": "not_performed",
+    "WindowsOriginalIntegration": "pending",
+    "aComplete": false,
+    "assets": [
+      {
+        "MDPASHA256": "48b370cc864366955939e703106e676ee60c1eca6a9068046a069e6b0411ed11",
+        "assetKey": "rom:EoS_NA:md:1",
+        "atlasSHA256": "1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd",
+        "framesCompared": 190,
+        "nativePlayback": {
+          "frameBoundaries": 232,
+          "scope": "native tick/finite/marker/pause/delay only; original wall time and Windows pending",
+          "selections": 64,
+          "status": "pass"
+        },
+        "sourceKind": "rom"
+      },
+      {
+        "MDPASHA256": "13006d9f64b93583ca150a8402b99cd79e5b4ca5ebbb6720ef681220826ea18f",
+        "assetKey": "rom:EoS_NA:md:4",
+        "atlasSHA256": "b446db9bc52015e1c7d0353a1490c7ae53821ebbc73287f2b43f9d8703709959",
+        "framesCompared": 158,
+        "nativePlayback": {
+          "frameBoundaries": 200,
+          "scope": "native tick/finite/marker/pause/delay only; original wall time and Windows pending",
+          "selections": 64,
+          "status": "pass"
+        },
+        "sourceKind": "rom"
+      }
+    ],
+    "framesCompared": 348,
+    "originalWallTime": "pending",
+    "schemaVersion": 1,
+    "scope": "existing A-1 RGBA reassembly, A-1/MDPA/native metadata and native tick playback",
+    "sourceManifestSHA256": "c657d24ce3da04c8c20a289c9a2f5ee493838a9ab2471ad31723406b7b294c8d",
+    "status": "pass"
+  },
+  "pending": [
+    "original wall time comparison",
+    "original shadow rendering/visual anchor verification",
+    "actual lock/display-off/suspend/DPI change",
+    "long resource lifetime and final performance"
+  ],
+  "phase": "A-3 in progress",
+  "reproducibility": {
+    "runtimeFilesCompared": 7,
+    "runtimeHashes": {
+      "asset-0/CREDITS.txt": "712bfe9e61241a4dffc2e432c7177e6bd1d18a7dd45b822d6cc365adf53685a0",
+      "asset-0/asset.mdpa": "48b370cc864366955939e703106e676ee60c1eca6a9068046a069e6b0411ed11",
+      "asset-0/atlas.png": "1875173b35b6970a58720648084762c100e4b25173f4f4e98f8499ca7a243cdd",
+      "asset-1/CREDITS.txt": "08da9190c4cc6083baeb65a628aab848052b26ff7b1c8b06199b7e5c69c84e35",
+      "asset-1/asset.mdpa": "13006d9f64b93583ca150a8402b99cd79e5b4ca5ebbb6720ef681220826ea18f",
+      "asset-1/atlas.png": "b446db9bc52015e1c7d0353a1490c7ae53821ebbc73287f2b43f9d8703709959",
+      "runtime-index.json": "237293bf88bdd4684fc3f62cda38f2433e244825e20925ff1c06f38321e69f7a"
+    },
+    "status": "pass"
+  },
+  "sharedRuntimeNative": "pass; identical to independently compiled original package",
+  "syncedOriginalInputsCommit": "4231a0c271612a78197a623e86bcf2b83dae7e23",
+  "tests": {
+    "ASanUBSan": {
+      "ctestCount": 2,
+      "originalPackageVerify": "pass",
+      "status": "pass"
+    },
+    "Python": {
+      "count": 18,
+      "status": "pass"
+    },
+    "ReleaseNative": {
+      "coreChecks": 10725,
+      "ctestCount": 2,
+      "status": "pass"
+    },
+    "fixtureReproducibility": "pass"
+  },
+  "uploadedInput": {
+    "allExtractedBytesMatchArchive": true,
+    "bytes": 587906,
+    "fileName": "a1-original-package.zip",
+    "files": 219,
+    "sha256": "834786ad283bc5980333867988192522891ca3323a996b05b6c6a1ee2ae27bb4",
+    "uncompressedBytes": 2545708
+  }
+}

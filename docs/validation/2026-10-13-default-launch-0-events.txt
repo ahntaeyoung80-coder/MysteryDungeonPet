@@ -1,0 +1,36 @@
+364193605 exploration snapshot=new day=1 runId=364169234
+364196502 initial session flags=1
+364201815 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+364201855 mode=automatic-exploration
+364201876 select clip=7 direction=0 loop=1
+364201912 power=32787
+364203308 show
+364565139 select clip=7 direction=4 loop=1
+364565190 select clip=0 direction=4 loop=1
+364929681 select clip=7 direction=2 loop=1
+364929732 life=Combat combat=PlayerTurn day=1 hearts=3
+365290762 select clip=1 direction=2 loop=0
+365290802 gameplay onceKey=turn:364169234:0:4:1
+365290817 life=Combat combat=PlayerAttack day=1 hearts=3
+365290829 move355 damage=1 critical=0
+365753290 finite finished assetKey=rom:EoS_NA:md:1
+365782294 select clip=7 direction=2 loop=1
+365782328 life=Combat combat=EnemyHurt day=1 hearts=3
+365973248 select clip=7 direction=2 loop=1
+365973300 life=Combat combat=EnemyTurn day=1 hearts=3
+366338334 select clip=7 direction=2 loop=1
+366338378 gameplay onceKey=enemy:364169234:0:4:1
+366338393 life=Combat combat=EnemyAttack day=1 hearts=3
+366338405 move355 damage=0 critical=0
+366763669 select clip=7 direction=2 loop=1
+366763717 life=Combat combat=PlayerTurn day=1 hearts=3
+367114958 select clip=1 direction=2 loop=0
+367115007 gameplay onceKey=turn:364169234:0:4:2
+367115022 life=Combat combat=PlayerAttack day=1 hearts=3
+367115034 move355 damage=1 critical=0
+367573198 finite finished assetKey=rom:EoS_NA:md:1
+367604372 select clip=7 direction=2 loop=1
+367604405 life=Combat combat=EnemyHurt day=1 hearts=3
+367791659 select clip=7 direction=2 loop=1
+367791694 life=Combat combat=Faint day=1 hearts=3
+368442711 exit submissions=59 decodes=4 switches=0

@@ -1,0 +1,52 @@
+Run: 38517206000
+Commit: 5643e8eeb8f9ccb4ab5875b9f56121ed06706157
+URL: https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38517206000
+Native Windows job: success
+Root EXE is the second default-launch report (pull-launch); both report pass.
+The exploration movement-only window was held by dialogue/combat; this is not a movement visual acceptance result.
+
+Microsoft Windows Server 2025
+Windows x64 runtime/source/assets hashes match; no ZIP required
+-- The CXX compiler identification is MSVC 19.51.36260.0
+100% tests passed out of 6
+Total Test time (real) =  14.52 sec
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+{"status":"pass","selections":64,"frameBoundaries":232,"scope":"native tick/finite/marker/pause/delay only; original wall time and Windows pending"}
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+{"status":"pass","selections":64,"frameBoundaries":200,"scope":"native tick/finite/marker/pause/delay only; original wall time and Windows pending"}
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"status": "pass",
+"uiMovement": "pending: dialogue/combat held player during the observation window",
+"snapshotRestore": "pass"
+"actualWindows11": "pending",
+"test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+"bedroomCharacters": 1,
+"status": "pass",
+"status": "pass",
+"test": "production player first Attack1 Hurt6 Faint33 victory resumes dungeon",
+"actualWindows11": "pending"
+"snapshot": "new then restored same runId",
+"explicitDiagnostics": "pass, exploration save unchanged",
+"diagnosticsMenu": "absent",
+"launch": "installed EXE with zero arguments from another directory",
+"status": "pass",
+"actualWindows11": "pending",
+"snapshot": "new then restored same runId",
+"explicitDiagnostics": "pass, exploration save unchanged",
+"diagnosticsMenu": "absent",
+"launch": "installed EXE with zero arguments from another directory",
+"status": "pass",
+"actualWindows11": "pending",
+

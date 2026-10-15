@@ -1,0 +1,24 @@
+# Windows 실행
+
+GitHub Desktop에서 `work`를 pull한 뒤 저장소 루트의 **MysteryDungeonPet.exe**를 더블클릭한다. ZIP 생성·다운로드·압축 해제·사용자 빌드는 필요 없다. EXE와 `assets/`를 저장소 안에 함께 둔다.
+
+기본 실행은 기존 저장 복원 또는 자동 던전 탐험으로 시작한다. 저장과 로그는 `%LOCALAPPDATA%\MysteryDungeonPet`에 기록한다. pull로 기존 저장을 지우지 않는다. 다른 작업 폴더에서 EXE를 실행해도 자산은 EXE 위치를 기준으로 읽는다.
+
+## 현재 동작
+
+- 평상시 아이템 → 미탐색 영역/frontier → 발견된 계단. HP2 이하에서는 전투를 피하고 오랭열매/계단으로 도망간다. 계단을 먼저 발견했거나 열매가 없으면 계단을 우선한다.
+- 오랭열매는HP3 이하에서만 사용한다. 열매 사용·아이템 획득은 각각1턴을 소비한다. 길을 막는 우호 NPC와 처음 만나면 인사·응답 후 자리 교환으로 통과한다. 같은 NPC와의 인사는 반복하지 않는다.
+- 계단 도착 →1초 fade-out → 다음 층 commit →1초 fade-in → 탐험 재개.
+- 노란 원반은 던전의 우호 NPC에게만 보인다. 플레이어·적·대화·생활 장면에는 없다.
+- 공동 식사는7초다. 밤 침실에서 동료와 인사한 뒤 눕기·잠들기 animation을 한 번 재생하고 바로 fade-out/in으로 아침으로 전환한다. 수면 정지 장면과2초 대기는 생략한다.
+- 동료와 함께 취침한다. 아침 fade-in → 두 배우 Wake14 → 두 배우 Nod22 인사 → 주인공 Walk0 왼쪽 통로 입구까지 약1.9초 이동 → 다음날 탐험. 동료 침상을 피해 맵 안에서 퇴실을 끝낸다.
+- 피격 하트는 적 Attack1이 끝난 뒤 감소한다. 저체력 도주와 적 추적 이동은 같은400ms에 표시해 매 걸음 사이 별도 휴식이 없다.
+- 새 저장은 MDES5이며 MDES1·2·3·4도 읽는다. 기술 선택·레벨·가방 등은 기존 범위 그대로다.
+
+우클릭 메뉴는 Hide·Always on top·Scale1..3·Exit다. 원작 방향/animation 진단은 `MysteryDungeonPet.exe --diagnostics`로 실행한다. 새 실행 시작은 `--new-run`을 명시한다.
+
+## 개발자 갱신과 검사
+
+제품 수정 시 개발자가 EXE도 함께 갱신한다. Windows의 MSVC/CMake/Python 환경에서는 `powershell -ExecutionPolicy Bypass -File tools/update_windows_runtime.ps1`을 실행해 루트 EXE와 `windows-runtime.json`을 생성한다. Linux 교차 빌드는 `tools/check_windows_runtime.py --refresh-from <EXE> --compiler <설명>`으로 같은 기록을 생성한다. ZIP 단계는 없다.
+
+`python tools/check_windows_runtime.py`는 EXE·소스·사용 자산 hash 일치를 검사한다. CI의 `tools/run_windows_checks.ps1`은 MSVC 빌드와 저장소 루트 EXE를 모두 다른 작업 폴더에서 기본 실행·저장 복원한다. 실제 Windows11 GUI·잠금/절전·장기 성능 확인 여부는 최신 검증 기록을 따른다.

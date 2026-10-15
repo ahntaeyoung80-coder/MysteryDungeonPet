@@ -2,6 +2,10 @@
 
 작성 기준: 2026-10-13 KST. 이 매핑은 Phase 1~3의 확인된 경로·정규화 규칙을 결합한다. 실제 ROM을 추출한 manifest가 아니라 후속 추출기와 runtime의 데이터 계약이다. 알 수 없는 원본 인덱스는 null/unresolved로 둔다.
 
+최신 실행 범위: `assets/original/gameplay/provenance.json`이 MD1/MD4 전투·생활 clip 및 G01P06B/G01P07A 집 map의 실제 선택 추출·crop/hash를 기록한다. 원본 ROM 전체/종별 지원 판정과 구분한다. 이번 최소 전투에서는 m_attack의 Attack/Hurt/Faint를 사용하며 아래 과거의 전투 제외 문구를 덮어쓴다. 오랭열매70 사용은 text-only이며 별도 clip을 연결하지 않는다.
+
+길드 생활 최신 연결: `gameplay/guild/provenance.json`과 MDGS1 cue가 식당12개개체·object107, 원본 개별동작·침상위치를 기록한다. 식당crop(180,112), 침실crop(92,56); 주인공Right2/동료Left6. NPC10명의MDindex/spriteIndex와原WAN검사를 완료했고 effect642/643/624는별도graphic미연결이다. 자세한표는 [GUILD_LIFE_SCENE.md](../GUILD_LIFE_SCENE.md)를 따른다.
+
 ## 1. 서로 다른 ID 체계
 
 | ID 공간 | 원본 위치 | 의미·정규화 키 | 금지할 연결 |
@@ -34,7 +38,7 @@
 | BALANCE/item_p.bin | item_id,category,sprite,palette,is_valid | ItemRecord+iconKey+foodKind | 수집 icon/생활 음식 분류 |
 | MONSTER/monster.bin | BIN_PACK spriteIndex,PKDPX WAN | original dungeon motions | Walk/Idle/Pose 등; ground/attack과 통합 |
 | MONSTER/m_ground.bin | 같은 index의 raw WAN | 생활 동작 | Eat/Sleep/EventSleep/Wake/Nod 등 실제 지원된 항목 |
-| MONSTER/m_attack.bin | 같은 index의 PKDPX WAN | 통합 reference,선택 동작만 | 전투 제거,필요한 시각 clip만 유지 |
+| MONSTER/m_attack.bin | 같은 index의 PKDPX WAN | 통합 reference,선택 동작만 | 최소 B-2 Attack/Hurt/Faint 선택,나머지 기술은 보류 |
 | DUNGEON/dungeon.bin | logical files는 pmd2dungeondata.xml로 복원 | tileset/item atlas+DMA rule/palette ticks | 새 terrain grid→원작 chunk; item sprite/palette |
 | MAP_BG/bg_list.dat+*.bma/bpc/bpl/bpa | BgListEntryProtocol+MapBgModule/BMA | selected background/layer frames | 생활 장면 backgroundKey |
 | GROUND/{object-name}.wan | script_data.objects에서 name 연결 | object sprite+anchor/tick | 식사/수면 소품 |
@@ -60,6 +64,10 @@ DMA 지형 WALL0/WATER1/FLOOR2와 이웃 비트 S01/SE02/E04/NE08/N10/NW20/W40/S
 | 생활/탐험 행동 | WAN Index | 확인된 script code | 재생·종별 지원 정책 |
 | --- | --- | --- | --- |
 | 걷기 | 0 | Idle 특수 경로와 일반 테이블을 구분 | 8방향 Walk,이동 속도는 Explorer |
+| 기본공격 | 1 | 전투 경량 상태가 직접 선택 | MD1/MD4의 원작 Attack 유한 재생; 공격355만 사용 |
+| 피격 | 6 | 전투 경량 상태가 직접 선택 | MD1/MD4의 Hurt 유한 재생; 패배 감정 cue에도 신규 재사용 |
+| 적 기절 | 33 | 전투 경량 상태가 직접 선택 | 원작 Faint 완료 뒤 승리; 같은 층·위치 재개 |
+| 바닥 충돌 | 34 | 현재 별도 선택 없음 | 원작 HitGround 지원 보존; 필요할 때만 후속 연결 |
 | Idle | 7 | 1/2 특수 idle 선택 가능 | 원본 loop/freeze 규칙과 종별 지원 |
 | Run | 별도 확인 못 함 | 미확인 | Walk 이동 속도 증가를 declared_fallback으로 표시 |
 | Sleep | 5 | 6→0x0805 | 생활 deadline까지 루프 |

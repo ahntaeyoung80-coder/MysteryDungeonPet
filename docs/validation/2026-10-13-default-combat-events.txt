@@ -1,0 +1,63 @@
+301511881 exploration snapshot=restored day=1 runId=901
+301514931 initial session flags=1
+301519818 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+301519856 mode=automatic-exploration
+301519881 select clip=7 direction=0 loop=1
+301519912 power=32787
+301521297 show
+301872266 select clip=1 direction=6 loop=0
+301872316 gameplay onceKey=turn:901:0:1:1
+301872332 life=Combat combat=PlayerAttack day=1 hearts=3
+301872344 move355 damage=1 critical=0
+302339632 finite finished assetKey=rom:EoS_NA:md:1
+302357108 select clip=7 direction=6 loop=1
+302357139 life=Combat combat=EnemyHurt day=1 hearts=3
+302547189 select clip=7 direction=6 loop=1
+302547229 life=Combat combat=EnemyTurn day=1 hearts=3
+302897323 select clip=7 direction=6 loop=1
+302897377 gameplay onceKey=enemy:901:0:1:1
+302897391 life=Combat combat=EnemyAttack day=1 hearts=2
+302897403 move355 damage=1 critical=0
+303308075 select clip=6 direction=6 loop=0
+303308130 life=Combat combat=PlayerHurt day=1 hearts=2
+303478565 finite finished assetKey=rom:EoS_NA:md:1
+303496173 select clip=7 direction=6 loop=1
+303496207 life=Combat combat=PlayerTurn day=1 hearts=2
+303860250 select clip=1 direction=6 loop=0
+303860302 gameplay onceKey=turn:901:0:1:2
+303860317 life=Combat combat=PlayerAttack day=1 hearts=2
+303860329 move355 damage=2 critical=1
+304332909 finite finished assetKey=rom:EoS_NA:md:1
+304353667 select clip=7 direction=6 loop=1
+304353710 life=Combat combat=EnemyHurt day=1 hearts=2
+304540551 select clip=7 direction=6 loop=1
+304540597 life=Combat combat=Faint day=1 hearts=2
+305126493 select clip=7 direction=6 loop=1
+305126538 life=Combat combat=CombatVictory day=1 hearts=2
+305490701 select clip=7 direction=6 loop=1
+305490754 life=Explore combat=CombatVictory day=1 hearts=2
+305854829 select clip=0 direction=6 loop=1
+306218798 select clip=7 direction=6 loop=1
+306569008 select clip=7 direction=0 loop=1
+306569054 select clip=0 direction=0 loop=1
+306919144 select clip=7 direction=0 loop=1
+307269643 select clip=0 direction=0 loop=1
+307619632 select clip=7 direction=0 loop=1
+307969848 select clip=0 direction=0 loop=1
+308323643 select clip=7 direction=0 loop=1
+308688048 select clip=0 direction=0 loop=1
+309039033 select clip=7 direction=0 loop=1
+309402187 select clip=0 direction=0 loop=1
+309764010 select clip=7 direction=0 loop=1
+310127697 select clip=0 direction=0 loop=1
+310491646 select clip=7 direction=0 loop=1
+310841446 select clip=0 direction=0 loop=1
+311203601 select clip=7 direction=0 loop=1
+311567811 select clip=0 direction=0 loop=1
+311917089 select clip=7 direction=0 loop=1
+312267981 select clip=7 direction=6 loop=1
+312268049 select clip=0 direction=6 loop=1
+312618034 select clip=7 direction=6 loop=1
+312976065 select clip=0 direction=6 loop=1
+313338987 select clip=7 direction=6 loop=1
+313530859 exit submissions=134 decodes=4 switches=0

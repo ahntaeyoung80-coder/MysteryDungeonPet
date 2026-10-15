@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-14",
+  "baseline_commit": "04082dbcda537edae05236d6c28851dd6c94340a",
+  "release": {
+    "passed": 6,
+    "tests": 6,
+    "seconds": 10.24,
+    "log": "2026-10-14-runtime-revision-release.txt"
+  },
+  "asan_ubsan": {
+    "passed": 6,
+    "tests": 6,
+    "detect_leaks": true,
+    "seconds": 70.27,
+    "log": "2026-10-14-runtime-revision-sanitize.txt"
+  },
+  "python": {
+    "passed": 25,
+    "tests": 25,
+    "skipped": 0,
+    "seconds": 4.602,
+    "log": "2026-10-14-runtime-revision-python.txt"
+  },
+  "scenario_save_restore": {
+    "checks": 10701,
+    "restores": 5239,
+    "log": "2026-10-14-runtime-revision-scenarios.jsonl"
+  },
+  "windows_cross": {
+    "compile_link": "passed",
+    "compiler": "MinGW GCC 14-posix x64",
+    "log": "2026-10-14-runtime-revision-windows.txt",
+    "native_execution": false
+  },
+  "direct_runtime": {
+    "path": "MysteryDungeonPet.exe",
+    "sha256": "ad67b2b3f93b16e12d50493d3505b239d0693b6b70cea0cf21aeb7a65571bfcb",
+    "bytes": 1686016,
+    "manifest": "windows-runtime.json",
+    "source_asset_hash_check": "passed",
+    "zip_created": false,
+    "cwd_independent_paths": "Windows CI passed for root EXE with zero arguments from another working directory"
+  },
+  "assets_changed": false,
+  "new_original_asset_research_or_extraction": false,
+  "original_sha256": {
+    "user-supplied.nds": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "rom-files.zip": "cc9d113ea4b438d8b8895a30c3d47863dc99cdb1e1381ce8c029aeeb8d748b54"
+  },
+  "pending": [
+    "User Windows11 visual acceptance, including continuous movement/floor fades/disc appearance",
+    "Windows lock/suspend/resume and long duration CPU/memory"
+  ],
+  "prior_windows_ci": {
+    "run_id": 38516554129,
+    "commit": "f470fcd",
+    "native_ctest": "6/6 passed",
+    "failure": "legacy exploration Windows check expected HP refresh before RoomExit; corrected to assert Ready/RoomExit and unchanged restored HP/RNG/day/inventory/journals"
+  },
+  "implementation_commit": "5643e8eeb8f9ccb4ab5875b9f56121ed06706157",
+  "github_ci": {
+    "run_id": 38517206000,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38517206000",
+    "core": "success",
+    "windows": "success",
+    "windows_os": "Windows Server 2025",
+    "compiler": "MSVC 19.51 x64 Release",
+    "native_ctest": {
+      "passed": 6,
+      "tests": 6,
+      "seconds": 14.52
+    },
+    "gui_lifecycle": "pass",
+    "bedroom_characters": 1,
+    "gui_combat": "pass",
+    "installed_default_launch_restore": "pass",
+    "root_exe_default_launch_restore": "pass",
+    "root_exe_diagnostics": "pass; exploration save unchanged",
+    "exploration_movement_window": "pending: dialogue/combat held player in four-second window",
+    "log": "2026-10-14-runtime-revision-windows-ci.txt"
+  }
+}

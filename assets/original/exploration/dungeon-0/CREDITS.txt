@@ -1,0 +1,2 @@
+Nintendo / Pokémon / CHUNSOFT original user-supplied assets.
+Offline parsers: SkyTemple-files (GPL-3.0-or-later).

@@ -1,0 +1,7 @@
+2026-10-13T12:45:34.7520802Z Microsoft Windows Server 2025
+2026-10-13T12:46:53.2292898Z 1/4 Test #1: pet_gameplay_tests ...............   Passed    6.68 sec
+2026-10-13T12:47:04.6979066Z 2/4 Test #2: pet_exploration_tests ............   Passed   11.47 sec
+2026-10-13T12:47:05.1190845Z 3/4 Test #3: pet_core_tests ...................   Passed    0.42 sec
+2026-10-13T12:47:05.1296042Z 4/4 Test #4: pet_package_playback .............   Passed    0.01 sec
+2026-10-13T12:47:05.1305576Z 100% tests passed out of 4
+2026-10-13T12:48:40.3214197Z Installed selected package bytes: 1699073 (selected runtime only; ROM excluded)

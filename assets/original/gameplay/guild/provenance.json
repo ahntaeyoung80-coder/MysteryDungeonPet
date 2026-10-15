@@ -1,0 +1,486 @@
+{
+  "dialogue": "original unknown encoded strings preserved for opcode parsing; dialogue decoding unresolved",
+  "effects": "Eating642/EatingSlow643/AppleOnHead624 provenance retained; separate effect renderer unresolved",
+  "mealPolicy": "original cast clips/loop flags; finite 8-second communal scene; meal consumption once",
+  "originalWANChecks": [
+    {
+      "actorId": 109,
+      "comparedFrames": 60,
+      "mdIndex": 322,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_DOGOOMU",
+      "originalSourceFrames": 116,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 488,
+      "status": "pass"
+    },
+    {
+      "actorId": 124,
+      "comparedFrames": 36,
+      "mdIndex": 434,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_BIPPA",
+      "originalSourceFrames": 68,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 316,
+      "status": "pass"
+    },
+    {
+      "actorId": 115,
+      "comparedFrames": 20,
+      "mdIndex": 369,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_HEIGANI",
+      "originalSourceFrames": 36,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 538,
+      "status": "pass"
+    },
+    {
+      "actorId": 119,
+      "comparedFrames": 36,
+      "mdIndex": 990,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_CHIRIIN",
+      "originalSourceFrames": 68,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 562,
+      "status": "pass"
+    },
+    {
+      "actorId": 131,
+      "comparedFrames": 68,
+      "mdIndex": 483,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_PERAPPU",
+      "originalSourceFrames": 132,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 357,
+      "status": "pass"
+    },
+    {
+      "actorId": 81,
+      "comparedFrames": 20,
+      "mdIndex": 50,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_DIGUDA",
+      "originalSourceFrames": 36,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 55,
+      "status": "pass"
+    },
+    {
+      "actorId": 82,
+      "comparedFrames": 20,
+      "mdIndex": 51,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_DAGUTORIO",
+      "originalSourceFrames": 36,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 57,
+      "status": "pass"
+    },
+    {
+      "actorId": 133,
+      "comparedFrames": 60,
+      "mdIndex": 495,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_GUREGGURU",
+      "originalSourceFrames": 116,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 375,
+      "status": "pass"
+    },
+    {
+      "actorId": 101,
+      "comparedFrames": 132,
+      "mdIndex": 792,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_KIMAWARI",
+      "originalSourceFrames": 260,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 208,
+      "status": "pass"
+    },
+    {
+      "actorId": 79,
+      "comparedFrames": 64,
+      "mdIndex": 40,
+      "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+      "name": "NPC_PUKURIN",
+      "originalSourceFrames": 128,
+      "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+      "spriteIndex": 42,
+      "status": "pass"
+    }
+  ],
+  "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "romHashUnchanged": true,
+  "rooms": [
+    {
+      "actors": [
+        {
+          "asset": "",
+          "clip": 15,
+          "direction": 0,
+          "effectId": 642,
+          "id": 0,
+          "kind": 0,
+          "mdIndex": 1,
+          "name": "PLAYER",
+          "position": [
+            220,
+            184
+          ],
+          "rawAnimationWord": 2063,
+          "scriptCode": 64,
+          "sourcePosition": [
+            220,
+            184
+          ]
+        },
+        {
+          "asset": "",
+          "clip": 15,
+          "direction": 0,
+          "effectId": 642,
+          "id": 10,
+          "kind": 1,
+          "mdIndex": 4,
+          "name": "ATTENDANT1",
+          "position": [
+            196,
+            184
+          ],
+          "rawAnimationWord": 2063,
+          "scriptCode": 64,
+          "sourcePosition": [
+            196,
+            184
+          ]
+        },
+        {
+          "asset": "guild/actor-109/asset.mdpa",
+          "clip": 13,
+          "direction": 0,
+          "effectId": 642,
+          "id": 109,
+          "kind": 2,
+          "mdIndex": 322,
+          "name": "NPC_DOGOOMU",
+          "position": [
+            244,
+            184
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 42,
+          "sourcePosition": [
+            244,
+            184
+          ]
+        },
+        {
+          "asset": "guild/actor-115/asset.mdpa",
+          "clip": 13,
+          "direction": 0,
+          "effectId": 642,
+          "id": 115,
+          "kind": 2,
+          "mdIndex": 369,
+          "name": "NPC_HEIGANI",
+          "position": [
+            292,
+            184
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 42,
+          "sourcePosition": [
+            292,
+            184
+          ]
+        },
+        {
+          "asset": "guild/actor-119/asset.mdpa",
+          "clip": 13,
+          "direction": 0,
+          "effectId": 642,
+          "id": 119,
+          "kind": 2,
+          "mdIndex": 990,
+          "name": "NPC_CHIRIIN",
+          "position": [
+            316,
+            184
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 42,
+          "sourcePosition": [
+            316,
+            184
+          ]
+        },
+        {
+          "asset": "guild/actor-124/asset.mdpa",
+          "clip": 13,
+          "direction": 0,
+          "effectId": 642,
+          "id": 124,
+          "kind": 2,
+          "mdIndex": 434,
+          "name": "NPC_BIPPA",
+          "position": [
+            268,
+            184
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 42,
+          "sourcePosition": [
+            268,
+            184
+          ]
+        },
+        {
+          "asset": "guild/actor-131/asset.mdpa",
+          "clip": 14,
+          "direction": 6,
+          "effectId": 642,
+          "id": 131,
+          "kind": 2,
+          "mdIndex": 483,
+          "name": "NPC_PERAPPU",
+          "position": [
+            340,
+            208
+          ],
+          "rawAnimationWord": 2062,
+          "scriptCode": 43,
+          "sourcePosition": [
+            340,
+            208
+          ]
+        },
+        {
+          "asset": "guild/object-107/asset.mdpa",
+          "clip": 0,
+          "direction": 0,
+          "effectId": 0,
+          "id": 10107,
+          "kind": 3,
+          "mdIndex": 0,
+          "name": "g01p06b1",
+          "position": [
+            256,
+            212
+          ],
+          "sourcePosition": [
+            256,
+            212
+          ]
+        },
+        {
+          "asset": "guild/actor-79/asset.mdpa",
+          "clip": 0,
+          "direction": 0,
+          "effectId": 624,
+          "id": 79,
+          "kind": 2,
+          "mdIndex": 40,
+          "name": "NPC_PUKURIN",
+          "position": [
+            368,
+            228
+          ],
+          "rawAnimationWord": 2048,
+          "scriptCode": 5,
+          "sourcePosition": [
+            368,
+            228
+          ]
+        },
+        {
+          "asset": "guild/actor-81/asset.mdpa",
+          "clip": 13,
+          "direction": 4,
+          "effectId": 643,
+          "id": 81,
+          "kind": 2,
+          "mdIndex": 50,
+          "name": "NPC_DIGUDA",
+          "position": [
+            316,
+            228
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 42,
+          "sourcePosition": [
+            316,
+            228
+          ]
+        },
+        {
+          "asset": "guild/actor-82/asset.mdpa",
+          "clip": 13,
+          "direction": 4,
+          "effectId": 643,
+          "id": 82,
+          "kind": 2,
+          "mdIndex": 51,
+          "name": "NPC_DAGUTORIO",
+          "position": [
+            292,
+            228
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 42,
+          "sourcePosition": [
+            292,
+            228
+          ]
+        },
+        {
+          "asset": "guild/actor-101/asset.mdpa",
+          "clip": 13,
+          "direction": 4,
+          "effectId": 643,
+          "id": 101,
+          "kind": 2,
+          "mdIndex": 792,
+          "name": "NPC_KIMAWARI",
+          "position": [
+            244,
+            228
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 42,
+          "sourcePosition": [
+            244,
+            228
+          ]
+        },
+        {
+          "asset": "guild/actor-133/asset.mdpa",
+          "clip": 13,
+          "direction": 4,
+          "effectId": 643,
+          "id": 133,
+          "kind": 2,
+          "mdIndex": 495,
+          "name": "NPC_GUREGGURU",
+          "position": [
+            268,
+            228
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 42,
+          "sourcePosition": [
+            268,
+            228
+          ]
+        }
+      ],
+      "name": "GuildDining",
+      "origin": [
+        0,
+        0
+      ],
+      "size": [
+        504,
+        360
+      ],
+      "source": "SCRIPT/G01P06B/c00a0601.ssa"
+    },
+    {
+      "actors": [
+        {
+          "asset": "",
+          "clip": 13,
+          "direction": 2,
+          "effectId": 0,
+          "id": 0,
+          "kind": 0,
+          "mdIndex": 1,
+          "name": "PLAYER",
+          "position": [
+            204,
+            184
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 62,
+          "sourcePosition": [
+            204,
+            184
+          ]
+        },
+        {
+          "asset": "",
+          "clip": 13,
+          "direction": 6,
+          "effectId": 0,
+          "id": 10,
+          "kind": 1,
+          "mdIndex": 4,
+          "name": "ATTENDANT1",
+          "position": [
+            156,
+            184
+          ],
+          "rawAnimationWord": 2061,
+          "scriptCode": 62,
+          "sourcePosition": [
+            156,
+            184
+          ]
+        }
+      ],
+      "name": "PlayerRoom",
+      "origin": [
+        0,
+        0
+      ],
+      "size": [
+        384,
+        312
+      ],
+      "source": "SCRIPT/G01P07A/c00a0201.ssa"
+    }
+  ],
+  "sleepPolicy": "original bed positions/directions; EventSleep13 loop then Wake14; Laying27 source recorded",
+  "sourceRefs": [
+    {
+      "path": "SCRIPT/G01P06B/c00a0601.ssa",
+      "sha256": "d5a3852b50e0893b4292fb71713bf602568d081403d8f5716d93bd1f6bd79ae0"
+    },
+    {
+      "path": "SCRIPT/G01P07A/c00a0201.ssa",
+      "sha256": "edfd1ad904de9aeb53f73edbb263e9e231f8a88ae1580c3045252026b7efc341"
+    },
+    {
+      "path": "SCRIPT/G01P06B/c00a0601.ssb",
+      "sha256": "bb70db2ae25bd55dad218b1a76d4b555424c799f16f4f4ad2016534566d12851"
+    },
+    {
+      "path": "SCRIPT/G01P07A/c00a0201.ssb",
+      "sha256": "f4579256f7fe6df58cec239b90d6c0e4f0840c67ab8fd6f985bc096e3b3b37eb"
+    },
+    {
+      "path": "BALANCE/monster.md",
+      "sha256": "0da60447bff18f968779a7afc5d34368fd1bfd301b792758a56e792147526411"
+    },
+    {
+      "path": "MONSTER/monster.bin",
+      "sha256": "2e1a5e998c4ffd0576e3ac284932c3fce885abd9874840b55f00b0e107010a49"
+    },
+    {
+      "path": "MONSTER/m_ground.bin",
+      "sha256": "33fe419ef7ebdaa1c4175034edf928ce9840df1e91ec0b986fe07e19ec414ce9"
+    },
+    {
+      "path": "MONSTER/m_attack.bin",
+      "sha256": "a8a00a08f6d258581743ecfb2311ba91ba16b9572b1e808b1a49d1a464275286"
+    },
+    {
+      "path": "GROUND/g01p06b1.wan",
+      "sha256": "26ec77ad0f2b30752e81282048e4eb63cc8bf65915358b10500b04f94971eec5"
+    }
+  ]
+}

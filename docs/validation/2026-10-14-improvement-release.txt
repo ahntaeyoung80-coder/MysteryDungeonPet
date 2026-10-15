@@ -1,0 +1,15 @@
+Test project /workspace/MysteryDungeonPet/build/improve
+    Start 1: pet_improvement_tests
+1/5 Test #1: pet_improvement_tests ............   Passed    0.03 sec
+    Start 2: pet_gameplay_tests
+2/5 Test #2: pet_gameplay_tests ...............   Passed    8.50 sec
+    Start 3: pet_exploration_tests
+3/5 Test #3: pet_exploration_tests ............   Passed   15.68 sec
+    Start 4: pet_core_tests
+4/5 Test #4: pet_core_tests ...................   Passed    0.36 sec
+    Start 5: pet_package_playback
+5/5 Test #5: pet_package_playback .............   Passed    0.01 sec
+
+100% tests passed out of 5
+
+Total Test time (real) =  24.58 sec

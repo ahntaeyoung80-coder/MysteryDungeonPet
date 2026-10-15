@@ -1,0 +1,5 @@
+elapsed_seconds,cpu_one_core_percent,cpu_all_cores_percent,logical_cores,working_set_bytes,private_bytes,peak_working_set_bytes,render_submissions,decode_count,marker_count,finite_finish_count,skipped_cycles,process_handles,gdi_objects,render_paused,submissions_while_paused,dpi,physical_size,integer_scale,window_x,window_y,switch_count,final_sample,animation_id,direction,resolved_direction,frame_index,animation_active,scene_x,scene_y,frame_ticks,frame_flag,anchor_x,anchor_y,rect_x,rect_y,rect_w,rect_h
+1.00066,0,0,4,15532032,4079616,15532032,12,2,0,0,0,196,2,0,0,96,200,1,100,100,0,0,0,4,4,3,1,108,372,4,0,11,21,200,201,22,22
+2.00101,0,0,4,15360000,3919872,15544320,24,2,0,0,0,196,2,0,0,96,200,1,100,100,0,0,0,0,0,2,1,108,420,4,0,11,22,162,146,22,28
+3.00198,0,0,4,15364096,3919872,15544320,39,2,0,0,0,196,2,0,0,96,200,1,100,100,0,0,7,2,2,0,1,156,420,40,0,11,16,204,22,22,20
+4.01157,0,0,4,15364096,3919872,15544320,53,2,0,0,0,196,2,0,0,96,200,1,100,100,0,1,0,6,6,1,1,132,372,4,0,12,19,182,226,23,23

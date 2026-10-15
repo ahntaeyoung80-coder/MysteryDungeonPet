@@ -1,0 +1,38 @@
+{
+  "combat-result": {
+    "actualWindows11": "pending",
+    "test": "production player first Attack1 Hurt6 Faint33 victory resumes dungeon",
+    "status": "pass"
+  },
+  "returnToEatMs": 1522.529,
+  "mealDurationMs": 8177.284,
+  "life-result": {
+    "test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+    "status": "pass",
+    "guildDiningCharacters": 12,
+    "actualWindows11": "pending",
+    "coreScenarios": 12,
+    "guildMembers": 10,
+    "bedroomCharacters": 2
+  },
+  "shortRunMetrics": {
+    "working_set_bytes": 19218432.0,
+    "private_bytes": 7737344.0,
+    "decode_count": 15.0
+  },
+  "viewport": [
+    "200"
+  ],
+  "CIrun": 38399667063,
+  "runtimeCommit": "b21cf29aee0cc8fac101caf0fc28319fd109f559",
+  "artifactId": 11814848172,
+  "selectedPackageBytes": 1699073,
+  "LinuxCTests": 4,
+  "pythonTests": 23,
+  "ASanUBSanGameplay": "pass",
+  "remainingEffects": [
+    "Eating642",
+    "EatingSlow643",
+    "AppleOnHead624"
+  ]
+}

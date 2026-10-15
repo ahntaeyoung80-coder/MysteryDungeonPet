@@ -1,0 +1,6 @@
+{
+  "test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+  "actualWindows11": "pending",
+  "status": "pass",
+  "coreScenarios": 12
+}
