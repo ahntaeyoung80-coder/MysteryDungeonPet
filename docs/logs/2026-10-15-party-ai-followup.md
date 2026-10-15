@@ -31,10 +31,21 @@
 - 현재 단계 표현과 기존 pipeline/DECISIONS 대조: B 집중·A 잔여·C 부분 구현으로 일치.
 - 코드·자산·EXE는 변경하지 않았으므로 빌드·런타임 검사를 재실행하지 않았다.
 
-커밋: `docs: separate current state from history and map current B phase [skip ci]`. 원격 반영은 커밋 후 branch head와 변경 파일을 다시 조회해 확인한다.
+커밋: `4abe078160f3fb47bd9623c502edc9e787c3a82d` (`docs: separate current state from history and map current B phase [skip ci]`). `work` 원격 HEAD 일치·변경9파일 존재를 다시 조회해 확인했다. 확인 완료20:28:48 KST로, 1단계 전체 경과는 **4분29초**다. 커밋·원격 확인 구간은53초다.
 
 ## 2단계 — 회귀 재현·설계
 
 예상50~80분(실행 환경 복구 후). 다음은 직선/HP시간/포위, 통로 양방향 전투/한 적 사망 후 다른 행동, 전투 후 복귀, 매행동 저장 복원을 고정하고 배우별 전투·라운드·저장 계약을 설계하는 일이다.
 
 현재 회귀 빌드·실행은 환경 차단으로 미착수다. 준비 설계와 실제 실행 검증을 구분하며, 새 요구 해결/검사 통과를 보고하지 않는다.
+
+### 2단계 준비 설계 — 실행 차단 중 중간 저장
+
+20:29:03~20:31:26 KST, **2분23초 경과**(소스 확인·설계 초안·환경 안내 포함). 작성/정적 검토를 마쳤다. 회귀 실행50~80분 예상은 아직 시작하지 않았으며 2단계 전체 완료가 아니다.
+
+- 기존 GameplayState·ActorCompletion·단일 enemyAnimator·MDES7 writer/reader와 companion/navigation 회귀를 확인했다.
+- `docs/PARTY_COMBAT_DESIGN.md`에 배우별 라운드/액션/완료 소유자·피해/RNG once·도주/복귀, 이전 진행 중 공격 이행, MDES8 검토 항목을 초안으로 정리했다. 저장 버전을 실제 변경하지 않았다.
+- R01~R09에 기존 follow/통로 fixture의 좌표와 직선·HP시간·포위·양방향/한쪽 처치·복귀·완료 소유자·매행동 복원 판정을 연결했다. 새 테스트 코드를 작성/실행하지 않았으며 “재현 완료”로 보고하지 않는다.
+- 설계 초안의 Markdown 상대 링크 검사: 누락0개. 런타임·자산·EXE 변경 없음.
+- 20:31:26 KST 재확인: 환경 pending/offline, capabilities 비어 있음, shell/build/test 도구 없음. 사용자가 재연결 방법을 물어 환경 선택/설정 또는 앱 다시 열기를 안내했다. 정확한 앱 메뉴 위치는 도구로 확인할 수 없다고 명시했다.
+- 이 중간 저장의 커밋 제목은 `docs: prepare party combat regressions and save migration design [skip ci]`다. 다음 실제 작업은 실행 환경 복구 후 로컬 fetch/변경 확인과 R01~R09 회귀 실행이다.

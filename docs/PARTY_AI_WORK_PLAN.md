@@ -38,6 +38,8 @@ PROJECT_STATE에는 현재 단계·실행 기준·현재 막힘·바로 다음 �
 
 ## 설계 시작점
 
+[배우별 전투·저장 설계와 고정 회귀](PARTY_COMBAT_DESIGN.md)는2단계 준비 초안이다. 코드·테스트 실행 결과와 구분한다.
+
 현재 `GameplayState`의 단일 적/피해 상태와 Windows 단일 전투 Animator를 배우별 완료 소유자·라운드와 함께 바꿔야 한다. `mustRetreat`, `companionFollowTile`, `combatApproach`, 저장 상태 검증의 거리 제약도 같은 설계로 정리한다. 단순 거리 검증 해제나 HUD 변경만으로 해결하지 않는다.
 
 기존 증거는 [최신 조사](TEMP_HANDOFF_2026-10-15_PARTY_AI.md)에서 재사용한다. 사용자 HP1 포위/저속/방 중복의 정확한 snapshot은 아직 없으므로 고정 fixture 재현과 사용자 장면의 재현을 구분한다.
