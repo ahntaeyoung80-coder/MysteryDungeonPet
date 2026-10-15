@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(6); // MDES6 appends the bounded navigation cycle history.
+    w.u32(0x5345444d); w.u32(7); // MDES7 appends the independent companion and locked attack target.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -133,6 +133,10 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u32(static_cast<unsigned>(s.survivalFirst));
     w.u32(static_cast<uint32_t>(s.gameplay.navigationHistory.size()));
     for(auto signature:s.gameplay.navigationHistory) w.u64(signature);
+    const auto& partner=g.companion;
+    w.u32(partner.enabled);w.u32(partner.tile+1);w.u32(partner.hearts);w.u32(partner.oran);w.u32(partner.direction);
+    w.u64(partner.actionRound);w.u64(partner.walkStartedMs);detail::writeMove(w,partner.movement);
+    w.u32(partner.hidden);w.u32(g.enemyTargetsCompanion);
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -141,7 +145,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 6) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 7) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -250,6 +254,13 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     if(schema>=6) {
         const auto count=r.count(32);
         for(uint32_t i=0;i<count;++i) s.gameplay.navigationHistory.push_back(r.u64());
+    }
+    if(schema>=7) {
+        auto& partner=s.gameplay.companion;
+        partner.enabled=r.boolean();partner.tile=static_cast<int>(r.count(kTiles))-1;
+        partner.hearts=r.count(kMaxHp);partner.oran=r.count(1);partner.direction=r.count(7);
+        partner.actionRound=r.u64();partner.walkStartedMs=r.u64();partner.movement=detail::readMove(r);
+        partner.hidden=r.boolean();s.gameplay.enemyTargetsCompanion=r.boolean();
     }
     r.u32(); r.end();
     validateState(s);

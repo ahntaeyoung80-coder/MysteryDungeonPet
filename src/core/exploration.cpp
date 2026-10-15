@@ -16,6 +16,16 @@ std::string layoutKey(std::uint64_t runId,const World& world) {
     for(auto tile:world.terrain){hash^=tile;hash*=1099511628211ULL;}
     return "floor-layout:"+std::to_string(runId)+":"+std::to_string(hash);
 }
+int companionSpawn(const World& world,int player,unsigned direction,const Mask& occupied) {
+    for(unsigned step=0;step<8;++step) {
+        const auto [dx,dy]=kDirections[(direction+4+step)%8];
+        const int x=player%kWidth+dx,y=player/kWidth+dy;
+        if(x<0 || x>=kWidth || y<0 || y>=kHeight) continue;
+        const int tile=y*kWidth+x;
+        if(tile!=world.stairs && canMove(world,player,tile,occupied)) return tile;
+    }
+    return -1;
+}
 std::uint64_t totalWeight(const Weights& weights) {
     std::uint64_t total = 0;
     for (const auto& w : weights) {
@@ -273,6 +283,7 @@ std::string Explorer::key(const std::string& action, std::uint32_t instance) con
 }
 void Explorer::enterFloor() {
     const int previousFeet=state_.world.centers.empty()?-1:state_.position;
+    const int previousCompanion=state_.gameplay.companion.enabled?state_.gameplay.companion.tile:-1;
     auto& layouts=state_.gameplay.onceKeys;
     if(previousFeet>=0) layouts.insert(layoutKey(state_.runId,state_.world)); // Upgrade old saves from their current floor.
     bool accepted=false;
@@ -280,12 +291,20 @@ void Explorer::enterFloor() {
         const auto mapSeed=state_.rng.state;
         auto world=generate(state_.rng,static_cast<std::uint64_t>(state_.floorIndex)+1);
         const auto key=layoutKey(state_.runId,world);
-        if(world.stairs==previousFeet || layouts.count(key)) continue;
+        if(world.stairs==previousFeet || world.stairs==previousCompanion || layouts.count(key)) continue;
         state_.mapSeed=mapSeed;state_.world=std::move(world);layouts.insert(key);accepted=true;break;
     }
     require(accepted,"no unique floor layout within generation budget");
     Mask entryExclusion{};
     if(previousFeet>=0) entryExclusion[previousFeet]=1;
+    if(previousCompanion>=0) entryExclusion[previousCompanion]=1;
+    if(state_.gameplay.companion.enabled) {
+        auto& partner=state_.gameplay.companion;
+        partner.tile=companionSpawn(state_.world,state_.world.start,state_.gameplay.playerDirection,entryExclusion);
+        require(partner.tile>=0,"no companion floor entry");
+        entryExclusion[partner.tile]=1;partner.movement={};partner.walkStartedMs=0;partner.hidden=false;
+        partner.direction=directionBetween(partner.tile,state_.world.start);partner.actionRound=state_.gameplay.actionRound;
+    }
     state_.population = populate(state_.world, state_.floors[state_.floorIndex],
                                  state_.rng, state_.spawnPolicy,entryExclusion);
     state_.position = state_.world.start;
@@ -319,10 +338,69 @@ bool Explorer::lowHealth() const {return state_.gameplay.enabled && state_.gamep
 Mask Explorer::occupancy(bool playerPath) const {
     auto mask=state_.blocked;
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && e.visible && (!e.done || (state_.gameplay.enabled && std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end()))) if(!playerPath || !friendly(e)) mask[e.tile]=1;
+    if(!playerPath && state_.gameplay.companion.enabled) mask[state_.gameplay.companion.tile]=1;
     mask[state_.position]=0; return mask;
+}
+bool Explorer::enableCompanion() {
+    auto& g=state_.gameplay;if(g.companion.enabled) return true;
+    if(!g.enabled) return false;
+    auto occupied=occupancy();
+    for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Item && e.visible && !e.done) occupied[e.tile]=1;
+    const int tile=companionSpawn(state_.world,state_.position,g.playerDirection,occupied);
+    if(tile<0) return false;
+    g.companion.enabled=true;g.companion.tile=tile;g.companion.direction=directionBetween(tile,state_.position);
+    invalidate(false);++state_.occupancyVersion;return true;
+}
+int Explorer::friendlyVacateTile(const Entity& e,int next) const {
+    if(!state_.gameplay.companion.enabled) return state_.position;
+    auto occupied=occupancy();occupied[state_.position]=1;occupied[next]=1;
+    const auto forward=directionBetween(state_.position,e.tile);
+    for(unsigned step=0;step<8;++step) {
+        const auto [dx,dy]=kDirections[(forward+step)%8];const int x=e.tile%kWidth+dx,y=e.tile/kWidth+dy;
+        if(x<0 || x>=kWidth || y<0 || y>=kHeight) continue;
+        const int tile=y*kWidth+x;
+        if(tile!=state_.world.stairs && canMove(state_.world,e.tile,tile,occupied)) return tile;
+    }
+    return -1;
+}
+int Explorer::companionFollowTile(int next) const {
+    const auto& g=state_.gameplay;const auto& partner=g.companion;
+    if(!partner.enabled) return -1;
+    auto occupied=state_.blocked;
+    for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && e.visible && (!e.done || friendly(e))) {
+        const int tile=friendly(e)&&e.tile==next?friendlyVacateTile(e,next):e.tile;
+        if(tile<0) return -1;
+        occupied[tile]=1;
+    }
+    occupied[next]=1;
+    int best=-1,bestScore=100;
+    for(int dy=-1;dy<=1;++dy) for(int dx=-1;dx<=1;++dx) {
+        const int x=partner.tile%kWidth+dx,y=partner.tile/kWidth+dy;
+        if(x<0 || x>=kWidth || y<0 || y>=kHeight) continue;
+        const int tile=y*kWidth+x;
+        if(occupied[tile] || !canAttack(state_.world,tile,next)) continue;
+        if(tile!=partner.tile && (partner.actionRound==g.actionRound || !canMove(state_.world,partner.tile,tile,occupied))) continue;
+        const int score=tile==state_.position?0:tile==partner.tile?1:2;
+        if(score<bestScore){best=tile;bestScore=score;}
+    }
+    return best;
+}
+void Explorer::recordCompanionMove(int from,std::uint64_t now) {
+    auto& g=state_.gameplay;auto& partner=g.companion;if(!partner.enabled) return;
+    if(from!=partner.tile) {
+        partner.direction=directionBetween(from,partner.tile);partner.actionRound=g.actionRound;
+        partner.movement={g.actionRound,now,400,partner.direction,from,partner.tile};
+        if(!partner.walkStartedMs) partner.walkStartedMs=now;
+    } else partner.walkStartedMs=0;
 }
 Mask Explorer::playerOccupancy() const {
     auto occupied=occupancy(true);
+    if(state_.gameplay.companion.enabled) for(auto [dx,dy]:kDirections) {
+        const int x=state_.position%kWidth+dx,y=state_.position/kWidth+dy;
+        if(x<0 || x>=kWidth || y<0 || y>=kHeight) continue;
+        const int tile=y*kWidth+x;
+        if(canMove(state_.world,state_.position,tile,occupied) && companionFollowTile(tile)<0) occupied[tile]=1;
+    }
     if(!lowHealth() || retreatProgress_) return occupied;
     auto safe=occupied;
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && e.visible && !e.done && !friendly(e))
@@ -455,13 +533,16 @@ void Explorer::plan() {
 }
 Event Explorer::moveTo(int next) {
     if(!canMove(state_.world,state_.position,next,occupancy(true))) return {};
-    const int old=state_.position;
+    const int partner=state_.gameplay.companion.enabled?companionFollowTile(next):-1;
+    if(state_.gameplay.companion.enabled && partner<0) return {};
     for(auto& e:state_.population.entities) if(e.tile==next && friendly(e)) {
-        e.tile=old;e.direction=directionBetween(next,old);e.movement={};
+        const int vacant=friendlyVacateTile(e,next);if(vacant<0) return {};
+        e.tile=vacant;e.direction=directionBetween(next,vacant);e.movement={};
         e.actionRound=state_.gameplay.actionRound;
         ++state_.occupancyVersion;
     }
     state_.position=next;++state_.floorSteps;++state_.stalledActions;
+    if(state_.gameplay.companion.enabled && state_.gameplay.companion.tile!=partner) {state_.gameplay.companion.tile=partner;++state_.occupancyVersion;}
     if(state_.goalKind==GoalKind::Friend && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e){return e.instanceId==state_.targetInstance && !canAttack(state_.world,state_.target,e.tile);})) invalidate();
     state_.visited[state_.position]=1;
     return {EventKind::Move,{},0};
@@ -497,7 +578,9 @@ Event Explorer::advance(bool poseFinished) {
         }
         if(pathIndex_<path_.size() && canMove(state_.world,state_.position,path_[pathIndex_],occupancy(true))) {
             // Discover on the next tick so a stairs route can notice newly revealed goals.
-            return moveTo(path_[pathIndex_++]);
+            const auto event=moveTo(path_[pathIndex_++]);
+            if(event.kind!=EventKind::Move) invalidate(false);
+            return event;
         }
         ++state_.targetFailures;
         auto& failures=state_.failedTargets[state_.target];failures=std::min(3,int(failures)+1);
@@ -592,6 +675,19 @@ void validateState(const ExplorationState& s) {
         require(m.direction<8 && (!m.actionId || (m.actionId<=g.actionRound && m.durationMs==400 && m.startedMs<=UINT64_MAX-400 && m.to==tile && canMove(s.world,m.from,m.to))),"invalid saved movement");
     };
     validateMove(g.movement,s.position);for(const auto& e:s.population.entities) validateMove(e.movement,e.tile);
+    const auto& partner=g.companion;
+    require(partner.hearts<=kMaxHp && partner.oran<=1 && partner.direction<8 && partner.actionRound<=g.actionRound &&
+        partner.walkStartedMs<=g.phaseStartedMs,"invalid companion stats/clock");
+    if(partner.enabled) {
+        require(g.enabled && s.world.walkable(partner.tile) && !s.blocked[partner.tile] && partner.tile!=s.position,"invalid companion tile");
+        if(s.phase!=Phase::Home) require(canAttack(s.world,s.position,partner.tile),"companion exceeded one-tile radius");
+        validateMove(partner.movement,partner.tile);
+        for(const auto& e:s.population.entities) {
+            const bool live=e.kind==EntityKind::Friend && e.visible && (!e.done || std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end());
+            require(!live || e.tile!=partner.tile,"companion overlaps an actor");
+        }
+    }
+    require(!g.enemyTargetsCompanion || partner.enabled,"enemy targets absent companion");
     require(s.world.version == static_cast<std::uint64_t>(s.floorIndex) + 1, "floor/grid version mismatch");
     require(s.world.walkable(s.position) && !s.blocked[s.position] && s.visited[s.position],
             "invalid explorer position");

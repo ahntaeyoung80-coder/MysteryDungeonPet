@@ -19,6 +19,8 @@ uint64_t navigationFingerprint(const ExplorationState& s) {
     add(s.floorIndex);add(s.world.version);add(s.mapSeed);add(s.rng.state);add(s.position);
     add(s.target+1);add(static_cast<unsigned>(s.goalKind));add(s.targetInstance);add(s.knownStairs+1);
     add(s.inventory.size());add(s.onceKeys.size());add(s.gameplay.onceKeys.size());add(s.gameplay.hearts);add(s.gameplay.oran);
+    const auto& partner=s.gameplay.companion;
+    if(partner.enabled){add(partner.tile);add(partner.hearts);add(partner.oran);add(partner.actionRound==s.gameplay.actionRound);}
     for(int tile=0;tile<kTiles;++tile){add(s.visited[tile]);add(s.discovered[tile]);add(s.failedTargets[tile]);add(s.blocked[tile]);}
     for(const auto& e:s.population.entities){add(e.instanceId);add(e.tile);add(e.done);add(e.visible);
         add(static_cast<unsigned>(e.tracking));add(e.lastSeen+1);add(e.chaseTarget+1);add(e.blockedTurns);
@@ -124,6 +126,7 @@ GameplayUpdate Explorer::resetExploration(std::uint64_t now) {
     g.onceKeys.erase(pendingHit(state_)); // Cancel only the attack that has not committed damage yet.
     g.onceKeys.insert("manual-reset:"+std::to_string(state_.runId));
     g.movement={};g.walkStartedMs=0;g.navigationHistory.clear();g.playerHidden=false;
+    g.companion.movement={};g.companion.walkStartedMs=0;g.companion.hidden=false;
     g.damage=0;g.hit=g.critical=false;
     for(auto& e:state_.population.entities){e.movement={};e.tracking=Tracking::Idle;e.lastSeen=e.chaseTarget=-1;e.blockedTurns=0;}
     retreatProgress_=false;
@@ -292,6 +295,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+1;next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
         next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+kFadeMs;
         next.state_.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;
+        if(previous.companion.enabled) {next.state_.gameplay.enabled=true;next.enableCompanion();next.state_.gameplay.companion.oran=previous.companion.oran;}
         next.assignRelationships();*this=std::move(next);return {GameplayEvent::Explore,{}};
     }
     if (g.life == LifePhase::Combat) {
@@ -382,7 +386,8 @@ void Explorer::shiftPausedClocks(std::uint64_t delta,std::uint64_t pausedAt) {
             move.startedMs+=delta;
         }
     };
-    shift(g.movement);for(auto& e:state_.population.entities) shift(e.movement);
+    if(g.companion.walkStartedMs) g.companion.walkStartedMs+=delta;
+    shift(g.movement);shift(g.companion.movement);for(auto& e:state_.population.entities) shift(e.movement);
 }
 GameplayUpdate Explorer::beginCombat(Entity& e,std::uint64_t now,CombatPhase first) {
     invalidate(false);auto& g=state_.gameplay;
@@ -423,6 +428,7 @@ int Explorer::detourTile(unsigned repetitions,uint64_t signature) {
         if(x<0 || x>=kWidth || y<0 || y>=kHeight) continue;
         const int tile=y*kWidth+x;
         if(!canMove(state_.world,state_.position,tile,occupied)) continue;
+        if(state_.gameplay.companion.enabled && companionFollowTile(tile)<0) continue;
         int threat=0;
         for(const auto& e:state_.population.entities)
             if(e.kind==EntityKind::Friend && e.visible && !e.done && !friendly(e) && canAttack(state_.world,e.tile,tile)) ++threat;
@@ -539,15 +545,19 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         return {GameplayEvent::DialoguePlayer,{}};
     }
     const int old=state_.position;
+    const int oldCompanion=g.companion.tile;
+    const auto oldActors=state_.population.entities;
     Event update;
     if(reroute) {
         if(detour>=0) update=moveTo(detour);
         invalidate(false); // Resume the same goal from the new location next turn.
     } else update=advance();
     g.phaseStartedMs=now;g.deadlineMs=now+(update.kind==EventKind::Move?400:0);
+    recordCompanionMove(oldCompanion,now);
     if(update.kind==EventKind::Move) {
-        for(auto& e:state_.population.entities) if(friendly(e) && e.tile==old && e.direction==directionBetween(state_.position,old)) {
-            e.movement={g.actionRound,now,400,e.direction,state_.position,old};
+        for(size_t index=0;index<state_.population.entities.size();++index) {
+            auto& e=state_.population.entities[index];
+            if(friendly(e) && e.tile!=oldActors[index].tile) e.movement={g.actionRound,now,400,e.direction,oldActors[index].tile,e.tile};
         }
         if(!g.walkStartedMs) g.walkStartedMs=now;
         g.playerActionRound=g.actionRound;g.playerDirection=directionBetween(old,state_.position);g.movement={g.actionRound,now,400,g.playerDirection,old,state_.position};}

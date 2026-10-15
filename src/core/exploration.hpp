@@ -114,6 +114,14 @@ enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedL
 enum class DialogueStage : std::uint8_t { Player, Npc };
 enum class DeathStage : std::uint8_t { FadeOut, Blackout };
 struct ActorCompletion { bool player=false, enemy=false, partner=false; };
+constexpr std::uint32_t kCompanionActorId=UINT32_MAX-1;
+struct CompanionState {
+    bool enabled=false,hidden=false;
+    int tile=-1;
+    std::uint32_t hearts=kMaxHp,oran=0,direction=0;
+    std::uint64_t actionRound=0,walkStartedMs=0;
+    MoveRecord movement{};
+};
 struct GameplayState {
     bool enabled = false, defeated = false, homeScene = false;
     LifePhase life = LifePhase::Explore;
@@ -133,6 +141,8 @@ struct GameplayState {
     std::vector<std::uint32_t> hostile;
     std::set<std::string> onceKeys;
     std::vector<std::uint64_t> navigationHistory; // MDES6: bounded joint-state cycle watch, excluding clocks/round numbers.
+    CompanionState companion;
+    bool enemyTargetsCompanion=false;
 };
 enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
     HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout, DialoguePlayer, DialogueNpc };
@@ -196,6 +206,7 @@ public:
     GoalKind goal() const { return state_.goalKind; }
     std::uint64_t bfsCalls() const { return bfsCalls_; }
     void enableGameplay(std::uint64_t utcMs);
+    bool enableCompanion();
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
     GameplayUpdate resetExploration(std::uint64_t utcMs);
     bool canResetExploration() const;
@@ -211,6 +222,9 @@ private:
     void plan();
     Event moveTo(int tile);
     int detourTile(unsigned repetitions, std::uint64_t signature);
+    int companionFollowTile(int playerNext) const;
+    int friendlyVacateTile(const Entity&,int playerNext) const;
+    void recordCompanionMove(int from,std::uint64_t now);
     void discover();
     Mask occupancy(bool playerPath = false) const;
     bool friendly(const Entity&) const;

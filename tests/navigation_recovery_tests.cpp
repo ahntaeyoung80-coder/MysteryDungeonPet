@@ -1,4 +1,5 @@
 #include "core/exploration.hpp"
+#include "legacy_snapshot.hpp"
 #include "core/exploration_package.hpp"
 #include <iostream>
 #include <stdexcept>
@@ -113,7 +114,7 @@ int main(int argc,char** argv){try{
   attackFirst.state().gameplay.life==LifePhase::Combat && attackFirst.state().position==attacked.position,
   "detour skipped an adjacent enemy's attack right");
  // MDES5 migration has no history; MDES1..4 retain their existing fixtures/checks.
- auto old=encodeSnapshot(cycleFixture());old.erase(old.end()-8,old.end()-4);old[4]=5;
+ auto old=encodeSnapshot(cycleFixture());removeCompanionBlock(old);old.erase(old.end()-8,old.end()-4);old[4]=5;
  uint32_t crc=0xffffffff;
  for(size_t i=0;i<old.size()-4;++i){crc^=old[i];for(unsigned bit=0;bit<8;++bit)crc=(crc>>1)^((crc&1)?0xedb88320U:0);}
  crc=~crc;for(unsigned b=0;b<4;++b)old[old.size()-4+b]=uint8_t(crc>>(8*b));

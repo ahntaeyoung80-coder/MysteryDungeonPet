@@ -1,4 +1,5 @@
 #include "core/exploration.hpp"
+#include "legacy_snapshot.hpp"
 #include "core/gameplay_scene.hpp"
 #include <iostream>
 #include <stdexcept>
@@ -99,7 +100,7 @@ int main() {try {
     s=fixture();s.phase=Phase::Home;s.gameplay.homeScene=true;s.gameplay.life=LifePhase::Ready;
     s.gameplay.sceneBeat=SceneBeat::RoomExit;s.gameplay.phaseStartedMs=1000;s.gameplay.deadlineMs=2200;s.gameplay.meals=1;
     s.gameplay.onceKeys={"return:910","meal:910"};
-    auto old=encodeSnapshot(s);old.erase(old.end()-12,old.end()-4);old[4]=4;uint32_t crc=0xffffffff;
+    auto old=encodeSnapshot(s);removeCompanionBlock(old);old.erase(old.end()-12,old.end()-4);old[4]=4;uint32_t crc=0xffffffff;
     for(size_t i=0;i<old.size()-4;++i) {crc^=old[i];for(int bit=0;bit<8;++bit) crc=(crc>>1)^((crc&1)?0xedb88320U:0);}
     crc=~crc;for(unsigned b=0;b<4;++b) old[old.size()-4+b]=uint8_t(crc>>(8*b));
     auto upgraded=decodeSnapshot(old,"survival");check(upgraded.gameplay.deadlineMs==1000+kRoomExitMs,"old exit save skipped the left corridor");
