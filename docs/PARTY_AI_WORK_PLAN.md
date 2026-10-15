@@ -54,3 +54,8 @@ PROJECT_STATE에는 현재 단계·실행 기준·현재 막힘·바로 다음 �
 ## 3단계 검증 완료·현재 재개 지점
 
 [CI38741809780](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38741809780)에서 Windows/ASan/Python/GUI/설치/복원과 실행물 갱신을 마쳤다. 독립 전투·MDES8 결과는 [3단계 로그](logs/2026-10-15-party-ai-stage3.md)에 기록했다. 명시 회귀15/16 중 남은 R01 직선 우선부터4단계를 진행한다. 원격 빌드·실행물 갱신이 가능하므로 위의 초기 환경 차단 설명은 현재 차단 사유가 아니다.5단계 원작 자산 추출도 같은 검증 경로에 연결한다.
+
+
+## 4단계 검증 완료
+
+[CI38822881451](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38822881451)에서 후속23개를 필수화하고 Windows14/14·GUI·설치/루트, ASan/UBSan13/13·Python26/26과 실행물 반영을 마쳤다. 직선/복귀·HP별400ms 공동 이동, 캐시 복원, 구형 저체력/목표 상실·예산·포위 전투의 추가 회귀를 포함한다. [변경·시간](logs/2026-10-16-party-ai-stage4.md). 다음은5단계 HP표시·관계 색상·7층/구형 저장·방 중복이다.

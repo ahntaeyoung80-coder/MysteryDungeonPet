@@ -1,0 +1,62 @@
+{
+  "source": "04f859ae4ab79252ee545df6a7ca893858332f00",
+  "run": 38822881451,
+  "windows": {
+    "job": 116723699049,
+    "nativePassed": 14,
+    "nativeSeconds": 27.84,
+    "requiredFollowupCases": 23,
+    "zeroArgumentNewAndRestored": "pass",
+    "fullGuiInstalledRoot": "pass",
+    "chaseFrames": {
+      "hp": [
+        1,
+        5
+      ],
+      "movementDurationMs": 400,
+      "alliedAndEnemyStartIntervals": "shared",
+      "actualStartGapAcceptanceMs": [
+        400,
+        650
+      ],
+      "intermediateSubmittedPositionsPerMoveAtLeast": 3,
+      "movesPerHp": 4,
+      "result": "pass"
+    },
+    "actualWindows11": "pending",
+    "scopeNotes": [
+      "Hosted Windows session; actual Windows11 pending",
+      "General short exploration observation was held by dialogue/combat; separate movement/party fixtures passed"
+    ]
+  },
+  "linux": {
+    "job": 116726147500,
+    "status": "pass",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "nativePassed": 13,
+    "nativeSeconds": 289.92,
+    "pythonPassed": 26,
+    "pythonSeconds": 17.063
+  },
+  "macroStage": "B-1/B-2",
+  "stage4StartUtc": "2026-10-15T22:47:23Z",
+  "finalSourceCommittedUtc": "2026-10-15T23:19:28Z",
+  "artifacts": [
+    {
+      "id": 12013628826,
+      "name": "party-ai-windows-validation",
+      "digest": "sha256:f871aabea777e891355af6edc27f25afb0c42734720da9888bb7ad1745731d61"
+    },
+    {
+      "id": 12013268950,
+      "name": "party-ai-built-runtime",
+      "digest": "sha256:7c409193256fe98319c92af034a79646d13d9fbe8757020654d800a710a95921"
+    }
+  ],
+  "runtimeCommit": "5aaf5be913b577584a301770d31704b66e352c87",
+  "verifiedRuntimePublishedUtc": "2026-10-15T23:34:32Z",
+  "implementationAndVerificationElapsedSeconds": 2829
+}
