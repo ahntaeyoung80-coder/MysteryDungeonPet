@@ -46,10 +46,11 @@ int main(int argc,char** argv){try{
  check(!recurring.gameplay.navigationHistory.empty(),"cycle watch did not record a joint state");
  auto saved=decodeSnapshot(encodeSnapshot(recurring),"oscillation");
  check(saved.gameplay.navigationHistory==recurring.gameplay.navigationHistory,"restore erased cycle watch");
- Explorer stuck(saved);check(stuck.advanceGameplay(1000).event==GameplayEvent::ReturnHome,"recurring joint state did not auto-reset");
- check(stuck.state().gameplay.onceKeys.count("navigation-reset:900") && stuck.state().phase==Phase::Home &&
-       stuck.state().gameplay.hearts==2 && stuck.state().inventory.empty() && !stuck.state().completed,"automatic recovery changed health/rewards or granted clear");
- const auto committed=encodeSnapshot(stuck.state());stuck.resetExploration(1001);check(encodeSnapshot(stuck.state())==committed,"reset repeated the return transaction");
+ Explorer stuck(saved);check(stuck.advanceGameplay(1000).event==GameplayEvent::Move,"recurring joint state did not move within the dungeon");
+ check(stuck.state().position!=observed.state().position && stuck.state().phase==Phase::Explore &&
+       stuck.state().floorIndex==saved.floorIndex && stuck.state().runId==saved.runId &&
+       stuck.state().gameplay.hearts==2 && stuck.state().inventory.empty() && !stuck.state().completed &&
+       !stuck.state().gameplay.onceKeys.count("return:900"),"detour repeated the old direction, returned home or changed committed progress");
  recurring.visited[75]=1;Explorer progress(recurring);
  check(progress.advanceGameplay(1000).event!=GameplayEvent::ReturnHome,"new exploration progress was mistaken for a cycle");
  // MDES5 migration has no history; MDES1..4 retain their existing fixtures/checks.
