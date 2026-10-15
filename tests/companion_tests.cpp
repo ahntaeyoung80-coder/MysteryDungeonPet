@@ -144,7 +144,8 @@ int main(int argc,char** argv){try{
     <<" round="<<g.actionRound<<" partyPhase="<<unsigned(g.partyPhase)
     <<" playerRound="<<g.playerActionRound<<" companionRound="<<g.companion.actionRound
     <<" intent="<<unsigned(g.companionIntent)<<" companionTarget="<<g.companionTarget
-    <<" steps="<<s.floorSteps<<" stalled="<<s.stalledActions<<'\n';
+    <<" stairs="<<s.world.stairs<<" known="<<s.knownStairs<<" stairsFailed="<<unsigned(s.failedTargets[s.world.stairs])
+    <<" hp="<<g.hearts<<" partnerHp="<<g.companion.hearts<<" steps="<<s.floorSteps<<" stalled="<<s.stalledActions<<'\n';
    for(const auto& enemy:s.population.entities)if(enemy.kind==EntityKind::Friend)
     std::cerr<<"actor="<<enemy.instanceId<<" tile="<<enemy.tile<<" hp="<<enemy.remainingHits
      <<" done="<<enemy.done<<" visible="<<enemy.visible<<" round="<<enemy.actionRound<<'\n';

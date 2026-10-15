@@ -336,13 +336,32 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         if(!available(0) || consumed(0)==g.actionRound || partyPlayback(g,0))return;
         if(heal(0))return;
         const auto adjacent=nearestEnemy(0,true);
+        if(adjacent && g.hearts<=kLowHp) {
+            const auto occupied=occupancy(true);bool safeExit=false;
+            for(auto [dx,dy]:kDirections) {
+                const int x=s.position%kWidth+dx,y=s.position/kWidth+dy;
+                if(x<0 || x>=kWidth || y<0 || y>=kHeight)continue;
+                const int tile=y*kWidth+x;
+                if(!canMove(s.world,s.position,tile,occupied))continue;
+                const bool threatened=std::any_of(s.population.entities.begin(),s.population.entities.end(),
+                    [&](const auto& e){return hostile(e) && canAttack(s.world,e.tile,tile);});
+                if(!threatened){safeExit=true;break;}
+            }
+            if(!safeExit){start(0,PartyActionKind::Attack,adjacent,5000);return;}
+        }
         if(adjacent && g.hearts>kLowHp) {
             start(0,PartyActionKind::Attack,adjacent,5000);return;
         }
         if(s.position==s.world.stairs) {start(0,PartyActionKind::Wait,0,400);return;}
         // Actor action rights affect occupancy. Rebuild at the decision boundary
         // so an in-memory path and a restored path cannot use different rounds.
+        if(s.knownStairs>=0)s.failedTargets[s.knownStairs]=0;
         invalidate(false);plan();
+        if(s.target<0 && std::any_of(s.failedTargets.begin(),s.failedTargets.end(),[](auto n){return n!=0;})) {
+            // Actor blockers are temporary. With no remaining goal, reconsider
+            // previously failed targets instead of circling explored floor.
+            s.failedTargets.fill(0);invalidate(false);plan();
+        }
         const auto signature=navigationFingerprint(s);
         const auto repeats=static_cast<unsigned>(std::count(g.navigationHistory.begin(),g.navigationHistory.end(),signature));
         if(g.navigationHistory.size()==32)g.navigationHistory.erase(g.navigationHistory.begin());
@@ -392,6 +411,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             g.life=LifePhase::Pose;g.phaseStartedMs=now;g.deadlineMs=now+5000;
             event(GameplayEvent::Pose,0,0,0);result.onceKey=step.onceKey;return;
         }
+        if(adjacent){start(0,PartyActionKind::Attack,adjacent,5000);return;}
         const auto action=start(0,PartyActionKind::Wait,0,400);
         event(GameplayEvent::Wait,0,0,action);
     };

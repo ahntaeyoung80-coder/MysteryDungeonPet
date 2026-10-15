@@ -131,9 +131,10 @@ inline unsigned run(const ExplorationState& base) {
                 e=Explorer(safe);
             }
             const auto event=restoredStep(e,now);
-            require(event.event!=GameplayEvent::ReturnHome && e.state().phase==Phase::Explore &&
+            require(event.event!=GameplayEvent::ReturnHome &&
                     !e.state().gameplay.onceKeys.count("return:"+std::to_string(s.runId)),
                     "being surrounded triggered an automatic return");
+            require(e.state().phase==Phase::Explore,"surrounded player was defeated before using an available attack");
             attacked=event.event==GameplayEvent::PlayerAttack;
             now=nextTime(e,now);
         }
@@ -162,11 +163,11 @@ inline unsigned run(const ExplorationState& base) {
             const auto actions=event.actors.empty()?std::vector<ActorEvent>{{event.event,event.actorId,g.enemyInstance,event.damage,0,g.actionRound,event.critical}}:event.actors;
             for(const auto& action:actions) {
             if(action.event==GameplayEvent::PlayerAttack) {
-                leader=leader || action.targetId==2;
-                std::cout<<"PARTY_AI R04 leader target="<<g.enemyInstance<<" round="<<g.actionRound<<std::endl;
+                leader=leader || (action.targetId==2 && action.round==round);
+                std::cout<<"PARTY_AI R04 leader target="<<action.targetId<<" round="<<action.round<<std::endl;
             }
             if(action.event==GameplayEvent::CompanionAttack) {
-                companion=companion || action.targetId==1;
+                companion=companion || (action.targetId==1 && action.round==round);
                 std::cout<<"PARTY_AI R04 companion target="<<g.enemyInstance<<" round="<<g.actionRound<<std::endl;
             }
             }
@@ -196,7 +197,8 @@ inline unsigned run(const ExplorationState& base) {
     test("R06_leader_retreat_does_not_cancel_companion_combat",[&] {
         auto s=corridor(base);auto& g=s.gameplay;
         g.hearts=1;g.life=LifePhase::Combat;g.combat=CombatPhase::CompanionTurn;
-        g.enemyInstance=1;g.enemyHits=2;forceHit(s);
+        g.enemyInstance=1;g.enemyHits=2;
+        g.companionIntent=CompanionIntent::Engage;g.companionTarget=1;forceHit(s);
         Explorer e(s);const auto event=restoredStep(e,1000);
         const auto action=std::find_if(event.actors.begin(),event.actors.end(),[](const auto& a){
             return a.event==GameplayEvent::CompanionAttack && a.targetId==1;
