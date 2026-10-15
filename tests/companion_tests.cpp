@@ -3,6 +3,7 @@
 #include "core/exploration_package.hpp"
 #include "core/package.hpp"
 #include "core/gameplay_scene.hpp"
+#include "party_ai_regressions.hpp"
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -153,4 +154,6 @@ int main(int argc,char** argv){try{
  auto invalid=migrated.state();invalid.gameplay.companion.tile=invalid.position;bool rejected=false;
  try{encodeSnapshot(invalid);}catch(const std::exception&){rejected=true;}check(rejected,"overlapping companion accepted");
  std::cout<<"16 directional/reversal cases, pause/partial restore, MDES6 migration and "<<actions<<" restored party actions pass\n";
+ const auto followupFailures=party_ai_regression::run(companionFixture());
+ check(followupFailures==0,"party AI follow-up requirements remain unresolved");
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
