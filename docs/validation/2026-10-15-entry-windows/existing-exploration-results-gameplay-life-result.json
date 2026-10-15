@@ -1,0 +1,9 @@
+{
+  "actualWindows11": "pending",
+  "bedroomCharacters": 2,
+  "coreScenarios": 12,
+  "status": "pass",
+  "test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+  "guildMembers": 10,
+  "guildDiningCharacters": 12
+}

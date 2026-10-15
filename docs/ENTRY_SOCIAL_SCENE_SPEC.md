@@ -11,3 +11,9 @@
 | 5 실제 Windows·실행물 | 사용자 실행물에 반영하고 근거를 남긴다 | Windows 층/화면 좌표·NPC 대화·수면 자세/퇴실 fade·기존 회귀 통과, 루트 EXE/source/assets hash 일치, 문서/결과 커밋·work push |
 
 기존 생성기·배치기·BFS·대화·Animator·fade와 원본 자산을 재사용한다. 층 지형 중복 기록은 기존 gameplay once journal에 run별 floor-layout 키로 저장해 MDES6 바이트 배치를 유지한다. 이전 저장은 현재 층부터 기록을 보강하며 이미 지나간 과거 지형을 추측 복원하지 않는다. 이전 발밑은 배치 금지 좌표이고 새 시작점은 기존 시작방 중심을 사용한다. 정상 클리어/패배 귀가는 유지하고 반복 이동 복구는 기존 같은 층 우회 정책을 유지한다.
+
+## 완료 근거
+
+구현0081db8의 [CI38697951696](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38697951696) core/windows가 모두 성공했다. Windows native12/12, 실제3층 시작점/표시 좌표·발밑 배치 제외/즉시 탈출 없음, 경로 밖 NPC 인사/응답1회, 아침 두 배우 Sleep13 마지막 frame 유지, 통로 끝에서 fade-out/탐험 fade-in의 실제 제출 픽셀 변화와 다음날 commit을 확인했다. 기존 이동31시나리오와 반복 우회/수동 Reset·생활/전투·루트 EXE 실행/복원도 통과했다.
+
+[검증 요약·hash](validation/2026-10-15-entry-summary.json), [원본 CSV·상태·events](validation/2026-10-15-entry-windows/), [5단계 결과](logs/2026-10-15-entry-stage5.md)를 따른다. 기존 논리의 새 시작점/계단 일치 자체는 재현되지 않았으며 새 시작점과 이전 좌표를 모두 보호하고 실제 표시를 확인했다. 실제 사용자 Windows11 화면·OS 사건·장기 성능·전체 콘텐츠는 별도 범위다.

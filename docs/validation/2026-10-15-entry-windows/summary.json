@@ -1,0 +1,8 @@
+{
+  "exit": "corridor endpoint held during fade-out; actual submitted pixels darken/brighten; next day commits once and movement waits for fade-in",
+  "entry": "third-floor fade-in: logical/display feet at entry, no stairs/entity underfoot, no immediate escape",
+  "status": "pass",
+  "friendly": "off-path approach, player greeting and NPC response once",
+  "wake": "both original Sleep13 final frames held through daylight fade before Wake14",
+  "actualWindows11": "not observed"
+}

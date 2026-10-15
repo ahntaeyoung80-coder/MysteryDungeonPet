@@ -79,7 +79,7 @@
 
 **위치:** [src/core/gameplay.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/gameplay.cpp)의 `LifePhase::Sleep`, `LifePhase::Wake`, `LifePhase::Ready`.
 
-현재 순서는 **밤 침실 fade-in → 취침 인사 → 눕기 → 잠들기 한 번 → fade-out → 낮 침실 fade-in → 기상 → 아침 인사 → 왼쪽 통로 이탈 → 탐험**이다.
+현재 순서는 **밤 침실 fade-in → 취침 인사 → 눕기 → 잠들기 한 번 → fade-out → 잠든 자세를 유지한 낮 침실 fade-in → 기상 → 아침 인사 → 왼쪽 통로 이탈 → fade-out → 다음날 commit → 탐험 fade-in**이다.
 
 | 단계 | 검색어 | 시간·완료 조건 |
 | --- | --- | --- |
@@ -90,6 +90,7 @@
 | 아침 전환 | `SceneBeat::BedFadeOut`, Wake의 `SceneBeat::BedFadeIn` | 각각 `kFadeMs` |
 | 기상·아침 인사 | `LifePhase::Wake`, `SceneBeat::MorningFace` | 두 배우의 완료 신호로 진행 |
 | 방 이탈 | `SceneBeat::RoomExit` | `kRoomExitMs = 1870`과 경로 이동 완료 |
+| 퇴실 장면 전환 | `MorningFadeOut`, `ExploreFadeIn` | 각각750ms, 검정에서 다음날1회 commit |
 
 **`kFiniteTimeoutMs = 5000`은 모든 동작을 5초씩 보여주는 설정이 아니다.** 인사·기상은 완료 신호가 핵심이므로 이 숫자만 늘려도 오래 머물지 않는다. 인사 문구를 일정 시간 더 읽게 하려면 해당 단계 진입의 `life(..., duration)`을 원하는 ms로 정하고, 완료 조건에 `now < g.deadlineMs` 검사도 함께 넣어야 한다. 배우 완료 조건은 유지한다. 이런 순서·완료 조건 변경은 숫자 교체보다 범위가 크다.
 
@@ -168,7 +169,7 @@
 
 해당 장면의 `return 22` 같은 숫자를 기존 연결 동작 번호로 교체한다. 실제 패키지에 없는 번호는 실행 오류가 된다. 동료는 [src/windows/main.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/windows/main.cpp)의 `advanceGuildActors`, 적·NPC는 `enemyClip_`에서 선택한다.
 
-`gameplayLoop`는 반복 여부다. 완료 신호를 기다리는 인사·기상·잠들기를 반복으로 바꾸면 다음 장면으로 못 넘어갈 수 있다. 원본 애니메이션 자체의 프레임 시간은 패키지의 `ticks`/속도 값과 [src/core/animator.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/animator.cpp)가 담당한다. `kFiniteTimeoutMs`는 재생 속도 설정이 아니다. 눕기27은 기존 한 프레임 동작이며 숫자를 바꿔 새 전환 프레임을 만들 수는 없다.
+`holdGameplayPose`는 아침 페이드 중 Sleep13의 마지막 자세를 유지한다. `gameplayLoop`는 반복 여부다. 완료 신호를 기다리는 인사·기상·잠들기를 반복으로 바꾸면 다음 장면으로 못 넘어갈 수 있다. 원본 애니메이션 자체의 프레임 시간은 패키지의 `ticks`/속도 값과 [src/core/animator.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/animator.cpp)가 담당한다. `kFiniteTimeoutMs`는 재생 속도 설정이 아니다. 눕기27은 기존 한 프레임 동작이며 숫자를 바꿔 새 전환 프레임을 만들 수는 없다.
 
 ### 4.2 방 이탈 경로·방향·카메라
 
@@ -180,7 +181,7 @@ const std::array<Point,5> path{{start,{184,200},{128,200},{112,184},{104,184}}};
 
 `start`는 현재 침상 좌표(204,184)이고 뒤의 점들을 차례로 지난다. 끝점(104,184)은 왼쪽 통로 입구다. 경로를 바꿀 때는 동료 침상과 벽을 피하고, 맵 안의 통로에서 끝내도록 좌표를 조절한다. 점 개수가 바뀌면 `Point,5`의 `5`도 바꾼다. 같은 좌표를 연속으로 넣으면 구간 시간이 0이 될 수 있으므로 각 점은 다르게 둔다.
 
-이동 시간은 구간 길이 × `400/24`로 계산한다. 현재 합은 **1870ms**다. 좌표나 속도를 바꾸면 각 구간의 `lround(hypot(dx,dy)*400/24)`를 합한 값으로 [src/core/exploration.hpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/exploration.hpp)의 `kRoomExitMs`도 맞춘다. 한쪽만 바꾸면 도착 후 서 있거나 퇴실 완료가 늦어진다.
+이동 시간은 구간 길이 × `400/24`로 계산한다. 현재 이동 합은 **1870ms**다. 이후 `SceneBeat::MorningFadeOut`의750ms 뒤 검정에서 다음날을 commit하고 `SceneBeat::ExploreFadeIn`750ms가 끝나야 이동을 재개한다. 좌표나 속도를 바꾸면 각 구간의 `lround(hypot(dx,dy)*400/24)`를 합한 값으로 [src/core/exploration.hpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/exploration.hpp)의 `kRoomExitMs`도 맞춘다. 한쪽만 바꾸면 도착 후 서 있거나 퇴실 완료가 늦어진다.
 
 방향 번호는 `0` 아래, `1` 오른쪽 아래, `2` 오른쪽, `3` 오른쪽 위, `4` 위, `5` 왼쪽 위, `6` 왼쪽, `7` 왼쪽 아래다. 이탈 방향은 좌표 차이로 자동 계산된다. 카메라는 [main.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/windows/main.cpp)의 `SceneBeat::RoomExit`, [src/core/motion.hpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/motion.hpp)의 `cameraFor`에서 같은 경로를 따라간다.
 
@@ -200,9 +201,11 @@ const std::array<Point,5> path{{start,{184,200},{128,200},{112,184},{104,184}}};
 
 | 검색어 | 역할 |
 | --- | --- |
-| `selectPriority` | 평상시 아이템 → frontier 후보 선택 |
+| `selectPriority` | 평상시 아이템 → 미인사 우호 NPC → frontier 후보 선택 |
+| `selectFriendly` | 발견된 우호 NPC의 접근 가능한 인접 목표 선택 |
+| `enterFloor`, `layoutKey` | 새 시작점/이전 발밑 배치 금지·run별 지형 중복 거부 |
 | `plan` | 목표와 경로 선택, 계단·보조 목표 처리 |
-| `reevaluateStairs` | 계단으로 가다가 새 아이템/frontier 발견 시 재평가 |
+| `reevaluateStairs` | 계단으로 가다가 새 아이템/우호 NPC/frontier 발견 시 재평가 |
 | `selectSurvival` | 저체력에서 먼저 발견한 열매/계단 순서로 생존 목표 선택 |
 | `playerOccupancy` | 저체력에서 적 공격 범위를 피해 경로 계산 |
 | `lowHealth` | `hearts <= kLowHp` 판단 |
@@ -226,7 +229,7 @@ HP 차감은 `EnemyTurn`의 공격 판정과 `EnemyAttack`의 `pendingHit` 제�
 
 - **한 타일 이동:** [src/core/gameplay.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/gameplay.cpp)의 `scheduleDungeon`에서 `MoveRecord`와 `now+400`; [src/core/motion.hpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/motion.hpp)의 `kMoveDurationUs = 400000`; [src/core/exploration.hpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/exploration.hpp)의 `MoveRecord::durationMs = 400`이 연결된다. [src/core/exploration.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/exploration.cpp)의 `validateMove`도 `durationMs==400`을 검사한다. 속도를 바꾸려면 표시·턴 마감·저장 검증·[main.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/windows/main.cpp)의 `restoreMovement`에 있는400도 함께 맞춰야 한다.
 - **아이템 획득:** `scheduleDungeon`의 `case EventKind::Pickup`. `playerActionRound`는 한 턴 소비, `deadlineMs=now+400`은 표시 대기다. 대기만 줄여도 턴 소비는 유지할 수 있다.
-- **NPC 인사·통과:** `scheduleDungeon`의 `GameplayEvent::DialoguePlayer` → `advanceGameplay`의 `LifePhase::Dialogue` → `exploration.cpp`의 `Explorer::advance` 안 `friendly(e)` 자리 교환이다. 대화 시간은 시작·응답의 두 `1200`을 바꾼다. `done`과 `greet:` 키는 인사를 반복하지 않는 기록이다.
+- **NPC 인사·통과:** `scheduleDungeon`의 `GameplayEvent::DialoguePlayer` → `advanceGameplay`의 `LifePhase::Dialogue` → `exploration.cpp`의 공통 `moveTo` 안 `friendly(e)` 자리 교환이다. 대화 시간은 시작·응답의 두 `1200`을 바꾼다. `done`과 `greet:` 키는 인사를 반복하지 않는 기록이다.
 - **배치 요청 수:** `exploration.hpp`의 `SpawnPolicy::itemRequest = 3`, `friendRequest = 2`. 적·우호 NPC가 공통 Friend 후보에서 배정되므로 `friendRequest`는 우호 NPC만의 수가 아니다. 이미 생성된 저장에는 다음 새 지도/run부터 적용된다.
 
 ## 6. 폴더와 저장 데이터

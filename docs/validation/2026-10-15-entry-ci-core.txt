@@ -1,0 +1,27 @@
+2026-10-15T07:19:23.5085222Z Windows x64 runtime/source/assets hashes match; no ZIP required
+2026-10-15T07:19:49.1049911Z       Start  1: pet_entry_social_scene_tests
+2026-10-15T07:19:53.7995802Z  1/11 Test  #1: pet_entry_social_scene_tests .....   Passed    4.69 sec
+2026-10-15T07:19:53.8068978Z       Start  2: pet_navigation_recovery_tests
+2026-10-15T07:19:57.0000961Z  2/11 Test  #2: pet_navigation_recovery_tests ....   Passed    3.19 sec
+2026-10-15T07:19:57.0002214Z       Start  3: pet_camera_tests
+2026-10-15T07:20:01.6799451Z  3/11 Test  #3: pet_camera_tests .................   Passed    4.68 sec
+2026-10-15T07:20:01.6801172Z       Start  4: pet_movement_tests
+2026-10-15T07:20:02.5682083Z  4/11 Test  #4: pet_movement_tests ...............   Passed    0.89 sec
+2026-10-15T07:20:02.5682628Z       Start  5: pet_survival_tests
+2026-10-15T07:20:02.6485575Z  5/11 Test  #5: pet_survival_tests ...............   Passed    0.08 sec
+2026-10-15T07:20:02.6486369Z       Start  6: pet_revision_tests
+2026-10-15T07:20:02.6881570Z  6/11 Test  #6: pet_revision_tests ...............   Passed    0.04 sec
+2026-10-15T07:20:02.6882271Z       Start  7: pet_improvement_tests
+2026-10-15T07:20:02.7317127Z  7/11 Test  #7: pet_improvement_tests ............   Passed    0.04 sec
+2026-10-15T07:20:02.7317789Z       Start  8: pet_gameplay_tests
+2026-10-15T07:20:33.1888952Z  8/11 Test  #8: pet_gameplay_tests ...............   Passed   30.46 sec
+2026-10-15T07:20:33.1892741Z       Start  9: pet_exploration_tests
+2026-10-15T07:21:22.9918595Z  9/11 Test  #9: pet_exploration_tests ............   Passed   49.80 sec
+2026-10-15T07:21:22.9919876Z       Start 10: pet_core_tests
+2026-10-15T07:21:26.9344759Z 10/11 Test #10: pet_core_tests ...................   Passed    3.94 sec
+2026-10-15T07:21:26.9345486Z       Start 11: pet_package_playback
+2026-10-15T07:21:26.9452904Z 11/11 Test #11: pet_package_playback .............   Passed    0.01 sec
+2026-10-15T07:21:26.9460405Z 100% tests passed, 0 tests failed out of 11
+2026-10-15T07:21:26.9461242Z Total Test time (real) =  97.84 sec
+2026-10-15T07:21:48.0179199Z Ran 26 tests in 10.129s
+2026-10-15T07:21:48.0179404Z OK

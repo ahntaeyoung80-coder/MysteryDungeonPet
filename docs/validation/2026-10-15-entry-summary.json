@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-15",
+  "status": "pass",
+  "branch": "work",
+  "testedCommit": "0081db8ffe0d5ac4ad9a3236ee3dd16f456c4a1e",
+  "scope": [
+    "new floor entry/previous feet exclusion and per-run layout deduplication",
+    "friendly NPC after items, before frontier/stairs; survival retained",
+    "both Sleep13 final poses through dawn; Wake14 then greeting/exit",
+    "750ms exit fade-out, next day commit at black,750ms exploration fade-in"
+  ],
+  "local": {
+    "release": "11/11,26.75s",
+    "asanUbsan": "11/11,151.15s,leak check enabled",
+    "python": "26/26,8.317s,no skips",
+    "floorCases": "1000 seeds x2 transitions, restore each floor; forced first-floor replay on third floor; room rectangle disjointness",
+    "format": "MDES6 layout unchanged; MDES1..6 readers"
+  },
+  "ci": {
+    "run": 38697951696,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38697951696",
+    "coreJob": 116298905685,
+    "windowsJob": 116298905416,
+    "core": "success; ASan/UBSan11/11,97.84s; Python26/26,10.129s,no skips",
+    "windows": "success; Server2025/MSVC19.51 native12/12,18.67s",
+    "entrySocialScene": {
+      "exit": "corridor endpoint held during fade-out; actual submitted pixels darken/brighten; next day commits once and movement waits for fade-in",
+      "entry": "third-floor fade-in: logical/display feet at entry, no stairs/entity underfoot, no immediate escape",
+      "status": "pass",
+      "friendly": "off-path approach, player greeting and NPC response once",
+      "wake": "both original Sleep13 final frames held through daylight fade before Wake14",
+      "actualWindows11": "not observed"
+    },
+    "movementCases": 31,
+    "composedFrames": 2414,
+    "submittedFrames": 2118,
+    "previousRegressions": "navigation detour/manual Reset, movement/camera/kill restore, life/combat, native/root EXE default launch and restore pass"
+  },
+  "runtimeSha256": {
+    "MysteryDungeonPet.exe": "38ff08c194f9f63df45ac9129f42a4ed1b0d54a87fad922b89010260e8aefdd2",
+    "windows-runtime.json": "0a57dad13066398a52f0884577b56dc5ff09a5a6b424c55179a53ed61c97115f"
+  },
+  "originalSha256": {
+    "assets/original/source/user-supplied.nds": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "assets/original/source/rom-files.zip": "cc9d113ea4b438d8b8895a30c3d47863dc99cdb1e1381ce8c029aeeb8d748b54"
+  },
+  "limits": [
+    "실제 사용자 Windows11 화면 미관측",
+    "이전 저장에서 이미 지나간 지형은 현재 층부터 중복 기록 보강",
+    "OS 사건·장기 성능·전체 콘텐츠 별도 범위"
+  ],
+  "artifact": {
+    "id": 11954839440,
+    "name": "windows-check-results",
+    "sha256": "807d3c0c649a7c6de7c012c9cc43cdc1b997d9c604b5105fd4e38e24aa976346"
+  },
+  "observations": {
+    "thirdFloor": {
+      "entry": 439,
+      "stairs": 210,
+      "displayPoint": [
+        180,
+        444
+      ],
+      "entitiesAtEntry": 0,
+      "immediateClear": false
+    },
+    "morningFade": {
+      "submittedFrames": 41,
+      "playerClip": 13,
+      "playerFrame": 1,
+      "partnerClip": 13,
+      "partnerFrame": 1
+    },
+    "exitFade": {
+      "submittedFrames": 44,
+      "position": [
+        104,
+        184
+      ],
+      "rgbSumFirst": 12523509,
+      "rgbSumLast": 1184
+    },
+    "exploreFade": {
+      "submittedFrames": 46,
+      "rgbSumFirst": 7486,
+      "rgbSumLast": 18881839
+    },
+    "friendlyGreetCount": 1,
+    "nextDay": 2
+  },
+  "evidenceSha256": {
+    "docs/validation/2026-10-15-entry-windows/entry.csv": "b2cc0324e3ec6e5f30b37a89f53b71caa32d7e63481bc7f969b9406420548caa",
+    "docs/validation/2026-10-15-entry-windows/entry.mdes": "46e2b3af3518d48e9608a781c335edc1a25fb50c8a040a44cabe6b6efede6930",
+    "docs/validation/2026-10-15-entry-windows/events.txt": "73c71c5fb6b2159f4b3804159d199a64a2d46890a231bfa55d4e67ebe3a4c275",
+    "docs/validation/2026-10-15-entry-windows/existing-exploration-results-default-launch-default-launch.json": "c0d3fdf802832feb9a833fc14da2ee259bff42e1dd73d274562b50087b81ce56",
+    "docs/validation/2026-10-15-entry-windows/existing-exploration-results-gameplay-combat-result.json": "397f11ea51d8cdc08f122dec01226fe875a9a9b6995ee20b81818f095e0a132d",
+    "docs/validation/2026-10-15-entry-windows/existing-exploration-results-gameplay-life-result.json": "f876cb756af47f1255bfa0b62053abc9d50da5e964a5b570fac9cecd863feccb",
+    "docs/validation/2026-10-15-entry-windows/existing-exploration-results-pull-launch-default-launch.json": "c0d3fdf802832feb9a833fc14da2ee259bff42e1dd73d274562b50087b81ce56",
+    "docs/validation/2026-10-15-entry-windows/existing-movement-results-summary.json": "6e8dac93af8060c5dfbdd6c4ddac09ac54c49608ed32a9ee38f7e337fd4c68f7",
+    "docs/validation/2026-10-15-entry-windows/existing-navigation-results-reset-states.json": "7bd654acfac35748fd999bec10a3368ce009a321c967d7c1eb643d64b7c6408e",
+    "docs/validation/2026-10-15-entry-windows/existing-navigation-results-summary.json": "9bd67b1f428d5e80ce50257d941304049f69f3f125d5ecae83b4cdc30a9e8a31",
+    "docs/validation/2026-10-15-entry-windows/npc.csv": "ffc9ad675d2fd67603fef2bd6c1b04f210caa02e500875ca31ee4fba22d43dbd",
+    "docs/validation/2026-10-15-entry-windows/npc.mdes": "4cd3242a2ca0f3c07362dc34d424ecfc00d97643f81de99357b6a1200cd4b844",
+    "docs/validation/2026-10-15-entry-windows/poses.json": "2eea8e6fdb3593431c03124e2635115fbe7086f1f94ce5e47e0100713dd7a91d",
+    "docs/validation/2026-10-15-entry-windows/states.json": "2996d6dc092222b9f568e253758a1ac3b396003e233f923c6cf58bf018fabb21",
+    "docs/validation/2026-10-15-entry-windows/summary.json": "1f7e3ba4d0d25646f3fad1798f39547939d870143b69a7bba9d0542a5ba6e8f2",
+    "docs/validation/2026-10-15-entry-windows/wake.csv": "765ada18b60c4f809413b89250739e5c84732b065d55210b8e37d1e5d002973e",
+    "docs/validation/2026-10-15-entry-windows/wake.mdes": "fef32ff4dedc80996c2b8b1a9bb97a613cd26cadbb348b26df892e5d7f3fdc72"
+  }
+}

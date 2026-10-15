@@ -1,0 +1,65 @@
+279238948 exploration snapshot=restored day=1 runId=930
+279242031 initial session flags=1
+279246946 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+279246986 mode=automatic-exploration
+279247010 select clip=7 direction=0 loop=1
+279247045 power=32787
+279249037 select clip=7 direction=0 loop=1
+279249073 life=Explore combat=PlayerTurn day=1 hearts=5 sceneBeat=13 dialogueStage=0
+279250667 show
+280259108 select clip=7 direction=0 loop=1
+280259233 gameplay onceKey=stairs:930:1:0
+280259256 life=Explore combat=PlayerTurn day=1 hearts=5 sceneBeat=14 dialogueStage=0
+281271727 select clip=7 direction=0 loop=1
+281271774 life=Explore combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=0
+281286909 select clip=0 direction=4 loop=1
+281698929 select clip=22 direction=3 loop=0
+281698979 life=Dialogue combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=0
+282031374 finite finished assetKey=rom:EoS_NA:md:1
+282266590 exit submissions=154 decodes=5 switches=0
+282356608 exploration snapshot=restored day=1 runId=920
+282359720 initial session flags=1
+282364719 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+282364758 mode=automatic-exploration
+282364784 select clip=7 direction=0 loop=1
+282364817 power=32787
+282366694 select clip=0 direction=1 loop=1
+282368282 show
+283186615 select clip=22 direction=1 loop=0
+283186668 life=Dialogue combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=0
+283518646 finite finished assetKey=rom:EoS_NA:md:1
+284389200 select clip=7 direction=1 loop=1
+284389279 life=Dialogue combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=1
+285591789 select clip=7 direction=1 loop=1
+285591844 life=Explore combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=1
+285607798 select clip=0 direction=2 loop=1
+287377490 exit submissions=168 decodes=5 switches=0
+287437194 exploration snapshot=restored day=1 runId=920
+287440476 initial session flags=1
+287445626 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+287445673 mode=automatic-exploration
+287445700 select clip=13 direction=2 loop=0
+287445734 power=32787
+287445773 guild room=PlayerRoom characters=2 objectCount=0
+287447584 show
+288156316 select clip=14 direction=2 loop=0
+288156375 life=Wake combat=PlayerTurn day=1 hearts=3 sceneBeat=8 dialogueStage=0
+288156392 guild room=PlayerRoom characters=2 objectCount=0
+288852183 guild partner wake finished
+288854135 finite finished assetKey=rom:EoS_NA:md:1
+288868024 select clip=22 direction=6 loop=0
+288868058 life=Ready combat=PlayerTurn day=1 hearts=3 sceneBeat=9 dialogueStage=0
+288868082 guild room=PlayerRoom characters=2 objectCount=0
+289213582 finite finished assetKey=rom:EoS_NA:md:1
+289217376 select clip=0 direction=7 loop=1
+289217414 life=Ready combat=PlayerTurn day=1 hearts=3 sceneBeat=16 dialogueStage=0
+289217431 guild room=PlayerRoom characters=2 objectCount=0
+291114689 select clip=7 direction=6 loop=1
+291114741 life=Ready combat=PlayerTurn day=1 hearts=3 sceneBeat=10 dialogueStage=0
+291114758 guild room=PlayerRoom characters=2 objectCount=0
+291874083 select clip=7 direction=6 loop=1
+291874134 life=Explore combat=PlayerTurn day=2 hearts=5 sceneBeat=11 dialogueStage=0
+292632795 select clip=7 direction=6 loop=1
+292632845 life=Explore combat=PlayerTurn day=2 hearts=5 sceneBeat=0 dialogueStage=0
+292648586 select clip=0 direction=5 loop=1
+294454395 exit submissions=350 decodes=5 switches=0

@@ -1,5 +1,9 @@
 # 개선 제작 인수인계
 
+## 최신 재개 기준 — 층 진입·우호 NPC·기상/퇴실, 2026-10-15
+
+구현0081db8은 새 시작점/이전 발밑 특수 배치 제외·run별 지형 중복 거부, 아이템 다음 우호 NPC 목표, 아침 수면 마지막 자세 유지·퇴실 후750ms fade-out/in을 포함한다. MDES6/이전 읽기와 반복 시 같은 층 우회·수동 Reset을 유지한다. 로컬 Release11/11·ASan/UBSan11/11·Python26/26과 루트 EXE hash를 통과했다. CI38697951696 core/windows 성공, Windows native12/12·실제3층 진입/좌표·NPC 대화·두 배우 잠든 frame 유지/퇴실 fade·기존 이동31시나리오·반복 우회/수동 Reset·생활/전투/루트 EXE 실행·복원도 통과했다. [최신 검증 요약](validation/2026-10-15-entry-summary.json)을 따른다. [최신 명세](ENTRY_SOCIAL_SCENE_SPEC.md)와 PROJECT_STATE.md를 우선한다. 아래는 이전 이력이다.
+
 ## 현재 재개 기준 — 대각선 반복·Reset 완료, 2026-10-15
 
 `work`의 사용자 보고 적2↔4/플레이어6↔8 반복을 재현하고 수정했다. 동반 역주행 재계획, MDES6 최근32개 상태 반복 감지/같은 층 우회, 백업 후 우클릭 `Reset 탐험 (귀가)`가 최신 구현이다. MDES1~5를 읽고 확정 HP·획득품·journal을 보존한다. 최신 work pull 후 루트 EXE를 실행한다.

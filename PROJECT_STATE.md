@@ -1,8 +1,24 @@
 # 현재 상태
 
-## 층 진입·우호 NPC·기상/퇴실 수정 진행 — 2026-10-15
+## 층 진입·우호 NPC·기상/퇴실 수정 완료 — 2026-10-15
 
-최신 사용자 보고의 [단계별 명세](docs/ENTRY_SOCIAL_SCENE_SPEC.md)를 우선한다. 원인·실패 회귀6c347b6을 고정하고, 새 시작점/이전 발밑의 배치 금지·run별 지형 중복 거부、아이템 다음 우호 NPC 우선순위、수면 자세 유지와 퇴실 fade-out/in을 구현했다. 1,000seed×2층 전환·저장 복원·NPC 접근/인사1회·기상/퇴실 전환을 포함해 Release11/11을 통과했다. 단계별 결과는 docs/logs/2026-10-15-entry-stage2/3/4.md를 따른다. 다음은 sanitizer 완료 확인·실제 Windows 통합/루트 EXE 갱신이다. 아래는 이전 체크포인트다.
+개발·조회 기준은 `work`다. [단계별 명세](docs/ENTRY_SOCIAL_SCENE_SPEC.md)의 이번 보고 범위를 완료했다.
+
+- 층 진입: 새 시작점과 이전 발밑에는 계단·아이템/배우를 배치하지 않는다. 기존 분리 방 슬롯을 유지하고 같은 run의 지형 중복을 거부한다. 1,000seed×2층 전환·매 층 저장 복원·방 사각형 겹침/과거 지형 강제 재사용 거부 통과.
+- 우선순위: 아이템 → 미인사 우호 NPC → frontier → 계단. 기존 목표 유지·저체력 생존 우선은 유지한다. 경로 밖 NPC도 찾아가 인사/응답1회, 저장 재실행 중복 없음.
+- 생활: 두 배우 Sleep13 마지막 자세를 아침 fade-in까지 유지 → Wake14 → 인사 →1870ms 퇴실 →750ms fade-out → 검정에서 다음날1회 commit →750ms 탐험 fade-in. 퇴실 fade에서 몸체·카메라는 통로 끝에 고정된다.
+- 저장/실행: MDES6·MDES1~5 읽기 유지, 지형 기록은 기존 gameplay journal 재사용. 이전 저장은 현재 층부터 기록 보강. 최신 work pull 후 루트 `MysteryDungeonPet.exe` 실행. EXE/source/assets hash 일치, 원본 ROM/ZIP 불변.
+- 검증: Release11/11(26.75초), ASan/UBSan11/11(151.15초), Python26/26(8.317초, skip없음). 구현0081db8의 [CI38697951696](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38697951696) core/windows 모두 성공. Linux ASan11/11·Python26/26, Windows Server2025/MSVC19.51 native12/12(18.67초), 실제3층 시작점/표시/발밑 제외·NPC 인사·두 배우 수면 마지막 frame·퇴실 fade 실제 픽셀·다음날 연결 통과. 기존 이동31시나리오·반복 우회/수동 Reset·생활/전투·루트 EXE 실행/복원도 통과. [원본 CSV·상태·hash 요약](docs/validation/2026-10-15-entry-summary.json).
+
+| 단계 | 완료 결과 | 커밋 |
+| --- | --- | --- |
+| 1 원인·실패 회귀 | 층/NPC/장면의 기존 실패 고정·명세 | 6c347b6 |
+| 2 층 배치·방 중복 | 이전 발밑/시작점 보호·지형 journal·2,000층 전환 | fbb9e97 |
+| 3 NPC 목표 | 정식 우선순위·접근/인사/중복 방지 | 87ca44a |
+| 4 기상·퇴실 | 잠든 마지막 자세·퇴실 후 fade/commit/복원 | a8f9de8 |
+| 5 Windows·인수인계 | 실제 화면·새 EXE·CI·사용 안내/증거 | 0081db8, 본 문서 정리 변경 |
+
+재개 시 fetch 후 HEAD/origin/work를 비교하고 새 보고의 snapshot/해당 trace를 보존한다. 실제 사용자 Windows11 화면·OS 사건·장기 성능·전체 콘텐츠는 별도 범위다. 아래는 이전 체크포인트 이력이다.
 
 ## 반복 감지 후 같은 층 우회 완료 — 2026-10-15
 

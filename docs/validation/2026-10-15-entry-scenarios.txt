@@ -1,0 +1,20 @@
+Start testing: Oct 15 07:13 UTC
+----------------------------------------------------------
+1/11 Testing: pet_entry_social_scene_tests
+1/11 Test: pet_entry_social_scene_tests
+Command: "/workspace/MysteryDungeonPet/build/movement/pet_entry_social_scene_tests"
+Directory: /workspace/MysteryDungeonPet/build/movement
+"pet_entry_social_scene_tests" start time: Oct 15 07:13 UTC
+Output:
+----------------------------------------------------------
+floor entry/layout regression pass
+friendly priority/dialogue regression pass
+sleep pose/exit fade/restore regression pass
+<end of output>
+Test time =   2.59 sec
+----------------------------------------------------------
+Test Passed.
+"pet_entry_social_scene_tests" end time: Oct 15 07:13 UTC
+"pet_entry_social_scene_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+

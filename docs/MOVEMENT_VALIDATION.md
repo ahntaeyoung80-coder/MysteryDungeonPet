@@ -53,3 +53,7 @@ python tools/check_movement_trace.py docs/validation/2026-10-15-movement-frames/
 ```
 
 이 판정은 중간 위치·연결된 행동·방향·camera·alpha·실제 제출을 확인한다. 시각적 부드러움 전체나 사용자의 실제 Windows11 환경을 자동으로 통과시키지 않는다.
+
+## 층·생활 trace 확장 — 2026-10-15
+
+`--movement-trace`는 생활 장면도 기록한다. 기존 열 뒤에 floor/entry_tile/stairs_tile/player_tile/entry_entities/holding_pose/partner_clip/partner_frame/rgb_sum을 추가했다. 실제 렌더와 같은 camera·합성 결과를 기록하며, 층 진입 좌표·두 배우 수면 마지막 frame·퇴실 fade의 위치/밝기는 `tests/entry_social_scene_windows_tests.ps1`로 확인한다. 기존 check_movement_trace.py는 상호작용/fade 없는 고정 이동 시나리오 전용이다.

@@ -1,0 +1,50 @@
+[
+  {
+    "runId": 930,
+    "floor": 1,
+    "entry": 459,
+    "stairs": 141,
+    "player": 141,
+    "day": 1,
+    "hearts": 5,
+    "greetings": 0,
+    "completed": false,
+    "life": "Explore"
+  },
+  {
+    "runId": 930,
+    "floor": 2,
+    "entry": 439,
+    "stairs": 210,
+    "player": 415,
+    "day": 1,
+    "hearts": 5,
+    "greetings": 0,
+    "completed": false,
+    "life": "Dialogue"
+  },
+  {
+    "runId": 920,
+    "floor": 0,
+    "entry": 100,
+    "stairs": 108,
+    "player": 106,
+    "day": 1,
+    "hearts": 5,
+    "greetings": 1,
+    "completed": false,
+    "life": "Explore"
+  },
+  {
+    "runId": 921,
+    "floor": 0,
+    "entry": 165,
+    "stairs": 390,
+    "player": 160,
+    "day": 2,
+    "hearts": 5,
+    "greetings": 0,
+    "completed": false,
+    "life": "Explore"
+  }
+]
