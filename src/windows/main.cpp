@@ -1260,6 +1260,12 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int) {
         App app(instance, std::move(o));
         return app.run();
     } catch (const std::exception& e) {
+        // App destruction closes its stream before this handler runs. Preserve
+        // the fatal reason alongside normal events for zero-argument launches.
+        try {
+            std::ofstream events(appDir() / L"events.log", std::ios::app);
+            events << nowUs() << " fatal " << e.what() << '\n';
+        } catch (...) { /* Keep the original startup/runtime failure. */ }
         if (!report.empty()) { std::ofstream output(report); output << "status=fail\nerror=" << e.what() << '\n'; }
         OutputDebugStringW((wide(e.what()) + L"\n").c_str());
         if (!validation) MessageBoxW(nullptr, wide(e.what()).c_str(), L"MysteryDungeonPet A-3", MB_OK | MB_ICONERROR);

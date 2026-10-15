@@ -78,3 +78,8 @@ R15에 자기 시야 밖이지만 저장된 위협에 동료가 접근하는 조
 `f37048f`의 [CI38739321236](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38739321236)는 native13/13(25.64초), 명시 후속15/16 통과다. 남은 후속 실패는4단계 직선 우선이다. WIC·playback·exploration·navigation·동료 양방향 독립 전투·entry·movement 등 선행 GUI 검사도 통과했다. 설치 패키지의 무인자 기본 실행을 닫을 때 비정상 종료가 있어 Windows 전체 검사는 아직 실패다. Linux/실행물 반영은 실행되지 않았다.
 
 기본 실행 검사가 실패 시 종료 코드·events·snapshot·metrics를 보존하도록 보강하고, 새 빌드 직후 같은 무인자 실행을 먼저 재현한다. 오류 증거 없이 완료 판정을 바꾸지 않는다.
+
+
+## 기본 실행 실패 축소
+
+`2d4e829`의 [CI38741154753](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38741154753)에서4초 실행→닫기→같은 저장 재실행의 두 번째 실행만 종료 코드1로 실패했다. 저장 복원과10~13라운드의 동료/주인공 이동은 로그에 남았다. 최외곽 예외 처리에서 디버그 출력만 남기던 오류를 events.log에도 보존한다. 빠른 probe 전용 빌드에는 companion test 실행물이 없으므로 해당 진단은 실행물이 있을 때만 수행한다.
