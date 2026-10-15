@@ -4,7 +4,7 @@
 
 사용자 요청으로 개발·조회 기준을 `work`로 통일한다. 원격 확인 시 `work=ca3c90a`에 구현·루트 EXE·최신 검증을 포함한 고유 커밋42개가 있었고, `main=468afc4`의 고유 커밋1개는 직접 수정 안내서 게시였다. 안내서와 게시 로그는 두 브랜치에서 동일했다. 두 이력을 병합하고 README·현재 상태·결정 문서는 최신 work 내용을 보존한다. 제품 코드·자산·EXE는 ca3c90a와 동일하게 유지한다.
 
-최초 로컬 `work`가 실제로는 main 커밋을 가리켰고 fetch 설정도 main만 대상으로 삼았다. 전체 원격 브랜치를 fetch하고 로컬 work의 upstream을 origin/work로 설정한다. 재개 시 `git fetch origin` 후 `git status -sb`와 `origin/work`를 확인한다. GitHub 기본 브랜치 work 전환과 main 삭제는 별도 관리 설정이 필요하며 아직 완료되지 않았다. 기존 기본 main 조회도 최신 구현을 반환하도록 통합 커밋을 두 원격 브랜치에 반영한다. 완료 상태는 최신 통합 로그를 따른다.
+최초 로컬 `work`가 실제로는 main 커밋을 가리켰고 fetch 설정도 main만 대상으로 삼았다. 전체 원격 브랜치 fetch와 로컬 work의 origin/work 추적 설정을 완료했다. 두 브랜치에 통합 커밋을 반영한 뒤 사용자가 GitHub 기본 브랜치를 work로 변경했다. 원격 HEAD=work와 main/work SHA 동일성을 확인하고 main을 삭제했다. 현재 원격 브랜치는 work만 존재하며 origin/HEAD도 work를 가리킨다. 재개 시 `git fetch origin` 후 `git status -sb`와 `origin/work`를 확인한다. 아래의 main/work 분리 설명은 통합 전 이력이다. 검증 결과는 최신 통합 로그를 따른다.
 
 ## 직접 수정 안내서 게시 — 2026-10-14
 
