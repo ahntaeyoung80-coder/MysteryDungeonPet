@@ -39,6 +39,7 @@ jobs:
           path: |
             build/windows/wic-results/*.txt
             build/windows/movement-results/*
+            build/windows/navigation-results/*
             build/windows/playback-results/**/*.csv
             build/windows/playback-results/**/*.json
             build/windows/exploration-results/*

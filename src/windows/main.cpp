@@ -30,6 +30,7 @@ constexpr UINT TrayMessage = WM_APP + 1;
 constexpr UINT ClipBase = 100, DirectionBase = 500;
 constexpr UINT Loop = 600, Finite = 601, Stop = 602, Hide = 603, Top = 604;
 constexpr UINT Scale1 = 610, Scale2 = 611, Scale3 = 612, Background = 620, Reload = 623, Quit = 624;
+constexpr UINT ResetExploration = 625;
 constexpr unsigned PhysicalSize = 200;
 const GUID SessionDisplayGuid{0x2b84c20e, 0xad23, 0x4ddf, {0x93, 0xdb, 0x05, 0xff, 0xbd, 0x7e, 0xfc, 0xa5}};
 int64_t nowUs() { return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count(); }
@@ -439,6 +440,7 @@ class App {
         add(Hide, hidden_ ? L"Show" : L"Hide"); add(Top, L"Always on top", topmost_);
         add(Scale1, L"Scale 1", scale_ == 1); add(Scale2, L"Scale 2", scale_ == 2); add(Scale3, L"Scale 3", scale_ == 3);
         if (!explorer_) { add(Background, L"Test background", backgroundOn_); add(Reload, L"Reload package"); }
+        if(explorer_) AppendMenuW(menu,MF_STRING|(explorer_->canResetExploration()?0:MF_GRAYED),ResetExploration,L"Reset 탐험 (귀가)");
         add(Quit, L"Exit");
         POINT cursor{}; GetCursorPos(&cursor);
         // Foreground is needed for tray menus to dismiss correctly; window remains NOACTIVATE.
@@ -456,6 +458,19 @@ class App {
             clip_ = assets_.package.clips[id - ClipBase].id; startClip(now);
         } else if (id >= DirectionBase && id < DirectionBase + 8) { direction_ = id - DirectionBase; startClip(now); }
         else switch (id) {
+            case ResetExploration: {
+                if(!explorer_ || !explorer_->canResetExploration()) break;
+                const auto utc=utcMs();auto candidate=*explorer_;
+                candidate.resetExploration(utc);
+                auto backup=options_.snapshot;backup+=L".reset-backup";
+                saveSnapshot(backup,explorer_->state());
+                saveSnapshot(options_.snapshot,candidate.state());
+                *explorer_=std::move(candidate);
+                if(paused_) pauseUtc_=utc;
+                settleNavigationReset(now);
+                log("navigation reset reason=manual backup="+backup.u8string());
+                break;
+            }
             case Loop: loop_ = true; startClip(now); break;
             case Finite: loop_ = false; startClip(now); break;
             case Stop: animator_.stop(); nextFrameDeadline_.reset(); log("explicit stop"); break;
@@ -477,6 +492,7 @@ class App {
     }
     LRESULT dispatch(UINT msg, WPARAM w, LPARAM l) {
         switch (msg) {
+            case WM_COMMAND: command(LOWORD(w)); return 0;
             case WM_MOUSEACTIVATE: return MA_NOACTIVATE;
             case WM_NCHITTEST: {
                 POINT p{GET_X_LPARAM(l), GET_Y_LPARAM(l)}; ScreenToClient(window_, &p);
@@ -601,6 +617,13 @@ class App {
         log("WTSRegisterSessionNotification OS=" + std::to_string(GetLastError()));
         sessionRetry_ = sessionAttempts_ < 3 ? now + 5000000 : 0;
     }
+    void settleNavigationReset(int64_t now) {
+        playerMotion_.reset(playerMotion_.sample(now));
+        actorMotions_.clear();actorAnimators_.clear();actorFrames_.clear();enemyAnimator_.stop();
+        completion_={};poseFinished_=false;clip_=gameplayClip(explorer_->state().gameplay);loop_=gameplayLoop(explorer_->state().gameplay);
+        exploreDeadline_=deadlineFromUtc(now,utcMs(),explorer_->state().gameplay.deadlineMs);
+        startClip(now);dirty_=true;
+    }
     void advanceExploration(int64_t now) {
         if (!explorer_ || blocked() || (now < exploreDeadline_ && !poseFinished_)) return;
         const int oldPosition = explorer_->state().position;
@@ -617,6 +640,9 @@ class App {
             exploreDeadline_=deadlineFromUtc(now,utcMs(),candidate.state().gameplay.deadlineMs);
             if (candidate.state().gameplay.life == LifePhase::ReturnHome) dirty_ = true;
             return;
+        }
+        if(event.event==GameplayEvent::ReturnHome && candidate.state().gameplay.onceKeys.count("navigation-reset:"+std::to_string(candidate.state().runId))) {
+            auto backup=options_.snapshot;backup+=L".reset-backup";saveSnapshot(backup,explorer_->state());
         }
         saveSnapshot(options_.snapshot, candidate.state());
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
@@ -666,6 +692,9 @@ class App {
         if (event.event == GameplayEvent::PlayerAttack || event.event == GameplayEvent::EnemyAttack)
             log("move355 damage=" + std::to_string(event.damage) + " critical=" + std::to_string(event.critical));
         if (event.event == GameplayEvent::HomeScene) log(std::string("life=HomeScene opaque original ")+(bedroomScene(g)?(nightScene(g)?"night bedroom":"day bedroom"):"dining map"));
+        if(event.event==GameplayEvent::ReturnHome && g.onceKeys.count("navigation-reset:"+std::to_string(explorer_->state().runId))) {
+            settleNavigationReset(now);log("navigation reset reason=repeated-joint-state");
+        }
         if(g.life==LifePhase::ReturnHome) dirty_=true;
         dirty_ = true;
     }

@@ -1,4 +1,5 @@
 #include "core/exploration.hpp"
+#include "core/exploration_package.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <map>
@@ -14,7 +15,23 @@ ExplorationState cycleFixture(){
  s.gameplay.enabled=true;s.gameplay.hostile={1};s.gameplay.hearts=2;s.gameplay.playerActionRound=s.gameplay.actionRound;
  return s;
 }
-int main(){try{
+int main(int argc,char** argv){try{
+ if(argc==4 && std::string(argv[1])=="--fixtures"){
+  const auto p=loadExplorationPackage(argv[2]);const std::filesystem::path output=argv[3];std::filesystem::create_directories(output);
+  auto s=cycleFixture();s.assetVersion=p.assetVersion;s.floors=p.floors;
+  saveSnapshot(output/"cycle.mdes",s);saveSnapshot(output/"manual.mdes",s);
+  Explorer observed(s);observed.advanceGameplay(1000);s.gameplay.navigationHistory=observed.state().gameplay.navigationHistory;
+  saveSnapshot(output/"watch.mdes",s);return 0;
+ }
+ if(argc==4 && std::string(argv[1])=="--inspect"){
+  const auto p=loadExplorationPackage(argv[2]);const auto s=loadSnapshot(argv[3],p.assetVersion);const auto& g=s.gameplay;
+  std::cout<<"{\"runId\":"<<s.runId<<",\"life\":\""<<lifeName(g.life)<<"\",\"day\":"<<g.day<<",\"hearts\":"<<g.hearts
+   <<",\"inventory\":"<<s.inventory.size()<<",\"completed\":"<<(s.completed?"true":"false")<<",\"meals\":"<<g.meals
+   <<",\"returnCount\":"<<g.onceKeys.count("return:"+std::to_string(s.runId))
+   <<",\"manualCount\":"<<g.onceKeys.count("manual-reset:"+std::to_string(s.runId))
+   <<",\"autoCount\":"<<g.onceKeys.count("navigation-reset:"+std::to_string(s.runId))
+   <<",\"movement\":"<<g.movement.actionId<<",\"history\":"<<g.navigationHistory.size()<<"}\n";return 0;
+ }
  Explorer e(cycleFixture());unsigned repeated=0;bool escaped=false;
  for(unsigned tick=0;tick<24;++tick){
   e.advanceGameplay(1000+tick*400,false);const auto& s=e.state();
@@ -41,6 +58,23 @@ int main(){try{
  for(size_t i=0;i<old.size()-4;++i){crc^=old[i];for(unsigned bit=0;bit<8;++bit)crc=(crc>>1)^((crc&1)?0xedb88320U:0);}
  crc=~crc;for(unsigned b=0;b<4;++b)old[old.size()-4+b]=uint8_t(crc>>(8*b));
  check(decodeSnapshot(old,"oscillation").gameplay.navigationHistory.empty(),"MDES5 did not initialize empty watch");
+ for(auto phase:{LifePhase::Explore,LifePhase::Combat,LifePhase::Dialogue}){
+  auto s=cycleFixture();s.population.entities.push_back({2,10,EntityKind::Item,s.position,true});
+  const std::string pickup="pickup:900:0:2";s.onceKeys.insert(pickup);s.inventory.push_back({pickup,10});
+  s.gameplay.life=phase;s.gameplay.enemyInstance=1;
+  if(phase==LifePhase::Combat){s.gameplay.combat=CombatPhase::EnemyAttack;s.gameplay.damage=1;s.gameplay.hit=true;
+   s.gameplay.onceKeys.insert("pending-hit:900:0:1:1");}
+  Explorer manual(s);check(manual.canResetExploration(),"active dungeon reset unavailable");
+  check(manual.resetExploration(1000).event==GameplayEvent::ReturnHome,"manual reset did not return home");
+  const auto& after=manual.state();
+  check(after.inventory.size()==1 && after.onceKeys.count(pickup) && !after.completed && after.gameplay.hearts==2 &&
+   after.gameplay.onceKeys.count("manual-reset:900") && after.gameplay.onceKeys.count("return:900") &&
+   !after.gameplay.onceKeys.count("pending-hit:900:0:1:1") && after.gameplay.movement.actionId==0,"reset lost committed progress or replayed pending damage");
+  manual=Explorer(decodeSnapshot(encodeSnapshot(after),"oscillation"));const auto durable=encodeSnapshot(manual.state());
+  check(!manual.canResetExploration() && manual.resetExploration(1001).event==GameplayEvent::None && encodeSnapshot(manual.state())==durable,"restored reset executed twice");
+  for(unsigned tick=0;tick<200 && manual.state().gameplay.day==1;++tick)manual.advanceGameplay(1000+tick*400,true);
+  check(manual.state().gameplay.day==2 && manual.state().inventory.size()==1 && manual.state().gameplay.meals==1,"reset failed to reach next day exactly once");
+ }
  auto invalid=cycleFixture();invalid.gameplay.navigationHistory.resize(33);bool rejected=false;
  try{encodeSnapshot(invalid);}catch(const std::exception&){rejected=true;}check(rejected,"unbounded watch accepted");
  // Sweep relative player/enemy geometry at low HP; restore after every action.

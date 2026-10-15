@@ -196,6 +196,7 @@ public:
     void enableGameplay(std::uint64_t utcMs);
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
     GameplayUpdate resetExploration(std::uint64_t utcMs, bool automatic = false);
+    bool canResetExploration() const;
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
 private:

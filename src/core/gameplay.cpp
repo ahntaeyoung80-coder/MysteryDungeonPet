@@ -107,10 +107,14 @@ GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate return transaction");
     return {GameplayEvent::ReturnHome, once};
 }
+bool Explorer::canResetExploration() const {
+    const auto& g=state_.gameplay;
+    return g.enabled && state_.phase==Phase::Explore &&
+        (g.life==LifePhase::Explore || g.life==LifePhase::Combat || g.life==LifePhase::Dialogue);
+}
 GameplayUpdate Explorer::resetExploration(std::uint64_t now,bool automatic) {
+    if(!canResetExploration()) return {};
     auto& g=state_.gameplay;
-    if(!g.enabled || state_.phase!=Phase::Explore ||
-       (g.life!=LifePhase::Explore && g.life!=LifePhase::Combat && g.life!=LifePhase::Dialogue)) return {};
     g.onceKeys.erase(pendingHit(state_)); // Cancel only the attack that has not committed damage yet.
     g.onceKeys.insert(std::string(automatic?"navigation-reset:":"manual-reset:")+std::to_string(state_.runId));
     g.movement={};g.walkStartedMs=0;g.navigationHistory.clear();g.playerHidden=false;
