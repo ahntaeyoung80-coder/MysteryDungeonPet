@@ -190,7 +190,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     if (schema >= 2) {
         auto& g = s.gameplay;
         g.enabled = r.boolean(); g.defeated = r.boolean(); g.homeScene = r.boolean();
-        g.life = static_cast<LifePhase>(r.count(schema>=3?10:8)); g.combat = static_cast<CombatPhase>(r.count(schema>=3?10:9));
+        g.life = static_cast<LifePhase>(r.count(schema>=3?10:8)); g.combat = static_cast<CombatPhase>(r.count(schema>=7?17:schema>=3?10:9));
         g.hearts = r.count(schema>=3?kMaxHp:3); g.oran = r.count(1); g.enemyHits = r.count(2); g.enemyInstance = r.count(kTiles); g.turn = r.u32();
         g.damage = r.count(2); g.meals = r.u32(); g.day = r.u32(); g.hit = r.boolean(); g.critical = r.boolean();
         g.phaseStartedMs = r.u64(); g.deadlineMs = r.u64();

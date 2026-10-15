@@ -334,7 +334,8 @@ bool Explorer::friendly(const Entity& e) const {
     return state_.gameplay.enabled && e.kind==EntityKind::Friend && e.visible &&
         std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end();
 }
-bool Explorer::lowHealth() const {return state_.gameplay.enabled && state_.gameplay.hearts<=kLowHp;}
+bool Explorer::lowHealth() const {const auto& g=state_.gameplay;return g.enabled && (g.hearts<=kLowHp || (g.companion.enabled && g.companion.hearts<=kLowHp));}
+bool Explorer::mustRetreat() const {const auto& g=state_.gameplay;return (g.hearts<=kLowHp && !g.oran) || (g.companion.enabled && g.companion.hearts<=kLowHp && !g.companion.oran);}
 Mask Explorer::occupancy(bool playerPath) const {
     auto mask=state_.blocked;
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && e.visible && (!e.done || (state_.gameplay.enabled && std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end()))) if(!playerPath || !friendly(e)) mask[e.tile]=1;
@@ -348,7 +349,7 @@ bool Explorer::enableCompanion() {
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Item && e.visible && !e.done) occupied[e.tile]=1;
     const int tile=companionSpawn(state_.world,state_.position,g.playerDirection,occupied);
     if(tile<0) return false;
-    g.companion.enabled=true;g.companion.tile=tile;g.companion.direction=directionBetween(tile,state_.position);
+    g.companion.enabled=true;g.companion.tile=tile;g.companion.direction=directionBetween(tile,state_.position);g.navigationHistory.clear();
     invalidate(false);++state_.occupancyVersion;return true;
 }
 int Explorer::friendlyVacateTile(const Entity& e,int next) const {
@@ -631,7 +632,7 @@ void validateState(const ExplorationState& s) {
     if(g.sceneBeat==SceneBeat::RoomExit) require(g.life==LifePhase::Ready && g.homeScene,"invalid bedroom exit");
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
     require(g.walkStartedMs<=g.phaseStartedMs,"invalid saved walking clock");
-    require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 10 &&
+    require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 17 &&
             g.hearts <= kMaxHp && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
     if(g.life==LifePhase::Dialogue) require(std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && e.kind==EntityKind::Friend && !e.done;}),"invalid dialogue owner");
@@ -688,6 +689,7 @@ void validateState(const ExplorationState& s) {
         }
     }
     require(!g.enemyTargetsCompanion || partner.enabled,"enemy targets absent companion");
+    require(static_cast<unsigned>(g.combat)<11 || g.combat==CombatPhase::PlayerApproach || partner.enabled,"companion combat without companion");
     require(s.world.version == static_cast<std::uint64_t>(s.floorIndex) + 1, "floor/grid version mismatch");
     require(s.world.walkable(s.position) && !s.blocked[s.position] && s.visited[s.position],
             "invalid explorer position");

@@ -109,7 +109,8 @@ struct InventoryEntry {
 constexpr std::uint32_t kMaxHp=5, kLowHp=2;
 constexpr std::uint32_t MOVE_REGULAR_ATTACK = 355, ITEM_ORAN_BERRY = 70;
 enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat, Death, Dialogue };
-enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat, PlayerFaint };
+enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat, PlayerFaint,
+    CompanionTurn, CompanionAttack, CompanionHurt, CompanionFaint, PlayerApproach, CompanionApproach, CompanionBerryText };
 enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit, ExplorationBerryText };
 enum class DialogueStage : std::uint8_t { Player, Npc };
 enum class DeathStage : std::uint8_t { FadeOut, Blackout };
@@ -145,7 +146,8 @@ struct GameplayState {
     bool enemyTargetsCompanion=false;
 };
 enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
-    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout, DialoguePlayer, DialogueNpc };
+    HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout, DialoguePlayer, DialogueNpc,
+    CompanionMove, CompanionAttack, CompanionFaint };
 struct GameplayUpdate {
     GameplayEvent event = GameplayEvent::None;
     std::string onceKey;
@@ -164,6 +166,8 @@ constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=1870;
 std::uint32_t gameplayClip(const GameplayState&);
 bool gameplayLoop(const GameplayState&);
 bool holdGameplayPose(const GameplayState&);
+std::uint32_t companionClip(const GameplayState&);
+bool companionLoop(const GameplayState&);
 // Shared attack roll: both sides hit 80%; only critical chance differs.
 struct AttackRoll { bool hit = false, critical = false; std::uint32_t damage = 0; };
 AttackRoll rollBasicAttack(Rng&, bool player);
@@ -229,6 +233,10 @@ private:
     Mask occupancy(bool playerPath = false) const;
     bool friendly(const Entity&) const;
     bool lowHealth() const;
+    bool mustRetreat() const;
+    int nearestPartyTile(const Entity&) const;
+    int combatApproach(const Entity&,bool companion) const;
+    GameplayUpdate healCompanion(std::uint64_t now);
     bool selectSurvival(const Search&);
     Mask playerOccupancy() const;
     void invalidate(bool clearTarget = true);
