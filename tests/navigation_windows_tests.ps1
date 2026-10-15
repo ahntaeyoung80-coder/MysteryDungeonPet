@@ -42,9 +42,21 @@ $Actions=@($Rows | Where-Object {$_.life -eq '0' -and $_.action_id -ne '0'} | Gr
 if($Actions.Count -lt 3){throw 'cycle movement not observed'}
 if(@($Actions | Where-Object {[int]$_.to_tile -notin @(102,125)}).Count -eq 0 -and
    @($Rows | Where-Object {$_.life -ne '0' -or $_.scene_beat -ne '0'}).Count -eq 0){throw 'diagonal chase/retreat cycle persists'}
-Finish (Launch 'watch' 3)
-$Automatic=Inspect "$Output/watch.mdes"
-if($Automatic.autoCount -ne 1 -or $Automatic.returnCount -ne 1 -or $Automatic.completed -or $Automatic.movement -ne 0 -or $Automatic.history -ne 0){throw 'automatic recovery did not return once without rewards/movement'}
+Copy-Item "$Output/watch.mdes" "$Output/watch-before.mdes"
+$WatchBefore=Inspect "$Output/watch-before.mdes"
+Finish (Launch 'watch' 1)
+$Detour=Inspect "$Output/watch.mdes"
+$DetourRows=@(Import-Csv "$Output/watch.csv")
+$FirstDetour=@($DetourRows | Where-Object {$_.life -eq '0' -and $_.action_id -ne '0'}) | Select-Object -First 1
+if(-not $FirstDetour -or [int]$FirstDetour.from_tile -ne 77 -or [int]$FirstDetour.to_tile -in @(77,102)) {throw 'persisted cycle did not choose a different adjacent direction'}
+if($Detour.autoCount -ne 0 -or $Detour.returnCount -ne 0 -or $Detour.completed -or
+ $Detour.runId -ne $WatchBefore.runId -or $Detour.floor -ne $WatchBefore.floor -or
+ $Detour.inventory -ne $WatchBefore.inventory -or (Test-Path "$Output/watch.mdes.reset-backup")){throw 'detour left the dungeon or reset committed progress'}
+Copy-Item "$Output/watch.csv" "$Output/watch-first-run.csv"
+Finish (Launch 'watch' 1)
+$DetourRestored=Inspect "$Output/watch.mdes"
+if($DetourRestored.returnCount -ne 0 -or $DetourRestored.autoCount -ne 0 -or
+ $DetourRestored.runId -ne $WatchBefore.runId -or $DetourRestored.floor -ne $WatchBefore.floor){throw 'restored detour returned or changed the run/floor'}
 $Process=$null
 try{
  $Process=Launch 'manual' 15
@@ -80,11 +92,11 @@ try{
  Finish (Launch 'manual' 4)
  $Restored=Inspect "$Output/manual.mdes"
  if($Restored.returnCount -ne 1 -or $Restored.manualCount -ne 1 -or $Restored.meals -ne 1 -or $Restored.day -ne 1){throw 'reset relaunch repeated return/meal or skipped lifecycle'}
- @($Automatic,$Backup,$Manual,$Restored)|ConvertTo-Json -Depth 5|Set-Content "$Output/reset-states.json"
+ @($WatchBefore,$Detour,$DetourRestored,$Backup,$Manual,$Restored)|ConvertTo-Json -Depth 5|Set-Content "$Output/reset-states.json"
 }finally{if($Process -and -not $Process.HasExited){$Process.Kill();$Process.WaitForExit()}}
 $Events=@(Get-Content $EventPath|Select-Object -Skip $Before)
 $Events|Set-Content "$Output/events.txt"
-if(($Events -join "`n") -notmatch 'navigation reset reason=repeated-joint-state' -or ($Events -join "`n") -notmatch 'navigation reset reason=manual'){throw 'recovery reason logs missing'}
-@{status='pass';cycle='original coupled chase/retreat escaped';automatic='repeated persisted joint state returned once';manual='context menu, backup, duplicate commands, durable return, relaunch and one meal';actualWindows11='not observed'}|
+if(($Events -join "`n") -notmatch 'navigation detour reason=repeated-joint-state' -or ($Events -join "`n") -match 'navigation reset reason=repeated-joint-state' -or ($Events -join "`n") -notmatch 'navigation reset reason=manual'){throw 'detour/manual reset reason logs invalid'}
+@{status='pass';cycle='original coupled chase/retreat escaped';automatic='persisted repeat chose another adjacent direction, stayed in same run/floor through relaunch, no automatic return';manual='context menu, backup, duplicate commands, durable return, relaunch and one meal';actualWindows11='not observed'}|
  ConvertTo-Json|Set-Content "$Output/summary.json"
 Get-Content -Raw "$Output/summary.json"
