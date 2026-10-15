@@ -183,7 +183,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
                 event(GameplayEvent::CombatDefeat,v.actorId,0,v.id);break;
             }
             if(auto* e=entity(v.actorId);e && !e->done) {
-                e->done=true;s.onceKeys.insert(key("greet",e->instanceId));
+                e->done=true;s.stalledActions=0;s.onceKeys.insert(key("greet",e->instanceId));
                 g.onceKeys.insert("victory:"+key("combat",e->instanceId));
                 invalidate(s.targetInstance==e->instanceId);
                 event(GameplayEvent::CombatVictory,e->instanceId,0,v.id);
@@ -238,6 +238,11 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         if(!actor) {
             g.movement=record;if(!g.walkStartedMs)g.walkStartedMs=now;
         } else if(actor==kCompanionActorId) {
+            for(auto& npc:s.population.entities)if(friendly(npc) && npc.tile==to) {
+                npc.tile=from;npc.direction=directionBetween(to,from);npc.actionRound=g.actionRound;
+                npc.movement={g.actionRound,now,400,npc.direction,to,from};++s.occupancyVersion;
+                event(GameplayEvent::ActorMove,npc.instanceId,0,action);
+            }
             g.companion.tile=to;g.companion.movement=record;
             if(!g.companion.walkStartedMs)g.companion.walkStartedMs=now;
             ++s.occupancyVersion;
@@ -277,8 +282,9 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     };
     auto approach=[&](uint32_t actor,int target)->int {
         const int from=position(actor);
-        auto blocked=occupancy();blocked[s.position]=1;
-        blocked[g.companion.tile]=1;blocked[from]=0;
+        auto blocked=occupancy();
+        for(const auto& npc:s.population.entities)if(friendly(npc) && !s.blocked[npc.tile])blocked[npc.tile]=0;
+        blocked[s.position]=1;blocked[g.companion.tile]=1;blocked[from]=0;
         const auto reach=bfs(s.world,from,blocked);
         int goal=-1,best=kTiles+1;
         for(int tile=0;tile<kTiles;++tile) {
@@ -374,9 +380,14 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             else {const auto action=start(0,PartyActionKind::Wait,0,400);event(GameplayEvent::Wait,0,0,action);}
             return;
         }
-        if(s.goalKind==GoalKind::Friend) {
-            auto* npc=entity(s.targetInstance);
-            if(npc && friendly(*npc) && !npc->done && canAttack(s.world,s.position,npc->tile)) {
+        {
+            const int next=detour>=0?detour:(!path_.empty()?path_.front():-1);
+            auto found=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& npc) {
+                return friendly(npc) && !npc.done && canAttack(s.world,s.position,npc.tile) &&
+                    ((s.goalKind==GoalKind::Friend && s.targetInstance==npc.instanceId) || npc.tile==next);
+            });
+            auto* npc=found==s.population.entities.end()?nullptr:&*found;
+            if(npc) {
                 start(0,PartyActionKind::Wait,0,0);
                 g.enemyInstance=npc->instanceId;g.dialogueStage=DialogueStage::Player;
                 g.playerDirection=directionBetween(s.position,npc->tile);
@@ -385,6 +396,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             }
         }
         const int from=s.position,oldPartner=g.companion.tile;
+        const auto oldActors=s.population.entities;
         const auto step=detour>=0?moveTo(detour):advance();
         if(step.kind==EventKind::ReturnedHome && !s.completed) {
             s.phase=Phase::Explore;invalidate();
@@ -394,6 +406,11 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         }
         if(step.kind==EventKind::Move) {
             move(0,from,s.position);
+            for(size_t i=0;i<s.population.entities.size();++i) {
+                auto& npc=s.population.entities[i];const auto& previous=oldActors[i];
+                if(friendly(npc) && npc.tile!=previous.tile)
+                    npc.movement={g.actionRound,now,400,npc.direction,previous.tile,npc.tile};
+            }
             if(g.companion.tile!=oldPartner)move(kCompanionActorId,oldPartner,g.companion.tile);
             result.navigationDetour=detour>=0;return;
         }
@@ -461,6 +478,12 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             g.partyPhase=PartyPhase::Allies;changed=true;
         }
         if(g.partyPhase==PartyPhase::Allies) {
+            if(g.companionIntent==CompanionIntent::Follow && available(kCompanionActorId) &&
+               consumed(kCompanionActorId)!=g.actionRound && !partyPlayback(g,kCompanionActorId)) {
+                if(const auto foe=nearestEnemy(kCompanionActorId,true)) {
+                    g.companionIntent=CompanionIntent::Engage;g.companionTarget=foe;changed=true;
+                }
+            }
             planPlayer();
             if(g.life==LifePhase::Dialogue || g.life==LifePhase::Pose)return result;
             planCompanion();

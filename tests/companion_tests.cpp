@@ -71,6 +71,16 @@ void combatCases(){
 int main(int argc,char** argv){try{
  if(argc==2 && std::string(argv[1])=="--party-ai-followup")
   return party_ai_regression::run(companionFixture())?1:0;
+ if(argc==4 && std::string(argv[1])=="--party-fixtures") {
+  const auto package=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];
+  std::filesystem::create_directories(out);
+  auto s=party_ai_regression::corridor(companionFixture());auto& g=s.gameplay;
+  s.assetVersion=package.assetVersion;s.floors=package.floors;
+  s.population.entities[0].remainingHits=1;
+  const auto now=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+  g.phaseStartedMs=now;g.deadlineMs=now+1000;party_ai_regression::forceHit(s);
+  saveSnapshot(out/"two-sided.mdes",s);return 0;
+ }
  if(argc==4 && std::string(argv[1])=="--fixtures") {
   const auto package=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];std::filesystem::create_directories(out);
   const auto now=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());

@@ -286,7 +286,18 @@ class App {
         movementTrace_ << ',' << (partner==guildLive_.end()?0:partner->clip) << ',' << (partner==guildLive_.end()?0:partner->frame) << ',' << light;
         const auto& p=g.companion;const auto point=companionMotion_.sample(now);
         movementTrace_ << ',' << p.enabled << ',' << p.tile << ',' << point.x << ',' << point.y << ',' << companionClip_ << ',' << companionFrame_ << ',' << companionMotion_.active(now)
-            << ',' << g.hearts << ',' << p.hearts << ',' << g.actionRound << ',' << g.playerActionRound << ',' << p.actionRound << ',' << g.enemyTargetsCompanion << ',' << static_cast<unsigned>(g.combat) << '\n';
+            << ',' << g.hearts << ',' << p.hearts << ',' << g.actionRound << ',' << g.playerActionRound << ',' << p.actionRound << ',' << g.enemyTargetsCompanion << ',' << static_cast<unsigned>(g.combat)
+            << ',' << g.independentParty << ',' << static_cast<unsigned>(g.partyPhase)
+            << ',' << partyPlayerToken_ << ',' << partyCompanionToken_ << ',';
+        bool firstActor=true;
+        for(const auto& e:state.population.entities) if(e.kind==EntityKind::Friend && e.visible &&
+            (!e.done || std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end())) {
+            if(!firstActor)movementTrace_ << ';';firstActor=false;
+            movementTrace_ << e.instanceId << ':' << e.tile << ':'
+                << (partyRendering()?partyActorClips_[e.instanceId]:7) << ':'
+                << actorFrames_[e.instanceId] << ':' << partyActorTokens_[e.instanceId];
+        }
+        movementTrace_ << '\n';
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
     }
@@ -669,7 +680,9 @@ class App {
         auto sync=[&](uint32_t actor,const Assets& source,Animator& animator,
                       auto& clip,auto& facing,auto& frame,auto& token) {
             const auto* v=partyPlayback(g,actor);
-            const auto wanted=partyClip(g,actor);
+            auto wanted=partyClip(g,actor);
+            if(!v && actor!=0 && actor!=kCompanionActorId &&
+               actorMotions_.count(actor) && actorMotions_.at(actor).active(now))wanted=0;
             const auto actual=actor!=0 && actor!=kCompanionActorId?npcClip(wanted):wanted;
             const unsigned dir=v?v->direction:actor==0?g.playerDirection:
                 actor==kCompanionActorId?g.companion.direction:
@@ -968,7 +981,7 @@ class App {
                     const auto& g = state.gameplay;
                     const bool active = !partyRendering() && (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && e.instanceId == g.enemyInstance;
                     const bool moving=actorMotions_.count(e.instanceId)&&actorMotions_.at(e.instanceId).active(now);
-                    const auto& f = enemyAssets_->package.frames(partyRendering()?npcClip(partyClip(g,e.instanceId)):active?enemyClip_:moving?0:7, active?enemyDirection_:e.direction)[partyRendering()?actorFrames_[e.instanceId]:active?enemyFrame_:moving?actorFrames_[e.instanceId]:0];
+                    const auto& f = enemyAssets_->package.frames(partyRendering()?partyActorClips_[e.instanceId]:active?enemyClip_:moving?0:7, active?enemyDirection_:e.direction)[partyRendering()?actorFrames_[e.instanceId]:active?enemyFrame_:moving?actorFrames_[e.instanceId]:0];
                     const auto world=actorMotions_.count(e.instanceId)?raster(actorMotions_.at(e.instanceId).sample(now)):raster(tilePoint(e.tile));
                     if(showFriendlyDisc(g,std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end(),false)) addDisc(layers,f,world);
                     layers.push_back({enemyAssets_->atlas.get(), f.rect, f.anchor, world});
@@ -1044,7 +1057,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");

@@ -304,7 +304,25 @@ inline unsigned run(const ExplorationState& base) {
         require(e.state().gameplay.life==LifePhase::Explore,"legacy encounter did not finish");
         e.enableCompanion();require(e.state().gameplay.independentParty,"finished legacy encounter did not upgrade");
     });
-    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=12"<<std::endl;
+    test("R12_party_greets_and_passes_a_friendly_corridor",[&] {
+        auto s=party(base);
+        for(int tile=0;tile<kTiles;++tile)
+            if(s.world.walkable(tile) && (tile/kWidth!=5 || tile%kWidth<3 || tile%kWidth>9))
+                s.blocked[tile]=1;
+        s.population.entities={{1,4,EntityKind::Friend,126,false},{2,10,EntityKind::Item,128,false}};
+        Explorer e(s);uint64_t now=1000;bool greeted=false;
+        for(unsigned tick=0;tick<64 && e.state().inventory.empty();++tick) {
+            const auto event=restoredStep(e,now);
+            greeted=greeted || event.event==GameplayEvent::DialoguePlayer;
+            require(e.state().phase==Phase::Explore && e.state().position!=e.state().gameplay.companion.tile,
+                    "friendly corridor returned home or overlapped the party");
+            now=nextTime(e,now);
+        }
+        require(greeted && e.state().inventory.size()==1 &&
+                e.state().onceKeys.count("greet:"+std::to_string(s.runId)+":0:1"),
+                "party could not greet and pass the corridor NPC");
+    });
+    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=13"<<std::endl;
     return failures;
 }
 } // namespace party_ai_regression

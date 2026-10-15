@@ -367,6 +367,7 @@ bool Explorer::enableCompanion() {
     invalidate(false);++state_.occupancyVersion;return true;
 }
 int Explorer::friendlyVacateTile(const Entity& e,int next) const {
+    if(state_.gameplay.independentParty && canMove(state_.world,e.tile,state_.position,state_.blocked))return state_.position;
     if(!state_.gameplay.companion.enabled) return state_.position;
     auto occupied=occupancy();occupied[state_.position]=1;occupied[next]=1;
     const auto forward=directionBetween(state_.position,e.tile);

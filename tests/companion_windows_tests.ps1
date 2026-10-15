@@ -8,7 +8,8 @@ New-Item -ItemType Directory -Force $Output|Out-Null
 $Output=[IO.Path]::GetFullPath($Output)
 function Run([string]$Name,[int]$Seconds){
  $Dir=Join-Path $Output $Name
- & $Tests --fixtures $Package $Dir
+ if($Name -eq 'two-sided'){ & $Tests --party-fixtures $Package $Dir }
+ else { & $Tests --fixtures $Package $Dir }
  if($LASTEXITCODE -ne 0){throw 'party fixtures failed'}
  $ArgsForApp=@('--explore',"`"$Package`"",'--snapshot',"`"$Dir/$Name.mdes`"",'--duration',$Seconds,
   '--metrics',"`"$Dir/metrics.csv`"",'--movement-trace',"`"$Dir/trace.csv`"")
@@ -22,9 +23,10 @@ function Run([string]$Name,[int]$Seconds){
   if($Row.life -in @('0','1','8','10')) {
    $Dx=[math]::Abs(([int]$Row.player_tile%24)-([int]$Row.companion_tile%24))
    $Dy=[math]::Abs([math]::Floor([int]$Row.player_tile/24)-[math]::Floor([int]$Row.companion_tile/24))
-   if($Dx -gt 1 -or $Dy -gt 1 -or ($Dx -eq 0 -and $Dy -eq 0)){throw 'logical party radius/overlap failed'}
-   if([math]::Abs([double]$Row.world_x-[double]$Row.companion_world_x) -gt 24.01 -or
-      [math]::Abs([double]$Row.world_y-[double]$Row.companion_world_y) -gt 24.01){throw 'rendered party exceeded one-tile radius'}
+   if($Dx -eq 0 -and $Dy -eq 0){throw 'logical party overlap failed'}
+   if(($Name -eq 'follow' -or $Row.independent_party -ne '1') -and ($Dx -gt 1 -or $Dy -gt 1)){throw 'legacy/follow party radius failed'}
+   if(($Name -eq 'follow' -or $Row.independent_party -ne '1') -and ([math]::Abs([double]$Row.world_x-[double]$Row.companion_world_x) -gt 24.01 -or
+      [math]::Abs([double]$Row.world_y-[double]$Row.companion_world_y) -gt 24.01)){throw 'rendered party exceeded one-tile radius'}
   }
  }
  & $Tests --inspect $Package "$Dir/$Name.mdes"|Set-Content "$Dir/state.json"
@@ -46,6 +48,19 @@ $Faint=@(Run 'faint' 7)
 if(@($Faint|Where-Object {$_.companion_clip -eq '33' -and $_.combat -eq '14'}).Count -lt 2 -or
  @($Faint|Where-Object {$_.life -eq '9'}).Count -lt 2){throw 'companion Faint33/death not presented'}
 # Compare the actual submitted body pixels with the retained original packages.
+$Two=Run 'two-sided' 6
+$Both=@($Two|Where-Object {
+ $_.independent_party -eq '1' -and $_.clip -eq '1' -and $_.companion_clip -eq '1' -and
+ [uint64]$_.player_party_action -gt 0 -and [uint64]$_.companion_party_action -gt 0 -and
+ $_.player_party_action -ne $_.companion_party_action
+})
+if($Both.Count -lt 2){throw 'independent player and companion attacks were not presented together'}
+$Surviving=@($Two|Where-Object {
+ $_.actor_states -notmatch '(^|;)1:' -and $_.actor_states -match '(^|;)2:' -and $_.clip -eq '1'
+})
+if($Surviving.Count -lt 2){throw 'right-side player attack stopped after left enemy removal'}
+@{status='pass';simultaneousSubmittedFrames=$Both.Count;afterLeftRemovalFrames=$Surviving.Count}|
+ ConvertTo-Json|Set-Content -Encoding UTF8 "$Output/two-sided-result.json"
 python tools/check_party_render.py --inspector $Inspector --output $Output
 if($LASTEXITCODE -ne 0){throw 'party original body pixels differ'}
 @{status='pass';follow='one tile; independent Walk0/motion';combat='Attack1, nearest companion Hurt6, Faint33/death';
