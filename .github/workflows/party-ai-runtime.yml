@@ -1,0 +1,117 @@
+name: Build and verify party AI Windows runtime
+on:
+  push:
+    branches: [fix/party-ai-runtime]
+permissions:
+  contents: read
+concurrency:
+  group: party-ai-runtime-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build the tracked runtime from this source
+        shell: pwsh
+        run: |
+          cmake -S . -B build/windows -A x64
+          if ($LASTEXITCODE -ne 0) { throw 'configure failed' }
+          cmake --build build/windows --config Release --target MysteryDungeonPet
+          if ($LASTEXITCODE -ne 0) { throw 'runtime build failed' }
+          python tools/check_windows_runtime.py --refresh-from build/windows/Release/MysteryDungeonPet.exe --compiler "MSVC x64 Release (GitHub Actions Windows)"
+          if ($LASTEXITCODE -ne 0) { throw 'runtime refresh failed' }
+      - name: Verify native core, GUI, installed and tracked runtime
+        shell: pwsh
+        run: ./tools/run_windows_checks.ps1
+      - name: Record outstanding follow-up requirements
+        id: followup
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          & build/windows/Release/pet_companion_tests.exe --party-ai-followup 2>&1 | Tee-Object build/windows/party-ai-followup.txt
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: party-ai-built-runtime
+          path: |
+            MysteryDungeonPet.exe
+            windows-runtime.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: party-ai-windows-validation
+          path: |
+            build/windows/Testing/Temporary/LastTest.log
+            build/windows/party-ai-followup.txt
+            build/windows/wic-results/*
+            build/windows/companion-results/**
+            build/windows/movement-results/*
+            build/windows/navigation-results/*
+            build/windows/entry-results/*
+            build/windows/exploration-results/**
+            build/windows/playback-results/**
+          if-no-files-found: warn
+  core:
+    needs: windows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: party-ai-built-runtime
+          path: .
+      - run: python tools/check_windows_runtime.py
+      - run: python tools/make_fixture.py --check
+      - run: cmake -S . -B build/linux -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
+      - run: cmake --build build/linux
+      - run: ctest --test-dir build/linux --output-on-failure
+      - run: python -m pip install -r requirements-offline.txt
+      - run: python -m unittest discover -s tests -v
+        env:
+          PET_PACKAGE_INSPECT: ${{ github.workspace }}/build/linux/pet_package_inspect
+          PET_EXPLORE: ${{ github.workspace }}/build/linux/pet_explore
+  publish-runtime:
+    needs: [windows, core]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: party-ai-built-runtime
+          path: .
+      - name: Check this binary and advance only the unchanged work branch
+        shell: bash
+        run: |
+          python tools/check_windows_runtime.py
+          git fetch origin fix/party-ai-runtime
+          task_remote_ref=$(git rev-parse origin/fix/party-ai-runtime)
+          if [ "$task_remote_ref" != "$GITHUB_SHA" ]; then
+            echo "Branch advanced during verification; leave the newer work unchanged."
+            exit 1
+          fi
+          git add MysteryDungeonPet.exe windows-runtime.json
+          if git diff --cached --quiet; then
+            echo "Verified runtime already matches the tracked files."
+            exit 0
+          fi
+          git config --local user.name 'github-actions[bot]'
+          git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "build: refresh verified Windows runtime [skip ci]"
+          git push origin HEAD:refs/heads/fix/party-ai-runtime
