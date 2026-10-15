@@ -1,0 +1,75 @@
+252499901 exploration snapshot=restored day=1 runId=900
+252502920 initial session flags=1
+252507804 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+252507843 mode=automatic-exploration
+252507867 select clip=7 direction=0 loop=1
+252507901 power=32787
+252510192 select clip=0 direction=1 loop=1
+252511717 show
+254158513 select clip=7 direction=4 loop=1
+254158566 life=Combat combat=EnemyTurn day=1 hearts=2 sceneBeat=0 dialogueStage=0
+254522235 select clip=7 direction=4 loop=1
+254522290 gameplay onceKey=enemy:900:0:1:5
+254522310 life=Combat combat=EnemyAttack day=1 hearts=2 sceneBeat=0 dialogueStage=0
+254522324 move355 damage=0 critical=0
+254935462 select clip=7 direction=4 loop=1
+254935504 life=Explore combat=EnemyAttack day=1 hearts=2 sceneBeat=0 dialogueStage=0
+254949469 select clip=0 direction=7 loop=1
+257829881 select clip=7 direction=6 loop=1
+257829930 life=Combat combat=EnemyTurn day=1 hearts=2 sceneBeat=0 dialogueStage=0
+258193752 select clip=7 direction=6 loop=1
+258193825 gameplay onceKey=enemy:900:0:1:12
+258193841 life=Combat combat=EnemyAttack day=1 hearts=2 sceneBeat=0 dialogueStage=0
+258193854 move355 damage=1 critical=0
+258620348 select clip=6 direction=6 loop=0
+258620393 life=Combat combat=PlayerHurt day=1 hearts=1 sceneBeat=0 dialogueStage=0
+258792924 finite finished assetKey=rom:EoS_NA:md:1
+258810546 select clip=7 direction=6 loop=1
+258810578 life=Explore combat=PlayerHurt day=1 hearts=1 sceneBeat=0 dialogueStage=0
+258826433 select clip=0 direction=3 loop=1
+260529452 exit submissions=378 decodes=5 switches=0
+260591289 exploration snapshot=restored day=1 runId=900
+260594369 initial session flags=1
+260600337 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+260600379 mode=automatic-exploration
+260600400 select clip=7 direction=0 loop=1
+260600436 power=32787
+260603235 select clip=7 direction=0 loop=1
+260603274 gameplay onceKey=return:900
+260603302 life=ReturnHome combat=PlayerTurn day=1 hearts=2 sceneBeat=0 dialogueStage=0
+260603323 select clip=7 direction=0 loop=1
+260603341 navigation reset reason=repeated-joint-state
+260605422 show
+261356062 life=HomeScene opaque original dining map
+261361733 guild room=GuildDining characters=12 objectCount=1
+262115304 select clip=15 direction=0 loop=1
+262115356 gameplay onceKey=meal:900
+262115372 life=Eat combat=PlayerTurn day=1 hearts=2 sceneBeat=1 dialogueStage=0
+262115390 guild room=GuildDining characters=12 objectCount=1
+263610352 exit submissions=156 decodes=16 switches=0
+263660399 exploration snapshot=restored day=1 runId=900
+263663497 initial session flags=1
+263668393 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+263668432 mode=automatic-exploration
+263668457 select clip=7 direction=0 loop=1
+263668491 power=32787
+263670471 select clip=0 direction=1 loop=1
+263672064 show
+263762256 select clip=7 direction=1 loop=1
+263762305 navigation reset reason=manual backup=D:\a\MysteryDungeonPet\MysteryDungeonPet\build\windows\navigation-results/manual.mdes.reset-backup
+263952307 exit submissions=11 decodes=5 switches=0
+264021687 exploration snapshot=restored day=1 runId=900
+264025120 initial session flags=1
+264030125 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+264030164 mode=automatic-exploration
+264030189 select clip=7 direction=1 loop=1
+264030235 power=32787
+264032271 show
+264512150 select clip=7 direction=0 loop=1
+264512213 life=HomeScene opaque original dining map
+264517840 guild room=GuildDining characters=12 objectCount=1
+265263299 select clip=15 direction=0 loop=1
+265263352 gameplay onceKey=meal:900
+265263367 life=Eat combat=PlayerTurn day=1 hearts=2 sceneBeat=1 dialogueStage=0
+265263386 guild room=GuildDining characters=12 objectCount=1
+268043416 exit submissions=189 decodes=16 switches=0

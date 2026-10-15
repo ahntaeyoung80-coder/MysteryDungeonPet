@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-15",
+  "status": "pass",
+  "branch": "work",
+  "testedCodeCommit": "605c30051918a8ded452931db20e93948626dd1d",
+  "cause": "저체력 안전 경로와 적 추적의 동반 역주행; 이동 성공으로 기존 실패 횟수 감지 우회",
+  "fix": "동반 역주행 시 실제 점유 기반 재계획, 최근32개 진행 상태 저장/반복 시 자동 귀가, 백업 후 수동 Reset",
+  "local": {
+    "release": "10/10, 15.07s",
+    "sanitizers": "10/10, 130.03s; final recovery test 1/1, 4.70s",
+    "python": "26/26, 6.847s, no skips",
+    "recoveryLayouts": 200,
+    "saveWriter": "MDES6",
+    "saveReaders": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "ci": {
+    "run": 38674804212,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38674804212",
+    "coreJob": 116225867390,
+    "windowsJob": 116225867253,
+    "core": "success; ASan/UBSan10/10, 180.76s; Python26/26,16.033s",
+    "windows": "success; Server2025/MSVC19.51 native11/11,16.53s",
+    "movementCases": 31,
+    "composedFrames": 2341,
+    "submittedFrames": 2082,
+    "navigation": {
+      "actualWindows11": "not observed",
+      "manual": "context menu, backup, duplicate commands, durable return, relaunch and one meal",
+      "cycle": "original coupled chase/retreat escaped",
+      "status": "pass",
+      "automatic": "repeated persisted joint state returned once"
+    }
+  },
+  "artifact": {
+    "id": 11946375501,
+    "name": "windows-check-results",
+    "sha256": "9e7f883847ed1feae54dc977748636b04e98ff5c0566d20cd480b5ed1b363f0b"
+  },
+  "runtime": {
+    "exeSha256": "99ff7d9fcef832bde201b776205eb9d1190d2185dd6e2bd05f833ebe6b2eea1e",
+    "manifestSha256": "d16d456f276a98eb8d7480cb6b510db98354a26599b5f436714fe60de5357a74",
+    "sourceAndAssetsHashCheck": "pass"
+  },
+  "limits": [
+    "실제 사용자 Windows11 화면은 미관측",
+    "OS 사건·장기 성능은 별도 범위"
+  ],
+  "evidenceSha256": {
+    "docs/validation/2026-10-15-navigation-windows/cycle.csv": "c84884566e8369418eea56a25c311b605ff6eb9c127101dfbda5edf3f232720d",
+    "docs/validation/2026-10-15-navigation-windows/events.txt": "5ec4ccb18d5d389539f4bab9ef541dc52b513b97ccef76d76d6cc439a3c55bfc",
+    "docs/validation/2026-10-15-navigation-windows/existing-default-launch-default-launch.json": "606b45383234f56db6b4724d2a546fec2416097acf006740212f4f0c46ea35d7",
+    "docs/validation/2026-10-15-navigation-windows/existing-gameplay-combat-result.json": "9b634de33040c591ab6351a38530631a7a267dbb1af37ca77b71837a642cbede",
+    "docs/validation/2026-10-15-navigation-windows/existing-gameplay-life-result.json": "2027a0a1d65637ede10d04933d9d9e649ee149f313ea981f4d72400dfe2eb5ca",
+    "docs/validation/2026-10-15-navigation-windows/existing-pull-launch-default-launch.json": "606b45383234f56db6b4724d2a546fec2416097acf006740212f4f0c46ea35d7",
+    "docs/validation/2026-10-15-navigation-windows/manual.csv": "b22c60cab0334406515eca9768a7cf354a990cbe71ab4ce1e201d24bbd7df549",
+    "docs/validation/2026-10-15-navigation-windows/manual.mdes": "788190f390ce61ce1c0ba5e969fe2a3d0f7dee606fda94a0ac09e94f9e4e4dab",
+    "docs/validation/2026-10-15-navigation-windows/manual.mdes.reset-backup": "5bd311614fed4fe49b2fc9613091ff349da85c3df902587f8c48ae320f01c478",
+    "docs/validation/2026-10-15-navigation-windows/movement-summary.json": "7c615ab3ce51b8dbc44a30ec90ad31be96aa5405cc0e8a60447d721066f0122c",
+    "docs/validation/2026-10-15-navigation-windows/reset-menu.txt": "d4833326da3e76b47195375a5b21f12db253cfeb5d2f43f58b05c545438273c2",
+    "docs/validation/2026-10-15-navigation-windows/reset-states.json": "b86a53a3d3e95ac47e2c19070f54217aba649041cf2dd2f9702f99733b53b00d",
+    "docs/validation/2026-10-15-navigation-windows/summary.json": "ffe362abac7bb7ab8b28fb5ce597e083281c5aecf11278155d9544e2e392cfc6",
+    "docs/validation/2026-10-15-navigation-windows/watch.csv": "c9b317ea151d79ebae23f43bef9dd3f78815900c6be781b30d00be1bbc2772df",
+    "docs/validation/2026-10-15-navigation-windows/watch.mdes": "3d15edd77941d9fb745d5f3ab30ec00289b1f8c444a1932655ea8e3fb2aa9ec6",
+    "docs/validation/2026-10-15-navigation-windows/watch.mdes.reset-backup": "c9003cb62b5c8e50f01d5bbdd40a8fe63fa9fc946bc27aad16a29333ee9912ba"
+  }
+}

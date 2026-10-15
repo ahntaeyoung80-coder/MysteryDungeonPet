@@ -1,0 +1,99 @@
+2026-10-15T03:10:25.2085802Z   gameplay.cpp
+2026-10-15T03:10:26.3611277Z   gameplay_scene.cpp
+2026-10-15T03:11:01.1042213Z   gameplay_tests.cpp
+2026-10-15T03:11:02.0478694Z   (compiling source file '../../tests/gameplay_tests.cpp')
+2026-10-15T03:11:02.0481591Z           D:\a\MysteryDungeonPet\MysteryDungeonPet\tests\gameplay_tests.cpp(258,38):
+2026-10-15T03:11:02.1263607Z   (compiling source file '../../tests/gameplay_tests.cpp')
+2026-10-15T03:11:02.1267244Z           D:\a\MysteryDungeonPet\MysteryDungeonPet\tests\gameplay_tests.cpp(258,38):
+2026-10-15T03:11:07.5702124Z   movement_tests.cpp
+2026-10-15T03:11:10.2150501Z   navigation_recovery_tests.cpp
+2026-10-15T03:11:23.9578223Z       Start  1: pet_navigation_recovery_tests
+2026-10-15T03:11:24.5562051Z  1/11 Test  #1: pet_navigation_recovery_tests ....   Passed    0.59 sec
+2026-10-15T03:11:25.0370526Z  2/11 Test  #2: pet_camera_tests .................   Passed    0.48 sec
+2026-10-15T03:11:25.0375380Z       Start  3: pet_movement_tests
+2026-10-15T03:11:25.2144360Z  3/11 Test  #3: pet_movement_tests ...............   Passed    0.18 sec
+2026-10-15T03:11:25.2360545Z  4/11 Test  #4: pet_survival_tests ...............   Passed    0.02 sec
+2026-10-15T03:11:25.2510144Z  5/11 Test  #5: pet_revision_tests ...............   Passed    0.01 sec
+2026-10-15T03:11:25.2666672Z  6/11 Test  #6: pet_improvement_tests ............   Passed    0.01 sec
+2026-10-15T03:11:25.2670942Z       Start  7: pet_gameplay_tests
+2026-10-15T03:11:30.3834739Z  7/11 Test  #7: pet_gameplay_tests ...............   Passed    5.12 sec
+2026-10-15T03:11:39.8799388Z  8/11 Test  #8: pet_exploration_tests ............   Passed    9.50 sec
+2026-10-15T03:11:40.3034244Z  9/11 Test  #9: pet_core_tests ...................   Passed    0.42 sec
+2026-10-15T03:11:40.3139784Z 10/11 Test #10: pet_package_playback .............   Passed    0.01 sec
+2026-10-15T03:11:40.4533091Z 11/11 Test #11: pet_text_overlay_tests ...........   Passed    0.14 sec
+2026-10-15T03:11:40.4543045Z 100% tests passed out of 11
+2026-10-15T03:11:40.4544049Z Total Test time (real) =  16.53 sec
+2026-10-15T03:12:19.8436428Z   "manual": "context menu, backup, duplicate commands, durable return, relaunch and one meal",
+2026-10-15T03:15:14.2398316Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay
+2026-10-15T03:15:14.2403595Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors
+2026-10-15T03:15:14.2414703Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/asset-0
+2026-10-15T03:15:14.2421277Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/asset-0/asset.mdpa
+2026-10-15T03:15:14.2430115Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/asset-0/atlas.png
+2026-10-15T03:15:14.2436169Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/asset-0/CREDITS.txt
+2026-10-15T03:15:14.2441132Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/asset-1
+2026-10-15T03:15:14.2448907Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/asset-1/asset.mdpa
+2026-10-15T03:15:14.2457076Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/asset-1/atlas.png
+2026-10-15T03:15:14.2462812Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/asset-1/CREDITS.txt
+2026-10-15T03:15:14.2468248Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/actors/runtime-index.json
+2026-10-15T03:15:14.2472979Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild
+2026-10-15T03:15:14.2478958Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-101
+2026-10-15T03:15:14.2485406Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-101/asset.mdpa
+2026-10-15T03:15:14.2491636Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-101/atlas.png
+2026-10-15T03:15:14.2496878Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-101/CREDITS.txt
+2026-10-15T03:15:14.2501673Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-109
+2026-10-15T03:15:14.2508350Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-109/asset.mdpa
+2026-10-15T03:15:14.2514081Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-109/atlas.png
+2026-10-15T03:15:14.2519158Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-109/CREDITS.txt
+2026-10-15T03:15:14.2523714Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-115
+2026-10-15T03:15:14.2530410Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-115/asset.mdpa
+2026-10-15T03:15:14.2535456Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-115/atlas.png
+2026-10-15T03:15:14.2540082Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-115/CREDITS.txt
+2026-10-15T03:15:14.2544381Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-119
+2026-10-15T03:15:14.2550601Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-119/asset.mdpa
+2026-10-15T03:15:14.2555778Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-119/atlas.png
+2026-10-15T03:15:14.2560399Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-119/CREDITS.txt
+2026-10-15T03:15:14.2564676Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-124
+2026-10-15T03:15:14.2570952Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-124/asset.mdpa
+2026-10-15T03:15:14.2576023Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-124/atlas.png
+2026-10-15T03:15:14.2580631Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-124/CREDITS.txt
+2026-10-15T03:15:14.2584801Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-131
+2026-10-15T03:15:14.2591123Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-131/asset.mdpa
+2026-10-15T03:15:14.2596147Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-131/atlas.png
+2026-10-15T03:15:14.2600921Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-131/CREDITS.txt
+2026-10-15T03:15:14.2608400Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-133
+2026-10-15T03:15:14.2617338Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-133/asset.mdpa
+2026-10-15T03:15:14.2622647Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-133/atlas.png
+2026-10-15T03:15:14.2628204Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-133/CREDITS.txt
+2026-10-15T03:15:14.2632609Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-79
+2026-10-15T03:15:14.2638292Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-79/asset.mdpa
+2026-10-15T03:15:14.2643914Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-79/atlas.png
+2026-10-15T03:15:14.2649438Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-79/CREDITS.txt
+2026-10-15T03:15:14.2653763Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-81
+2026-10-15T03:15:14.2659744Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-81/asset.mdpa
+2026-10-15T03:15:14.2664648Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-81/atlas.png
+2026-10-15T03:15:14.2669628Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-81/CREDITS.txt
+2026-10-15T03:15:14.2673937Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-82
+2026-10-15T03:15:14.2679621Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-82/asset.mdpa
+2026-10-15T03:15:14.2684582Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-82/atlas.png
+2026-10-15T03:15:14.2690085Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/actor-82/CREDITS.txt
+2026-10-15T03:15:14.2694666Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/guild.mdgs
+2026-10-15T03:15:14.2718417Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/guild/provenance.json
+2026-10-15T03:15:14.2723353Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/home
+2026-10-15T03:15:14.2729273Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/home/atlas.png
+2026-10-15T03:15:14.2737136Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/home/CREDITS.txt
+2026-10-15T03:15:14.2741372Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/home/home.mdpa
+2026-10-15T03:15:14.2745774Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/props
+2026-10-15T03:15:14.2751371Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/props/atlas.png
+2026-10-15T03:15:14.2755884Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/props/CREDITS.txt
+2026-10-15T03:15:14.2760270Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/props/props.mdpa
+2026-10-15T03:15:14.2765695Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/props/provenance.json
+2026-10-15T03:15:14.2770625Z -- Installing: D:/a/MysteryDungeonPet/MysteryDungeonPet/build/windows/package/assets/gameplay/provenance.json
+2026-10-15T03:15:35.3337507Z   "uiMovement": "pending: dialogue/combat held player during the observation window",
+2026-10-15T03:15:35.3348852Z   "launch": "installed EXE with zero arguments from another directory"
+2026-10-15T03:15:35.3353894Z   "launch": "installed EXE with zero arguments from another directory"
+build/windows/movement-results/*
+build/windows/navigation-results/*
+build/windows/exploration-results/gameplay/*
+build/windows/exploration-results/default-launch/*
+build/windows/exploration-results/pull-launch/*
+2026-10-15T03:15:36.7171415Z (node:9600) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.

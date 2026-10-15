@@ -1,0 +1,49 @@
+2026-10-15T03:10:07.9463781Z [ 35%] Linking CXX executable pet_navigation_recovery_tests
+2026-10-15T03:10:08.0786246Z [ 35%] Built target pet_navigation_recovery_tests
+2026-10-15T03:10:10.6099357Z [ 47%] Linking CXX executable pet_movement_tests
+2026-10-15T03:10:10.7394380Z [ 47%] Built target pet_movement_tests
+2026-10-15T03:10:19.6855355Z [ 70%] Linking CXX executable pet_gameplay_tests
+2026-10-15T03:10:19.8342151Z [ 70%] Built target pet_gameplay_tests
+2026-10-15T03:10:27.9268818Z       Start  1: pet_navigation_recovery_tests
+2026-10-15T03:10:34.6500371Z  1/10 Test  #1: pet_navigation_recovery_tests ....   Passed    6.72 sec
+2026-10-15T03:10:44.1987131Z  2/10 Test  #2: pet_camera_tests .................   Passed    9.54 sec
+2026-10-15T03:10:44.1989077Z       Start  3: pet_movement_tests
+2026-10-15T03:10:46.0688031Z  3/10 Test  #3: pet_movement_tests ...............   Passed    1.87 sec
+2026-10-15T03:10:46.2282878Z  4/10 Test  #4: pet_survival_tests ...............   Passed    0.16 sec
+2026-10-15T03:10:46.3029524Z  5/10 Test  #5: pet_revision_tests ...............   Passed    0.07 sec
+2026-10-15T03:10:46.3990692Z  6/10 Test  #6: pet_improvement_tests ............   Passed    0.10 sec
+2026-10-15T03:10:46.3991724Z       Start  7: pet_gameplay_tests
+2026-10-15T03:11:47.5052005Z  7/10 Test  #7: pet_gameplay_tests ...............   Passed   61.11 sec
+2026-10-15T03:13:20.6663582Z  8/10 Test  #8: pet_exploration_tests ............   Passed   93.15 sec
+2026-10-15T03:13:28.6257318Z  9/10 Test  #9: pet_core_tests ...................   Passed    7.96 sec
+2026-10-15T03:13:28.6392015Z 10/10 Test #10: pet_package_playback .............   Passed    0.01 sec
+2026-10-15T03:13:28.6397156Z 100% tests passed, 0 tests failed out of 10
+2026-10-15T03:13:28.6398052Z Total Test time (real) = 180.76 sec
+2026-10-15T03:13:41.1786506Z test_bin_pack_rejects_truncation_and_offsets (test_a1.Distributions.test_bin_pack_rejects_truncation_and_offsets) ... ok
+2026-10-15T03:13:41.1788200Z test_cdf_cases (test_a1.Distributions.test_cdf_cases) ... ok
+2026-10-15T03:13:41.1799060Z test_group_floor_first_and_last (test_a1.Distributions.test_group_floor_first_and_last) ... ok
+2026-10-15T03:13:41.1801799Z test_item_category_cdf_and_guaranteed (test_a1.Distributions.test_item_category_cdf_and_guaranteed) ... ok
+2026-10-15T03:13:41.1802900Z test_monster_contexts_and_special_rows (test_a1.Distributions.test_monster_contexts_and_special_rows) ... ok
+2026-10-15T03:13:41.1803991Z test_raw_strings_preserve_unknown_encoding_and_check_bounds (test_a1.Distributions.test_raw_strings_preserve_unknown_encoding_and_check_bounds) ... ok
+2026-10-15T03:13:41.2020598Z test_alias_cycle_and_missing_sheet_rejected_before_pack (test_a1.Packages.test_alias_cycle_and_missing_sheet_rejected_before_pack) ... ok
+2026-10-15T03:13:41.3551853Z test_cli_unsupported_rom_retains_hash_and_failure_stage (test_a1.Packages.test_cli_unsupported_rom_retains_hash_and_failure_stage) ... ok
+2026-10-15T03:13:41.4060280Z ok
+2026-10-15T03:13:41.5885037Z test_mutated_package_rejected (test_a1.Packages.test_mutated_package_rejected) ... ok
+2026-10-15T03:13:41.6806738Z test_pixels_markers_alias_rows_ticks_and_reproducibility (test_a1.Packages.test_pixels_markers_alias_rows_ticks_and_reproducibility) ... ok
+2026-10-15T03:13:41.8909350Z test_a1_to_native_preserves_every_frame_and_alias_timing (test_a2_bridge.A2Bridge.test_a1_to_native_preserves_every_frame_and_alias_timing) ... ok
+2026-10-15T03:13:41.9360789Z test_unsupported_budget_and_alias_geometry_are_explicit (test_a2_bridge.A2Bridge.test_unsupported_budget_and_alias_geometry_are_explicit) ... ok
+2026-10-15T03:13:42.6482655Z test_durable_home_does_not_replay_pickup_or_clear (test_b1.B1BridgeTests.test_durable_home_does_not_replay_pickup_or_clear) ... ok
+2026-10-15T03:13:43.5604876Z test_gameplay_greeting_terminal_restore (test_b1.B1BridgeTests.test_gameplay_greeting_terminal_restore) ... ok
+2026-10-15T03:13:48.5946848Z test_native_autotile_matches_skytemple_drawer (test_b1.B1BridgeTests.test_native_autotile_matches_skytemple_drawer) ... ok
+2026-10-15T03:13:48.6050336Z test_normal_and_floor_items_only (test_b1.B1BridgeTests.test_normal_and_floor_items_only) ... ok
+2026-10-15T03:13:53.7789512Z test_original_conversion_reproducible_and_closed (test_b1.B1BridgeTests.test_original_conversion_reproducible_and_closed) ... ok
+2026-10-15T03:13:56.4748759Z test_process_kill_preserves_committed_run (test_b1.B1BridgeTests.test_process_kill_preserves_committed_run) ... ok
+2026-10-15T03:13:56.7954273Z ok
+2026-10-15T03:13:57.1868025Z test_full_backgrounds_preserve_original_pixels_and_window_frame (test_improvement_assets.ImprovementAssets.test_full_backgrounds_preserve_original_pixels_and_window_frame) ... ok
+2026-10-15T03:13:57.2032283Z test_empty_baseline_and_contaminated_animation (test_playback_metrics.PlaybackMetricsTests.test_empty_baseline_and_contaminated_animation) ... ok
+2026-10-15T03:13:57.2054653Z test_final_sample_and_destroyed_window_regressions_are_rejected (test_playback_metrics.PlaybackMetricsTests.test_final_sample_and_destroyed_window_regressions_are_rejected) ... ok
+2026-10-15T03:13:57.2071176Z test_historical_columns_nan_and_nonincreasing_clock_rejected (test_playback_metrics.PlaybackMetricsTests.test_historical_columns_nan_and_nonincreasing_clock_rejected) ... ok
+2026-10-15T03:13:57.2110198Z test_mismatched_direction_frame_anchor_and_timing_are_rejected (test_playback_metrics.PlaybackMetricsTests.test_mismatched_direction_frame_anchor_and_timing_are_rejected) ... ok
+2026-10-15T03:13:57.2116435Z test_native_metadata_alias_and_one_row_and_final_live_window (test_playback_metrics.PlaybackMetricsTests.test_native_metadata_alias_and_one_row_and_final_live_window) ... ok
+2026-10-15T03:13:57.2118661Z Ran 26 tests in 16.033s
+2026-10-15T03:13:57.2119006Z OK

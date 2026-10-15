@@ -1,0 +1,9 @@
+{
+  "test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+  "bedroomCharacters": 2,
+  "guildMembers": 10,
+  "guildDiningCharacters": 12,
+  "actualWindows11": "pending",
+  "status": "pass",
+  "coreScenarios": 12
+}
