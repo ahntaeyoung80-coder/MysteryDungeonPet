@@ -244,6 +244,9 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
                 event(GameplayEvent::ActorMove,npc.instanceId,0,action);
             }
             g.companion.tile=to;g.companion.movement=record;
+            if(g.companionIntent==CompanionIntent::Return && canAttack(s.world,s.position,to)) {
+                g.companionIntent=CompanionIntent::Follow;g.companionTarget=0;
+            }
             if(!g.companion.walkStartedMs)g.companion.walkStartedMs=now;
             ++s.occupancyVersion;
         } else {
@@ -272,7 +275,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         uint32_t best=0;int distance=std::numeric_limits<int>::max();
         const int from=position(actor);const auto reach=bfs(s.world,from);
         for(const auto& e:s.population.entities) {
-            if(!hostile(e) || (adjacent?!canAttack(s.world,from,e.tile):!seen(from,e.tile)))continue;
+            if(!hostile(e) || (adjacent?!canAttack(s.world,from,e.tile):(actor!=kCompanionActorId && !seen(from,e.tile))))continue;
             const int d=reach.distance[e.tile];
             if(d>=0 && (d<distance || (d==distance && (!best || e.instanceId<best)))) {
                 best=e.instanceId;distance=d;
@@ -313,11 +316,11 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             start(actor,PartyActionKind::Wait,0,0);return;
         }
         if(g.companionIntent==CompanionIntent::Follow) {
-            if(!canAttack(s.world,s.position,g.companion.tile)) {
-                g.companionIntent=CompanionIntent::Return;changed=true;
-            } else if(const auto foe=nearestEnemy(actor,false)) {
+            if(const auto foe=nearestEnemy(actor,false)) {
                 g.companionTarget=foe;g.companionIntent=CompanionIntent::Engage;
                 target=entity(foe);changed=true;
+            } else if(!canAttack(s.world,s.position,g.companion.tile)) {
+                g.companionIntent=CompanionIntent::Return;changed=true;
             }
         }
         if(g.companionIntent==CompanionIntent::Engage && target && hostile(*target)) {

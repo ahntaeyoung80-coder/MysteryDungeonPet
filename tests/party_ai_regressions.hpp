@@ -344,7 +344,18 @@ inline unsigned run(const ExplorationState& base) {
                 e.state().floorSteps<=Explorer::kFloorStepLimit+kTiles,
                 "old probe budget permanently disabled reachable goals");
     });
-    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=15"<<std::endl;
+    test("R15_companion_approaches_shared_known_threat",[&] {
+        auto s=party(base);s.gameplay.hearts=1;
+        s.population.entities={{1,4,EntityKind::Friend,156,false}};s.gameplay.hostile={1};
+        require(s.world.room[156]!=s.world.room[s.gameplay.companion.tile] &&
+                bfs(s.world,s.gameplay.companion.tile).distance[156]>2,"shared threat fixture is already local");
+        Explorer e(s);restoredStep(e,1000);
+        require(e.state().gameplay.companionIntent==CompanionIntent::Engage &&
+                e.state().gameplay.companionTarget==1 &&
+                e.state().gameplay.companion.actionRound==e.state().gameplay.actionRound,
+                "companion ignored the threat blocking the leader's safe exploration");
+    });
+    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=16"<<std::endl;
     return failures;
 }
 } // namespace party_ai_regression

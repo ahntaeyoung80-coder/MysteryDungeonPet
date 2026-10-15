@@ -56,10 +56,14 @@ $Both=@($Two|Where-Object {
 })
 if($Both.Count -lt 2){throw 'independent player and companion attacks were not presented together'}
 $Surviving=@($Two|Where-Object {
- $_.actor_states -notmatch '(^|;)1:' -and $_.actor_states -match '(^|;)2:' -and $_.clip -eq '1'
+ $_.actor_states -notmatch '(^|;)1:' -and $_.actor_states -match '(^|;)2:[0-9]+:(1|6|33):'
 })
-if($Surviving.Count -lt 2){throw 'right-side player attack stopped after left enemy removal'}
-@{status='pass';simultaneousSubmittedFrames=$Both.Count;afterLeftRemovalFrames=$Surviving.Count}|
+$Finished=@($Two|Where-Object {$_.actor_states -notmatch '(^|;)(1|2):'})
+$PlayerAttacks=@($Two|Where-Object {$_.clip -eq '1'}|Select-Object -ExpandProperty player_party_action -Unique)
+if($Surviving.Count -lt 2 -or $Finished.Count -lt 1 -or $PlayerAttacks.Count -lt 2){
+ throw 'right encounter failed to progress and finish independently of left faint animation'
+}
+@{status='pass';simultaneousSubmittedFrames=$Both.Count;afterLeftRemovalFrames=$Surviving.Count;bothRemovedFrames=$Finished.Count}|
  ConvertTo-Json|Set-Content -Encoding UTF8 "$Output/two-sided-result.json"
 python tools/check_party_render.py --inspector $Inspector --output $Output
 if($LASTEXITCODE -ne 0){throw 'party original body pixels differ'}
