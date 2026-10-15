@@ -83,3 +83,10 @@ R15에 자기 시야 밖이지만 저장된 위협에 동료가 접근하는 조
 ## 기본 실행 실패 축소
 
 `2d4e829`의 [CI38741154753](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38741154753)에서4초 실행→닫기→같은 저장 재실행의 두 번째 실행만 종료 코드1로 실패했다. 저장 복원과10~13라운드의 동료/주인공 이동은 로그에 남았다. 최외곽 예외 처리에서 디버그 출력만 남기던 오류를 events.log에도 보존한다. 빠른 probe 전용 빌드에는 companion test 실행물이 없으므로 해당 진단은 실행물이 있을 때만 수행한다.
+
+
+## 복원 후 이동 예외 원인과 수정
+
+`2978861`의 [CI38741460793](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38741460793)에서 실제 오류는 `direction phase incompatible`였다. 독립 파티 renderer는 적 Animator를 Idle/Attack/Hurt에도 사용하지만, 종전 이동 연결부는 active이면 항상 Walk→Walk 방향 변경이라고 가정했다. 복원 뒤 대기 중이던 적의 첫 이동에서 Idle→Walk를 changeDirection으로 처리해 주기 길이 계약에 걸렸다.
+
+독립 표시에서는 이동 보간만 등록하고 syncPartyActors가 실제 clip을 선택하도록 연결한다. Dialogue 등 종전 표시 구간으로 넘어간 독립 상태의 이동은 Walk를 새로 시작한다. 종전 단독 경로의 Walk 방향/위상 보존은 유지한다. 무인자 새 실행→저장 복원 probe와 기존 전체 GUI 검사를 다시 실행한다.

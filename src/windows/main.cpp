@@ -767,8 +767,14 @@ class App {
             if(old!=oldEntities.end() && old->tile!=e.tile && e.kind==EntityKind::Friend) {
                 actorMotions_[e.instanceId].begin(e.instanceId,g.actionRound,tilePoint(old->tile),tilePoint(e.tile),now,e.direction);
                 auto& animation=actorAnimators_[e.instanceId];
-                if(animation.active()) animation.changeDirection(enemyAssets_->package,0,e.direction);
-                else animation.start(enemyAssets_->package,0,e.direction,true,now);
+                // The party cache can currently hold Idle/Attack/Hurt. Only the
+                // legacy walk cache guarantees changeDirection stays in Walk.
+                // syncPartyActors selects the actual clip after this move.
+                if(!partyRendering()) {
+                    if(!g.independentParty && animation.active())
+                        animation.changeDirection(enemyAssets_->package,0,e.direction);
+                    else animation.start(enemyAssets_->package,0,e.direction,true,now);
+                }
             }
         }
         if(partyRendering()) {
