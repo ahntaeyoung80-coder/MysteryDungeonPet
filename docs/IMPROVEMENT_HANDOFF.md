@@ -1,5 +1,11 @@
 # 개선 제작 인수인계
 
+## 현재 재개 기준 — 2026-10-15
+
+개발 기준은 `work`다. 이동·카메라 안정화의5단계 작업을 완료했다. 기존 이동·카메라 결함은 재현되지 않았고 고정 snapshot·실제 합성/제출 trace와 회귀 검사를 추가했다. CI38666625639 core/windows 성공, Release9/9·ASan/UBSan9/9·Python26/26·Windows native10/10, 고정31시나리오·2,362합성frame·2,055제출·이동 중 kill/복원과 기존 생활/전투/루트 EXE 실행이 통과했다. [재현 안내](MOVEMENT_VALIDATION.md)와 [검증 요약](validation/2026-10-15-movement-summary.json)을 우선한다.
+
+루트 EXE와 소스/자산 hash가 일치한다. 다음 독립 범위는 실제 사용자 Windows11 육안·OS 사건·장기 성능이며, 이번 검사를 대신 반복할 필요는 없다. 새 체감 문제가 보고되면 저장·증거를 보존하고 해당 시나리오만 재현한다. 임시 문제 문서는 사용자 화면의 과거 체감 항목이 남아 있어 보존한다. 아래 내용은 이전 체크포인트 이력이다.
+
 ## 후속 수정 — 기상·생존·자리 교환
 
 최신 기준은 PROJECT_STATE.md의 기상·생존·자리 교환 수정과 [MDES5](implementation/MDES5_FORMAT.md)다. 동료 취침/기상/인사를 복원하고 주인공이 침상 아래 바닥을 거쳐 왼쪽 통로로 나간다. 열매 손실2칸 기준·HP2 이하 생존 목표·발견 순서·아이템1턴·우호 NPC 원자적 교환을 적용했다. 루트 EXE도 갱신했다. 구현6680f4d의 CI38521173193은 core/windows 모두success이며 MSVC CTest7/7·침실2명/기상/인사/이탈 GUI·루트 EXE 다른 CWD 실행/복원/진단을 통과했다. 다음 확인은 사용자 Windows11 육안·OS 사건·장기 성능이다. 검증은 docs/validation/2026-10-14-survival-summary.json이며 아래 주인공만 취침/기상·아래 방향 이탈·MDES4 설명은 이전 이력이다.

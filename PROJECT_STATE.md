@@ -1,8 +1,27 @@
 # 현재 상태
 
-## 이동·카메라 안정화 — 2026-10-15
+## 이동·카메라 안정화 완료 — 2026-10-15
 
-사용자 승인으로 [5단계 명세](docs/MOVEMENT_STABILIZATION_SPEC.md)를 진행한다. 1단계 기준은 work=80470ba, 기존 EXE hash/Release7/7 통과다. 2단계는 pet_movement_tests의 8방향64행동·400ms·연속 보행·방향 전환·pause/MDES5 복원이 통과했고 코어 결함은 재현되지 않았다. 고정 snapshot 생성과 명시적 --movement-trace(실제 합성CSV/제출/BMP)를 추가해 기존 대화·전투에 가린 이동 관찰 공백을 보완했다. 루트 EXE를 교차 빌드·갱신하고 hash를 확인했다. 네이티브 Windows 화면 검증은 4단계에서 수행한다. 3단계는363개 합성 화면의 1/2/3배·네 변/모서리·clamp 경계·alpha255·배우/소품 정렬·정지 불변 검사를 통과했고 카메라 결함은 재현되지 않았다. Windows 원작 trace 판정기를 준비했다. 4단계 완료: Release9/9·ASan/UBSan9/9·Python26/26과 CI38666625639 core/windows가 통과했다. 실제 Windows native10/10, 고정31시나리오·2,362합성frame·2,055제출·이동 중 kill/복원·기존 생활/전투/루트 EXE 실행이 통과했다. [검증 요약](docs/validation/2026-10-15-movement-summary.json)에 근거를 보존했다. 실제 Windows11 육안·OS 사건·장기 성능은 별도 미검증이다. 다음은5단계 실행물/문서 정리다.
+개발·조회 기준은 `work`다. [5단계 명세](docs/MOVEMENT_STABILIZATION_SPEC.md)의 이번 자동 검증 범위를 완료했다. 기존 이동·카메라 결함은 재현되지 않았으며, 고정 snapshot과 선택형 `--movement-trace`(실제 합성CSV·제출 성공·BMP), 이동·카메라 회귀 검사를 추가했다. 탐험·전투·생활 규칙과 MDES1~5 호환은 유지한다.
+
+- 실행: 최신 work를 pull한 뒤 루트 `MysteryDungeonPet.exe` 더블클릭. EXE/source/assets hash 일치. ROM·원본 ZIP SHA256 불변.
+- 로컬: Release9/9·ASan/UBSan9/9·Python26/26, MinGW x64 Release 통과.
+- 실제 Windows: CI38666625639 core/windows 성공. Server2025/MSVC19.51 native10/10, 고정31시나리오·2,362합성frame·2,055제출, 이동 중 kill/복원, 기존 생활·전투·설치/루트 EXE 실행·저장 복원 통과.
+- 근거: [검증 요약·hash](docs/validation/2026-10-15-movement-summary.json), [재현 안내](docs/MOVEMENT_VALIDATION.md), 원본CSV/대표PNG·단계별 logs.
+
+| 단계 | 완료 결과 | 커밋 |
+| --- | --- | --- |
+| 1 기준·재현 | work=80470ba와 EXE hash/기존7검사 확인 | 83b57a5 |
+| 2 이동·방향 | 8방향64행동·400ms·위상·pause/복원, trace/EXE | a75d13d |
+| 3 카메라·외곽 | 363합성 화면·1/2/3배·경계·alpha·좌표 검증 | affde50 |
+| 4 통합 회귀 | Windows31시나리오·기존 전투/생활·중단 복원 | 11c5d3e |
+| 5 실행물·문서 | 실행물/증거 hash·문서 링크·재개 기준 최종 정리 | 본 문서 정리 변경 |
+
+## 남은 별도 범위·재개
+
+실제 사용자 Windows11의 과거 체감 문제 전체 해소는 미관측이다. OS 잠금·화면 꺼짐·절전·DPI/모니터 변경과 장기 성능, 전체 종/폼·콘텐츠/원작 시간 정합성·활동 분류는 후속 범위다. [임시 문제 문서](docs/TEMP_NEXT_SESSION_ISSUES.md)는 사용자 화면의 잔여 확인을 위해 보존했다.
+
+새 문제가 보고되면 저장 파일을 보존하고 해당 구간을 고정해 재현한다. 이동은 `advanceExploration`/`restoreMovement`/`Motion`, 화면은 `render`/`cameraFor`/`compose`, 판정은 `tests/movement_windows_tests.ps1`과 `tools/check_movement_trace.py`를 확인한다. 이미 통과한 전체 검사를 사용자에게 반복 요청하지 않는다. 아래는 이전 체크포인트 이력이다.
 
 ## 브랜치 통합 — 2026-10-15
 

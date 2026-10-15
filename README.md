@@ -6,7 +6,9 @@
 
 GitHub Desktop에서 `work`를 pull한 뒤 루트의 **MysteryDungeonPet.exe**를 더블클릭한다. ZIP 과정은 없다. 최신 동작·MDES5·남은 검증은 [현재 상태](PROJECT_STATE.md), [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 아래 설명은 이전 체크포인트 이력이다.
 
-2026-10-14 개선 제작: 8방향 연속 이동·계단 우선 탐험·적 추적/소비 기반 턴·HP5·사망 연출·원본 소품·전체 식당/낮밤 침실·NPC 대화를 구현했다. [현재 상태](PROJECT_STATE.md)와 [개선 인수인계](docs/IMPROVEMENT_HANDOFF.md)를 우선한다. 새 코드의 실제 Windows GUI·OS 사건·장기 성능 검증은 아직 남아 있다. 아래 A/B 단계 설명은 이전 개발 이력이다.
+2026-10-15 이동·카메라 검증: Windows 고정31시나리오·이동 중 종료/복원과 기존 생활·전투 회귀를 통과했다. [검증 결과·재현 방법](docs/MOVEMENT_VALIDATION.md)을 따른다. 사용자 Windows11 육안·OS 사건·장기 성능은 별도 미검증이다.
+
+2026-10-14 개선 제작: 8방향 연속 이동·계단 우선 탐험·적 추적/소비 기반 턴·HP5·사망 연출·원본 소품·전체 식당/낮밤 침실·NPC 대화를 구현했다. [현재 상태](PROJECT_STATE.md)와 [개선 인수인계](docs/IMPROVEMENT_HANDOFF.md)를 우선한다. 실제 사용자 Windows11 육안·OS 사건·장기 성능은 미검증이다. 아래 A/B 단계 설명은 이전 개발 이력이다.
 
 
 현재 Windows 설치본은 `MysteryDungeonPet.exe`를 더블클릭하면 자동 탐험·최소 전투·길드 공동 식사·주인공 방 취침·기상·다음날 탐험을 시작한다. [실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 방향·애니메이션 검사는 `--diagnostics`로 명시한다. 아래 개발 이력의 이전 단계와 현재 범위는 [PROJECT_STATE.md](PROJECT_STATE.md)에서 구분한다.

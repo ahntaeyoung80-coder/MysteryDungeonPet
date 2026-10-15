@@ -22,3 +22,5 @@ GitHub Desktop에서 `work`를 pull한 뒤 저장소 루트의 **MysteryDungeonP
 제품 수정 시 개발자가 EXE도 함께 갱신한다. Windows의 MSVC/CMake/Python 환경에서는 `powershell -ExecutionPolicy Bypass -File tools/update_windows_runtime.ps1`을 실행해 루트 EXE와 `windows-runtime.json`을 생성한다. Linux 교차 빌드는 `tools/check_windows_runtime.py --refresh-from <EXE> --compiler <설명>`으로 같은 기록을 생성한다. ZIP 단계는 없다.
 
 `python tools/check_windows_runtime.py`는 EXE·소스·사용 자산 hash 일치를 검사한다. CI의 `tools/run_windows_checks.ps1`은 MSVC 빌드와 저장소 루트 EXE를 모두 다른 작업 폴더에서 기본 실행·저장 복원한다. 실제 Windows11 GUI·잠금/절전·장기 성능 확인 여부는 최신 검증 기록을 따른다.
+
+이동·카메라 고정31시나리오와 `--movement-trace`의 프레임CSV/BMP는 [이동 검증 안내](MOVEMENT_VALIDATION.md)를 따른다. 최신 CI에서 중간 위치·방향 전환·1/2/3배 외곽·이동 중 강제 종료/복원과 기존 생활·전투가 통과했다.
