@@ -1,5 +1,7 @@
 # 이동·카메라 검증 재현
 
+후속 사용자 보고의 적 추적/저체력 도주 왕복은 별도로 재현·수정했다. 최신 결과는 [대각선 반복·Reset](NAVIGATION_RECOVERY.md)과 [CI38674804212 검증 요약](validation/2026-10-15-navigation-summary.json)을 우선한다. 아래는 후속 재현 이전의 이동·카메라 검증 기록이다. 현재 검사의 snapshot writer는 MDES6이고 MDES1~5도 읽는다.
+
 2026-10-15 `work`의 자동 검증 범위 완료. [명세](MOVEMENT_STABILIZATION_SPEC.md), [검증 요약](validation/2026-10-15-movement-summary.json), [단계별 기록](logs/2026-10-15-movement-stage4.md)을 함께 본다.
 
 ## 실행 결과
@@ -38,7 +40,7 @@ pwsh -File tools/run_windows_checks.ps1
 pwsh -File tests/movement_windows_tests.ps1 -Exe build/windows/Release/MysteryDungeonPet.exe -Tests build/windows/Release/pet_movement_tests.exe -Output build/windows/movement-results
 ```
 
-검사기는 정상 MDES5 입력을 매번 생성하며 일반 앱의 탐험·저장·WIC·Animator/Motion·합성·UpdateLayeredWindow를 실행한다. 고정 전환 경로의 첫 방향 전환5.2초를 포함하고 계단 도착6.8초 전까지 관찰한다. 중단/복원 전후 상태도 JSON으로 남긴다. 실행 세션이 잠겨 화면을 관측하지 못하면 결과는pending이다.
+검사기는 정상 MDES6 입력을 매번 생성하며 일반 앱의 탐험·저장·WIC·Animator/Motion·합성·UpdateLayeredWindow를 실행한다. 고정 전환 경로의 첫 방향 전환5.2초를 포함하고 계단 도착6.8초 전까지 관찰한다. 중단/복원 전후 상태도 JSON으로 남긴다. 실행 세션이 잠겨 화면을 관측하지 못하면 결과는pending이다.
 
 ## 기록 형식과 재판정
 

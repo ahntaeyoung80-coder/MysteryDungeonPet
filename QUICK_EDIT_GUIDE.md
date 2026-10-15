@@ -256,7 +256,7 @@ HP 차감은 `EnemyTurn`의 공격 판정과 `EnemyAttack`의 `pendingHit` 제�
 .\MysteryDungeonPet.exe --new-run
 ```
 
-이 명령은 기존 진행 대신 새 run을 저장하므로 백업을 먼저 한다. 저장의 enum 번호, `onceKeys`, `pending-hit`, CRC와 MDES schema는 문구·시간을 바꾸려고 수정할 필요가 없다. 저장 구조 변경 설명은 [MDES5 형식](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/docs/implementation/MDES5_FORMAT.md)을 참고한다.
+이 명령은 기존 진행 대신 새 run을 저장하므로 백업을 먼저 한다. 반복 이동에서 탈출하려면 우클릭 `Reset 탐험 (귀가)`를 사용한다. 직전 저장을 `.reset-backup`으로 보존하고 확정 획득품을 유지하며 귀가한다. [사용법](docs/NAVIGATION_RECOVERY.md)을 따른다. 저장의 enum 번호, `onceKeys`, `pending-hit`, CRC와 MDES schema는 문구·시간을 바꾸려고 수정할 필요가 없다. 저장 구조 변경 설명은 [MDES6 형식](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/docs/implementation/MDES6_FORMAT.md)을 참고한다.
 
 ## 7. 수정 적용·확인·되돌리기
 

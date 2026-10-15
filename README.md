@@ -4,7 +4,9 @@
 
 대분류·소분류 목차에서 원하는 항목을 골라 파일 위치와 검색어로 바로 찾는다. 개발·조회 기준은 **`work` 브랜치**다. 작업 시작 시 원격을 fetch하고 `origin/work`의 최신 상태를 확인한다.
 
-GitHub Desktop에서 `work`를 pull한 뒤 루트의 **MysteryDungeonPet.exe**를 더블클릭한다. ZIP 과정은 없다. 최신 동작·MDES5·남은 검증은 [현재 상태](PROJECT_STATE.md), [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 아래 설명은 이전 체크포인트 이력이다.
+GitHub Desktop에서 `work`를 pull한 뒤 루트의 **MysteryDungeonPet.exe**를 더블클릭한다. ZIP 과정은 없다. 최신 동작·MDES6·남은 검증은 [현재 상태](PROJECT_STATE.md), [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 아래 설명은 이전 체크포인트 이력이다.
+
+2026-10-15 대각선 반복 수정: 적 추적과 저체력 도주의 동반 역주행을 재현·수정했다. 반복 상태는 자동 귀가하며, 우클릭 **Reset 탐험 (귀가)**로도 탈출할 수 있다. 직전 저장을 백업하고 확정 HP·획득품을 보존한다. [원인·사용법·검증](docs/NAVIGATION_RECOVERY.md). 최신 Linux/Windows CI 통과, 루트 EXE 갱신 완료.
 
 2026-10-15 이동·카메라 검증: Windows 고정31시나리오·이동 중 종료/복원과 기존 생활·전투 회귀를 통과했다. [검증 결과·재현 방법](docs/MOVEMENT_VALIDATION.md)을 따른다. 사용자 Windows11 육안·OS 사건·장기 성능은 별도 미검증이다.
 

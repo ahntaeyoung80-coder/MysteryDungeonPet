@@ -1,8 +1,23 @@
 # 현재 상태
 
-## 대각선 반복 이동 수정 — Windows 검증 완료, 문서 정리 중 — 2026-10-15
+## 대각선 반복 이동 수정·Reset 완료 — 2026-10-15
 
-사용자 보고를 HP2의 적 추적/도주 결합 상태에서 재현하고 동반 역주행 재계획·MDES6 반복 감지/자동 귀가·백업 후 우클릭 Reset을 구현했다. 이전 “결함 미재현”보다 이번 원인·재현을 우선한다. 구현605c300의 CI38674804212 core/windows 모두 성공, Linux10/10·Python26/26·Windows11/11과 실제 앱의 원래 왕복 탈출/자동 복구/Reset·백업·재실행·기존 이동31시나리오를 통과했다. 다음은 실행물 hash 최종 확인·안내/재개 문서 정리다. [3단계 결과](docs/logs/2026-10-15-navigation-stage3.md), [검증 요약](docs/validation/2026-10-15-navigation-summary.json).
+개발·조회 기준은 `work`다. 사용자 보고의 적2↔4/플레이어6↔8 왕복을 HP2에서 재현했다. 적 추적과 매번 바뀌는 안전 경로가 서로 역주행하는 원인을 수정하고, 최근32개 진행 상태의 반복 감지/자동 귀가와 백업 후 수동 Reset을 추가했다. 이전 “결함 미재현” 판정보다 이번 재현·수정 결과를 우선한다.
+
+- 실행: 최신 work pull → 루트 `MysteryDungeonPet.exe`. EXE·소스·자산 hash 일치, 원본 ROM·ZIP 불변.
+- 탈출: 캐릭터/트레이 우클릭 → **Reset 탐험 (귀가)**. 확정 HP·획득품·기록을 보존하고 귀가/생활/다음날로 진행한다. 직전 저장은 `.reset-backup`에 남는다. [원인·사용법](docs/NAVIGATION_RECOVERY.md).
+- 저장: MDES6 작성, MDES1~5 읽기 호환. 기존 저장 삭제 불필요.
+- 검증: Release10/10, ASan/UBSan10/10+최신 Reset 회귀, Python26/26. 저체력200배치의 매행동 저장/복원 통과.
+- 실제 Windows: 구현605c300의 [CI38674804212](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38674804212) core/windows 성공. Server2025/MSVC19.51 native11/11, 실제 앱 원래 왕복 탈출·자동 복구·우클릭 Reset/백업/중복/재실행, 기존 이동31시나리오·생활·전투·루트 EXE 실행/복원 통과. [검증 요약·hash](docs/validation/2026-10-15-navigation-summary.json).
+
+| 단계 | 완료 기준·결과 | 커밋 |
+| --- | --- | --- |
+| 1 원인·재현 | 원래 두 배치의 무한 왕복을 고정 회귀로 재현 | 5be5a8e |
+| 2 원인 수정·자동 복구 | 원래 왕복 탈출·200배치·반복 감지/복원·MDES6 호환 통과 | f27af6d |
+| 3 수동 Reset·Windows | 백업/보존·중복 방지·실제 메뉴/재실행·전체 CI 통과 | 605c300, 16d6048 |
+| 4 실행물·인수인계 | EXE hash·현재 안내·증거 링크 확인, work 반영 | 본 문서 정리 변경 |
+
+이번 버그 수정/Reset 범위는 완료했다. 실제 사용자 Windows11 화면, OS 사건·장기 성능·전체 콘텐츠는 별도 미검증이다. 재개 시 fetch 후 origin/work와 HEAD를 비교하고 새 보고의 snapshot/`.reset-backup`부터 보존한다. 아래는 이전 체크포인트 이력이다.
 
 ## 이동·카메라 안정화 완료 — 2026-10-15
 

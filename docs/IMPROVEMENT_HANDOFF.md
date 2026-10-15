@@ -1,6 +1,12 @@
 # 개선 제작 인수인계
 
-## 현재 재개 기준 — 2026-10-15
+## 현재 재개 기준 — 대각선 반복·Reset 완료, 2026-10-15
+
+`work`의 사용자 보고 적2↔4/플레이어6↔8 반복을 재현하고 수정했다. 동반 역주행 재계획, MDES6 최근32개 상태 반복 감지/자동 귀가, 백업 후 우클릭 `Reset 탐험 (귀가)`가 최신 구현이다. MDES1~5를 읽고 확정 HP·획득품·journal을 보존한다. 최신 work pull 후 루트 EXE를 실행한다.
+
+구현605c300의 CI38674804212 core/windows 모두 성공. Linux ASan/UBSan10/10·Python26/26, Windows native11/11·원래 왕복 탈출/자동 복구/메뉴 Reset/백업/중복/재실행과 기존 이동31시나리오·생활/전투/루트 EXE 실행·복원이 통과했다. [원인·사용법](NAVIGATION_RECOVERY.md), [검증 요약](validation/2026-10-15-navigation-summary.json), PROJECT_STATE.md를 우선한다. 새 보고는 snapshot과 `.reset-backup`부터 보존한다. 사용자 Windows11 화면·OS 사건·장기 성능은 별도 미검증이다.
+
+## 이전 이동·카메라 검증 — 2026-10-15
 
 개발 기준은 `work`다. 이동·카메라 안정화의5단계 작업을 완료했다. 기존 이동·카메라 결함은 재현되지 않았고 고정 snapshot·실제 합성/제출 trace와 회귀 검사를 추가했다. CI38666625639 core/windows 성공, Release9/9·ASan/UBSan9/9·Python26/26·Windows native10/10, 고정31시나리오·2,362합성frame·2,055제출·이동 중 kill/복원과 기존 생활/전투/루트 EXE 실행이 통과했다. [재현 안내](MOVEMENT_VALIDATION.md)와 [검증 요약](validation/2026-10-15-movement-summary.json)을 우선한다.
 

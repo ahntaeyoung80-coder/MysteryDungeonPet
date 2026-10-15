@@ -13,9 +13,11 @@ GitHub Desktop에서 `work`를 pull한 뒤 저장소 루트의 **MysteryDungeonP
 - 공동 식사는7초다. 밤 침실에서 동료와 인사한 뒤 눕기·잠들기 animation을 한 번 재생하고 바로 fade-out/in으로 아침으로 전환한다. 수면 정지 장면과2초 대기는 생략한다.
 - 동료와 함께 취침한다. 아침 fade-in → 두 배우 Wake14 → 두 배우 Nod22 인사 → 주인공 Walk0 왼쪽 통로 입구까지 약1.9초 이동 → 다음날 탐험. 동료 침상을 피해 맵 안에서 퇴실을 끝낸다.
 - 피격 하트는 적 Attack1이 끝난 뒤 감소한다. 저체력 도주와 적 추적 이동은 같은400ms에 표시해 매 걸음 사이 별도 휴식이 없다.
-- 새 저장은 MDES5이며 MDES1·2·3·4도 읽는다. 기술 선택·레벨·가방 등은 기존 범위 그대로다.
+- 새 저장은 MDES6이며 MDES1·2·3·4·5도 읽는다. 기술 선택·레벨·가방 등은 기존 범위 그대로다.
 
-우클릭 메뉴는 Hide·Always on top·Scale1..3·Exit다. 원작 방향/animation 진단은 `MysteryDungeonPet.exe --diagnostics`로 실행한다. 새 실행 시작은 `--new-run`을 명시한다.
+대각선 왕복은 동반 역주행 재계획으로 수정했으며, 같은 진행 상태가 반복되면 자동 귀가한다.
+
+우클릭 메뉴는 Hide·Always on top·Scale1..3·**Reset 탐험 (귀가)**·Exit다. 탐험/전투/대화 중 Reset하면 확정 HP·획득품을 보존하고 귀가한 뒤 다음날 탐험으로 이어간다. 직전 상태는 저장 경로 뒤의 `.reset-backup`에 보존한다. 이미 귀가/생활 중이면 비활성화한다. [상세 원인·사용법·검증](NAVIGATION_RECOVERY.md)을 따른다. 원작 방향/animation 진단은 `MysteryDungeonPet.exe --diagnostics`로 실행한다. 새 실행 시작은 `--new-run`을 명시한다.
 
 ## 개발자 갱신과 검사
 
