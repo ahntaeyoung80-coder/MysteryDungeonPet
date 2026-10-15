@@ -95,8 +95,7 @@ Search bfs(const World& world, int start, const Mask& blocked) {
     result.distance.fill(-1);
     result.parent.fill(-1);
     if (!world.walkable(start) || blocked[start]) return result;
-    std::array<int, kTiles> queue{}, diagonals{}, turns{}, lastDirection{};
-    lastDirection.fill(-1);
+    std::array<int, kTiles> queue{}, diagonals{};
     int head = 0, tail = 0;
     queue[tail++] = start;
     result.distance[start] = 0;
@@ -108,17 +107,16 @@ Search bfs(const World& world, int start, const Mask& blocked) {
             const int n = ny * kWidth + nx;
             if (!canMove(world,p,n,blocked)) continue;
             const int distance=result.distance[p]+1;
-            const int direction=int(directionBetween(p,n));
             const int diagonal=diagonals[p]+(dx!=0 && dy!=0);
-            const int turn=turns[p]+(lastDirection[p]>=0 && lastDirection[p]!=direction);
             const bool unseen=result.distance[n]<0;
             if(!unseen && (result.distance[n]!=distance ||
-                std::make_pair(diagonal,turn)>=std::make_pair(diagonals[n],turns[n]))) continue;
+                std::make_pair(diagonal,p)>=std::make_pair(diagonals[n],result.parent[n]))) continue;
             // BFS visits every predecessor level before this node is popped.
             // Refine equal-length parents without re-enqueuing or changing
-            // terrain/corner/occupancy rules. Fewer turns is a stable local tie.
+            // terrain/corner/occupancy rules. A fixed parent-tile tie gives the
+            // same suffix from a restored position; local turn counts do not.
             result.distance[n]=distance;result.parent[n]=p;
-            diagonals[n]=diagonal;turns[n]=turn;lastDirection[n]=direction;
+            diagonals[n]=diagonal;
             if(unseen)queue[tail++]=n;
         }
     }
