@@ -13,3 +13,10 @@
 주인공 HP 줄은 유지하고 동료 HP 줄의 그리기만 제거한다. 내부 HP·피해/회복·저장은 수정하지 않는다. 기존 HUD 회귀를 동료 HP 변경 시 같은 픽셀·주인공 HP 변경 시 다른 픽셀로 갱신했다. 아직 새 검증 전이다.
 
 원작 녹색 켈리몬(MD383/sprite556)은 기존 asset-2를 재사용한다. 보라색(MD384/sprite554)은 보존된 ROM에서 기존 prepare_party_actor.py로 추출할 계획이며, 색칠/재생성으로 대신하지 않는다. 기존 actor runtime-index에는 asset0/1만 있어 녹색/보라색의 출처·실제 hash를 함께 추가할 예정이다.
+
+
+## HP 항목 중간 커밋·원작 관계 자산 생성 경로
+
+08:36:31~08:38:08 KST,1분37초에 초기 자료 확인·동료 HUD 제거·기존 픽셀 회귀 갱신을 마쳤다. 중간 커밋은 `470f30d`이며 아직5단계 완료가 아니다.
+
+관계 자산 생성은 별도 Linux job에서 수행한다. 기존 actor0/1/2 및 ROM hash를 유지하고 기존 prepare_party_actor의 원작 WAN 픽셀 검사를 통과한 MD384/sprite554만 asset-3으로 전달한다. actor runtime-index에 기존 녹색과 새 보라색의 실제 hash/역할·출처를 추가한다. Windows/코어/실행물 반영 job은 같은 artifact를 사용하고, 필수 검증 성공 후에만 asset-3/index와 EXE/manifest를 함께 커밋한다. 아직 실제 추출·표시 통과 결과는 없다.

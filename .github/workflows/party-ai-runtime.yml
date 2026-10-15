@@ -8,12 +8,41 @@ concurrency:
   group: party-ai-runtime-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  party-preflight:
+  relationship-assets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-offline.txt
+      - run: python -m tools.prepare_relationship_actors --report build/relationship-actors.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: party-ai-relationship-actors
+          path: |
+            assets/original/gameplay/actors/asset-3/**
+            assets/original/gameplay/actors/runtime-index.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: party-ai-relationship-evidence
+          path: build/relationship-actors.json
+          if-no-files-found: warn
+  party-preflight:
+    needs: relationship-assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: party-ai-relationship-actors
+          path: assets/original/gameplay/actors
       - run: cmake -S . -B build/preflight -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build build/preflight --target pet_companion_tests pet_gameplay_tests pet_navigation_recovery_tests --parallel 2
       - name: Run party, lifecycle restore and navigation regressions
@@ -30,6 +59,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: party-ai-relationship-actors
+          path: assets/original/gameplay/actors
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -86,6 +119,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: party-ai-relationship-actors
+          path: assets/original/gameplay/actors
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -110,6 +147,10 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: party-ai-relationship-actors
+          path: assets/original/gameplay/actors
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -127,7 +168,7 @@ jobs:
             echo "Branch advanced during verification; leave the newer work unchanged."
             exit 1
           fi
-          git add MysteryDungeonPet.exe windows-runtime.json
+          git add MysteryDungeonPet.exe windows-runtime.json assets/original/gameplay/actors/asset-3 assets/original/gameplay/actors/runtime-index.json
           if git diff --cached --quiet; then
             echo "Verified runtime already matches the tracked files."
             exit 0
