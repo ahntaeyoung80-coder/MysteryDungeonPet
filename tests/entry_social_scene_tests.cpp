@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 using namespace pet;
 void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
 ExplorationState socialFixture(){
@@ -19,6 +20,7 @@ Explorer restore(const Explorer& e){return Explorer(decodeSnapshot(encodeSnapsho
 void floors(){
  for(uint64_t seed=1;seed<=1000;++seed){
   Explorer e(seed,seed,"entry-social",fixtureProfiles(3));
+  std::vector<Mask> layouts{e.state().world.terrain};
   for(unsigned floor=1;floor<3;++floor){
    auto s=e.state();const auto old=s.world.terrain;const int oldFeet=s.world.stairs;
    s.position=oldFeet;s.visited[oldFeet]=1;e=Explorer(s);e.advance();e=restore(e);
@@ -26,14 +28,19 @@ void floors(){
    check(n.floorIndex==floor && n.position==n.world.start && n.position!=n.world.stairs,"new floor spawned stairs at entry");
    check(n.world.stairs!=oldFeet,"new floor put stairs under previous player feet");
    for(const auto& a:n.population.entities)check(a.tile!=n.position && a.tile!=oldFeet,"new floor put an entity under entry/previous feet");
-   check(n.world.terrain!=old,"new floor reused the previous layout");validateWorld(n.world);
+   check(n.world.terrain!=old && std::find(layouts.begin(),layouts.end(),n.world.terrain)==layouts.end(),"new floor reused an earlier layout");
+   layouts.push_back(n.world.terrain);validateWorld(n.world);
+   struct Bounds{int x0=24,y0=24,x1=-1,y1=-1;};std::vector<Bounds> bounds(n.world.centers.size());
+   for(int tile=0;tile<kTiles;++tile)if(n.world.room[tile]>=0){auto& b=bounds[n.world.room[tile]];b.x0=std::min(b.x0,tile%24);b.x1=std::max(b.x1,tile%24);b.y0=std::min(b.y0,tile/24);b.y1=std::max(b.y1,tile/24);}
+   for(unsigned i=0;i<bounds.size();++i)for(unsigned j=0;j<i;++j){const auto a=bounds[i],b=bounds[j];check(a.x1<b.x0||b.x1<a.x0||a.y1<b.y0||b.y1<a.y0,"room rectangles overlap");}
   }
  }
- auto s=socialFixture();s.rng.state=s.mapSeed;s.position=s.world.stairs;s.visited[s.position]=1;
  // Use an unmodified generated world to force the same candidate from saved RNG.
- Explorer first(921,196,"entry-social",fixtureProfiles(3));s=first.state();s.rng.state=s.mapSeed;
+ Explorer first(921,196,"entry-social",fixtureProfiles(3));auto s=first.state();s.rng.state=s.mapSeed;
  const auto old=s.world.terrain;s.position=s.world.stairs;s.visited[s.position]=1;Explorer replay(s);replay.advance();
  check(replay.state().world.terrain!=old,"replayed map seed bypassed layout deduplication");
+ s=replay.state();s.position=s.world.stairs;s.visited[s.position]=1;s.rng.state=first.state().mapSeed;
+ replay=restore(Explorer(s));replay.advance();check(replay.state().world.terrain!=old,"restored third floor reused first floor layout");
  std::cout<<"floor entry/layout regression pass\n";
 }
 void npc(){

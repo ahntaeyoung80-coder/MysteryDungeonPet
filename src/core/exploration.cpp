@@ -11,6 +11,11 @@ namespace {
 void require(bool ok, const char* message) {
     if (!ok) throw std::runtime_error(message);
 }
+std::string layoutKey(std::uint64_t runId,const World& world) {
+    std::uint64_t hash=14695981039346656037ULL;
+    for(auto tile:world.terrain){hash^=tile;hash*=1099511628211ULL;}
+    return "floor-layout:"+std::to_string(runId)+":"+std::to_string(hash);
+}
 std::uint64_t totalWeight(const Weights& weights) {
     std::uint64_t total = 0;
     for (const auto& w : weights) {
@@ -267,10 +272,22 @@ std::string Explorer::key(const std::string& action, std::uint32_t instance) con
            std::to_string(state_.floorIndex) + ":" + std::to_string(instance);
 }
 void Explorer::enterFloor() {
-    state_.mapSeed = state_.rng.state;
-    state_.world = generate(state_.rng, static_cast<std::uint64_t>(state_.floorIndex) + 1);
+    const int previousFeet=state_.world.centers.empty()?-1:state_.position;
+    auto& layouts=state_.gameplay.onceKeys;
+    if(previousFeet>=0) layouts.insert(layoutKey(state_.runId,state_.world)); // Upgrade old saves from their current floor.
+    bool accepted=false;
+    for(unsigned attempt=0;attempt<128;++attempt) {
+        const auto mapSeed=state_.rng.state;
+        auto world=generate(state_.rng,static_cast<std::uint64_t>(state_.floorIndex)+1);
+        const auto key=layoutKey(state_.runId,world);
+        if(world.stairs==previousFeet || layouts.count(key)) continue;
+        state_.mapSeed=mapSeed;state_.world=std::move(world);layouts.insert(key);accepted=true;break;
+    }
+    require(accepted,"no unique floor layout within generation budget");
+    Mask entryExclusion{};
+    if(previousFeet>=0) entryExclusion[previousFeet]=1;
     state_.population = populate(state_.world, state_.floors[state_.floorIndex],
-                                 state_.rng, state_.spawnPolicy);
+                                 state_.rng, state_.spawnPolicy,entryExclusion);
     state_.position = state_.world.start;
     state_.visited.fill(0);
     state_.visited[state_.position] = 1;

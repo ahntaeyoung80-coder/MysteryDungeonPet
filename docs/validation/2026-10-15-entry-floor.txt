@@ -1,0 +1,10 @@
+floor entry/layout regression pass
+Test project /workspace/MysteryDungeonPet/build/movement
+    Start 6: pet_revision_tests
+1/2 Test #6: pet_revision_tests ...............   Passed    0.01 sec
+    Start 9: pet_exploration_tests
+2/2 Test #9: pet_exploration_tests ............   Passed    8.81 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =   8.82 sec
