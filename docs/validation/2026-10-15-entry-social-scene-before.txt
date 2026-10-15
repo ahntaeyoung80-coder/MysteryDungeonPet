@@ -1,0 +1,3 @@
+floor: new floor put an entity under entry/previous feet
+npc: off-path friendly NPC was not a regular priority
+scene: morning fade-in stands before Wake14
