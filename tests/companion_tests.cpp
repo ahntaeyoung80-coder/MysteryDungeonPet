@@ -86,7 +86,7 @@ int main(int argc,char** argv){try{
    cg.phaseStartedMs=now;cg.deadlineMs=now+1000;
    chase.population.entities={{1,10,EntityKind::Item,129,false},{2,4,EntityKind::Friend,260,false}};
    cg.hostile={2};auto& enemy=chase.population.entities[1];
-   enemy.tracking=Tracking::Chase;enemy.lastSeen=enemy.chaseTarget=chase.position;
+   enemy.tracking=Tracking::Chase;enemy.lastSeen=enemy.chaseTarget=156;
    saveSnapshot(out/("chase"+std::to_string(hp)+".mdes"),chase);
   }
   return 0;

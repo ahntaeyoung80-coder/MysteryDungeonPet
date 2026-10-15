@@ -399,7 +399,9 @@ inline unsigned run(const ExplorationState& base) {
             s.population.entities={{1,10,EntityKind::Item,129,false},
                                    {2,4,EntityKind::Friend,260,false}};
             s.gameplay.hostile={2};auto& enemy=s.population.entities[1];
-            enemy.tracking=Tracking::Chase;enemy.lastSeen=enemy.chaseTarget=s.position;
+            // Keep the remembered endpoint free for four steps in both HP cases.
+            // The old player tile may legitimately become companion-occupied.
+            enemy.tracking=Tracking::Chase;enemy.lastSeen=enemy.chaseTarget=156;
             Explorer e(s);uint64_t now=1000;std::vector<uint64_t> starts;
             for(unsigned tick=0;tick<16 && starts.size()<4;++tick) {
                 const auto event=restoredStep(e,now);
