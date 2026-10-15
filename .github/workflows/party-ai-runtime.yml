@@ -29,17 +29,16 @@ jobs:
       - name: Probe zero-argument launch before the full regression suite
         shell: pwsh
         run: ./tests/default_launch_windows_tests.ps1 -Exe build/windows/Release/MysteryDungeonPet.exe -Output build/windows/default-probe
+      - name: Verify all party AI follow-up requirements
+        shell: pwsh
+        run: |
+          cmake --build build/windows --config Release --target pet_companion_tests
+          if ($LASTEXITCODE -ne 0) { throw 'party test build failed' }
+          & build/windows/Release/pet_companion_tests.exe --party-ai-followup 2>&1 | Tee-Object build/windows/party-ai-followup.txt
+          exit $LASTEXITCODE
       - name: Verify native core, GUI, installed and tracked runtime
         shell: pwsh
         run: ./tools/run_windows_checks.ps1
-      - name: Record outstanding follow-up requirements
-        id: followup
-        if: always() && hashFiles('build/windows/Release/pet_companion_tests.exe') != ''
-        continue-on-error: true
-        shell: pwsh
-        run: |
-          & build/windows/Release/pet_companion_tests.exe --party-ai-followup 2>&1 | Tee-Object build/windows/party-ai-followup.txt
-          exit $LASTEXITCODE
       - uses: actions/upload-artifact@v4
         with:
           name: party-ai-built-runtime
