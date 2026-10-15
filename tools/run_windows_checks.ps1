@@ -18,6 +18,7 @@ try {
     & tests/playback_metrics_tests.ps1 -Exe $Exe -Inspector "$BuildDir/Release/pet_package_inspect.exe" -Output "$BuildDir/playback-results"
     & tests/exploration_windows_tests.ps1 -Exe $Exe -Explorer "$BuildDir/Release/pet_explore.exe" -Output "$BuildDir/exploration-results"
     & tests/navigation_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_navigation_recovery_tests.exe" -Output "$BuildDir/navigation-results"
+    & tests/entry_social_scene_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_entry_social_scene_tests.exe" -Output "$BuildDir/entry-results"
     & tests/movement_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_movement_tests.exe" -Output "$BuildDir/movement-results"
     & tests/gameplay_windows_tests.ps1 -Exe $Exe -Tests "$BuildDir/Release/pet_gameplay_tests.exe" -Output "$BuildDir/exploration-results/gameplay"
     Get-ChildItem -Directory 'assets/original/runtime' | ForEach-Object {

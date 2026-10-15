@@ -24,9 +24,9 @@ if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     foreach ($Pattern in @('select clip=17', 'life=ReturnHome', 'life=HomeScene', 'guild room=GuildDining characters=12 objectCount=1', 'guild room=PlayerRoom characters=2', 'guild partner wake finished', 'life=Eat', 'life=Sleep', 'life=Wake', 'life=Ready', 'life=Explore.*day=2', 'sceneBeat=13 ', 'sceneBeat=2 ', 'sceneBeat=6 ', 'sceneBeat=7 ', 'sceneBeat=3 ', 'sceneBeat=4 ', 'sceneBeat=5 ', 'sceneBeat=12 ', 'sceneBeat=8 ', 'sceneBeat=9 ', 'sceneBeat=16 ')) {
         if ($Joined -notmatch $Pattern) { throw "missing production life event: $Pattern" }
     }
-    if ($Joined -match 'sceneBeat=(10|11|15) ') { throw 'sleep hold or redundant morning fades replayed' }
+    if ($Joined -match 'sceneBeat=15 ') { throw 'old wake delay replayed' }
     $PreviousBeatIndex = -1
-    foreach ($Beat in @(2,6,3,4,7,5,12,8,9,16)) {
+    foreach ($Beat in @(2,6,3,4,7,5,12,8,9,16,10,11)) {
         $BeatIndex = 0
         while ($BeatIndex -lt $Events.Count -and $Events[$BeatIndex] -notmatch "sceneBeat=$Beat ") { $BeatIndex++ }
         if ($BeatIndex -le $PreviousBeatIndex -or $BeatIndex -eq $Events.Count) { throw "bedtime/wake ordering failed at beat $Beat" }
@@ -37,7 +37,7 @@ if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     if ($SleepFade-$SleepStart -gt 6000000) { throw 'sleep onset retained the old ten-second idle' }
     $ExitStart = [long]((@($Events | Where-Object { $_ -match 'sceneBeat=16 ' })[0] -split ' ')[0])
     $NextDay = [long]((@($Events | Where-Object { $_ -match 'life=Explore.*day=2' })[0] -split ' ')[0])
-    if ($NextDay-$ExitStart -lt 1800000 -or $NextDay-$ExitStart -gt 3000000) { throw 'room exit did not use the short in-map route' }
+    if ($NextDay-$ExitStart -lt 2500000 -or $NextDay-$ExitStart -gt 3500000) { throw 'room exit did not include the short route and fade-out' }
     $Returning = @($Events | Where-Object { $_ -match 'life=ReturnHome' })[0]
     $Eating = @($Events | Where-Object { $_ -match 'life=Eat' })[0]
     $ReturnUs = [long]($Returning -split ' ')[0]

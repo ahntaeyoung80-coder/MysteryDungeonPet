@@ -262,8 +262,8 @@ class App {
         const auto scene=dungeon?raster(playerMotion_.sample(now)):currentPlayback().scenePosition;
         const auto world=dungeon?playerMotion_.sample(now):WorldPoint{double(scene.x),double(scene.y)};
         const auto camera=dungeon?cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_)):homeCamera(now);
-        uint64_t hash=14695981039346656037ULL;unsigned opaque=0;
-        for(size_t i=0;i<surface_.pixels.size();++i) {hash^=surface_.pixels[i];hash*=1099511628211ULL;if(i%4==3 && surface_.pixels[i]==255) ++opaque;}
+        uint64_t hash=14695981039346656037ULL,light=0;unsigned opaque=0;
+        for(size_t i=0;i<surface_.pixels.size();++i) {hash^=surface_.pixels[i];hash*=1099511628211ULL;if(i%4==3){if(surface_.pixels[i]==255) ++opaque;}else light+=surface_.pixels[i];}
         movementTrace_ << now-start_ << ',' << g.movement.actionId << ',' << g.movement.startedMs << ',' << g.movement.durationMs << ','
             << g.movement.from << ',' << g.movement.to << ',' << std::setprecision(12) << world.x << ',' << world.y << ','
             << scene.x << ',' << scene.y << ',' << camera.x << ',' << camera.y << ',' << direction_ << ',' << clip_ << ',' << frame_ << ','
@@ -272,7 +272,7 @@ class App {
             << state.floorIndex << ',' << state.world.start << ',' << state.world.stairs << ',' << state.position << ','
             << std::count_if(state.population.entities.begin(),state.population.entities.end(),[&](const auto& e){return e.tile==state.world.start;}) << ',' << holdingScenePose();
         const auto partner=std::find_if(guildLive_.begin(),guildLive_.end(),[](const auto& a){return a.cue->kind==GuildActorKind::Partner;});
-        movementTrace_ << ',' << (partner==guildLive_.end()?0:partner->clip) << ',' << (partner==guildLive_.end()?0:partner->frame) << '\n';
+        movementTrace_ << ',' << (partner==guildLive_.end()?0:partner->clip) << ',' << (partner==guildLive_.end()?0:partner->frame) << ',' << light << '\n';
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
     }
@@ -901,7 +901,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");

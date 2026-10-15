@@ -2,6 +2,9 @@
 #include "core/gameplay_scene.hpp"
 #include "core/animator.hpp"
 #include "core/package.hpp"
+#include "core/exploration_package.hpp"
+#include <chrono>
+#include <fstream>
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
@@ -87,6 +90,32 @@ void scenes(){
  std::cout<<"sleep pose/exit fade/restore regression pass\n";
 }
 int main(int argc,char** argv){unsigned failed=0;
+ if(argc==4 && (std::string(argv[1])=="--fixtures" || std::string(argv[1])=="--wake-fixture"))try{
+  const auto p=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];std::filesystem::create_directories(out);
+  if(std::string(argv[1])=="--fixtures"){
+   Explorer floor(930,196,p.assetVersion,p.floors);auto s=floor.state();s.position=s.world.stairs;s.visited[s.position]=1;
+   floor=Explorer(s);floor.advance();s=floor.state();s.position=s.world.stairs;s.visited[s.position]=1;
+   floor=Explorer(s);floor.enableGameplay(0);saveSnapshot(out/"entry.mdes",floor.state());
+   s=socialFixture();s.assetVersion=p.assetVersion;s.floors=p.floors;s.population.entities={{1,4,EntityKind::Friend,6*24+6,false}};
+   saveSnapshot(out/"npc.mdes",s);
+   const auto actors=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original/gameplay/actors";
+   const auto player=loadPackage(actors/"asset-0/asset.mdpa"),partner=loadPackage(actors/"asset-1/asset.mdpa");
+   std::ofstream(out/"poses.json")<<"{\"playerLast\":"<<player.frames(13,2).size()-1<<",\"partnerLast\":"<<partner.frames(13,6).size()-1<<"}\n";
+  } else {
+   auto s=socialFixture();s.assetVersion=p.assetVersion;s.floors=p.floors;s.phase=Phase::Home;
+   auto& g=s.gameplay;g.homeScene=true;g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::BedFadeIn;g.hearts=3;g.meals=1;
+   g.phaseStartedMs=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();g.deadlineMs=g.phaseStartedMs+750;
+   g.onceKeys={"return:920","meal:920"};saveSnapshot(out/"wake.mdes",s);
+  }
+  return 0;
+ }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
+ if(argc==4 && std::string(argv[1])=="--inspect")try{
+  const auto p=loadExplorationPackage(argv[2]);const auto s=loadSnapshot(argv[3],p.assetVersion);
+  const auto greetings=std::count_if(s.onceKeys.begin(),s.onceKeys.end(),[](const auto& key){return key.rfind("greet:",0)==0;});
+  std::cout<<"{\"runId\":"<<s.runId<<",\"floor\":"<<s.floorIndex<<",\"entry\":"<<s.world.start<<",\"stairs\":"<<s.world.stairs
+   <<",\"player\":"<<s.position<<",\"day\":"<<s.gameplay.day<<",\"hearts\":"<<s.gameplay.hearts<<",\"greetings\":"<<greetings
+   <<",\"completed\":"<<(s.completed?"true":"false")<<",\"life\":\""<<lifeName(s.gameplay.life)<<"\"}\n";return 0;
+ }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
  for(const auto& entry:{std::make_pair("floor",floors),std::make_pair("npc",npc),std::make_pair("scene",scenes)}){
   if(argc>1 && std::string(argv[1])!=entry.first)continue;
   try{entry.second();}catch(const std::exception& e){++failed;std::cerr<<entry.first<<": "<<e.what()<<'\n';}
