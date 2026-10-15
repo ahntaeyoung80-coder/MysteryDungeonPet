@@ -456,7 +456,7 @@ bool Explorer::frontier(int tile) const {
     return false;
 }
 bool Explorer::selectPriority(const Search& search,bool items,bool frontiers) {
-    if(state_.floorSteps>=kFloorStepLimit || state_.stalledActions>=kTiles*2) return false;
+    if(!state_.gameplay.independentParty && (state_.floorSteps>=kFloorStepLimit || state_.stalledActions>=kTiles*2)) return false;
     int best=3*(kTiles+1);
     if(items) for(const auto& e:state_.population.entities) {
         if(e.kind!=EntityKind::Item || e.done || !e.visible || !state_.discovered[e.tile] || state_.failedTargets[e.tile]>=3) continue;
@@ -564,7 +564,11 @@ Event Explorer::moveTo(int next) {
         e.actionRound=state_.gameplay.actionRound;
         ++state_.occupancyVersion;
     }
-    state_.position=next;++state_.floorSteps;++state_.stalledActions;
+    state_.position=next;
+    if(state_.gameplay.independentParty) {
+        state_.floorSteps=std::min(kFloorStepLimit+kTiles,state_.floorSteps+1);
+        state_.stalledActions=std::min(kFloorStepLimit+kTiles,state_.stalledActions+1);
+    } else {++state_.floorSteps;++state_.stalledActions;}
     if(state_.gameplay.companion.enabled && partner>=0 && state_.gameplay.companion.tile!=partner) {state_.gameplay.companion.tile=partner;++state_.occupancyVersion;}
     if(state_.goalKind==GoalKind::Friend && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e){return e.instanceId==state_.targetInstance && !canAttack(state_.world,state_.target,e.tile);})) invalidate();
     state_.visited[state_.position]=1;
@@ -593,7 +597,7 @@ Event Explorer::advance(bool poseFinished) {
             invalidate();
         }
         if(state_.target<0) plan();
-        if(state_.target<0 || state_.floorSteps>kFloorStepLimit+kTiles) {
+        if(state_.target<0 || (!state_.gameplay.independentParty && state_.floorSteps>kFloorStepLimit+kTiles)) {
             state_.phase=Phase::Home;invalidate();return {EventKind::ReturnedHome,{},0};
         }
         if(cachedWorld_!=state_.world.version || cachedOccupancy_!=state_.occupancyVersion || pathIndex_>=path_.size()) {

@@ -506,7 +506,7 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
     g.combat=CombatPhase::PlayerTurn;return {};
 }
 int Explorer::detourTile(unsigned repetitions,uint64_t signature) {
-    if(state_.floorSteps>=kFloorStepLimit+kTiles) return -1;
+    if(!state_.gameplay.independentParty && state_.floorSteps>=kFloorStepLimit+kTiles) return -1;
     auto occupied=occupancy(true);
     if(state_.goalKind!=GoalKind::Stairs) occupied[state_.world.stairs]=1;
     const int planned=pathIndex_<path_.size()?path_[pathIndex_]:-1;

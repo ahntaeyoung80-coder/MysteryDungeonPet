@@ -322,7 +322,29 @@ inline unsigned run(const ExplorationState& base) {
                 e.state().onceKeys.count("greet:"+std::to_string(s.runId)+":0:1"),
                 "party could not greet and pass the corridor NPC");
     });
-    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=13"<<std::endl;
+    test("R13_recovery_decision_refreshes_room_visibility",[&] {
+        auto s=party(base);s.discovered.fill(0);s.discovered[s.position]=1;s.knownStairs=-1;
+        s.target=126;s.goalKind=GoalKind::Auxiliary;
+        s.gameplay.navigationHistory={navigationFingerprint(s)};
+        Explorer e(s);restoredStep(e,1000);
+        require(e.state().discovered[129],"detour planning skipped visibility discovery");
+    });
+    test("R14_exhausted_old_probe_budget_keeps_exploring",[&] {
+        auto s=party(base);s.knownStairs=-1;
+        s.floorSteps=Explorer::kFloorStepLimit+kTiles;s.stalledActions=s.floorSteps;
+        s.population.entities={{1,10,EntityKind::Item,129,false}};
+        Explorer e(s);uint64_t now=1000;
+        for(unsigned tick=0;tick<16 && e.state().inventory.empty();++tick) {
+            const auto event=restoredStep(e,now);
+            require(event.event!=GameplayEvent::ReturnHome && e.state().phase==Phase::Explore,
+                    "old probe budget ended the current exploration");
+            now=nextTime(e,now);
+        }
+        require(e.state().inventory.size()==1 &&
+                e.state().floorSteps<=Explorer::kFloorStepLimit+kTiles,
+                "old probe budget permanently disabled reachable goals");
+    });
+    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=15"<<std::endl;
     return failures;
 }
 } // namespace party_ai_regression

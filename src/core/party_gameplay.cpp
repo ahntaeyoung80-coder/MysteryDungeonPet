@@ -340,6 +340,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     };
     auto planPlayer=[&] {
         if(!available(0) || consumed(0)==g.actionRound || partyPlayback(g,0))return;
+        discover();
         if(heal(0))return;
         const auto adjacent=nearestEnemy(0,true);
         if(adjacent && g.hearts<=kLowHp) {
