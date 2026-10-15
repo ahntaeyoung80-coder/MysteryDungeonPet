@@ -4,7 +4,9 @@
 
 대분류·소분류 목차에서 원하는 항목을 골라 파일 위치와 검색어로 바로 찾는다. 개발·조회 기준은 **`work` 브랜치**다. 작업 시작 시 원격을 fetch하고 `origin/work`의 최신 상태를 확인한다.
 
-GitHub Desktop에서 `work`를 pull한 뒤 루트의 **MysteryDungeonPet.exe**를 더블클릭한다. ZIP 과정은 없다. 최신 동작·MDES6·남은 검증은 [현재 상태](PROJECT_STATE.md), [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 아래 설명은 이전 체크포인트 이력이다.
+실행 중이면 **Exit**로 종료하고 GitHub Desktop에서 `work`를 pull한 뒤 루트의 **MysteryDungeonPet.exe**를 더블클릭한다. ZIP 과정은 없다. 최신 파이리 동료·켈리몬 NPC/적·MDES7·검증은 [현재 상태](PROJECT_STATE.md), [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다. 아래 설명은 이전 체크포인트 이력이다.
+
+2026-10-15 동료 추가: 파이리가1칸 안에서 뒤따르며 함께 탐험·전투한다. 적/우호 NPC는 켈리몬, 적은 가까운 아군을 공격한다. 방 안 지원 이동과 통로 대기를 구분한다. [명세](docs/COMPANION_SPEC.md), [Windows·코어 검증](docs/logs/2026-10-15-companion-stage5.md)을 따른다.
 
 2026-10-15 층 진입·NPC·기상/퇴실 수정: 새 시작점과 이전 발밑의 특수 배치를 막고 탐험 중 같은 지형의 재사용을 거부한다. 우호 NPC를 아이템 다음 목표로 올렸으며, 아침에는 잠든 자세에서 일어나고 퇴실 뒤 fade-out/in으로 다음날 탐험에 연결한다. [명세·완료 기준](docs/ENTRY_SOCIAL_SCENE_SPEC.md), [현재 상태](PROJECT_STATE.md)를 따른다.
 

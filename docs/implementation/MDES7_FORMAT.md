@@ -14,3 +14,5 @@ MDES6의 CRC 앞에 고정76bytes를 추가한다. 이전 MDES1~6 읽기는 유�
 동료의 논리 위치·이동 시작/끝·행동권·HP/열매와 피해 대상을 함께 durable commit한다. 던전에서 플레이어와 다른 칸·대각 포함1칸/모서리 준수·배우 비중첩을 검증한다. 층 전환은 함께 새 위치에 배치하고, 일시정지 시 양쪽 이동/보행 시계를 함께 이동한다. 수동 Reset은 확정 상태를 유지하고 두 배우의 남은 이동을 지운다.
 
 기존 MDES3/4/5 모양 생성 회귀는 먼저76bytes 동료 block을 제거한 뒤 종전 필드를 제거하고 CRC를 다시 계산한다. 저장 버전만 바꿔 다른 형식으로 해석하지 않는다.
+
+전투 enum은 기존0~10을 유지하고11 CompanionTurn,12 CompanionAttack,13 CompanionHurt,14 CompanionFaint,15 PlayerApproach,16 CompanionApproach,17 CompanionBerryText를 추가한다. MDES7에서만17까지 읽으며 이전 형식의 범위는 유지한다. 공격 완료 주체를 각 단계에서 결정하므로 별도 완료 flag를 저장하지 않는다.

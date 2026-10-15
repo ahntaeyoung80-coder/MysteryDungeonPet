@@ -259,7 +259,7 @@ HP 차감은 `EnemyTurn`의 공격 판정과 `EnemyAttack`의 `pendingHit` 제�
 .\MysteryDungeonPet.exe --new-run
 ```
 
-이 명령은 기존 진행 대신 새 run을 저장하므로 백업을 먼저 한다. 반복 이동에서 탈출하려면 우클릭 `Reset 탐험 (귀가)`를 사용한다. 직전 저장을 `.reset-backup`으로 보존하고 확정 획득품을 유지하며 귀가한다. [사용법](docs/NAVIGATION_RECOVERY.md)을 따른다. 저장의 enum 번호, `onceKeys`, `pending-hit`, CRC와 MDES schema는 문구·시간을 바꾸려고 수정할 필요가 없다. 저장 구조 변경 설명은 [MDES6 형식](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/docs/implementation/MDES6_FORMAT.md)을 참고한다.
+이 명령은 기존 진행 대신 새 run을 저장하므로 백업을 먼저 한다. 반복 이동에서 탈출하려면 우클릭 `Reset 탐험 (귀가)`를 사용한다. 직전 저장을 `.reset-backup`으로 보존하고 확정 획득품을 유지하며 귀가한다. [사용법](docs/NAVIGATION_RECOVERY.md)을 따른다. 저장의 enum 번호, `onceKeys`, `pending-hit`, CRC와 MDES schema는 문구·시간을 바꾸려고 수정할 필요가 없다. 저장 구조 변경 설명은 [MDES7 형식](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/docs/implementation/MDES7_FORMAT.md)을 참고한다.
 
 ## 7. 수정 적용·확인·되돌리기
 
@@ -299,3 +299,10 @@ ctest --test-dir build/edit-check -C Release --output-on-failure
 GitHub Desktop에서는 **수정한 소스 + 새 `MysteryDungeonPet.exe` + 새 `windows-runtime.json` + 필요한 검사/자산 파일**을 함께 commit하고 push한다. `build/`, `local/`, 개인 저장·로그는 올리지 않는다. GitHub Actions는 검사하며, 루트 EXE를 대신 자동 생성해 commit하지 않는다.
 
 아직 commit하지 않은 수정을 되돌리려면 Changes에서 해당 파일의 Discard changes를 사용한다. 이미 commit한 수정은 History의 Revert로 되돌린다. 소스와 EXE·hash 기록을 같은 변경 단위로 되돌리면 서로 맞지 않는 상태를 피할 수 있다. 기존 게임 진행을 되돌리는 것은 Git revert와 별개이며 백업한 저장 파일을 앱 종료 후 복원한다.
+
+## 동료 추가 이후 수정 위치
+
+- 파이리 동료: `CompanionState`/`enableCompanion`/`companionFollowTile`/`recordCompanionMove`, `actors/asset-1`과 Windows `companionAssets_`/`companionMotion_`/`companionAnimator_`다. 적·우호 NPC는 `actors/asset-2`와 `enemyAssets_`로 분리했다.
+- 최대HP·400ms 이동·명중80%/급소20%·회복2는 두 아군에 같은 값을 적용한다. 회복 조건/양을 바꾸면 `PlayerTurn`, `CompanionTurn`, `scheduleDungeon`, `healCompanion`을 함께 맞춘다. `lowHealth`/`mustRetreat`도 두 배우를 판단한다.
+- 적의 대상은 `nearestPartyTile`, 방 전투 지원은 `combatApproach`가 결정한다. 통로에서 지원 재배치를 하지 않는 조건과 1칸 반경/비중첩을 유지한다. 두 번째 하트 줄은 `gameplayOverlay`의 `24+2*y+yy`다.
+- 검사는 `pet_companion_tests`와 `tests/companion_windows_tests.ps1`을 사용한다. 기존 단독 snapshot 검사는 `--solo`, 기본 제품 실행은 동료 활성화다. 자산 교체는 `tools/prepare_party_actor.py --md-index <원본 MD번호> --out <새 디렉터리>`로 원본 대조 후 한다.
