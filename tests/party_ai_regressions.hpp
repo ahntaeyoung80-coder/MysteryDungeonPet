@@ -461,6 +461,19 @@ inline unsigned run(const ExplorationState& base) {
         }
         require(killed && returnMoved && followed,"companion did not finish, return and rejoin after its separated fight");
     });
+    test("R20_cached_path_suffix_matches_a_fresh_search",[&] {
+        World world;world.terrain.fill(0);
+        for(int y=1;y<=4;++y)for(int x=1;x<=3;++x)world.terrain[y*kWidth+x]=1;
+        world.terrain[3*kWidth+3]=0;
+        const int start=kWidth+3,goal=4*kWidth+1;
+        const auto cached=bfs(world,start).pathTo(goal);
+        require(cached.size()==3,"suffix fixture no longer has its three-step shortest route");
+        for(size_t cut=1;cut<cached.size();++cut) {
+            const auto fresh=bfs(world,cached[cut-1]).pathTo(goal);
+            const std::vector<int> tail(cached.begin()+cut,cached.end());
+            require(fresh==tail,"restoring a static cached path changes its next tile");
+        }
+    });
     std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases="<<cases<<std::endl;
     return failures;
 }
