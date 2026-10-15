@@ -1,6 +1,6 @@
 {
   "compiler": "MinGW GCC 14-posix x64 Release / static libgcc and libstdc++",
-  "exe_sha256": "301146161c6154cea5d68c051e0b144b3acbf972c9aae2935615f3afd1dc9c35",
+  "exe_sha256": "23327e293a1e2a044d5d48fd080ae9ef94dc6f128e77319215131960dbfdb91e",
   "inputs": {
     "CMakeLists.txt": "b76e007600bd795af973c6d5ba6a35047e529765f5baa9a41dfd8bc6e145e053",
     "cmake/mingw.cmake": "bc88b295b39dcf7a6fe314cb4f9b3ec108b2cadde35bc5f861a4e8a2139672ae",
@@ -27,7 +27,7 @@
     "src/windows/app.rc": "dee796c28bae15cf5c74ac1ece175de1b3f91771a9bd2fe9a116990d9d6eb7c7",
     "src/windows/assets.cpp": "231b2168f063b5117fb8dc592a7c85abb028d5972d4cf7c355c3d1c2041c7f30",
     "src/windows/assets.hpp": "2b3906f2450324d4a6463a13f6f58fa0d36dced0e01f3009e9a8de21b745345e",
-    "src/windows/main.cpp": "5c074e82e758fb7be50631b1b4e0df9786c162b22459dc377fea7b6a60efb58f",
+    "src/windows/main.cpp": "34d35da484669258bddc71345894313cd292a18750fc10dec0fc59075f0e93e9",
     "src/windows/text_overlay.cpp": "0eab6454c0cc5ce206fcadd3b9f667274175462c3e1ead65e3761a963c6948d1",
     "src/windows/text_overlay.hpp": "405c212604968c9e42bddd1862af940b5a931b2cbe38a16e4a1455593655ca90",
     "assets/original/runtime/asset-0/CREDITS.txt": "712bfe9e61241a4dffc2e432c7177e6bd1d18a7dd45b822d6cc365adf53685a0",

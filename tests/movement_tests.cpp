@@ -36,6 +36,14 @@ void fixtures(const std::filesystem::path& packagePath,const std::filesystem::pa
 }
 int main(int argc,char** argv) {try {
     if(argc==4 && std::string(argv[1])=="--fixtures") {fixtures(argv[2],argv[3]);return 0;}
+    if(argc==4 && std::string(argv[1])=="--inspect") {
+        const auto package=loadExplorationPackage(argv[2]);const auto s=loadSnapshot(argv[3],package.assetVersion);const auto& g=s.gameplay;
+        const auto utc=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+        std::cout<<"{\"runId\":"<<s.runId<<",\"inventory\":"<<s.inventory.size()<<",\"onceCount\":"<<s.onceKeys.size()
+            <<",\"gameplayOnceCount\":"<<g.onceKeys.size()<<",\"day\":"<<g.day<<",\"hearts\":"<<g.hearts
+            <<",\"actionId\":"<<g.movement.actionId<<",\"startedMs\":"<<g.movement.startedMs<<",\"durationMs\":"<<g.movement.durationMs
+            <<",\"from\":"<<g.movement.from<<",\"to\":"<<g.movement.to<<",\"nowMs\":"<<utc<<"}\n";return 0;
+    }
     check(argc==2,"expected original actor package");
     const auto package=loadPackage(argv[1]);
     // Compare every direction at the same nonzero clock to an uninterrupted Walk.

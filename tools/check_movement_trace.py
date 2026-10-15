@@ -22,6 +22,7 @@ def check_trace(path, kind, scale):
     anchor, maximum = viewport // 2, 576 - viewport
     previous_time = -1
     submitted, directions = 0, set()
+    walking_start = None
     for row in rows:
         stamp = int(row['elapsed_us'])
         require(stamp >= previous_time, 'non-monotonic frame trace')
@@ -45,6 +46,9 @@ def check_trace(path, kind, scale):
         action = int(row['action_id'])
         if not action:
             continue
+        if walking_start is None:
+            walking_start = row['walk_started_ms']
+        require(row['walk_started_ms'] == walking_start, 'successive steps reset saved walking phase')
         require(int(row['duration_ms']) == 400 and int(row['clip']) == 0, 'moving step is not 400ms Walk')
         start, end = int(row['from_tile']), int(row['to_tile'])
         dx, dy = end % 24 - start % 24, end // 24 - start // 24
