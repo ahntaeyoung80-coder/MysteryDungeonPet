@@ -218,6 +218,7 @@ private:
     Mask playerOccupancy() const;
     void invalidate(bool clearTarget = true);
     bool selectPriority(const Search&, bool items, bool frontiers);
+    bool selectFriendly(const Search&);
     bool frontier(int tile) const;
     void reevaluateStairs();
     std::string key(const std::string& action, std::uint32_t instance = 0) const;

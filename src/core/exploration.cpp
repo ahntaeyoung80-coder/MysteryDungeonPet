@@ -372,9 +372,22 @@ bool Explorer::selectPriority(const Search& search,bool items,bool frontiers) {
         if(distance>=0 && score<best) {best=score;state_.target=e.tile;state_.goalKind=GoalKind::Item;state_.targetInstance=e.instanceId;}
     }
     if(state_.target>=0) return true;
+    if(!lowHealth() && selectFriendly(search)) return true;
     if(frontiers) for(int tile=0;tile<kTiles;++tile) {
         if(search.distance[tile]>0 && state_.failedTargets[tile]<3 && frontier(tile) && search.distance[tile]<best) {
             best=search.distance[tile];state_.target=tile;state_.goalKind=GoalKind::Frontier;
+        }
+    }
+    return state_.target>=0;
+}
+bool Explorer::selectFriendly(const Search& search) {
+    int best=kTiles+1;
+    for(const auto& e:state_.population.entities) {
+        if(e.kind!=EntityKind::Friend || e.done || !e.visible || state_.blocked[e.tile] || !state_.discovered[e.tile] ||
+           (state_.gameplay.enabled && !friendly(e))) continue;
+        for(int tile=0;tile<kTiles;++tile) if(state_.failedTargets[tile]<3 && search.distance[tile]>=0 &&
+            search.distance[tile]<best && canAttack(state_.world,tile,e.tile)) {
+            best=search.distance[tile];state_.target=tile;state_.targetInstance=e.instanceId;state_.goalKind=GoalKind::Friend;
         }
     }
     return state_.target>=0;
@@ -405,7 +418,11 @@ void Explorer::reevaluateStairs() {
     });
     bool frontiers=false;
     for(int tile=0;!frontiers && tile<kTiles;++tile) frontiers=state_.failedTargets[tile]<3 && frontier(tile);
-    if(!items && !frontiers) return;
+    const bool friends=std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e){
+        return e.kind==EntityKind::Friend && !e.done && e.visible && state_.discovered[e.tile] &&
+            (!state_.gameplay.enabled || friendly(e));
+    });
+    if(!items && !frontiers && !friends) return;
     auto occupied=playerOccupancy();occupied[state_.world.stairs]=1;
     const auto reach=bfs(state_.world,state_.position,occupied);++bfsCalls_;
     const int previousTarget=state_.target;
@@ -429,14 +446,6 @@ void Explorer::plan() {
         }
     } else if(!survival) path_=explore.pathTo(state_.target);
     if(state_.target<0 && state_.stalledActions<kTiles*2 && state_.floorSteps<kFloorStepLimit) {
-        // Friendly contact is auxiliary too; it cannot displace a regular goal.
-        int best=kTiles+1;
-        for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && !e.done && e.visible &&
-            (!state_.gameplay.enabled || std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end())) {
-            for(int tile=0;tile<kTiles;++tile) if(canAttack(state_.world,tile,e.tile) && explore.distance[tile]>=0 && explore.distance[tile]<best && state_.failedTargets[tile]<3) {
-                best=explore.distance[tile];state_.target=tile;state_.targetInstance=e.instanceId;state_.goalKind=GoalKind::Friend;path_=explore.pathTo(tile);
-            }
-        }
         // A bounded, deterministic probe only when every regular goal is unavailable.
         if(state_.target<0 && state_.stalledActions<8) for(int tile=0;tile<kTiles;++tile) if(explore.distance[tile]>0 && explore.distance[tile]<=2 && !state_.visited[tile] && state_.failedTargets[tile]<3) {
             state_.target=tile;state_.goalKind=GoalKind::Auxiliary;path_=explore.pathTo(tile);break;

@@ -53,6 +53,10 @@ void npc(){
  check(greetings==1 && e.state().population.entities[0].done && e.state().onceKeys.count("greet:920:0:1"),"NPC did not greet/respond exactly once");
  e=restore(e);for(unsigned tick=0;tick<6;++tick,now+=400)check(e.advanceGameplay(now,true).event!=GameplayEvent::DialoguePlayer,"completed NPC repeated greeting");
  s.population.entities.push_back({2,10,EntityKind::Item,3*24+5,false});Explorer items(s);items.advanceGameplay(1000);check(items.goal()==GoalKind::Item,"NPC displaced an unfinished item");
+ auto heading=s;heading.population.entities.pop_back();heading.target=heading.world.stairs;heading.goalKind=GoalKind::Stairs;
+ Explorer reconsider(heading);reconsider.advanceGameplay(1000);check(reconsider.goal()==GoalKind::Friend,"known stairs ignored a newly available friendly NPC");
+ auto pending=reconsider.state();pending.population.entities.push_back({2,10,EntityKind::Item,3*24+5,false});
+ reconsider=restore(Explorer(pending));reconsider.advanceGameplay(1400);check(reconsider.goal()==GoalKind::Friend && reconsider.state().targetInstance==1,"new target replaced an unfinished friendly goal on restore");
  s.gameplay.hearts=2;Explorer survival(s);survival.advanceGameplay(1000);check(survival.goal()==GoalKind::Stairs,"NPC displaced low-HP survival");
  s.gameplay.hearts=5;s.gameplay.hostile={1};s.population.entities.pop_back();Explorer hostile(s);hostile.advanceGameplay(1000);check(hostile.goal()!=GoalKind::Friend,"hostile selected for greeting");
  std::cout<<"friendly priority/dialogue regression pass\n";

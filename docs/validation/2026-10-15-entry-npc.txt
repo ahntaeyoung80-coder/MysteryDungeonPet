@@ -1,0 +1,12 @@
+friendly priority/dialogue regression pass
+Test project /workspace/MysteryDungeonPet/build/movement
+    Start 2: pet_navigation_recovery_tests
+1/3 Test #2: pet_navigation_recovery_tests ....   Passed    0.59 sec
+    Start 5: pet_survival_tests
+2/3 Test #5: pet_survival_tests ...............   Passed    0.01 sec
+    Start 6: pet_revision_tests
+3/3 Test #6: pet_revision_tests ...............   Passed    0.01 sec
+
+100% tests passed out of 3
+
+Total Test time (real) =   0.61 sec
