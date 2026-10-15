@@ -2,7 +2,7 @@
   "compiler": "MinGW GCC 14-posix x64 Release / static libgcc and libstdc++",
   "exe_sha256": "301146161c6154cea5d68c051e0b144b3acbf972c9aae2935615f3afd1dc9c35",
   "inputs": {
-    "CMakeLists.txt": "c5a1e471b6ada76542a8605ff86317c52ad42decbd3ba4876d35d89e414ea8dc",
+    "CMakeLists.txt": "b76e007600bd795af973c6d5ba6a35047e529765f5baa9a41dfd8bc6e145e053",
     "cmake/mingw.cmake": "bc88b295b39dcf7a6fe314cb4f9b3ec108b2cadde35bc5f861a4e8a2139672ae",
     "src/core/animator.cpp": "695bc36a0638ad9e4bf87aa5f42d3e7d3989f3a1cba2790f7f4a3411cb0691f7",
     "src/core/animator.hpp": "69bc7d21c3982f01e4b4ac0eaa97df51c92c43b93a6f3299949dd711b2d37441",

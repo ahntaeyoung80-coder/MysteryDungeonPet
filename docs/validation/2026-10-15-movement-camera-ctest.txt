@@ -1,0 +1,9 @@
+Test project /workspace/MysteryDungeonPet/build/movement
+    Start 1: pet_camera_tests
+1/2 Test #1: pet_camera_tests .................   Passed    0.39 sec
+    Start 2: pet_movement_tests
+2/2 Test #2: pet_movement_tests ...............   Passed    0.15 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =   0.54 sec
