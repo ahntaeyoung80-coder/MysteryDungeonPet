@@ -136,6 +136,25 @@ int main(int argc,char** argv){try{
    e=Explorer(decodeSnapshot(encodeSnapshot(e.state()),"companion"));e.advanceGameplay(1000+tick*1000,true);
    const auto& s=e.state();if(s.phase!=Phase::Home && !s.gameplay.independentParty)check(canAttack(s.world,s.position,s.gameplay.companion.tile),"combat separated party");
   }
+  if(e.state().gameplay.day!=2) {
+   const auto& s=e.state();const auto& g=s.gameplay;
+   std::cerr<<"party daily stalled seed="<<seed<<" floor="<<s.floorIndex
+    <<" life="<<lifeName(g.life)<<" phase="<<unsigned(s.phase)<<" player="<<s.position
+    <<" companion="<<g.companion.tile<<" target="<<s.target<<" goal="<<unsigned(s.goalKind)
+    <<" round="<<g.actionRound<<" partyPhase="<<unsigned(g.partyPhase)
+    <<" playerRound="<<g.playerActionRound<<" companionRound="<<g.companion.actionRound
+    <<" intent="<<unsigned(g.companionIntent)<<" companionTarget="<<g.companionTarget
+    <<" steps="<<s.floorSteps<<" stalled="<<s.stalledActions<<'\n';
+   for(const auto& enemy:s.population.entities)if(enemy.kind==EntityKind::Friend)
+    std::cerr<<"actor="<<enemy.instanceId<<" tile="<<enemy.tile<<" hp="<<enemy.remainingHits
+     <<" done="<<enemy.done<<" visible="<<enemy.visible<<" round="<<enemy.actionRound<<'\n';
+   for(const auto& a:g.partyActions)
+    std::cerr<<"action="<<a.id<<" actor="<<a.actorId<<" target="<<a.targetId
+     <<" kind="<<unsigned(a.kind)<<" done="<<a.finished<<" start="<<a.startedMs<<" deadline="<<a.deadlineMs<<'\n';
+   for(const auto& v:g.partyPlaybacks)
+    std::cerr<<"playback="<<v.id<<" actor="<<v.actorId<<" clip="<<v.clip
+     <<" start="<<v.startedMs<<" deadline="<<v.deadlineMs<<'\n';
+  }
   check(e.state().gameplay.day==2,"populated party failed finite daily loop");
  }
  unsigned actions=0;

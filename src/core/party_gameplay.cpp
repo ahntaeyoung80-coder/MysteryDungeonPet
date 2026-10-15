@@ -301,7 +301,10 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         }
         if(g.companionIntent==CompanionIntent::Return &&
            canAttack(s.world,s.position,g.companion.tile)) {
-            g.companionIntent=CompanionIntent::Follow;changed=true;
+            g.companionIntent=CompanionIntent::Follow;g.companionTarget=0;changed=true;
+            // Expose the completed return before selecting a new fight. This
+            // gives a corridor leader one legal turn to exchange positions.
+            start(actor,PartyActionKind::Wait,0,0);return;
         }
         if(g.companionIntent==CompanionIntent::Follow) {
             if(!canAttack(s.world,s.position,g.companion.tile)) {

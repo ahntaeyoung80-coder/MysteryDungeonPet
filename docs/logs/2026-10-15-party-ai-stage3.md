@@ -23,3 +23,9 @@
 `ad2d49d`의 [CI38733826794](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38733826794)는 Windows compile/link와 실제 EXE refresh에 성공했다. native CTest는12/13(19.19초)이며 companion만 `invalid goal tile`로 실패했다. 새 패배 전환에서 탐험 목표를 비우지 않는 경로를 확인해 기존 invalidate 계약을 적용했다. 실패 때문에 Linux/실행물 반영은 실행되지 않았다.
 
 같은 수정에 R10 keyed 완료 토큰의 다른 run/배우/액션·중복 거부와 R11 실제 MDES7 pending-hit의 완료 후 이행을 추가했다. MDES8 형식 문서와 일시정지 clock overflow 검사를 함께 보강한다. 통과 여부는 다음 CI에서 확인한다.
+
+## 두 번째 CI와 진행성 보강
+
+`4fcb808`의 [CI38734363963](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38734363963)는 compile/link 성공, CTest12/13(21.96초)이며 companion의 populated daily loop가 끝나지 않았다. 기존 목표 오류는 지나갔다. 복귀를 완료한 동료가 같은 update에서 접근 불가능한 적을 재선택하면 Follow 상태가 주인공의 다음 차례에 드러나지 않아 통로 교환을 막는 경로가 있다. 복귀 완료 뒤에는 그 차례를 마쳐 다음 주인공 이동에 Follow 상태를 보이게 한다.
+
+실패 시 seed/층/두 위치/목표/행동권/의도/남은 액션·재생을 출력한다. 기본 회귀가 실패해도 명시 후속12검사는 실행·수집하도록 작업 브랜치 CI 진단을 보강했다. 실행물 반영은 필수 Windows/Linux 검사 성공 때만 수행한다.
