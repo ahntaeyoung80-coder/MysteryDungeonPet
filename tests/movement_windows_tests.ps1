@@ -63,11 +63,13 @@ $Process.Kill()
 $Process.WaitForExit()
 $Before = & $Tests --inspect $Package $Snapshot | ConvertFrom-Json
 if ($LASTEXITCODE -ne 0) { throw 'interrupted snapshot invalid' }
+$Before | ConvertTo-Json | Set-Content "$Output/interrupted-before.json"
 if ($Before.actionId -eq 0) {
     $Results += @{name='restore'; status='pending: interrupted runner did not start movement'}
 } else {
     $Results += Run-Frames 'restore' 'straight' $Snapshot 1 3
     $After = & $Tests --inspect $Package $Snapshot | ConvertFrom-Json
+    $After | ConvertTo-Json | Set-Content "$Output/interrupted-after.json"
     if ($LASTEXITCODE -ne 0 -or $After.runId -ne $Before.runId -or $After.inventory -ne $Before.inventory -or
         $After.onceCount -ne $Before.onceCount -or $After.gameplayOnceCount -ne $Before.gameplayOnceCount -or
         $After.day -ne $Before.day -or $After.hearts -ne $Before.hearts) { throw 'movement restore changed transaction state' }
@@ -76,7 +78,7 @@ if ($Before.actionId -eq 0) {
         $First = $Trace[0]
         if ([long]$First.action_id -ne $Before.actionId -or [int]$First.from_tile -ne $Before.from -or [int]$First.to_tile -ne $Before.to) { throw 'restore replaced pending movement' }
         $Elapsed = [math]::Max(0,[long]$First.utc_ms-[long]$First.started_ms)
-        $Fraction = [math]::Min(1,$Elapsed/400.0)
+        $Fraction = [math]::Min(1.0,$Elapsed/400.0)
         $Expected = ($Before.from % 24)*24+12+24*$Fraction
         if ([math]::Abs([double]$First.world_x-$Expected) -gt 2) { throw 'restore restarted or skipped pending movement' }
     }
