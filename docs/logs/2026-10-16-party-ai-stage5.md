@@ -27,3 +27,10 @@
 녹색 asset-2는 우호, 보라색 asset-3은 hostile catalogue에 있는 적의 패키지로 선택한다. 독립 배우·종전 단일 조우·대화·이동 복원·걷기·피격/기절 fallback 모두 같은 선택 경계를 사용한다. guild의 별도 원작 NPC 자산은 재사용한다.
 
 NPC별 실제 clip/frame/direction을 trace에 기록한다. 기존 원작 픽셀 검사의 적 기대 자산을 보라색으로 바꾸고, native에서 두 원작 출처와8방향 필수 clip을 검사한다. 우호·적의 저장 복원 픽셀 검사를 추가할 예정이다. 아직 원작 추출/표시 완료로 보고하지 않는다.
+
+
+## 원작 추출 성공·실제 관계 픽셀/복원 검사 보강
+
+`84ad85c`의 [CI38825315038](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38825315038)에서 관계 자산 생성과 기존 사전 검사는 성공했다. 보라색 MD384/sprite554의 출력160프레임을 원작 WAN과 비교했고 원본 소스 프레임240개를 확인했다. ROM 및 actor0/1/2 바이트 유지도 통과했다. Windows 표시는 아직 검증 중이다.
+
+우호/적의 독립 fixture는 같은 NPC instance1에 서로 다른 저장 관계를 부여한다. 일반 앱에서 각각 저장 후 다시 실행해 runId/hostile catalogue가 유지되는지 검사한다. 첫 제출 이미지와 복원 첫 이미지를 원작 녹색/보라색 atlas 픽셀과 대조한다. 관계 검증의 기준은 fixture에 선언한 역할이며 renderer가 보고한 자산 이름으로 정답을 정하지 않는다. 전투/걷기/기절은 기존 GUI/원작 WAN 검사에서 함께 검증한다.

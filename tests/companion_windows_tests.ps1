@@ -6,18 +6,24 @@ $Inspector=(Resolve-Path $Inspector).Path
 $Package=(Resolve-Path 'assets/original/exploration/dungeon-0/exploration.mdpe').Path
 New-Item -ItemType Directory -Force $Output|Out-Null
 $Output=[IO.Path]::GetFullPath($Output)
-function Run([string]$Name,[int]$Seconds){
+function Run([string]$Name,[int]$Seconds,[bool]$Restored=$false){
  $Dir=Join-Path $Output $Name
- if($Name -in @('two-sided','chase1','chase5')){ & $Tests --party-fixtures $Package $Dir }
- else { & $Tests --fixtures $Package $Dir }
- if($LASTEXITCODE -ne 0){throw 'party fixtures failed'}
+ if(-not $Restored) {
+  if($Name -in @('two-sided','chase1','chase5')){ & $Tests --party-fixtures $Package $Dir }
+  elseif($Name -in @('friendly','hostile')){ & $Tests --relationship-fixtures $Package $Dir }
+  else { & $Tests --fixtures $Package $Dir }
+  if($LASTEXITCODE -ne 0){throw 'party fixtures failed'}
+ }
+ $TraceName=if($Restored){'restored-trace'}else{'trace'}
+ $StateName=if($Restored){'restored-state'}else{'state'}
  $ArgsForApp=@('--explore',"`"$Package`"",'--snapshot',"`"$Dir/$Name.mdes`"",'--duration',$Seconds,
-  '--metrics',"`"$Dir/metrics.csv`"",'--movement-trace',"`"$Dir/trace.csv`"")
+  '--metrics',"`"$Dir/metrics.csv`"",'--movement-trace',"`"$Dir/$TraceName.csv`"")
  $Process=Start-Process $Exe -ArgumentList $ArgsForApp -PassThru
  if(-not $Process.WaitForExit(20000)){$Process.Kill();throw 'party app timeout'}
  if($Process.ExitCode -ne 0){throw 'party app failed'}
- $Rows=@(Import-Csv "$Dir/trace.csv"|Where-Object {$_.submitted -eq '1'})
- if($Rows.Count -lt 10){throw 'party submitted frames absent'}
+  $Rows=@(Import-Csv "$Dir/$TraceName.csv"|Where-Object {$_.submitted -eq '1'})
+ $Minimum=if($Name -in @('friendly','hostile')){1}else{10}
+ if($Rows.Count -lt $Minimum){throw 'party submitted frames absent'}
  foreach($Row in $Rows){
   if($Row.companion_enabled -ne '1'){throw 'party disabled during actual launch'}
   if($Row.life -in @('0','1','8','10')) {
@@ -29,7 +35,7 @@ function Run([string]$Name,[int]$Seconds){
       [math]::Abs([double]$Row.world_y-[double]$Row.companion_world_y) -gt 24.01)){throw 'rendered party exceeded one-tile radius'}
   }
  }
- & $Tests --inspect $Package "$Dir/$Name.mdes"|Set-Content "$Dir/state.json"
+ & $Tests --inspect $Package "$Dir/$Name.mdes"|Set-Content "$Dir/$StateName.json"
  if($LASTEXITCODE -ne 0){throw 'actual party save cannot restore'}
  return $Rows
 }
@@ -91,6 +97,21 @@ foreach($Hp in @(5,1)) {
  $ChaseResults += @{hp=$Hp;starts=$Starts;gapsMs=$Gaps;durationMs=400;status='pass'}
 }
 $ChaseResults|ConvertTo-Json -Depth 4|Set-Content "$Output/chase-timing.json"
+$RelationshipResults=@()
+foreach($Role in @('friendly','hostile')) {
+ $null=Run $Role 1
+ $Before=Get-Content -Raw "$Output/$Role/state.json"|ConvertFrom-Json
+ $null=Run $Role 1 $true
+ $After=Get-Content -Raw "$Output/$Role/restored-state.json"|ConvertFrom-Json
+ $Expected=if($Role -eq 'hostile'){1}else{0}
+ if($After.runId -ne $Before.runId -or $Before.hostileCount -ne $Expected -or $After.hostileCount -ne $Expected){
+  throw "$Role relationship changed when restoring the ordinary app"
+ }
+ $RelationshipResults+=@{role=$Role;runId=$After.runId;hostileCount=$After.hostileCount;restored='pass'}
+}
+$RelationshipResults|ConvertTo-Json|Set-Content "$Output/relationship-restore.json"
+Get-Content -Raw "$Output/chase-timing.json"
+Get-Content -Raw "$Output/relationship-restore.json"
 python tools/check_party_render.py --inspector $Inspector --output $Output
 if($LASTEXITCODE -ne 0){throw 'party original body pixels differ'}
 @{status='pass';follow='one tile; independent Walk0/motion';combat='Attack1, nearest companion Hurt6, Faint33/death';

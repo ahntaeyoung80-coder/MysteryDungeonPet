@@ -71,6 +71,21 @@ void combatCases(){
 int main(int argc,char** argv){try{
  if(argc==2 && std::string(argv[1])=="--party-ai-followup")
   return party_ai_regression::run(companionFixture())?1:0;
+ if(argc==4 && std::string(argv[1])=="--relationship-fixtures") {
+  const auto package=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];
+  std::filesystem::create_directories(out);
+  const auto now=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+  for(const std::string name:{"friendly","hostile"}) {
+   auto s=party_ai_regression::party(companionFixture());auto& g=s.gameplay;
+   s.assetVersion=package.assetVersion;s.floors=package.floors;
+   s.population.entities={{1,4,EntityKind::Friend,126,false}};
+   g.hostile=name=="hostile"?std::vector<uint32_t>{1}:std::vector<uint32_t>{};
+   // Hold the decision while the ordinary app loads/saves/restores the role.
+   g.phaseStartedMs=now;g.deadlineMs=now+10000;party_ai_regression::forceHit(s);
+   saveSnapshot(out/(name+".mdes"),s);
+  }
+  return 0;
+ }
  if(argc==4 && std::string(argv[1])=="--party-fixtures") {
   const auto package=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];
   std::filesystem::create_directories(out);
@@ -115,6 +130,7 @@ int main(int argc,char** argv){try{
  if(argc==4 && std::string(argv[1])=="--inspect") {
   const auto p=loadExplorationPackage(argv[2]);const auto s=loadSnapshot(argv[3],p.assetVersion);const auto& g=s.gameplay;
   std::cout<<"{\"runId\":"<<s.runId<<",\"day\":"<<g.day<<",\"life\":\""<<lifeName(g.life)<<"\",\"player\":"<<s.position
+   <<",\"floorCount\":"<<s.floors.size()<<",\"dungeonId\":"<<s.floors[0].dungeonId<<",\"hostileCount\":"<<g.hostile.size()
    <<",\"companionEnabled\":"<<g.companion.enabled<<",\"companion\":"<<g.companion.tile<<",\"playerHp\":"<<g.hearts<<",\"companionHp\":"<<g.companion.hearts<<"}\n";
   return 0;
  }
