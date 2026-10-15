@@ -3,6 +3,7 @@
 #include "core/exploration_package.hpp"
 #include "core/package.hpp"
 #include "core/gameplay_scene.hpp"
+#include "party_ai_regressions.hpp"
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -68,6 +69,8 @@ void combatCases(){
  }
 }
 int main(int argc,char** argv){try{
+ if(argc==2 && std::string(argv[1])=="--party-ai-followup")
+  return party_ai_regression::run(companionFixture())?1:0;
  if(argc==4 && std::string(argv[1])=="--fixtures") {
   const auto package=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];std::filesystem::create_directories(out);
   const auto now=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());

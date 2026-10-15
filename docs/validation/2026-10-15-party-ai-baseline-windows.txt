@@ -1,0 +1,18 @@
+2026-10-15T11:44:50.1738481Z 16 directional/reversal cases, pause/partial restore, MDES6 migration and 9941 restored party actions pass
+2026-10-15T11:44:50.1739416Z PARTY_AI R01 observed=125->150->175->152->129
+2026-10-15T11:44:50.1740224Z PARTY_AI FAIL R01_unobstructed_straight_path: unobstructed same-row goal used an unnecessary diagonal detour
+2026-10-15T11:44:50.1740972Z PARTY_AI R02 HP5 1000 1400 1800 2200 HP1 1000 1400 1800 2200
+2026-10-15T11:44:50.1741439Z PARTY_AI PASS R02_hp_alone_does_not_delay_walking
+2026-10-15T11:44:50.1742174Z PARTY_AI FAIL R03_hp1_surrounded_fights_without_returning: being surrounded triggered an automatic return
+2026-10-15T11:44:50.1743165Z PARTY_AI FAIL R03_no_legal_action_waits_without_returning: no available goal ended exploration instead of waiting
+2026-10-15T11:44:50.1744126Z PARTY_AI R04 leader target=2 round=1
+2026-10-15T11:44:50.1745057Z PARTY_AI FAIL R04_both_allies_attack_their_own_enemy_in_one_round: one ally lost its independent attack against the opposite enemy
+2026-10-15T11:44:50.1745894Z PARTY_AI PASS R05_one_enemy_faints_other_fight_continues
+2026-10-15T11:44:50.1746711Z PARTY_AI FAIL R06_leader_retreat_does_not_cancel_companion_combat: leader low HP canceled the companion's own adjacent combat
+2026-10-15T11:44:50.1747647Z PARTY_AI FAIL R06_separated_combat_state_roundtrips: companion exceeded one-tile radius
+2026-10-15T11:44:50.1748279Z PARTY_AI PASS R07_R08_owner_and_damage_survive_restore
+2026-10-15T11:44:50.1749015Z PARTY_AI REPLAY now=1400 before=150 continuous=175 restored=126 target=129/129 companion=150/150 round=2/2 event=21/21
+2026-10-15T11:44:50.1750108Z PARTY_AI FAIL R08_navigation_matches_uninterrupted_execution: interrupted execution changed the event, RNG or durable state
+2026-10-15T11:44:50.1751062Z PARTY_AI SUMMARY failures=7 cases=10
+2026-10-15T11:45:08.9446461Z 92% tests passed, 1 tests failed out of 13
+2026-10-15T11:45:08.9446947Z Total Test time (real) =  24.87 sec

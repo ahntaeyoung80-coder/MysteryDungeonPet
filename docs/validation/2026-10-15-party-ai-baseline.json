@@ -1,0 +1,137 @@
+{
+  "status": "known_failures_reproduced",
+  "dateKst": "2026-10-15",
+  "baselineRef": "a4effe3d8aa3412057f02d5e72dd636246291459",
+  "runtimeSourceCommit": "6ccb38c68652736a5127885f969184a739f9957d",
+  "testBranch": "test/party-ai-regressions",
+  "testCommit": "f7da8de4242a1536b9000ae44bec5c5e74c9f3b7",
+  "ci": {
+    "runId": 38729302845,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38729302845",
+    "linux": {
+      "jobId": 116402836359,
+      "sanitizers": [
+        "address",
+        "undefined"
+      ],
+      "ctestPassed": 11,
+      "ctestTotal": 12,
+      "ctestSeconds": 262.03
+    },
+    "windows": {
+      "jobId": 116402836724,
+      "platform": "Windows Server 2025",
+      "compiler": "MSVC 19.51",
+      "ctestPassed": 12,
+      "ctestTotal": 13,
+      "ctestSeconds": 24.87
+    },
+    "failedTarget": "pet_companion_tests",
+    "expectedFailureReason": "The new follow-up requirements are not implemented; all ten cases were compiled and run on both platforms."
+  },
+  "followup": {
+    "total": 10,
+    "passed": 3,
+    "failed": 7,
+    "cases": [
+      {
+        "name": "R01_unobstructed_straight_path",
+        "status": "fail",
+        "reason": "unobstructed same-row goal used an unnecessary diagonal detour"
+      },
+      {
+        "name": "R02_hp_alone_does_not_delay_walking",
+        "status": "pass",
+        "reason": null
+      },
+      {
+        "name": "R03_hp1_surrounded_fights_without_returning",
+        "status": "fail",
+        "reason": "being surrounded triggered an automatic return"
+      },
+      {
+        "name": "R03_no_legal_action_waits_without_returning",
+        "status": "fail",
+        "reason": "no available goal ended exploration instead of waiting"
+      },
+      {
+        "name": "R04_both_allies_attack_their_own_enemy_in_one_round",
+        "status": "fail",
+        "reason": "one ally lost its independent attack against the opposite enemy"
+      },
+      {
+        "name": "R05_one_enemy_faints_other_fight_continues",
+        "status": "pass",
+        "reason": null
+      },
+      {
+        "name": "R06_leader_retreat_does_not_cancel_companion_combat",
+        "status": "fail",
+        "reason": "leader low HP canceled the companion's own adjacent combat"
+      },
+      {
+        "name": "R06_separated_combat_state_roundtrips",
+        "status": "fail",
+        "reason": "companion exceeded one-tile radius"
+      },
+      {
+        "name": "R07_R08_owner_and_damage_survive_restore",
+        "status": "pass",
+        "reason": null
+      },
+      {
+        "name": "R08_navigation_matches_uninterrupted_execution",
+        "status": "fail",
+        "reason": "interrupted execution changed the event, RNG or durable state"
+      }
+    ]
+  },
+  "observations": {
+    "straightPath": {
+      "observed": [
+        125,
+        150,
+        175,
+        152,
+        129
+      ],
+      "required": [
+        125,
+        126,
+        127,
+        128,
+        129
+      ]
+    },
+    "walkingWithoutEnemies": {
+      "hp5StartsMs": [
+        1000,
+        1400,
+        1800,
+        2200
+      ],
+      "hp1StartsMs": [
+        1000,
+        1400,
+        1800,
+        2200
+      ]
+    },
+    "navigationReplay": {
+      "nowMs": 1400,
+      "from": 150,
+      "uninterruptedTo": 175,
+      "restoredTo": 126,
+      "target": 129,
+      "round": 2,
+      "companionTo": 150
+    }
+  },
+  "limitations": [
+    "No runtime, asset, save schema or EXE changes in this baseline.",
+    "Python and GUI steps after the failing CTest were skipped; they are not reported as verified.",
+    "Exact user snapshots for delayed low-HP walking, room duplication and stalled combat are unavailable.",
+    "The passing one-enemy-defeat fixture does not resolve the reported combat stall.",
+    "Multiple-enemy completion IDs, concurrent GUI animation, save migration, colors and seven floors remain implementation work."
+  ]
+}
