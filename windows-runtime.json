@@ -1,8 +1,8 @@
 {
   "compiler": "MinGW GCC 14-posix x64 Release / static libgcc and libstdc++",
-  "exe_sha256": "b046b85cee43f40f6ac98cd27e3051ddf1c9d6171b49150b28d234f38343d0bd",
+  "exe_sha256": "301146161c6154cea5d68c051e0b144b3acbf972c9aae2935615f3afd1dc9c35",
   "inputs": {
-    "CMakeLists.txt": "06ccc92981555a488f28569ce0743b150e4878f1fd53f643227a14d67d580ca5",
+    "CMakeLists.txt": "c5a1e471b6ada76542a8605ff86317c52ad42decbd3ba4876d35d89e414ea8dc",
     "cmake/mingw.cmake": "bc88b295b39dcf7a6fe314cb4f9b3ec108b2cadde35bc5f861a4e8a2139672ae",
     "src/core/animator.cpp": "695bc36a0638ad9e4bf87aa5f42d3e7d3989f3a1cba2790f7f4a3411cb0691f7",
     "src/core/animator.hpp": "69bc7d21c3982f01e4b4ac0eaa97df51c92c43b93a6f3299949dd711b2d37441",
@@ -27,7 +27,7 @@
     "src/windows/app.rc": "dee796c28bae15cf5c74ac1ece175de1b3f91771a9bd2fe9a116990d9d6eb7c7",
     "src/windows/assets.cpp": "231b2168f063b5117fb8dc592a7c85abb028d5972d4cf7c355c3d1c2041c7f30",
     "src/windows/assets.hpp": "2b3906f2450324d4a6463a13f6f58fa0d36dced0e01f3009e9a8de21b745345e",
-    "src/windows/main.cpp": "88b3a8cf8b3f52d1d91b8c4090a775948acd6e04492c6c2c1f03bda5fb84e5bc",
+    "src/windows/main.cpp": "5c074e82e758fb7be50631b1b4e0df9786c162b22459dc377fea7b6a60efb58f",
     "src/windows/text_overlay.cpp": "0eab6454c0cc5ce206fcadd3b9f667274175462c3e1ead65e3761a963c6948d1",
     "src/windows/text_overlay.hpp": "405c212604968c9e42bddd1862af940b5a931b2cbe38a16e4a1455593655ca90",
     "assets/original/runtime/asset-0/CREDITS.txt": "712bfe9e61241a4dffc2e432c7177e6bd1d18a7dd45b822d6cc365adf53685a0",

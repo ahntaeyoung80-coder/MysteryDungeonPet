@@ -2,7 +2,7 @@
 
 ## 이동·카메라 안정화 — 2026-10-15
 
-사용자 승인으로 5단계를 진행한다. [명세](docs/MOVEMENT_STABILIZATION_SPEC.md)를 따른다. 1단계: work=80470ba 기준·루트 EXE hash 일치와 Release7/7(15.87초)을 확인했다. 최신 기준은 work만 사용한다. 다음은 고정 이동/방향 전환·복원 검사와 카메라/실제 Windows GUI 검증이다. 단계별 커밋을 남기고 실행하지 않은 항목은 pending으로 기록한다.
+사용자 승인으로 [5단계 명세](docs/MOVEMENT_STABILIZATION_SPEC.md)를 진행한다. 1단계 기준은 work=80470ba, 기존 EXE hash/Release7/7 통과다. 2단계는 pet_movement_tests의 8방향64행동·400ms·연속 보행·방향 전환·pause/MDES5 복원이 통과했고 코어 결함은 재현되지 않았다. 고정 snapshot 생성과 명시적 --movement-trace(실제 합성CSV/제출/BMP)를 추가해 기존 대화·전투에 가린 이동 관찰 공백을 보완했다. 루트 EXE를 교차 빌드·갱신하고 hash를 확인했다. 네이티브 Windows 화면 검증은 4단계에서 수행한다. 다음은 카메라·외곽 표시 검사다.
 
 ## 브랜치 통합 — 2026-10-15
 

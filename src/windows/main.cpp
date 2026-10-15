@@ -103,7 +103,7 @@ std::filesystem::path runtimePath(const wchar_t* installed,const wchar_t* reposi
 }
 struct Options {
     std::filesystem::path package = runtimePath(L"assets/original/asset-0/asset.mdpa",L"assets/original/runtime/asset-0/asset.mdpa");
-    std::filesystem::path metrics, report;
+    std::filesystem::path metrics, report, movementTrace;
     std::filesystem::path exploration, snapshot;
     std::filesystem::path gameplayAssets = runtimePath(L"assets/gameplay",L"assets/original/gameplay");
     unsigned seed = 1;
@@ -138,6 +138,7 @@ Options options() {
         else if (arg == L"--seed") o.seed = number(value(), UINT32_MAX);
         else if (arg == L"--new-run") o.newRun = true;
         else if (arg == L"--metrics") o.metrics = value();
+        else if (arg == L"--movement-trace") o.movementTrace = value();
         else if (arg == L"--report") o.report = value();
         else if (arg == L"--clip") { o.clip = number(value(), INT32_MAX); animationTest = true; }
         else if (arg == L"--direction") { o.direction = number(value(), 7); animationTest = true; }
@@ -232,7 +233,35 @@ class App {
     unsigned sessionAttempts_ = 0;
     int64_t previousMetric_ = 0;
     uint64_t previousCpu_ = 0;
-    std::ofstream metrics_, events_;
+    std::ofstream metrics_, events_, movementTrace_;
+    unsigned traceImages_ = 0;
+    void traceImage(const char* suffix) {
+        if(!movementTrace_ || !dib_ || !submitted_) return;
+        auto path=options_.movementTrace;path.replace_extension();path+=suffix;
+        std::ofstream out(path,std::ios::binary|std::ios::trunc);
+        if(!out) throw std::runtime_error("cannot open movement frame image");
+        BITMAPFILEHEADER file{};file.bfType=0x4d42;file.bfOffBits=sizeof(file)+sizeof(BITMAPINFOHEADER);
+        file.bfSize=file.bfOffBits+size_*size_*4;
+        BITMAPINFOHEADER info{};info.biSize=sizeof(info);info.biWidth=LONG(size_);info.biHeight=-LONG(size_);
+        info.biPlanes=1;info.biBitCount=32;info.biCompression=BI_RGB;info.biSizeImage=size_*size_*4;
+        out.write(reinterpret_cast<const char*>(&file),sizeof(file));out.write(reinterpret_cast<const char*>(&info),sizeof(info));
+        out.write(static_cast<const char*>(dib_->bits),size_*size_*4);
+        if(!out) throw std::runtime_error("cannot write movement frame image");
+    }
+    void traceMovement(int64_t now,bool submitted) {
+        if(!movementTrace_ || !explorer_ || !dungeonScene(explorer_->state().gameplay)) return;
+        const auto& g=explorer_->state().gameplay;const auto world=playerMotion_.sample(now);const auto scene=raster(world);
+        const auto camera=cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_));
+        uint64_t hash=14695981039346656037ULL;unsigned opaque=0;
+        for(size_t i=0;i<surface_.pixels.size();++i) {hash^=surface_.pixels[i];hash*=1099511628211ULL;if(i%4==3 && surface_.pixels[i]==255) ++opaque;}
+        movementTrace_ << now-start_ << ',' << g.movement.actionId << ',' << g.movement.startedMs << ',' << g.movement.durationMs << ','
+            << g.movement.from << ',' << g.movement.to << ',' << std::setprecision(12) << world.x << ',' << world.y << ','
+            << scene.x << ',' << scene.y << ',' << camera.x << ',' << camera.y << ',' << direction_ << ',' << clip_ << ',' << frame_ << ','
+            << scale_ << ',' << playerMotion_.active(now) << ',' << opaque << ',' << hash << ',' << submitted << ','
+            << markers_ << ',' << static_cast<unsigned>(g.life) << ',' << static_cast<unsigned>(g.sceneBeat) << '\n';
+        if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
+        if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
+    }
     static LRESULT CALLBACK procedure(HWND hwnd, UINT msg, WPARAM w, LPARAM l) {
         App* self = reinterpret_cast<App*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
         if (msg == WM_NCCREATE) {
@@ -517,6 +546,7 @@ class App {
     void finalSample() {
         if (finalSampled_) return;
         sample(nowUs(), true);
+        traceImage("-last.bmp");
         finalSampled_ = true;
     }
     void sample(int64_t now, bool final = false) {
@@ -736,7 +766,7 @@ class App {
             poseFinished_=completion_.player;
         }
         (void)playerFinished;
-        if (!dirty_) return;
+        if (!dirty_) {traceMovement(now,false);return;}
         std::vector<Layer> layers;
         Point camera{0, 0};
         if (explorer_ && dungeonScene(explorer_->state().gameplay)) {
@@ -812,7 +842,7 @@ class App {
         const bool textChanged=overlayText!=submittedText_;
         bool changed = previous != surface_.pixels;
         dirty_ = false;
-        if (!changed && !textChanged && submitted_) return;
+        if (!changed && !textChanged && submitted_) {traceMovement(now,false);return;}
         std::memcpy(dib_->bits, surface_.pixels.data(), surface_.pixels.size());
         textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,
             explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout);
@@ -821,6 +851,7 @@ class App {
         BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
         winCheck(UpdateLayeredWindow(window_, nullptr, &position, &size, dib_->dc, &source, 0, &blend, ULW_ALPHA) != 0, "UpdateLayeredWindow");
         ++submissions_; submitted_ = true; submittedText_=std::move(overlayText);
+        traceMovement(now,true);
         if (blocked()) ++hiddenSubmissions_;
     }
 public:
@@ -834,6 +865,11 @@ public:
         if (options_.metrics.empty()) options_.metrics = directory_ / L"metrics.csv";
         metrics_.open(options_.metrics, std::ios::trunc);
         if (!metrics_) throw std::runtime_error("cannot open metrics file");
+        if(!options_.movementTrace.empty()) {
+            movementTrace_.open(options_.movementTrace,std::ios::trunc);
+            if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat\n";
+        }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
         metrics_ << "elapsed_seconds,cpu_one_core_percent,cpu_all_cores_percent,logical_cores,working_set_bytes,private_bytes,peak_working_set_bytes,render_submissions,decode_count,marker_count,finite_finish_count,skipped_cycles,process_handles,gdi_objects,render_paused,submissions_while_paused,dpi,physical_size,integer_scale,window_x,window_y,switch_count,final_sample," << PlaybackSample::columns << '\n';
