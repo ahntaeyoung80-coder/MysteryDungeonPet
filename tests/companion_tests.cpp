@@ -128,7 +128,9 @@ int main(int argc,char** argv){try{
  check(partner.assetKey!=npc.assetKey && npc.provenance.find("383")!=std::string::npos,"companion and Kecleon assets not separated");
  GameplayState hud;hud.enabled=true;hud.companion.enabled=true;Surface full(200,200),hurt(200,200);
  gameplayOverlay(full,hud,0);hud.companion.hearts=4;gameplayOverlay(hurt,hud,0);
- check(full.pixels!=hurt.pixels,"independent companion hearts not displayed");
+ check(full.pixels==hurt.pixels,"companion HP leaked into the visible HUD");
+ Surface playerHurt(200,200);hud.hearts=4;gameplayOverlay(playerHurt,hud,0);
+ check(full.pixels!=playerHurt.pixels,"player hearts disappeared with companion HUD");
  combatCases();
  for(unsigned dir=0;dir<8;++dir)for(bool reverse:{false,true}){
   auto s=companionFixture();auto [dx,dy]=kDirections[dir];const int next=s.position+dy*24+dx;

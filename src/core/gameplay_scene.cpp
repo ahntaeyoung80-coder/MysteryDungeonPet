@@ -40,9 +40,6 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now) {
         for (unsigned h = 0; h < kMaxHp; ++h) for (unsigned y = 0; y < 6; ++y) for (unsigned x = 0; x < 7; ++x)
             if (heart[y][x] == '1') for(unsigned yy=0;yy<2;++yy) for(unsigned xx=0;xx<2;++xx)
                 pixel(8 + 18*h + 2*x+xx,8+2*y+yy,35,35,h<g.hearts?230:65);
-        if(g.companion.enabled) for(unsigned h=0;h<kMaxHp;++h) for(unsigned y=0;y<6;++y) for(unsigned x=0;x<7;++x)
-            if(heart[y][x]=='1') for(unsigned yy=0;yy<2;++yy) for(unsigned xx=0;xx<2;++xx)
-                pixel(8+18*h+2*x+xx,24+2*y+yy,35,35,h<g.companion.hearts?230:65);
     }
     if (partyHealing(g) || (g.life == LifePhase::Combat && (g.combat == CombatPhase::BerryText || g.combat == CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)
         for (unsigned y = 150; y < std::min(190U, s.height); ++y)

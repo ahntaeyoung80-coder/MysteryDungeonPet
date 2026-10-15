@@ -17,6 +17,6 @@
 
 4단계 검증과 실행물 반영을 마쳤다. [전투·이동 계약](docs/PARTY_COMBAT_DESIGN.md), [4단계 변경·시간 로그](docs/logs/2026-10-16-party-ai-stage4.md), [검증 증거](docs/validation/2026-10-16-party-ai-stage4.json).
 
-다음은5단계 동료 HP표시·녹색/보라색 자산·기본7층/기존3층 저장·방 중복 유형 점검이다. 이어6단계 통합·최종 실행물/현재 상태 정리와 `work` 반영을 진행한다. [항목별 계획](docs/PARTY_AI_WORK_PLAN.md).
+현재5단계 동료 HP표시·녹색/보라색 자산·기본7층/기존3층 저장·방 중복 유형을 수정·점검 중이다. [5단계 로그](docs/logs/2026-10-16-party-ai-stage5.md). 이어6단계 통합·최종 실행물/현재 상태 정리와 `work` 반영을 진행한다. [항목별 계획](docs/PARTY_AI_WORK_PLAN.md).
 
 관리형 shell은 아직 없으며 검증된 GitHub Actions 경로로 작업한다.
