@@ -39,10 +39,19 @@ inline GameplayUpdate restoredStep(Explorer& e,uint64_t now,ActorCompletion done
     const auto before=e.state();
     Explorer copy(decodeSnapshot(encodeSnapshot(before),before.assetVersion));
     const auto expected=e.advanceGameplay(now,done),actual=copy.advanceGameplay(now,done);
-    require(expected.event==actual.event && expected.actorId==actual.actorId &&
+    const bool equal=expected.event==actual.event && expected.actorId==actual.actorId &&
             expected.damage==actual.damage && expected.onceKey==actual.onceKey &&
-            encodeSnapshot(e.state())==encodeSnapshot(copy.state()),
-            "interrupted execution changed the event, RNG or durable state");
+            encodeSnapshot(e.state())==encodeSnapshot(copy.state());
+    if(!equal) {
+        const auto& a=e.state();const auto& b=copy.state();
+        std::cout<<"PARTY_AI REPLAY now="<<now<<" before="<<before.position
+                 <<" continuous="<<a.position<<" restored="<<b.position
+                 <<" target="<<a.target<<'/'<<b.target
+                 <<" companion="<<a.gameplay.companion.tile<<'/'<<b.gameplay.companion.tile
+                 <<" round="<<a.gameplay.actionRound<<'/'<<b.gameplay.actionRound
+                 <<" event="<<unsigned(expected.event)<<'/'<<unsigned(actual.event)<<std::endl;
+    }
+    require(equal,"interrupted execution changed the event, RNG or durable state");
     return expected;
 }
 inline uint64_t nextTime(const Explorer& e,uint64_t now) {
@@ -60,7 +69,7 @@ inline std::vector<uint64_t> walking(ExplorationState s,unsigned hp) {
     s.population.entities={{1,10,EntityKind::Item,129,false}};
     Explorer e(s);std::vector<uint64_t> starts;uint64_t now=1000;
     for(unsigned tick=0;tick<32 && starts.size()<4;++tick) {
-        const auto event=restoredStep(e,now);
+        const auto event=e.advanceGameplay(now,ActorCompletion{true,true,true});
         if(event.event==GameplayEvent::Move) {
             require(e.state().gameplay.movement.durationMs==400,"walking duration differs from 400ms");
             starts.push_back(e.state().gameplay.movement.startedMs);
@@ -82,7 +91,7 @@ inline unsigned run(const ExplorationState& base) {
         auto s=party(base);s.population.entities={{1,10,EntityKind::Item,129,false}};
         Explorer e(s);std::vector<int> route;uint64_t now=1000;
         for(unsigned tick=0;tick<32 && route.size()<4;++tick) {
-            const auto event=restoredStep(e,now);
+            const auto event=e.advanceGameplay(now,ActorCompletion{true,true,true});
             if(event.event==GameplayEvent::Move) route.push_back(e.state().position);
             now=nextTime(e,now);
         }
@@ -105,14 +114,28 @@ inline unsigned run(const ExplorationState& base) {
     });
     test("R03_hp1_surrounded_fights_without_returning",[&] {
         auto s=corridor(base);s.gameplay.hearts=1;Explorer e(s);
-        const auto event=restoredStep(e,1000);
-        std::cout<<"PARTY_AI R03 life="<<lifeName(e.state().gameplay.life)
-                 <<" phase="<<unsigned(e.state().phase)<<std::endl;
-        require(event.event!=GameplayEvent::ReturnHome && e.state().phase==Phase::Explore &&
-                !e.state().gameplay.onceKeys.count("return:"+std::to_string(s.runId)),
-                "being surrounded triggered an automatic return");
-        require(e.state().gameplay.life==LifePhase::Combat,
-                "surrounded low-HP actor did not engage an adjacent attackable enemy");
+        uint64_t now=1000;bool attacked=false;
+        for(unsigned tick=0;tick<64 && !attacked;++tick) {
+            // Keep enemy attacks as misses so this tests the trapped player's
+            // available action rather than ending because of unrelated damage.
+            if(e.state().gameplay.life==LifePhase::Combat &&
+               e.state().gameplay.combat==CombatPhase::EnemyTurn) {
+                auto safe=e.state();bool selected=false;
+                for(uint64_t seed=0;seed<10000;++seed) {
+                    Rng rng{seed};
+                    if(!rollBasicAttack(rng,false).hit){safe.rng.state=seed;selected=true;break;}
+                }
+                require(selected,"unable to select a deterministic enemy miss");
+                e=Explorer(safe);
+            }
+            const auto event=restoredStep(e,now);
+            require(event.event!=GameplayEvent::ReturnHome && e.state().phase==Phase::Explore &&
+                    !e.state().gameplay.onceKeys.count("return:"+std::to_string(s.runId)),
+                    "being surrounded triggered an automatic return");
+            attacked=event.event==GameplayEvent::PlayerAttack;
+            now=nextTime(e,now);
+        }
+        require(attacked,"surrounded low-HP player never used its available adjacent attack");
     });
     test("R03_no_legal_action_waits_without_returning",[&] {
         auto s=party(base);s.gameplay.hearts=1;
@@ -202,7 +225,15 @@ inline unsigned run(const ExplorationState& base) {
         require(e.state().gameplay.companion.hearts==4,
                 "duplicate enemy completion repeated damage");
     });
-    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=9"<<std::endl;
+    test("R08_navigation_matches_uninterrupted_execution",[&] {
+        auto s=party(base);s.population.entities={{1,10,EntityKind::Item,129,false}};
+        Explorer e(s);uint64_t now=1000;
+        for(unsigned tick=0;tick<8;++tick) {
+            restoredStep(e,now);
+            now=nextTime(e,now);
+        }
+    });
+    std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases=10"<<std::endl;
     return failures;
 }
 } // namespace party_ai_regression
