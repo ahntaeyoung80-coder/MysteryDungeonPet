@@ -1,0 +1,23 @@
+Test project /workspace/MysteryDungeonPet/build/movement-sanitize
+    Start 1: pet_camera_tests
+1/9 Test #1: pet_camera_tests .................   Passed    7.47 sec
+    Start 2: pet_movement_tests
+2/9 Test #2: pet_movement_tests ...............   Passed    1.19 sec
+    Start 3: pet_survival_tests
+3/9 Test #3: pet_survival_tests ...............   Passed    0.10 sec
+    Start 4: pet_revision_tests
+4/9 Test #4: pet_revision_tests ...............   Passed    0.05 sec
+    Start 5: pet_improvement_tests
+5/9 Test #5: pet_improvement_tests ............   Passed    0.05 sec
+    Start 6: pet_gameplay_tests
+6/9 Test #6: pet_gameplay_tests ...............   Passed   51.73 sec
+    Start 7: pet_exploration_tests
+7/9 Test #7: pet_exploration_tests ............   Passed   66.10 sec
+    Start 8: pet_core_tests
+8/9 Test #8: pet_core_tests ...................   Passed    5.61 sec
+    Start 9: pet_package_playback
+9/9 Test #9: pet_package_playback .............   Passed    0.01 sec
+
+100% tests passed out of 9
+
+Total Test time (real) = 132.31 sec

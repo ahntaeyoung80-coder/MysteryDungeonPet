@@ -1,0 +1,13 @@
+2026-10-15T01:28:51.0113260Z   pet_camera_tests.vcxproj -> D:\a\MysteryDungeonPet\MysteryDungeonPet\build\windows\Release\pet_camera_tests.exe
+2026-10-15T01:29:02.8594776Z   pet_movement_tests.vcxproj -> D:\a\MysteryDungeonPet\MysteryDungeonPet\build\windows\Release\pet_movement_tests.exe
+2026-10-15T01:29:10.0112141Z       Start  1: pet_camera_tests
+2026-10-15T01:29:10.3203985Z  1/10 Test  #1: pet_camera_tests .................   Passed    0.30 sec
+2026-10-15T01:29:10.3213382Z       Start  2: pet_movement_tests
+2026-10-15T01:29:10.4456119Z  2/10 Test  #2: pet_movement_tests ...............   Passed    0.12 sec
+2026-10-15T01:29:21.9048572Z 10/10 Test #10: pet_text_overlay_tests ...........   Passed    0.13 sec
+2026-10-15T01:29:21.9056011Z 100% tests passed out of 10
+2026-10-15T01:29:21.9056288Z Total Test time (real) =  11.93 sec
+2026-10-15T01:29:46.1483629Z {"status": "pass", "kind": "straight", "scale": 1, "frames": 205, "submittedFrames": 198, "actions": 10, "directions": [2], "opaquePixels": 40000, "nativeWindows11": "not observed"}
+2026-10-15T01:29:51.2738483Z ValueError: turn scenario did not observe direction change
+2026-10-15T01:29:51.3758715Z [31;1m[0m[36;1m[36;1m  33 | [0m     if ($LASTEXITCODE -ne 0) { [36;1mthrow "$Name frame contract failed"[0m }[0m
+2026-10-15T01:29:51.3759809Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mturn-1 frame contract failed[0m

@@ -1,0 +1,6 @@
+Recorded Windows straight trace: pass
+camera_x: rejected (camera/actor origin mismatch)
+opaque_pixels: rejected (transparent dungeon viewport)
+direction: rejected (body faces away from movement)
+clip: rejected (moving step is not 400ms Walk)
+walk_started_ms: rejected (successive steps reset saved walking phase)

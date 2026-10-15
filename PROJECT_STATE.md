@@ -2,7 +2,7 @@
 
 ## 이동·카메라 안정화 — 2026-10-15
 
-사용자 승인으로 [5단계 명세](docs/MOVEMENT_STABILIZATION_SPEC.md)를 진행한다. 1단계 기준은 work=80470ba, 기존 EXE hash/Release7/7 통과다. 2단계는 pet_movement_tests의 8방향64행동·400ms·연속 보행·방향 전환·pause/MDES5 복원이 통과했고 코어 결함은 재현되지 않았다. 고정 snapshot 생성과 명시적 --movement-trace(실제 합성CSV/제출/BMP)를 추가해 기존 대화·전투에 가린 이동 관찰 공백을 보완했다. 루트 EXE를 교차 빌드·갱신하고 hash를 확인했다. 네이티브 Windows 화면 검증은 4단계에서 수행한다. 3단계는363개 합성 화면의 1/2/3배·네 변/모서리·clamp 경계·alpha255·배우/소품 정렬·정지 불변 검사를 통과했고 카메라 결함은 재현되지 않았다. Windows 원작 trace 판정기를 준비했다. 다음은 전체 회귀와 실제 Windows GUI 검사다.
+사용자 승인으로 [5단계 명세](docs/MOVEMENT_STABILIZATION_SPEC.md)를 진행한다. 1단계 기준은 work=80470ba, 기존 EXE hash/Release7/7 통과다. 2단계는 pet_movement_tests의 8방향64행동·400ms·연속 보행·방향 전환·pause/MDES5 복원이 통과했고 코어 결함은 재현되지 않았다. 고정 snapshot 생성과 명시적 --movement-trace(실제 합성CSV/제출/BMP)를 추가해 기존 대화·전투에 가린 이동 관찰 공백을 보완했다. 루트 EXE를 교차 빌드·갱신하고 hash를 확인했다. 네이티브 Windows 화면 검증은 4단계에서 수행한다. 3단계는363개 합성 화면의 1/2/3배·네 변/모서리·clamp 경계·alpha255·배우/소품 정렬·정지 불변 검사를 통과했고 카메라 결함은 재현되지 않았다. Windows 원작 trace 판정기를 준비했다. 4단계 완료: Release9/9·ASan/UBSan9/9·Python26/26과 CI38666625639 core/windows가 통과했다. 실제 Windows native10/10, 고정31시나리오·2,362합성frame·2,055제출·이동 중 kill/복원·기존 생활/전투/루트 EXE 실행이 통과했다. [검증 요약](docs/validation/2026-10-15-movement-summary.json)에 근거를 보존했다. 실제 Windows11 육안·OS 사건·장기 성능은 별도 미검증이다. 다음은5단계 실행물/문서 정리다.
 
 ## 브랜치 통합 — 2026-10-15
 
