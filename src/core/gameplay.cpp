@@ -338,7 +338,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             if(!canAttack(state_.world,state_.position,enemy.tile)) {
                 const int next=combatApproach(enemy,false);
                 if(next<0) return afterCombatAction(now);
-                const int old=state_.position;state_.position=next;state_.visited[next]=1;++state_.floorSteps;++state_.stalledActions;++state_.occupancyVersion;invalidate(false);
+                const int old=state_.position;state_.position=next;state_.visited[next]=1;state_.floorSteps=std::min(kFloorStepLimit+kTiles,state_.floorSteps+1);state_.stalledActions=std::min(kFloorStepLimit+kTiles,state_.stalledActions+1);++state_.occupancyVersion;invalidate(false);
                 g.playerDirection=directionBetween(old,next);g.movement={g.actionRound,now,400,g.playerDirection,old,next};
                 if(!g.walkStartedMs)g.walkStartedMs=now;
                 return combat(CombatPhase::PlayerApproach,GameplayEvent::Move,400);
@@ -506,7 +506,7 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
     g.combat=CombatPhase::PlayerTurn;return {};
 }
 int Explorer::detourTile(unsigned repetitions,uint64_t signature) {
-    if(!state_.gameplay.independentParty && state_.floorSteps>=kFloorStepLimit+kTiles) return -1;
+    if(!state_.gameplay.enabled && state_.floorSteps>=kFloorStepLimit+kTiles) return -1;
     auto occupied=occupancy(true);
     if(state_.goalKind!=GoalKind::Stairs) occupied[state_.world.stairs]=1;
     const int planned=pathIndex_<path_.size()?path_[pathIndex_]:-1;

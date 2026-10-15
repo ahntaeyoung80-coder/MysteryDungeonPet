@@ -244,6 +244,14 @@ int main(int argc, char** argv) {
             Explorer run(seed,seed,"days",floors); run.enableGameplay(1000);
             std::uint64_t clock=1000;
             for (unsigned step=0;run.state().gameplay.day<3;++step) {
+                if(step>=10000) {
+                    const auto& stuck=run.state();const auto& g=stuck.gameplay;
+                    std::cerr<<"multi-day seed="<<seed<<" day="<<g.day<<" floor="<<stuck.floorIndex
+                        <<" P="<<stuck.position<<" target="<<stuck.target<<" hp="<<g.hearts
+                        <<" steps="<<stuck.floorSteps<<" stalled="<<stuck.stalledActions
+                        <<" stairs="<<stuck.world.stairs<<" failed="<<unsigned(stuck.failedTargets[stuck.world.stairs])
+                        <<" life="<<lifeName(g.life)<<'\n';
+                }
                 check(step<10000,"multi-day run stuck");
                 clock=std::max(clock+350,run.state().gameplay.deadlineMs);
                 advance(run,clock,true);

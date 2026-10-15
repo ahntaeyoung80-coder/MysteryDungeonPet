@@ -465,7 +465,7 @@ bool Explorer::frontier(int tile) const {
     return false;
 }
 bool Explorer::selectPriority(const Search& search,bool items,bool frontiers) {
-    if(!state_.gameplay.independentParty && (state_.floorSteps>=kFloorStepLimit || state_.stalledActions>=kTiles*2)) return false;
+    if(!state_.gameplay.enabled && (state_.floorSteps>=kFloorStepLimit || state_.stalledActions>=kTiles*2)) return false;
     int best=3*(kTiles+1);
     if(items) for(const auto& e:state_.population.entities) {
         if(e.kind!=EntityKind::Item || e.done || !e.visible || !state_.discovered[e.tile] || state_.failedTargets[e.tile]>=3) continue;
@@ -574,7 +574,7 @@ Event Explorer::moveTo(int next) {
         ++state_.occupancyVersion;
     }
     state_.position=next;
-    if(state_.gameplay.independentParty) {
+    if(state_.gameplay.enabled) {
         state_.floorSteps=std::min(kFloorStepLimit+kTiles,state_.floorSteps+1);
         state_.stalledActions=std::min(kFloorStepLimit+kTiles,state_.stalledActions+1);
     } else {++state_.floorSteps;++state_.stalledActions;}
@@ -610,7 +610,7 @@ Event Explorer::advance(bool poseFinished) {
             invalidate();
         }
         if(state_.target<0) plan();
-        if(state_.target<0 || (!state_.gameplay.independentParty && state_.floorSteps>kFloorStepLimit+kTiles)) {
+        if(state_.target<0 || (!state_.gameplay.enabled && state_.floorSteps>kFloorStepLimit+kTiles)) {
             state_.phase=Phase::Home;invalidate();return {EventKind::ReturnedHome,{},0};
         }
         if(cachedWorld_!=state_.world.version || cachedOccupancy_!=state_.occupancyVersion || pathIndex_>=path_.size()) {

@@ -474,6 +474,20 @@ inline unsigned run(const ExplorationState& base) {
             require(fresh==tail,"restoring a static cached path changes its next tile");
         }
     });
+    test("R21_legacy_exhausted_budget_resumes_reachable_goals",[&] {
+        auto s=party(base);s.gameplay.independentParty=false;s.gameplay.companion={};
+        s.floorSteps=Explorer::kFloorStepLimit+kTiles;s.stalledActions=s.floorSteps;
+        s.population.entities={{1,10,EntityKind::Item,129,false}};
+        Explorer e(s);uint64_t now=1000;
+        for(unsigned tick=0;tick<16 && e.state().inventory.empty();++tick) {
+            const auto event=restoredStep(e,now);
+            require(event.event!=GameplayEvent::ReturnHome && e.state().phase==Phase::Explore,
+                    "legacy exhausted budget returned home");
+            now=nextTime(e,now);
+        }
+        require(e.state().inventory.size()==1 && e.state().floorSteps<=Explorer::kFloorStepLimit+kTiles,
+                "legacy exhausted budget permanently disabled a reachable goal");
+    });
     std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases="<<cases<<std::endl;
     return failures;
 }
