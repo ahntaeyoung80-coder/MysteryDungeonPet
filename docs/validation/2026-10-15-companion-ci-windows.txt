@@ -1,0 +1,18 @@
+2026-10-15T10:03:26.3622261Z -- The CXX compiler identification is MSVC 19.51.36260.0
+2026-10-15T10:04:49.2839464Z  1/13 Test  #1: pet_companion_tests ..............   Passed    6.54 sec
+2026-10-15T10:04:50.2793502Z  2/13 Test  #2: pet_entry_social_scene_tests .....   Passed    0.99 sec
+2026-10-15T10:04:50.9594568Z  3/13 Test  #3: pet_navigation_recovery_tests ....   Passed    0.68 sec
+2026-10-15T10:04:51.5416558Z  4/13 Test  #4: pet_camera_tests .................   Passed    0.58 sec
+2026-10-15T10:04:51.7407257Z  5/13 Test  #5: pet_movement_tests ...............   Passed    0.20 sec
+2026-10-15T10:04:51.7647008Z  6/13 Test  #6: pet_survival_tests ...............   Passed    0.02 sec
+2026-10-15T10:04:51.7809687Z  7/13 Test  #7: pet_revision_tests ...............   Passed    0.02 sec
+2026-10-15T10:04:51.7974898Z  8/13 Test  #8: pet_improvement_tests ............   Passed    0.02 sec
+2026-10-15T10:04:57.4570297Z  9/13 Test  #9: pet_gameplay_tests ...............   Passed    5.66 sec
+2026-10-15T10:05:09.0800919Z 10/13 Test #10: pet_exploration_tests ............   Passed   11.62 sec
+2026-10-15T10:05:09.5170443Z 11/13 Test #11: pet_core_tests ...................   Passed    0.44 sec
+2026-10-15T10:05:09.5277492Z 12/13 Test #12: pet_package_playback .............   Passed    0.01 sec
+2026-10-15T10:05:09.6822605Z 13/13 Test #13: pet_text_overlay_tests ...........   Passed    0.15 sec
+2026-10-15T10:05:09.6832888Z 100% tests passed out of 13
+2026-10-15T10:05:09.6833333Z Total Test time (real) =  26.97 sec
+2026-10-15T10:06:11.0020586Z [{"scenario": "follow", "asset": "asset-1", "matchedPixels": 264, "testedPixels": 264, "status": "pass"}, {"scenario": "attack", "asset": "asset-2", "matchedPixels": 286, "testedPixels": 286, "status": "pass"}]
+2026-10-15T10:09:43.7355650Z Installed selected package bytes: 2002570 (selected runtime only; ROM excluded)

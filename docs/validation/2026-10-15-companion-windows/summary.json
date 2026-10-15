@@ -1,0 +1,9 @@
+{
+  "actualWindows11": "not observed",
+  "support": "one room step, no corridor reposition",
+  "restore": "every actual save validated",
+  "combat": "Attack1, nearest companion Hurt6, Faint33/death",
+  "follow": "one tile; independent Walk0/motion",
+  "sprites": "original Charmander + Kecleon submitted pixels",
+  "status": "pass"
+}

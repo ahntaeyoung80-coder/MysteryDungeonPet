@@ -1,0 +1,18 @@
+2026-10-15T10:02:55.0711370Z -- The CXX compiler identification is GNU 13.3.0
+2026-10-15T10:04:44.7853436Z  1/12 Test  #1: pet_companion_tests ..............   Passed   61.00 sec
+2026-10-15T10:04:54.4575221Z  2/12 Test  #2: pet_entry_social_scene_tests .....   Passed    9.64 sec
+2026-10-15T10:05:01.0654430Z  3/12 Test  #3: pet_navigation_recovery_tests ....   Passed    6.61 sec
+2026-10-15T10:05:10.6645314Z  4/12 Test  #4: pet_camera_tests .................   Passed    9.60 sec
+2026-10-15T10:05:12.4412350Z  5/12 Test  #5: pet_movement_tests ...............   Passed    1.78 sec
+2026-10-15T10:05:12.5897490Z  6/12 Test  #6: pet_survival_tests ...............   Passed    0.15 sec
+2026-10-15T10:05:12.6745915Z  7/12 Test  #7: pet_revision_tests ...............   Passed    0.08 sec
+2026-10-15T10:05:12.7619034Z  8/12 Test  #8: pet_improvement_tests ............   Passed    0.09 sec
+2026-10-15T10:06:15.1175987Z  9/12 Test  #9: pet_gameplay_tests ...............   Passed   62.36 sec
+2026-10-15T10:07:59.9808196Z 10/12 Test #10: pet_exploration_tests ............   Passed  104.83 sec
+2026-10-15T10:08:07.8765790Z 11/12 Test #11: pet_core_tests ...................   Passed    7.90 sec
+2026-10-15T10:08:07.8904984Z 12/12 Test #12: pet_package_playback .............   Passed    0.01 sec
+2026-10-15T10:08:07.8910378Z 100% tests passed, 0 tests failed out of 12
+2026-10-15T10:08:07.8911113Z Total Test time (real) = 264.21 sec
+2026-10-15T10:08:39.5046027Z Ran 26 tests in 16.973s
+2026-10-15T10:08:39.5046418Z OK
+2026-10-15T10:08:39.5048186Z A1->MDPA->native: 144 frames (including aliases), points, flags, markers, ticks, hashes pass

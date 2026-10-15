@@ -1,0 +1,74 @@
+{
+  "follow": {
+    "runId": 940,
+    "day": 1,
+    "life": "Explore",
+    "player": 154,
+    "companionEnabled": 1,
+    "companion": 129,
+    "playerHp": 5,
+    "companionHp": 5,
+    "traceRows": 122,
+    "traceSha256": "d8f78603c5180e9ff132c6be44a2f49a5ea5ff11b2ebbdcffff63942c6d613ff"
+  },
+  "attack": {
+    "runId": 940,
+    "day": 1,
+    "life": "Combat",
+    "player": 125,
+    "companionEnabled": 1,
+    "companion": 150,
+    "playerHp": 4,
+    "companionHp": 5,
+    "traceRows": 103,
+    "traceSha256": "7b42ba2df16877cd6e6758e86f12d01bde7968132f00a3cafabcec116cfa84fb"
+  },
+  "target": {
+    "runId": 940,
+    "day": 1,
+    "life": "Combat",
+    "player": 100,
+    "companionEnabled": 1,
+    "companion": 124,
+    "playerHp": 4,
+    "companionHp": 4,
+    "traceRows": 115,
+    "traceSha256": "a73f5c7dc37aa5814077c1987d7bf5fbb576da1f5c190395a05972a755cf16ee"
+  },
+  "room": {
+    "runId": 940,
+    "day": 1,
+    "life": "Combat",
+    "player": 125,
+    "companionEnabled": 1,
+    "companion": 149,
+    "playerHp": 5,
+    "companionHp": 5,
+    "traceRows": 57,
+    "traceSha256": "b18fe8c10cb3014b2ebb8fa45cca7756271503f491d5e21080b2e117cd154ae1"
+  },
+  "corridor": {
+    "runId": 940,
+    "day": 1,
+    "life": "Combat",
+    "player": 125,
+    "companionEnabled": 1,
+    "companion": 124,
+    "playerHp": 5,
+    "companionHp": 5,
+    "traceRows": 48,
+    "traceSha256": "039b896288d7f754be63af40a1507cc34f23ed19eceb01b1bc47cf3020dd7cd7"
+  },
+  "faint": {
+    "runId": 940,
+    "day": 1,
+    "life": "Eat",
+    "player": 125,
+    "companionEnabled": 1,
+    "companion": 124,
+    "playerHp": 5,
+    "companionHp": 0,
+    "traceRows": 303,
+    "traceSha256": "916c6ef77fab4cd5e6c749a9d6b6ceeb821514eed54e0fe2a881f3d8e98771a3"
+  }
+}

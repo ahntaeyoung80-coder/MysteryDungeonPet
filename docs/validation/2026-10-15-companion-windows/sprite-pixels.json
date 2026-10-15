@@ -1,0 +1,16 @@
+[
+  {
+    "scenario": "follow",
+    "asset": "asset-1",
+    "matchedPixels": 264,
+    "testedPixels": 264,
+    "status": "pass"
+  },
+  {
+    "scenario": "attack",
+    "asset": "asset-2",
+    "matchedPixels": 286,
+    "testedPixels": 286,
+    "status": "pass"
+  }
+]

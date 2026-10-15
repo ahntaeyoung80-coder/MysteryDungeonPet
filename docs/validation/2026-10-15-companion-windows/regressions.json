@@ -1,0 +1,456 @@
+{
+  "entry-results/summary.json": {
+    "actualWindows11": "not observed",
+    "friendly": "off-path approach, player greeting and NPC response once",
+    "wake": "both original Sleep13 final frames held through daylight fade before Wake14",
+    "entry": "third-floor fade-in: logical/display feet at entry, no stairs/entity underfoot, no immediate escape",
+    "exit": "corridor endpoint held during fade-out; actual submitted pixels darken/brighten; next day commits once and movement waits for fade-in",
+    "status": "pass"
+  },
+  "navigation-results/summary.json": {
+    "manual": "context menu, backup, duplicate commands, durable return, relaunch and one meal",
+    "automatic": "persisted repeat chose another adjacent direction, stayed in same run/floor through relaunch, no automatic return",
+    "cycle": "original coupled chase/retreat escaped",
+    "status": "pass",
+    "actualWindows11": "not observed"
+  },
+  "movement-results/summary.json": {
+    "longTermPerformance": "out of scope",
+    "cases": [
+      {
+        "status": "pass",
+        "kind": "straight",
+        "scale": 1,
+        "frames": 266,
+        "submittedFrames": 240,
+        "actions": 10,
+        "directions": [
+          2
+        ],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "straight-1"
+      },
+      {
+        "status": "pass",
+        "kind": "turn",
+        "scale": 1,
+        "frames": 395,
+        "submittedFrames": 360,
+        "actions": 15,
+        "directions": [
+          1,
+          3
+        ],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "turn-1"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 1,
+        "frames": 10,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-left-1"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 1,
+        "frames": 10,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-1"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 1,
+        "frames": 12,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-right-1"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 1,
+        "frames": 10,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "left-1"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 1,
+        "frames": 11,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "right-1"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 1,
+        "frames": 11,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-left-1"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 1,
+        "frames": 12,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-1"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 1,
+        "frames": 9,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-right-1"
+      },
+      {
+        "status": "pass",
+        "kind": "straight",
+        "scale": 2,
+        "frames": 259,
+        "submittedFrames": 233,
+        "actions": 10,
+        "directions": [
+          2
+        ],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "straight-2"
+      },
+      {
+        "status": "pass",
+        "kind": "turn",
+        "scale": 2,
+        "frames": 387,
+        "submittedFrames": 359,
+        "actions": 15,
+        "directions": [
+          1,
+          3
+        ],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "turn-2"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 2,
+        "frames": 11,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-left-2"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 2,
+        "frames": 13,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-2"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 2,
+        "frames": 12,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-right-2"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 2,
+        "frames": 9,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "left-2"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 2,
+        "frames": 11,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "right-2"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 2,
+        "frames": 13,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-left-2"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 2,
+        "frames": 11,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-2"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 2,
+        "frames": 10,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-right-2"
+      },
+      {
+        "status": "pass",
+        "kind": "straight",
+        "scale": 3,
+        "frames": 261,
+        "submittedFrames": 240,
+        "actions": 10,
+        "directions": [
+          2
+        ],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "straight-3"
+      },
+      {
+        "status": "pass",
+        "kind": "turn",
+        "scale": 3,
+        "frames": 397,
+        "submittedFrames": 359,
+        "actions": 15,
+        "directions": [
+          1,
+          3
+        ],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "turn-3"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 3,
+        "frames": 10,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-left-3"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 3,
+        "frames": 12,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-3"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 3,
+        "frames": 12,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "top-right-3"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 3,
+        "frames": 13,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "left-3"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 3,
+        "frames": 9,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "right-3"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 3,
+        "frames": 11,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-left-3"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 3,
+        "frames": 11,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-3"
+      },
+      {
+        "status": "pass",
+        "kind": "edge",
+        "scale": 3,
+        "frames": 10,
+        "submittedFrames": 7,
+        "actions": 0,
+        "directions": [],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "bottom-right-3"
+      },
+      {
+        "status": "pass",
+        "kind": "straight",
+        "scale": 1,
+        "frames": 192,
+        "submittedFrames": 177,
+        "actions": 8,
+        "directions": [
+          2
+        ],
+        "opaquePixels": 40000,
+        "nativeWindows11": "not observed",
+        "name": "restore"
+      }
+    ],
+    "status": "pass",
+    "osEvents": "out of scope",
+    "actualUserWindows11": "not observed"
+  },
+  "exploration-results/exploration.json": {
+    "snapshotRestore": "pass",
+    "uiMovement": "pending: dialogue/combat held player during the observation window",
+    "actualWindows11Exploration": "pending",
+    "desktopWindowFixed": "pass",
+    "a3Remaining": "pending",
+    "physicalSize": 200,
+    "status": "pass",
+    "minimumDecodeCount": 5
+  },
+  "exploration-results/gameplay/life-result.json": {
+    "bedroomCharacters": 2,
+    "guildMembers": 10,
+    "coreScenarios": 12,
+    "test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+    "guildDiningCharacters": 12,
+    "actualWindows11": "pending",
+    "status": "pass"
+  },
+  "exploration-results/gameplay/combat-result.json": {
+    "test": "production player first Attack1 Hurt6 finite Kecleon exit victory resumes dungeon",
+    "actualWindows11": "pending",
+    "status": "pass"
+  },
+  "exploration-results/default-launch/default-launch.json": {
+    "actualWindows11": "pending",
+    "physicalSize": 200,
+    "diagnosticsMenu": "absent",
+    "snapshot": "new then restored same runId",
+    "launch": "installed EXE with zero arguments from another directory",
+    "explicitDiagnostics": "pass, exploration save unchanged",
+    "status": "pass"
+  },
+  "exploration-results/pull-launch/default-launch.json": {
+    "actualWindows11": "pending",
+    "physicalSize": 200,
+    "diagnosticsMenu": "absent",
+    "snapshot": "new then restored same runId",
+    "launch": "installed EXE with zero arguments from another directory",
+    "explicitDiagnostics": "pass, exploration save unchanged",
+    "status": "pass"
+  }
+}

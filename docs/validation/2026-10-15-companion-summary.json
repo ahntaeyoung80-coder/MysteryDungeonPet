@@ -1,0 +1,83 @@
+{
+  "status": "pass",
+  "sourceCommit": "6ccb38c68652736a5127885f969184a739f9957d",
+  "ci": {
+    "runId": 38717413606,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38717413606",
+    "conclusion": "success",
+    "linux": {
+      "compiler": "GNU 13.3.0",
+      "sanitizers": "ASan/UBSan",
+      "tests": 12,
+      "seconds": 264.21,
+      "pythonTests": 26,
+      "pythonSeconds": 16.973
+    },
+    "windows": {
+      "platform": "Windows Server 2025 / MSVC 19.51 x64 Release",
+      "tests": 13,
+      "seconds": 26.97,
+      "partyScenarios": 6,
+      "movementScenarios": 31
+    },
+    "artifact": {
+      "id": 11963332416,
+      "name": "windows-check-results",
+      "sha256": "06f96241025355a13574b82181a8ac22b55f2a5bb57ddaf9080d4a444e8a382a"
+    }
+  },
+  "local": {
+    "releaseTests": 12,
+    "releaseSeconds": 23.41,
+    "sanitizerTests": 12,
+    "sanitizerSeconds": 196.55,
+    "pythonTests": 26,
+    "pythonSeconds": 17.108
+  },
+  "runtime": {
+    "entrypoint": "MysteryDungeonPet.exe",
+    "sha256": "e98518f9ac08cfb6200a1e137d595ee178ab62cc11a6985bdaff821c64141e54",
+    "manifestSha256": "4898e22631fa080bec6f5fc78dbd97afe73e030271805b272241abacef21981c",
+    "inputCount": 97,
+    "hashCheck": "pass",
+    "compiler": "MinGW-w64 GCC 14.2.0 x64 Release (Debian cross compiler)"
+  },
+  "originals": {
+    "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "zipSha256": "834786ad283bc5980333867988192522891ca3323a996b05b6c6a1ee2ae27bb4",
+    "unchanged": true
+  },
+  "sprites": {
+    "companion": {
+      "mdIndex": 4,
+      "spriteIndex": 4,
+      "name": "Charmander",
+      "submittedPixelsMatched": 264,
+      "submittedPixelsTested": 264
+    },
+    "npcAndEnemy": {
+      "mdIndex": 383,
+      "spriteIndex": 556,
+      "nationalDex": 352,
+      "name": "Kecleon",
+      "submittedPixelsMatched": 286,
+      "submittedPixelsTested": 286,
+      "originalWanFramesVerified": 160
+    }
+  },
+  "saveFormat": {
+    "write": "MDES7",
+    "read": [
+      "MDES1",
+      "MDES2",
+      "MDES3",
+      "MDES4",
+      "MDES5",
+      "MDES6",
+      "MDES7"
+    ]
+  },
+  "limitations": [
+    "User Windows 11 machine, actual lock/suspend hardware and long-term performance were not observed in this task."
+  ]
+}
