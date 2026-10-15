@@ -77,3 +77,12 @@ HP5/HP1 각각의 추적 적 fixture를4초씩 실제 앱에서 실행한다. CS
 3단계의 독립 파티 정책을 gameplay 실행 전체에 적용한다. 각 검색의 유한성은 유지하되 누적 진단 카운터로 다음 합법 행동을 영구 금지하지 않고, 이동/접근 카운터를 저장 상한에서 포화시킨다. standalone 탐험의 예산/캐시는 유지한다. R21에 동료 없는 구형 gameplay가 예산 소진 저장에서 도달 가능한 아이템을 얻는지 매행동 복원으로 검사한다. 후속은22개다.
 
 다일 실패에는 seed/day/floor/P/HP/목표/계단 실패/카운터를 출력한다. 세 사전 검사 중 앞선 것이 실패해도 나머지 출력을 수집하되 job은 실패시켜 실행물 반영을 막는다.
+
+
+## 포위 전투 착수 뒤 철회 반복의 실제 원인 수정
+
+`fa52b74`의 [CI38822497471](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38822497471)에서 후속22개와200개 저체력 배치는 모두 통과했다. 다일 정지는 seed4/day1/floor0/P296/HP1/steps10/lifeCombat으로 확인됐다. 따라서 그 시드의 정지는 예산 소진으로 확정하지 않는다. 앞선 예산 변경은 R21의 별도 소진 저장 진행을 보장하는 수정이다.
+
+실제 루프는 목표 상실 후 시작한 PlayerTurn을 종전 mustRetreat가 공격 전에 다시 Explore로 취소하는 경로다. 같은 적을 상대로 한 포위 전투 결정을 기존 gameplay journal에 `cornered:<combat key>`로 기록하고, 해당 Combat 중에만 이 결정을 유지한다. snapshot 복원 뒤에도 공격을 취소하지 않는다. 일반 저체력 조우/종전 pending-hit의 처리·전투 밖 도주 판단은 유지한다. 새 byte block 없이 기존 journal의 유한한 적별 결정 키를 사용한다.
+
+R22는 동료 없는 HP1·막힌 목표·인접 HP1 적에서 실제 공격→기절/승리까지 매행동 복원하며, Explore/PlayerTurn 반복·귀가·첫 행동 유실이 없는지 검사한다. 후속은23개다.

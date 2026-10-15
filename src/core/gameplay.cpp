@@ -707,8 +707,10 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         state_.phase=Phase::Explore;state_.failedTargets.fill(0);invalidate();
         for(auto& enemy:state_.population.entities)
             if(enemy.kind==EntityKind::Friend && enemy.visible && !enemy.done &&
-               hostile(enemy) && canAttack(state_.world,state_.position,enemy.tile))
+               hostile(enemy) && canAttack(state_.world,state_.position,enemy.tile)) {
+                g.onceKeys.insert("cornered:"+key("combat",enemy.instanceId));
                 return beginCombat(enemy,now,CombatPhase::PlayerTurn);
+            }
         g.playerActionRound=g.actionRound;g.deadlineMs=now+400;
         return {GameplayEvent::Wait,{}};
     case EventKind::Pickup:

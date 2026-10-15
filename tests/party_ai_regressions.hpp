@@ -488,6 +488,24 @@ inline unsigned run(const ExplorationState& base) {
         require(e.state().inventory.size()==1 && e.state().floorSteps<=Explorer::kFloorStepLimit+kTiles,
                 "legacy exhausted budget permanently disabled a reachable goal");
     });
+    test("R22_legacy_cornered_combat_does_not_cancel_before_attack",[&] {
+        auto s=party(base);s.gameplay.independentParty=false;s.gameplay.companion={};
+        s.gameplay.hearts=1;
+        s.population.entities={{1,4,EntityKind::Friend,126,false}};
+        s.population.entities[0].remainingHits=1;s.gameplay.hostile={1};
+        for(int tile=0;tile<kTiles;++tile)
+            if(s.world.walkable(tile) && tile!=125 && tile!=126)s.blocked[tile]=1;
+        forceHit(s);Explorer e(s);uint64_t now=1000;bool attacked=false,finished=false;
+        for(unsigned tick=0;tick<16 && !finished;++tick) {
+            const auto event=restoredStep(e,now);
+            attacked=attacked || event.event==GameplayEvent::PlayerAttack;
+            finished=e.state().population.entities[0].done;
+            require(event.event!=GameplayEvent::ReturnHome && e.state().gameplay.hearts==1,
+                    "cornered legacy encounter returned home or lost its first attack");
+            now=nextTime(e,now);
+        }
+        require(attacked && finished,"cornered legacy encounter oscillated between retreat and PlayerTurn");
+    });
     std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases="<<cases<<std::endl;
     return failures;
 }

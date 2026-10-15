@@ -346,7 +346,15 @@ bool Explorer::friendly(const Entity& e) const {
         std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end();
 }
 bool Explorer::lowHealth() const {const auto& g=state_.gameplay;return g.enabled && (g.hearts<=kLowHp || (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp));}
-bool Explorer::mustRetreat() const {const auto& g=state_.gameplay;return (g.hearts<=kLowHp && !g.oran) || (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp && !g.companion.oran);}
+bool Explorer::mustRetreat() const {
+    const auto& g=state_.gameplay;
+    // A targetless cornered encounter commits to this existing enemy. Persist
+    // that decision so restoring PlayerTurn cannot restart the retreat loop.
+    if(g.life==LifePhase::Combat &&
+       g.onceKeys.count("cornered:"+key("combat",g.enemyInstance)))return false;
+    return (g.hearts<=kLowHp && !g.oran) ||
+        (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp && !g.companion.oran);
+}
 Mask Explorer::occupancy(bool playerPath) const {
     auto mask=state_.blocked;
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && e.visible && (!e.done || (state_.gameplay.enabled && std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end()))) if(!playerPath || !friendly(e)) mask[e.tile]=1;
