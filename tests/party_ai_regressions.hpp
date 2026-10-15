@@ -409,9 +409,19 @@ inline unsigned run(const ExplorationState& base) {
                 if(player!=event.actors.end()) {
                     const auto& state=e.state();const auto& move=state.gameplay.movement;
                     const auto& chase=state.population.entities[1].movement;
-                    require(move.durationMs==400 && chase.durationMs==400 &&
-                            chase.startedMs==move.startedMs && chase.actionId==move.actionId,
-                            "enemy and leader movement used separate intervals");
+                    if(move.durationMs!=400 || chase.durationMs!=400 ||
+                       chase.startedMs!=move.startedMs || chase.actionId!=move.actionId) {
+                        std::ostringstream details;
+                        details<<"enemy and leader movement used separate intervals hp="<<hp<<" now="<<now
+                            <<" P="<<state.position<<" C="<<state.gameplay.companion.tile
+                            <<" E="<<state.population.entities[1].tile
+                            <<" Pstart="<<move.startedMs<<" Pround="<<move.actionId
+                            <<" Estart="<<chase.startedMs<<" Eround="<<chase.actionId
+                            <<" tracking="<<unsigned(state.population.entities[1].tracking);
+                        for(const auto& a:state.gameplay.partyActions)if(a.actorId==2)
+                            details<<" Eaction="<<unsigned(a.kind)<<" finished="<<a.finished;
+                        throw std::runtime_error(details.str());
+                    }
                     starts.push_back(move.startedMs);
                 }
                 now=nextTime(e,now);

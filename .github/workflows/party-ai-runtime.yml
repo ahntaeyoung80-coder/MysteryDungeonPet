@@ -8,7 +8,17 @@ concurrency:
   group: party-ai-runtime-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  party-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: cmake -S . -B build/preflight -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake --build build/preflight --target pet_companion_tests --parallel 2
+      - run: build/preflight/pet_companion_tests --party-ai-followup
   windows:
+    needs: party-preflight
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
