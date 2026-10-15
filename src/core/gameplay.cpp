@@ -12,6 +12,18 @@ std::string pendingHit(const ExplorationState& s) {
     return "pending-hit:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
         std::to_string(g.enemyInstance)+":"+std::to_string(g.actionRound);
 }
+uint64_t navigationFingerprint(const ExplorationState& s) {
+    uint64_t hash=14695981039346656037ULL;
+    auto add=[&](uint64_t value){for(unsigned byte=0;byte<8;++byte){hash^=uint8_t(value>>(byte*8));hash*=1099511628211ULL;}};
+    add(s.floorIndex);add(s.world.version);add(s.mapSeed);add(s.rng.state);add(s.position);
+    add(s.target+1);add(static_cast<unsigned>(s.goalKind));add(s.targetInstance);add(s.knownStairs+1);
+    add(s.inventory.size());add(s.onceKeys.size());add(s.gameplay.onceKeys.size());add(s.gameplay.hearts);add(s.gameplay.oran);
+    for(int tile=0;tile<kTiles;++tile){add(s.visited[tile]);add(s.discovered[tile]);add(s.failedTargets[tile]);add(s.blocked[tile]);}
+    for(const auto& e:s.population.entities){add(e.instanceId);add(e.tile);add(e.done);add(e.visible);
+        add(static_cast<unsigned>(e.tracking));add(e.lastSeen+1);add(e.chaseTarget+1);add(e.blockedTurns);
+        add(e.actionRound==s.gameplay.actionRound);}
+    return hash;
+}
 }
 const char* lifeName(LifePhase phase) {
     static const char* names[]{"Explore", "Pose", "ReturnHome", "Emotion", "Eat", "Sleep", "Wake", "Ready", "Combat", "Death", "Dialogue"};
@@ -94,6 +106,18 @@ GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     const auto once = "return:" + std::to_string(state_.runId);
     if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate return transaction");
     return {GameplayEvent::ReturnHome, once};
+}
+GameplayUpdate Explorer::resetExploration(std::uint64_t now,bool automatic) {
+    auto& g=state_.gameplay;
+    if(!g.enabled || state_.phase!=Phase::Explore ||
+       (g.life!=LifePhase::Explore && g.life!=LifePhase::Combat && g.life!=LifePhase::Dialogue)) return {};
+    g.onceKeys.erase(pendingHit(state_)); // Cancel only the attack that has not committed damage yet.
+    g.onceKeys.insert(std::string(automatic?"navigation-reset:":"manual-reset:")+std::to_string(state_.runId));
+    g.movement={};g.walkStartedMs=0;g.navigationHistory.clear();g.playerHidden=false;
+    g.damage=0;g.hit=g.critical=false;
+    for(auto& e:state_.population.entities){e.movement={};e.tracking=Tracking::Idle;e.lastSeen=e.chaseTarget=-1;e.blockedTurns=0;}
+    retreatProgress_=false;
+    return beginReturn(now,false);
 }
 void Explorer::completeEncounter() {
     auto& g = state_.gameplay;
@@ -371,12 +395,21 @@ GameplayUpdate Explorer::afterCombatAction(std::uint64_t now) {
 }
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;
+    retreatProgress_=false;
     if(state_.position==state_.world.stairs) {
         invalidate();g.movement={};g.walkStartedMs=0;
         g.sceneBeat=SceneBeat::FloorFadeOut;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
         return {};
     }
     discover();
+    if(g.playerActionRound==g.actionRound) {
+        const auto signature=navigationFingerprint(state_);
+        if(std::find(g.navigationHistory.begin(),g.navigationHistory.end(),signature)!=g.navigationHistory.end())
+            return resetExploration(now,true);
+        if(g.navigationHistory.size()==32) g.navigationHistory.erase(g.navigationHistory.begin());
+        g.navigationHistory.push_back(signature);
+    }
+    bool hostileReversed=false;
     auto hostile=[&](const Entity& e){return std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end();};
     auto visible=[&](int a,int b){
         const int room=state_.world.room[a];
@@ -401,6 +434,7 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
                 }
                 if(goal>=0) {
                     const auto path=reach.pathTo(goal);const int old=e.tile;e.tile=path.front();
+                    hostileReversed=hostileReversed || (e.movement.actionId && e.movement.to==old && e.movement.from==e.tile);
                     if(!lowHealth()) g.walkStartedMs=0;
                     e.direction=directionBetween(old,e.tile);e.movement={g.actionRound,now,400,e.direction,old,e.tile};e.blockedTurns=0;++state_.occupancyVersion;invalidate(false);
                     if(lowHealth()) continue; // Retreat and hostile movement share one 400ms presentation.
@@ -421,6 +455,13 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         return {GameplayEvent::UseOranBerry,once};
     }
     if(state_.target<0 || lowHealth()) plan();
+    if(lowHealth() && hostileReversed && g.movement.actionId && g.movement.to==state_.position &&
+       !path_.empty() && path_.front()==g.movement.from) {
+        // Both bodies would reverse the preceding joint move. The shifting safety
+        // mask is orbiting the threat: keep real occupancy but release the future
+        // attack-zone mask for this step so the goal can make progress.
+        retreatProgress_=true;plan();
+    }
     int nextTile=-1;
     if(state_.target>=0 && std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e) {
         return friendly(e) && !e.done && canAttack(state_.world,state_.position,e.tile);

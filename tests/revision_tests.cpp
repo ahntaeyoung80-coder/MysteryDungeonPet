@@ -58,7 +58,7 @@ int main() {try {
         g.life=life;g.homeScene=life!=LifePhase::Dialogue;check(!showFriendlyDisc(g,true,false),"disc leaked into a scene");
     }
     // The fourth schema only extends enums; a real MDES3-shaped idle save remains readable.
-    auto old=encodeSnapshot(Explorer(fixture()).state());old.erase(old.end()-8,old.end()-4);old[4]=3;uint32_t crc=0xffffffff;
+    auto old=encodeSnapshot(Explorer(fixture()).state());old.erase(old.end()-12,old.end()-4);old[4]=3;uint32_t crc=0xffffffff;
     for(size_t i=0;i<old.size()-4;++i) {crc^=old[i];for(int bit=0;bit<8;++bit) crc=(crc>>1) ^ ((crc&1)?0xedb88320U:0);}
     crc=~crc;
     for(unsigned b=0;b<4;++b) old[old.size()-4+b]=uint8_t(crc>>(8*b));

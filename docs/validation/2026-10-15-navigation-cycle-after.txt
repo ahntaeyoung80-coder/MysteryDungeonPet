@@ -1,0 +1,7 @@
+0 player=102 enemy=76 life=Explore
+1 player=125 enemy=77 life=Explore
+2 player=102 enemy=100 life=Explore
+3 player=101 enemy=77 life=Explore
+4 player=101 enemy=77 life=Combat
+200 restored low-HP geometries escaped; automatic recoveries=0
+navigation recovery regression pass

@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(5); // MDES5 appends the survival discovery order; reads schemas 1..4.
+    w.u32(0x5345444d); w.u32(6); // MDES6 appends the bounded navigation cycle history.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -131,6 +131,8 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u64(g.walkStartedMs);detail::writeMove(w,g.movement);
     for(const auto& e:s.population.entities) detail::writeMove(w,e.movement);
     w.u32(static_cast<unsigned>(s.survivalFirst));
+    w.u32(static_cast<uint32_t>(s.gameplay.navigationHistory.size()));
+    for(auto signature:s.gameplay.navigationHistory) w.u64(signature);
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -139,7 +141,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema != 1 && schema != 2 && schema != 3 && schema != 4 && schema != 5) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 6) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -243,6 +245,10 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         s.survivalFirst=s.knownStairs>=0?SurvivalFirst::Stairs:oran?SurvivalFirst::Oran:SurvivalFirst::None;
     }
     if(s.gameplay.sceneBeat==SceneBeat::RoomExit) s.gameplay.deadlineMs=s.gameplay.phaseStartedMs+kRoomExitMs;
+    if(schema>=6) {
+        const auto count=r.count(32);
+        for(uint32_t i=0;i<count;++i) s.gameplay.navigationHistory.push_back(r.u64());
+    }
     r.u32(); r.end();
     validateState(s);
     return s;

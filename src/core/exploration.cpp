@@ -281,7 +281,7 @@ void Explorer::enterFloor() {
     state_.occupancyVersion = 0;
     state_.floorSteps = 0;
     invalidate();
-    state_.gameplay.movement={};state_.gameplay.walkStartedMs=0;
+    state_.gameplay.movement={};state_.gameplay.walkStartedMs=0;state_.gameplay.navigationHistory.clear();
     if (state_.gameplay.enabled) {if(state_.gameplay.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");++state_.gameplay.actionRound;assignRelationships();}
 }
 void Explorer::setBlocked(int tile, bool value) {
@@ -306,7 +306,7 @@ Mask Explorer::occupancy(bool playerPath) const {
 }
 Mask Explorer::playerOccupancy() const {
     auto occupied=occupancy(true);
-    if(!lowHealth()) return occupied;
+    if(!lowHealth() || retreatProgress_) return occupied;
     auto safe=occupied;
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Friend && e.visible && !e.done && !friendly(e))
         for(int tile=0;tile<kTiles;++tile) if(tile!=state_.position && canAttack(state_.world,e.tile,tile)) safe[tile]=1;
@@ -508,6 +508,7 @@ Event Explorer::advance(bool poseFinished) {
 }
 void validateState(const ExplorationState& s) {
     const auto& g = s.gameplay;
+    require(g.navigationHistory.size()<=32,"navigation history exceeds bound");
     require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=17 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
     if(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn) {
         require(g.enabled && g.life==LifePhase::Explore && !g.homeScene && s.target==-1 && !g.movement.actionId,"invalid floor presentation");

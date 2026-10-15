@@ -132,6 +132,7 @@ struct GameplayState {
     std::uint32_t playerDirection=0;
     std::vector<std::uint32_t> hostile;
     std::set<std::string> onceKeys;
+    std::vector<std::uint64_t> navigationHistory; // MDES6: bounded joint-state cycle watch, excluding clocks/round numbers.
 };
 enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
     HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout, DialoguePlayer, DialogueNpc };
@@ -194,6 +195,7 @@ public:
     std::uint64_t bfsCalls() const { return bfsCalls_; }
     void enableGameplay(std::uint64_t utcMs);
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
+    GameplayUpdate resetExploration(std::uint64_t utcMs, bool automatic = false);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
 private:
@@ -201,6 +203,7 @@ private:
     std::vector<int> path_;
     std::size_t pathIndex_ = 0;
     std::uint64_t cachedWorld_ = 0, cachedOccupancy_ = 0, bfsCalls_ = 0;
+    bool retreatProgress_ = false;
     void enterFloor();
     void plan();
     void discover();
