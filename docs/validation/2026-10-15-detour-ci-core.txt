@@ -1,0 +1,25 @@
+2026-10-15T06:26:29.3421264Z Windows x64 runtime/source/assets hashes match; no ZIP required
+2026-10-15T06:27:02.7137358Z       Start  1: pet_navigation_recovery_tests
+2026-10-15T06:27:07.3850088Z  1/10 Test  #1: pet_navigation_recovery_tests ....   Passed    4.67 sec
+2026-10-15T06:27:07.3907805Z       Start  2: pet_camera_tests
+2026-10-15T06:27:14.3414258Z  2/10 Test  #2: pet_camera_tests .................   Passed    6.95 sec
+2026-10-15T06:27:14.3414920Z       Start  3: pet_movement_tests
+2026-10-15T06:27:15.5645583Z  3/10 Test  #3: pet_movement_tests ...............   Passed    1.22 sec
+2026-10-15T06:27:15.5646610Z       Start  4: pet_survival_tests
+2026-10-15T06:27:15.6815188Z  4/10 Test  #4: pet_survival_tests ...............   Passed    0.12 sec
+2026-10-15T06:27:15.6817283Z       Start  5: pet_revision_tests
+2026-10-15T06:27:15.7350335Z  5/10 Test  #5: pet_revision_tests ...............   Passed    0.05 sec
+2026-10-15T06:27:15.7356027Z       Start  6: pet_improvement_tests
+2026-10-15T06:27:15.7942681Z  6/10 Test  #6: pet_improvement_tests ............   Passed    0.06 sec
+2026-10-15T06:27:15.7943751Z       Start  7: pet_gameplay_tests
+2026-10-15T06:27:57.3108153Z  7/10 Test  #7: pet_gameplay_tests ...............   Passed   41.52 sec
+2026-10-15T06:27:57.3395738Z       Start  8: pet_exploration_tests
+2026-10-15T06:29:00.1532515Z  8/10 Test  #8: pet_exploration_tests ............   Passed   62.81 sec
+2026-10-15T06:29:00.1533803Z       Start  9: pet_core_tests
+2026-10-15T06:29:05.7104702Z  9/10 Test  #9: pet_core_tests ...................   Passed    5.56 sec
+2026-10-15T06:29:05.7106500Z       Start 10: pet_package_playback
+2026-10-15T06:29:05.7220117Z 10/10 Test #10: pet_package_playback .............   Passed    0.01 sec
+2026-10-15T06:29:05.7225756Z 100% tests passed, 0 tests failed out of 10
+2026-10-15T06:29:05.7226308Z Total Test time (real) = 123.13 sec
+2026-10-15T06:29:40.3010002Z Ran 26 tests in 18.389s
+2026-10-15T06:29:40.3010244Z OK

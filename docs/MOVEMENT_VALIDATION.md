@@ -1,6 +1,6 @@
 # 이동·카메라 검증 재현
 
-후속 사용자 보고의 적 추적/저체력 도주 왕복은 별도로 재현·수정했다. 최신 결과는 [대각선 반복·Reset](NAVIGATION_RECOVERY.md)과 [CI38674804212 검증 요약](validation/2026-10-15-navigation-summary.json)을 우선한다. 아래는 후속 재현 이전의 이동·카메라 검증 기록이다. 현재 검사의 snapshot writer는 MDES6이고 MDES1~5도 읽는다.
+후속 사용자 보고의 적 추적/저체력 도주 왕복은 별도로 재현·수정했다. 최신 결과는 [대각선 반복·Reset](NAVIGATION_RECOVERY.md)과 [CI38692398718 우회 검증 요약](validation/2026-10-15-detour-summary.json)을 우선한다. 아래는 후속 재현 이전의 이동·카메라 검증 기록이다. 현재 검사의 snapshot writer는 MDES6이고 MDES1~5도 읽는다.
 
 2026-10-15 `work`의 자동 검증 범위 완료. [명세](MOVEMENT_STABILIZATION_SPEC.md), [검증 요약](validation/2026-10-15-movement-summary.json), [단계별 기록](logs/2026-10-15-movement-stage4.md)을 함께 본다.
 

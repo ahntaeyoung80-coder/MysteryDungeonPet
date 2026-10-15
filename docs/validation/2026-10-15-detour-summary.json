@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-15",
+  "status": "pass",
+  "branch": "work",
+  "testedCommit": "1babcf212306490e03b95c5cf8509cd310fdbf07",
+  "behavior": "반복 시 같은 층 합법 인접 칸 우회; 같은 상태에서 후보 순환; 출구 없음은 대기. 수동 Reset만 귀가.",
+  "save": "MDES6 layout unchanged; readers MDES1..6",
+  "local": {
+    "release": "10/10,27.97s",
+    "asanUbsan": "10/10,141.24s; final navigation regression1/1,4.68s",
+    "python": "26/26,6.894s,no skips",
+    "layoutsWithoutAutomaticReturn": 200,
+    "restoredCandidateRotation": "HP2/HP5,16 decisions each",
+    "blockedRestoreWaits": 8,
+    "other": "single exit, blocked diagonal corner, unspent enemy attack, manual Reset"
+  },
+  "ci": {
+    "run": 38692398718,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38692398718",
+    "coreJob": 116281099654,
+    "windowsJob": 116281100045,
+    "core": "success; final ASan/UBSan10/10,123.13s; Python26/26,18.389s,no skips",
+    "windows": "success; Server2025/MSVC19.51 native11/11,16.64s; actual GUI first detour77->54, same run900/floor0 through relaunch, automatic return0; manual Reset/backup/duplicate/relaunch pass",
+    "navigation": {
+      "automatic": "persisted repeat chose another adjacent direction, stayed in same run/floor through relaunch, no automatic return",
+      "status": "pass",
+      "cycle": "original coupled chase/retreat escaped",
+      "actualWindows11": "not observed",
+      "manual": "context menu, backup, duplicate commands, durable return, relaunch and one meal"
+    },
+    "movementCases": 31,
+    "composedFrames": 2386,
+    "submittedFrames": 2093,
+    "existing": "life, combat, default launch/restore with native and repository-root EXEs pass"
+  },
+  "runtimeSha256": {
+    "MysteryDungeonPet.exe": "b7f1fdf9b84c36d8e5667276cd40b33ccff7f64e27df64a91d02846fe57f75a8",
+    "windows-runtime.json": "6f01164a0070e75a767d2e5d1a5a5c55ea488d010d1a08233456dd5d6270c630"
+  },
+  "limits": [
+    "실제 사용자 Windows11 화면 미관측",
+    "OS 사건·장기 성능·전체 콘텐츠 별도 범위"
+  ],
+  "artifact": {
+    "id": 11953130820,
+    "name": "windows-check-results",
+    "sha256": "9484169880a7dd59b6d5bb8c02750e9a9cc192a09ae137be9d6f3c70bcddcfe9"
+  },
+  "evidenceSha256": {
+    "docs/validation/2026-10-15-detour-windows/cycle.csv": "9f7e201817e2ad2765c081c9c6728417e24e3b1e100b71e5c405834440d6b22b",
+    "docs/validation/2026-10-15-detour-windows/events.txt": "bbdf263d81493d274770674a2f4dbe00ea8d5d06dc34cc056542fa7c101e75bd",
+    "docs/validation/2026-10-15-detour-windows/existing-default-launch-default-launch.json": "8e58cdb08025197a1341dfe1476aa152cfe652f0df2eb45869fa903c1e9ab670",
+    "docs/validation/2026-10-15-detour-windows/existing-gameplay-combat-result.json": "34d6a84e26b5c182f3b6032b4582e9959fd4ab372936c4e57423e9e0a5ab4953",
+    "docs/validation/2026-10-15-detour-windows/existing-gameplay-life-result.json": "fdccb00f4903871e849191a60044554c7d511c60d641bfb1f3b6263d55042387",
+    "docs/validation/2026-10-15-detour-windows/existing-pull-launch-default-launch.json": "8e58cdb08025197a1341dfe1476aa152cfe652f0df2eb45869fa903c1e9ab670",
+    "docs/validation/2026-10-15-detour-windows/manual.csv": "d0eeb1ef917f37dfdeeaeec79298c097244de9b06aa68324afc3619a21f6ecf6",
+    "docs/validation/2026-10-15-detour-windows/manual.mdes": "8b68fe083339b22eb9ec57d92e03190527909804705f49939873ccabcfeba938",
+    "docs/validation/2026-10-15-detour-windows/manual.mdes.reset-backup": "499c35180b759eab5e9a59ddf5a302b7727eb54fefd39401866386a8bf28ee90",
+    "docs/validation/2026-10-15-detour-windows/movement-summary.json": "569004a97e65f896edd080dd941b078bf2a54727b79f92f710f72692f210ba82",
+    "docs/validation/2026-10-15-detour-windows/reset-menu.txt": "d4833326da3e76b47195375a5b21f12db253cfeb5d2f43f58b05c545438273c2",
+    "docs/validation/2026-10-15-detour-windows/reset-states.json": "7bd654acfac35748fd999bec10a3368ce009a321c967d7c1eb643d64b7c6408e",
+    "docs/validation/2026-10-15-detour-windows/summary.json": "9cf1019d9fd7810e9f0a71893b5e4e5dc8b91f561a2abfc231339a2dfde359fd",
+    "docs/validation/2026-10-15-detour-windows/watch-before.mdes": "c9003cb62b5c8e50f01d5bbdd40a8fe63fa9fc946bc27aad16a29333ee9912ba",
+    "docs/validation/2026-10-15-detour-windows/watch-first-run.csv": "4964269de83d7275d39e1c930dc61d99c4f80ca6dc552b2b9f4ddc0da5959c62",
+    "docs/validation/2026-10-15-detour-windows/watch.csv": "e647e97b5e1a9849546c0cf8117be6d55ed28c4ca8c5299a20afa30907056e94",
+    "docs/validation/2026-10-15-detour-windows/watch.mdes": "9690887a56027a6a6a3a2acf86aec17e839a420e305e61116ebdb7c349940145"
+  }
+}

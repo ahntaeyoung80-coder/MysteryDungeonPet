@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "snapshot": "new then restored same runId",
+  "diagnosticsMenu": "absent",
+  "launch": "installed EXE with zero arguments from another directory",
+  "physicalSize": 200,
+  "actualWindows11": "pending",
+  "explicitDiagnostics": "pass, exploration save unchanged"
+}
