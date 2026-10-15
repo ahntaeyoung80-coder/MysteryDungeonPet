@@ -1,0 +1,9 @@
+{
+  "baseline": "80470ba0e5fa40ca3a85ee982a67753aed29fad8",
+  "branch": "work",
+  "exeSha256": "b046b85cee43f40f6ac98cd27e3051ddf1c9d6171b49150b28d234f38343d0bd",
+  "runtimeHashCheck": "pass",
+  "releaseCTest": "7/7 pass, 15.87s",
+  "nativeWindowsMovement": "pending: fixed-snapshot GUI coverage to be added",
+  "actualUserWindows11": "not observed"
+}
