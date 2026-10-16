@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-16",
+  "repository": "ahntaeyoung80-coder/MysteryDungeonPet",
+  "macroPhase": "B-1/B-2 stabilization",
+  "baseline": "51c7cf3b592a5e659d40d406f62ebf1687012c79",
+  "stage5": {
+    "source": "9dd3927bbf14c7d5dffca63d7b8229455e7133c1",
+    "run": 38830612402,
+    "preflight": {
+      "cases": 27,
+      "failures": 0,
+      "translatedShapeReproducedBeforeFix": true,
+      "baselineRun": 38829101279,
+      "roomSeeds": 512,
+      "roomRectangles": 1269,
+      "legacyToSevenRestoredDecisions": 334
+    },
+    "windows": {
+      "job": 116748700086,
+      "conclusion": "success",
+      "native": {
+        "passed": 15,
+        "total": 15,
+        "seconds": 23.28
+      },
+      "followup": {
+        "passed": 27,
+        "total": 27
+      },
+      "submittedPixels": {
+        "companion": {
+          "matched": 264,
+          "tested": 264
+        },
+        "friendly": {
+          "matched": 286,
+          "tested": 286,
+          "restored": true
+        },
+        "hostile": {
+          "matched": 286,
+          "tested": 286,
+          "restored": true
+        }
+      },
+      "checks": [
+        "WIC",
+        "playback",
+        "movement",
+        "navigation",
+        "entry/lifecycle",
+        "two-sided independent combat",
+        "HP1/HP5 400ms shared movement",
+        "installed and tracked zero-argument launch/restore",
+        "legacy 3-floor active save preservation and next-day 7-floor app migration"
+      ]
+    },
+    "runtime": "55e900624a59b240509faf556f0e7a429f692091",
+    "linux": {
+      "job": 116751193402,
+      "conclusion": "success",
+      "asanUbsan": {
+        "passed": 14,
+        "total": 14,
+        "seconds": 203.38
+      },
+      "python": {
+        "passed": 26,
+        "total": 26,
+        "seconds": 13.599
+      }
+    },
+    "jobs": [
+      {
+        "id": 116748286453,
+        "name": "relationship-assets",
+        "conclusion": "success",
+        "startedAt": "2026-10-16T00:38:26Z",
+        "completedAt": "2026-10-16T00:38:54Z"
+      },
+      {
+        "id": 116748437884,
+        "name": "party-preflight",
+        "conclusion": "success",
+        "startedAt": "2026-10-16T00:38:56Z",
+        "completedAt": "2026-10-16T00:39:45Z"
+      },
+      {
+        "id": 116748700086,
+        "name": "windows",
+        "conclusion": "success",
+        "startedAt": "2026-10-16T00:39:48Z",
+        "completedAt": "2026-10-16T00:47:59Z"
+      },
+      {
+        "id": 116751193402,
+        "name": "core",
+        "conclusion": "success",
+        "startedAt": "2026-10-16T00:48:00Z",
+        "completedAt": "2026-10-16T00:52:36Z"
+      },
+      {
+        "id": 116752560526,
+        "name": "publish-runtime",
+        "conclusion": "success",
+        "startedAt": "2026-10-16T00:52:39Z",
+        "completedAt": "2026-10-16T00:52:49Z"
+      }
+    ],
+    "runtimeManifest": {
+      "exeSha256": "2e077115e7793ac7fbb7e29e43775071545d93af879dec082843ddfa6b1d983e",
+      "inputCount": 102
+    },
+    "roomPolicy": {
+      "normalizedRecentLayouts": 64,
+      "maxGenerationAttempts": 128,
+      "baselineSeeds": [
+        340,
+        1041
+      ],
+      "baselineTranslatedEqual": true,
+      "afterFixTranslatedEqual": false,
+      "nextDayRestore": true,
+      "malformedAndOversizedHistoryRejected": true
+    },
+    "times": {
+      "startedAt": "2026-10-15T23:36:31Z",
+      "runtimePublishedAt": "2026-10-16T00:52:49Z",
+      "secondsThroughRuntime": 4578,
+      "roomControlledBaselineAt": "2026-10-16T00:22:15Z",
+      "roomBaselineThroughVerifiedSeconds": 1834,
+      "overlap": "색상·7층·방 조사/CI 구간은 겹치며 합산하지 않는다."
+    }
+  },
+  "assets": {
+    "baseline": "51c7cf3",
+    "candidate": "9dd3927",
+    "changed": [
+      {
+        "path": "assets/original/gameplay/actors/runtime-index.json",
+        "old": "e0cb46c51e302937c3975e8c37b03db3fa55835a",
+        "new": "b18fef070713b54f192bdad1e7fccac3ff3dd49f"
+      }
+    ],
+    "added": [
+      {
+        "path": "assets/original/gameplay/actors/asset-3/CREDITS.txt",
+        "sha": "b7993fea5802145ab4b8a29a76b0c15b1b1686e9"
+      },
+      {
+        "path": "assets/original/gameplay/actors/asset-3/asset.mdpa",
+        "sha": "7c60400ee8c64a4be1616fc6f65ba2205829988c"
+      },
+      {
+        "path": "assets/original/gameplay/actors/asset-3/atlas.png",
+        "sha": "4dff8b4909a7de3cf3335c7066396ce8b45751c3"
+      },
+      {
+        "path": "assets/original/gameplay/actors/asset-3/provenance.json",
+        "sha": "678bbc153c5cf8bd062a4a7ffebb67d01c463678"
+      }
+    ],
+    "rom": [
+      {
+        "path": "assets/original/source/user-supplied.nds",
+        "sha": "0787f88390f9d40662c060209a97ba7a3fc56b30",
+        "bytes": 91394048,
+        "unchanged": true
+      }
+    ]
+  },
+  "pending": [
+    "User-reported room duplication scene/snapshot not available; controlled translated-layout reproduction is separate.",
+    "Actual Windows 11 / real lock, suspend, DPI/monitor gates are not replaced by hosted runner checks.",
+    "Original game wall time, full support audit, activity integration and 24-hour/final performance gates remain."
+  ]
+}
