@@ -12,9 +12,32 @@
       "atlasSha256": "82f935384829cc75e5be04e0a55300dbd718eb0ef377f62df9edc5064b62aa97",
       "manifest": "asset-1/asset.mdpa",
       "sha256": "17db3e71f820a4614aa208fb5cda5669dd0a55dbce43cc6efb97d72bb698a9bc"
+    },
+    {
+      "assetKey": "rom:EoS_NA:monster:383",
+      "atlasSha256": "1a46ef10bdcf4f0356d69c21ccfe9d480b25a7767f00b8e4e71c8a743f6115e4",
+      "manifest": "asset-2/asset.mdpa",
+      "mdIndex": 383,
+      "relationship": "friendly",
+      "sha256": "043ec389e7ed966bd87699058685d2a997e387e7fd95a0cca4a0c63065223eb1",
+      "spriteIndex": 556
+    },
+    {
+      "assetKey": "rom:EoS_NA:monster:384",
+      "atlasSha256": "4ce4447c972b85ca38780111231e6e2e531d7b195df0eedf158c29830e09bf95",
+      "manifest": "asset-3/asset.mdpa",
+      "mdIndex": 384,
+      "relationship": "hostile",
+      "sha256": "f089a0f50db627d6ab8efcbebe57f3bb1added276cc2505579fb44356ba5851a",
+      "spriteIndex": 554
     }
   ],
   "originalWallTime": "pending",
+  "relationshipRoles": {
+    "friendly": "asset-2/asset.mdpa",
+    "hostile": "asset-3/asset.mdpa"
+  },
+  "relationshipSource": "per-actor provenance.json; retained ROM WAN pixels",
   "sourceManifestHash": "20e4abc5cf5577c27534af84aa84102fc2292fbc9ec83312c4c79a881f216fb4",
   "status": "compiled_requires_consumer_validation"
 }
