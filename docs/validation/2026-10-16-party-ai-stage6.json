@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-16",
+  "phase": "B-1/B-2 안정화",
+  "runtimeSource": "9dd3927bbf14c7d5dffca63d7b8229455e7133c1",
+  "runtimeCommit": "55e900624a59b240509faf556f0e7a429f692091",
+  "runtimeExeSha256": "2e077115e7793ac7fbb7e29e43775071545d93af879dec082843ddfa6b1d983e",
+  "runtimeInputCount": 102,
+  "promotedWorkCommit": "327345531468cd696465c012a7ef19341c7cdb44",
+  "workCiRun": 38832257459,
+  "assets": {
+    "baseline": "51c7cf3b592a5e659d40d406f62ebf1687012c79",
+    "candidate": "327345531468cd696465c012a7ef19341c7cdb44",
+    "changedExistingAssetPaths": [
+      "assets/original/gameplay/actors/runtime-index.json"
+    ],
+    "unchangedExistingAssetFiles": 78,
+    "romBlobSha": "0787f88390f9d40662c060209a97ba7a3fc56b30",
+    "sourceIdenticalToVerified9dd": true
+  },
+  "docs": {
+    "files": 13,
+    "missing": [],
+    "markdownFiles": 12
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "seconds": 269,
+      "commit": "4abe078160f3fb47bd9623c502edc9e787c3a82d"
+    },
+    {
+      "stage": 2,
+      "measuredSeconds": 1078,
+      "segmentsSeconds": [
+        143,
+        935
+      ],
+      "commit": "51c7cf3b592a5e659d40d406f62ebf1687012c79"
+    },
+    {
+      "stage": 3,
+      "seconds": 5610,
+      "excludedResumeWaitSeconds": 33155,
+      "commit": "c3af808bccc0ea324d81b166a8589c4cdbfec104"
+    },
+    {
+      "stage": 4,
+      "seconds": 2948,
+      "commit": "d2e168a0f132d5fb0e9719206055d5e46a05456d"
+    },
+    {
+      "stage": 5,
+      "seconds": 4642,
+      "commit": "5ca91ba26f007b3b32d700e3690e81726b756233"
+    },
+    {
+      "stage": 6,
+      "startedAt": "2026-10-16T00:53:53Z",
+      "promotedAt": "2026-10-16T00:55:33Z",
+      "status": "verified",
+      "checksCompletedAt": "2026-10-16T01:02:53Z",
+      "reviewAndLogFinalizedAt": "2026-10-16T01:05:06Z",
+      "secondsThroughReviewAndLog": 673,
+      "promotionToCiSeconds": 440,
+      "timingScope": "최종 검토/로그 확정까지 계측. 이후 문서 기록 커밋/원격 확인 시각은 Git metadata와 최종 응답으로 확인한다."
+    }
+  ],
+  "pending": [
+    "User-reported room duplication scene/snapshot not available; controlled translated-layout reproduction is separate.",
+    "Actual Windows 11 / real lock, suspend, DPI/monitor gates are not replaced by hosted runner checks.",
+    "Original game wall time, full support audit, activity integration and 24-hour/final performance gates remain."
+  ],
+  "workChecks": {
+    "linux": {
+      "jobId": 116753437523,
+      "asanUbsan": {
+        "passed": 14,
+        "total": 14,
+        "seconds": 299.86
+      },
+      "python": {
+        "passed": 26,
+        "total": 26,
+        "seconds": 17.436
+      },
+      "runtimeHashCheck": "pass"
+    },
+    "windows": {
+      "jobId": 116753437373,
+      "native": {
+        "passed": 15,
+        "total": 15,
+        "seconds": 23.11
+      },
+      "mandatoryFollowupCases": 27,
+      "guiInstalledTrackedRuntime": "pass",
+      "originalPixelsAndRestore": "pass",
+      "legacyThreeFloorPreservedAndNextDaySeven": "pass",
+      "runtimeHashCheck": "pass"
+    },
+    "jobs": [
+      {
+        "id": 116753437373,
+        "name": "windows",
+        "conclusion": "success",
+        "startedAt": "2026-10-16T00:55:37Z",
+        "completedAt": "2026-10-16T01:02:53Z"
+      },
+      {
+        "id": 116753437523,
+        "name": "core",
+        "conclusion": "success",
+        "startedAt": "2026-10-16T00:55:37Z",
+        "completedAt": "2026-10-16T01:02:16Z"
+      }
+    ]
+  },
+  "workCiConclusion": "success",
+  "finalRecordChangeScope": "문서/검증 기록만 수정. src/CMake/EXE/102개 hash 입력은 검증된 work SHA와 동일하다."
+}

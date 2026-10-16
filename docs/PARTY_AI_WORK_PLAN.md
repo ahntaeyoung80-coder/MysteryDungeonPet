@@ -23,7 +23,7 @@ PROJECT_STATE에는 현재 단계·실행 기준·현재 막힘·바로 다음 �
 
 단계2 이후는 실제 코드/자산 검증 결과가 필요하다. 관리형 shell 대신 GitHub Actions의 MSVC Windows 실행과 Linux sanitizer/Python을 사용한다. 로컬 shell 미확보는 현재 구현/검증 차단 사유가 아니다.
 
-## 현재 확보한 결과
+## 초기 기준선과 원격 검증 경로
 
 1단계 문서 정리는 `4abe078`로 반영했다.2단계는 [회귀 기준선](PARTY_AI_REGRESSION.md)과 테스트 코드10개를 확보했다. Linux/Windows에서 같은7실패/3통과를 확인했으며 기능 수정 결과가 아니다. 명시 실행 모드 `pet_companion_tests --party-ai-followup`로 실패를 계속 재현할 수 있다.
 
@@ -66,3 +66,8 @@ PROJECT_STATE에는 현재 단계·실행 기준·현재 막힘·바로 다음 �
 [CI38830612402](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38830612402)의 소스 `9dd3927`·실행물 `55e9006`에서 Windows15/15·후속27/27·GUI/설치/루트와 ASan/UBSan14/14·Python26/26이 통과했다. 원작 관계별 색상/복원·HP표시·기본7층/기존3층 저장·최근64개 평행이동 지형을 포함한다. 사용자 방 중복의 정확한 장면과 통제 재현은 구분한다. [5단계 변경·시간](logs/2026-10-16-party-ai-stage5.md), [증거](validation/2026-10-16-party-ai-stage5.json).
 
 5단계 마감 `5ca91ba`를 원격 확인한09:53:53 KST부터6단계다. 기존 통합 검사를 재사용하고 실행물/원본/문서 대조와 `work` 기본 CI를 확인한다. 최종 대조3~5분·상태/로그2~4분·반영/CI8~15분, 총15~25분으로 갱신한다. [6단계 로그](logs/2026-10-16-party-ai-stage6.md).
+
+
+## 6단계 검증 완료
+
+`work=3273455`의 [기본 CI38832257459](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/38832257459)가 Windows15/15·필수 후속27·GUI/설치/루트·구형3층/7층 이행, ASan/UBSan14/14·Python26/26을 통과했다. 실행물/원본 대조·README/현재 상태·과거 기준선 구분·설계/이력·실측 로그를 반영했다. 최종 검토/로그 확정까지 11분13초이며 세부 구간과 남은 A/B/C 범위는 [6단계 로그](logs/2026-10-16-party-ai-stage6.md), [증거](validation/2026-10-16-party-ai-stage6.json)를 따른다. 이6단계 완료가 C 전체 완료를 뜻하지 않는다.
