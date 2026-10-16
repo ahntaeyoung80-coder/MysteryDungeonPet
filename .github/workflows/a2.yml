@@ -37,6 +37,8 @@ jobs:
         with:
           name: windows-check-results
           path: |
+            build/windows/package-migration-results/**
+            build/windows/default-launch-results/**
             build/windows/wic-results/*.txt
             build/windows/movement-results/*
             build/windows/navigation-results/*
