@@ -789,7 +789,7 @@ class App {
         if(changePackage) {
             for(const auto& entry:nextTiles)decodes_+=entry.second.decoded?1:0;
             tiles_=std::move(nextTiles);explorationPackage_=std::move(pendingDefaultPackage_);
-            pendingDefaultPackage_.reset();chunkVersion_=0;chunks_.clear();
+            pendingDefaultPackage_.reset();chunkVersion_=0;chunks_.fill(0);
             log("default exploration upgraded at new run floors="+std::to_string(explorer_->state().floors.size()));
         }
         const auto& g = explorer_->state().gameplay;
