@@ -506,6 +506,35 @@ inline unsigned run(const ExplorationState& base) {
         }
         require(attacked && finished,"cornered legacy encounter oscillated between retreat and PlayerTurn");
     });
+    test("R23_translated_floor_shape_is_not_reused",[&] {
+        auto canonical=[](const World& w) {
+            int minX=kWidth,minY=kHeight,maxX=-1,maxY=-1;
+            for(int p=0;p<kTiles;++p)if(w.walkable(p)) {
+                minX=std::min(minX,p%kWidth);maxX=std::max(maxX,p%kWidth);
+                minY=std::min(minY,p/kWidth);maxY=std::max(maxY,p/kWidth);
+            }
+            std::string shape=std::to_string(maxX-minX+1)+"x"+std::to_string(maxY-minY+1)+":";
+            for(int y=minY;y<=maxY;++y)for(int x=minX;x<=maxX;++x)
+                shape+=w.walkable(y*kWidth+x)?'1':'0';
+            return shape;
+        };
+        Rng firstRng{340},secondRng{1041};
+        const auto first=generate(firstRng,1),second=generate(secondRng,2);
+        require(first.terrain!=second.terrain && canonical(first)==canonical(second),
+                "controlled original generator seeds are not translated copies");
+        require(first.stairs!=second.stairs,"controlled floor candidate hits the prior feet exclusion");
+        Explorer initial(940,340,"layout-collision",fixtureProfiles(2),{0,0,0,0});
+        auto state=initial.state();
+        require(state.world.terrain==first.terrain,"fixture did not reuse actual production generation");
+        state.position=state.world.stairs;state.visited[state.position]=state.discovered[state.position]=1;
+        state.knownStairs=state.position;state.target=state.position;state.goalKind=GoalKind::Stairs;
+        state.rng.state=1041;
+        Explorer e(state);const auto event=e.advance();
+        require(event.kind==EventKind::FloorChanged,"controlled duplicate fixture did not change floors");
+        std::cout<<"PARTY_AI R23 seedA=340 seedB=1041 rawEqual="<<(first.terrain==e.state().world.terrain)
+            <<" translatedEqual="<<(canonical(first)==canonical(e.state().world))<<std::endl;
+        require(canonical(first)!=canonical(e.state().world),"whole-floor shape repeated after a translation despite the raw-layout guard");
+    });
     std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases="<<cases<<std::endl;
     return failures;
 }

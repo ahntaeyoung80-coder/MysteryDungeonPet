@@ -1,0 +1,25 @@
+name: Reproduce translated layout baseline
+on:
+  push:
+    branches: [test/layout-translation-20261016]
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: cmake -S . -B build/layout-repro -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake --build build/layout-repro --target pet_companion_tests --parallel 2
+      - name: Record the expected pre-fix failure
+        run: |
+          set -o pipefail
+          build/layout-repro/pet_companion_tests --party-ai-followup 2>&1 | tee build/layout-repro/layout-baseline.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: translated-layout-baseline
+          path: build/layout-repro/layout-baseline.txt
+          if-no-files-found: warn
