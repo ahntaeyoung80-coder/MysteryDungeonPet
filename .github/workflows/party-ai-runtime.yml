@@ -44,13 +44,14 @@ jobs:
           name: party-ai-relationship-actors
           path: assets/original/gameplay/actors
       - run: cmake -S . -B build/preflight -DCMAKE_BUILD_TYPE=Debug
-      - run: cmake --build build/preflight --target pet_companion_tests pet_gameplay_tests pet_navigation_recovery_tests --parallel 2
+      - run: cmake --build build/preflight --target pet_companion_tests pet_gameplay_tests pet_navigation_recovery_tests pet_package_transition_tests --parallel 2
       - name: Run party, lifecycle restore and navigation regressions
         run: |
           task_test_result=0
           build/preflight/pet_companion_tests --party-ai-followup || task_test_result=1
           build/preflight/pet_gameplay_tests assets/original/gameplay || task_test_result=1
           build/preflight/pet_navigation_recovery_tests || task_test_result=1
+          build/preflight/pet_package_transition_tests assets/original/exploration/dungeon-0/exploration.mdpe assets/original/exploration/dungeon-15/exploration.mdpe || task_test_result=1
           exit "$task_test_result"
   windows:
     needs: party-preflight
@@ -71,7 +72,7 @@ jobs:
         run: |
           cmake -S . -B build/windows -A x64
           if ($LASTEXITCODE -ne 0) { throw 'configure failed' }
-          cmake --build build/windows --config Release --target MysteryDungeonPet
+          cmake --build build/windows --config Release --target MysteryDungeonPet pet_companion_tests
           if ($LASTEXITCODE -ne 0) { throw 'runtime build failed' }
           python tools/check_windows_runtime.py --refresh-from build/windows/Release/MysteryDungeonPet.exe --compiler "MSVC x64 Release (GitHub Actions Windows)"
           if ($LASTEXITCODE -ne 0) { throw 'runtime refresh failed' }
@@ -100,6 +101,7 @@ jobs:
         with:
           name: party-ai-windows-validation
           path: |
+            build/windows/package-migration-results/**
             build/windows/default-probe/**
             build/windows/default-launch-results/**
             build/windows/Testing/Temporary/LastTest.log

@@ -251,6 +251,7 @@ public:
     std::uint64_t bfsCalls() const { return bfsCalls_; }
     void enableGameplay(std::uint64_t utcMs);
     bool enableCompanion();
+    void setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors);
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
     GameplayUpdate resetExploration(std::uint64_t utcMs);
     bool canResetExploration() const;
@@ -258,6 +259,8 @@ public:
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
 private:
     ExplorationState state_;
+    std::string nextRunAssetVersion_;
+    std::vector<FloorProfile> nextRunFloors_; // launch policy; reapplied when an old save is restored
     std::vector<int> path_;
     std::size_t pathIndex_ = 0;
     std::uint64_t cachedWorld_ = 0, cachedOccupancy_ = 0, bfsCalls_ = 0;

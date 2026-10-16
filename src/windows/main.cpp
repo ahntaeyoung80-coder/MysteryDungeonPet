@@ -108,7 +108,7 @@ struct Options {
     std::filesystem::path exploration, snapshot;
     std::filesystem::path gameplayAssets = runtimePath(L"assets/gameplay",L"assets/original/gameplay");
     unsigned seed = 1;
-    bool newRun = false, solo = false;
+    bool newRun = false, solo = false, defaultExploration = false;
     unsigned scale = 3, direction = 0;
     uint32_t clip = 0;
     bool loop = true, validate = false, scaleExplicit = false;
@@ -154,8 +154,10 @@ Options options() {
     }
     // A normal desktop launch owns exploration. Keep explicit A diagnostics compatible;
     // an explicit --explore still wins over their legacy --package selector.
-    if (o.exploration.empty() && !animationTest)
-        o.exploration = runtimePath(L"assets/exploration/dungeon-0/exploration.mdpe",L"assets/original/exploration/dungeon-0/exploration.mdpe");
+    if (o.exploration.empty() && !animationTest) {
+        o.defaultExploration=true;
+        o.exploration = runtimePath(L"assets/exploration/dungeon-15/exploration.mdpe",L"assets/original/exploration/dungeon-15/exploration.mdpe");
+    }
     if (!o.scale) throw std::runtime_error("scale must be 1..8");
     if (!o.exploration.empty() && (o.validate || o.scenario != L"manual"))
         throw std::runtime_error("exploration requires manual scenario");
@@ -202,7 +204,7 @@ class App {
     uint32_t enemyClip_ = 7;
     size_t enemyFrame_ = 0;
     unsigned enemyDirection_ = 0;
-    std::optional<ExplorationPackage> explorationPackage_;
+    std::optional<ExplorationPackage> explorationPackage_, pendingDefaultPackage_;
     std::unique_ptr<Explorer> explorer_;
     std::map<uint32_t, Assets> tiles_;
     std::array<uint32_t, kTiles> chunks_{};
@@ -749,6 +751,16 @@ class App {
         exploreDeadline_=deadlineFromUtc(now,utcMs(),explorer_->state().gameplay.deadlineMs);
         startClip(now);dirty_=true;
     }
+    static std::map<uint32_t,Assets> loadExplorationTiles(const ExplorationPackage& package,const std::filesystem::path& directory) {
+        std::map<uint32_t,Assets> result;
+        for(const auto& tileset:package.tilesets) {
+            auto asset=Assets::load(directory/tileset.packageFile);
+            if(asset.package.frames(0,0).size()!=tileset.chunkCount)
+                throw std::runtime_error("tileset atlas count mismatch");
+            result.emplace(tileset.id,std::move(asset));
+        }
+        return result;
+    }
     void advanceExploration(int64_t now) {
         if (!explorer_ || blocked() || (now < exploreDeadline_ && !poseFinished_ && completion_.actions.empty())) return;
         const int oldPosition = explorer_->state().position;
@@ -768,8 +780,18 @@ class App {
             if (candidate.state().gameplay.life == LifePhase::ReturnHome) dirty_ = true;
             return;
         }
+        const bool changePackage=pendingDefaultPackage_ &&
+            candidate.state().assetVersion==pendingDefaultPackage_->assetVersion;
+        std::map<uint32_t,Assets> nextTiles;
+        if(changePackage)nextTiles=loadExplorationTiles(*pendingDefaultPackage_,options_.exploration.parent_path());
         saveSnapshot(options_.snapshot, candidate.state());
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
+        if(changePackage) {
+            for(const auto& entry:nextTiles)decodes_+=entry.second.decoded?1:0;
+            tiles_=std::move(nextTiles);explorationPackage_=std::move(pendingDefaultPackage_);
+            pendingDefaultPackage_.reset();chunkVersion_=0;chunks_.clear();
+            log("default exploration upgraded at new run floors="+std::to_string(explorer_->state().floors.size()));
+        }
         const auto& g = explorer_->state().gameplay;
         const bool newFloor=event.event==GameplayEvent::FloorChanged || (event.event==GameplayEvent::Explore && oldLife==LifePhase::Ready);
         if(g.companion.enabled) {
@@ -1098,21 +1120,31 @@ public:
             guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");
             decodes_ += (enemyAssets_->decoded ? 1 : 0) + (homeAssets_->decoded ? 1 : 0);
             explorationPackage_ = loadExplorationPackage(options_.exploration);
-            for (const auto& tileset : explorationPackage_->tilesets) {
-                auto tiles = Assets::load(options_.exploration.parent_path() / tileset.packageFile);
-                if (tiles.package.frames(0, 0).size() != tileset.chunkCount)
-                    throw std::runtime_error("tileset atlas count mismatch");
-                decodes_ += tiles.decoded ? 1 : 0; tiles_.emplace(tileset.id, std::move(tiles));
-            }
+            auto explorationDirectory=options_.exploration.parent_path();
             if (options_.snapshot.empty()) options_.snapshot = directory_ / L"exploration.mdes";
             const bool restoring = !options_.newRun && std::filesystem::exists(options_.snapshot);
-            if (restoring)
-                explorer_ = std::make_unique<Explorer>(loadSnapshot(options_.snapshot, explorationPackage_->assetVersion));
-            else {
+            if (restoring) {
+                try {
+                    explorer_=std::make_unique<Explorer>(loadSnapshot(options_.snapshot,explorationPackage_->assetVersion));
+                } catch(const std::runtime_error& error) {
+                    if(!options_.defaultExploration || std::string(error.what())!="snapshot asset version mismatch")throw;
+                    const auto legacyPath=runtimePath(L"assets/exploration/dungeon-0/exploration.mdpe",L"assets/original/exploration/dungeon-0/exploration.mdpe");
+                    auto legacyPackage=loadExplorationPackage(legacyPath);
+                    auto legacyState=loadSnapshot(options_.snapshot,legacyPackage.assetVersion);
+                    if(legacyState.floors.size()!=3)throw std::runtime_error("unsupported legacy default floor count");
+                    explorer_=std::make_unique<Explorer>(std::move(legacyState));
+                    pendingDefaultPackage_=std::move(explorationPackage_);
+                    explorationPackage_=std::move(legacyPackage);explorationDirectory=legacyPath.parent_path();
+                    explorer_->setNextRunPackage(pendingDefaultPackage_->assetVersion,pendingDefaultPackage_->floors);
+                    log("legacy default three-floor run preserved; next new run uses seven floors");
+                }
+            } else {
                 explorer_ = std::make_unique<Explorer>(static_cast<uint64_t>(nowUs()), options_.seed,
                             explorationPackage_->assetVersion, explorationPackage_->floors);
                 saveSnapshot(options_.snapshot, explorer_->state());
             }
+            tiles_=loadExplorationTiles(*explorationPackage_,explorationDirectory);
+            for(const auto& entry:tiles_)decodes_+=entry.second.decoded?1:0;
             playerMotion_.reset(tilePoint(explorer_->state().position));
             explorer_->enableGameplay(utcMs());
             if(!options_.solo) explorer_->enableCompanion();

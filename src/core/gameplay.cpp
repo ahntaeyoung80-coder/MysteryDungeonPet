@@ -315,7 +315,9 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         if(now<g.deadlineMs) return {};
         if(state_.runId==UINT64_MAX || g.day==UINT32_MAX) throw std::runtime_error("day counter exhausted");
         const auto previous=g;const auto inventory=state_.inventory;
-        Explorer next(state_.runId+1,state_.rng.state,state_.assetVersion,state_.floors,state_.spawnPolicy);
+        Explorer next(state_.runId+1,state_.rng.state,
+            nextRunAssetVersion_.empty()?state_.assetVersion:nextRunAssetVersion_,
+            nextRunFloors_.empty()?state_.floors:nextRunFloors_,state_.spawnPolicy);
         next.state_.inventory=inventory;
         for(const auto& entry:inventory) next.state_.onceKeys.insert(entry.onceKey);
         next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+1;next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;

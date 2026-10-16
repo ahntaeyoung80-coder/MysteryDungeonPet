@@ -14,6 +14,11 @@ add_library(pet_core src/core/package.cpp src/core/animator.cpp src/core/surface
 target_include_directories(pet_core PUBLIC src)
 include(CTest)
 if(BUILD_TESTING)
+  add_executable(pet_package_transition_tests tests/package_transition_tests.cpp)
+  target_link_libraries(pet_package_transition_tests PRIVATE pet_core)
+  add_test(NAME pet_package_transition_tests COMMAND pet_package_transition_tests
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets/original/exploration/dungeon-0/exploration.mdpe"
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets/original/exploration/dungeon-15/exploration.mdpe")
   add_executable(pet_companion_tests tests/companion_tests.cpp)
   target_link_libraries(pet_companion_tests PRIVATE pet_core)
   add_test(NAME pet_companion_tests COMMAND pet_companion_tests)

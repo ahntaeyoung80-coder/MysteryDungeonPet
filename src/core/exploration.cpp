@@ -272,6 +272,16 @@ Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVer
     enterFloor();
     validateState(state_);
 }
+void Explorer::setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors) {
+    require(!assetVersion.empty() && assetVersion.size()<=256,"invalid next-run asset version");
+    require(!floors.empty() && floors.size()<=128,"invalid next-run floor count");
+    for(size_t i=0;i<floors.size();++i) {
+        validateProfile(floors[i]);
+        require(floors[i].edition==floors[0].edition && floors[i].dungeonId==floors[0].dungeonId &&
+                floors[i].localFloor==i,"next-run floors are not a complete dungeon");
+    }
+    nextRunAssetVersion_=std::move(assetVersion);nextRunFloors_=std::move(floors);
+}
 Explorer::Explorer(ExplorationState state) : state_(std::move(state)) {
     validateState(state_);
     if (state_.target != -1 && (!state_.gameplay.enabled || state_.gameplay.life == LifePhase::Explore)) {

@@ -131,7 +131,10 @@ int main(int argc,char** argv){try{
   const auto p=loadExplorationPackage(argv[2]);const auto s=loadSnapshot(argv[3],p.assetVersion);const auto& g=s.gameplay;
   std::cout<<"{\"runId\":"<<s.runId<<",\"day\":"<<g.day<<",\"life\":\""<<lifeName(g.life)<<"\",\"player\":"<<s.position
    <<",\"floorCount\":"<<s.floors.size()<<",\"dungeonId\":"<<s.floors[0].dungeonId<<",\"hostileCount\":"<<g.hostile.size()
-   <<",\"companionEnabled\":"<<g.companion.enabled<<",\"companion\":"<<g.companion.tile<<",\"playerHp\":"<<g.hearts<<",\"companionHp\":"<<g.companion.hearts<<"}\n";
+   <<",\"inventory\":"<<s.inventory.size()<<",\"meals\":"<<g.meals<<",\"oran\":"<<g.oran<<",\"companionOran\":"<<g.companion.oran<<",\"rngState\":\""<<s.rng.state<<"\""
+   <<",\"companionEnabled\":"<<g.companion.enabled<<",\"companion\":"<<g.companion.tile<<",\"playerHp\":"<<g.hearts<<",\"companionHp\":"<<g.companion.hearts<<",\"inventoryKeys\":[";
+  for(size_t i=0;i<s.inventory.size();++i) {if(i)std::cout<<',';std::cout<<'\"'<<s.inventory[i].onceKey<<'\"';}
+  std::cout<<"]}\n";
   return 0;
  }
 

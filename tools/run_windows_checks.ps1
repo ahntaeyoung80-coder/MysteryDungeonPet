@@ -33,6 +33,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'package failed' }
     & tests/default_launch_windows_tests.ps1 -Exe "$BuildDir/package/MysteryDungeonPet.exe" -Output "$BuildDir/exploration-results/default-launch"
     & tests/default_launch_windows_tests.ps1 -Exe "MysteryDungeonPet.exe" -Output "$BuildDir/exploration-results/pull-launch"
+    & tests/package_migration_windows_tests.ps1 -Exe "MysteryDungeonPet.exe" -Tests "$BuildDir/Release/pet_package_transition_tests.exe" -Inspector "$BuildDir/Release/pet_companion_tests.exe" -Output "$BuildDir/package-migration-results"
     foreach ($Report in @("$BuildDir/exploration-results/exploration.json", "$BuildDir/exploration-results/gameplay/life-result.json", "$BuildDir/exploration-results/gameplay/combat-result.json", "$BuildDir/exploration-results/default-launch/default-launch.json", "$BuildDir/exploration-results/pull-launch/default-launch.json")) {
         Write-Output (Get-Content -Raw $Report)
     }
