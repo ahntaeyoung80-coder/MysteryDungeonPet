@@ -242,7 +242,8 @@ public:
     static constexpr std::uint32_t kFloorStepLimit = kTiles * 8;
     static constexpr std::uint32_t kPoseTimeout = 8;
     Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVersion,
-             std::vector<FloorProfile> floors, SpawnPolicy policy = {});
+             std::vector<FloorProfile> floors, SpawnPolicy policy = {},
+             std::vector<std::uint64_t> recentLayouts = {});
     explicit Explorer(ExplorationState state);
     const ExplorationState& state() const { return state_; }
     Event advance(bool poseFinished = false); // one tile/action per event/deadline
@@ -265,6 +266,7 @@ private:
     std::size_t pathIndex_ = 0;
     std::uint64_t cachedWorld_ = 0, cachedOccupancy_ = 0, bfsCalls_ = 0;
     bool retreatProgress_ = false;
+    std::vector<std::uint64_t> recentLayouts() const;
     void enterFloor();
     void plan();
     Event moveTo(int tile);

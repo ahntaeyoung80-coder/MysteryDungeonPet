@@ -16,6 +16,50 @@ std::string layoutKey(std::uint64_t runId,const World& world) {
     for(auto tile:world.terrain){hash^=tile;hash*=1099511628211ULL;}
     return "floor-layout:"+std::to_string(runId)+":"+std::to_string(hash);
 }
+constexpr size_t kRecentLayoutLimit=64;
+struct LayoutMemory {uint64_t sequence,hash;std::string key;};
+std::vector<LayoutMemory> layoutMemory(const GameplayState& gameplay) {
+    const std::string prefix="recent-layout:";
+    std::vector<LayoutMemory> result;std::set<uint64_t> sequences,hashes;
+    auto number=[](const std::string& text) {
+        uint64_t value=0;const auto parsed=std::from_chars(text.data(),text.data()+text.size(),value);
+        require(!text.empty() && parsed.ec==std::errc{} && parsed.ptr==text.data()+text.size(),
+                "invalid recent layout number");return value;
+    };
+    for(const auto& key:gameplay.onceKeys)if(key.compare(0,prefix.size(),prefix)==0) {
+        const auto separator=key.find(':',prefix.size());
+        require(separator!=std::string::npos,"invalid recent layout key");
+        const auto sequence=number(key.substr(prefix.size(),separator-prefix.size()));
+        const auto hash=number(key.substr(separator+1));
+        require(sequences.insert(sequence).second && hashes.insert(hash).second,
+                "duplicate recent layout entry");
+        result.push_back({sequence,hash,key});
+        require(result.size()<=kRecentLayoutLimit,"recent layout history exceeds bound");
+    }
+    std::sort(result.begin(),result.end(),[](const auto& a,const auto& b){return a.sequence<b.sequence;});
+    return result;
+}
+uint64_t normalizedLayout(const World& world) {
+    int minX=kWidth,minY=kHeight,maxX=-1,maxY=-1;
+    for(int tile=0;tile<kTiles;++tile)if(world.walkable(tile)) {
+        minX=std::min(minX,tile%kWidth);maxX=std::max(maxX,tile%kWidth);
+        minY=std::min(minY,tile/kWidth);maxY=std::max(maxY,tile/kWidth);
+    }
+    require(maxX>=minX && maxY>=minY,"empty layout shape");
+    uint64_t hash=14695981039346656037ULL;
+    auto add=[&](uint8_t value){hash^=value;hash*=1099511628211ULL;};
+    add(uint8_t(maxX-minX+1));add(uint8_t(maxY-minY+1));
+    for(int y=minY;y<=maxY;++y)for(int x=minX;x<=maxX;++x)add(world.terrain[y*kWidth+x]);
+    return hash;
+}
+void rememberLayout(GameplayState& gameplay,uint64_t hash) {
+    const auto history=layoutMemory(gameplay);
+    if(std::any_of(history.begin(),history.end(),[&](const auto& entry){return entry.hash==hash;}))return;
+    require(history.empty() || history.back().sequence!=UINT64_MAX,"recent layout counter exhausted");
+    const auto sequence=history.empty()?0:history.back().sequence+1;
+    if(history.size()==kRecentLayoutLimit)gameplay.onceKeys.erase(history.front().key);
+    gameplay.onceKeys.insert("recent-layout:"+std::to_string(sequence)+":"+std::to_string(hash));
+}
 int companionSpawn(const World& world,int player,unsigned direction,const Mask& occupied) {
     for(unsigned step=0;step<8;++step) {
         const auto [dx,dy]=kDirections[(direction+4+step)%8];
@@ -260,7 +304,7 @@ Population populate(const World& world, const FloorProfile& profile, Rng& rng,
 }
 EncounterAction encounterPolicy(const Entity&) { return EncounterAction::Greet; }
 Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVersion,
-                   std::vector<FloorProfile> floors, SpawnPolicy policy) {
+                   std::vector<FloorProfile> floors, SpawnPolicy policy,std::vector<uint64_t> recentLayouts) {
     require(!floors.empty() && floors.size() <= 128, "invalid floor count");
     validatePolicy(policy);
     for (const auto& p : floors) validateProfile(p);
@@ -269,6 +313,12 @@ Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVer
     state_.assetVersion = std::move(assetVersion);
     state_.floors = std::move(floors);
     state_.spawnPolicy = policy;
+    require(recentLayouts.size()<=kRecentLayoutLimit,"recent layout input exceeds bound");
+    std::set<uint64_t> unique;
+    for(size_t i=0;i<recentLayouts.size();++i) {
+        require(unique.insert(recentLayouts[i]).second,"duplicate recent layout input");
+        state_.gameplay.onceKeys.insert("recent-layout:"+std::to_string(i)+":"+std::to_string(recentLayouts[i]));
+    }
     enterFloor();
     validateState(state_);
 }
@@ -300,18 +350,38 @@ std::string Explorer::key(const std::string& action, std::uint32_t instance) con
     return action + ":" + std::to_string(state_.runId) + ":" +
            std::to_string(state_.floorIndex) + ":" + std::to_string(instance);
 }
+std::vector<uint64_t> Explorer::recentLayouts() const {
+    std::vector<uint64_t> result;
+    for(const auto& entry:layoutMemory(state_.gameplay))result.push_back(entry.hash);
+    // Older snapshots do not contain this history. Their current world is
+    // still available and must not be repeated by the very next run.
+    if(!state_.world.centers.empty()) {
+        const auto current=normalizedLayout(state_.world);
+        if(std::find(result.begin(),result.end(),current)==result.end()) {
+            if(result.size()==kRecentLayoutLimit)result.erase(result.begin());
+            result.push_back(current);
+        }
+    }
+    return result;
+}
 void Explorer::enterFloor() {
     const int previousFeet=state_.world.centers.empty()?-1:state_.position;
     const int previousCompanion=state_.gameplay.companion.enabled?state_.gameplay.companion.tile:-1;
     auto& layouts=state_.gameplay.onceKeys;
-    if(previousFeet>=0) layouts.insert(layoutKey(state_.runId,state_.world)); // Upgrade old saves from their current floor.
+    if(previousFeet>=0) {
+        layouts.insert(layoutKey(state_.runId,state_.world));
+        rememberLayout(state_.gameplay,normalizedLayout(state_.world));
+    }
+    const auto recent=layoutMemory(state_.gameplay);
     bool accepted=false;
     for(unsigned attempt=0;attempt<128;++attempt) {
         const auto mapSeed=state_.rng.state;
         auto world=generate(state_.rng,static_cast<std::uint64_t>(state_.floorIndex)+1);
         const auto key=layoutKey(state_.runId,world);
-        if(world.stairs==previousFeet || world.stairs==previousCompanion || layouts.count(key)) continue;
-        state_.mapSeed=mapSeed;state_.world=std::move(world);layouts.insert(key);accepted=true;break;
+        const auto shape=normalizedLayout(world);
+        if(world.stairs==previousFeet || world.stairs==previousCompanion || layouts.count(key) ||
+           std::any_of(recent.begin(),recent.end(),[&](const auto& entry){return entry.hash==shape;})) continue;
+        state_.mapSeed=mapSeed;state_.world=std::move(world);layouts.insert(key);rememberLayout(state_.gameplay,shape);accepted=true;break;
     }
     require(accepted,"no unique floor layout within generation budget");
     Mask entryExclusion{};
@@ -682,6 +752,7 @@ Event Explorer::advance(bool poseFinished) {
 void validateState(const ExplorationState& s) {
     const auto& g = s.gameplay;
     validatePartyState(s);
+    (void)layoutMemory(g);
     require(g.navigationHistory.size()<=32,"navigation history exceeds bound");
     require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=17 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
     if(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn) {

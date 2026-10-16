@@ -317,7 +317,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         const auto previous=g;const auto inventory=state_.inventory;
         Explorer next(state_.runId+1,state_.rng.state,
             nextRunAssetVersion_.empty()?state_.assetVersion:nextRunAssetVersion_,
-            nextRunFloors_.empty()?state_.floors:nextRunFloors_,state_.spawnPolicy);
+            nextRunFloors_.empty()?state_.floors:nextRunFloors_,state_.spawnPolicy,recentLayouts());
         next.state_.inventory=inventory;
         for(const auto& entry:inventory) next.state_.onceKeys.insert(entry.onceKey);
         next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+1;next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;

@@ -19,7 +19,10 @@ void crc(std::vector<uint8_t>& bytes) {
     value=~value;for(unsigned b=0;b<4;++b)bytes[bytes.size()-4+b]=uint8_t(value>>(8*b));
 }
 std::vector<uint8_t> legacy7(const ExplorationState& state) {
-    auto bytes=encodeSnapshot(state);removePartyBlock(bytes);crc(bytes);
+    auto old=state;
+    for(auto it=old.gameplay.onceKeys.begin();it!=old.gameplay.onceKeys.end();)
+        if(it->find("recent-layout:")==0)it=old.gameplay.onceKeys.erase(it);else ++it;
+    auto bytes=encodeSnapshot(old);removePartyBlock(bytes);crc(bytes);
     check(bytes[4]==7,"fixture is not an MDES7 payload");return bytes;
 }
 void writeLegacy(const std::filesystem::path& path,const ExplorationState& state) {

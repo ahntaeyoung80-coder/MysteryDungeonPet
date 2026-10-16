@@ -81,6 +81,16 @@ inline std::vector<uint64_t> walking(ExplorationState s,unsigned hp) {
     require(starts.size()==4,"walking fixture did not produce four moves");
     return starts;
 }
+inline std::string canonicalTerrain(const World& world) {
+    int minX=kWidth,minY=kHeight,maxX=-1,maxY=-1;
+    for(int p=0;p<kTiles;++p)if(world.walkable(p)) {
+        minX=std::min(minX,p%kWidth);maxX=std::max(maxX,p%kWidth);
+        minY=std::min(minY,p/kWidth);maxY=std::max(maxY,p/kWidth);
+    }
+    std::string shape=std::to_string(maxX-minX+1)+"x"+std::to_string(maxY-minY+1)+":";
+    for(int y=minY;y<=maxY;++y)for(int x=minX;x<=maxX;++x)shape+=world.walkable(y*kWidth+x)?'1':'0';
+    return shape;
+}
 inline unsigned run(const ExplorationState& base) {
     unsigned failures=0,cases=0;
     auto test=[&](const char* name,const auto& body) {
@@ -505,6 +515,91 @@ inline unsigned run(const ExplorationState& base) {
             now=nextTime(e,now);
         }
         require(attacked && finished,"cornered legacy encounter oscillated between retreat and PlayerTurn");
+    });
+    test("R23_translated_floor_shape_is_not_reused",[&] {
+        auto canonical=[](const World& w) {
+            int minX=kWidth,minY=kHeight,maxX=-1,maxY=-1;
+            for(int p=0;p<kTiles;++p)if(w.walkable(p)) {
+                minX=std::min(minX,p%kWidth);maxX=std::max(maxX,p%kWidth);
+                minY=std::min(minY,p/kWidth);maxY=std::max(maxY,p/kWidth);
+            }
+            std::string shape=std::to_string(maxX-minX+1)+"x"+std::to_string(maxY-minY+1)+":";
+            for(int y=minY;y<=maxY;++y)for(int x=minX;x<=maxX;++x)
+                shape+=w.walkable(y*kWidth+x)?'1':'0';
+            return shape;
+        };
+        Rng firstRng{340},secondRng{1041};
+        const auto first=generate(firstRng,1),second=generate(secondRng,2);
+        require(first.terrain!=second.terrain && canonical(first)==canonical(second),
+                "controlled original generator seeds are not translated copies");
+        require(first.stairs!=second.stairs,"controlled floor candidate hits the prior feet exclusion");
+        Explorer initial(940,340,"layout-collision",fixtureProfiles(2),{0,0,0,0});
+        auto state=initial.state();
+        require(state.world.terrain==first.terrain,"fixture did not reuse actual production generation");
+        state.position=state.world.stairs;state.visited[state.position]=state.discovered[state.position]=1;
+        state.knownStairs=state.position;state.target=state.position;state.goalKind=GoalKind::Stairs;
+        state.rng.state=1041;
+        Explorer e(state);const auto event=e.advance();
+        require(event.kind==EventKind::FloorChanged,"controlled duplicate fixture did not change floors");
+        std::cout<<"PARTY_AI R23 seedA=340 seedB=1041 rawEqual="<<(first.terrain==e.state().world.terrain)
+            <<" translatedEqual="<<(canonical(first)==canonical(e.state().world))<<std::endl;
+        require(canonical(first)!=canonical(e.state().world),"whole-floor shape repeated after a translation despite the raw-layout guard");
+    });
+    test("R24_next_day_remembers_the_previous_floor_shape",[&] {
+        Explorer e(940,42,"layout-history",fixtureProfiles(1),{0,0,0,0});e.enableGameplay(1000);
+        const auto shape=canonicalTerrain(e.state().world);
+        e.resetExploration(2000);uint64_t now=2000;
+        for(unsigned tick=0;tick<64 && e.state().gameplay.sceneBeat!=SceneBeat::MorningFadeOut;++tick) {
+            restoredStep(e,now);now=nextTime(e,now);
+        }
+        require(e.state().gameplay.sceneBeat==SceneBeat::MorningFadeOut,"new-day layout fixture missed the normal morning boundary");
+        auto ready=e.state();ready.rng.state=42;e=Explorer(ready);
+        restoredStep(e,ready.gameplay.deadlineMs);
+        require(e.state().runId==941 && e.state().gameplay.day==2,"new-day layout fixture did not start its next run");
+        require(canonicalTerrain(e.state().world)!=shape,"new run reused the preceding floor shape");
+    });
+    test("R25_layout_memory_is_bounded_and_restored",[&] {
+        std::vector<uint64_t> previous;for(uint64_t i=1;i<=64;++i)previous.push_back(i);
+        Explorer e(940,42,"layout-memory",fixtureProfiles(1),{0,0,0,0},previous);
+        auto count=[](const ExplorationState& s) {
+            return std::count_if(s.gameplay.onceKeys.begin(),s.gameplay.onceKeys.end(),[](const auto& key) {
+                return key.find("recent-layout:")==0;
+            });
+        };
+        require(count(e.state())==64,"layout memory grew beyond its fixed history");
+        const auto bytes=encodeSnapshot(e.state());
+        require(encodeSnapshot(decodeSnapshot(bytes,"layout-memory"))==bytes,"layout memory changed on restore");
+        auto invalid=e.state();invalid.gameplay.onceKeys.insert("recent-layout:999:0");
+        bool rejected=false;try{encodeSnapshot(invalid);}catch(const std::exception&){rejected=true;}
+        require(rejected,"oversized layout history was accepted");
+        invalid=e.state();
+        const auto first=std::find_if(invalid.gameplay.onceKeys.begin(),invalid.gameplay.onceKeys.end(),[](const auto& key){return key.find("recent-layout:")==0;});
+        invalid.gameplay.onceKeys.erase(first);invalid.gameplay.onceKeys.insert("recent-layout:bad:1");
+        rejected=false;try{encodeSnapshot(invalid);}catch(const std::exception&){rejected=true;}
+        require(rejected,"malformed layout history was accepted");
+    });
+    test("R26_generated_room_rectangles_do_not_overlap",[&] {
+        unsigned checked=0;
+        for(uint64_t seed=1;seed<=512;++seed) {
+            Rng rng{seed};const auto world=generate(rng,1);
+            struct Box {int left=kWidth,top=kHeight,right=-1,bottom=-1;};
+            std::vector<Box> rooms(world.centers.size());
+            for(int tile=0;tile<kTiles;++tile)if(world.room[tile]>=0) {
+                const auto id=size_t(world.room[tile]);require(id<rooms.size(),"room id exceeds generated room count");
+                auto& box=rooms[id];box.left=std::min(box.left,tile%kWidth);box.right=std::max(box.right,tile%kWidth);
+                box.top=std::min(box.top,tile/kWidth);box.bottom=std::max(box.bottom,tile/kWidth);
+            }
+            for(size_t id=0;id<rooms.size();++id) {
+                const auto& box=rooms[id];require(box.left<=box.right && box.top<=box.bottom,"generated room vanished");
+                for(int y=box.top;y<=box.bottom;++y)for(int x=box.left;x<=box.right;++x)
+                    require(world.room[y*kWidth+x]==int(id) && world.walkable(y*kWidth+x),"room rectangles overlap or have holes");
+                for(size_t other=0;other<id;++other)
+                    require(box.right<rooms[other].left || rooms[other].right<box.left ||
+                            box.bottom<rooms[other].top || rooms[other].bottom<box.top,"two room bounds overlap");
+                ++checked;
+            }
+        }
+        std::cout<<"PARTY_AI R26 room rectangles checked="<<checked<<" seeds=512"<<std::endl;
     });
     std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases="<<cases<<std::endl;
     return failures;
