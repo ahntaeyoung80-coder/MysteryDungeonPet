@@ -84,7 +84,7 @@ result = {
     'heroPortraitsMatched': [52, 488], 'legacyGenderDuplicateRepairedAndPersisted': [625, 1],
     'nativeTests': 'character_scene and dialogue_portrait 2/2 passed',
     'pythonTests': 'character_assets 4/4 passed', 'nativeWindows11': 'pending',
-    'fullCi': 'background after push',
+    'fullCi': 'push workflow; run status unconfirmed because gh API returned Forbidden',
 }
 (OUT / 'summary.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
 print('PASS: 21 options per role, distinct menu/restart pairs, two duplicate rejections, legacy repair, exact Meowth/Munchlax body and portrait pixels')

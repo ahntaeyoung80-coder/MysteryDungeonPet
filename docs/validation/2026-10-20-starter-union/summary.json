@@ -30,5 +30,5 @@
   "nativeTests": "character_scene and dialogue_portrait 2/2 passed",
   "pythonTests": "character_assets 4/4 passed",
   "nativeWindows11": "pending",
-  "fullCi": "background after push"
+  "fullCi": "push workflow; run status unconfirmed because gh API returned Forbidden"
 }

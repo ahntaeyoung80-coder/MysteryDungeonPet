@@ -26,3 +26,9 @@
 - push는 `a2.yml`의 Linux/Windows 전체 CI를 자동 실행한다. `work`에서는 party 전용 workflow가 실행되지 않는다. 소스·자산·EXE를 한 번에 push하며 후속 기록 전용 커밋만 `[skip ci]`로 중복 CI를 피한다.
 
 [실제 EXE 검증·스크린샷](../validation/2026-10-20-starter-union/summary.json), [대조 도구](../validation/2026-10-20-starter-union/verify_captures.py).
+
+## 원격 반영·마감
+
+기능/에셋/EXE/근거 커밋 `feb17b081b0c985437b13046974b5061b0e27a40`을 `work`로 push했다. 22:30:17 KST에 명시 fetch 후 HEAD와 origin/work가 같은 것을 확인했다. 최초 측정22:21:07부터 **9분10초**이며 첫 조회의 미계측 구간과 이 기록 전용 마감은 별도다. 런타임 해시 검사는 통과했고 순수 작업·검사·문서 구간은 병행되어 분리 측정하지 않았다.
+
+CI는 push 자동 경로에 맡겼다. `gh run list`가 API Forbidden을 반환해 이번 실행의 run ID/현재 상태는 확인하지 못했으며 성공으로 보고하지 않는다. [Actions 목록](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions)에서 후속 확인한다. CI 대기는0이며 이 마감 기록만 `[skip ci]`로 반영해 같은 코드의 중복 전체 CI를 만들지 않는다.
