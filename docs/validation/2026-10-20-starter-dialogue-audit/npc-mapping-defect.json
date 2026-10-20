@@ -1,0 +1,19 @@
+{
+  "currentBodyMd": 383,
+  "currentBodyDex": 352,
+  "currentBodySpecies": "Kecleon",
+  "currentBodySprite": 556,
+  "configuredKao": 373,
+  "configuredPortraitSpecies": "Cradily",
+  "configuredPortraitBodyEquivalentMd": 374,
+  "configuredPortraitDex": 346,
+  "correctKao": 382,
+  "correctKaoSlots": [
+    0,
+    6,
+    10
+  ],
+  "externalNormalEqualsCorrectRomNormal": true,
+  "cause": "explicit visual mapping was misclassified; self-consistent character metadata cannot detect a wrong hand-authored KAO species mapping",
+  "changedProduct": false
+}

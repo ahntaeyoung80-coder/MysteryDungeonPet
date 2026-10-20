@@ -1,0 +1,49 @@
+{
+  "dateKst": "2026-10-20",
+  "sourceCommit": "da2d06fa1e9e4c955623e794ae60164b51cdb658",
+  "mode": "verification only",
+  "productCodeAssetsSettingsExeChanged": false,
+  "exeSha256": "6a9aa6a1f0403e74d9c75b0e686b02e3e19d255c147c32278f7761ef48390923",
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "heroSpecies": 19,
+  "partnerSpecies": 21,
+  "uniqueMdIds": 34,
+  "uniqueBodySprites": 22,
+  "requiredBodyClips": [
+    0,
+    1,
+    5,
+    6,
+    7,
+    13,
+    14,
+    15,
+    17,
+    22,
+    27,
+    33,
+    34
+  ],
+  "commonOriginalExpressionsPerStarter": 14,
+  "nativePackagesPassed": 22,
+  "packedFramesCompared": 7671,
+  "originalFramesCompared": 11679,
+  "facingCasesPassed": 32,
+  "facingStagesIncludingRestore": 64,
+  "newWindowsGuiVerification": "not run; current core probe and prior final EXE NPC trace reused",
+  "knownDefect": {
+    "body": "Kecleon MD383",
+    "configuredPortrait": "Cradily KAO373",
+    "correctPortrait": "Kecleon KAO382",
+    "correctOriginalSlots": [
+      0,
+      6,
+      10
+    ],
+    "fixed": false
+  },
+  "externalCandidatesVerifiedPngs": 12,
+  "externalAssetsAdopted": false,
+  "runtimeHashCheck": "pass",
+  "fullMemoryIntegrationCi": "not run; documentation/evidence-only change"
+}

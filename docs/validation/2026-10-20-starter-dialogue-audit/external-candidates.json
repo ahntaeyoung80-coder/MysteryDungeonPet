@@ -1,0 +1,140 @@
+{
+  "commit": "e4b1949687cb2344e6675717466e357189d3acba",
+  "files": [
+    {
+      "nationalDex": 352,
+      "expression": "Normal",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0352/Normal.png",
+      "pngSha256": "641c1685d274e3ffe5f543d5508e59b4069c460e155d0fed22befc569a22a1ec",
+      "rgbaSha256": "1f5fdd420e0a9446dec5b2a116433b45c65bbb4e1ba764b7a274ed6826b4194f",
+      "dimensions": [
+        40,
+        40
+      ],
+      "matchesCurrentRomNormal": false
+    },
+    {
+      "nationalDex": 352,
+      "expression": "Happy",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0352/Happy.png",
+      "pngSha256": "5a74fc9d2681b0cb628dd4185bc2600107722987545e698209d57eed49e83aa2",
+      "rgbaSha256": "da687fdb8355047d2b20028c8312deef7853b750d873e4954e6faa16f8d4fe91",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 352,
+      "expression": "Worried",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0352/Worried.png",
+      "pngSha256": "eac4425ac43015c5b7bc25f4fa49192c201c53911ffce5c6310e209f38feb076",
+      "rgbaSha256": "75a0014aa614013a12910c4a8c704f294dd2ead9e3a08a15e068656769650e1a",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 352,
+      "expression": "Sad",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0352/Sad.png",
+      "pngSha256": "4a605c5001dff7f15e1734198035c0472c7a073bff975ac812b9e9dc61074b02",
+      "rgbaSha256": "633dd2200f239547175a6db83d76ad6466a86202ea692c99fa3fa1cb8eb8d973",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 352,
+      "expression": "Angry",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0352/Angry.png",
+      "pngSha256": "9077d0c21c89bdbb67ccd2e75f405eccddfe4e5112ca55f38e9db36f79c907f5",
+      "rgbaSha256": "17f24be7f388b2429df33e227d887b1ab86e9c974e75937f5a47fb83dccdea59",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 352,
+      "expression": "Shouting",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0352/Shouting.png",
+      "pngSha256": "ad49129bf5046d65a6d2231a514a5a9516cef8933ab15c22ee06e7e70be38053",
+      "rgbaSha256": "2791a13f69dae658a4580f6d43fae6c32d2579d0635bf9528b890cb96ced742a",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 294,
+      "expression": "Normal",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0294/Normal.png",
+      "pngSha256": "75f1e2acd33750e3404aacc95e927f58964a3df7bc8de0df41b1554d0329ccac",
+      "rgbaSha256": "4d80cb0903005d150f0b51e48505181f1f571d21f7fc128fa5ec8711f57de6df",
+      "dimensions": [
+        40,
+        40
+      ],
+      "matchesCurrentRomNormal": true
+    },
+    {
+      "nationalDex": 294,
+      "expression": "Happy",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0294/Happy.png",
+      "pngSha256": "b3acb512c730b44efea63b38d11c7d93a521f0c95e895243e4476a71643698a5",
+      "rgbaSha256": "412da684613e578e81c133eaafae7f8209e3bcf7c25962fe0dccfd63241d2400",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 294,
+      "expression": "Worried",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0294/Worried.png",
+      "pngSha256": "607a1685337cfd66898a657d3585961b476be42605abeb67d7cd9016978eaf6f",
+      "rgbaSha256": "14ad15bd5c813d2cc6b1604b4a551343f46cdbac08ffe7ca72a48f6ca689d817",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 294,
+      "expression": "Sad",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0294/Sad.png",
+      "pngSha256": "c24791c8eb985921e327d159eb9f2c5f6dec4206f3cd2e0d8a68ce15aba597bc",
+      "rgbaSha256": "f190940efd770152d9a031049cda8920caead1f907c9e1fdea85a9eeb805b120",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 294,
+      "expression": "Angry",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0294/Angry.png",
+      "pngSha256": "b5c79683557580bf694d72970bad8fd3beabc9774f0ccf100fe22f655e9027cc",
+      "rgbaSha256": "f07061488497028fabacdbdd69a6263b98c06eb6844cb81073026959ff433a91",
+      "dimensions": [
+        40,
+        40
+      ]
+    },
+    {
+      "nationalDex": 294,
+      "expression": "Shouting",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/e4b1949687cb2344e6675717466e357189d3acba/portrait/0294/Shouting.png",
+      "pngSha256": "426b4156055c7bd85040d196877764f7b6d11e5bbf6fed93d91d275b1f8a66e2",
+      "rgbaSha256": "a59112e12d0ef9ffe90a038742f5b90a144d9c5dba81b7b6fbabce5fff297813",
+      "dimensions": [
+        40,
+        40
+      ]
+    }
+  ],
+  "scope": "candidate verification only; not adopted into product assets; per-file credits remain required"
+}
