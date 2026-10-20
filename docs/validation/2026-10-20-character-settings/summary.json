@@ -87,7 +87,11 @@
   "selectedCastFullLifecycle": true,
   "mealMs": 6000.864,
   "nativeWindows11": "pending",
-  "fullCi": "background after push",
+  "fullCi": {
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39426975126",
+    "status": "in_progress",
+    "commit": "cbabb32658d9688b0eb1812dc79a3e92054c1744"
+  },
   "nativeRelatedTargets": 9,
   "pythonIdentityTests": 7,
   "nativeDirectionRestoreStates": 64,

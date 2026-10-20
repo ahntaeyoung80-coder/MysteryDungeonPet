@@ -35,3 +35,8 @@ MinGW GCC14.2 posix/static x64 Release를 Wine10/Xvfb에서 실행했다. 테스
 [실행/그림 검증](../validation/2026-10-20-character-settings/summary.json), [native 실패 원인/기존 통과](../validation/2026-10-20-character-settings/related-tests-initial.txt), [수정 target](../validation/2026-10-20-character-settings/related-tests-fixed.txt), [추가 경계](../validation/2026-10-20-character-settings/character-edge-tests.txt), [실제 종/그림 검사](../validation/2026-10-20-character-settings/pixel-identity-tests.txt).
 
 소스·선택 에셋·루트 EXE/manifest와 증거 SHA가 일치하고 diff 검사도 통과했다. 전체 메모리/전체 통합 검사는 이번에 실행하지 않았다. 관련 검사→실제 EXE→소스/EXE 동시 반영을 우선하는 사용자 지시를 따른다. native MSVC/사용자 Windows11은 아직 미확인이고 자동 CI는 push 후 백그라운드다. 다음은 Windows11 실제 표시와 B의 남은 인수 기준이다.
+
+
+## 반영 확인
+
+기능 commit `cbabb32658d9688b0eb1812dc79a3e92054c1744`을 work에 push하고 HEAD/origin/work 일치를 확인했다.22:02:18 KST 기준 착수부터31분26초였다. [CI39426975126](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39426975126)는 in_progress이며 완료를 기다리지 않는다. 이 마감 기록은 docs 전용 `[skip ci]` commit으로 추가해 전체 CI 중복을 막는다. 재사용 개발 컨테이너는 삭제하지 않고 정지한다.
