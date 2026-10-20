@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /workspace/MysteryDungeonPet/build/dialogue-linux
+Test project /workspace/MysteryDungeonPet/build/dialogue-linux
+    Start 1: pet_character_scene_tests
+1/2 Test #1: pet_character_scene_tests ........   Passed    0.04 sec
+    Start 3: pet_dialogue_portrait_tests
+2/2 Test #3: pet_dialogue_portrait_tests ......   Passed    0.03 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   0.07 sec

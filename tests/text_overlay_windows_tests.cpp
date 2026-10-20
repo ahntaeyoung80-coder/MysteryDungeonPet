@@ -34,18 +34,18 @@ int main() {try {
         }
         if(ink<50) throw std::runtime_error("text missing from actual GDI raster");
     }
-    for(const auto& label:{L"[뜨거운 동굴 상층] - 1F",L"[뜨거운 동굴 정상] - 7F",L"[아주 긴 이름의 던전에서도 층수는 보존한다] - 99F"}) {
+    for(const auto& label:{L"1F",L"7F",L"128F"}) {
         std::memset(bits,0,200*200*4);renderer.drawMapHud(dc,bits,200,label);
         const auto* p=static_cast<const uint8_t*>(bits);unsigned ink=0;
         for(unsigned y=0;y<200;++y)for(unsigned x=0;x<200;++x) {
             const auto offset=(y*200+x)*4;
             if(p[offset+2]>100) {
-                if(p[offset+3]!=255 || x<8 || x>=193 || y<24 || y>=41)
+                if(p[offset+3]!=255 || x<146 || x>=193 || y<8 || y>=23)
                     throw std::runtime_error("map HUD outside upper-right area or transparent");
                 ++ink;
             }
         }
-        if(ink<50)throw std::runtime_error("map/floor HUD ink missing");
+        if(ink<10)throw std::runtime_error("floor HUD ink missing");
     }
     SelectObject(dc,previous);DeleteObject(bitmap);DeleteDC(dc);
     std::cout<<"eight Korean text scenes and three map/floor HUD labels have visible opaque GDI ink\n";

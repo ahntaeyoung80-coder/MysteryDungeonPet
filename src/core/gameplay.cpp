@@ -142,7 +142,7 @@ void Explorer::startGuildMorning(std::uint64_t now) {
     invalidate();state_.phase=Phase::Home;
     g.onceKeys.insert("return:"+std::to_string(state_.runId));
     g.onceKeys.insert("guild-start:"+std::to_string(state_.runId));
-    g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::BedFadeIn;g.homeScene=true;
+    g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::BedFadeIn;g.homeScene=true;g.deathStage=DeathStage::FadeOut;
     g.phaseStartedMs=now;g.deadlineMs=now+kFadeMs;
     g.defeated=false;g.playerHidden=false;g.fadeInOnly=false;
     g.hearts=kMaxHp;g.companion.hearts=kMaxHp;g.companion.hidden=false;
@@ -217,6 +217,10 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
     };
     if(g.life==LifePhase::Death) {
         if(now<g.deadlineMs) return {};
+        if(g.deathStage==DeathStage::PartnerTalk) {
+            g.deathStage=DeathStage::FadeOut;g.phaseStartedMs=now;g.deadlineMs=now+750;
+            return {GameplayEvent::CombatDefeat,{}};
+        }
         if(g.deathStage==DeathStage::FadeOut) {
             g.deathStage=DeathStage::Blackout;g.phaseStartedMs=now;g.deadlineMs=now+1000;
             return {GameplayEvent::Blackout,{}};
@@ -511,12 +515,12 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             return life(LifePhase::Explore, GameplayEvent::Explore, 350);
         case CombatPhase::PlayerFaint:
             if(!completed.player) return {};
-            invalidate();state_.phase=Phase::Home;g.playerHidden=true;g.deathStage=DeathStage::FadeOut;
-            return life(LifePhase::Death,GameplayEvent::CombatDefeat,750);
+            invalidate();state_.phase=Phase::Home;g.playerHidden=true;g.deathStage=DeathStage::PartnerTalk;
+            return life(LifePhase::Death,GameplayEvent::CombatDefeat,2400);
         case CombatPhase::CompanionFaint:
             if(!completed.partner) return {};
-            invalidate();state_.phase=Phase::Home;g.companion.hidden=true;g.deathStage=DeathStage::FadeOut;
-            return life(LifePhase::Death,GameplayEvent::CombatDefeat,750);
+            invalidate();state_.phase=Phase::Home;g.companion.hidden=true;g.deathStage=DeathStage::PartnerTalk;
+            return life(LifePhase::Death,GameplayEvent::CombatDefeat,2400);
         case CombatPhase::Defeat:
             if (now < g.deadlineMs) return {};
             return combat(CombatPhase::PlayerFaint, GameplayEvent::PlayerFaint);

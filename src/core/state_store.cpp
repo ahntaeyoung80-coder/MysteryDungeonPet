@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(10); // MDES10 adds completion-scene beats; field layout remains MDES9.
+    w.u32(0x5345444d); w.u32(11); // MDES11 adds the partner defeat dialogue; field layout remains MDES9.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -162,7 +162,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 10) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 11) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -224,7 +224,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         s.visitedRooms=r.count(7);s.stalledActions=r.count(Explorer::kFloorStepLimit+kTiles+1);s.targetFailures=r.u32();
         s.knownStairs=static_cast<int>(r.count(kTiles))-1;s.targetInstance=r.count(kTiles);
         auto& g=s.gameplay;g.actionRound=r.u64();g.playerActionRound=r.u64();g.playerDirection=r.count(7);
-        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=10?24:schema>=9?19:schema>=5?17:schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
+        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(schema>=11?2:1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=10?24:schema>=9?19:schema>=5?17:schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
         for(auto& e:s.population.entities) {
             e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
             e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();

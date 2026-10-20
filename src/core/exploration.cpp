@@ -816,7 +816,8 @@ void validateState(const ExplorationState& s) {
     validatePartyState(s);
     (void)layoutMemory(g);
     require(g.navigationHistory.size()<=32,"navigation history exceeds bound");
-    require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=24 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
+    require(static_cast<unsigned>(g.deathStage)<=2 && static_cast<unsigned>(g.sceneBeat)<=24 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
+    if(g.deathStage==DeathStage::PartnerTalk)require(g.life==LifePhase::Death,"death dialogue outside defeat");
     if(g.sceneBeat>=SceneBeat::CompletionFadeIn)
         require(completionScene(g) && s.completed && !g.homeScene,"invalid completion scene");
     if(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn) {

@@ -13,6 +13,7 @@
 #include "core/gameplay_scene.hpp"
 #include "core/guild_scene.hpp"
 #include "core/completion_scene.hpp"
+#include "core/character_selection.hpp"
 #include "core/motion.hpp"
 #include <algorithm>
 #include <chrono>
@@ -31,7 +32,7 @@ constexpr UINT TrayMessage = WM_APP + 1;
 constexpr UINT ClipBase = 100, DirectionBase = 500;
 constexpr UINT Loop = 600, Finite = 601, Stop = 602, Hide = 603, Top = 604;
 constexpr UINT Scale1 = 610, Scale2 = 611, Scale3 = 612, Background = 620, Reload = 623, Quit = 624;
-constexpr UINT ResetExploration = 625;
+constexpr UINT ResetExploration = 625, PlayerCharacterBase=1000, PartnerCharacterBase=1100;
 constexpr unsigned PhysicalSize = 200;
 const GUID SessionDisplayGuid{0x2b84c20e, 0xad23, 0x4ddf, {0x93, 0xdb, 0x05, 0xff, 0xbd, 0x7e, 0xfc, 0xa5}};
 int64_t nowUs() { return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count(); }
@@ -106,7 +107,7 @@ std::filesystem::path runtimePath(const wchar_t* installed,const wchar_t* reposi
 struct Options {
     std::filesystem::path package = runtimePath(L"assets/original/asset-0/asset.mdpa",L"assets/original/runtime/asset-0/asset.mdpa");
     std::filesystem::path metrics, report, movementTrace;
-    std::filesystem::path exploration, snapshot;
+    std::filesystem::path exploration, snapshot, characterProfile;
     std::filesystem::path gameplayAssets = runtimePath(L"assets/gameplay",L"assets/original/gameplay");
     unsigned seed = 1;
     bool newRun = false, solo = false, defaultExploration = false;
@@ -137,6 +138,7 @@ Options options() {
         else if (arg == L"--explore") o.exploration = value();
         else if (arg == L"--gameplay-assets") o.gameplayAssets = value();
         else if (arg == L"--snapshot") o.snapshot = value();
+        else if(arg==L"--character-profile")o.characterProfile=value();
         else if (arg == L"--seed") o.seed = number(value(), UINT32_MAX);
         else if (arg == L"--solo") o.solo = true;
         else if (arg == L"--new-run") o.newRun = true;
@@ -177,6 +179,9 @@ class App {
     HWND window_ = nullptr;
     Options options_;
     std::filesystem::path directory_;
+    CharacterCatalogue characterCatalogue_;
+    std::filesystem::path characterProfile_;
+    std::optional<CharacterSelection> pendingCharacterSelection_;
     DialogueCast dialogueCast_;
     Assets assets_;
     std::optional<Assets> enemyAssets_, friendlyAssets_, companionAssets_, homeAssets_, propsAssets_;
@@ -247,8 +252,9 @@ class App {
     bool loop_;
     size_t frame_ = 0;
     std::optional<int64_t> nextFrameDeadline_;
-    bool finalSampled_ = false,traceCompletionImage_=false;
+    bool finalSampled_ = false,traceCompletionImage_=false,traceDeathImage_=false,traceCharacterImagePending_=false;
     std::wstring submittedText_,submittedHud_;
+    unsigned submittedFade_=UINT_MAX;
     uint64_t submissions_ = 0, decodes_ = 0, markers_ = 0, finishes_ = 0, skippedCycles_ = 0, switches_ = 0;
     uint64_t hiddenSubmissions_ = 0;
     int64_t start_ = 0, metricDeadline_ = 0, stopDeadline_ = 0, scenarioDeadline_ = 0, sessionRetry_ = 0;
@@ -294,8 +300,8 @@ class App {
     std::wstring mapHud() const {
         if(!explorer_)return {};
         const auto& state=explorer_->state();const auto& g=state.gameplay;
-        if(!dungeonScene(g) || g.life==LifePhase::Death || g.life==LifePhase::ReturnHome)return {};
-        return wide(completionRegistry_.mapLabel(state.floors[state.floorIndex].dungeonId,state.floorIndex,completionScene(g)));
+        if(!dungeonScene(g) || (g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout))return {};
+        return std::to_wstring(state.floorIndex+1)+L"F";
     }
     void traceMovement(int64_t now,bool submitted) {
         if(!movementTrace_ || !explorer_) return;
@@ -304,7 +310,8 @@ class App {
         const auto world=dungeon && !completionDestination()?playerMotion_.sample(now):WorldPoint{double(scene.x),double(scene.y)};
         const auto camera=completionDestination()?endingCamera():dungeon?cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_)):homeCamera(now);
         uint64_t hash=14695981039346656037ULL,light=0;unsigned opaque=0;
-        for(size_t i=0;i<surface_.pixels.size();++i) {hash^=surface_.pixels[i];hash*=1099511628211ULL;if(i%4==3){if(surface_.pixels[i]==255) ++opaque;}else light+=surface_.pixels[i];}
+        const auto* pixels=submitted_?static_cast<const std::uint8_t*>(dib_->bits):surface_.pixels.data();
+        for(size_t i=0;i<surface_.pixels.size();++i) {hash^=pixels[i];hash*=1099511628211ULL;if(i%4==3){if(pixels[i]==255) ++opaque;}else light+=pixels[i];}
         movementTrace_ << now-start_ << ',' << g.movement.actionId << ',' << g.movement.startedMs << ',' << g.movement.durationMs << ','
             << g.movement.from << ',' << g.movement.to << ',' << std::setprecision(12) << world.x << ',' << world.y << ','
             << scene.x << ',' << scene.y << ',' << camera.x << ',' << camera.y << ',' << direction_ << ',' << clip_ << ',' << frame_ << ','
@@ -349,8 +356,13 @@ class App {
             g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
             bedroomExit(partner->cue->position,g,utcMs(),true).position:partner->cue->position;
         movementTrace_ << ',' << partnerPoint.x << ',' << partnerPoint.y << ',' << (partner==guildLive_.end()?-1:int(partner->direction))
-            << ',' << guildAppleVisible(g) << ',' << appleFrame_ << '\n';
+            << ',' << guildAppleVisible(g) << ',' << appleFrame_;
+        const auto portrait=dialoguePortraits(g);const auto line=gameplayDialogue(g);
+        movementTrace_<<','<<dialogueCast_.actor(PortraitRole::Player).portraitClip<<','<<dialogueCast_.actor(PortraitRole::Partner).portraitClip
+            <<','<<unsigned(portrait.speaker)<<','<<unsigned(portrait.emotion)<<','<<line.id<<','<<gameplayFadeOpacity(g,utcMs())<<'\n';
         const bool textReady=!gameplayText(g).empty() && revealedGameplayText(g,utcMs())==gameplayText(g);
+        if(submitted && traceCharacterImagePending_){traceImage("-characters.bmp");traceCharacterImagePending_=false;}
+        if(submitted && !traceDeathImage_ && g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk && textReady){traceImage("-defeat-dialogue.bmp");traceDeathImage_=true;}
         if(submitted && !traceCompletionImage_ && g.sceneBeat==SceneBeat::CompletionText && utcMs()>=g.phaseStartedMs+1500){traceImage("-completion.bmp");traceCompletionImage_=true;}
         if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay && textReady){traceImage("-alarm.bmp");traceAlarmImage_=true;}
         if(submitted && textReady) {
@@ -548,6 +560,20 @@ class App {
         add(Scale1, L"Scale 1", scale_ == 1); add(Scale2, L"Scale 2", scale_ == 2); add(Scale3, L"Scale 3", scale_ == 3);
         if (!explorer_) { add(Background, L"Test background", backgroundOn_); add(Reload, L"Reload package"); }
         if(explorer_) AppendMenuW(menu,MF_STRING|(explorer_->canResetExploration()?0:MF_GRAYED),ResetExploration,L"Reset 탐험 (귀가)");
+        if(explorer_) {
+            const auto selection=characterSelection();
+            for(auto role:{PortraitRole::Player,PortraitRole::Partner}) {
+                const auto sub=CreatePopupMenu();winCheck(sub!=nullptr,"character menu");const auto ids=characterCatalogue_.menu(role);
+                const auto selected=characterCatalogue_.select(role,role==PortraitRole::Player?selection.player:selection.partner).displayName;
+                for(unsigned i=0;i<ids.size();++i) {
+                    const auto actor=characterCatalogue_.select(role,ids[i]);
+                    winCheck(AppendMenuW(sub,MF_STRING|(selected==actor.displayName?MF_CHECKED:0),(role==PortraitRole::Player?PlayerCharacterBase:PartnerCharacterBase)+i,wide(actor.displayName).c_str())!=0,"starter menu item");
+                }
+                winCheck(GetMenuItemCount(sub)==int(ids.size()),"starter menu count");
+                winCheck(AppendMenuW(menu,MF_POPUP,reinterpret_cast<UINT_PTR>(sub),role==PortraitRole::Player?L"내 캐릭터":L"동료 캐릭터")!=0,"starter submenu");
+                log("character menu role="+std::to_string(unsigned(role))+" options="+std::to_string(ids.size()));
+            }
+        }
         add(Quit, L"Exit");
         POINT cursor{}; GetCursorPos(&cursor);
         // Foreground is needed for tray menus to dismiss correctly; window remains NOACTIVATE.
@@ -556,7 +582,53 @@ class App {
         DestroyMenu(menu); PostMessageW(window_, WM_NULL, 0, 0);
         if (cmd) command(cmd);
     }
+    CharacterSelection characterSelection() const {
+        return pendingCharacterSelection_.value_or(CharacterSelection{dialogueCast_.actor(PortraitRole::Player).portraitClip,dialogueCast_.actor(PortraitRole::Partner).portraitClip});
+    }
+    void requestCharacter(PortraitRole role,std::uint32_t id) {
+        try {
+            const auto actor=characterCatalogue_.select(role,id);
+            auto candidate=Assets::load(options_.gameplayAssets/actor.bodyManifest);
+            validateDialogueActor(actor,candidate.package,portraitAssets_->package);
+            for(unsigned clip:{0U,1U,5U,6U,7U,13U,14U,15U,17U,22U,27U,33U,34U})for(unsigned dir=0;dir<8;++dir)candidate.package.frames(clip,dir);
+            auto selection=characterSelection();if(role==PortraitRole::Player)selection.player=id;else selection.partner=id;
+            saveCharacterSelection(characterProfile_,characterCatalogue_,selection);pendingCharacterSelection_=selection;
+            log("character selection queued role="+std::to_string(unsigned(role))+" md="+std::to_string(id));dirty_=true;
+        } catch(const std::exception& error) {log(std::string("character selection rejected: ")+error.what());}
+    }
+    void applyCharacterSelection(int64_t now) {
+        if(!pendingCharacterSelection_ || !explorer_)return;
+        const auto& state=explorer_->state();const auto& g=state.gameplay;
+        if(g.life==LifePhase::Dialogue || g.life==LifePhase::Combat || g.life==LifePhase::Death || g.life==LifePhase::Pose ||
+           std::any_of(g.partyPlaybacks.begin(),g.partyPlaybacks.end(),[](const auto& v){return v.clip==1 || v.clip==6 || v.clip==33;}) ||
+           (!g.homeScene && g.sceneBeat!=SceneBeat::None))return;
+        const auto next=*pendingCharacterSelection_;
+        try {
+            const auto player=characterCatalogue_.select(PortraitRole::Player,next.player),partner=characterCatalogue_.select(PortraitRole::Partner,next.partner);
+            auto playerAssets=Assets::load(options_.gameplayAssets/player.bodyManifest,&assets_);
+            auto partnerAssets=Assets::load(options_.gameplayAssets/partner.bodyManifest,companionAssets_?&*companionAssets_:nullptr);
+            validateDialogueActor(player,playerAssets.package,portraitAssets_->package);validateDialogueActor(partner,partnerAssets.package,portraitAssets_->package);
+            animator_.stop();companionAnimator_.stop();guildLive_.clear();guildRoom_=-1;
+            decodes_+=playerAssets.decoded?1:0;decodes_+=partnerAssets.decoded?1:0;
+            assets_=std::move(playerAssets);companionAssets_=std::move(partnerAssets);
+            for(auto& actor:dialogueCast_.actors)if(actor.role==PortraitRole::Player)actor=player;else if(actor.role==PortraitRole::Partner)actor=partner;
+            pendingCharacterSelection_.reset();partyPlayerToken_=partyCompanionToken_=UINT64_MAX;completion_={};poseFinished_=false;
+            clip_=gameplayClip(g);loop_=gameplayLoop(g);direction_=g.homeScene?bedroomDirection(g,guildRooms_[bedroomScene(g)?1:0].player().direction):g.playerDirection;
+            startClip(now,true);companionFrame_=0;syncCompanion(now);syncPartyActors(now);dirty_=true;
+            traceCharacterImagePending_=true;
+            log("characters applied player="+std::to_string(next.player)+" partner="+std::to_string(next.partner));
+        } catch(const std::exception& error) {
+            pendingCharacterSelection_.reset();log(std::string("character apply rejected: ")+error.what());
+            saveCharacterSelection(characterProfile_,characterCatalogue_,characterSelection());
+        }
+    }
     void command(UINT id) {
+        if(explorer_ && ((id>=PlayerCharacterBase && id<PlayerCharacterBase+100) || (id>=PartnerCharacterBase && id<PartnerCharacterBase+100))) {
+            const auto role=id>=PartnerCharacterBase?PortraitRole::Partner:PortraitRole::Player;
+            const auto ids=characterCatalogue_.menu(role);const auto index=id-(role==PortraitRole::Player?PlayerCharacterBase:PartnerCharacterBase);
+            if(index<ids.size())requestCharacter(role,ids[index]);
+            return;
+        }
         if (explorer_ && (id == Loop || id == Finite || id == Stop || id == Reload || id == Background ||
             (id >= ClipBase && id < ClipBase + assets_.package.clips.size()) ||
             (id >= DirectionBase && id < DirectionBase + 8))) return;
@@ -793,7 +865,7 @@ class App {
         if(partyRendering())return;
         const auto& g=explorer_->state().gameplay;
         if(!g.companion.enabled || !dungeonScene(g)) {companionAnimator_.stop();return;}
-        const auto clip=companionClip(g);const auto dir=g.companion.direction;
+        const auto clip=companionClip(g);const auto dir=dialogueDirection(explorer_->state(),kCompanionActorId);
         const bool loop=companionLoop(g);
         if(!companionAnimator_.active() || clip!=companionClip_ || (!loop && companionPhaseStarted_!=g.phaseStartedMs) || (dir!=companionDirection_ && clip!=0)) {
             auto utc=utcMs();auto started=clip==0?g.companion.walkStartedMs:g.phaseStartedMs;
@@ -1013,6 +1085,16 @@ class App {
             else if(actorAnimators_[entry.first].active()) {actorAnimators_[entry.first].stop();dirty_=true;}
         }
         advanceExploration(now);
+        applyCharacterSelection(now);
+        if(explorer_ && explorer_->state().gameplay.life==LifePhase::Dialogue) {
+            const auto& state=explorer_->state();const auto facing=dialogueDirection(state,0);
+            if(direction_!=facing){direction_=facing;animator_.changeDirection(assets_.package,clip_,facing);dirty_=true;}
+            if(!companionDialogue(state.gameplay)) {
+                const auto npcFacing=dialogueDirection(state,state.gameplay.enemyInstance);
+                if(enemyDirection_!=npcFacing){enemyDirection_=npcFacing;enemyAnimator_.changeDirection(npcAssets(state.gameplay.enemyInstance).package,enemyClip_,npcFacing);dirty_=true;}
+            }
+            syncCompanion(now);
+        }
         if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
             const auto sample=bedroomExit(guildRooms_[1].player().position,explorer_->state().gameplay,utcMs());
             const unsigned clip=sample.moving?0U:7U;
@@ -1177,12 +1259,13 @@ class App {
         if(playerLayer)layers.push_back(*playerLayer); // player wins any sprite overlap
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
-        if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr);
+        if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr,false);
         const auto speaker=explorer_?dialoguePortraits(explorer_->state().gameplay):DialoguePortraits{};
         if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_);
         std::wstring overlayText=explorer_?revealedGameplayText(explorer_->state().gameplay,utcMs()):std::wstring{};
         const auto hud=mapHud();
-        const bool textChanged=overlayText!=submittedText_ || hud!=submittedHud_;
+        const auto fade=explorer_?gameplayFadeOpacity(explorer_->state().gameplay,utcMs()):0;
+        const bool textChanged=overlayText!=submittedText_ || hud!=submittedHud_ || fade!=submittedFade_;
         bool changed = previous != surface_.pixels;
         dirty_ = false;
         if (!changed && !textChanged && submitted_) {traceMovement(now,false);return;}
@@ -1190,6 +1273,9 @@ class App {
         textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,
             explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout);
         textOverlay_.drawMapHud(dib_->dc,dib_->bits,size_,hud);
+        if(explorer_)applyGameplayFade(static_cast<std::uint8_t*>(dib_->bits),surface_.pixels.size(),explorer_->state().gameplay,utcMs());
+        if(explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout)
+            textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,true);
         RECT rect{}; winCheck(GetWindowRect(window_, &rect) != 0, "submit rect");
         POINT position{rect.left, rect.top}, source{0, 0}; SIZE size{LONG(size_), LONG(size_)};
         BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
@@ -1198,13 +1284,15 @@ class App {
         if(explorer_ && explorer_->state().screenExploration && !completionScene(explorer_->state().gameplay)) {
             explorer_->enableScreenExploration((size_+scale_-1)/scale_);
             explorer_->observeViewport(camera.x,camera.y);
-        } submittedText_=std::move(overlayText);submittedHud_=hud;
+        } submittedText_=std::move(overlayText);submittedHud_=hud;submittedFade_=fade;
         traceMovement(now,true);
         if (blocked()) ++hiddenSubmissions_;
     }
 public:
     App(HINSTANCE instance, Options o) : instance_(instance), options_(std::move(o)), directory_(appDir()),
-        dialogueCast_(options_.exploration.empty()?DialogueCast{}:loadDialogueCast(options_.gameplayAssets / L"portraits/cast.mddc")),
+        characterCatalogue_(options_.exploration.empty()?CharacterCatalogue{}:loadCharacterCatalogue(options_.gameplayAssets/L"starters/starters.mdsc")),
+        characterProfile_(options_.characterProfile.empty()?directory_/L"characters.state":options_.characterProfile),
+        dialogueCast_(options_.exploration.empty()?DialogueCast{}:selectedDialogueCast(loadDialogueCast(options_.gameplayAssets/L"portraits/cast.mddc"),characterCatalogue_,characterProfile_)),
         assets_(Assets::load(options_.exploration.empty() ? options_.package : options_.gameplayAssets / dialogueCast_.actor(PortraitRole::Player).bodyManifest)), surface_(PhysicalSize, PhysicalSize),
         clip_(options_.clip), direction_(options_.direction), scale_(options_.scale), loop_(options_.loop) {
         assets_.package.frames(clip_, direction_);
@@ -1217,7 +1305,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
@@ -1245,6 +1333,7 @@ public:
             guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");
             decodes_ += (enemyAssets_->decoded ? 1 : 0) + (homeAssets_->decoded ? 1 : 0);
             explorationPackage_ = loadExplorationPackage(options_.exploration);
+            if(characterCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("starter/exploration ROM mismatch");
             completionRegistry_=loadCompletionRegistry(options_.gameplayAssets / L"completion/destinations.mdec");
             if(completionRegistry_.romHash!=explorationPackage_->romHash)throw std::runtime_error("completion/exploration ROM mismatch");
             for(const auto& destination:completionRegistry_.destinations) {

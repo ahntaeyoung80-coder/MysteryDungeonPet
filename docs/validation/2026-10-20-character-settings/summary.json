@@ -1,0 +1,99 @@
+{
+  "platform": "MinGW GCC14.2 static x64 Release; Wine10/Xvfb; test-only unlock/Nanum font substitutes",
+  "runtimeSha256": "badf6aa0e545a9ae58f7793aa234e0707bd0c6d3abbe38b26cd1d4068ed5d55d",
+  "moodCaptures": {
+    "npc-player": {
+      "mdIndex": 1,
+      "emotion": 1
+    },
+    "npc-reply": {
+      "mdIndex": 383,
+      "emotion": 4
+    },
+    "companion-player": {
+      "mdIndex": 1,
+      "emotion": 4
+    },
+    "companion-reply": {
+      "mdIndex": 4,
+      "emotion": 1
+    },
+    "player-death-defeat-dialogue": {
+      "mdIndex": 4,
+      "emotion": 4
+    },
+    "partner-death-defeat-dialogue": {
+      "mdIndex": 4,
+      "emotion": 5
+    },
+    "peak-bed-greeting": {
+      "mdIndex": 489,
+      "emotion": 1
+    },
+    "peak-alarm": {
+      "mdIndex": 322,
+      "emotion": 7
+    },
+    "peak-morning-greeting": {
+      "mdIndex": 489,
+      "emotion": 1
+    },
+    "restart-companion-player": {
+      "mdIndex": 25,
+      "emotion": 4
+    },
+    "restart-companion-reply": {
+      "mdIndex": 52,
+      "emotion": 1
+    }
+  },
+  "partnerSpeciesLoaded": [
+    1,
+    4,
+    7,
+    25,
+    52,
+    155,
+    158,
+    258,
+    280,
+    286,
+    422,
+    425,
+    428,
+    438,
+    488,
+    489,
+    637,
+    733,
+    752,
+    883,
+    928
+  ],
+  "femalePikachuLoaded": true,
+  "bodySpriteVariants": 22,
+  "nativePopupKeyboardSelection": {
+    "hero": 25,
+    "partner": 52,
+    "restartPreserved": true,
+    "heroOptions": 19,
+    "partnerOptions": 21
+  },
+  "swappedHeroOpaquePixelsMatched": 317,
+  "floorHudFade": {
+    "opacity": 219,
+    "hudMaximum": 36
+  },
+  "selectedCastFullLifecycle": true,
+  "mealMs": 6000.864,
+  "nativeWindows11": "pending",
+  "fullCi": "background after push",
+  "nativeRelatedTargets": 9,
+  "pythonIdentityTests": 7,
+  "nativeDirectionRestoreStates": 64,
+  "mdes10Migration": "pass",
+  "invalidProfileFallback": "pass",
+  "generatorReproductionFiles": 103,
+  "runtimeSourceAssetsHash": "pass",
+  "menuFontNote": "Wine-only Tahoma/MS Shell Dlg and Malgun Gothic -> NanumGothic substitutions; product uses native Windows menu font and Malgun Gothic dialogue font"
+}

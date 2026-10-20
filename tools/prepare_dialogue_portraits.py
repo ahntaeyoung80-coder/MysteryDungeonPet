@@ -23,7 +23,7 @@ def body_identity(path):
     return source, fields[2], fields[1], character
 
 
-def prepare(root, output, cast_path=None, characters_path=None):
+def prepare(root, output, cast_path=None, characters_path=None, expressions=False):
     from ndspy.rom import NintendoDSRom
     from skytemple_files.common.types.file_types import FileType
     from PIL import Image
@@ -68,23 +68,43 @@ def prepare(root, output, cast_path=None, characters_path=None):
                        'displayName': definition['displayName'], 'characterId': character,
                        'bodyAssetKey': body_key, 'bodyAtlasSha256': body_hash, 'portraitClip': md})
     config = {'schemaVersion': 1, 'actors': [{'role': a['role'], 'bodyManifest': a['bodyManifest']} for a in actors]}
-    atlas = Image.new('RGBA', (40 * len(characters), 40))
+    if expressions:
+        characters = {md: {'characterId': f"rom:{before}:{catalogue['edition']}:md:{md}", 'bodyMdIndex': md, 'kaoIndex': row['kaoIndex']} for md,row in known.items()}
+    atlas = Image.new('RGBA', (40 * len(characters), 560 if expressions else 40))
+    supplements = {}
+    supplement_root = root / 'assets/original/source/portrait-supplements'
+    supplement_manifest = supplement_root / 'manifest.json'
+    if expressions and supplement_manifest.exists():
+        supplement_data = json.loads(supplement_manifest.read_text())
+        for entry in supplement_data['files']:
+            path = supplement_root / entry['file']
+            if not path.resolve().is_relative_to(supplement_root.resolve()):
+                raise ValueError('unsafe portrait supplement path')
+            if digest(path.read_bytes()) != entry['sha256']:
+                raise ValueError('portrait supplement hash mismatch')
+            supplements[(entry['mdIndex'], entry['expression'])] = entry
     clips, audit = [], []
     for column, (md, character) in enumerate(sorted(characters.items())):
         index = character['kaoIndex']
-        portrait = archive.get(index, 0)
-        if portrait is None:
-            raise ValueError(f'missing original portrait: MD{md}, KAO{index}:0')
-        image = portrait.get().convert('RGBA')
-        if image.size != (40, 40):
-            raise ValueError('unexpected original portrait dimensions')
-        atlas.paste(image, (column * 40, 0))
-        metadata = {'characterId': character['characterId'], 'bodyMdIndex': md,
-                    'kaoIndex': index, 'expression': 0, 'rgbaSha256': digest(image.tobytes())}
-        audit.append(metadata)
-        clips.append({'id': md, 'name': f'MD{md}', 'sourceMetadata': character['characterId'], 'rows': [[{
-            'rect': [column * 40, 0, 40, 40], 'anchor': [0, 0], 'shadow': [0, 0],
-            'ticks': 1, 'markers': [], 'sourceMetadata': json.dumps(metadata, sort_keys=True)}]]})
+        frames = []
+        for expression in range(14 if expressions else 1):
+            actual = expression if archive.get(index, expression*2) else 0
+            portrait = archive.get(index, actual*2)
+            if portrait is None:
+                raise ValueError(f'missing original portrait: MD{md}, KAO{index}:0')
+            supplement = supplements.get((md, expression)) if actual != expression else None
+            image = Image.open(supplement_root / supplement['file']).convert('RGBA') if supplement else portrait.get().convert('RGBA')
+            if supplement: actual = expression
+            if image.size != (40, 40):
+                raise ValueError('unexpected original portrait dimensions')
+            atlas.paste(image, (column*40, expression*40))
+            metadata = {'characterId': character['characterId'], 'bodyMdIndex': md,
+                        'kaoIndex': index, 'expression': expression, 'actualExpression': actual,
+                        'rgbaSha256': digest(image.tobytes()), 'portraitSource': supplement if supplement else 'original ROM'}
+            audit.append(metadata)
+            frames.append({'rect': [column*40, expression*40, 40, 40], 'anchor': [0,0], 'shadow': [0,0],
+                           'ticks': 1, 'markers': [], 'sourceMetadata': json.dumps(metadata, sort_keys=True)})
+        clips.append({'id': md, 'name': f'MD{md}', 'sourceMetadata': character['characterId'], 'rows': [frames]})
     if digest(source.read_bytes()) != before:
         raise ValueError('ROM changed')
     output.mkdir(parents=True)
@@ -94,10 +114,12 @@ def prepare(root, output, cast_path=None, characters_path=None):
                   'sourceSha256': digest(raw), 'portraits': audit, 'cast': actors,
                   'mapping': 'explicit original body/portrait visual comparison; archive indices differ from MD and sprite indices',
                   'transform': 'none; original 40x40 indexed pixels converted to RGBA, no resize or mirroring'}
-    package = {'assetVersion': 1, 'tickHz': 60, 'width': atlas.width, 'height': 40,
-               'pngBytes': len(png), 'sourceKind': 1, 'atlasName': 'atlas.png',
+    provenance_text = json.dumps(provenance, ensure_ascii=False, indent=2) + '\n'
+    runtime_provenance = {'romSha256': before, 'sourcePath': 'FONT/kaomado.kao', 'sourceSha256': digest(raw), 'auditFile': 'provenance.json', 'auditSha256': digest(provenance_text.encode('utf-8'))} if expressions else provenance
+    package = {'assetVersion': 1, 'tickHz': 60, 'width': atlas.width, 'height': atlas.height,
+               'pngBytes': len(png), 'sourceKind': 2 if supplements else 1, 'atlasName': 'atlas.png',
                'pngSha256': digest(png), 'assetKey': 'rom:font:dialogue-portraits',
-               'provenance': json.dumps(provenance, sort_keys=True), 'clips': clips}
+               'provenance': json.dumps(runtime_provenance, sort_keys=True), 'clips': clips}
     (output / 'portraits.mdpa').write_bytes(encode_package(package))
     binding = bytearray(struct.pack('<3I', 0x4344444D, 1, len(actors)))
     for actor in sorted(actors, key=lambda a: a['role']):
@@ -110,8 +132,15 @@ def prepare(root, output, cast_path=None, characters_path=None):
     (output / 'cast.mddc').write_bytes(binding)
     (output / 'cast.json').write_text(json.dumps(config, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     (output / 'characters.json').write_text(json.dumps(catalogue, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    (output / 'provenance.json').write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    (output / 'provenance.json').write_text(provenance_text, encoding='utf-8')
     (output / 'CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; original ROM dialogue portraits\n', encoding='utf-8')
+    if supplements:
+        import shutil
+        for name in ('LICENSE.CC_BY-NC_4.md','LICENSE.PMDCollab_1.md'):
+            shutil.copyfile(supplement_root / name, output / name)
+        for md in (322,383):shutil.copyfile(supplement_root / str(md) / 'credits.txt', output / f'credits-MD{md}.txt')
+        with (output / 'CREDITS.txt').open('a',encoding='utf-8') as credits:
+            credits.write('Selected missing expressions: PMDCollab/SpriteCollab e4b1949687cb2344e6675717466e357189d3acba; see per-character credits and licenses.\nhttps://github.com/PMDCollab/SpriteCollab/tree/e4b1949687cb2344e6675717466e357189d3acba/portrait\n')
     return {'romUnchanged': True, 'originalPortraits': audit, 'cast': actors, 'output': str(output)}
 
 

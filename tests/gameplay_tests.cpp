@@ -204,6 +204,8 @@ int main(int argc, char** argv) {
         }
         check(dead.state().gameplay.combat == CombatPhase::PlayerFaint, "third enemy hit missing death");
         next(dead);check(dead.state().gameplay.life==LifePhase::Death && dead.state().gameplay.playerHidden,"Faint did not hide player");
+        check(dead.state().gameplay.deathStage==DeathStage::PartnerTalk && !gameplayText(dead.state().gameplay).empty(),"partner defeat line missing");
+        next(dead);check(dead.state().gameplay.deathStage==DeathStage::FadeOut,"defeat line skipped fade");
         next(dead);check(dead.state().gameplay.deathStage==DeathStage::Blackout,"opaque blackout missing");
         next(dead);homePipeline(dead,true);
         pass(6,"three enemy normal hits -> defeat -> return -> expression -> meal -> sleep -> wake");

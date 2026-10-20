@@ -113,7 +113,7 @@ enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, Ene
     CompanionTurn, CompanionAttack, CompanionHurt, CompanionFaint, PlayerApproach, CompanionApproach, CompanionBerryText };
 enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit, ExplorationBerryText, AlarmEnter, AlarmLeave, CompletionFadeIn, CompletionWalk, CompletionPose, CompletionText, CompletionFadeOut };
 enum class DialogueStage : std::uint8_t { Player, Npc };
-enum class DeathStage : std::uint8_t { FadeOut, Blackout };
+enum class DeathStage : std::uint8_t { FadeOut, Blackout, PartnerTalk };
 struct ActorFinished {
     std::uint64_t runId=0,round=0,actionId=0;
     std::uint32_t floorIndex=0,actorId=0;

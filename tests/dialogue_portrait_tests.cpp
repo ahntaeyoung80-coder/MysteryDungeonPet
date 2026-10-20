@@ -80,7 +80,7 @@ void portraits() {
     for(const auto& actor:cast.actors)validateDialogueActor(actor,loadPackage(folder/actor.bodyManifest),p);
     check(cast.actor(PortraitRole::Partner).portraitClip==4 && cast.actor(PortraitRole::Friendly).portraitClip==383,"portrait ID is still a role/atlas position");
     check(cast.label(PortraitRole::Player)=="나 · 이상해씨" && cast.label(PortraitRole::Partner)=="동료 · 파이리","speaker role/name distinction missing");
-    Surface atlas(p.width,40);for(unsigned y=0;y<40;++y)for(unsigned x=0;x<p.width;++x){const auto i=(y*p.width+x)*4;atlas.pixels[i]=x/40+1;atlas.pixels[i+3]=255;}
+    Surface atlas(p.width,p.height);for(unsigned y=0;y<p.height;++y)for(unsigned x=0;x<p.width;++x){const auto i=(y*p.width+x)*4;atlas.pixels[i]=x/40+1;atlas.pixels[i+3]=255;}
     const auto ui=loadPackage(folder/"ui/ui.mdpa");Surface tiles(144,8);
     for(unsigned y=0;y<8;++y)for(unsigned x=0;x<144;++x){const auto i=(y*144+x)*4;tiles.pixels[i]=x/8;tiles.pixels[i+3]=255;}
     const auto frame=originalWindowPanel(tiles,ui,56,56);

@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "edition": "EoS_NA",
+  "characters": [
+    {
+      "mdIndex": 1,
+      "kaoIndex": 0,
+      "displayName": "이상해씨"
+    },
+    {
+      "mdIndex": 4,
+      "kaoIndex": 3,
+      "displayName": "파이리"
+    },
+    {
+      "mdIndex": 7,
+      "kaoIndex": 6,
+      "displayName": "꼬부기"
+    },
+    {
+      "mdIndex": 25,
+      "kaoIndex": 24,
+      "displayName": "피카츄"
+    },
+    {
+      "mdIndex": 52,
+      "kaoIndex": 51,
+      "displayName": "나옹"
+    },
+    {
+      "mdIndex": 152,
+      "kaoIndex": 151,
+      "displayName": "치코리타"
+    },
+    {
+      "mdIndex": 155,
+      "kaoIndex": 154,
+      "displayName": "브케인"
+    },
+    {
+      "mdIndex": 158,
+      "kaoIndex": 157,
+      "displayName": "리아코"
+    },
+    {
+      "mdIndex": 258,
+      "kaoIndex": 257,
+      "displayName": "코코리"
+    },
+    {
+      "mdIndex": 280,
+      "kaoIndex": 279,
+      "displayName": "나무지기"
+    },
+    {
+      "mdIndex": 283,
+      "kaoIndex": 282,
+      "displayName": "아차모"
+    },
+    {
+      "mdIndex": 286,
+      "kaoIndex": 285,
+      "displayName": "물짱이"
+    },
+    {
+      "mdIndex": 422,
+      "kaoIndex": 421,
+      "displayName": "모부기"
+    },
+    {
+      "mdIndex": 425,
+      "kaoIndex": 424,
+      "displayName": "불꽃숭이"
+    },
+    {
+      "mdIndex": 428,
+      "kaoIndex": 427,
+      "displayName": "팽도리"
+    },
+    {
+      "mdIndex": 438,
+      "kaoIndex": 437,
+      "displayName": "꼬링크"
+    },
+    {
+      "mdIndex": 488,
+      "kaoIndex": 487,
+      "displayName": "먹고자"
+    },
+    {
+      "mdIndex": 489,
+      "kaoIndex": 488,
+      "displayName": "리오르"
+    },
+    {
+      "mdIndex": 601,
+      "kaoIndex": 0,
+      "displayName": "이상해씨"
+    },
+    {
+      "mdIndex": 604,
+      "kaoIndex": 3,
+      "displayName": "파이리"
+    },
+    {
+      "mdIndex": 607,
+      "kaoIndex": 6,
+      "displayName": "꼬부기"
+    },
+    {
+      "mdIndex": 625,
+      "kaoIndex": 24,
+      "displayName": "피카츄"
+    },
+    {
+      "mdIndex": 637,
+      "kaoIndex": 36,
+      "displayName": "식스테일"
+    },
+    {
+      "mdIndex": 733,
+      "kaoIndex": 132,
+      "displayName": "이브이"
+    },
+    {
+      "mdIndex": 752,
+      "kaoIndex": 151,
+      "displayName": "치코리타"
+    },
+    {
+      "mdIndex": 755,
+      "kaoIndex": 154,
+      "displayName": "브케인"
+    },
+    {
+      "mdIndex": 758,
+      "kaoIndex": 157,
+      "displayName": "리아코"
+    },
+    {
+      "mdIndex": 880,
+      "kaoIndex": 279,
+      "displayName": "나무지기"
+    },
+    {
+      "mdIndex": 883,
+      "kaoIndex": 282,
+      "displayName": "아차모"
+    },
+    {
+      "mdIndex": 886,
+      "kaoIndex": 285,
+      "displayName": "물짱이"
+    },
+    {
+      "mdIndex": 928,
+      "kaoIndex": 327,
+      "displayName": "에나비"
+    },
+    {
+      "mdIndex": 1022,
+      "kaoIndex": 421,
+      "displayName": "모부기"
+    },
+    {
+      "mdIndex": 1025,
+      "kaoIndex": 424,
+      "displayName": "불꽃숭이"
+    },
+    {
+      "mdIndex": 1028,
+      "kaoIndex": 427,
+      "displayName": "팽도리"
+    },
+    {
+      "mdIndex": 383,
+      "kaoIndex": 382,
+      "displayName": "켈리몬"
+    },
+    {
+      "mdIndex": 322,
+      "kaoIndex": 321,
+      "displayName": "노공룡"
+    }
+  ]
+}

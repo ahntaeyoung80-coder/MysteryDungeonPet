@@ -1,1 +1,3 @@
 Nintendo / Pokémon / CHUNSOFT; original ROM dialogue portraits
+Selected missing expressions: PMDCollab/SpriteCollab e4b1949687cb2344e6675717466e357189d3acba; see per-character credits and licenses.
+https://github.com/PMDCollab/SpriteCollab/tree/e4b1949687cb2344e6675717466e357189d3acba/portrait

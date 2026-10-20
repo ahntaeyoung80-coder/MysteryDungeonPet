@@ -1,0 +1,33 @@
+npc PASS
+companion PASS
+player-death PASS
+partner-death PASS
+fade PASS
+starter-1 PASS
+starter-4 PASS
+starter-7 PASS
+starter-25 PASS
+starter-52 PASS
+starter-155 PASS
+starter-158 PASS
+starter-258 PASS
+starter-280 PASS
+starter-286 PASS
+starter-422 PASS
+starter-425 PASS
+starter-428 PASS
+starter-438 PASS
+starter-488 PASS
+starter-489 PASS
+starter-637 PASS
+starter-733 PASS
+starter-752 PASS
+starter-883 PASS
+starter-928 PASS
+female-pikachu PASS
+
+Initial external menu handle inspector could not read another process menu. Native item-count checks and actual keyboard popup selections verified the menu instead.
+menu PASS
+restart PASS
+peak lifecycle PASS
+ALL EXE CASES PASS

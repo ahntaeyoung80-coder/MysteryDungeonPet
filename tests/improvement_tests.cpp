@@ -56,7 +56,7 @@ int main(int argc,char** argv) { try {
     auto blocked=e.state();blocked.position=near;blocked.visited[near]=1;blocked.target=-1;blocked.goalKind=GoalKind::None;blocked.targetInstance=0;
     Explorer temporary(blocked);temporary.setBlocked(state.world.stairs,true);temporary.advance();check(temporary.state().knownStairs==state.world.stairs,"occupancy erased stairs");
     check(e.advance().kind==EventKind::Pose && e.state().completed,"arrival does not clear");
-    auto bytes=encodeSnapshot(e.state());check(bytes[4]==10,"writer not MDES10");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
+    auto bytes=encodeSnapshot(e.state());check(bytes[4]==11,"writer not MDES11");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
     auto turnFixture=[](int player,int enemy,bool playerMoved,bool enemyMoved) {
         Explorer initial(400,42,"turns",fixtureProfiles(1),{0,0,0,0});auto s=initial.state();
         s.world.terrain.fill(0);s.world.room.fill(-1);
@@ -116,10 +116,12 @@ int main(int argc,char** argv) { try {
     ds.gameplay.life=LifePhase::Combat;ds.gameplay.combat=CombatPhase::PlayerFaint;ds.gameplay.hearts=0;ds.gameplay.enemyInstance=1;ds.gameplay.deadlineMs=5000;death=Explorer(ds);
     death.advanceGameplay(1000,ActorCompletion{false,true,true});check(death.state().gameplay.combat==CombatPhase::PlayerFaint,"other actor completed death");
     death.advanceGameplay(1000,ActorCompletion{true,false,false});check(death.state().gameplay.life==LifePhase::Death&&death.state().gameplay.playerHidden,"player Faint not hidden");
-    death.advanceGameplay(1750);check(death.state().gameplay.deathStage==DeathStage::Blackout,"death order");
+    death.advanceGameplay(3399);check(death.state().gameplay.deathStage==DeathStage::PartnerTalk && gameplayDialogue(death.state().gameplay).speaker==PortraitRole::Partner,"death partner line missing or shortened");
+    death.advanceGameplay(3400);check(death.state().gameplay.deathStage==DeathStage::FadeOut,"death dialogue did not fade");
+    death.advanceGameplay(4150);check(death.state().gameplay.deathStage==DeathStage::Blackout,"death order");
     Surface blackout(200,200);gameplayOverlay(blackout,death.state().gameplay,1750);
     for(size_t i=0;i<blackout.pixels.size();i+=4) check(blackout.pixels[i]==0&&blackout.pixels[i+3]==255,"blackout transparency");
-    death.advanceGameplay(2750);check(death.state().gameplay.fadeInOnly&&death.state().gameplay.homeScene,"blackout target swap");
+    death.advanceGameplay(5150);check(death.state().gameplay.fadeInOnly&&death.state().gameplay.homeScene,"blackout target swap");
     ds.gameplay.combat=CombatPhase::Defeat;ds.gameplay.deadlineMs=1000;
     Explorer oldDefeat(ds);
     check(oldDefeat.advanceGameplay(1000).event==GameplayEvent::PlayerFaint &&

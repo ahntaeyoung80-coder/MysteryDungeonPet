@@ -9,20 +9,44 @@ namespace pet {
 bool partyHealing(const GameplayState& g) {
     return g.independentParty && std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return a.kind==PartyActionKind::Berry && !a.finished;});
 }
+DialogueLine gameplayDialogue(const GameplayState& g) {
+    using Role=PortraitRole;using Mood=PortraitEmotion;
+    if(g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk)
+        return g.companion.hearts?DialogueLine{101,Role::Partner,Mood::Worried,L"괜찮아? 무리하지 말고 돌아가자!"}:
+            DialogueLine{102,Role::Partner,Mood::Sad,L"미안... 더는 못 걷겠어. 돌아가자."};
+    if(companionDialogue(g))return g.dialogueStage==DialogueStage::Player?
+        DialogueLine{11,Role::Player,Mood::Worried,L"잘 따라오고 있지? 잠깐 쉬어 가자."}:
+        DialogueLine{12,Role::Partner,Mood::Happy,L"물론이지! 함께라면 든든해."};
+    if(g.life==LifePhase::Dialogue)return g.dialogueStage==DialogueStage::Player?
+        DialogueLine{21,Role::Player,Mood::Happy,L"안녕! 같이 탐험하자."}:
+        DialogueLine{22,Role::Friendly,Mood::Worried,L"조심해서 다녀와!"};
+    if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return {31,Role::Player,Mood::Happy,L"잘 자! 내일도 같이 탐험하자."};
+    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)return {41,Role::Alarm,Mood::Shouting,L"일어나아아! 아침이다아아!"};
+    if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)return {51,Role::Player,Mood::Happy,L"좋은 아침! 함께 출발하자."};
+    return {};
+}
 std::wstring gameplayText(const GameplayState& g) {
     if(g.sceneBeat==SceneBeat::CompletionText && completionScene(g))return L"탐험을 성공적으로 마쳤다";
-    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText) return L"오랭열매! 2하트 회복";
-    if(companionDialogue(g)) return g.dialogueStage==DialogueStage::Player?L"잘 따라오고 있지? 잠깐 쉬어 가자.":L"물론이지! 함께라면 든든해.";
-    if(g.life==LifePhase::Dialogue) return g.dialogueStage==DialogueStage::Player?L"안녕! 같이 탐험하자.":L"조심해서 다녀와!";
-    if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) return L"잘 자! 내일도 같이 탐험하자.";
-    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay) return L"노공룡: 일어나아아! 아침이다아아!";
-    if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace) return L"좋은 아침! 함께 출발하자.";
-    if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout) return L"눈앞이 깜깜해졌다";
+    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매! 2하트 회복";
+    const auto line=gameplayDialogue(g);if(line.id)return line.text;
+    if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return L"눈앞이 깜깜해졌다";
     return {};
+}
+unsigned dialogueDirection(const ExplorationState& s,std::uint32_t actor) {
+    const auto& g=s.gameplay;
+    const auto found=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==actor;});
+    const auto fallback=actor==0?g.playerDirection:actor==kCompanionActorId?g.companion.direction:found==s.population.entities.end()?0:found->direction;
+    if(g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk && actor==kCompanionActorId)
+        return directionBetween(g.companion.tile,s.position);
+    if(g.life!=LifePhase::Dialogue)return fallback;
+    if(companionDialogue(g))return actor==0?directionBetween(s.position,g.companion.tile):actor==kCompanionActorId?directionBetween(g.companion.tile,s.position):fallback;
+    const auto target=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance;});
+    if(target==s.population.entities.end())return fallback;
+    return actor==0?directionBetween(s.position,target->tile):actor==kCompanionActorId?directionBetween(g.companion.tile,target->tile):actor==target->instanceId?directionBetween(target->tile,s.position):fallback;
 }
 std::wstring revealedGameplayText(const GameplayState& g,std::uint64_t now) {
     const auto text=gameplayText(g);
-    if(g.life==LifePhase::Death)return text;
+    if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return text;
     const auto elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
     return text.substr(0,std::min<std::uint64_t>(text.size(),1+elapsed/25));
 }
@@ -81,23 +105,17 @@ void validateDialogueActor(const DialogueActor& actor,const Package& body,const 
         throw std::runtime_error("dialogue body/portrait character identity mismatch: "+actor.characterId);
 }
 DialoguePortraits dialoguePortraits(const GameplayState& g) {
-    if(g.life==LifePhase::Dialogue) {
-        const auto other=companionDialogue(g)?PortraitRole::Partner:PortraitRole::Friendly;
-        return g.dialogueStage==DialogueStage::Player?DialoguePortraits{PortraitRole::Player,0}:
-            DialoguePortraits{other,g.enemyInstance};
-    }
-    if((g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) ||
-       (g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace))
-        return {PortraitRole::Player,0};
-    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)
-        return {PortraitRole::Alarm,109};
-    return {};
+    const auto line=gameplayDialogue(g);
+    const auto id=line.speaker==PortraitRole::Partner?kCompanionActorId:line.speaker==PortraitRole::Friendly?g.enemyInstance:line.speaker==PortraitRole::Alarm?109U:0U;
+    return {line.speaker,id,line.emotion};
 }
 void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& package,DialoguePortraits portraits,
     const DialogueCast& cast,const Surface& frame) {
     if(portraits.speaker==PortraitRole::None)return;
     const auto& actor=cast.actor(portraits.speaker);
-    const auto& rect=package.frames(actor.portraitClip,0).front().rect;
+    const auto& faces=package.frames(actor.portraitClip,0);
+    const auto emotion=static_cast<unsigned>(portraits.emotion);
+    const auto& rect=faces[emotion<faces.size()?emotion:0].rect;
     if(package.resolve(actor.portraitClip).sourceMetadata!=actor.characterId || rect.w!=40 || rect.h!=40 ||
        rect.x<0 || rect.y<0 || uint64_t(rect.x)+40>atlas.width || uint64_t(rect.y)+40>atlas.height)
         throw std::runtime_error("invalid dialogue portrait character/region");
@@ -156,7 +174,7 @@ BedroomExitSample loudredAlarm(Point original,const GameplayState& g,std::uint64
     if(g.sceneBeat==SceneBeat::AlarmLeave)return {{original.x-int32_t(48*elapsed/800),original.y},6,elapsed==800};
     return {original,2,false};
 }
-void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const Surface* panel) {
+void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const Surface* panel,bool includeFade) {
     auto pixel = [&](unsigned x, unsigned y, unsigned blue, unsigned green, unsigned red) {
         if (x >= s.width || y >= s.height) return;
         const auto i = (y * s.width + x) * 4;
@@ -172,25 +190,9 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const
     if (!panel && (partyHealing(g) || (g.life == LifePhase::Combat && (g.combat == CombatPhase::BerryText || g.combat == CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText))
         for (unsigned y = 150; y < std::min(190U, s.height); ++y)
             for (unsigned x = 8; x < std::min(192U, s.width); ++x) pixel(x, y, 40, 30, 20);
-    if(g.life==LifePhase::Death) {
-        const auto elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
-        const auto opacity=g.deathStage==DeathStage::Blackout?255:std::min<std::uint64_t>(255,elapsed*255/750);
-        for(std::size_t i=0;i<s.pixels.size();i+=4) {
-            for(unsigned ch=0;ch<3;++ch) s.pixels[i+ch]=static_cast<uint8_t>(s.pixels[i+ch]*(255-opacity)/255);
-            s.pixels[i+3]=255; // death is an opaque blackout, never desktop transparency
-        }
-    }
-    const bool out=g.sceneBeat==SceneBeat::CompletionFadeOut || g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::FloorFadeOut;
-    const bool in=g.sceneBeat==SceneBeat::CompletionFadeIn || g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::ExploreFadeIn || g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::FloorFadeIn;
-    if(out||in) {
-        const auto elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
-        const auto duration=(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn)?kFloorFadeMs:750;
-        const auto opacity=out?std::min<uint64_t>(255,elapsed*255/duration):elapsed>=duration?0:(duration-elapsed)*255/duration;
-        for(size_t i=0;i<s.pixels.size();i+=4) {for(unsigned ch=0;ch<3;++ch) s.pixels[i+ch]=static_cast<uint8_t>(s.pixels[i+ch]*(255-opacity)/255);s.pixels[i+3]=255;}
-    }
     if(!panel && (g.life==LifePhase::Dialogue || (g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay) || (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) || (g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)))
         for(unsigned y=150;y<190;++y) for(unsigned x=8;x<192;++x) pixel(x,y,40,30,20);
-    if(panel && g.life!=LifePhase::Death && !gameplayText(g).empty()) {
+    if(panel && (g.life!=LifePhase::Death || g.deathStage==DeathStage::PartnerTalk) && !gameplayText(g).empty()) {
         for(unsigned y=0;y<panel->height && y+144<s.height;++y)
             for(unsigned x=0;x<panel->width && x+8<s.width;++x) {
                 const auto src=(y*panel->width+x)*4,dst=((y+144)*s.width+x+8)*4;
@@ -198,11 +200,20 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const
                 for(unsigned ch=0;ch<4;++ch)s.pixels[dst+ch]=uint8_t(panel->pixels[src+ch]+(s.pixels[dst+ch]*inv+127)/255);
             }
     }
-    if (g.life == LifePhase::ReturnHome) {
-        const auto elapsed = now > g.phaseStartedMs ? now - g.phaseStartedMs : 0;
-        const auto opacity = g.fadeInOnly ? (elapsed>=750?0:(750-elapsed)*255/750) : g.homeScene ? (elapsed >= 1500 ? 0 : std::min<std::uint64_t>(255, (1500-elapsed)*255/750)) : std::min<std::uint64_t>(255, elapsed*255/750);
-        for (std::size_t i = 0; i < s.pixels.size(); i += 4)
-            for (unsigned ch = 0; ch < 3; ++ch) s.pixels[i+ch] = static_cast<std::uint8_t>(s.pixels[i+ch] * (255-opacity) / 255);
-    }
+    if(includeFade)applyGameplayFade(s.pixels.data(),s.pixels.size(),g,now);
+}
+unsigned gameplayFadeOpacity(const GameplayState& g,std::uint64_t now) {
+    const auto elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
+    if(g.life==LifePhase::Death)return g.deathStage==DeathStage::PartnerTalk?0:g.deathStage==DeathStage::Blackout?255:unsigned(std::min<std::uint64_t>(255,elapsed*255/750));
+    if(g.life==LifePhase::ReturnHome)return unsigned(g.fadeInOnly?(elapsed>=750?0:(750-elapsed)*255/750):g.homeScene?(elapsed>=1500?0:std::min<std::uint64_t>(255,(1500-elapsed)*255/750)):std::min<std::uint64_t>(255,elapsed*255/750));
+    const bool out=g.sceneBeat==SceneBeat::CompletionFadeOut || g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::FloorFadeOut;
+    const bool in=g.sceneBeat==SceneBeat::CompletionFadeIn || g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::ExploreFadeIn || g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::FloorFadeIn;
+    if(!out && !in)return 0;
+    const auto duration=(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn)?kFloorFadeMs:750;
+    return unsigned(out?std::min<std::uint64_t>(255,elapsed*255/duration):elapsed>=duration?0:(duration-elapsed)*255/duration);
+}
+void applyGameplayFade(std::uint8_t* pixels,std::size_t bytes,const GameplayState& g,std::uint64_t now) {
+    const auto opacity=gameplayFadeOpacity(g,now);if(!opacity)return;
+    for(std::size_t i=0;i+3<bytes;i+=4){for(unsigned channel=0;channel<3;++channel)pixels[i+channel]=std::uint8_t(pixels[i+channel]*(255-opacity)/255);pixels[i+3]=255;}
 }
 }

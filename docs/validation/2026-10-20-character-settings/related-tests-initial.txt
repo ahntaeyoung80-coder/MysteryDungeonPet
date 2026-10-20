@@ -1,0 +1,28 @@
+Internal ctest changing into directory: /workspace/MysteryDungeonPet/build/dialogue-linux
+Test project /workspace/MysteryDungeonPet/build/dialogue-linux
+    Start  1: pet_completion_scene_tests
+1/8 Test  #1: pet_completion_scene_tests .......   Passed    0.18 sec
+    Start  2: pet_dialogue_portrait_tests
+2/8 Test  #2: pet_dialogue_portrait_tests ......***Failed    0.02 sec
+package: invalid string length
+
+    Start  3: pet_package_transition_tests
+3/8 Test  #3: pet_package_transition_tests .....   Passed    0.99 sec
+    Start  4: pet_companion_tests
+4/8 Test  #4: pet_companion_tests ..............   Passed   16.31 sec
+    Start  6: pet_entry_social_scene_tests
+5/8 Test  #6: pet_entry_social_scene_tests .....   Passed    1.79 sec
+    Start 10: pet_survival_tests
+6/8 Test #10: pet_survival_tests ...............   Passed    0.03 sec
+    Start 12: pet_improvement_tests
+7/8 Test #12: pet_improvement_tests ............   Passed    0.01 sec
+    Start 13: pet_gameplay_tests
+8/8 Test #13: pet_gameplay_tests ...............   Passed   11.75 sec
+
+88% tests passed, 1 tests failed out of 8
+
+Total Test time (real) =  31.08 sec
+
+The following tests FAILED:
+	  2 - pet_dialogue_portrait_tests (Failed)
+Errors while running CTest

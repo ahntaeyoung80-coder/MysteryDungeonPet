@@ -24,7 +24,7 @@ def inputs():
     result = {}
     for path in sources + assets:
         data = path.read_bytes()
-        if path.suffix in {'.cpp', '.hpp', '.txt', '.cmake', '.json', '.manifest', '.rc'}:
+        if path.suffix in {'.cpp', '.hpp', '.txt', '.cmake', '.json', '.manifest', '.rc', '.md'}:
             data = data.replace(b'\r\n', b'\n')  # Git for Windows may check out text with CRLF.
         result[path.relative_to(ROOT).as_posix()] = hashlib.sha256(data).hexdigest()
     return result
