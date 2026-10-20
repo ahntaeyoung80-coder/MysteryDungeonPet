@@ -564,10 +564,12 @@ class App {
             const auto selection=characterSelection();
             for(auto role:{PortraitRole::Player,PortraitRole::Partner}) {
                 const auto sub=CreatePopupMenu();winCheck(sub!=nullptr,"character menu");const auto ids=characterCatalogue_.menu(role);
-                const auto selected=characterCatalogue_.select(role,role==PortraitRole::Player?selection.player:selection.partner).displayName;
+                const auto selected=role==PortraitRole::Player?selection.player:selection.partner;
                 for(unsigned i=0;i<ids.size();++i) {
                     const auto actor=characterCatalogue_.select(role,ids[i]);
-                    winCheck(AppendMenuW(sub,MF_STRING|(selected==actor.displayName?MF_CHECKED:0),(role==PortraitRole::Player?PlayerCharacterBase:PartnerCharacterBase)+i,wide(actor.displayName).c_str())!=0,"starter menu item");
+                    const bool blocked=characterCatalogue_.sameSpecies(ids[i],role==PortraitRole::Player?selection.partner:selection.player);
+                    const auto label=wide(actor.displayName)+(blocked?(role==PortraitRole::Player?L" (동료 선택 중)":L" (플레이어 선택 중)"):L"");
+                    winCheck(AppendMenuW(sub,MF_STRING|(characterCatalogue_.sameSpecies(selected,ids[i])?MF_CHECKED:0)|(blocked?MF_GRAYED:0),(role==PortraitRole::Player?PlayerCharacterBase:PartnerCharacterBase)+i,label.c_str())!=0,"starter menu item");
                 }
                 winCheck(GetMenuItemCount(sub)==int(ids.size()),"starter menu count");
                 winCheck(AppendMenuW(menu,MF_POPUP,reinterpret_cast<UINT_PTR>(sub),role==PortraitRole::Player?L"내 캐릭터":L"동료 캐릭터")!=0,"starter submenu");
@@ -587,11 +589,12 @@ class App {
     }
     void requestCharacter(PortraitRole role,std::uint32_t id) {
         try {
+            auto selection=characterSelection();if(role==PortraitRole::Player)selection.player=id;else selection.partner=id;
+            characterCatalogue_.validate(selection);
             const auto actor=characterCatalogue_.select(role,id);
             auto candidate=Assets::load(options_.gameplayAssets/actor.bodyManifest);
             validateDialogueActor(actor,candidate.package,portraitAssets_->package);
             for(unsigned clip:{0U,1U,5U,6U,7U,13U,14U,15U,17U,22U,27U,33U,34U})for(unsigned dir=0;dir<8;++dir)candidate.package.frames(clip,dir);
-            auto selection=characterSelection();if(role==PortraitRole::Player)selection.player=id;else selection.partner=id;
             saveCharacterSelection(characterProfile_,characterCatalogue_,selection);pendingCharacterSelection_=selection;
             log("character selection queued role="+std::to_string(unsigned(role))+" md="+std::to_string(id));dirty_=true;
         } catch(const std::exception& error) {log(std::string("character selection rejected: ")+error.what());}

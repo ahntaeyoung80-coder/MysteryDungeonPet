@@ -1,0 +1,34 @@
+{
+  "platform": "MinGW GCC14.2 static x64 Release; Wine10/Xvfb; test-only unlock and font substitutes",
+  "runtimeSha256": "5db6138b31ecb17d2252293744d2fda55b618d0a4f7aa6135294c9e4b8ab28e8",
+  "heroOptions": 21,
+  "partnerOptions": 21,
+  "nativePairCoverage": {
+    "allowed": 420,
+    "blocked": 21
+  },
+  "actualPopupSelection": {
+    "player": 488,
+    "partner": 52,
+    "restartPreserved": true
+  },
+  "disabledEntryEnter": "popup dismissed without queuing a character change",
+  "directDuplicateRequestsRejected": 2,
+  "allActualTracePairsDistinct": true,
+  "heroBodyOpaquePixelsMatched": {
+    "52": 201,
+    "488": 249
+  },
+  "heroPortraitsMatched": [
+    52,
+    488
+  ],
+  "legacyGenderDuplicateRepairedAndPersisted": [
+    625,
+    1
+  ],
+  "nativeTests": "character_scene and dialogue_portrait 2/2 passed",
+  "pythonTests": "character_assets 4/4 passed",
+  "nativeWindows11": "pending",
+  "fullCi": "background after push"
+}

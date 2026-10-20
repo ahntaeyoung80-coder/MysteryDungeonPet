@@ -38,12 +38,16 @@ int main(int argc,char** argv){try {
         saveSnapshot(out/"fade.mdes",fade);
         for(auto role:{PortraitRole::Player,PortraitRole::Partner})for(auto id:catalogue.menu(role)) {
             CharacterSelection choice;if(role==PortraitRole::Player)choice.player=id;else choice.partner=id;
+            if(catalogue.sameSpecies(choice.player,choice.partner)) {
+                if(role==PortraitRole::Player)choice.partner=id==1?4:1;else choice.player=id==1?4:1;
+            }
             saveCharacterSelection(out/(std::to_string(unsigned(role))+"-"+std::to_string(id)+".state"),catalogue,choice);
         }
-        saveCharacterSelection(out/"female-pikachu.state",catalogue,{625,25});return 0;
+        saveCharacterSelection(out/"female-pikachu.state",catalogue,{625,1});return 0;
     }
-    check(catalogue.characters.size()==34 && catalogue.menu(PortraitRole::Player).size()==19 && catalogue.menu(PortraitRole::Partner).size()==21,"starter allow-list lost original role restrictions");
-    bool rejected=false;try{(void)catalogue.select(PortraitRole::Player,52);}catch(const std::exception&){rejected=true;}check(rejected,"partner-only Meowth selectable as hero");
+    check(catalogue.characters.size()==34 && catalogue.menu(PortraitRole::Player).size()==21 && catalogue.menu(PortraitRole::Partner).size()==21,"starter union must expose 21 species in each role");
+    for(unsigned id:{52U,488U})check(catalogue.select(PortraitRole::Player,id).portraitClip==id,"Meowth/Munchlax unavailable as player");
+    bool rejected=false;
     rejected=false;try{(void)catalogue.select(PortraitRole::Partner,383);}catch(const std::exception&){rejected=true;}check(rejected,"non-starter NPC selectable");
     const auto portraits=loadPackage(root/"portraits/portraits.mdpa");
     for(const auto& c:catalogue.characters) {
@@ -59,9 +63,31 @@ int main(int argc,char** argv){try {
     saveCharacterSelection(profile,catalogue,{625,488});auto selected=loadCharacterSelection(profile,catalogue);
     check(selected.player==625 && selected.partner==488,"gender or partner-only selection lost");
     const auto changed=selectedDialogueCast(cast,catalogue,profile);check(changed.actor(PortraitRole::Player).portraitClip==625 && changed.actor(PortraitRole::Partner).portraitClip==488,"startup profile did not bind both roles");
-    saveCharacterSelection(profile,catalogue,{4,4});selected=loadCharacterSelection(profile,catalogue);check(selected.player==4 && selected.partner==4,"same species collapsed actor roles");
-    auto damaged=readFile(profile,512);damaged[76]=52;
-    {std::ofstream file(profile,std::ios::binary|std::ios::trunc);file.write(reinterpret_cast<const char*>(damaged.data()),std::streamsize(damaged.size()));}
+    const auto saved=readFile(profile,512);
+    for(auto duplicate:{CharacterSelection{4,4},CharacterSelection{625,25}}) {
+        rejected=false;try{saveCharacterSelection(profile,catalogue,duplicate);}catch(const std::exception&){rejected=true;}
+        check(rejected && readFile(profile,512)==saved,"duplicate or gender variant overwrote the valid profile");
+    }
+    unsigned allowed=0,blocked=0;
+    for(auto player:catalogue.menu(PortraitRole::Player))for(auto partner:catalogue.menu(PortraitRole::Partner)) {
+        try {catalogue.validate({player,partner});++allowed;}
+        catch(const std::exception&) {check(catalogue.sameSpecies(player,partner),"different species rejected");++blocked;}
+    }
+    check(allowed==420 && blocked==21 && catalogue.sameSpecies(625,25),"starter pair or gender duplicate policy wrong");
+    auto damaged=saved;
+    auto setId=[&](unsigned offset,unsigned id){for(unsigned b=0;b<4;++b)damaged[offset+b]=std::uint8_t(id>>(b*8));};
+    auto writeDamaged=[&](){std::ofstream file(profile,std::ios::binary|std::ios::trunc);file.write(reinterpret_cast<const char*>(damaged.data()),std::streamsize(damaged.size()));};
+    for(auto duplicate:{CharacterSelection{4,4},CharacterSelection{625,25}}) {
+        setId(76,duplicate.player);setId(80,duplicate.partner);writeDamaged();
+        selected=loadCharacterSelection(profile,catalogue);
+        check(selected.player==duplicate.player && selected.partner==1,"legacy duplicate did not preserve player and choose distinct partner");
+        check(loadCharacterSelection(profile,catalogue).partner==1 && readFile(profile,512)!=damaged,"legacy duplicate repair was not persisted");
+    }
+    for(unsigned player:{52U,488U}) {
+        saveCharacterSelection(profile,catalogue,{player,4});const auto playerCast=selectedDialogueCast(cast,catalogue,profile);
+        check(playerCast.actor(PortraitRole::Player).portraitClip==player,"Meowth/Munchlax player profile lost on restart");
+    }
+    setId(76,383);setId(80,4);writeDamaged();
     const auto fallback=selectedDialogueCast(cast,catalogue,profile);
     check(fallback.actor(PortraitRole::Player).portraitClip==1 && fallback.actor(PortraitRole::Partner).portraitClip==4,"invalid profile partially changed the cast");
     std::filesystem::remove(profile);
@@ -104,5 +130,5 @@ int main(int argc,char** argv){try {
         const auto opacity=gameplayFadeOpacity(g,1375);applyGameplayFade(image.pixels.data(),image.pixels.size(),g,1375);
         check(image.pixels[(10*200+185)*4]==255-opacity && image.pixels[(70*200+5)*4]==255-opacity,"HUD and background use different fade");
     }
-    std::cout<<"34 character IDs / 19 hero and 21 partner options, 14 moods, exact Kecleon mapping, profile replace/restore, defeat dialogue replay and final fade passed\n";
+    std::cout<<"34 character IDs / 21 options per role, 420 distinct pairs / 21 duplicates blocked, gender duplicate migration, 14 moods, exact Kecleon mapping, profile replace/restore, defeat dialogue replay and final fade passed\n";
 }catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}

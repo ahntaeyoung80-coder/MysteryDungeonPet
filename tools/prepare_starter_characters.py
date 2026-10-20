@@ -1,4 +1,4 @@
-"""원작 스타팅 허용 목록·몸체·감정 초상화를 재현 가능한 선택 패키지로 만든다."""
+"""원작 스타팅 합집합·몸체·감정 초상화를 재현 가능한 선택 패키지로 만든다."""
 import argparse
 import hashlib
 import json
@@ -24,6 +24,7 @@ def prepare(root, output):
     md=FileType.MD.deserialize(rom.getFileByName('BALANCE/monster.md'))
     if len({md.entries[i].national_pokedex_number for i in heroes})!=19 or len(partners)!=21:
         raise ValueError('unexpected original starter list')
+    playable=heroes|partners  # 제품 정책: 나옹·먹고자도 플레이어로 허용한다.
     output.mkdir(parents=True);characters=[];bodies={};entries=[]
     for index in sorted(heroes|partners):
         record=md.entries[index];sprite=int(record.sprite_index)
@@ -34,7 +35,7 @@ def prepare(root, output):
         dest=bodies[sprite];src,key,body_hash,_=body_identity(dest/'asset.mdpa')
         identity=f'rom:{before}:{config.game_edition}:md:{index}'
         name=NAMES[int(record.national_pokedex_number)]
-        entry={'mdIndex':index,'roleMask':(1 if index in heroes else 0)|(2 if index in partners else 0),
+        entry={'mdIndex':index,'speciesId':int(record.national_pokedex_number),'roleMask':1|(2 if index in partners else 0),
                'characterId':identity,'bodyAssetKey':key,'bodyAtlasSha256':body_hash,
                'bodyManifest':f'starters/bodies/{sprite}/asset.mdpa','displayName':name,'portraitClip':index}
         entries.append(entry)
@@ -43,19 +44,19 @@ def prepare(root, output):
     catalogue={'schemaVersion':1,'romSha256':before,'edition':config.game_edition,'characters':characters}
     character_file=output/'characters.json';character_file.write_text(json.dumps(catalogue,ensure_ascii=False,indent=2)+'\n')
     prepare_portraits(root,output/'portraits',characters_path=character_file,expressions=True)
-    body=bytearray(struct.pack('<2I',0x4353444D,1))
+    body=bytearray(struct.pack('<2I',0x4353444D,2))
     def u32(v):body.extend(struct.pack('<I',v))
     def string(v):
         raw=v.encode('utf-8');u32(len(raw));body.extend(raw)
     string(before);u32(len(entries))
     for entry in entries:
-        u32(entry['mdIndex']);u32(entry['roleMask'])
+        u32(entry['mdIndex']);u32(entry['roleMask']);u32(entry['speciesId'])
         for field in ['characterId','bodyAssetKey','bodyAtlasSha256','bodyManifest','displayName']:string(entry[field])
     (output/'starters.mdsc').write_bytes(body)
-    (output/'catalogue.json').write_text(json.dumps({'romSha256':before,'heroSlots':sorted(heroes),'partnerSlots':sorted(partners),'characters':entries},ensure_ascii=False,indent=2)+'\n')
+    (output/'catalogue.json').write_text(json.dumps({'schemaVersion':2,'romSha256':before,'heroSlots':sorted(heroes),'partnerSlots':sorted(partners),'playableSlots':sorted(playable),'characters':entries},ensure_ascii=False,indent=2)+'\n')
     (output/'CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; original ROM starter bodies and portraits\n')
     if before!=digest(source.read_bytes()):raise ValueError('ROM changed')
-    return {'romUnchanged':True,'characters':len(entries),'bodyPackages':len(bodies),'heroSpecies':19,'partnerSpecies':21}
+    return {'romUnchanged':True,'characters':len(entries),'bodyPackages':len(bodies),'heroSpecies':21,'partnerSpecies':21}
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)

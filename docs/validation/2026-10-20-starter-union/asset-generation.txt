@@ -1,0 +1,1 @@
+{"romUnchanged": true, "characters": 34, "bodyPackages": 22, "heroSpecies": 21, "partnerSpecies": 21}

@@ -1,0 +1,9 @@
+test_every_starter_body_gender_id_and_fourteen_original_faces (tests.test_character_assets.CharacterAssetTests.test_every_starter_body_gender_id_and_fourteen_original_faces) ... ok
+test_exact_npc_species_pixels_not_only_self_consistent_metadata (tests.test_character_assets.CharacterAssetTests.test_exact_npc_species_pixels_not_only_self_consistent_metadata) ... ok
+test_npc_supplements_preserve_existing_original_expressions (tests.test_character_assets.CharacterAssetTests.test_npc_supplements_preserve_existing_original_expressions) ... ok
+test_product_starters_include_meowth_and_munchlax_in_both_roles (tests.test_character_assets.CharacterAssetTests.test_product_starters_include_meowth_and_munchlax_in_both_roles) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.623s
+
+OK

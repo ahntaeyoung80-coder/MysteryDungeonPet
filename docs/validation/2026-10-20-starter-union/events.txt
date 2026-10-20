@@ -1,0 +1,14 @@
+22207026103 character menu role=1 options=21
+22207026159 character menu role=2 options=21
+22208655647 character selection queued role=1 md=488
+22209321882 character menu role=1 options=21
+22209321971 character menu role=2 options=21
+22211715922 characters applied player=488 partner=4
+22212322278 character selection rejected: player and partner must be different species
+22212622584 character menu role=1 options=21
+22212622677 character menu role=2 options=21
+22214308995 character selection queued role=2 md=52
+22214312708 characters applied player=488 partner=52
+22214876655 character menu role=1 options=21
+22214876732 character menu role=2 options=21
+22216482815 character selection rejected: player and partner must be different species

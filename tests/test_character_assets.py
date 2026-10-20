@@ -39,6 +39,7 @@ class CharacterAssetTests(unittest.TestCase):
         self.assertEqual(len(catalogue['characters']), 34)
         for character in catalogue['characters']:
             md = character['mdIndex']
+            self.assertEqual(character['speciesId'], self.md.entries[md].national_pokedex_number, md)
             source, _, _, identity = body_identity(GAMEPLAY/character['bodyManifest'])
             self.assertEqual(source['spriteIndex'], self.md.entries[md].sprite_index, md)
             self.assertEqual(source['nationalDex'], self.md.entries[md].national_pokedex_number, md)
@@ -48,6 +49,18 @@ class CharacterAssetTests(unittest.TestCase):
                 original = self.kao.get(md % 600-1, mood*2)
                 self.assertIsNotNone(original, (md, mood))
                 self.assertEqual(self.face(md, mood).tobytes(), original.get().convert('RGBA').tobytes(), (md, mood))
+
+    def test_product_starters_include_meowth_and_munchlax_in_both_roles(self):
+        catalogue = json.loads((GAMEPLAY/'starters/catalogue.json').read_text())
+        self.assertEqual(catalogue['schemaVersion'], 2)
+        for role in (1, 2):
+            species = {c['speciesId'] for c in catalogue['characters'] if c['roleMask'] & role}
+            self.assertEqual(len(species), 21)
+            self.assertTrue({52, 446}.issubset(species))
+        # Keep original-ROM evidence separate from the product's union policy.
+        self.assertNotIn(488, catalogue['heroSlots'])
+        self.assertNotIn(52, catalogue['heroSlots'])
+        self.assertTrue({52,488}.issubset(catalogue['playableSlots']))
 
     def test_npc_supplements_preserve_existing_original_expressions(self):
         from PIL import Image

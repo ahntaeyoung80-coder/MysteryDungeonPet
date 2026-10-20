@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
   "heroSlots": [
     1,
@@ -57,9 +58,46 @@
     883,
     928
   ],
+  "playableSlots": [
+    1,
+    4,
+    7,
+    25,
+    52,
+    152,
+    155,
+    158,
+    258,
+    280,
+    283,
+    286,
+    422,
+    425,
+    428,
+    438,
+    488,
+    489,
+    601,
+    604,
+    607,
+    625,
+    637,
+    733,
+    752,
+    755,
+    758,
+    880,
+    883,
+    886,
+    928,
+    1022,
+    1025,
+    1028
+  ],
   "characters": [
     {
       "mdIndex": 1,
+      "speciesId": 1,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:1",
       "bodyAssetKey": "rom:EoS_NA:monster:1",
@@ -70,6 +108,7 @@
     },
     {
       "mdIndex": 4,
+      "speciesId": 4,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:4",
       "bodyAssetKey": "rom:EoS_NA:monster:4",
@@ -80,6 +119,7 @@
     },
     {
       "mdIndex": 7,
+      "speciesId": 7,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:7",
       "bodyAssetKey": "rom:EoS_NA:monster:7",
@@ -90,6 +130,7 @@
     },
     {
       "mdIndex": 25,
+      "speciesId": 25,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:25",
       "bodyAssetKey": "rom:EoS_NA:monster:25",
@@ -100,7 +141,8 @@
     },
     {
       "mdIndex": 52,
-      "roleMask": 2,
+      "speciesId": 52,
+      "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:52",
       "bodyAssetKey": "rom:EoS_NA:monster:52",
       "bodyAtlasSha256": "c281a464cf06b3e9180df69ff93683dea58e0fbb079e36b1c4926309c73a6ac9",
@@ -110,6 +152,7 @@
     },
     {
       "mdIndex": 152,
+      "speciesId": 152,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:152",
       "bodyAssetKey": "rom:EoS_NA:monster:152",
@@ -120,6 +163,7 @@
     },
     {
       "mdIndex": 155,
+      "speciesId": 155,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:155",
       "bodyAssetKey": "rom:EoS_NA:monster:155",
@@ -130,6 +174,7 @@
     },
     {
       "mdIndex": 158,
+      "speciesId": 158,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:158",
       "bodyAssetKey": "rom:EoS_NA:monster:158",
@@ -140,6 +185,7 @@
     },
     {
       "mdIndex": 258,
+      "speciesId": 231,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:258",
       "bodyAssetKey": "rom:EoS_NA:monster:258",
@@ -150,6 +196,7 @@
     },
     {
       "mdIndex": 280,
+      "speciesId": 252,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:280",
       "bodyAssetKey": "rom:EoS_NA:monster:280",
@@ -160,6 +207,7 @@
     },
     {
       "mdIndex": 283,
+      "speciesId": 255,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:283",
       "bodyAssetKey": "rom:EoS_NA:monster:283",
@@ -170,6 +218,7 @@
     },
     {
       "mdIndex": 286,
+      "speciesId": 258,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:286",
       "bodyAssetKey": "rom:EoS_NA:monster:286",
@@ -180,6 +229,7 @@
     },
     {
       "mdIndex": 422,
+      "speciesId": 387,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:422",
       "bodyAssetKey": "rom:EoS_NA:monster:422",
@@ -190,6 +240,7 @@
     },
     {
       "mdIndex": 425,
+      "speciesId": 390,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:425",
       "bodyAssetKey": "rom:EoS_NA:monster:425",
@@ -200,6 +251,7 @@
     },
     {
       "mdIndex": 428,
+      "speciesId": 393,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:428",
       "bodyAssetKey": "rom:EoS_NA:monster:428",
@@ -210,6 +262,7 @@
     },
     {
       "mdIndex": 438,
+      "speciesId": 403,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:438",
       "bodyAssetKey": "rom:EoS_NA:monster:438",
@@ -220,7 +273,8 @@
     },
     {
       "mdIndex": 488,
-      "roleMask": 2,
+      "speciesId": 446,
+      "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:488",
       "bodyAssetKey": "rom:EoS_NA:monster:488",
       "bodyAtlasSha256": "3a9a33570b308090174b3fd7f43be9d15b225d6db88a144629eaf4b42696ed26",
@@ -230,6 +284,7 @@
     },
     {
       "mdIndex": 489,
+      "speciesId": 447,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:489",
       "bodyAssetKey": "rom:EoS_NA:monster:489",
@@ -240,6 +295,7 @@
     },
     {
       "mdIndex": 601,
+      "speciesId": 1,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:601",
       "bodyAssetKey": "rom:EoS_NA:monster:1",
@@ -250,6 +306,7 @@
     },
     {
       "mdIndex": 604,
+      "speciesId": 4,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:604",
       "bodyAssetKey": "rom:EoS_NA:monster:4",
@@ -260,6 +317,7 @@
     },
     {
       "mdIndex": 607,
+      "speciesId": 7,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:607",
       "bodyAssetKey": "rom:EoS_NA:monster:7",
@@ -270,6 +328,7 @@
     },
     {
       "mdIndex": 625,
+      "speciesId": 25,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:625",
       "bodyAssetKey": "rom:EoS_NA:monster:625",
@@ -280,6 +339,7 @@
     },
     {
       "mdIndex": 637,
+      "speciesId": 37,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:637",
       "bodyAssetKey": "rom:EoS_NA:monster:637",
@@ -290,6 +350,7 @@
     },
     {
       "mdIndex": 733,
+      "speciesId": 133,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:733",
       "bodyAssetKey": "rom:EoS_NA:monster:733",
@@ -300,6 +361,7 @@
     },
     {
       "mdIndex": 752,
+      "speciesId": 152,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:752",
       "bodyAssetKey": "rom:EoS_NA:monster:152",
@@ -310,6 +372,7 @@
     },
     {
       "mdIndex": 755,
+      "speciesId": 155,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:755",
       "bodyAssetKey": "rom:EoS_NA:monster:155",
@@ -320,6 +383,7 @@
     },
     {
       "mdIndex": 758,
+      "speciesId": 158,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:758",
       "bodyAssetKey": "rom:EoS_NA:monster:158",
@@ -330,6 +394,7 @@
     },
     {
       "mdIndex": 880,
+      "speciesId": 252,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:880",
       "bodyAssetKey": "rom:EoS_NA:monster:280",
@@ -340,6 +405,7 @@
     },
     {
       "mdIndex": 883,
+      "speciesId": 255,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:883",
       "bodyAssetKey": "rom:EoS_NA:monster:283",
@@ -350,6 +416,7 @@
     },
     {
       "mdIndex": 886,
+      "speciesId": 258,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:886",
       "bodyAssetKey": "rom:EoS_NA:monster:286",
@@ -360,6 +427,7 @@
     },
     {
       "mdIndex": 928,
+      "speciesId": 300,
       "roleMask": 3,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:928",
       "bodyAssetKey": "rom:EoS_NA:monster:928",
@@ -370,6 +438,7 @@
     },
     {
       "mdIndex": 1022,
+      "speciesId": 387,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:1022",
       "bodyAssetKey": "rom:EoS_NA:monster:422",
@@ -380,6 +449,7 @@
     },
     {
       "mdIndex": 1025,
+      "speciesId": 390,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:1025",
       "bodyAssetKey": "rom:EoS_NA:monster:425",
@@ -390,6 +460,7 @@
     },
     {
       "mdIndex": 1028,
+      "speciesId": 393,
       "roleMask": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:1028",
       "bodyAssetKey": "rom:EoS_NA:monster:428",
