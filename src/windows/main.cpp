@@ -178,7 +178,7 @@ class App {
     std::filesystem::path directory_;
     Assets assets_;
     std::optional<Assets> enemyAssets_, friendlyAssets_, companionAssets_, homeAssets_, propsAssets_;
-    std::optional<Assets> appleAssets_,uiAssets_;
+    std::optional<Assets> appleAssets_,uiAssets_,portraitAssets_;
     Animator appleAnimator_;
     std::size_t appleFrame_=0;
     std::optional<Surface> dialoguePanel_;
@@ -254,6 +254,7 @@ class App {
     std::ofstream metrics_, events_, movementTrace_;
     unsigned traceImages_ = 0;
     bool traceAlarmImage_=false;
+    std::array<bool,6> traceDialogueImages_{};
     void traceImage(const char* suffix) {
         if(!movementTrace_ || !dib_ || !submitted_) return;
         auto path=options_.movementTrace;path.replace_extension();path+=suffix;
@@ -326,7 +327,17 @@ class App {
             bedroomExit(partner->cue->position,g,utcMs(),true).position:partner->cue->position;
         movementTrace_ << ',' << partnerPoint.x << ',' << partnerPoint.y << ',' << (partner==guildLive_.end()?-1:int(partner->direction))
             << ',' << guildAppleVisible(g) << ',' << appleFrame_ << '\n';
-        if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay){traceImage("-alarm.bmp");traceAlarmImage_=true;}
+        const bool textReady=!gameplayText(g).empty() && revealedGameplayText(g,utcMs())==gameplayText(g);
+        if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay && textReady){traceImage("-alarm.bmp");traceAlarmImage_=true;}
+        if(submitted && textReady) {
+            int capture=-1;const char* suffix="";
+            if(g.life==LifePhase::Dialogue) {
+                capture=(companionDialogue(g)?2:0)+(g.dialogueStage==DialogueStage::Npc?1:0);
+                static const char* names[]{"-npc-player.bmp","-npc-reply.bmp","-companion-player.bmp","-companion-reply.bmp"};suffix=names[capture];
+            } else if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace){capture=4;suffix="-bed-greeting.bmp";}
+            else if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace){capture=5;suffix="-morning-greeting.bmp";}
+            if(capture>=0 && !traceDialogueImages_[capture]){traceImage(suffix);traceDialogueImages_[capture]=true;}
+        }
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
     }
@@ -861,7 +872,8 @@ class App {
             playerMotion_.begin(0, g.movement.actionId, tilePoint(oldPosition),tilePoint(pos),now,direction_);
             (void)dx; (void)dy;
         }
-        if (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) {
+        if(companionDialogue(g)) direction_=g.playerDirection;
+        else if (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) {
             const auto entity = std::find_if(explorer_->state().population.entities.begin(), explorer_->state().population.entities.end(), [&](const auto& e) { return e.instanceId == g.enemyInstance; });
             const int dx = entity->tile % kWidth - oldPosition % kWidth, dy = entity->tile / kWidth - oldPosition / kWidth;
             if(g.combat!=CombatPhase::PlayerApproach || g.life!=LifePhase::Combat) direction_ = directionBetween(explorer_->state().position,entity->tile);
@@ -876,7 +888,7 @@ class App {
             if(oldDirection != direction_) animator_.changeDirection(assets_.package,0,direction_);
         } else if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage || oldBeat!=g.sceneBeat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
         if(event.event == GameplayEvent::FloorChanged || (event.event == GameplayEvent::Explore && oldLife==LifePhase::Ready)) {playerMotion_.reset(tilePoint(explorer_->state().position));actorMotions_.clear();actorAnimators_.clear();}
-        if ((g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && (oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage)) {
+        if (!companionDialogue(g) && (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && (oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage)) {
             enemyClip_ = g.life==LifePhase::Dialogue ? (g.dialogueStage==DialogueStage::Npc?npcClip(22,npcAssets(g.enemyInstance)):7) : g.combat == CombatPhase::EnemyAttack ? 1 : g.combat == CombatPhase::EnemyHurt ? 6 : g.combat == CombatPhase::Faint ? npcClip(33,npcAssets(g.enemyInstance)) : 7;
             enemyFrame_ = 0;
             enemyAnimator_.start(npcAssets(g.enemyInstance).package, enemyClip_, enemyDirection_, enemyClip_ == 7 && !(g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc), now);
@@ -991,7 +1003,7 @@ class App {
             if(result.finished)collectPartyCompletion(0,partyPlayerToken_);
             playerFinished = result.finished;
         }
-        if (explorer_ && (explorer_->state().gameplay.life == LifePhase::Combat || explorer_->state().gameplay.life==LifePhase::Dialogue) && !partyRendering() && enemyAnimator_.active()) {
+        if (explorer_ && !companionDialogue(explorer_->state().gameplay) && (explorer_->state().gameplay.life == LifePhase::Combat || explorer_->state().gameplay.life==LifePhase::Dialogue) && !partyRendering() && enemyAnimator_.active()) {
             const auto result = enemyAnimator_.advance(now);
             dirty_ = dirty_ || enemyFrame_ != result.frame; enemyFrame_ = result.frame;
             if (result.nextDeadlineUs && (!nextFrameDeadline_ || *result.nextDeadlineUs < *nextFrameDeadline_)) nextFrameDeadline_ = result.nextDeadlineUs;
@@ -1031,7 +1043,7 @@ class App {
                 (g.combat==CombatPhase::PlayerAttack || g.combat==CombatPhase::PlayerHurt || g.combat==CombatPhase::PlayerFaint || enemy || partner));
             poseFinished_=joint?(completion_.player&&completion_.partner):body?(enemy?completion_.enemy:partner?completion_.partner:completion_.player):false;
             if(g.life==LifePhase::Dialogue && utcMs()>=g.deadlineMs)
-                poseFinished_=g.dialogueStage==DialogueStage::Player?completion_.player:completion_.enemy;
+                poseFinished_=g.dialogueStage==DialogueStage::Player?completion_.player:companionDialogue(g)?completion_.partner:completion_.enemy;
             if(g.life==LifePhase::Death || g.life==LifePhase::ReturnHome || g.sceneBeat!=SceneBeat::None) dirty_=true;
         }
         if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
@@ -1041,7 +1053,7 @@ class App {
             });
             poseFinished_=completion_.player && completion_.partner;
         }
-        if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::BedFace && utcMs()<explorer_->state().gameplay.deadlineMs)poseFinished_=false;
+        if(explorer_ && (explorer_->state().gameplay.sceneBeat==SceneBeat::BedFace || explorer_->state().gameplay.sceneBeat==SceneBeat::MorningFace) && utcMs()<explorer_->state().gameplay.deadlineMs)poseFinished_=false;
         if(partyRendering())poseFinished_=!completion_.actions.empty();
         (void)playerFinished;
         if(explorer_ && revealedGameplayText(explorer_->state().gameplay,utcMs())!=submittedText_)dirty_=true;
@@ -1135,6 +1147,7 @@ class App {
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
         if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr);
+        if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,dialoguePortraits(explorer_->state().gameplay));
         std::wstring overlayText=explorer_?revealedGameplayText(explorer_->state().gameplay,utcMs()):std::wstring{};
         const bool textChanged=overlayText!=submittedText_;
         bool changed = previous != surface_.pixels;
@@ -1185,6 +1198,8 @@ public:
             propsAssets_=Assets::load(options_.gameplayAssets / L"props/props.mdpa");
             appleAssets_=Assets::load(options_.gameplayAssets / L"effects/apple.mdpa");
             uiAssets_=Assets::load(options_.gameplayAssets / L"ui/ui.mdpa");
+            portraitAssets_=Assets::load(options_.gameplayAssets / L"portraits/portraits.mdpa");
+            decodes_+=portraitAssets_->decoded?1:0;
             dialoguePanel_=originalDialoguePanel(*uiAssets_->atlas,uiAssets_->package);
             decodes_+=appleAssets_->decoded?1:0;decodes_+=uiAssets_->decoded?1:0;
             decodes_+=propsAssets_->decoded?1:0;
@@ -1242,7 +1257,7 @@ public:
             if(g.homeScene) direction_=g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
                 bedroomExit(guildRooms_[1].player().position,g,utcMs()).direction:guildRooms_[bedroomScene(g)?1:0].player().direction;
             direction_=bedroomDirection(g,direction_);
-            if(g.life==LifePhase::Combat || g.life==LifePhase::Dialogue) {
+            if(!companionDialogue(g) && (g.life==LifePhase::Combat || g.life==LifePhase::Dialogue)) {
                 const auto enemy=std::find_if(explorer_->state().population.entities.begin(),explorer_->state().population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance;});
                 enemyDirection_=enemy->direction;
                 enemyClip_=g.life==LifePhase::Dialogue?(g.dialogueStage==DialogueStage::Npc?npcClip(22,npcAssets(g.enemyInstance)):7):g.combat==CombatPhase::EnemyAttack?1:g.combat==CombatPhase::EnemyHurt?6:g.combat==CombatPhase::Faint?npcClip(33,npcAssets(g.enemyInstance)):7;

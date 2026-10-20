@@ -14,5 +14,10 @@ std::wstring gameplayText(const GameplayState&);
 std::wstring revealedGameplayText(const GameplayState&,std::uint64_t utcMs);
 std::size_t loopFrameAt(const Package&,std::uint32_t clip,std::uint64_t elapsedMs);
 Surface originalDialoguePanel(const Surface&,const Package&);
+enum class PortraitRole { None, Player, Partner, Friendly, Loudred };
+struct DialoguePortraits { PortraitRole left=PortraitRole::None,right=PortraitRole::None,speaker=PortraitRole::None; };
+DialoguePortraits dialoguePortraits(const GameplayState&);
+// Portraits remain 40x40 screen pixels, independent of the dungeon camera/scale.
+void dialoguePortraitOverlay(Surface&,const Surface& atlas,const Package&,DialoguePortraits);
 void gameplayOverlay(Surface&, const GameplayState&, std::uint64_t utcMs,const Surface* dialoguePanel=nullptr);
 }

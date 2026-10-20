@@ -1,0 +1,39 @@
+{
+  "romUnchanged": true,
+  "originalPortraits": [
+    {
+      "role": 1,
+      "name": "Player",
+      "bodyMdIndex": 1,
+      "kaoIndex": 0,
+      "expression": 0,
+      "rgbaSha256": "8f70a77cd33139709321fd0b3f0e73e713e14c4a117b25ba5edef06dd645c7b5"
+    },
+    {
+      "role": 2,
+      "name": "Partner",
+      "bodyMdIndex": 4,
+      "kaoIndex": 3,
+      "expression": 0,
+      "rgbaSha256": "4a50b16746ab8d6ee16c8d055018a072124a5e575b1be809ae7dc986ad78c270"
+    },
+    {
+      "role": 3,
+      "name": "FriendlyKecleon",
+      "bodyMdIndex": 383,
+      "kaoIndex": 373,
+      "expression": 0,
+      "rgbaSha256": "c6ce1c229430c4decf4a782a7e4f2b049ef04924a721efed701b44102aca5e60"
+    },
+    {
+      "role": 4,
+      "name": "Loudred",
+      "bodyMdIndex": 322,
+      "kaoIndex": 321,
+      "expression": 0,
+      "rgbaSha256": "4d80cb0903005d150f0b51e48505181f1f571d21f7fc128fa5ec8711f57de6df"
+    }
+  ],
+  "deterministicPackageMatch": true,
+  "decoderCommit": "5ed359a2560a1f04666b9ea02b71649b89cb16d7"
+}

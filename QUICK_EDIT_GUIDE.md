@@ -124,6 +124,10 @@
 
 예를 들어 `L"좋은 아침! 함께 출발하자."`를 `L"잘 잤어? 다녀올게!"`로 바꾸고 EXE를 갱신한다. 표시 조건인 `g.life`, `g.sceneBeat`는 그대로 둬도 된다. 긴 문장은 200px 창에서 잘릴 수 있으므로 두 줄 안에 들어오는 길이부터 시도한다. 원작 대사 추출물이 아니라 현재 런타임에 직접 적힌 문구다.
 
+2026-10-20 추가: 우호 NPC 대화에는 주인공·녹색 켈리몬, 취침·아침 인사와 탐험 중 동료 대화에는 주인공·동료, 기상 알람에는 노공룡의 원작 초상화를 표시한다. `src/core/gameplay_scene.cpp`의 `dialoguePortraits`가 등장 인물·발화자를 고르고 `dialoguePortraitOverlay`가 텍스트박스 바로 위에 원본40×40px로 그린다. 초상화는 카메라·던전 확대 배율과 별개이며 말하는 인물의 테두리를 강조한다. 원본 선택·인덱스는 `tools/prepare_dialogue_portraits.py`, 실행 자산은 `assets/original/gameplay/portraits/`에 있다. MD/몸체 스프라이트 번호로 KAO 인덱스를 추정하지 않는다.
+
+탐험 중 동료 대화는 `gameplay.cpp`의 `beginCompanionDialogue`에서 설정한다. 첫20~28걸음 후32걸음 구간마다 한 번, 인접한 동료와 안전한 정지 시점에 서로 바라본다. 적 근처·저체력·기절·계단·진행 중 행동/이동에서는 미룬다. 대화 문구는 `gameplayText`의 `companionDialogue` 분기, 각 발화 시간은 `kDialogueMs = 1600`이다. 기존 NPC 인사는 각1200ms를 유지한다. 기상 인사도 최소1600ms 읽기 시간을 확보한다.
+
 ### 3.2 글꼴·크기·위치·텍스트 상자
 
 **글자:** [src/windows/text_overlay.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/windows/text_overlay.cpp)의 `TextOverlay::TextOverlay`, `TextOverlay::draw`.

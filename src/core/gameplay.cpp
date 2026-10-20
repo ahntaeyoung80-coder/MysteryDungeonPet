@@ -49,6 +49,9 @@ bool nightScene(const GameplayState& g) {
 bool showFriendlyDisc(const GameplayState& g,bool friendly,bool player) {
     return dungeonScene(g) && g.life!=LifePhase::Dialogue && friendly && !player;
 }
+bool companionDialogue(const GameplayState& g) {
+    return g.life==LifePhase::Dialogue && g.enemyInstance==kCompanionActorId;
+}
 std::uint32_t gameplayClip(const GameplayState& g) {
     if(g.independentParty && !g.homeScene && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && g.sceneBeat==SceneBeat::None) return partyClip(g,0);
     switch (g.life) {
@@ -86,6 +89,7 @@ bool gameplayLoop(const GameplayState& g) {
 std::uint32_t companionClip(const GameplayState& g) {
     if(g.independentParty && !g.homeScene && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && g.sceneBeat==SceneBeat::None) return partyClip(g,kCompanionActorId);
     if(g.homeScene) return gameplayClip(g);
+    if(g.life==LifePhase::Dialogue) return companionDialogue(g) && g.dialogueStage==DialogueStage::Npc?22:7;
     if(g.life==LifePhase::Combat) {
         if(g.combat==CombatPhase::CompanionAttack) return 1;
         if(g.combat==CombatPhase::CompanionHurt) return 6;
@@ -147,6 +151,7 @@ GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     invalidate();
     state_.phase = Phase::Home;
     auto& g = state_.gameplay;
+    if(companionDialogue(g))g.enemyInstance=0;
     g.life = LifePhase::ReturnHome; g.defeated = defeated; g.homeScene = false;g.sceneBeat=SceneBeat::None;g.fadeInOnly=false;g.walkStartedMs=0;
     g.companion.walkStartedMs=0;
     g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
@@ -185,7 +190,8 @@ void Explorer::completeEncounter() {
 GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,bool finished) {
     // Legacy headless driver: completion belongs to the active clip's actor.
     const auto& g=state_.gameplay;ActorCompletion result;
-    if((g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint))) result.enemy=finished;
+    if(companionDialogue(g) && g.dialogueStage==DialogueStage::Npc) result.partner=finished;
+    else if((g.life==LifePhase::Dialogue && g.dialogueStage==DialogueStage::Npc) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint))) result.enemy=finished;
     else {result.player=finished;result.partner=finished;}
     return advanceGameplay(now,result);
 }
@@ -235,6 +241,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         g.sceneBeat=SceneBeat::None;g.phaseStartedMs=g.deadlineMs=now;
         return {GameplayEvent::Explore,{}};
     }
+    if(beginCompanionDialogue(now)) return {GameplayEvent::DialoguePlayer,{}};
     if(g.independentParty && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && g.sceneBeat==SceneBeat::None) return advanceParty(now,completed);
     if (g.life == LifePhase::Pose) {
         if (!finiteDone || (g.companion.enabled && !completed.partner && now<g.deadlineMs)) return {};
@@ -268,8 +275,13 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         if(now<g.deadlineMs) return {};
         if(g.dialogueStage==DialogueStage::Player) {
             if(!completed.player) return {};
-            g.dialogueStage=DialogueStage::Npc;g.phaseStartedMs=now;g.deadlineMs=now+1200;
+            g.dialogueStage=DialogueStage::Npc;g.phaseStartedMs=now;g.deadlineMs=now+(companionDialogue(g)?kDialogueMs:1200);
             return {GameplayEvent::DialogueNpc,{}};
+        }
+        if(companionDialogue(g)) {
+            if(!completed.partner) return {};
+            g.enemyInstance=0;
+            return life(LifePhase::Explore,GameplayEvent::Explore,0);
         }
         if(!completed.enemy) return {};
         auto& e=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){return x.instanceId==g.enemyInstance;});
@@ -328,10 +340,10 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         }
         if(!(completed.player&&completed.partner)) return {};
         g.sceneBeat=SceneBeat::MorningFace;
-        return life(LifePhase::Ready,GameplayEvent::Ready,kFiniteTimeoutMs);
+        return life(LifePhase::Ready,GameplayEvent::Ready,kDialogueMs);
     }
     if(g.life==LifePhase::Ready) {
-        if(g.sceneBeat==SceneBeat::MorningFace && !(completed.player&&completed.partner)) return {};
+        if(g.sceneBeat==SceneBeat::MorningFace && (now<g.deadlineMs || !(completed.player&&completed.partner))) return {};
         if(g.sceneBeat!=SceneBeat::RoomExit && g.sceneBeat!=SceneBeat::MorningFadeOut) { // Resume old morning saves through the exit.
             g.sceneBeat=SceneBeat::RoomExit;g.playerDirection=0;
             return life(LifePhase::Ready,GameplayEvent::Ready,kRoomExitMs);
@@ -614,6 +626,38 @@ GameplayUpdate Explorer::healCompanion(std::uint64_t now) {
     if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate companion berry use");
     invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+1000;
     return {GameplayEvent::UseOranBerry,once,0,false,kCompanionActorId};
+}
+bool Explorer::beginCompanionDialogue(std::uint64_t now) {
+    auto& s=state_;auto& g=s.gameplay;auto& p=g.companion;
+    // Only pause at a settled, safe movement boundary. Keep combat RNG and turn rights intact.
+    if(g.life!=LifePhase::Explore || g.homeScene || g.sceneBeat!=SceneBeat::None || now<g.deadlineMs ||
+       !p.enabled || p.hidden || p.hearts<=kLowHp || g.hearts<=kLowHp ||
+       s.position==s.world.stairs || !canAttack(s.world,s.position,p.tile) ||
+       !g.partyPlaybacks.empty() || std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;})) return false;
+    const auto first=20U+unsigned(s.mapSeed%9);
+    if(s.floorSteps<first) return false;
+    const auto slot=(s.floorSteps-first)/32;
+    const auto once="companion-chat:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(slot);
+    if(g.onceKeys.count(once))return false;
+    auto moving=[&](const MoveRecord& m){return m.actionId && now>=m.startedMs && now-m.startedMs<m.durationMs;};
+    if(moving(g.movement) || moving(p.movement))return false;
+    const auto playerReach=bfs(s.world,s.position),partnerReach=bfs(s.world,p.tile);
+    for(const auto& e:s.population.entities) {
+        if(!e.visible || e.done)continue;
+        if(moving(e.movement))return false;
+        if(e.kind==EntityKind::Item && e.tile==s.position)return false;
+        if(e.kind!=EntityKind::Friend)continue;
+        if(std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)==g.hostile.end()) {
+            if(canAttack(s.world,s.position,e.tile))return false;
+        } else if((s.world.room[e.tile]>=0 && (s.world.room[e.tile]==s.world.room[s.position] || s.world.room[e.tile]==s.world.room[p.tile])) ||
+            (playerReach.distance[e.tile]>=0 && playerReach.distance[e.tile]<=4) ||
+            (partnerReach.distance[e.tile]>=0 && partnerReach.distance[e.tile]<=4)) return false;
+    }
+    g.onceKeys.insert(once);g.enemyInstance=kCompanionActorId;g.dialogueStage=DialogueStage::Player;
+    g.playerDirection=directionBetween(s.position,p.tile);p.direction=directionBetween(p.tile,s.position);
+    g.walkStartedMs=p.walkStartedMs=0;g.movement={};p.movement={};
+    g.life=LifePhase::Dialogue;g.phaseStartedMs=now;g.deadlineMs=now+kDialogueMs;
+    return true;
 }
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;

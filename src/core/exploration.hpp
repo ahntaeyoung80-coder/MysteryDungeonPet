@@ -200,6 +200,8 @@ bool dungeonScene(const GameplayState&);
 bool bedroomScene(const GameplayState&);
 bool nightScene(const GameplayState&);
 bool showFriendlyDisc(const GameplayState&, bool friendly, bool player);
+bool companionDialogue(const GameplayState&);
+constexpr std::uint64_t kDialogueMs=1600;
 constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=2200, kBedGreetingMs=1600;
 std::uint32_t gameplayClip(const GameplayState&);
 bool gameplayLoop(const GameplayState&);
@@ -302,6 +304,7 @@ private:
     GameplayUpdate beginReturn(std::uint64_t now, bool defeated);
     void completeEncounter();
     GameplayUpdate scheduleDungeon(std::uint64_t now);
+    bool beginCompanionDialogue(std::uint64_t now);
     GameplayUpdate beginCombat(Entity&, std::uint64_t now, CombatPhase);
     GameplayUpdate afterCombatAction(std::uint64_t now);
     GameplayUpdate advanceParty(std::uint64_t now,const ActorCompletion&);

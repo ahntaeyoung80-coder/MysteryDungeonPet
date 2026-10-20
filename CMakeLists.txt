@@ -14,6 +14,9 @@ add_library(pet_core src/core/package.cpp src/core/animator.cpp src/core/surface
 target_include_directories(pet_core PUBLIC src)
 include(CTest)
 if(BUILD_TESTING)
+  add_executable(pet_dialogue_portrait_tests tests/dialogue_portrait_tests.cpp)
+  target_link_libraries(pet_dialogue_portrait_tests PRIVATE pet_core)
+  add_test(NAME pet_dialogue_portrait_tests COMMAND pet_dialogue_portrait_tests)
   add_executable(pet_package_transition_tests tests/package_transition_tests.cpp)
   target_link_libraries(pet_package_transition_tests PRIVATE pet_core)
   add_test(NAME pet_package_transition_tests COMMAND pet_package_transition_tests

@@ -1,0 +1,198 @@
+{
+  "platform": "MinGW GCC14.2 x64 Release; Wine10/Xvfb, test-only session unlock and Malgun Gothic -> NanumGothic font substitution",
+  "screenshots": {
+    "npc-player": {
+      "originalPortraitPixels": "pass",
+      "speakerBorder": "pass",
+      "opaqueTextPanel": "pass"
+    },
+    "npc-reply": {
+      "originalPortraitPixels": "pass",
+      "speakerBorder": "pass",
+      "opaqueTextPanel": "pass"
+    },
+    "companion-player": {
+      "originalPortraitPixels": "pass",
+      "speakerBorder": "pass",
+      "opaqueTextPanel": "pass"
+    },
+    "companion-reply": {
+      "originalPortraitPixels": "pass",
+      "speakerBorder": "pass",
+      "opaqueTextPanel": "pass"
+    },
+    "bed-greeting": {
+      "originalPortraitPixels": "pass",
+      "speakerBorder": "pass",
+      "opaqueTextPanel": "pass"
+    },
+    "morning-greeting": {
+      "originalPortraitPixels": "pass",
+      "speakerBorder": "pass",
+      "opaqueTextPanel": "pass"
+    },
+    "alarm": {
+      "originalPortraitPixels": "pass",
+      "speakerBorder": "pass",
+      "opaqueTextPanel": "pass"
+    }
+  },
+  "runtimeScenes": {
+    "npc": {
+      "frames": 1902,
+      "dialogueFrames": 110,
+      "states": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "0",
+          "14"
+        ],
+        [
+          "10",
+          "0"
+        ]
+      ],
+      "frozenDuringDialogueAndMovementResumed": true
+    },
+    "companion": {
+      "frames": 1831,
+      "dialogueFrames": 130,
+      "states": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "0",
+          "14"
+        ],
+        [
+          "10",
+          "0"
+        ]
+      ],
+      "frozenDuringDialogueAndMovementResumed": true
+    },
+    "bed": {
+      "frames": 1537,
+      "dialogueFrames": 0,
+      "states": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "11"
+        ],
+        [
+          "5",
+          "3"
+        ],
+        [
+          "5",
+          "4"
+        ],
+        [
+          "5",
+          "5"
+        ],
+        [
+          "5",
+          "7"
+        ],
+        [
+          "6",
+          "12"
+        ],
+        [
+          "6",
+          "15"
+        ],
+        [
+          "6",
+          "18"
+        ],
+        [
+          "6",
+          "19"
+        ],
+        [
+          "6",
+          "8"
+        ],
+        [
+          "7",
+          "10"
+        ],
+        [
+          "7",
+          "16"
+        ],
+        [
+          "7",
+          "9"
+        ]
+      ],
+      "frozenDuringDialogueAndMovementResumed": null
+    },
+    "wake": {
+      "frames": 1880,
+      "dialogueFrames": 0,
+      "states": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "11"
+        ],
+        [
+          "6",
+          "15"
+        ],
+        [
+          "6",
+          "18"
+        ],
+        [
+          "6",
+          "19"
+        ],
+        [
+          "6",
+          "8"
+        ],
+        [
+          "7",
+          "10"
+        ],
+        [
+          "7",
+          "16"
+        ],
+        [
+          "7",
+          "9"
+        ]
+      ],
+      "frozenDuringDialogueAndMovementResumed": null
+    }
+  },
+  "relatedTests": "dialogue portraits, entry/social scene, gameplay, companion, survival: 5/5; Wine GDI Korean scenes: 7/7",
+  "fullMemorySuite": "not run for this scoped dialogue change",
+  "nativeWindowsExecution": "pending; not substituted by Wine",
+  "ci": "background after release; not a deployment gate"
+}

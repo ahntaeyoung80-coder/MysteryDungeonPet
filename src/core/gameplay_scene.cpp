@@ -2,12 +2,14 @@
 #include <algorithm>
 #include <cstdlib>
 #include <cmath>
+#include <stdexcept>
 namespace pet {
 bool partyHealing(const GameplayState& g) {
     return g.independentParty && std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return a.kind==PartyActionKind::Berry && !a.finished;});
 }
 std::wstring gameplayText(const GameplayState& g) {
     if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText) return L"오랭열매! 2하트 회복";
+    if(companionDialogue(g)) return g.dialogueStage==DialogueStage::Player?L"잘 따라오고 있지? 잠깐 쉬어 가자.":L"물론이지! 함께라면 든든해.";
     if(g.life==LifePhase::Dialogue) return g.dialogueStage==DialogueStage::Player?L"안녕! 같이 탐험하자.":L"조심해서 다녀와!";
     if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) return L"잘 자! 내일도 같이 탐험하자.";
     if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay) return L"노공룡: 일어나아아! 아침이다아아!";
@@ -37,6 +39,43 @@ Surface originalDialoguePanel(const Surface& atlas,const Package& package) {
         layers.push_back({&atlas,tile.rect,{0,0},{int32_t(x),int32_t(y)}});
     }
     compose(panel,layers,{0,0},1);return panel;
+}
+DialoguePortraits dialoguePortraits(const GameplayState& g) {
+    if(g.life==LifePhase::Dialogue) {
+        const auto other=companionDialogue(g)?PortraitRole::Partner:PortraitRole::Friendly;
+        return {PortraitRole::Player,other,g.dialogueStage==DialogueStage::Player?PortraitRole::Player:other};
+    }
+    if((g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) ||
+       (g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace))
+        return {PortraitRole::Player,PortraitRole::Partner,PortraitRole::Player};
+    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)
+        return {PortraitRole::None,PortraitRole::Loudred,PortraitRole::Loudred};
+    return {};
+}
+void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& package,DialoguePortraits portraits) {
+    auto draw=[&](PortraitRole role,unsigned left) {
+        if(role==PortraitRole::None)return;
+        const auto& rect=package.frames(static_cast<unsigned>(role),0).front().rect;
+        constexpr unsigned top=100,border=2,size=40;
+        if(rect.w!=size || rect.h!=size || rect.x<0 || rect.y<0 ||
+           uint64_t(rect.x)+size>atlas.width || uint64_t(rect.y)+size>atlas.height)
+            throw std::runtime_error("dialogue portrait must be a valid 40x40 atlas region");
+        for(unsigned y=0;y<size+2*border && top+y<s.height;++y)
+            for(unsigned x=0;x<size+2*border && left+x<s.width;++x) {
+                const auto dst=((top+y)*s.width+left+x)*4;
+                const bool frame=x<border || y<border || x>=size+border || y>=size+border;
+                if(frame) {
+                    const bool active=role==portraits.speaker;
+                    s.pixels[dst]=active?70:72;s.pixels[dst+1]=active?200:80;s.pixels[dst+2]=active?248:88;s.pixels[dst+3]=255;
+                } else {
+                    const auto src=((rect.y+int(y-border))*atlas.width+rect.x+x-border)*4;
+                    const auto inv=255-atlas.pixels[src+3];
+                    for(unsigned ch=0;ch<3;++ch)s.pixels[dst+ch]=uint8_t(atlas.pixels[src+ch]+(24*inv+127)/255);
+                    s.pixels[dst+3]=255;
+                }
+            }
+    };
+    draw(portraits.left,8);draw(portraits.right,148);
 }
 bool guildAppleVisible(const GameplayState& g) {
     return g.homeScene && !bedroomScene(g);

@@ -828,7 +828,12 @@ void validateState(const ExplorationState& s) {
     require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 17 &&
             g.hearts <= kMaxHp && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
-    if(g.life==LifePhase::Dialogue) require(std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && e.kind==EntityKind::Friend && !e.done;}),"invalid dialogue owner");
+    if(g.life==LifePhase::Dialogue) {
+        if(companionDialogue(g)) require(g.companion.enabled && !g.companion.hidden && g.companion.hearts>0 &&
+            canAttack(s.world,s.position,g.companion.tile),"invalid companion dialogue owner");
+        else require(std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && e.kind==EntityKind::Friend && !e.done;}),"invalid dialogue owner");
+    }
+    require(g.enemyInstance<=kTiles || companionDialogue(g),"companion actor id outside dialogue");
     if (g.enabled) {
         require(g.deadlineMs >= g.phaseStartedMs, "invalid gameplay deadline");
         require(g.life != LifePhase::Combat || g.independentParty || (s.phase == Phase::Explore && g.enemyInstance > 0 &&

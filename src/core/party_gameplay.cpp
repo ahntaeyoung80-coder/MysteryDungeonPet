@@ -364,6 +364,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     };
     auto planPlayer=[&] {
         if(!available(0) || consumed(0)==g.actionRound || partyPlayback(g,0))return;
+        if(beginCompanionDialogue(now)) {event(GameplayEvent::DialoguePlayer,0,kCompanionActorId,0);return;}
         retreatProgress_=false;
         discover();
         if(heal(0))return;
@@ -433,6 +434,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
                 start(0,PartyActionKind::Wait,0,0);
                 g.enemyInstance=npc->instanceId;g.dialogueStage=DialogueStage::Player;
                 g.playerDirection=directionBetween(s.position,npc->tile);
+                npc->direction=directionBetween(npc->tile,s.position);
                 g.life=LifePhase::Dialogue;g.phaseStartedMs=now;g.deadlineMs=now+1200;
                 event(GameplayEvent::DialoguePlayer,0,npc->instanceId,0);return;
             }
