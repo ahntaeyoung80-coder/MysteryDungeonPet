@@ -1,0 +1,44 @@
+[
+  {
+    "name": "WarpTrap",
+    "slot": 1033,
+    "sourceName": "traps.trp.img",
+    "sprite": 6,
+    "palette": 1,
+    "file": "prop-6.png",
+    "size": [
+      24,
+      24
+    ],
+    "rgbaSha256": "49b9ccaf19511884fb6b16cf86630fa48ad027f32b675c988a4624a3a1a7cd88",
+    "mappingSource": "pinned SkyTemple SpriteProvider.get_for_trap/TRAP_PALETTE_MAP; palette map is hardcoded there, not claimed newly read from ROM"
+  },
+  {
+    "name": "RescuePoint",
+    "slot": 1033,
+    "sourceName": "traps.trp.img",
+    "sprite": 29,
+    "palette": 1,
+    "file": "prop-29.png",
+    "size": [
+      24,
+      24
+    ],
+    "rgbaSha256": "fdab769adfd2d242b1cd2a45dc4faed625b1e4b6308681287e3de6c7e5b8af79",
+    "mappingSource": "pinned SkyTemple SpriteProvider.get_for_trap/TRAP_PALETTE_MAP; palette map is hardcoded there, not claimed newly read from ROM"
+  },
+  {
+    "name": "KecleonShop",
+    "slot": 1033,
+    "sourceName": "traps.trp.img",
+    "sprite": 30,
+    "palette": 1,
+    "file": "prop-30.png",
+    "size": [
+      24,
+      24
+    ],
+    "rgbaSha256": "acc2b7f0bcf88ffc175667307dc0fca8cb63ad0aadf80303912c0996cf06ea87",
+    "mappingSource": "pinned SkyTemple SpriteProvider.get_for_trap/TRAP_PALETTE_MAP; palette map is hardcoded there, not claimed newly read from ROM"
+  }
+]

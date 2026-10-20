@@ -1,0 +1,42 @@
+[
+  {
+    "recordIndex": 70,
+    "itemId": 70,
+    "valid": true,
+    "sprite": 2,
+    "palette": 0,
+    "buyPrice": 50,
+    "sellPrice": 5,
+    "runtimeEffect": "Oran healing only"
+  },
+  {
+    "recordIndex": 109,
+    "itemId": 109,
+    "valid": true,
+    "sprite": 3,
+    "palette": 6,
+    "buyPrice": 25,
+    "sellPrice": 1,
+    "runtimeEffect": "event effect/economy not implemented"
+  },
+  {
+    "recordIndex": 110,
+    "itemId": 110,
+    "valid": true,
+    "sprite": 3,
+    "palette": 6,
+    "buyPrice": 50,
+    "sellPrice": 1,
+    "runtimeEffect": "event effect/economy not implemented"
+  },
+  {
+    "recordIndex": 183,
+    "itemId": 183,
+    "valid": true,
+    "sprite": 6,
+    "palette": 3,
+    "buyPrice": 0,
+    "sellPrice": 0,
+    "runtimeEffect": "event effect/economy not implemented"
+  }
+]

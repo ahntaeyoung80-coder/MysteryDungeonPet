@@ -1,6 +1,6 @@
 # 현재 상태
 
-기준: 2026-10-20 KST. 개발·실행 기준 브랜치 `work`.
+기준: 2026-10-21 KST. 개발·실행 기준 브랜치 `work`.
 
 ## 현재 단계
 
@@ -19,4 +19,4 @@
 
 관련 native9개 target·Python7개, 실제 EXE22몸체·11감정 장면·동료/주인공 기절·선택한 리오르의 생활 연속성을 앞서 확인했다. 이번 선택 정책 변경은 native2/2·Python4/4, 420개 조합 허용/21개 중복 차단, 실제 메뉴 선택/중복 거부/재시작/구형 중복 저장 보정, 나옹·먹고자 몸체/초상화 픽셀 대조를 통과했다. 전체 메모리 검사는 반복하지 않았고 source/assets/root EXE를 함께 반영한다. 자동 CI는 배포 후 백그라운드이며 사용자 Windows11 확인은 남아 있다. 다음은 Windows11 실제 표시와 B의 남은 인수 기준이다. [최신 로그](docs/logs/2026-10-20-starter-union.md), [선택 검증](docs/validation/2026-10-20-starter-union/summary.json), [앞선 연출 검증](docs/validation/2026-10-20-character-settings/summary.json).
 
-사용자의 최신 지시로 다양성 확장은 **문서 작성 단계**다. [원작 데이터 자료](docs/research/2026-10-20-variety-original-data.md)와 [대사·감정·초상화 분류/한국어 초안](docs/research/2026-10-20-variety-dialogue-catalogue.md)을 분리했다. 일반180정의 중1,795층·아이템217그림조합·출현521 MD의WAN구조를 읽고 맵별 목록을 보존했다. 참조 오류71/173, 문자 해독, 일반NPC의 감정 결손·일부 동작 부재는 미해결/제약으로 명시했다. 코드·제품 에셋·EXE는 수정하지 않았다. 다음은 사용자 지시에 따른 문서 검토/구현 범위 확정이며 랜덤 사건·대사 구현은 아직 착수하지 않는다. [조사 로그](docs/logs/2026-10-20-variety-documentation.md).
+사용자의 최신 지시로 다양성 확장은 **자료 조사·문서 작성 단계**다. [원작 데이터 자료](docs/research/2026-10-20-variety-original-data.md)와 [공통 대사 분류](docs/research/2026-10-20-variety-dialogue-catalogue.md)에 이어 [이벤트 10종 명세](docs/research/2026-10-21-ten-events.md), [24묶음·120문장 대사 초안](docs/research/2026-10-21-ten-event-dialogues.md), [원본 리소스 자료](docs/research/2026-10-21-event-resources/README.md)를 정리했다. E10은 던전 쉼터가 아닌 마을/온천 휴일이다. 온천 ground·코터스 배치·Float20·물결625~629를 확인했으며, 기본 던전15에는 상점/MH/워프의 원작 양수 조건이 없다. 김 효과43의 팔레트·워프 연출 ID·원작 문자열 해독은 미해결이다. 코드·제품 에셋·EXE는 변경하지 않았다. 다음은 사용자 지시에 따른 발생 정책·거래/보상·휴일 주기와 구현 범위 확정이며 이벤트 구현은 아직 착수하지 않는다. [최신 조사 로그](docs/logs/2026-10-21-ten-event-documentation.md).

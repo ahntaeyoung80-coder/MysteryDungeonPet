@@ -1,0 +1,2391 @@
+{
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "scriptAnimationTable": {
+    "overlay": 11,
+    "address": "0x023218CC",
+    "entries": [
+      {
+        "scriptCode": 2,
+        "rawWord": 768,
+        "wanClip": 0
+      },
+      {
+        "scriptCode": 63,
+        "rawWord": 4110,
+        "wanClip": 14
+      },
+      {
+        "scriptCode": 69,
+        "rawWord": 2068,
+        "wanClip": 20
+      }
+    ]
+  },
+  "actors": [
+    {
+      "mdIndex": 1,
+      "spriteIndex": 0,
+      "nationalDex": 1,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 4,
+      "spriteIndex": 4,
+      "nationalDex": 4,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 7,
+      "spriteIndex": 7,
+      "nationalDex": 7,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 64
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 25,
+      "spriteIndex": 26,
+      "nationalDex": 25,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 52,
+      "spriteIndex": 59,
+      "nationalDex": 52,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 152,
+      "spriteIndex": 164,
+      "nationalDex": 152,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 155,
+      "spriteIndex": 168,
+      "nationalDex": 155,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 158,
+      "spriteIndex": 171,
+      "nationalDex": 158,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 191,
+      "spriteIndex": 207,
+      "nationalDex": 191,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 64
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 237,
+      "spriteIndex": 257,
+      "nationalDex": 210,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 258,
+      "spriteIndex": 279,
+      "nationalDex": 231,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 104
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 280,
+      "spriteIndex": 440,
+      "nationalDex": 252,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 283,
+      "spriteIndex": 445,
+      "nationalDex": 255,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 286,
+      "spriteIndex": 450,
+      "nationalDex": 258,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 352,
+      "spriteIndex": 521,
+      "nationalDex": 324,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 144
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 369,
+      "spriteIndex": 538,
+      "nationalDex": 341,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "13": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 4
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 383,
+      "spriteIndex": 556,
+      "nationalDex": 352,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 5
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 422,
+      "spriteIndex": 302,
+      "nationalDex": 387,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 425,
+      "spriteIndex": 305,
+      "nationalDex": 390,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 428,
+      "spriteIndex": 308,
+      "nationalDex": 393,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 112
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 434,
+      "spriteIndex": 316,
+      "nationalDex": 399,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 4
+        },
+        "14": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 7
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "21": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 8
+        },
+        "22": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 2
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 438,
+      "spriteIndex": 321,
+      "nationalDex": 403,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 120
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 18
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 488,
+      "spriteIndex": 372,
+      "nationalDex": 446,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 104
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 489,
+      "spriteIndex": 390,
+      "nationalDex": 447,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 120
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 601,
+      "spriteIndex": 0,
+      "nationalDex": 1,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 604,
+      "spriteIndex": 4,
+      "nationalDex": 4,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 607,
+      "spriteIndex": 7,
+      "nationalDex": 7,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 64
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 625,
+      "spriteIndex": 25,
+      "nationalDex": 25,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 637,
+      "spriteIndex": 39,
+      "nationalDex": 37,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 733,
+      "spriteIndex": 145,
+      "nationalDex": 133,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 752,
+      "spriteIndex": 164,
+      "nationalDex": 152,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 755,
+      "spriteIndex": 168,
+      "nationalDex": 155,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 758,
+      "spriteIndex": 171,
+      "nationalDex": 158,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 880,
+      "spriteIndex": 440,
+      "nationalDex": 252,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 883,
+      "spriteIndex": 445,
+      "nationalDex": 255,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 886,
+      "spriteIndex": 450,
+      "nationalDex": 258,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 928,
+      "spriteIndex": 495,
+      "nationalDex": 300,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 1022,
+      "spriteIndex": 302,
+      "nationalDex": 387,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 88
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 1025,
+      "spriteIndex": 305,
+      "nationalDex": 390,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 56
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 80
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    },
+    {
+      "mdIndex": 1028,
+      "spriteIndex": 308,
+      "nationalDex": 393,
+      "clips": {
+        "0": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "1": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 112
+        },
+        "6": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "7": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 48
+        },
+        "13": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 16
+        },
+        "14": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 40
+        },
+        "20": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        },
+        "21": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 9
+        },
+        "22": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 24
+        },
+        "23": {
+          "rows": 1,
+          "nonemptyRows": 1,
+          "frames": 3
+        },
+        "33": {
+          "rows": 8,
+          "nonemptyRows": 8,
+          "frames": 32
+        }
+      },
+      "sourceRef": "BALANCE/monster.md plus original three MONSTER packs; parsed/merged, no atlas export"
+    }
+  ],
+  "currentStarterRuntimeClips": [
+    0,
+    1,
+    5,
+    6,
+    7,
+    13,
+    14,
+    15,
+    17,
+    22,
+    27,
+    33,
+    34
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "dateKst": "2026-10-21",
+  "basisCommit": "0191b602f78b83050b6372507d66121e954798ba",
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "romUnchanged": true,
+  "backgrounds": [
+    [
+      "P01P01A",
+      [
+        432,
+        456
+      ]
+    ],
+    [
+      "P02P01A",
+      [
+        504,
+        408
+      ]
+    ],
+    [
+      "T01P01A",
+      [
+        672,
+        504
+      ]
+    ],
+    [
+      "D10P41A",
+      [
+        648,
+        624
+      ]
+    ],
+    [
+      "T01P02A",
+      [
+        552,
+        504
+      ]
+    ]
+  ],
+  "hotSpringProof": "SCRIPT/P02P01A/enter00.ssb: back_SetDungeonBanner(178,0), back_SetGround(LEVEL_P02P01A); selected SSA Torkoal352 and SSB effects625..629",
+  "effectIds": [
+    43,
+    88,
+    92,
+    625,
+    626,
+    627,
+    628,
+    629
+  ],
+  "starterMdCount": 34,
+  "bodyMdChecked": 40,
+  "missingStarterFloat20": [],
+  "spriteProviderSource": {
+    "url": "https://github.com/SkyTemple/skytemple/blob/f78d0ef387dbc121bad4c8f0186237f9a4ae035d/skytemple/core/sprite_provider.py",
+    "sha256": "4b3e309de19674312b3ec0fb8e1abd632e89f0f1570ee85e018cf5554952c09f"
+  },
+  "sourceHashes": {
+    "EFFECT/effect.bin": "90d7eed4c6afc5b3f6c8f74e54f13409641467d98c82ef9ea6aa6b053c13cab2",
+    "DUNGEON/dungeon.bin": "c6866569313f971bf01f89dfe7d0796fb9a61a044ad81455f26a1571863c8a34",
+    "BALANCE/monster.md": "0da60447bff18f968779a7afc5d34368fd1bfd301b792758a56e792147526411",
+    "BALANCE/item_p.bin": "232448b25f92af571388980a02a1c7a6522c637629e9a4095371865f4e584012",
+    "FONT/kaomado.kao": "9b575358918c8da22925a27bcec9cd1d816e11252b3bf34cf609195808444414",
+    "MAP_BG/bg_list.dat": "81f68a7e9316765f2605beacab54f9cba862d3de03891e911d8561b5de1bb025"
+  },
+  "unverified": [
+    "runtime effect palette/orientation/occlusion and original wall time",
+    "complete holiday state/transaction execution",
+    "original encoded dialogue text",
+    "warp visual effect ID; MOVE_WARP369 is not an effect ID"
+  ],
+  "scope": "documentation only; code/runtime assets/EXE unchanged"
+}

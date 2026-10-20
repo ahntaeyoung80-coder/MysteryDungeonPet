@@ -1,0 +1,140 @@
+{
+  "scope": "this directory, excluding files.json itself",
+  "files": [
+    {
+      "file": "D10P41A.png",
+      "bytes": 290008,
+      "sha256": "6cada0c28ca4c6970a4c701bfb657f422523ee9163dde8f2a2bd20e8e469959d"
+    },
+    {
+      "file": "P01P01A.png",
+      "bytes": 156633,
+      "sha256": "1237f8c630ccdadd610145881bab96b3ab81ed89a4f4c99e9319bdd2a2f0331b"
+    },
+    {
+      "file": "P02P01A.png",
+      "bytes": 137201,
+      "sha256": "bf615667f0c39d92ef78a299084924e4cf8fc07e05c06e96facb8d1f32cd60fd"
+    },
+    {
+      "file": "README.md",
+      "bytes": 6270,
+      "sha256": "399a2f5a25bc588cd4f494e7d1b3d0f306fa2869b422884e74f2b2a64ff8bf5a"
+    },
+    {
+      "file": "T01P01A.png",
+      "bytes": 210289,
+      "sha256": "4409a4bbd7e9b106462a0133a23425d9f443a9d89a23f2221d5eecd36f2dd3be"
+    },
+    {
+      "file": "T01P02A.png",
+      "bytes": 172516,
+      "sha256": "60c0cbe21307fefa3a3e52f1e320a66ed3c375bba35e7a42a899c4d396d8f86d"
+    },
+    {
+      "file": "actor-cues.json",
+      "bytes": 49667,
+      "sha256": "2dbdb4fdaf36127f9ae019c0f4cbf08fd66f56c220daf9caeb41294cd56c9d1f"
+    },
+    {
+      "file": "backgrounds.json",
+      "bytes": 348104,
+      "sha256": "00cec51910eb778e3632eb1029c5e81eb4c91cdd838b6c9d5b6429830c9d8302"
+    },
+    {
+      "file": "effect-625.png",
+      "bytes": 3190,
+      "sha256": "203be3468b07c4e232a212c4da3e9e9957d908c7a689ad83b88eed956265d018"
+    },
+    {
+      "file": "effect-626.png",
+      "bytes": 3044,
+      "sha256": "1bf39305798e2462bac952f1ea3250e57ba1ece12451ab614dea049b6cefc623"
+    },
+    {
+      "file": "effect-627.png",
+      "bytes": 3044,
+      "sha256": "1bf39305798e2462bac952f1ea3250e57ba1ece12451ab614dea049b6cefc623"
+    },
+    {
+      "file": "effect-628.png",
+      "bytes": 3190,
+      "sha256": "203be3468b07c4e232a212c4da3e9e9957d908c7a689ad83b88eed956265d018"
+    },
+    {
+      "file": "effect-629.png",
+      "bytes": 3190,
+      "sha256": "203be3468b07c4e232a212c4da3e9e9957d908c7a689ad83b88eed956265d018"
+    },
+    {
+      "file": "effect-88.png",
+      "bytes": 332,
+      "sha256": "cee5467769e738a927bb2018acd359ddd4d2e64a4a759ddee7aa3de26cd3e509"
+    },
+    {
+      "file": "effect-92.png",
+      "bytes": 259,
+      "sha256": "da3383e98a00410059c640ce0510993c52d75d1bc01c2a0f687f842e01edacf1"
+    },
+    {
+      "file": "effects.json",
+      "bytes": 6617,
+      "sha256": "764b627ac864768ef4449c17738190b71a2af3f45bc989b29f7c504d8ecbfbd8"
+    },
+    {
+      "file": "event-items.json",
+      "bytes": 805,
+      "sha256": "c685c4bb7a4ee9bf00e45ed9da88c33d26a222b406b56be8c032ed7957e74a05"
+    },
+    {
+      "file": "map-eligibility.json",
+      "bytes": 42066,
+      "sha256": "cde77789c09541d85ee7e64c9065b6e42c24236c2667ba7b01644ac6b48dfb12"
+    },
+    {
+      "file": "npc-moods.png",
+      "bytes": 38989,
+      "sha256": "950a46b70bc0be66166c1a854c236bdca052a033893fb194f2cb8134f95f56b0"
+    },
+    {
+      "file": "npc-portraits.json",
+      "bytes": 1182,
+      "sha256": "6036b62ed13f288fab35d178c4526854bae1a85cd1ee1fb1862ed0bfaa055aaf"
+    },
+    {
+      "file": "prop-29.png",
+      "bytes": 480,
+      "sha256": "275d16ff3ce21385fd4da9351384d03fe5826049b1caa0d3bd53db5b80a6fa3c"
+    },
+    {
+      "file": "prop-30.png",
+      "bytes": 416,
+      "sha256": "d65ed335641d2ed718e38bc1d1e778830319255ee2614975c70c755d78dac577"
+    },
+    {
+      "file": "prop-6.png",
+      "bytes": 582,
+      "sha256": "e65e88663f797f1488b9c8b78d20167a43d72d619d6a1de3fbd6f96018959a82"
+    },
+    {
+      "file": "props.json",
+      "bytes": 1282,
+      "sha256": "a57a85ddd651ed74fd5dad051b19ce6720e113d3e658ca3c27754c01be44f4fb"
+    },
+    {
+      "file": "script-evidence.json",
+      "bytes": 14053,
+      "sha256": "1346b73e18ba4b96a38e876a0f5420fa6005c11d08728bc656ca1ae13dab0a3d"
+    },
+    {
+      "file": "summary.json",
+      "bytes": 2055,
+      "sha256": "54acd6f2ee0050952dbee308e039c69f573217a1ea54f5fb09a6d3394d5861f2"
+    },
+    {
+      "file": "validation.json",
+      "bytes": 2280,
+      "sha256": "475bcfc472d06b43d9b7b5c52bce815a5070cd132cdf8f6ed3cc8a838006f4d6"
+    }
+  ]
+}

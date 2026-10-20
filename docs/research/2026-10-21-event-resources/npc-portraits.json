@@ -1,0 +1,62 @@
+[
+  {
+    "mdIndex": 352,
+    "kaoRow": 351,
+    "originalEmotionIds": [
+      0,
+      12
+    ],
+    "normalSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87"
+  },
+  {
+    "mdIndex": 383,
+    "kaoRow": 382,
+    "originalEmotionIds": [
+      0,
+      3,
+      5
+    ],
+    "normalSha256": "1f5fdd420e0a9446dec5b2a116433b45c65bbb4e1ba764b7a274ed6826b4194f"
+  },
+  {
+    "mdIndex": 434,
+    "kaoRow": 433,
+    "originalEmotionIds": [
+      0,
+      1,
+      2,
+      5,
+      8,
+      9,
+      12,
+      13
+    ],
+    "normalSha256": "a2bdfbaab9eb47e75ac97ae297280d0f0afcba856530545539c620e1923796a2"
+  },
+  {
+    "mdIndex": 369,
+    "kaoRow": 368,
+    "originalEmotionIds": [
+      0,
+      4,
+      5
+    ],
+    "normalSha256": "1d4d008215f676a8b0d9111e5f8efecdb30259912f5bd0469dfa65f78a7d6ba3"
+  },
+  {
+    "mdIndex": 237,
+    "kaoRow": 236,
+    "originalEmotionIds": [
+      0
+    ],
+    "normalSha256": "ce97a9bf8771ae3b645b8b6364a24d89e00bc5fcb72ec49cc69f5ae303a2aca7"
+  },
+  {
+    "mdIndex": 191,
+    "kaoRow": 190,
+    "originalEmotionIds": [
+      0
+    ],
+    "normalSha256": "4fa1e4447981742ed44ba4addcf3d463fa97a9d74d681c20ec20482856fb9123"
+  }
+]

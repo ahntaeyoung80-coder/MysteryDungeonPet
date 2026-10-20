@@ -1,0 +1,1802 @@
+{
+  "schema": "documentation-draft-1",
+  "dateKst": "2026-10-21",
+  "sourceKind": "authored_ko_draft",
+  "runtimeRegistered": false,
+  "events": [
+    {
+      "eventId": "E01",
+      "name": "지친 탐험가"
+    },
+    {
+      "eventId": "E02",
+      "name": "길 잃은 포켓몬"
+    },
+    {
+      "eventId": "E03",
+      "name": "켈리몬의 작은 매대"
+    },
+    {
+      "eventId": "E04",
+      "name": "소규모 몬스터 하우스"
+    },
+    {
+      "eventId": "E05",
+      "name": "탐험 중 작은 감탄"
+    },
+    {
+      "eventId": "E06",
+      "name": "분실물 돌려주기"
+    },
+    {
+      "eventId": "E07",
+      "name": "다른 탐험대와 공동 전투"
+    },
+    {
+      "eventId": "E08",
+      "name": "워프 함정으로 잠깐 떨어지기"
+    },
+    {
+      "eventId": "E09",
+      "name": "길드원의 깜짝 방문"
+    },
+    {
+      "eventId": "E10",
+      "name": "휴일: 마을 또는 온천 방문"
+    }
+  ],
+  "excluded": "벽틈의 반짝임 / 매장 아이템 발견",
+  "bundles": [
+    {
+      "eventId": "E01",
+      "bundleId": "E01.share_a",
+      "eligibility": "safe encounter; reserved Oran available without using last recovery reserve",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E01.share_a.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "휴... 조금 지쳤어.",
+          "emotionRequested": 4,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.share_a.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "괜찮아? 이 열매를 나눠 줄게.",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.share_a.03",
+          "stage": "intro",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "천천히 쉬면서 먹어.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.share_a.04",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "고마워. 덕분에 마음이 놓여.",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "item transfer committed"
+        },
+        {
+          "lineId": "E01.share_a.05",
+          "stage": "success",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "무리하지 말고 다녀와.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.share_a.06",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "너희도 조심해서 가!",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "안전한 조우이며 마지막 회복 예비량을 남기고 나눌 오랭열매를 예약한 경우",
+      "stageGates": {
+        "success": "reserved item transfer committed exactly once"
+      }
+    },
+    {
+      "eventId": "E01",
+      "bundleId": "E01.encourage",
+      "eligibility": "no safe surplus item; transfer amount zero",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E01.encourage.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "잠깐 숨을 돌려야겠어.",
+          "emotionRequested": 4,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.encourage.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "지금은 물건을 나누기 어렵겠어.",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.encourage.03",
+          "stage": "intro",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "서두르지 말고 쉬어 가.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.encourage.04",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "말만으로도 고마워. 조심해서 가.",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "안전하게 나눌 여분이 없어 전달량이 0인 경우",
+      "stageGates": {}
+    },
+    {
+      "eventId": "E01",
+      "bundleId": "E01.share_b",
+      "eligibility": "safe surplus Oran reserved; alternate wording",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E01.share_b.01",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "많이 지쳐 보여. 잠깐 쉬는 게 어때?",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.share_b.02",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "응... 조금만 쉬려고.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.share_b.03",
+          "stage": "intro",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "이 열매도 챙겨 둬.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E01.share_b.04",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "정말 고마워. 소중히 쓸게.",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "item transfer committed"
+        }
+      ],
+      "eligibilityKo": "여분 오랭열매를 예약한 경우의 다른 말투",
+      "stageGates": {
+        "success": "reserved item transfer committed exactly once"
+      }
+    },
+    {
+      "eventId": "E02",
+      "bundleId": "E02.escort_a",
+      "eligibility": "NPC accepted escort; same-floor route to stairs exists",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E02.escort_a.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 191,
+          "text": "저기... 계단으로 가는 길을 모르겠어.",
+          "emotionRequested": 4,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E02.escort_a.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "우리와 같이 가자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E02.escort_a.03",
+          "stage": "intro",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "천천히 따라오면 돼.",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E02.escort_a.04",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 191,
+          "text": "여기까지 데려다줘서 고마워!",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "escort NPC physically reached stairs meeting position"
+        },
+        {
+          "lineId": "E02.escort_a.05",
+          "stage": "success",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "이제 조심해서 가.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E02.escort_a.06",
+          "stage": "success",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "무사히 다녀와!",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "NPC가 동행에 동의했고 같은 층 계단까지 경로가 있는 경우",
+      "stageGates": {
+        "success": "escort actor physically at current floor stairs meeting position"
+      }
+    },
+    {
+      "eventId": "E02",
+      "bundleId": "E02.escort_b",
+      "eligibility": "alternate escort conversation; actual route/arrival required",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E02.escort_b.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 191,
+          "text": "길을 잘못 든 것 같아.",
+          "emotionRequested": 4,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E02.escort_b.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "계단까지는 함께 가 줄게.",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E02.escort_b.03",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 191,
+          "text": "이제 길을 알겠어. 고마워!",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "escort arrival committed"
+        },
+        {
+          "lineId": "E02.escort_b.04",
+          "stage": "success",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "도움이 돼서 다행이야.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "동행 대사의 다른 말투이며 실제 경로와 도착 확인이 필요한 경우",
+      "stageGates": {
+        "success": "escort actor physically at current floor stairs meeting position"
+      }
+    },
+    {
+      "eventId": "E03",
+      "bundleId": "E03.trade_a",
+      "eligibility": "shop open; concrete give/receive offer reserved",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E03.trade_a.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "어서 와! 물건을 보고 가.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.trade_a.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "교환할 수 있는 물건이 있을까?",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.trade_a.03",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "서로 필요한 물건을 살펴보자.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.trade_a.04",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "교환은 끝났어. 잘 챙겨 둬!",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "cost and stock and receipt committed together"
+        },
+        {
+          "lineId": "E03.trade_a.05",
+          "stage": "success",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "고마워. 잘 쓸게.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.trade_a.06",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "조심해서 다녀와!",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "매대가 열려 있고 줄 물건과 받을 물건이 구체적으로 예약된 경우",
+      "stageGates": {
+        "success": "reserved cost, stock and receipt committed atomically exactly once"
+      }
+    },
+    {
+      "eventId": "E03",
+      "bundleId": "E03.browse",
+      "eligibility": "no eligible trade; no cost or item receipt",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E03.browse.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "구경만 하고 가도 좋아.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.browse.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "오늘은 어떤 물건이 있나 볼게.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.browse.03",
+          "stage": "success",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "다음에 또 들르자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.browse.04",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "언제든 환영이야!",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "성립하는 교환이 없어 비용 차감과 물품 수령 없이 구경하는 경우",
+      "stageGates": {}
+    },
+    {
+      "eventId": "E03",
+      "bundleId": "E03.trade_b",
+      "eligibility": "alternate successful concrete offer",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E03.trade_b.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "마침 교환할 물건이 있네.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.trade_b.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "좋아. 그걸로 바꾸자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E03.trade_b.03",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "여기 있어. 물건은 확인했지?",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "trade transaction committed"
+        },
+        {
+          "lineId": "E03.trade_b.04",
+          "stage": "success",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "응, 잘 챙겼어!",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "구체적인 교환이 실제 성립한 경우의 다른 말투",
+      "stageGates": {
+        "success": "reserved cost, stock and receipt committed atomically exactly once"
+      }
+    },
+    {
+      "eventId": "E04",
+      "bundleId": "E04.house_a",
+      "eligibility": "monster-house event committed; enough health/space; enemy count fixed",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E04.house_a.01",
+          "stage": "intro",
+          "speakerRole": "System",
+          "binding": "no actor/portrait",
+          "sampleNpcMd": null,
+          "text": "몬스터 하우스다!",
+          "emotionRequested": null,
+          "emotionRendered": null,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; no actor required"
+        },
+        {
+          "lineId": "E04.house_a.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "조심해! 둘러싸이지 말자.",
+          "emotionRequested": 12,
+          "emotionRendered": 12,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E04.house_a.03",
+          "stage": "intro",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "알겠어. 함께 버티자!",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E04.house_a.04",
+          "stage": "victory",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "휴... 이제 잠잠해졌네.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "all event enemies resolved; party survives"
+        },
+        {
+          "lineId": "E04.house_a.05",
+          "stage": "victory",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "주변을 살피고 움직이자.",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E04.house_a.06",
+          "stage": "victory",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "좋아. 천천히 가자.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "사건과 적수가 확정됐고 체력과 배치 공간이 충분한 경우",
+      "stageGates": {
+        "victory": "all event enemies resolved; both party actors alive"
+      }
+    },
+    {
+      "eventId": "E04",
+      "bundleId": "E04.house_b",
+      "eligibility": "alternate alert and post-victory dialogue",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E04.house_b.01",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "갑자기 나타났어!",
+          "emotionRequested": 12,
+          "emotionRendered": 12,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E04.house_b.02",
+          "stage": "intro",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "침착하게 대응하자!",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E04.house_b.03",
+          "stage": "victory",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "잘 버텼어!",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "victory committed; living companion"
+        },
+        {
+          "lineId": "E04.house_b.04",
+          "stage": "victory",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "아직 방심하지 말자.",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "경고와 실제 승리 후 대사의 다른 말투",
+      "stageGates": {
+        "victory": "all event enemies resolved; both party actors alive"
+      }
+    },
+    {
+      "eventId": "E05",
+      "bundleId": "E05.view_a",
+      "eligibility": "safe viewpoint; no specific unverified weather/landmark claims",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E05.view_a.01",
+          "stage": "view",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "여긴 잠깐 멈춰도 좋겠다.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E05.view_a.02",
+          "stage": "view",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "응. 주변도 천천히 보자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E05.view_a.03",
+          "stage": "depart",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "함께 와서 더 기억에 남을 것 같아.",
+          "emotionRequested": 11,
+          "emotionRendered": 11,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E05.view_a.04",
+          "stage": "depart",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "나도 그래. 이제 가 볼까?",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "안전한 감상 장소이며 확인하지 않은 날씨나 지형을 주장하지 않는 경우",
+      "stageGates": {
+        "view": "silent scenery beat completed; actors facing each other for dialogue"
+      }
+    },
+    {
+      "eventId": "E05",
+      "bundleId": "E05.view_b",
+      "eligibility": "alternate quiet viewpoint",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E05.view_b.01",
+          "stage": "view",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "이런 곳도 있었구나.",
+          "emotionRequested": 11,
+          "emotionRendered": 11,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E05.view_b.02",
+          "stage": "view",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "서두르기만 하면 놓쳤겠지.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E05.view_b.03",
+          "stage": "depart",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "오늘 본 건 기억해 둘게.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E05.view_b.04",
+          "stage": "depart",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "좋아. 다시 함께 가자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "조용한 감상 대사의 다른 말투",
+      "stageGates": {
+        "view": "silent scenery beat completed; actors facing each other for dialogue"
+      }
+    },
+    {
+      "eventId": "E06",
+      "bundleId": "E06.return_a",
+      "eligibility": "lost property secured; exact owner instance identified",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E06.return_a.01",
+          "stage": "pickup",
+          "speakerRole": "System",
+          "binding": "no actor/portrait",
+          "sampleNpcMd": null,
+          "text": "누군가 잃어버린 물건을 발견했다.",
+          "emotionRequested": null,
+          "emotionRendered": null,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; no actor required"
+        },
+        {
+          "lineId": "E06.return_a.02",
+          "stage": "pickup",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "주인이 근처에 있을까?",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E06.return_a.03",
+          "stage": "owner",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "그거, 내가 잃어버린 물건이야!",
+          "emotionRequested": 12,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E06.return_a.04",
+          "stage": "owner",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "찾고 있었구나. 돌려줄게.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E06.return_a.05",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "정말 고마워. 한참 찾고 있었어.",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "return transaction committed; no reward promised"
+        },
+        {
+          "lineId": "E06.return_a.06",
+          "stage": "success",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "주인을 찾아서 다행이야.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "분실물을 확보했고 정확한 주인 개체가 확인된 경우",
+      "stageGates": {
+        "pickup": "event-owned property secured",
+        "owner": "exact assigned owner instance identified",
+        "success": "return transaction committed exactly once"
+      }
+    },
+    {
+      "eventId": "E06",
+      "bundleId": "E06.return_b",
+      "eligibility": "alternate lost-property return; no invented reward",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E06.return_b.01",
+          "stage": "pickup",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "누가 떨어뜨린 모양이야.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E06.return_b.02",
+          "stage": "pickup",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "주인을 찾으면 돌려주자.",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E06.return_b.03",
+          "stage": "owner",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "혹시 내 물건을 못 봤어?",
+          "emotionRequested": 4,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E06.return_b.04",
+          "stage": "owner",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "이 물건이 맞지? 여기 있어.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E06.return_b.05",
+          "stage": "success",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "맞아! 찾아줘서 고마워.",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "owner identity and return committed"
+        },
+        {
+          "lineId": "E06.return_b.06",
+          "stage": "success",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "다음에는 잘 챙겨 둬.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "답례를 가정하지 않는 반환 대사의 다른 말투",
+      "stageGates": {
+        "pickup": "event-owned property secured",
+        "owner": "exact assigned owner instance identified",
+        "success": "return transaction committed exactly once"
+      }
+    },
+    {
+      "eventId": "E07",
+      "bundleId": "E07.assist_a",
+      "eligibility": "temporary ally/hostile roles fixed; safe combat support",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E07.assist_a.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "혼자서는 버거워... 도와줘!",
+          "emotionRequested": 4,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E07.assist_a.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "함께 상대하자!",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E07.assist_a.03",
+          "stage": "intro",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "옆에서 도울게!",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E07.assist_a.04",
+          "stage": "victory",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "덕분에 버텼어. 정말 고마워.",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "ally alive; event enemies resolved; actual support contribution"
+        },
+        {
+          "lineId": "E07.assist_a.05",
+          "stage": "victory",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "무사해서 다행이야.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E07.assist_a.06",
+          "stage": "victory",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "이제 각자 조심해서 가자.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "임시 아군과 적의 역할을 고정했고 안전하게 전투를 지원하는 경우",
+      "stageGates": {
+        "victory": "temporary ally alive; battle success and actual support contribution committed"
+      }
+    },
+    {
+      "eventId": "E07",
+      "bundleId": "E07.assist_b",
+      "eligibility": "alternate temporary-ally support conversation",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E07.assist_b.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "잠깐만 힘을 빌려줄래?",
+          "emotionRequested": 4,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E07.assist_b.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "좋아. 힘을 합치자.",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E07.assist_b.03",
+          "stage": "intro",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "서로 떨어지지 말자!",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E07.assist_b.04",
+          "stage": "victory",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "혼자가 아니라서 든든했어.",
+          "emotionRequested": 1,
+          "emotionRendered": 0,
+          "fallbackReason": "same actor original Normal; desired mood absent",
+          "conditions": "ally alive and battle success committed"
+        },
+        {
+          "lineId": "E07.assist_b.05",
+          "stage": "victory",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "우리도 도움이 돼서 기뻐.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E07.assist_b.06",
+          "stage": "victory",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 237,
+          "text": "너희의 탐험도 잘 풀리길 바라!",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "임시 아군 지원 대사의 다른 말투",
+      "stageGates": {
+        "victory": "temporary ally alive; battle success and actual support contribution committed"
+      }
+    },
+    {
+      "eventId": "E08",
+      "bundleId": "E08.reunion_a",
+      "eligibility": "one confirmed warp; reunion within same floor",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E08.reunion_a.01",
+          "stage": "separated",
+          "speakerRole": "System",
+          "binding": "no actor/portrait",
+          "sampleNpcMd": null,
+          "text": "워프 함정을 밟았다!",
+          "emotionRequested": null,
+          "emotionRendered": null,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; no actor required"
+        },
+        {
+          "lineId": "E08.reunion_a.02",
+          "stage": "reunion",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "찾았다! 괜찮아?",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "both actors adjacent after reunion"
+        },
+        {
+          "lineId": "E08.reunion_a.03",
+          "stage": "reunion",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "응. 다시 만나서 다행이야.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E08.reunion_a.04",
+          "stage": "reunion",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "다음엔 발밑도 더 살피자.",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E08.reunion_a.05",
+          "stage": "reunion",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "좋아. 함께 가자.",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "확정된 워프 한 번 뒤 같은 층에서 재회하는 경우",
+      "stageGates": {
+        "separated": "one confirmed warp; system announcement only",
+        "reunion": "both party actors adjacent and mutually facing after same-floor reunion"
+      }
+    },
+    {
+      "eventId": "E08",
+      "bundleId": "E08.reunion_b",
+      "eligibility": "alternate reunion; no two-way talk while separated",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E08.reunion_b.01",
+          "stage": "separated",
+          "speakerRole": "System",
+          "binding": "no actor/portrait",
+          "sampleNpcMd": null,
+          "text": "워프 함정을 밟았다!",
+          "emotionRequested": null,
+          "emotionRendered": null,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; no actor required"
+        },
+        {
+          "lineId": "E08.reunion_b.02",
+          "stage": "reunion",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "휴, 어디로 갔나 했어.",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "adjacent reunion confirmed"
+        },
+        {
+          "lineId": "E08.reunion_b.03",
+          "stage": "reunion",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "나도 찾고 있었어. 무사해서 다행이야.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E08.reunion_b.04",
+          "stage": "reunion",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "이제 다시 길을 찾아보자.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E08.reunion_b.05",
+          "stage": "reunion",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "응. 천천히 함께 가자.",
+          "emotionRequested": 9,
+          "emotionRendered": 9,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "분리 중 왕복 대화 없이 재회한 뒤 나누는 다른 말투",
+      "stageGates": {
+        "separated": "one confirmed warp; system announcement only",
+        "reunion": "both party actors adjacent and mutually facing after same-floor reunion"
+      }
+    },
+    {
+      "eventId": "E09",
+      "bundleId": "E09.bidoof",
+      "eligibility": "visitor is original guild Bidoof actor124/MD434",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E09.bidoof.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 434,
+          "text": "어라? 여기서 다 만나네!",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E09.bidoof.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "탐험하러 나온 거야?",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E09.bidoof.03",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 434,
+          "text": "응! 서로 무리하지 말고 다녀오자.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E09.bidoof.04",
+          "stage": "depart",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "좋아. 길드에서 또 보자!",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "방문자가 원작 길드 비버니 actor124/MD434인 경우",
+      "stageGates": {}
+    },
+    {
+      "eventId": "E09",
+      "bundleId": "E09.corphish",
+      "eligibility": "visitor is original guild Corphish actor115/MD369",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E09.corphish.01",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 369,
+          "text": "여기까지 왔구나! 잘 지내고 있지?",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E09.corphish.02",
+          "stage": "intro",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "응. 함께 돌아다니는 중이야.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E09.corphish.03",
+          "stage": "intro",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 369,
+          "text": "너무 무리하진 마. 길드에서 보자.",
+          "emotionRequested": 4,
+          "emotionRendered": 4,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E09.corphish.04",
+          "stage": "depart",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "알겠어. 너도 조심해서 가!",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "방문자가 원작 길드 가재군 actor115/MD369인 경우",
+      "stageGates": {}
+    },
+    {
+      "eventId": "E10",
+      "bundleId": "E10.town_a",
+      "eligibility": "day plan is holiday/town; no dungeon run or trade implied",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E10.town_a.01",
+          "stage": "morning",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "오늘은 탐험을 쉬고 마을에 가 볼까?",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.town_a.02",
+          "stage": "morning",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "좋아! 천천히 둘러보자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.town_a.03",
+          "stage": "visit",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "반가워. 오늘은 쉬는 날이구나.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.town_a.04",
+          "stage": "visit",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "응. 잠깐 산책하러 왔어.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.town_a.05",
+          "stage": "depart",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "서두르지 않으니 한결 편안해.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.town_a.06",
+          "stage": "depart",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "이제 돌아가서 푹 쉬자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "하루 일정이 마을 휴일이며 던전 탐험이나 거래를 전제하지 않는 경우",
+      "stageGates": {}
+    },
+    {
+      "eventId": "E10",
+      "bundleId": "E10.town_b",
+      "eligibility": "alternate holiday/town walk; no purchase or reward",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E10.town_b.01",
+          "stage": "morning",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "오늘은 마을에서 쉬어 가는 거지?",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.town_b.02",
+          "stage": "morning",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "응. 가끔은 이런 날도 좋겠지.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.town_b.03",
+          "stage": "visit",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 383,
+          "text": "느긋하게 보고 가. 언제든 환영이야.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.town_b.04",
+          "stage": "depart",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "좋은 휴일이었어. 이제 돌아가자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "구매나 보상이 없는 마을 휴일 산책의 다른 말투",
+      "stageGates": {}
+    },
+    {
+      "eventId": "E10",
+      "bundleId": "E10.spring_a",
+      "eligibility": "day plan is holiday/hot spring; float/water scene enabled",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E10.spring_a.01",
+          "stage": "morning",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "오늘은 온천에서 쉬어 가자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.spring_a.02",
+          "stage": "morning",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "좋아. 느긋하게 보내고 싶어.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.spring_a.03",
+          "stage": "visit",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 352,
+          "text": "어서 오게. 서두를 것 없네.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.spring_a.04",
+          "stage": "bath",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "따뜻해서 몸이 풀리는 것 같아.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "float/water scene actually visible; no numeric heal claim"
+        },
+        {
+          "lineId": "E10.spring_a.05",
+          "stage": "bath",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "응. 오늘은 천천히 쉬자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.spring_a.06",
+          "stage": "depart",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 352,
+          "text": "잘 쉬었나? 돌아가는 길도 조심하게.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "하루 일정이 온천 휴일이며 입욕 동작과 물결 장면을 사용할 수 있는 경우",
+      "stageGates": {
+        "bath": "Float20 and water effects actually visible; dialogue actors face each other"
+      }
+    },
+    {
+      "eventId": "E10",
+      "bundleId": "E10.spring_b",
+      "eligibility": "alternate holiday/hot spring; no maximum-HP claim",
+      "sourceKind": "authored_ko_draft",
+      "approval": "draft; not runtime content",
+      "lines": [
+        {
+          "lineId": "E10.spring_b.01",
+          "stage": "visit",
+          "speakerRole": "EventNpc",
+          "binding": "actual event NPC instance",
+          "sampleNpcMd": 352,
+          "text": "편히 쉬다 가게. 좋은 날이구먼.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.spring_b.02",
+          "stage": "visit",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "오늘은 푹 쉬려고 왔어.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.spring_b.03",
+          "stage": "bath",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "가만히 있으니 마음도 차분해지네.",
+          "emotionRequested": 0,
+          "emotionRendered": 0,
+          "fallbackReason": null,
+          "conditions": "rest stage reached"
+        },
+        {
+          "lineId": "E10.spring_b.04",
+          "stage": "bath",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "함께 와서 더 좋은 것 같아.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.spring_b.05",
+          "stage": "depart",
+          "speakerRole": "Partner",
+          "binding": "current partner",
+          "sampleNpcMd": null,
+          "text": "이제 돌아갈까? 잘 쉬었어.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        },
+        {
+          "lineId": "E10.spring_b.06",
+          "stage": "depart",
+          "speakerRole": "Player",
+          "binding": "current player",
+          "sampleNpcMd": null,
+          "text": "응. 내일은 또 내일의 하루를 보내자.",
+          "emotionRequested": 1,
+          "emotionRendered": 1,
+          "fallbackReason": null,
+          "conditions": "event stage facts committed; speaker exists"
+        }
+      ],
+      "eligibilityKo": "최대 HP 회복을 주장하지 않는 온천 휴일의 다른 말투",
+      "stageGates": {
+        "bath": "Float20 and water effects actually visible; dialogue actors face each other"
+      }
+    }
+  ],
+  "counts": {
+    "events": 10,
+    "bundles": 24,
+    "lines": 120
+  }
+}
