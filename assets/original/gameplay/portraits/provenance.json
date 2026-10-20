@@ -4,36 +4,70 @@
   "sourceSha256": "9b575358918c8da22925a27bcec9cd1d816e11252b3bf34cf609195808444414",
   "portraits": [
     {
-      "role": 1,
-      "name": "Player",
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:1",
       "bodyMdIndex": 1,
       "kaoIndex": 0,
       "expression": 0,
       "rgbaSha256": "8f70a77cd33139709321fd0b3f0e73e713e14c4a117b25ba5edef06dd645c7b5"
     },
     {
-      "role": 2,
-      "name": "Partner",
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:4",
       "bodyMdIndex": 4,
       "kaoIndex": 3,
       "expression": 0,
       "rgbaSha256": "4a50b16746ab8d6ee16c8d055018a072124a5e575b1be809ae7dc986ad78c270"
     },
     {
-      "role": 3,
-      "name": "FriendlyKecleon",
-      "bodyMdIndex": 383,
-      "kaoIndex": 373,
-      "expression": 0,
-      "rgbaSha256": "c6ce1c229430c4decf4a782a7e4f2b049ef04924a721efed701b44102aca5e60"
-    },
-    {
-      "role": 4,
-      "name": "Loudred",
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:322",
       "bodyMdIndex": 322,
       "kaoIndex": 321,
       "expression": 0,
       "rgbaSha256": "4d80cb0903005d150f0b51e48505181f1f571d21f7fc128fa5ec8711f57de6df"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:383",
+      "bodyMdIndex": 383,
+      "kaoIndex": 373,
+      "expression": 0,
+      "rgbaSha256": "c6ce1c229430c4decf4a782a7e4f2b049ef04924a721efed701b44102aca5e60"
+    }
+  ],
+  "cast": [
+    {
+      "role": 1,
+      "bodyManifest": "actors/asset-0/asset.mdpa",
+      "displayName": "이상해씨",
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:1",
+      "bodyAssetKey": "rom:EoS_NA:md:1",
+      "bodyAtlasSha256": "608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744",
+      "portraitClip": 1
+    },
+    {
+      "role": 2,
+      "bodyManifest": "actors/asset-1/asset.mdpa",
+      "displayName": "파이리",
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:4",
+      "bodyAssetKey": "rom:EoS_NA:md:4",
+      "bodyAtlasSha256": "82f935384829cc75e5be04e0a55300dbd718eb0ef377f62df9edc5064b62aa97",
+      "portraitClip": 4
+    },
+    {
+      "role": 3,
+      "bodyManifest": "actors/asset-2/asset.mdpa",
+      "displayName": "켈리몬",
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:383",
+      "bodyAssetKey": "rom:EoS_NA:monster:383",
+      "bodyAtlasSha256": "1a46ef10bdcf4f0356d69c21ccfe9d480b25a7767f00b8e4e71c8a743f6115e4",
+      "portraitClip": 383
+    },
+    {
+      "role": 4,
+      "bodyManifest": "guild/actor-109/asset.mdpa",
+      "displayName": "노공룡",
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:322",
+      "bodyAssetKey": "rom:guild:actor:109",
+      "bodyAtlasSha256": "efb5167ea57d5c9a8e0edbebf3c9076939692ef5de8024ea98381838b7f6efad",
+      "portraitClip": 322
     }
   ],
   "mapping": "explicit original body/portrait visual comparison; archive indices differ from MD and sprite indices",

@@ -1,0 +1,1 @@
+seven Korean text scenes and two speaker role/name labels have visible opaque GDI ink

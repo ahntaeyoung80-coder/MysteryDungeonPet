@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "actors": [
+    {
+      "role": 1,
+      "bodyManifest": "actors/asset-0/asset.mdpa"
+    },
+    {
+      "role": 2,
+      "bodyManifest": "actors/asset-1/asset.mdpa"
+    },
+    {
+      "role": 3,
+      "bodyManifest": "actors/asset-2/asset.mdpa"
+    },
+    {
+      "role": 4,
+      "bodyManifest": "guild/actor-109/asset.mdpa"
+    }
+  ]
+}

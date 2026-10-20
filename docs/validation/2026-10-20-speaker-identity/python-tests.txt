@@ -1,0 +1,9 @@
+test_body_selection_alone_swaps_character_portrait_and_name (tests.test_dialogue_portraits.DialogueIdentityTests.test_body_selection_alone_swaps_character_portrait_and_name) ... ok
+test_same_character_keeps_two_distinct_roles (tests.test_dialogue_portraits.DialogueIdentityTests.test_same_character_keeps_two_distinct_roles) ... ok
+test_unknown_character_has_no_previous_portrait_fallback (tests.test_dialogue_portraits.DialogueIdentityTests.test_unknown_character_has_no_previous_portrait_fallback) ... ok
+test_wrong_rom_catalogue_and_duplicate_roles_rejected (tests.test_dialogue_portraits.DialogueIdentityTests.test_wrong_rom_catalogue_and_duplicate_roles_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.853s
+
+OK

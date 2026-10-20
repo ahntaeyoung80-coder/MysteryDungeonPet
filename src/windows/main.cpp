@@ -176,12 +176,13 @@ class App {
     HWND window_ = nullptr;
     Options options_;
     std::filesystem::path directory_;
+    DialogueCast dialogueCast_;
     Assets assets_;
     std::optional<Assets> enemyAssets_, friendlyAssets_, companionAssets_, homeAssets_, propsAssets_;
     std::optional<Assets> appleAssets_,uiAssets_,portraitAssets_;
     Animator appleAnimator_;
     std::size_t appleFrame_=0;
-    std::optional<Surface> dialoguePanel_;
+    std::optional<Surface> dialoguePanel_,portraitFrame_,speakerNameplate_;
     std::vector<GuildRoom> guildRooms_;
     std::map<std::string, Assets> guildAssets_;
     struct GuildLiveActor {
@@ -564,7 +565,8 @@ class App {
             case Scale1: case Scale2: case Scale3: scale_ = id - Scale1 + 1; dirty_ = true; break;
             case Background: backgroundOn_ = !backgroundOn_; dirty_ = true; break;
             case Reload: {
-                Assets candidate = Assets::load(options_.package, &assets_);
+                Assets candidate = Assets::load(explorer_?options_.gameplayAssets / dialogueCast_.actor(PortraitRole::Player).bodyManifest:options_.package, &assets_);
+                if(explorer_)validateDialogueActor(dialogueCast_.actor(PortraitRole::Player),candidate.package,portraitAssets_->package);
                 candidate.package.frames(clip_, direction_); // Reject before replacing the last good state.
                 animator_.stop(); assets_ = std::move(candidate); decodes_ += assets_.decoded ? 1 : 0;
                 startClip(now); log("package reloaded assetKey=" + assets_.package.assetKey); break;
@@ -923,7 +925,8 @@ class App {
                 else {
                     auto it = guildAssets_.find(cue.assetFile);
                     if (it == guildAssets_.end()) {
-                        auto loaded = Assets::load(options_.gameplayAssets / cue.assetFile);
+                        auto loaded = Assets::load(options_.gameplayAssets / (cue.id==109?dialogueCast_.actor(PortraitRole::Alarm).bodyManifest:cue.assetFile));
+                        if(cue.id==109)validateDialogueActor(dialogueCast_.actor(PortraitRole::Alarm),loaded.package,portraitAssets_->package);
                         decodes_ += loaded.decoded ? 1 : 0;
                         it = guildAssets_.emplace(cue.assetFile, std::move(loaded)).first;
                     }
@@ -1147,7 +1150,8 @@ class App {
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
         if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr);
-        if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,dialoguePortraits(explorer_->state().gameplay));
+        const auto speaker=explorer_?dialoguePortraits(explorer_->state().gameplay):DialoguePortraits{};
+        if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_,*speakerNameplate_);
         std::wstring overlayText=explorer_?revealedGameplayText(explorer_->state().gameplay,utcMs()):std::wstring{};
         const bool textChanged=overlayText!=submittedText_;
         bool changed = previous != surface_.pixels;
@@ -1156,6 +1160,7 @@ class App {
         std::memcpy(dib_->bits, surface_.pixels.data(), surface_.pixels.size());
         textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,
             explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout);
+        if(speaker.speaker!=PortraitRole::None)textOverlay_.drawSpeaker(dib_->dc,dib_->bits,size_,wide(dialogueCast_.label(speaker.speaker)),speaker.speaker!=PortraitRole::Player);
         RECT rect{}; winCheck(GetWindowRect(window_, &rect) != 0, "submit rect");
         POINT position{rect.left, rect.top}, source{0, 0}; SIZE size{LONG(size_), LONG(size_)};
         BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
@@ -1170,7 +1175,8 @@ class App {
     }
 public:
     App(HINSTANCE instance, Options o) : instance_(instance), options_(std::move(o)), directory_(appDir()),
-        assets_(Assets::load(options_.exploration.empty() ? options_.package : options_.gameplayAssets / L"actors/asset-0/asset.mdpa")), surface_(PhysicalSize, PhysicalSize),
+        dialogueCast_(options_.exploration.empty()?DialogueCast{}:loadDialogueCast(options_.gameplayAssets / L"portraits/cast.mddc")),
+        assets_(Assets::load(options_.exploration.empty() ? options_.package : options_.gameplayAssets / dialogueCast_.actor(PortraitRole::Player).bodyManifest)), surface_(PhysicalSize, PhysicalSize),
         clip_(options_.clip), direction_(options_.direction), scale_(options_.scale), loop_(options_.loop) {
         assets_.package.frames(clip_, direction_);
         if (options_.scenario == L"idle") clip_ = 7;
@@ -1189,8 +1195,8 @@ public:
         metrics_ << "elapsed_seconds,cpu_one_core_percent,cpu_all_cores_percent,logical_cores,working_set_bytes,private_bytes,peak_working_set_bytes,render_submissions,decode_count,marker_count,finite_finish_count,skipped_cycles,process_handles,gdi_objects,render_paused,submissions_while_paused,dpi,physical_size,integer_scale,window_x,window_y,switch_count,final_sample," << PlaybackSample::columns << '\n';
         decodes_ = assets_.decoded ? 1 : 0;
         if (!options_.exploration.empty()) {
-            companionAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-1/asset.mdpa");
-            friendlyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-2/asset.mdpa");
+            companionAssets_ = Assets::load(options_.gameplayAssets / dialogueCast_.actor(PortraitRole::Partner).bodyManifest);
+            friendlyAssets_ = Assets::load(options_.gameplayAssets / dialogueCast_.actor(PortraitRole::Friendly).bodyManifest);
             enemyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-3/asset.mdpa");
             decodes_+=friendlyAssets_->decoded?1:0;
             decodes_+=companionAssets_->decoded?1:0;
@@ -1199,8 +1205,13 @@ public:
             appleAssets_=Assets::load(options_.gameplayAssets / L"effects/apple.mdpa");
             uiAssets_=Assets::load(options_.gameplayAssets / L"ui/ui.mdpa");
             portraitAssets_=Assets::load(options_.gameplayAssets / L"portraits/portraits.mdpa");
+            validateDialogueActor(dialogueCast_.actor(PortraitRole::Player),assets_.package,portraitAssets_->package);
+            validateDialogueActor(dialogueCast_.actor(PortraitRole::Partner),companionAssets_->package,portraitAssets_->package);
+            validateDialogueActor(dialogueCast_.actor(PortraitRole::Friendly),friendlyAssets_->package,portraitAssets_->package);
             decodes_+=portraitAssets_->decoded?1:0;
             dialoguePanel_=originalDialoguePanel(*uiAssets_->atlas,uiAssets_->package);
+            portraitFrame_=originalWindowPanel(*uiAssets_->atlas,uiAssets_->package,56,56);
+            speakerNameplate_=originalWindowPanel(*uiAssets_->atlas,uiAssets_->package,112,24);
             decodes_+=appleAssets_->decoded?1:0;decodes_+=uiAssets_->decoded?1:0;
             decodes_+=propsAssets_->decoded?1:0;
             guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");

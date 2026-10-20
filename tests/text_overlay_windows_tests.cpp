@@ -33,6 +33,20 @@ int main() {try {
         }
         if(ink<50) throw std::runtime_error("text missing from actual GDI raster");
     }
+    for(const auto right:{false,true}) {
+        std::memset(bits,0,200*200*4);
+        renderer.drawSpeaker(dc,bits,200,right?L"동료 · 이상해씨":L"나 · 파이리",right);
+        const auto* p=static_cast<const uint8_t*>(bits);unsigned ink=0;const unsigned left=right?16:72;
+        for(unsigned y=0;y<200;++y)for(unsigned x=0;x<200;++x) {
+            const auto offset=(y*200+x)*4;
+            if(p[offset+2]>100) {
+                if(p[offset+3]!=255 || x<left+8 || x>=left+105 || y<124 || y>=141)
+                    throw std::runtime_error("speaker label outside original nameplate or transparent");
+                ++ink;
+            }
+        }
+        if(ink<50)throw std::runtime_error("speaker role/name ink missing");
+    }
     SelectObject(dc,previous);DeleteObject(bitmap);DeleteDC(dc);
-    std::cout<<"seven Korean text scenes have visible opaque GDI ink\n";
+    std::cout<<"seven Korean text scenes and two speaker role/name labels have visible opaque GDI ink\n";
 } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}}

@@ -124,8 +124,11 @@
 
 예를 들어 `L"좋은 아침! 함께 출발하자."`를 `L"잘 잤어? 다녀올게!"`로 바꾸고 EXE를 갱신한다. 표시 조건인 `g.life`, `g.sceneBeat`는 그대로 둬도 된다. 긴 문장은 200px 창에서 잘릴 수 있으므로 두 줄 안에 들어오는 길이부터 시도한다. 원작 대사 추출물이 아니라 현재 런타임에 직접 적힌 문구다.
 
-2026-10-20 추가: 우호 NPC 대화에는 주인공·녹색 켈리몬, 취침·아침 인사와 탐험 중 동료 대화에는 주인공·동료, 기상 알람에는 노공룡의 원작 초상화를 표시한다. `src/core/gameplay_scene.cpp`의 `dialoguePortraits`가 등장 인물·발화자를 고르고 `dialoguePortraitOverlay`가 텍스트박스 바로 위에 원본40×40px로 그린다. 초상화는 카메라·던전 확대 배율과 별개이며 말하는 인물의 테두리를 강조한다. 원본 선택·인덱스는 `tools/prepare_dialogue_portraits.py`, 실행 자산은 `assets/original/gameplay/portraits/`에 있다. MD/몸체 스프라이트 번호로 KAO 인덱스를 추정하지 않는다.
+2026-10-20 화자 표시: **현재 말하는 인물의 초상화 한 개만** 텍스트박스 위에 표시한다. 주인공은 왼쪽, 상대는 오른쪽이며 같은 원작8px 모서리/변 타일로 초상화56×56·이름표112×24를 만든다. 그림은 내부40×40 원본 픽셀을 유지하고 이름표는 `나 · 이상해씨`, `동료 · 파이리`, `NPC · 켈리몬`처럼 역할과 실제 캐릭터 이름을 함께 표시한다. 선택은 `src/core/gameplay_scene.cpp`의 `dialoguePortraits`, 테두리는 `originalWindowPanel`, 이름 글자는 `src/windows/text_overlay.cpp`의 `drawSpeaker`다.
 
+**플레이어/동료를 바꿀 때:** `assets/original/gameplay/portraits/cast.json`의 해당 역할 `bodyManifest`를 실제 몸체 패키지 경로로 바꾼다. 초상화 번호와 이름을 역할에 직접 적지 않는다. `characters.json`은 원본 ROM·판본·MD record별 KAO 인덱스/이름의 검증된 목록이며 MD/도감/스프라이트 번호와 KAO 인덱스를 같은 값으로 추정하지 않는다. 새 캐릭터는 필요한 몸체 동작을 추출하고 이 목록에 검증된 매핑을 추가한다. 이어 `python -m tools.prepare_dialogue_portraits --out <새 출력 폴더>`로 생성한 선택 자산 전체를 검토해 `portraits/`에 반영하고 EXE를 빌드한다. 실행 중 선택 UI나 hot swap을 추가한 것은 아니다.
+
+대화 역할 ID(1/2/3/4), 배우 instance ID(주인공0/예약 동료 ID/NPC instance/알람109), 실제 캐릭터 ID(`ROM hash + 판본 + MD record`), portrait clip ID(MD record), KAO 인덱스를 분리한다. 런타임은 `cast.mddc`의 같은 연결에서 몸체·초상화·이름을 고르며 body assetKey/atlas hash와 portrait character ID를 검사한다. 등록되지 않은 캐릭터나 서로 다른 조합은 명시 오류로 중단한다. 기본 캐릭터를 대신 표시하는 fallback은 없다.
 탐험 중 동료 대화는 `gameplay.cpp`의 `beginCompanionDialogue`에서 설정한다. 첫20~28걸음 후32걸음 구간마다 한 번, 인접한 동료와 안전한 정지 시점에 서로 바라본다. 적 근처·저체력·기절·계단·진행 중 행동/이동에서는 미룬다. 대화 문구는 `gameplayText`의 `companionDialogue` 분기, 각 발화 시간은 `kDialogueMs = 1600`이다. 기존 NPC 인사는 각1200ms를 유지한다. 기상 인사도 최소1600ms 읽기 시간을 확보한다.
 
 ### 3.2 글꼴·크기·위치·텍스트 상자

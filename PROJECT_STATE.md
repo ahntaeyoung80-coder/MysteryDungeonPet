@@ -15,4 +15,4 @@
 
 ## 진행·바로 다음 작업
 
-대화창 위에 주인공/우호 NPC/동료/노공룡의 원작 초상화를 연결했고 취침·아침 인사·알람에도 표시한다. 탐험 중에는 안전한 인접 정지 경계에서 가끔 동료를 돌아보고 두 발화 후 기존 목표를 이어간다. 관련5개 검사와 새 PE Wine10의7개 실제 장면에서 원본 초상화 픽셀·발화자 강조·이동 정지/재개를 확인했다. 소스·선택 자산·root EXE를 함께 반영하며 전체 메모리 검사는 실행하지 않았다. 자동 CI는 배포 후 백그라운드이고 native Windows/사용자 Windows11은 pending이다. 다음은 사용자 Windows11 표시와 B의 남은 인수 기준 확인이다. [최신 로그](docs/logs/2026-10-20-dialogue-portraits.md), [검증](docs/validation/2026-10-20-dialogue-portraits/summary.json).
+대화 중에는 현재 화자 한 명의 초상화와 역할/이름표만 원작 대화창 타일 프레임에 표시한다. 기존 역할 고정 얼굴의 교체 위험을 보완해 역할/instance/실제 캐릭터 ID를 분리했고 같은 cast binding에서 몸체·초상화·이름을 선택한다. Linux 관련2/2·Python ID 회귀4/4·Wine GDI7장면/이름표2개·최종 새 PE9장면에서 단독 화자/원작 테두리와 실제 플레이어·동료 교환을 확인했다. 소스·선택 자산·root EXE를 함께 반영하며 전체 메모리 검사는 실행하지 않았다. 자동 CI는 배포 후 백그라운드이고 native Windows/사용자 Windows11은 pending이다. 다음은 Windows11 표시와 B의 남은 인수 기준 확인이다. [최신 로그](docs/logs/2026-10-20-speaker-identity.md), [검증](docs/validation/2026-10-20-speaker-identity/summary.json).

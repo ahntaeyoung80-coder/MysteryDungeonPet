@@ -1,0 +1,89 @@
+{
+  "platform": "MinGW GCC14.2 static x64 Release; Wine10/Xvfb; test-only unlock/font substitute",
+  "screenshots": {
+    "npc-player": {
+      "characterMdIndex": 1,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    },
+    "npc-reply": {
+      "characterMdIndex": 383,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    },
+    "companion-player": {
+      "characterMdIndex": 1,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    },
+    "companion-reply": {
+      "characterMdIndex": 4,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    },
+    "bed": {
+      "characterMdIndex": 1,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    },
+    "morning": {
+      "characterMdIndex": 1,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    },
+    "alarm": {
+      "characterMdIndex": 322,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    },
+    "swapped-player": {
+      "characterMdIndex": 4,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    },
+    "swapped-partner": {
+      "characterMdIndex": 1,
+      "onlySpeaker": true,
+      "originalPortraitPixels": true,
+      "originalWindowBorder": true,
+      "originalNameplateBorder": true
+    }
+  },
+  "motion": {
+    "npc": {
+      "dialogueFrames": 110,
+      "pausedAndResumed": true
+    },
+    "companion": {
+      "dialogueFrames": 130,
+      "pausedAndResumed": true
+    },
+    "swapped": {
+      "dialogueFrames": 132,
+      "pausedAndResumed": true
+    }
+  },
+  "nativeTests": "2/2",
+  "pythonIdentityTests": "4/4",
+  "gdi": "7 dialogue scenes + 2 role/name labels pass",
+  "runtimeSha256": "b755f9a185dc67ee9b51943dc6b502d0d752f6b089b4d660bc80c16fbae982d5",
+  "nativeWindowsExecution": "pending",
+  "fullMemorySuite": "not run for scoped UI/asset identity change",
+  "ci": "background after release"
+}

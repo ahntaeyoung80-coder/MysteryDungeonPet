@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "edition": "EoS_NA",
+  "characters": [
+    {
+      "mdIndex": 1,
+      "kaoIndex": 0,
+      "displayName": "이상해씨"
+    },
+    {
+      "mdIndex": 4,
+      "kaoIndex": 3,
+      "displayName": "파이리"
+    },
+    {
+      "mdIndex": 383,
+      "kaoIndex": 373,
+      "displayName": "켈리몬"
+    },
+    {
+      "mdIndex": 322,
+      "kaoIndex": 321,
+      "displayName": "노공룡"
+    }
+  ]
+}

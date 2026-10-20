@@ -1,8 +1,10 @@
 #include "core/gameplay_scene.hpp"
+#include "core/exploration_io.hpp"
 #include <algorithm>
 #include <cstdlib>
 #include <cmath>
 #include <stdexcept>
+#include <set>
 namespace pet {
 bool partyHealing(const GameplayState& g) {
     return g.independentParty && std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return a.kind==PartyActionKind::Berry && !a.finished;});
@@ -31,51 +33,84 @@ std::size_t loopFrameAt(const Package& p,std::uint32_t clip,std::uint64_t elapse
     return frames.size()-1;
 }
 Surface originalDialoguePanel(const Surface& atlas,const Package& package) {
+    return originalWindowPanel(atlas,package,184,48);
+}
+Surface originalWindowPanel(const Surface& atlas,const Package& package,unsigned width,unsigned height) {
+    if(width<24 || height<24 || width>200 || height>200 || width%8 || height%8)
+        throw std::runtime_error("original window requires 8px tile dimensions");
     const auto& tiles=package.frames(0,0);
-    Surface panel(184,48);std::vector<Layer> layers;
+    Surface panel(width,height);std::vector<Layer> layers;
     constexpr unsigned ids[3][3]{{2,3,4},{5,1,6},{7,8,9}};
-    for(unsigned y=0;y<48;y+=8)for(unsigned x=0;x<184;x+=8) {
-        const auto& tile=tiles.at(ids[y==0?0:y==40?2:1][x==0?0:x==176?2:1]);
+    for(unsigned y=0;y<height;y+=8)for(unsigned x=0;x<width;x+=8) {
+        const auto& tile=tiles.at(ids[y==0?0:y==height-8?2:1][x==0?0:x==width-8?2:1]);
         layers.push_back({&atlas,tile.rect,{0,0},{int32_t(x),int32_t(y)}});
     }
     compose(panel,layers,{0,0},1);return panel;
 }
+const DialogueActor& DialogueCast::actor(PortraitRole role) const {
+    const auto found=std::find_if(actors.begin(),actors.end(),[&](const auto& a){return a.role==role;});
+    if(found==actors.end())throw std::runtime_error("dialogue role has no character binding");
+    return *found;
+}
+std::string DialogueCast::label(PortraitRole role) const {
+    const char* prefix=role==PortraitRole::Player?"나 · ":role==PortraitRole::Partner?"동료 · ":role==PortraitRole::Friendly?"NPC · ":"";
+    return prefix+actor(role).displayName;
+}
+DialogueCast loadDialogueCast(const std::filesystem::path& path) {
+    const auto bytes=readFile(path,8192);detail::Reader r(bytes);
+    if(r.u32()!=0x4344444d || r.u32()!=1 || r.count(4)!=4)throw std::runtime_error("invalid dialogue cast header");
+    DialogueCast cast;std::set<unsigned> roles;
+    for(unsigned i=0;i<4;++i) {
+        DialogueActor a;a.role=static_cast<PortraitRole>(r.count(4));a.portraitClip=r.count(65535);
+        a.characterId=r.str();a.bodyAssetKey=r.str();a.bodyAtlasSha256=r.str();a.bodyManifest=r.str();a.displayName=r.str();
+        if(a.role==PortraitRole::None || !roles.insert(static_cast<unsigned>(a.role)).second || !a.portraitClip ||
+           a.characterId.empty() || a.bodyAssetKey.empty() || a.displayName.empty() || a.bodyAtlasSha256.size()!=64 ||
+           !std::all_of(a.bodyAtlasSha256.begin(),a.bodyAtlasSha256.end(),[](char c){return (c>='0' && c<='9') || (c>='a' && c<='f');}))
+            throw std::runtime_error("invalid dialogue cast identity");
+        const auto manifest=std::filesystem::u8path(a.bodyManifest);
+        if(a.bodyManifest.empty() || manifest.is_absolute() || a.bodyManifest.find_first_of("\\:")!=std::string::npos)
+            throw std::runtime_error("invalid dialogue body path");
+        for(const auto& part:manifest)if(part==".." || part==".")throw std::runtime_error("unsafe dialogue body path");
+        cast.actors.push_back(std::move(a));
+    }
+    r.end();return cast;
+}
+void validateDialogueActor(const DialogueActor& actor,const Package& body,const Package& portraits) {
+    if(actor.bodyAssetKey!=body.assetKey || actor.bodyAtlasSha256!=body.pngSha256 || portraits.resolve(actor.portraitClip).sourceMetadata!=actor.characterId)
+        throw std::runtime_error("dialogue body/portrait character identity mismatch: "+actor.characterId);
+}
 DialoguePortraits dialoguePortraits(const GameplayState& g) {
     if(g.life==LifePhase::Dialogue) {
         const auto other=companionDialogue(g)?PortraitRole::Partner:PortraitRole::Friendly;
-        return {PortraitRole::Player,other,g.dialogueStage==DialogueStage::Player?PortraitRole::Player:other};
+        return g.dialogueStage==DialogueStage::Player?DialoguePortraits{PortraitRole::Player,0}:
+            DialoguePortraits{other,g.enemyInstance};
     }
     if((g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) ||
        (g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace))
-        return {PortraitRole::Player,PortraitRole::Partner,PortraitRole::Player};
+        return {PortraitRole::Player,0};
     if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)
-        return {PortraitRole::None,PortraitRole::Loudred,PortraitRole::Loudred};
+        return {PortraitRole::Alarm,109};
     return {};
 }
-void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& package,DialoguePortraits portraits) {
-    auto draw=[&](PortraitRole role,unsigned left) {
-        if(role==PortraitRole::None)return;
-        const auto& rect=package.frames(static_cast<unsigned>(role),0).front().rect;
-        constexpr unsigned top=100,border=2,size=40;
-        if(rect.w!=size || rect.h!=size || rect.x<0 || rect.y<0 ||
-           uint64_t(rect.x)+size>atlas.width || uint64_t(rect.y)+size>atlas.height)
-            throw std::runtime_error("dialogue portrait must be a valid 40x40 atlas region");
-        for(unsigned y=0;y<size+2*border && top+y<s.height;++y)
-            for(unsigned x=0;x<size+2*border && left+x<s.width;++x) {
-                const auto dst=((top+y)*s.width+left+x)*4;
-                const bool frame=x<border || y<border || x>=size+border || y>=size+border;
-                if(frame) {
-                    const bool active=role==portraits.speaker;
-                    s.pixels[dst]=active?70:72;s.pixels[dst+1]=active?200:80;s.pixels[dst+2]=active?248:88;s.pixels[dst+3]=255;
-                } else {
-                    const auto src=((rect.y+int(y-border))*atlas.width+rect.x+x-border)*4;
-                    const auto inv=255-atlas.pixels[src+3];
-                    for(unsigned ch=0;ch<3;++ch)s.pixels[dst+ch]=uint8_t(atlas.pixels[src+ch]+(24*inv+127)/255);
-                    s.pixels[dst+3]=255;
-                }
-            }
+void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& package,DialoguePortraits portraits,
+    const DialogueCast& cast,const Surface& frame,const Surface& nameplate) {
+    if(portraits.speaker==PortraitRole::None)return;
+    const auto& actor=cast.actor(portraits.speaker);
+    const auto& rect=package.frames(actor.portraitClip,0).front().rect;
+    if(package.resolve(actor.portraitClip).sourceMetadata!=actor.characterId || rect.w!=40 || rect.h!=40 ||
+       rect.x<0 || rect.y<0 || uint64_t(rect.x)+40>atlas.width || uint64_t(rect.y)+40>atlas.height)
+        throw std::runtime_error("invalid dialogue portrait character/region");
+    auto blit=[&](const Surface& source,Rect area,unsigned left,unsigned top) {
+        for(unsigned y=0;y<unsigned(area.h) && top+y<s.height;++y)for(unsigned x=0;x<unsigned(area.w) && left+x<s.width;++x) {
+            const auto src=((area.y+y)*source.width+area.x+x)*4,dst=((top+y)*s.width+left+x)*4;
+            const auto inv=255-source.pixels[src+3];
+            for(unsigned ch=0;ch<4;++ch)s.pixels[dst+ch]=uint8_t(source.pixels[src+ch]+(s.pixels[dst+ch]*inv+127)/255);
+        }
     };
-    draw(portraits.left,8);draw(portraits.right,148);
+    const bool player=portraits.speaker==PortraitRole::Player;const unsigned left=player?8:136;
+    blit(frame,{0,0,int32_t(frame.width),int32_t(frame.height)},left,88);
+    blit(atlas,rect,left+8,96);
+    blit(nameplate,{0,0,int32_t(nameplate.width),int32_t(nameplate.height)},player?72:16,120);
 }
 bool guildAppleVisible(const GameplayState& g) {
     return g.homeScene && !bedroomScene(g);

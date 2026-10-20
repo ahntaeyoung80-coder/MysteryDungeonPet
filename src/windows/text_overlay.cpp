@@ -8,6 +8,19 @@ TextOverlay::TextOverlay():font_(CreateFontW(-12,0,0,0,FW_NORMAL,FALSE,FALSE,FAL
     if(!font_) throw std::runtime_error("text font creation failed");
 }
 TextOverlay::~TextOverlay() {DeleteObject(font_);}
+void TextOverlay::drawSpeaker(HDC dc,void* bits,unsigned size,const std::wstring& label,bool right) const {
+    if(label.empty())return;
+    const int left=right?16:72;
+    const auto oldFont=SelectObject(dc,font_);SetBkMode(dc,TRANSPARENT);
+    RECT rect{left+8,125,left+104,140};auto shadow=rect;OffsetRect(&shadow,1,1);
+    SetTextColor(dc,RGB(0,0,0));DrawTextW(dc,label.c_str(),-1,&shadow,DT_LEFT|DT_SINGLELINE|DT_NOPREFIX|DT_END_ELLIPSIS);
+    SetTextColor(dc,RGB(255,255,255));const auto height=DrawTextW(dc,label.c_str(),-1,&rect,DT_LEFT|DT_SINGLELINE|DT_NOPREFIX|DT_END_ELLIPSIS);
+    const auto flushed=GdiFlush();SelectObject(dc,oldFont);
+    if(!height || !flushed)throw std::runtime_error("speaker label rasterization failed");
+    auto* pixels=static_cast<std::uint8_t*>(bits);
+    for(unsigned y=124;y<std::min(size,141U);++y)for(unsigned x=unsigned(left+8);x<std::min(size,unsigned(left+105));++x)
+        pixels[(y*size+x)*4+3]=255;
+}
 void TextOverlay::draw(HDC dc,void* bits,unsigned size,const std::wstring& text,bool blackout) const {
     if(text.empty()) return;
     const auto oldFont=SelectObject(dc,font_);
