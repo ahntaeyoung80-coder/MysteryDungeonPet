@@ -1,0 +1,1 @@
+PASS: 180 map records, 1795 floors + 6 explicit range failures, 521 body/8-direction core clip references, 1400 items/217 image combinations, 69x6 talk groups/1284 string references, map aggregates and local Markdown links

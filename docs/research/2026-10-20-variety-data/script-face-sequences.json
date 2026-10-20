@@ -1,0 +1,46 @@
+[
+  {
+    "path": "SCRIPT/G01P06B/c00a0601.ssb",
+    "sha256": "bb70db2ae25bd55dad218b1a76d4b555424c799f16f4f4ad2016534566d12851",
+    "faceOps": [
+      "message_ResetActor();",
+      "message_Talk(<encoded message operands omitted>);",
+      "message_Talk(<encoded message operands omitted>);",
+      "message_Talk(<encoded message operands omitted>);",
+      "message_Talk(<encoded message operands omitted>);"
+    ],
+    "textStatus": "not decoded; plaintext omitted"
+  },
+  {
+    "path": "SCRIPT/G01P07A/c00a0201.ssb",
+    "sha256": "f4579256f7fe6df58cec239b90d6c0e4f0840c67ab8fd6f985bc096e3b3b37eb",
+    "faceOps": [
+      "message_SetFace(ACTOR_NPC_DOGOOMU, FACE_NORMAL, FACE_POS_BOTTOM_L_FACEINW);",
+      "message_Talk(<encoded message operands omitted>);",
+      "message_SetFace(ACTOR_ATTENDANT1, FACE_DIZZY, FACE_POS_STANDARD);",
+      "message_SwitchTalk(<encoded message operands omitted>);"
+    ],
+    "textStatus": "not decoded; plaintext omitted"
+  },
+  {
+    "path": "SCRIPT/D10P41A/m10a0901.ssb",
+    "sha256": "2f5703605f37ca89dcfeab753e15921d2935b603c3ad4249d5fa747e55cd9d45",
+    "faceOps": [
+      "back_SetDungeonBanner(16, 0);",
+      "message_SetFace(ACTOR_ATTENDANT1, FACE_WORRIED, FACE_POS_STANDARD);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SetFace(ACTOR_ATTENDANT1, FACE_SURPRISED, FACE_POS_STANDARD);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SetFace(ACTOR_ATTENDANT1, FACE_STUNNED, FACE_POS_STANDARD);",
+      "message_SwitchTalk(<encoded message operands omitted>);",
+      "message_SwitchTalk(<encoded message operands omitted>);"
+    ],
+    "textStatus": "not decoded; plaintext omitted"
+  }
+]

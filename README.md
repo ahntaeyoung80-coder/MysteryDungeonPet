@@ -18,5 +18,7 @@
 - [A/B/C 개발 계획·완료 기준](docs/DEVELOPMENT_PIPELINE.md)
 - [개발 맥락·주요 이력](docs/PROJECT_HISTORY.md)
 - [동료 AI 후속 작업 계획](docs/PARTY_AI_WORK_PLAN.md)
+- [다양성 확장용 원작 맵·출현·아이템·에셋 자료](docs/research/2026-10-20-variety-original-data.md)
+- [상황별 대사 초안·말투·감정·초상화 분류](docs/research/2026-10-20-variety-dialogue-catalogue.md)
 - [직접 수정·빌드 안내](QUICK_EDIT_GUIDE.md)
 - [설계 결정](docs/DECISIONS.md) · [작업 로그](docs/logs/)

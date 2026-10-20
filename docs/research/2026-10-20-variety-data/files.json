@@ -1,0 +1,70 @@
+{
+  "MAP_INDEX.md": {
+    "bytes": 57539,
+    "sha256": "20e05bcf5a68f3150ac401546aba23e4b5e390815a8a46f2320f346967a4acb5"
+  },
+  "README.md": {
+    "bytes": 3303,
+    "sha256": "a6a3e24c193884d586f9a01585250de2fe6f1dc63738023920dc867f2ad05642"
+  },
+  "audit-summary.json": {
+    "bytes": 17541,
+    "sha256": "ce156990fad9848a36be14f612efd3351fc03bb5cff89f326c018f6a6aeebc71"
+  },
+  "body-availability.json": {
+    "bytes": 843002,
+    "sha256": "6316d0dd9467520fddfb458336fccb9f24bbda7bf6423884586f35c07738ceaf"
+  },
+  "dialogue-source-index.json": {
+    "bytes": 275126,
+    "sha256": "3870f5531689e81e30be172cb5aef76d025f584518fb0ea3585692619836b8e5"
+  },
+  "floor-profiles.jsonl.gz": {
+    "bytes": 1427834,
+    "sha256": "c0c17a39bff994322fbf5448902547f525fde6354ea86bb03c9d564ded3ae354"
+  },
+  "item-sprites.png": {
+    "bytes": 42684,
+    "sha256": "06be77b0a0bbd577eb1019c17729e789cf531183291f8d5c7a62977446a3564b"
+  },
+  "items.csv": {
+    "bytes": 173969,
+    "sha256": "30da4ec5fd655c3bafd8e70e430bf25d4bf9ca76a2e12b1dfb7b3dcca0ff1cce"
+  },
+  "map-encounters.csv": {
+    "bytes": 350494,
+    "sha256": "348e9c52f2ec42d0a115bacf480a7579b9e658a3c5c8289ce8e5f55b89d4089d"
+  },
+  "maps.json": {
+    "bytes": 1105372,
+    "sha256": "8438ef90804b79a0f911bc5fb392f1f32a501272a090e05d019535e0db08343b"
+  },
+  "original-portrait-moods.png": {
+    "bytes": 223144,
+    "sha256": "d55e92fd862ba180921c3fc42d7ba0d7b2707551508a8da927758f4a3ec8c53b"
+  },
+  "portrait-availability.csv": {
+    "bytes": 51137,
+    "sha256": "ae12e77b4a5cf0f9aedc0dd071040415f7053f1ca5b65e8a803c898a44b9ae52"
+  },
+  "runtime-map-comparison.json": {
+    "bytes": 2483,
+    "sha256": "7fe809e57c6f74bfc949c071cd716b4a3885387b85398bf9d964730b2707aa5e"
+  },
+  "script-actors.csv": {
+    "bytes": 773974,
+    "sha256": "4c2fc76aa2df07c6e5a5691688502cf09055e70f99a72f731db35907e7bb8657"
+  },
+  "script-face-sequences.json": {
+    "bytes": 2100,
+    "sha256": "b16d97edae5414cd4510c7b7aedeafc35cf1252948d2a43105a1f5fd9bc59f9b"
+  },
+  "validation.json": {
+    "bytes": 550,
+    "sha256": "d98de9cb63ea5575816e09073ec6b3dd98066aa0abe679e8520229ebd81dc010"
+  },
+  "validation.txt": {
+    "bytes": 223,
+    "sha256": "ebd11408b2f9a684adf4f2c80251650f70c72ea768d79e2aef18432dabe3d5ed"
+  }
+}

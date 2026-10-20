@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "scope": "read-only data/schema/reference/count/Markdown-target checks; no C++ tests or GUI/build rerun",
+  "sourceAssetsExeChanged": false,
+  "basisCommit": "8ca52153c0cf2d4f0f6e17259793c92601162d62",
+  "maps": 180,
+  "validLogicalFloors": 1795,
+  "explicitRangeErrors": 6,
+  "bodyMdRecords": 521,
+  "items": 1400,
+  "spritePalettePairsDecoded": 217,
+  "talkGroups": 69,
+  "talkTypes": 6,
+  "talkReferences": 1284,
+  "localMarkdownTargets": "pass after writing task log",
+  "runtimePackageComparisons": [
+    0,
+    15
+  ]
+}

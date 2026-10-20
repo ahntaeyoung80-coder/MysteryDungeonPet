@@ -1,0 +1,132 @@
+[
+  {
+    "dungeonId": 0,
+    "floorCount": 3,
+    "assetVersion": "67a33aa911a679e6b16e14442f267d5221734c72008529a85ce779fc533bf893",
+    "packageSha256": "d35e7b0603a52540e68a24d54f77888b06b2815e8a8c6f868032b8dfeb963558",
+    "profilesMatchReadOnlyRomNormalization": true,
+    "floors": [
+      {
+        "localFloor": 0,
+        "monsterIds": [
+          16,
+          191,
+          293,
+          425
+        ],
+        "floorItemCandidates": 3
+      },
+      {
+        "localFloor": 1,
+        "monsterIds": [
+          16,
+          191,
+          293,
+          425
+        ],
+        "floorItemCandidates": 3
+      },
+      {
+        "localFloor": 2,
+        "monsterIds": [
+          16,
+          102,
+          191,
+          293,
+          425
+        ],
+        "floorItemCandidates": 11
+      }
+    ]
+  },
+  {
+    "dungeonId": 15,
+    "floorCount": 7,
+    "assetVersion": "06e80ef75e7693648644ed9811c60094be6783d3d2d323a7a311af5f287c2359",
+    "packageSha256": "539da061971262286524b13acb3e8361062b78dccc97a73a973a22429471868b",
+    "profilesMatchReadOnlyRomNormalization": true,
+    "floors": [
+      {
+        "localFloor": 0,
+        "monsterIds": [
+          83,
+          193,
+          237,
+          240,
+          341,
+          342,
+          437
+        ],
+        "floorItemCandidates": 106
+      },
+      {
+        "localFloor": 1,
+        "monsterIds": [
+          126,
+          237,
+          240,
+          341,
+          342,
+          437
+        ],
+        "floorItemCandidates": 106
+      },
+      {
+        "localFloor": 2,
+        "monsterIds": [
+          126,
+          237,
+          240,
+          341,
+          342,
+          437
+        ],
+        "floorItemCandidates": 106
+      },
+      {
+        "localFloor": 3,
+        "monsterIds": [
+          126,
+          237,
+          240,
+          341,
+          342
+        ],
+        "floorItemCandidates": 106
+      },
+      {
+        "localFloor": 4,
+        "monsterIds": [
+          126,
+          237,
+          240,
+          341,
+          342
+        ],
+        "floorItemCandidates": 106
+      },
+      {
+        "localFloor": 5,
+        "monsterIds": [
+          126,
+          237,
+          240,
+          341,
+          342
+        ],
+        "floorItemCandidates": 106
+      },
+      {
+        "localFloor": 6,
+        "monsterIds": [
+          126,
+          237,
+          240,
+          341,
+          342
+        ],
+        "floorItemCandidates": 106
+      }
+    ]
+  }
+]
