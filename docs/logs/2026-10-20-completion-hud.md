@@ -4,7 +4,7 @@
 
 사용자는 명찰 제거, 각 맵의 원작 종료 장소에서 성공 문구 후 귀가, 우상단 `[맵이름] - 1F` 표시를 요청했다. 진행 중 식사 장면의 마지막1초를 잘라 기존7초에서6초로 하되 애니메이션을 압축하지 않도록 확정했다. 이전 화자 단독 표시·캐릭터 ID 교체 점검은 유지한다.
 
-08:01:38 UTC 착수 때 원작 종료 장소 조사5~10분, 구현15~25분, 관련 검사·실제 EXE5~10분을 보고했다. 08:25:10까지23분32초 경과했다. 자료 조사·구현·관련 검사·Wine 실행과 문서 작성이 겹쳤으므로 항목별 순수 시간을 임의 분리하지 않는다. 전체 CI 완료는 배포 조건으로 두지 않고 push 뒤 백그라운드다. 이번 fetch에서 실제 origin/work는6e54e2d였고 기존 로컬 b48fb0c와 함께 반영한다.
+08:01:38 UTC 착수 때 원작 종료 장소 조사5~10분, 구현15~25분, 관련 검사·실제 EXE5~10분을 보고했다. 08:25:10까지23분32초 경과했다. 자료 조사·구현·관련 검사·Wine 실행과 문서 작성이 겹쳤으므로 항목별 순수 시간을 임의 분리하지 않는다. 전체 CI 완료는 배포 조건으로 두지 않고 push 뒤 백그라운드다. 로컬의 origin/work 추적 ref가6e54e2d에 남아 있어 조사 후 확인하니 fetch refspec이 main만 추적하고 있었다. 명시 fetch의 FETCH_HEAD와 연결된 GitHub ref로 실제 원격을 확인했으며, work 추적 refspec을 추가했다. 원격 push는 기존 b48fb0c→이번18d236d로 반영됐다.
 
 ## 원작 확인·구현
 
@@ -23,3 +23,7 @@
 - 전체 메모리/전체 통합 검사는 실행하지 않았다. 이번 변경은 완료 상태 저장·장면에 관련된 회귀와 실제 EXE를 먼저 확인하는 사용자 배포 지시를 따른다. 최종 EXE 로그에 이미 준비된 HomeScene도 기록하도록 조정해 기존 native GUI 검증 계약을 유지했고 최종 EXE7실행을 다시 확인했다. native MSVC/사용자 Windows11과 push CI는 이 로그 작성 시 pending이다.
 
 검증: [요약](../validation/2026-10-20-completion-hud/summary.json), [원작 연결](../validation/2026-10-20-completion-hud/source-audit.json), [최종 완료/식사 검사](../validation/2026-10-20-completion-hud/completion-gameplay-tests.txt), [저장 이행](../validation/2026-10-20-completion-hud/snapshot-transition-tests.txt), [GDI](../validation/2026-10-20-completion-hud/gdi-tests.txt). 다음은 사용자 Windows11 표시 확인과 B의 남은 인수 기준이다.
+
+## 원격 반영·실측 마감
+
+08:26:18 UTC에 기능18d236d의 push CI가 시작됐다. 08:26:19 조회 기준 착수부터24분41초 경과했으며 실제 GitHub work ref가18d236d7356fc8e9acc713f86edd4396b3739103인 것을 연결 도구로 확인했다. [CI39393393693](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39393393693)는 in_progress로 완료를 기다리지 않는다. 이 마감 기록만 별도 docs commit `[skip ci]`로 반영해 전체 CI 중복 실행을 막는다. 별도 CI 대기 시간은 없고 진행 중 로컬 검사·빌드·Wine 대기는 위 실측 경과에 포함된다. GDI 캡처의 CRLF 공백 검사를 정규화한 뒤 diff 검사도 통과했다. 로컬 재사용 도구 컨테이너는 삭제하지 않고 정지한다.

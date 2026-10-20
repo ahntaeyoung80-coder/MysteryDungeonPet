@@ -83,5 +83,9 @@
   "gdi": "8 Korean text scenes including success + 3 map/floor labels passed",
   "nativeWindows11": "pending",
   "fullMemorySuite": "not run; scoped related tests and actual EXE first",
-  "ci": "background after push"
+  "ci": {
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39393393693",
+    "status": "in_progress",
+    "commit": "18d236d7356fc8e9acc713f86edd4396b3739103"
+  }
 }
