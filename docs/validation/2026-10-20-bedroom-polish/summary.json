@@ -24,5 +24,7 @@
   "runtimeSha256": "720b8734d25d97b0f6c7108c5bd173dc5fc8d127f3f883bb088e117efc6e5d1c",
   "nativeCi": "background on push; not yet verified",
   "asan": "already running; completion does not gate release",
-  "deploymentPolicy": "user requested immediate deployment after focused tests and actual EXE check; full memory/CI completion does not gate release"
+  "deploymentPolicy": "user requested immediate deployment after focused tests and actual EXE check; full memory/CI completion does not gate release",
+  "sourceCommit": "79856b42f42689ba77e29fc211c35dade4d5ed35",
+  "remoteShaVerified": true
 }
