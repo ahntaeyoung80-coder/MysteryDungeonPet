@@ -34,5 +34,7 @@
   },
   "runtimeSha256": "aac18aff420412d885b23f5d7fdbc14e6ddac45e094752cdced61430b52ada92",
   "nativeCi": "background on push; completion not required for deployment",
-  "fullMemoryTests": "not run for this scoped visual change"
+  "fullMemoryTests": "not run for this scoped visual change",
+  "sourceCommit": "a2c9b6d8aa6b19449cb0e90bbe20d9e08b0c61ed",
+  "remoteShaVerified": true
 }

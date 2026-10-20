@@ -19,3 +19,5 @@ entry/social·survival·gameplay 관련3/3이 통과했다. MinGW GCC14.2 static
 [검증 자료](../validation/2026-10-20-meal-straight-exit/summary.json), 같은 폴더의 원본 대조 JSON·재현 스크립트·관련 검사·실제 출력 요약을 참고한다.
 
 시계 첫 확인 UTC07:04:13→배포 기록 준비07:14:52는 **10분39초**다. 구현·도구 준비·검사·기록 병행 구간이며 항목별 순수 시간과 대기는 분리 계측하지 않았다. 원격 SHA는 push 후 확인한다.
+
+제품·새 root EXE는 `a2c9b6d8aa6b19449cb0e90bbe20d9e08b0c61ed`로 work에 push했고 UTC07:15:14에 원격 SHA 일치를 확인했다. 첫 시계 확인부터 **11분1초**(병행 준비/구현/검사/기록 포함)이며 CI 완료는 기다리지 않는다. 기록만 갱신하는 커밋은 skip-ci다. Docker `mdpet-tools`는 삭제하지 않고 정지해 다음 빌드에서 재사용한다.
