@@ -38,6 +38,9 @@ Surface originalDialoguePanel(const Surface& atlas,const Package& package) {
     }
     compose(panel,layers,{0,0},1);return panel;
 }
+bool guildAppleVisible(const GameplayState& g) {
+    return g.homeScene && !bedroomScene(g);
+}
 unsigned bedroomDirection(const GameplayState& g,unsigned fallback,bool partner) {
     const bool beforeBed=g.life==LifePhase::Sleep && (g.sceneBeat==SceneBeat::NightFadeIn ||
         g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::BedFace);
@@ -47,13 +50,13 @@ unsigned bedroomPlaybackScale(const GameplayState& g) {
     return g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace?4U:1U;
 }
 BedroomExitSample bedroomExit(Point start,const GameplayState& g,std::uint64_t now,bool partner) {
-    // Step off the bedding into the shared aisle, then follow the leader to the doorway.
+    // The leader walks straight left; the companion follows once the leader has passed.
     const int end=partner?104:80;
-    const std::array<Point,4> path{{start,{start.x,196},{end,196},{end,184}}};
+    const std::array<Point,2> path{{start,{end,184}}};
     std::uint64_t elapsed=g.sceneBeat==SceneBeat::MorningFadeOut?kRoomExitMs:now>g.phaseStartedMs?now-g.phaseStartedMs:0;
     if(partner) {
         constexpr std::uint64_t followDelay=1200;
-        if(elapsed<followDelay)return {start,2,false,false};
+        if(elapsed<followDelay)return {start,6,false,false};
         elapsed-=followDelay;
     }
     for(unsigned i=1;i<path.size();++i) {

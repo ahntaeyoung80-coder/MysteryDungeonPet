@@ -24,18 +24,17 @@ int main() {try {
     for(uint64_t time=1000;time<=1000+kRoomExitMs;time+=10) {
         const auto sample=bedroomExit({204,184},g,time),follower=bedroomExit({156,184},g,time,true);
         const auto p=sample.position,partner=follower.position;
-        check(p.x<=previousX && p.x>=80 && p.y>=184 && p.y<=196,"exit crossed map boundary or reversed");
-        check(partner.y>=184 && partner.y<=196,"partner left the shared aisle");
-        const auto dx=p.x-partner.x,dy=p.y-partner.y;
-        check(dx*dx+dy*dy>=144,"exit walked through partner feet");
-        if(time>=2400)check(p.x<=partner.x-23,"partner led after joining the aisle");
+        check(p.x<=previousX && p.x>=80 && p.y==184,"exit crossed map boundary or reversed");
+        check(partner.y==184,"partner left the straight exit line");
+        // Pixel overlap is expected while the leader passes; player renders above partner.
+        if(time>=2200)check(p.x<=partner.x-23,"partner led after starting to follow");
         if(time<2200)check(partner.x==156 && partner.y==184 && !follower.moving,"partner moved before leader passed");
         const auto camera=bedroomExitCamera(g,time);
         check(camera.x<=previousCamera && camera.y==184 && previousCamera-camera.x<=1,"exit camera snapped or reversed");
         previousCamera=camera.x;previousX=p.x;
     }
     check(!bedroomExit({204,184},g,1000+kRoomExitMs).moving && !bedroomExit({156,184},g,1000+kRoomExitMs,true).moving,"arrived actors kept walking in place");
-    check(bedroomExit({204,184},g,1000).direction==0 && bedroomExit({204,184},g,1300).direction==6 && bedroomExit({204,184},g,3400).direction==4,"exit animation direction did not follow the path");
+    check(bedroomExit({204,184},g,1000).direction==6 && bedroomExit({204,184},g,1300).direction==6 && bedroomExit({204,184},g,3100).direction==6,"exit animation direction did not follow the path");
     auto s=fixture();s.gameplay.oran=1;s.gameplay.hearts=4;Explorer one(s);
     check(one.advanceGameplay(1000).event!=GameplayEvent::UseOranBerry&&one.state().gameplay.oran==1&&one.state().gameplay.hearts==4,"one missing heart wastes berry");
     s.gameplay.hearts=3;Explorer two(s);check(two.advanceGameplay(1000).event==GameplayEvent::UseOranBerry&&two.state().gameplay.hearts==5&&two.state().gameplay.oran==0,"two missing hearts did not heal outside combat");

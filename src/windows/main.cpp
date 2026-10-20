@@ -179,6 +179,8 @@ class App {
     Assets assets_;
     std::optional<Assets> enemyAssets_, friendlyAssets_, companionAssets_, homeAssets_, propsAssets_;
     std::optional<Assets> appleAssets_,uiAssets_;
+    Animator appleAnimator_;
+    std::size_t appleFrame_=0;
     std::optional<Surface> dialoguePanel_;
     std::vector<GuildRoom> guildRooms_;
     std::map<std::string, Assets> guildAssets_;
@@ -322,7 +324,8 @@ class App {
         const auto partnerPoint=partner==guildLive_.end()?Point{-1,-1}:
             g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
             bedroomExit(partner->cue->position,g,utcMs(),true).position:partner->cue->position;
-        movementTrace_ << ',' << partnerPoint.x << ',' << partnerPoint.y << ',' << (partner==guildLive_.end()?-1:int(partner->direction)) << '\n';
+        movementTrace_ << ',' << partnerPoint.x << ',' << partnerPoint.y << ',' << (partner==guildLive_.end()?-1:int(partner->direction))
+            << ',' << guildAppleVisible(g) << ',' << appleFrame_ << '\n';
         if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay){traceImage("-alarm.bmp");traceAlarmImage_=true;}
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
@@ -346,7 +349,7 @@ class App {
     void synchronizePause(int64_t now) {
         const bool p=blocked();if(p==paused_) return;
         if(p) {
-            pauseUtc_=utcMs();playerMotion_.pause(now);guildCamera_.pause(now);animator_.pause(now);enemyAnimator_.pause(now);companionAnimator_.pause(now);companionMotion_.pause(now);
+            pauseUtc_=utcMs();playerMotion_.pause(now);guildCamera_.pause(now);animator_.pause(now);appleAnimator_.pause(now);enemyAnimator_.pause(now);companionAnimator_.pause(now);companionMotion_.pause(now);
             for(auto& entry:actorMotions_) entry.second.pause(now);
             for(auto& entry:actorAnimators_) entry.second.pause(now);
             for(auto& actor:guildLive_) actor.animator.pause(now);
@@ -358,7 +361,7 @@ class App {
                 const auto deadline=explorer_->state().gameplay.deadlineMs;
                 exploreDeadline_=deadlineFromUtc(now,utcMs(),deadline);
             }
-            playerMotion_.resume(now);guildCamera_.resume(now);animator_.resume(now);enemyAnimator_.resume(now);companionAnimator_.resume(now);companionMotion_.resume(now);
+            playerMotion_.resume(now);guildCamera_.resume(now);animator_.resume(now);appleAnimator_.resume(now);enemyAnimator_.resume(now);companionAnimator_.resume(now);companionMotion_.resume(now);
             for(auto& entry:actorMotions_) entry.second.resume(now);
             for(auto& entry:actorAnimators_) entry.second.resume(now);
             for(auto& actor:guildLive_) actor.animator.resume(now);
@@ -889,9 +892,15 @@ class App {
         dirty_ = true;
     }
     void advanceGuildActors(int64_t now) {
-        if (!explorer_ || dungeonScene(explorer_->state().gameplay)) { guildLive_.clear(); guildRoom_ = -1; return; }
+        if (!explorer_ || dungeonScene(explorer_->state().gameplay)) { guildLive_.clear(); appleAnimator_.stop(); guildRoom_ = -1; return; }
         const auto& g = explorer_->state().gameplay;
         const int room = bedroomScene(g)?1:0;
+        if(guildAppleVisible(g)) {
+            if(!appleAnimator_.active())appleAnimator_.start(appleAssets_->package,624,0,true,now);
+            const auto sample=appleAnimator_.advance(now);
+            dirty_=dirty_ || appleFrame_!=sample.frame;appleFrame_=sample.frame;
+            if(sample.nextDeadlineUs && (!nextFrameDeadline_ || *sample.nextDeadlineUs<*nextFrameDeadline_))nextFrameDeadline_=sample.nextDeadlineUs;
+        } else appleAnimator_.stop();
         if (guildRoom_ != room || guildLife_ != g.life || guildBeat_!=g.sceneBeat) {
             guildLive_.clear(); guildRoom_ = room; guildLife_ = g.life;guildBeat_=g.sceneBeat;
             for (const auto& cue : guildRooms_[room].actors) {
@@ -1099,9 +1108,8 @@ class App {
                         (g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut)?
                         bedroomExit(cue.position,g,utcMs(),true).position:cue.position;
                     layers.push_back({it->assets->atlas.get(), frame.rect, frame.anchor, position});
-                    if(g.life==LifePhase::Eat && cue.id==79) {
-                        const auto elapsed=utcMs()>g.phaseStartedMs?utcMs()-g.phaseStartedMs:0;
-                        const auto& apple=appleAssets_->package.frames(624,0)[loopFrameAt(appleAssets_->package,624,elapsed)];
+                    if(cue.effectId==624 && guildAppleVisible(g)) {
+                        const auto& apple=appleAssets_->package.frames(624,0)[appleFrame_];
                         const auto head=std::find_if(frame.markers.begin(),frame.markers.end(),[](const auto& m){return m.kind==0;});
                         if(head==frame.markers.end())throw std::runtime_error("Wigglytuff head marker missing");
                         const Point attachment{position.x+head->point.x-frame.anchor.x,position.y+head->point.y-frame.anchor.y};
@@ -1161,7 +1169,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");

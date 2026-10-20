@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "diningSubmittedFrames": 531,
+  "appleVisibleFromFirstDiningFrame": true,
+  "appleFrameIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "firstEatAppleFrame": 8,
+  "exitSubmittedFrames": 141,
+  "straightY": 184,
+  "direction": 6,
+  "companionFollowsLeader": true,
+  "idleAtArrival": true
+}

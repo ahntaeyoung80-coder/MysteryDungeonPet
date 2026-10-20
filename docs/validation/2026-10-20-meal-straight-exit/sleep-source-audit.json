@@ -1,0 +1,60 @@
+{
+  "source": "ROM MONSTER/m_ground.bin",
+  "result": "Laying27 has one original pose; EventSleep13 has two original poses. No discarded intermediate frames in these sequences.",
+  "clips": [
+    {
+      "asset": "asset-0",
+      "mdIndex": 1,
+      "clip": 27,
+      "directions": 8,
+      "sourceFramesPerDirection": 1,
+      "retainedFramesPerDirection": 1,
+      "ticks": [
+        12
+      ],
+      "matchedOriginalFrames": 8,
+      "status": "pass"
+    },
+    {
+      "asset": "asset-0",
+      "mdIndex": 1,
+      "clip": 13,
+      "directions": 8,
+      "sourceFramesPerDirection": 2,
+      "retainedFramesPerDirection": 2,
+      "ticks": [
+        30,
+        35
+      ],
+      "matchedOriginalFrames": 16,
+      "status": "pass"
+    },
+    {
+      "asset": "asset-1",
+      "mdIndex": 4,
+      "clip": 27,
+      "directions": 8,
+      "sourceFramesPerDirection": 1,
+      "retainedFramesPerDirection": 1,
+      "ticks": [
+        12
+      ],
+      "matchedOriginalFrames": 8,
+      "status": "pass"
+    },
+    {
+      "asset": "asset-1",
+      "mdIndex": 4,
+      "clip": 13,
+      "directions": 8,
+      "sourceFramesPerDirection": 2,
+      "retainedFramesPerDirection": 2,
+      "ticks": [
+        30,
+        35
+      ],
+      "matchedOriginalFrames": 16,
+      "status": "pass"
+    }
+  ]
+}

@@ -38,6 +38,12 @@ foreach($Row in $Arrival){
 $NpcRows=@(Run 'npc' 5)
 $NpcAfter=Inspect 'npc'
 if($NpcAfter.greetings -ne 1 -or @($NpcRows|Where-Object {$_.life -eq '10'}).Count -lt 3){throw 'off-path friendly NPC did not approach/greet/respond once'}
+& $Tests --meal-fixture $Package $Output
+if($LASTEXITCODE -ne 0){throw 'meal fixture failed'}
+$MealRows=@(Run 'meal' 10)
+$Dining=@($MealRows|Where-Object {$_.life -in @('2','3','4') -or $_.scene_beat -eq '2'})
+if($Dining.Count -lt 10 -or @($Dining|Where-Object {$_.guild_apple_visible -ne '1'}).Count){throw 'apple was not present continuously throughout dining'}
+if(@($Dining|Select-Object -ExpandProperty guild_apple_frame -Unique).Count -lt 10){throw 'apple effect stopped animating'}
 & $Tests --bed-fixture $Package $Output
 if($LASTEXITCODE -ne 0){throw 'bedtime fixture failed'}
 $BedRows=@(Run 'bed' 4)
@@ -81,9 +87,10 @@ foreach($Row in $Sleeping){
   $Row.partner_clip -ne '13' -or [int]$Row.partner_frame -ne $Poses.partnerLast){throw 'morning fade stood up or replayed sleep onset'}
 }
 $Exit=@($WakeRows|Where-Object {$_.scene_beat -eq '16'})
-if(@($Exit|Where-Object {$_.scene_y -eq '196' -and $_.direction -eq '6'}).Count -lt 10){throw 'leader did not use the bedding aisle'}
-if(@($Exit|Where-Object {$_.guild_partner_y -eq '196' -and $_.guild_partner_direction -eq '6'}).Count -lt 3){throw 'partner did not follow the same aisle'}
+if(@($Exit|Where-Object {$_.scene_y -eq '184' -and $_.direction -eq '6'}).Count -lt 10){throw 'leader did not walk straight left'}
+if(@($Exit|Where-Object {$_.guild_partner_y -eq '184' -and $_.guild_partner_direction -eq '6'}).Count -lt 3){throw 'partner did not follow straight left'}
 if(@($Exit|Where-Object {$_.clip -eq '7' -and $_.scene_x -eq '80'}).Count -lt 1){throw 'arrived leader walked in place'}
+if(@($Exit|Where-Object {$_.scene_y -ne '184' -or $_.guild_partner_y -ne '184'}).Count){throw 'exit route left the straight line'}
 $PreviousCamera=80
 foreach($Row in $Exit) {
  if([int]$Row.camera_x -gt $PreviousCamera -or $Row.camera_y -ne '84'){throw 'exit camera jumped right or moved vertically'}

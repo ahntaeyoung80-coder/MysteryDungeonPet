@@ -113,6 +113,10 @@ void scenes(){
  const auto panel=originalDialoguePanel(atlas,ui);
  for(const auto v:std::vector<std::array<unsigned,3>>{{0,0,2},{8,0,3},{176,0,4},{0,8,5},{8,8,1},{176,8,6},{0,40,7},{8,40,8},{176,40,9}})
   check(panel.pixels[(v[1]*184+v[0])*4]==v[2],"dialogue border tile position changed");
+ auto meal=s.gameplay;meal.homeScene=true;
+ for(auto phase:{LifePhase::ReturnHome,LifePhase::Emotion,LifePhase::Eat}){meal.life=phase;meal.sceneBeat=SceneBeat::None;check(guildAppleVisible(meal),"apple appeared only after meal started");}
+ meal.life=LifePhase::Sleep;meal.sceneBeat=SceneBeat::DiningExit;check(guildAppleVisible(meal),"apple vanished before dining fade finished");
+ meal.sceneBeat=SceneBeat::NightFadeIn;check(!guildAppleVisible(meal),"apple leaked into bedroom");
  auto text=s.gameplay;text.sceneBeat=SceneBeat::WakeDelay;
  check(revealedGameplayText(text,1000).size()==1 && revealedGameplayText(text,1050).size()==3 && revealedGameplayText(text,3000)==gameplayText(text),"text reveal timing changed");
  Explorer e(s);e=restore(e);e.advanceGameplay(1750);
@@ -142,7 +146,7 @@ void scenes(){
  std::cout<<"sleep pose/exit fade/restore regression pass\n";
 }
 int main(int argc,char** argv){unsigned failed=0;
- if(argc==4 && (std::string(argv[1])=="--fixtures" || std::string(argv[1])=="--wake-fixture" || std::string(argv[1])=="--bed-fixture"))try{
+ if(argc==4 && (std::string(argv[1])=="--fixtures" || std::string(argv[1])=="--wake-fixture" || std::string(argv[1])=="--bed-fixture" || std::string(argv[1])=="--meal-fixture"))try{
   const auto p=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];std::filesystem::create_directories(out);
   if(std::string(argv[1])=="--fixtures"){
    Explorer floor(930,196,p.assetVersion,p.floors);auto s=floor.state();s.position=s.world.stairs;s.visited[s.position]=1;
@@ -158,11 +162,15 @@ int main(int argc,char** argv){unsigned failed=0;
    auto& g=s.gameplay;g.homeScene=true;g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::BedFadeIn;g.hearts=3;g.meals=1;
    g.phaseStartedMs=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();g.deadlineMs=g.phaseStartedMs+750;
    g.onceKeys={"return:920","meal:920"};
+   if(std::string(argv[1])=="--meal-fixture") {
+    g.life=LifePhase::ReturnHome;g.sceneBeat=SceneBeat::None;g.deadlineMs=g.phaseStartedMs+1500;
+    saveSnapshot(out/"meal.mdes",s);return 0;
+   }
    if(std::string(argv[1])=="--bed-fixture") {
     g.life=LifePhase::Sleep;g.sceneBeat=SceneBeat::NightFadeIn;saveSnapshot(out/"bed.mdes",s);return 0;
    }
    saveSnapshot(out/"wake.mdes",s);
-   g.life=LifePhase::Ready;g.sceneBeat=SceneBeat::RoomExit;g.phaseStartedMs-=950;g.deadlineMs=g.phaseStartedMs+kRoomExitMs;
+   g.life=LifePhase::Ready;g.sceneBeat=SceneBeat::RoomExit;g.phaseStartedMs-=800;g.deadlineMs=g.phaseStartedMs+kRoomExitMs;
    saveSnapshot(out/"overlap.mdes",s);
   }
   return 0;
