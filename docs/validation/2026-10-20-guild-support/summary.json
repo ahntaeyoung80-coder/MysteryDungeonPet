@@ -1,0 +1,207 @@
+{
+  "date": "2026-10-20 KST",
+  "baseline": "c026a9e786fed5d3a6a333b97995768be09e82b1",
+  "userFatal": "invalid entity goal",
+  "fix": "moved NPC invalidates disposable goal; older snapshots clear stale goal; default launches discard goals and enter guild morning",
+  "nativeLinux": {
+    "asanUbsan": "13/14 first run; only scene expectation failed; corrected alarm expectation, affected test 1/1 passed",
+    "python": "26/26 passed",
+    "fixture": "hash check pass"
+  },
+  "windowsPEUnderWine": {
+    "runtime": "static MinGW GCC14.2.0 x64 Release",
+    "wine": "10.0 Debian 13; Xvfb; WTS unlock injected by test helper because Wine cannot query Windows session",
+    "text": "7 scenes passed",
+    "companion": "9523 restored actions; guild start and stale goal migration passed",
+    "party": "29/29 passed",
+    "gameplay": "13519 checks; 6644 restored transitions passed",
+    "rootLaunch": "guild alarm -> joint exit -> fresh exploration; nonzero submitted pixels",
+    "traces": {
+      "guild-start-trace.csv": {
+        "rows": 1896,
+        "submittedRows": 837,
+        "lifeBeatSequence": [
+          [
+            6,
+            12
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            7,
+            16
+          ],
+          [
+            7,
+            10
+          ],
+          [
+            0,
+            11
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "sha256": "d6f7b213dcdcc47e29958ff02d4a5a2bc1aa3b6732402f9a48cafebecd268ec1"
+      },
+      "wine-life-trace.csv": {
+        "rows": 4723,
+        "submittedRows": 2238,
+        "lifeBeatSequence": [
+          [
+            0,
+            13
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            12
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            7,
+            16
+          ],
+          [
+            7,
+            10
+          ],
+          [
+            0,
+            11
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            13
+          ],
+          [
+            0,
+            14
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "sha256": "d5c43319e659706fab0266afc8b63d3daccae66c74afc5c451dcf73e7865888b"
+      },
+      "root-guild-start-trace.csv": {
+        "rows": 1186,
+        "submittedRows": 503,
+        "lifeBeatSequence": [
+          [
+            6,
+            12
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            7,
+            16
+          ],
+          [
+            7,
+            10
+          ],
+          [
+            0,
+            11
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            10,
+            0
+          ]
+        ],
+        "sha256": "60ea13f4296e08433a47293cf40a74a179e4bd6abe01fea5fa1a276aa8d136b9"
+      }
+    }
+  },
+  "exeSha256": "a87fdd8d87ed10cb5baba72427472103dc682ab28a0b82e2fb7ed11976d099f6",
+  "assets": {
+    "romUnchanged": true,
+    "loudred": "original SSA actor109 / SSB18 -> WAN3, pixel verification pass",
+    "apple": "original item109 sprite3 palette6; export reproduction pass"
+  },
+  "pending": [
+    "Native Windows CI for this commit",
+    "User Windows11 replay",
+    "Original alarm audio; full AppleOnHead624/Eating effects"
+  ],
+  "scope": "No A/C full completion claim; no activity integration or broad platform rewrite"
+}

@@ -1,15 +1,15 @@
 {
   "dialogue": "original unknown encoded strings preserved for opcode parsing; dialogue decoding unresolved",
-  "effects": "Eating642/EatingSlow643/AppleOnHead624 provenance retained; separate effect renderer unresolved",
+  "effects": "AppleOnHead624 uses the original item109 apple sprite attached to Wigglytuff; Eating642/643 full effects remain unresolved",
   "mealPolicy": "original cast clips/loop flags; finite 8-second communal scene; meal consumption once",
   "originalWANChecks": [
     {
       "actorId": 109,
-      "comparedFrames": 60,
+      "comparedFrames": 188,
       "mdIndex": 322,
       "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
       "name": "NPC_DOGOOMU",
-      "originalSourceFrames": 116,
+      "originalSourceFrames": 372,
       "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
       "spriteIndex": 488,
       "status": "pass"
@@ -392,6 +392,26 @@
     {
       "actors": [
         {
+          "asset": "guild/actor-109/asset.mdpa",
+          "clip": 3,
+          "direction": 2,
+          "effectId": 0,
+          "id": 109,
+          "kind": 2,
+          "mdIndex": 322,
+          "name": "NPC_DOGOOMU",
+          "position": [
+            112,
+            180
+          ],
+          "rawAnimationWord": 4099,
+          "scriptCode": 18,
+          "sourcePosition": [
+            112,
+            180
+          ]
+        },
+        {
           "asset": "",
           "clip": 13,
           "direction": 2,
@@ -482,5 +502,17 @@
       "path": "GROUND/g01p06b1.wan",
       "sha256": "26ec77ad0f2b30752e81282048e4eb63cc8bf65915358b10500b04f94971eec5"
     }
-  ]
+  ],
+  "wakeAlarm": {
+    "actorId": 109,
+    "audio": "not extracted",
+    "clip": 3,
+    "durationMs": 2000,
+    "scriptCode": 18,
+    "sourcePosition": [
+      112,
+      180
+    ],
+    "sourceScript": "SCRIPT/G01P07A/c00a0201.ssb"
+  }
 }

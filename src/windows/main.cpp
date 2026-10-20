@@ -341,7 +341,7 @@ class App {
         } else {
             if(explorer_) {
                 auto candidate=*explorer_;const auto utc=utcMs();candidate.shiftPausedClocks(utc>pauseUtc_?utc-pauseUtc_:0,pauseUtc_);
-                saveSnapshot(options_.snapshot,candidate.state());*explorer_=std::move(candidate);
+                saveRunSnapshot(options_.snapshot,candidate.state());*explorer_=std::move(candidate);
                 const auto deadline=explorer_->state().gameplay.deadlineMs;
                 exploreDeadline_=deadlineFromUtc(now,utcMs(),deadline);
             }
@@ -424,8 +424,14 @@ class App {
         LONG y = std::clamp(desired.y, info.rcWork.top, std::max(info.rcWork.top, info.rcWork.bottom - LONG(size_)));
         winCheck(SetWindowPos(window_, nullptr, x, y, int(size_), int(size_), SWP_NOACTIVATE | SWP_NOZORDER) != 0, "window position");
     }
+    void saveRunSnapshot(const std::filesystem::path& path,const ExplorationState& state) const {
+        if(!options_.defaultExploration){saveSnapshot(path,state);return;}
+        auto persistent=state;
+        persistent.target=-1;persistent.targetInstance=0;persistent.goalKind=GoalKind::None;
+        saveSnapshot(path,persistent);
+    }
     void save() {
-        if (explorer_) saveSnapshot(options_.snapshot, explorer_->state());
+        if (explorer_) saveRunSnapshot(options_.snapshot, explorer_->state());
         RECT rect{};
         winCheck(GetWindowRect(window_, &rect) != 0, "save window position");
         std::ostringstream s;
@@ -513,8 +519,8 @@ class App {
                 const auto utc=utcMs();auto candidate=*explorer_;
                 candidate.resetExploration(utc);
                 auto backup=options_.snapshot;backup+=L".reset-backup";
-                saveSnapshot(backup,explorer_->state());
-                saveSnapshot(options_.snapshot,candidate.state());
+                saveRunSnapshot(backup,explorer_->state());
+                saveRunSnapshot(options_.snapshot,candidate.state());
                 *explorer_=std::move(candidate);
                 if(paused_) pauseUtc_=utc;
                 settleNavigationReset(now);
@@ -784,7 +790,7 @@ class App {
             candidate.state().assetVersion==pendingDefaultPackage_->assetVersion;
         std::map<uint32_t,Assets> nextTiles;
         if(changePackage)nextTiles=loadExplorationTiles(*pendingDefaultPackage_,options_.exploration.parent_path());
-        saveSnapshot(options_.snapshot, candidate.state());
+        saveRunSnapshot(options_.snapshot, candidate.state());
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
         if(changePackage) {
             for(const auto& entry:nextTiles)decodes_+=entry.second.decoded?1:0;
@@ -877,6 +883,7 @@ class App {
             guildLive_.clear(); guildRoom_ = room; guildLife_ = g.life;guildBeat_=g.sceneBeat;
             for (const auto& cue : guildRooms_[room].actors) {
                 if (cue.kind == GuildActorKind::Player) continue;
+                if(room==1 && cue.id==109 && g.sceneBeat!=SceneBeat::WakeDelay)continue;
                 const Assets* source = nullptr;
                 if (cue.kind == GuildActorKind::Partner) source = &*companionAssets_;
                 else {
@@ -893,8 +900,11 @@ class App {
                 actor.clip = cue.kind == GuildActorKind::Object ? cue.actionClip :
                     cue.kind == GuildActorKind::Partner ? (room == 1 ? gameplayClip(g) : g.life == LifePhase::Eat ? 15U : 7U) :
                     g.life == LifePhase::Eat ? cue.actionClip : 7U;
-                if(room==1 && cue.kind==GuildActorKind::Partner && g.sceneBeat==SceneBeat::RoomExit) actor.clip=7;
-                actor.animator.start(source->package, actor.clip, actor.direction, room==1?(cue.kind==GuildActorKind::Partner && g.sceneBeat==SceneBeat::RoomExit?true:gameplayLoop(g)):true, sceneClipStart(now));
+                if(room==1 && cue.id==109)actor.clip=cue.actionClip;
+                if(room==1 && cue.kind==GuildActorKind::Partner && (g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut)) {
+                    actor.clip=g.sceneBeat==SceneBeat::RoomExit?0:7;actor.direction=6;
+                }
+                actor.animator.start(source->package, actor.clip, actor.direction, room==1?(cue.id==109?true:gameplayLoop(g)):true, cue.id==109 && room==1?restoredClipStart(now):sceneClipStart(now));
                 guildLive_.push_back(std::move(actor));
             }
             log("guild room=" + guildRooms_[room].name + " characters=" + std::to_string(1+std::count_if(guildLive_.begin(),guildLive_.end(),[](const auto& actor){return actor.cue->kind!=GuildActorKind::Object;})) + " objectCount=" + std::to_string(room == 0 ? 1 : 0));
@@ -991,7 +1001,10 @@ class App {
         }
         if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
             completion_.player=bedroomExit(guildRooms_[1].player().position,explorer_->state().gameplay,utcMs()).finished;
-            poseFinished_=completion_.player;
+            completion_.partner=std::all_of(guildLive_.begin(),guildLive_.end(),[&](const auto& actor) {
+                return actor.cue->kind!=GuildActorKind::Partner || bedroomExit(actor.cue->position,explorer_->state().gameplay,utcMs(),true).finished;
+            });
+            poseFinished_=completion_.player && completion_.partner;
         }
         if(partyRendering())poseFinished_=!completion_.actions.empty();
         (void)playerFinished;
@@ -1043,6 +1056,7 @@ class App {
             const bool bedroom=bedroomScene(g);
             const auto& f = homeAssets_->package.frames(bedroom ? (nightScene(g)?2:1) : 0, 0).front();
             camera=homeCamera(now);
+            if(g.sceneBeat==SceneBeat::WakeDelay) camera.x+=((utcMs()-g.phaseStartedMs)/80)%2?2:-2;
             layers.push_back({homeAssets_->atlas.get(), f.rect, f.anchor, {0, 0}});
             for (const auto& cue : guildRooms_[bedroom ? 1 : 0].actors) {
                 if (cue.kind == GuildActorKind::Player) {
@@ -1052,7 +1066,11 @@ class App {
                     const auto it = std::find_if(guildLive_.begin(), guildLive_.end(), [&](const auto& a) { return a.cue->id == cue.id; });
                     if(it==guildLive_.end()) continue;
                     const auto& frame = it->assets->package.frames(it->clip, it->direction)[it->frame];
-                    layers.push_back({it->assets->atlas.get(), frame.rect, frame.anchor, cue.position});
+                    const auto position=bedroom && cue.kind==GuildActorKind::Partner &&
+                        (g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut)?
+                        bedroomExit(cue.position,g,utcMs(),true).position:cue.position;
+                    layers.push_back({it->assets->atlas.get(), frame.rect, frame.anchor, position});
+                    if(g.life==LifePhase::Eat && cue.id==79) addProp(layers,4,{position.x,position.y-frame.anchor.y-2});
                 }
             }
         }
@@ -1141,18 +1159,22 @@ public:
             } else {
                 explorer_ = std::make_unique<Explorer>(static_cast<uint64_t>(nowUs()), options_.seed,
                             explorationPackage_->assetVersion, explorationPackage_->floors);
-                saveSnapshot(options_.snapshot, explorer_->state());
+                saveRunSnapshot(options_.snapshot, explorer_->state());
             }
             tiles_=loadExplorationTiles(*explorationPackage_,explorationDirectory);
             for(const auto& entry:tiles_)decodes_+=entry.second.decoded?1:0;
             playerMotion_.reset(tilePoint(explorer_->state().position));
             explorer_->enableGameplay(utcMs());
             if(!options_.solo) explorer_->enableCompanion();
+            if(options_.defaultExploration) {
+                explorer_->startGuildMorning(utcMs());
+                log("startup=guild-morning exploration-goal=discarded");
+            }
             if(explorer_->state().gameplay.companion.enabled)companionMotion_.reset(tilePoint(explorer_->state().gameplay.companion.tile));
             restoreMovement(nowUs());
             if(explorer_->state().gameplay.sceneBeat==SceneBeat::DiningPan) guildCamera_.begin(UINT32_MAX,explorer_->state().gameplay.day,{368,212},{168,212},restoredClipStart(nowUs()),6,4000000);
             syncCompanion(nowUs());
-            saveSnapshot(options_.snapshot, explorer_->state());
+            saveRunSnapshot(options_.snapshot, explorer_->state());
             log(std::string("exploration snapshot=") + (restoring ? "restored" : "new") +
                 " day=" + std::to_string(explorer_->state().gameplay.day) +
                 " runId=" + std::to_string(explorer_->state().runId));

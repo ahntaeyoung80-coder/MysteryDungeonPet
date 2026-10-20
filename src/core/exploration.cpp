@@ -332,6 +332,19 @@ void Explorer::setNextRunPackage(std::string assetVersion,std::vector<FloorProfi
     }
     nextRunAssetVersion_=std::move(assetVersion);nextRunFloors_=std::move(floors);
 }
+bool discardStaleEntityGoal(ExplorationState& s) {
+    if(s.goalKind!=GoalKind::Friend && s.goalKind!=GoalKind::Item)return false;
+    // Check only the disposable entity route. World, journals and combat still
+    // undergo the full validator, including when importing an older save.
+    if(s.target<0 || s.target>=kTiles)return false;
+    const bool valid=std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e) {
+        return e.instanceId==s.targetInstance && e.visible && !e.done &&
+            e.kind==(s.goalKind==GoalKind::Item?EntityKind::Item:EntityKind::Friend) &&
+            (e.kind==EntityKind::Item?e.tile==s.target:canAttack(s.world,s.target,e.tile));
+    });
+    if(valid)return false;
+    s.target=-1;s.goalKind=GoalKind::None;s.targetInstance=0;return true;
+}
 Explorer::Explorer(ExplorationState state) : state_(std::move(state)) {
     validateState(state_);
     if (state_.target != -1 && (!state_.gameplay.enabled || state_.gameplay.life == LifePhase::Explore)) {
@@ -345,6 +358,7 @@ Explorer::Explorer(ExplorationState state) : state_(std::move(state)) {
 void Explorer::invalidate(bool clearTarget) {
     path_.clear(); pathIndex_=0; cachedWorld_=cachedOccupancy_=UINT64_MAX;
     if(clearTarget) {state_.target=-1;state_.goalKind=GoalKind::None;state_.targetInstance=0;}
+    else discardStaleEntityGoal(state_);
 }
 std::string Explorer::key(const std::string& action, std::uint32_t instance) const {
     return action + ":" + std::to_string(state_.runId) + ":" +
@@ -781,7 +795,9 @@ void validateState(const ExplorationState& s) {
                 g.life == LifePhase::ReturnHome || g.life==LifePhase::Death || g.life==LifePhase::Dialogue || g.homeScene, "life event without home scene");
         if (g.life == LifePhase::ReturnHome || g.homeScene)
             require(g.onceKeys.count("return:" + std::to_string(s.runId)) != 0, "return transaction missing");
-        if (g.life == LifePhase::Eat || g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready)
+        const bool guildStart=(g.life==LifePhase::Wake || g.life==LifePhase::Ready) &&
+            g.onceKeys.count("guild-start:"+std::to_string(s.runId));
+        if (!guildStart && (g.life == LifePhase::Eat || g.life == LifePhase::Sleep || g.life == LifePhase::Wake || g.life == LifePhase::Ready))
             require(g.onceKeys.count("meal:" + std::to_string(s.runId)) && g.meals > 0, "meal transaction missing");
         std::set<std::uint32_t> unique;
         for (auto id : g.hostile) require(unique.insert(id).second &&

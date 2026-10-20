@@ -68,6 +68,52 @@ void combatCases(){
   check(e.state().gameplay.day==2 && e.state().gameplay.hearts==5 && e.state().gameplay.companion.hearts==5 && !e.state().gameplay.companion.hidden,"party next day recovery failed");
  }
 }
+void startupCases() {
+ auto s=companionFixture();s.gameplay.companion.enabled=true;s.gameplay.companion.tile=124;
+ s.population.entities={{1,4,EntityKind::Friend,126,false}};
+ s.target=125;s.targetInstance=1;s.goalKind=GoalKind::Friend;
+ auto bytes=encodeSnapshot(s);
+ std::vector<uint8_t> record;
+ for(uint32_t v:{1U,4U,uint32_t(EntityKind::Friend),126U,0U})
+  for(unsigned b=0;b<4;++b)record.push_back(uint8_t(v>>(8*b)));
+ auto found=std::search(bytes.begin(),bytes.end(),record.begin(),record.end());
+ check(found!=bytes.end(),"legacy entity fixture missing");
+ const auto offset=size_t(found-bytes.begin())+12;
+ for(unsigned b=0;b<4;++b)bytes[offset+b]=uint8_t(152U>>(8*b));crc(bytes);
+ auto imported=decodeSnapshot(bytes,"companion");
+ check(imported.target==-1 && imported.goalKind==GoalKind::None && !imported.targetInstance &&
+  imported.position==s.position && imported.rng.state==s.rng.state && imported.population.entities[0].tile==152,
+  "legacy stale entity goal blocked restore or changed durable progress");
+ // Current movement invalidates exactly the same route before the next save.
+ s.population.entities[0].tile=152;
+ check(discardStaleEntityGoal(s),"moved NPC retained stale goal");validateState(s);
+ s.gameplay.meals=7;s.gameplay.day=4;s.gameplay.hearts=2;s.gameplay.companion.hearts=1;
+ Explorer e(s);e.startGuildMorning(1000);
+ const auto boot=e.state();const auto& g=boot.gameplay;
+ check(g.homeScene && g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::BedFadeIn &&
+  boot.target==-1 && g.meals==7 && g.day==4 && g.hearts==kMaxHp && g.companion.hearts==kMaxHp &&
+  g.partyActions.empty() && g.partyPlaybacks.empty(),"guild startup resumed exploration or lost progress");
+ e=Explorer(decodeSnapshot(encodeSnapshot(boot),"companion"));
+ e.advanceGameplay(1750,ActorCompletion{true,true,true});
+ check(e.state().gameplay.sceneBeat==SceneBeat::WakeDelay && !gameplayText(e.state().gameplay).empty(),"boot skipped Loudred alarm");
+ auto early=encodeSnapshot(e.state());e.advanceGameplay(3749,ActorCompletion{true,true,true});
+ check(early==encodeSnapshot(e.state()),"alarm ended before its deadline");
+ uint64_t now=3750;
+ for(unsigned tick=0;tick<12 && e.state().gameplay.homeScene;++tick) {
+  e.advanceGameplay(now,ActorCompletion{true,true,true});
+  now=std::max(now+1,e.state().gameplay.deadlineMs);
+ }
+ check(!e.state().gameplay.homeScene && e.state().gameplay.day==4 && e.state().gameplay.meals==7 &&
+  e.state().runId==boot.runId+1,"startup added a phantom day/meal or resumed the old run");
+ // The next normal bedtime must still increment the day.
+ auto next=e.state();next.phase=Phase::Home;next.target=-1;next.goalKind=GoalKind::None;next.targetInstance=0;
+ auto& ng=next.gameplay;ng.homeScene=true;ng.life=LifePhase::Ready;ng.sceneBeat=SceneBeat::MorningFadeOut;
+ ng.partyActions.clear();ng.partyPlaybacks.clear();ng.partyPhase=PartyPhase::Idle;
+ ng.onceKeys.insert("return:"+std::to_string(next.runId));ng.onceKeys.insert("meal:"+std::to_string(next.runId));ng.phaseStartedMs=now;ng.deadlineMs=now;
+ e=Explorer(next);e.advanceGameplay(now,ActorCompletion{true,true,true});
+ check(e.state().gameplay.day==5,"startup marker suppressed the following day's increment");
+ std::cout<<"guild startup / stale entity goal migration / alarm / day progression pass\n";
+}
 int main(int argc,char** argv){try{
  if(argc==2 && std::string(argv[1])=="--party-ai-followup")
   return party_ai_regression::run(companionFixture())?1:0;
@@ -150,7 +196,7 @@ int main(int argc,char** argv){try{
  check(full.pixels==hurt.pixels,"companion HP leaked into the visible HUD");
  Surface playerHurt(200,200);hud.hearts=4;gameplayOverlay(playerHurt,hud,0);
  check(full.pixels!=playerHurt.pixels,"player hearts disappeared with companion HUD");
- combatCases();
+ combatCases();startupCases();
  for(unsigned dir=0;dir<8;++dir)for(bool reverse:{false,true}){
   auto s=companionFixture();auto [dx,dy]=kDirections[dir];const int next=s.position+dy*24+dx;
   s.gameplay.companion.enabled=true;s.gameplay.companion.tile=reverse?next:s.position-dy*24-dx;

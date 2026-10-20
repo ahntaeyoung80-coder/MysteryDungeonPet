@@ -79,7 +79,7 @@
 
 **위치:** [src/core/gameplay.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/gameplay.cpp)의 `LifePhase::Sleep`, `LifePhase::Wake`, `LifePhase::Ready`.
 
-현재 순서는 **밤 침실 fade-in → 취침 인사 → 눕기 → 잠들기 한 번 → fade-out → 잠든 자세를 유지한 낮 침실 fade-in → 기상 → 아침 인사 → 왼쪽 통로 이탈 → fade-out → 다음날 commit → 탐험 fade-in**이다.
+현재 순서는 **밤 침실 fade-in → 취침 인사 → 눕기 → 잠들기 한 번 → fade-out → 잠든 자세를 유지한 낮 침실 fade-in → 노공룡 알람2초 → 기상 → 아침 인사 → 동료와 왼쪽 통로 이탈 → fade-out → 다음날 commit → 탐험 fade-in**이다.
 
 | 단계 | 검색어 | 시간·완료 조건 |
 | --- | --- | --- |
@@ -94,7 +94,7 @@
 
 **`kFiniteTimeoutMs = 5000`은 모든 동작을 5초씩 보여주는 설정이 아니다.** 인사·기상은 완료 신호가 핵심이므로 이 숫자만 늘려도 오래 머물지 않는다. 인사 문구를 일정 시간 더 읽게 하려면 해당 단계 진입의 `life(..., duration)`을 원하는 ms로 정하고, 완료 조건에 `now < g.deadlineMs` 검사도 함께 넣어야 한다. 배우 완료 조건은 유지한다. 이런 순서·완료 조건 변경은 숫자 교체보다 범위가 크다.
 
-`kWakeDelayMs = 2000`과 `WakeDelay`는 이전 저장 호환용이다. 현재 새 취침 순서에는 2초 대기가 없으므로 이 값만 바꿔서는 새 장면의 속도가 바뀌지 않는다.
+`kWakeDelayMs = 2000`과 `WakeDelay`는 현재 노공룡의 기상 알람2초다. 원작 동작3·대사·화면 흔들림을 이 단계에서 표시한다.
 
 ### 2.3 층 전환·사망·열매 메시지
 
@@ -119,10 +119,10 @@
 | `안녕! 같이 탐험하자.` | NPC에게 플레이어가 인사 |
 | `조심해서 다녀와!` | NPC의 응답 |
 | `잘 자! 내일도 같이 탐험하자.` | 동료와 취침 인사 |
-| `좋은 아침! 다녀올게.` | 동료와 기상 인사 |
+| `좋은 아침! 함께 출발하자.` | 동료와 기상 인사 |
 | `눈앞이 깜깜해졌다` | 사망 후 검정 화면 |
 
-예를 들어 `L"좋은 아침! 다녀올게."`를 `L"잘 잤어? 다녀올게!"`로 바꾸고 EXE를 갱신한다. 표시 조건인 `g.life`, `g.sceneBeat`는 그대로 둬도 된다. 긴 문장은 200px 창에서 잘릴 수 있으므로 두 줄 안에 들어오는 길이부터 시도한다. 원작 대사 추출물이 아니라 현재 런타임에 직접 적힌 문구다.
+예를 들어 `L"좋은 아침! 함께 출발하자."`를 `L"잘 잤어? 다녀올게!"`로 바꾸고 EXE를 갱신한다. 표시 조건인 `g.life`, `g.sceneBeat`는 그대로 둬도 된다. 긴 문장은 200px 창에서 잘릴 수 있으므로 두 줄 안에 들어오는 길이부터 시도한다. 원작 대사 추출물이 아니라 현재 런타임에 직접 적힌 문구다.
 
 ### 3.2 글꼴·크기·위치·텍스트 상자
 
@@ -176,12 +176,12 @@
 **경로:** [src/core/gameplay_scene.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/gameplay_scene.cpp)의 `bedroomExit`.
 
 ```cpp
-const std::array<Point,5> path{{start,{184,200},{128,200},{112,184},{104,184}}};
+const std::array<Point,2> path{{start,{partner?80:104,184}}};
 ```
 
-`start`는 현재 침상 좌표(204,184)이고 뒤의 점들을 차례로 지난다. 끝점(104,184)은 왼쪽 통로 입구다. 경로를 바꿀 때는 동료 침상과 벽을 피하고, 맵 안의 통로에서 끝내도록 좌표를 조절한다. 점 개수가 바뀌면 `Point,5`의 `5`도 바꾼다. 같은 좌표를 연속으로 넣으면 구간 시간이 0이 될 수 있으므로 각 점은 다르게 둔다.
+`start`는 주인공(204,184), 동료(156,184)의 침상 좌표다. 둘 다 같은 줄로 동시에 왼쪽 이동한다. 주인공 끝점(104,184), 동료 끝점(80,184)은 통로 안이며 동료를 돌아가지 않는다. `partner`로 끝점을 나눈다.
 
-이동 시간은 구간 길이 × `400/24`로 계산한다. 현재 이동 합은 **1870ms**다. 이후 `SceneBeat::MorningFadeOut`의750ms 뒤 검정에서 다음날을 commit하고 `SceneBeat::ExploreFadeIn`750ms가 끝나야 이동을 재개한다. 좌표나 속도를 바꾸면 각 구간의 `lround(hypot(dx,dy)*400/24)`를 합한 값으로 [src/core/exploration.hpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/exploration.hpp)의 `kRoomExitMs`도 맞춘다. 한쪽만 바꾸면 도착 후 서 있거나 퇴실 완료가 늦어진다.
+이동 시간은 구간 길이 × `400/24`로 계산한다. 주인공은1667ms, 동료는1267ms 뒤 도착하고 `kRoomExitMs=1870`까지 완료를 기다린다. 이후750ms fade-out과750ms 탐험 fade-in을 거친다. 경로를 늘릴 때는 `kRoomExitMs`가 두 배우의 이동 시간보다 짧아지지 않게 맞춘다.
 
 방향 번호는 `0` 아래, `1` 오른쪽 아래, `2` 오른쪽, `3` 오른쪽 위, `4` 위, `5` 왼쪽 위, `6` 왼쪽, `7` 왼쪽 아래다. 이탈 방향은 좌표 차이로 자동 계산된다. 카메라는 [main.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/windows/main.cpp)의 `SceneBeat::RoomExit`, [src/core/motion.hpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/motion.hpp)의 `cameraFor`에서 같은 경로를 따라간다.
 
@@ -253,7 +253,7 @@ HP 차감은 `EnemyTurn`의 공격 판정과 `EnemyAttack`의 `pendingHit` 제�
 
 탐색기 주소창에 `%LOCALAPPDATA%\MysteryDungeonPet`을 입력하면 저장·로그 폴더를 열 수 있다. 게임 진행은 `exploration.mdes`, 창 위치·배율은 `window.state`, 이벤트는 `events.log`, 측정은 `metrics.csv`다. 실행 파일이 있는 폴더와 저장 폴더는 다르다.
 
-문구는 새 EXE에서 바로 읽지만, 진행 중인 장면의 기존 `deadlineMs`나 이미 생성된 NPC·지도·HP는 저장에 남을 수 있다. 식사 시간을 고쳤는데 현재 식사가 예전 시간대로 끝나면 **다음 식사**에서 확인한다. 새 run이 꼭 필요하면 실행 중인 앱을 종료하고 저장 폴더를 별도로 복사한 뒤 다음을 사용한다.
+일반 실행은 매번 길드의 아침에서 시작한다. 획득품·열매·날짜·식사 횟수는 유지하고 탐험 위치·목표는 재개하지 않는다. 명시 `--explore`만 기존 상세 상태를 복원한다. 누적 진행까지 새로 시작하려면 실행 중인 앱을 종료하고 저장 폴더를 별도로 복사한 뒤 다음을 사용한다.
 
 ```powershell
 .\MysteryDungeonPet.exe --new-run

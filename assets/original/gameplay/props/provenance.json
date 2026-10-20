@@ -45,6 +45,18 @@
         8,
         9
       ]
+    },
+    {
+      "itemId": 109,
+      "palette": 6,
+      "policy": "Wigglytuff head prop during communal meal; reuses original item graphic",
+      "rgbaSha256": "efa24dad6c255922351b291d2083e1727fe2e79bd3008771bded1890f3594bf6",
+      "size": [
+        16,
+        16
+      ],
+      "slot": 1022,
+      "sprite": 3
     }
   ],
   "romHashUnchanged": true,

@@ -300,6 +300,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         if(length!=r.offset-partyStart-4)throw std::runtime_error("party snapshot block length mismatch");
     }
     r.u32(); r.end();
+    discardStaleEntityGoal(s);
     validateState(s);
     return s;
 }

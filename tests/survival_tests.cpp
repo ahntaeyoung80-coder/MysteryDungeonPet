@@ -24,7 +24,8 @@ int main() {try {
     for(uint64_t time=1000;time<=1000+kRoomExitMs;time+=10) {
         const auto p=bedroomExit({204,184},g,time).position;
         check(p.x<=previousX && p.x>=104 && p.y>=184 && p.y<=200,"exit detoured or crossed map boundary");
-        check(!(p.x>=136&&p.x<=176&&p.y<200),"exit crossed partner bed");previousX=p.x;
+        const auto partner=bedroomExit({156,184},g,time,true).position;
+        check(p.y==184 && partner.y==184 && partner.x<p.x && p.x-partner.x>=24,"party exit overlapped or detoured");previousX=p.x;
     }
     auto s=fixture();s.gameplay.oran=1;s.gameplay.hearts=4;Explorer one(s);
     check(one.advanceGameplay(1000).event!=GameplayEvent::UseOranBerry&&one.state().gameplay.oran==1&&one.state().gameplay.hearts==4,"one missing heart wastes berry");

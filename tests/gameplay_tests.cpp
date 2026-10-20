@@ -99,6 +99,7 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Sleeping && gameplayClip(e.state().gameplay)==13 && !gameplayLoop(e.state().gameplay),"sleep onset must be one finite animation");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeOut && nightScene(e.state().gameplay),"sleep onset did not fade directly");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeIn && !nightScene(e.state().gameplay),"morning fade-in exposed night");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::WakeDelay && !gameplayText(e.state().gameplay).empty(),"Loudred alarm missing");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Waking && gameplayClip(e.state().gameplay)==14,"Wake14 daylight missing");
     const auto oldDay=e.state().gameplay.day;const auto oldHearts=e.state().gameplay.hearts;
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{false,true,true});check(e.state().gameplay.life==LifePhase::Wake,"other actor finished player Wake");
@@ -127,7 +128,7 @@ int main(int argc, char** argv) {
             for (unsigned d = 0; d < 8; ++d) { check(!player.frames(clip,d).empty(), "original player clip missing"); check(!enemy.frames(clip,d).empty(), "original enemy clip missing"); }
         check(home.frames(0,0).front().rect.w == 504 && home.frames(0,0).front().rect.h == 360 && home.frames(2,0).front().rect.w==384, "home map not linked");
         const auto rooms = loadGuildScene(std::filesystem::path(argv[1]) / "guild/guild.mdgs");
-        check(rooms.size() == 2 && rooms[0].actors.size() == 13 && rooms[1].actors.size() == 2, "original guild cast not connected");
+        check(rooms.size() == 2 && rooms[0].actors.size() == 13 && rooms[1].actors.size() == 3, "original guild cast not connected");
         check(rooms[0].player().position.x == 220 && rooms[0].player().position.y == 184 && rooms[0].player().direction == 0, "dining player SSA placement lost");
         check(rooms[1].player().position.x == 204 && rooms[1].player().position.y == 184 && rooms[1].player().direction == 2, "player not in original right bed");
         const auto partner = std::find_if(rooms[1].actors.begin(), rooms[1].actors.end(), [](const auto& a) { return a.kind == GuildActorKind::Partner; });

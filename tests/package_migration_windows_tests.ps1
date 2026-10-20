@@ -42,13 +42,13 @@ try {
  Launch 'legacy-ready' 8
  $After=Inspect $NewPackage "$Fixtures/legacy-ready.mdes"
  $After|ConvertTo-Json -Depth 4|Set-Content "$Output/legacy-ready-after.json"
- if($After.runId -ne ($Before.runId+1) -or $After.day -ne ($Before.day+1) -or $After.floorCount -ne 7 -or
+ if($After.runId -ne ($Before.runId+1) -or $After.day -ne $Before.day -or $After.floorCount -ne 7 -or
     $After.dungeonId -ne 15 -or $After.meals -ne $Before.meals){
-  throw 'legacy morning did not enter the new seven-floor run exactly once'
+  throw 'guild startup did not enter the new seven-floor run exactly once without adding a day'
  }
  foreach($Key in $Before.inventoryKeys){if($After.inventoryKeys -notcontains $Key){throw 'legacy morning inventory lost'}}
- @{status='pass';activeLegacy='same run/map/RNG/inventory; three floors';
-   newRun='next run/day; seven original floors; meal/inventory retained';
+ @{status='pass';activeLegacy='progress retained during guild alarm; old run abandoned on departure';
+   newRun='new run, same day; seven original floors; meal/inventory retained';
    actualWindows11='pending'}|ConvertTo-Json|Set-Content "$Output/summary.json"
  Get-Content -Raw "$Output/summary.json"
 } catch {

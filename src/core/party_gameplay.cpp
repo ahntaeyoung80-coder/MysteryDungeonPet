@@ -271,10 +271,19 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         if(room>=0 && room==s.world.room[to])return true;
         const auto sight=bfs(s.world,from);return sight.distance[to]>=0 && sight.distance[to]<=2;
     };
+    auto supportThreat=[&](const Entity& e) {
+        if(!hostile(e))return false;
+        const auto leader=bfs(s.world,s.position);
+        const auto partner=bfs(s.world,g.companion.tile);
+        return leader.distance[g.companion.tile]>=0 && leader.distance[g.companion.tile]<=3 &&
+            partner.distance[e.tile]>=0 && partner.distance[e.tile]<=2 &&
+            (canAttack(s.world,s.position,e.tile) || canAttack(s.world,g.companion.tile,e.tile));
+    };
     auto nearestEnemy=[&](uint32_t actor,bool adjacent)->uint32_t {
         uint32_t best=0;int distance=std::numeric_limits<int>::max();
         const int from=position(actor);const auto reach=bfs(s.world,from);
         for(const auto& e:s.population.entities) {
+            if(actor==kCompanionActorId && !supportThreat(e))continue;
             if(!hostile(e) || (adjacent?!canAttack(s.world,from,e.tile):(actor!=kCompanionActorId && !seen(from,e.tile))))continue;
             const int d=reach.distance[e.tile];
             if(d>=0 && (d<distance || (d==distance && (!best || e.instanceId<best)))) {
@@ -313,10 +322,11 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         if(!available(actor) || consumed(actor)==g.actionRound || partyPlayback(g,actor))return;
         if(heal(actor))return;
         auto* target=entity(g.companionTarget);
-        if(g.companionIntent==CompanionIntent::Engage && target && !target->done && !target->remainingHits) {
+        if(g.companionIntent==CompanionIntent::Engage && target && !target->done && !target->remainingHits &&
+           canAttack(s.world,s.position,g.companion.tile)) {
             start(actor,PartyActionKind::Wait,0,0);return;
         }
-        if(g.companionIntent==CompanionIntent::Engage && (!target || !hostile(*target))) {
+        if(g.companionIntent==CompanionIntent::Engage && (!target || !supportThreat(*target))) {
             g.companionIntent=CompanionIntent::Return;g.companionTarget=0;changed=true;
         }
         if(g.companionIntent==CompanionIntent::Return &&
@@ -339,7 +349,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
                 start(actor,PartyActionKind::Attack,target->instanceId,5000);return;
             }
             const int next=approach(actor,target->tile);
-            if(next>=0){move(actor,g.companion.tile,next);return;}
+            if(next>=0 && bfs(s.world,s.position).distance[next]<=2){move(actor,g.companion.tile,next);return;}
             g.companionIntent=CompanionIntent::Return;g.companionTarget=0;changed=true;
         }
         int next=-1;
@@ -354,6 +364,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     };
     auto planPlayer=[&] {
         if(!available(0) || consumed(0)==g.actionRound || partyPlayback(g,0))return;
+        retreatProgress_=false;
         discover();
         if(heal(0))return;
         const auto adjacent=nearestEnemy(0,true);
@@ -382,6 +393,12 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             // Actor blockers are temporary. With no remaining goal, reconsider
             // previously failed targets instead of circling explored floor.
             s.failedTargets.fill(0);invalidate(false);plan();
+        }
+        if(s.target<0 && lowHealth()) {
+            // With no safe frontier, approach the nearest remaining route using
+            // real occupancy. Otherwise a faraway corridor guard causes an
+            // endless retreat even though the companion stays beside us.
+            retreatProgress_=true;plan();
         }
         const auto signature=navigationFingerprint(s);
         const auto repeats=static_cast<unsigned>(std::count(g.navigationHistory.begin(),g.navigationHistory.end(),signature));

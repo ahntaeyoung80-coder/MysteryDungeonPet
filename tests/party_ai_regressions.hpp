@@ -355,16 +355,16 @@ inline unsigned run(const ExplorationState& base) {
                 e.state().floorSteps<=Explorer::kFloorStepLimit+kTiles,
                 "old probe budget permanently disabled reachable goals");
     });
-    test("R15_companion_approaches_shared_known_threat",[&] {
+    test("R15_companion_ignores_distant_threat",[&] {
         auto s=party(base);s.gameplay.hearts=1;
         s.population.entities={{1,4,EntityKind::Friend,156,false}};s.gameplay.hostile={1};
         require(s.world.room[156]!=s.world.room[s.gameplay.companion.tile] &&
                 bfs(s.world,s.gameplay.companion.tile).distance[156]>2,"shared threat fixture is already local");
         Explorer e(s);restoredStep(e,1000);
-        require(e.state().gameplay.companionIntent==CompanionIntent::Engage &&
-                e.state().gameplay.companionTarget==1 &&
+        require(e.state().gameplay.companionIntent!=CompanionIntent::Engage &&
+                e.state().gameplay.companionTarget==0 &&
                 e.state().gameplay.companion.actionRound==e.state().gameplay.actionRound,
-                "companion ignored the threat blocking the leader's safe exploration");
+                "companion left the leader to hunt a distant threat");
     });
     test("R16_shortest_paths_prefer_axes_and_preserve_corners",[&] {
         const auto horizontal=bfs(base.world,125).pathTo(129);
@@ -444,32 +444,36 @@ inline unsigned run(const ExplorationState& base) {
             std::cout<<"PARTY_AI R18 HP"<<hp;for(auto start:starts)std::cout<<' '<<start;std::cout<<std::endl;
         }
     });
-    test("R19_companion_finishes_separated_fight_then_returns",[&] {
+    test("R19_separated_companion_returns_instead_of_hunting",[&] {
         auto s=party(base);auto& g=s.gameplay;
-        s.position=129;s.visited[129]=1;g.hearts=1;g.playerActionRound=g.actionRound;
+        s.position=129;s.visited[129]=1;g.playerActionRound=g.actionRound;
         g.companionIntent=CompanionIntent::Engage;g.companionTarget=1;
-        s.population.entities={{1,4,EntityKind::Friend,123,false},{2,10,EntityKind::Item,130,false}};
-        s.population.entities[0].remainingHits=1;g.hostile={1};forceHit(s);
-        Explorer e(s);uint64_t now=1000;bool killed=false,returnMoved=false,followed=false;
-        for(unsigned tick=0;tick<80 && !followed;++tick) {
-            const auto before=e.state();const auto event=restoredStep(e,now);
-            const auto& after=e.state();const auto& partner=after.gameplay.companion;
-            killed=killed || after.population.entities[0].done;
-            const bool moved=std::any_of(event.actors.begin(),event.actors.end(),[](const auto& a) {
-                return a.actorId==kCompanionActorId && a.event==GameplayEvent::CompanionMove;
-            });
-            if(moved && killed) {
-                returnMoved=true;
-                require(canMove(after.world,before.gameplay.companion.tile,partner.tile),
-                        "post-combat return teleported or cut a wall corner");
-            }
-            followed=returnMoved && after.gameplay.companionIntent==CompanionIntent::Follow &&
-                canAttack(after.world,after.position,partner.tile);
-            require(event.event!=GameplayEvent::ReturnHome && !after.gameplay.defeated,
-                    "return fixture ended the run before rejoining");
-            now=nextTime(e,now);
-        }
-        require(killed && returnMoved && followed,"companion did not finish, return and rejoin after its separated fight");
+        s.population.entities={{1,4,EntityKind::Friend,123,false}};g.hostile={1};
+        Explorer e(s);const auto event=restoredStep(e,1000);
+        require(e.state().gameplay.companionIntent==CompanionIntent::Return &&
+                !e.state().gameplay.companionTarget,"old distant engagement was retained");
+        require(std::none_of(event.actors.begin(),event.actors.end(),[](const auto& a) {
+            return a.event==GameplayEvent::CompanionAttack;
+        }),"separated companion attacked instead of returning");
+        require(bfs(s.world,s.position).distance[e.state().gameplay.companion.tile]<
+                bfs(s.world,s.position).distance[g.companion.tile],"companion failed to move toward leader");
+    });
+    test("R19_local_player_combat_gets_support",[&] {
+        auto s=party(base);s.gameplay.playerActionRound=s.gameplay.actionRound;
+        s.population.entities={{1,4,EntityKind::Friend,126,false}};s.gameplay.hostile={1};
+        Explorer e(s);const auto event=restoredStep(e,1000);
+        require(e.state().gameplay.companionIntent==CompanionIntent::Engage &&
+                e.state().gameplay.companionTarget==1,"companion did not assist leader's nearby combat");
+        require(std::any_of(event.actors.begin(),event.actors.end(),[](const auto& a) {
+            return a.event==GameplayEvent::CompanionMove || a.event==GameplayEvent::CompanionAttack;
+        }),"local support used no action");
+    });
+    test("R19_idle_room_enemy_does_not_trigger_hunt",[&] {
+        auto s=party(base);s.gameplay.playerActionRound=s.gameplay.actionRound;
+        s.population.entities={{1,4,EntityKind::Friend,128,false}};s.gameplay.hostile={1};
+        Explorer e(s);restoredStep(e,1000);
+        require(e.state().gameplay.companionIntent!=CompanionIntent::Engage &&
+                !e.state().gameplay.companionTarget,"same-room enemy outside support range triggered a hunt");
     });
     test("R20_cached_path_suffix_matches_a_fresh_search",[&] {
         World world;world.terrain.fill(0);

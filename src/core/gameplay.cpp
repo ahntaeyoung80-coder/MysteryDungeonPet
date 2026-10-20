@@ -43,7 +43,7 @@ bool bedroomScene(const GameplayState& g) {
         g.life==LifePhase::Wake || g.life==LifePhase::Ready);
 }
 bool nightScene(const GameplayState& g) {
-    return bedroomScene(g) && !(g.life==LifePhase::Wake && (g.sceneBeat==SceneBeat::Waking || g.sceneBeat==SceneBeat::BedFadeIn)) && g.life!=LifePhase::Ready;
+    return bedroomScene(g) && g.life!=LifePhase::Wake && g.life!=LifePhase::Ready;
 }
 bool showFriendlyDisc(const GameplayState& g,bool friendly,bool player) {
     return dungeonScene(g) && g.life!=LifePhase::Dialogue && friendly && !player;
@@ -125,6 +125,22 @@ void Explorer::enableGameplay(std::uint64_t now) {
     if (state_.phase == Phase::Home) (void)beginReturn(now, false);
     else if (state_.phase == Phase::Pose) { g.life = LifePhase::Pose; g.phaseStartedMs = now; g.deadlineMs = now + kFiniteTimeoutMs; }
     else { g.phaseStartedMs = now; g.deadlineMs = now; }
+}
+void Explorer::startGuildMorning(std::uint64_t now) {
+    enableGameplay(now);
+    auto& g=state_.gameplay;
+    invalidate();state_.phase=Phase::Home;
+    g.onceKeys.insert("return:"+std::to_string(state_.runId));
+    g.onceKeys.insert("guild-start:"+std::to_string(state_.runId));
+    g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::BedFadeIn;g.homeScene=true;
+    g.phaseStartedMs=now;g.deadlineMs=now+kFadeMs;
+    g.defeated=false;g.playerHidden=false;g.fadeInOnly=false;
+    g.hearts=kMaxHp;g.companion.hearts=kMaxHp;g.companion.hidden=false;
+    g.movement={};g.companion.movement={};g.walkStartedMs=g.companion.walkStartedMs=0;
+    g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
+    g.companionIntent=CompanionIntent::Follow;g.companionTarget=0;
+    g.enemyTargetsCompanion=false;g.enemyInstance=0;g.enemyHits=0;
+    for(auto& e:state_.population.entities)e.movement={};
 }
 GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     invalidate();
@@ -293,7 +309,11 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         }
     }
     if(g.life==LifePhase::Wake) {
-        if(g.sceneBeat==SceneBeat::WakeDelay || g.sceneBeat==SceneBeat::BedFadeIn) {
+        if(g.sceneBeat==SceneBeat::BedFadeIn) {
+            if(now<g.deadlineMs) return {};
+            g.sceneBeat=SceneBeat::WakeDelay;return life(LifePhase::Wake,GameplayEvent::Wake,kWakeDelayMs);
+        }
+        if(g.sceneBeat==SceneBeat::WakeDelay) {
             if(now<g.deadlineMs) return {};
             g.sceneBeat=SceneBeat::Waking;return life(LifePhase::Wake,GameplayEvent::Wake,kFiniteTimeoutMs);
         }
@@ -308,7 +328,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             return life(LifePhase::Ready,GameplayEvent::Ready,kRoomExitMs);
         }
         if(g.sceneBeat==SceneBeat::RoomExit) {
-            if(now<g.deadlineMs || !completed.player) return {};
+            if(now<g.deadlineMs || !completed.player || (g.companion.enabled && !completed.partner)) return {};
             g.sceneBeat=SceneBeat::MorningFadeOut;
             return life(LifePhase::Ready,GameplayEvent::Ready,kFadeMs);
         }
@@ -320,7 +340,9 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             nextRunFloors_.empty()?state_.floors:nextRunFloors_,state_.spawnPolicy,recentLayouts());
         next.state_.inventory=inventory;
         for(const auto& entry:inventory) next.state_.onceKeys.insert(entry.onceKey);
-        next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+1;next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
+        next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+
+            (previous.onceKeys.count("guild-start:"+std::to_string(state_.runId))?0:1);
+        next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
         next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+kFadeMs;
         next.state_.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;
         if(previous.companion.enabled) {next.state_.gameplay.enabled=true;next.enableCompanion();next.state_.gameplay.companion.oran=previous.companion.oran;}

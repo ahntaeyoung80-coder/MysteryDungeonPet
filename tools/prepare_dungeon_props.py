@@ -32,12 +32,16 @@ def prepare(root,output):
         pixels=[i for b in data[4+(8+tile)*32:4+(9+tile)*32] for i in (b&15,b>>4)]
         for n,index in enumerate(pixels):disc.putpixel((tile*8+n%8,n//8),tuple(palette[index*3:index*3+3])+(255 if index else 0,))
     images.append(('YellowDisc',disc,[8,4]));provenance.append({'slot':995,'tiles':[8,9],'paletteSlot':997,'palette':0,'shadowSize':1,'size':[16,8],'rgbaSha256':hashlib.sha256(disc.tobytes()).hexdigest(),'policy':'player and all friendly NPCs; user policy'})
+    item=FileType.ITEM_P.deserialize(rom.getFileByName('BALANCE/item_p.bin')).item_list[109]
+    indexed=pack[1022].to_pil(item.sprite,item.palette);apple=indexed.convert('RGBA')
+    apple.putalpha(Image.frombytes('L',apple.size,bytes(0 if i%16==0 else 255 for i in indexed.tobytes())))
+    images.append(('Apple',apple,[8,8]));provenance.append({'itemId':109,'slot':1022,'sprite':item.sprite,'palette':item.palette,'size':apple.size,'rgbaSha256':hashlib.sha256(apple.tobytes()).hexdigest(),'policy':'Wigglytuff head prop during communal meal; reuses original item graphic'})
     with tempfile.TemporaryDirectory() as temp:
-        out=Path(temp);atlas=Image.new('RGBA',(24,72));clips=[];y=0
+        out=Path(temp);atlas=Image.new('RGBA',(24,sum(image.height for _,image,_ in images)));clips=[];y=0
         for i,(name,image,anchor) in enumerate(images):
             atlas.paste(image,(0,y));clips.append({'id':i,'name':name,'rows':[[{'rect':[0,y,*image.size],'anchor':anchor,'shadow':[0,0],'ticks':1,'markers':[]}]]});y+=image.height
         atlas.save(out/'atlas.png')
-        package={'assetVersion':1,'tickHz':60,'width':24,'height':72,'pngBytes':(out/'atlas.png').stat().st_size,'sourceKind':1,'atlasName':'atlas.png','pngSha256':file_hash(out/'atlas.png'),'assetKey':'rom:EoS_NA:dungeon-props','provenance':json.dumps(provenance),'clips':clips}
+        package={'assetVersion':1,'tickHz':60,'width':24,'height':atlas.height,'pngBytes':(out/'atlas.png').stat().st_size,'sourceKind':1,'atlasName':'atlas.png','pngSha256':file_hash(out/'atlas.png'),'assetKey':'rom:EoS_NA:dungeon-props','provenance':json.dumps(provenance),'clips':clips}
         (out/'props.mdpa').write_bytes(encode_package(package));(out/'CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; original dungeon graphics\n',encoding='utf-8')
         report={'romHashUnchanged':file_hash(source)==before,'romSha256':before,'sourcePath':'DUNGEON/dungeon.bin','sourceSha256':hashlib.sha256(raw).hexdigest(),'props':provenance}
         if not report['romHashUnchanged']:raise ValueError('ROM changed')

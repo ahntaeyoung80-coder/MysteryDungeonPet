@@ -77,7 +77,9 @@ void scenes(){
   Animator pose;pose.start(p,13,2,false,0);const auto held=pose.advance(60000000);
   check(held.finished && held.frame+1==p.frames(13,2).size(),"original sleep clip does not hold final frame");
  }
- Explorer e(s);e=restore(e);e.advanceGameplay(1750);check(gameplayClip(e.state().gameplay)==14,"Wake14 missing after sleep pose");
+ Explorer e(s);e=restore(e);e.advanceGameplay(1750);
+ check(e.state().gameplay.sceneBeat==SceneBeat::WakeDelay && gameplayClip(e.state().gameplay)==13 && holdGameplayPose(e.state().gameplay),"alarm did not hold sleeping bodies");
+ e=restore(e);e.advanceGameplay(1750+kWakeDelayMs);check(gameplayClip(e.state().gameplay)==14,"Wake14 missing after Loudred alarm");
  s=e.state();s.gameplay.life=LifePhase::Ready;s.gameplay.sceneBeat=SceneBeat::RoomExit;s.gameplay.phaseStartedMs=2000;s.gameplay.deadlineMs=2000+kRoomExitMs;
  e=Explorer(s);e.advanceGameplay(s.gameplay.deadlineMs,true);
  check(e.state().gameplay.sceneBeat==SceneBeat::MorningFadeOut && e.state().gameplay.day==1 && e.state().gameplay.homeScene,"room exit skipped fade-out");

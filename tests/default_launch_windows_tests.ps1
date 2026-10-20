@@ -89,6 +89,7 @@ try {
         $State | ConvertTo-Json -Depth 4 | Set-Content "$Output/launch-$Run-state.json"
         $Joined = $Events -join "`n"
         if ($Joined -notmatch 'mode=automatic-exploration') { throw 'default launch did not own Explorer' }
+        if ($Joined -notmatch 'startup=guild-morning exploration-goal=discarded') { throw 'default launch did not start in the guild' }
         $Expected = if ($Run -eq 0) { 'new' } else { 'restored' }
         if ($Joined -notmatch "exploration snapshot=$Expected day=1 runId=(\d+)") { throw 'default snapshot start/restore failed' }
         $RunIds += $Matches[1]
@@ -99,11 +100,11 @@ try {
         }
         $Positions = @($Rows | ForEach-Object { "$($_.scene_x),$($_.scene_y)" } | Sort-Object -Unique)
         if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
-            if ($Positions.Count -lt 2 -and $Joined -notmatch 'gameplay onceKey=|life=Combat|life=Dialogue') { throw 'default explorer did not advance' }
+            if ($Positions.Count -lt 2 -and $Joined -notmatch 'gameplay onceKey=|life=Combat|life=Dialogue|life=Wake|life=Ready') { throw 'default explorer did not advance' }
         } else { $Status = 'pending: runner session paused rendering' }
         $Process = $null
     }
-    if ($RunIds[0] -ne $RunIds[1]) { throw 'no-argument relaunch replaced the saved run' }
+    # Departure starts a fresh run; restarting must preserve progress and enter the guild.
     $SavedHash = (Get-FileHash $Snapshot).Hash
     $Before = @(Get-Content $EventPath).Count
     $DiagnosticCsv = "$Output/diagnostics.csv"
@@ -117,7 +118,7 @@ try {
     if (@(Import-Csv $DiagnosticCsv | Where-Object { [int]$_.decode_count -ne 1 }).Count) { throw 'diagnostics loaded gameplay assets' }
     $Process = $null
     @{status=$Status; launch='installed EXE with zero arguments from another directory';
-      snapshot='new then restored same runId'; diagnosticsMenu='absent'; explicitDiagnostics='pass, exploration save unchanged';
+      snapshot='progress retained; guild morning on every launch'; diagnosticsMenu='absent'; explicitDiagnostics='pass, exploration save unchanged';
       physicalSize=200; actualWindows11='pending'} |
         ConvertTo-Json | Set-Content "$Output/default-launch.json"
 } catch {

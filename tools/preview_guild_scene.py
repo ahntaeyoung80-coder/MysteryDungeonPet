@@ -26,20 +26,25 @@ def preview(assets, inspector, output):
         return atlas.crop((x,y,x+w,y+h)), f['anchor']
     rooms=json.loads((assets/'guild/provenance.json').read_text())['rooms']
     output.mkdir(parents=True,exist_ok=True)
-    for index,room in enumerate(rooms):
+    for index,name,bg,alarm in [(0,"guild-dining",0,False),(1,"player-room-sleep",2,False),(1,"loudred-alarm",1,True)]:
+        room=rooms[index]
         images=[]
         for ms in range(0,2000,50):
-            frame,_=sample(assets/'home/home.mdpa',index,0,ms)
+            frame,_=sample(assets/'home/home.mdpa',bg,0,ms)
             for actor in room['actors']:
+                if index==1 and actor['id']==109 and not alarm: continue
                 path = assets/('actors/asset-0/asset.mdpa' if actor['kind']==0 else 'actors/asset-1/asset.mdpa' if actor['kind']==1 else actor['asset'])
                 direction=actor['direction']
                 if index==0 and actor['id']==79:direction=0 if (ms*60//1000//20)%2 else 4
                 image,anchor=sample(path,actor['clip'],direction,ms)
                 frame.alpha_composite(image,(actor['position'][0]-anchor[0],actor['position'][1]-anchor[1]))
+                if index==0 and actor['id']==79:
+                    apple,apple_anchor=sample(assets/'props/props.mdpa',4,0,ms)
+                    frame.alpha_composite(apple,(actor['position'][0]-apple_anchor[0],actor['position'][1]-anchor[1]-2-apple_anchor[1]))
             images.append(frame)
-        images[0].save(output/('guild-dining.gif' if index==0 else 'player-room-sleep.gif'),save_all=True,append_images=images[1:],duration=50,loop=0,disposal=2)
-        images[0].save(output/('guild-dining.png' if index==0 else 'player-room-sleep.png'))
-    return {'source':'native MDPA inspector frame/anchor/tick metadata','cast':12,'roomSleepers':2,'effectGraphics':'separate eating/AppleOnHead overlay unresolved'}
+        images[0].save(output/(name+'.gif'),save_all=True,append_images=images[1:],duration=50,loop=0,disposal=2)
+        images[0].save(output/(name+'.png'))
+    return {'source':'native MDPA inspector frame/anchor/tick metadata','cast':12,'roomSleepers':2,'wakeAlarm':'original Loudred body clip3; source SSA placement','effectGraphics':'original item109 apple attached to Wigglytuff; full Eating effects unresolved'}
 
 
 if __name__=='__main__':

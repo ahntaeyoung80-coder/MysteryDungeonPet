@@ -12,12 +12,13 @@ int main() {try {
     if(!dc || !bitmap) throw std::runtime_error("DIB creation failed");
     const auto previous=SelectObject(dc,bitmap);TextOverlay renderer;
     GameplayState g;g.sceneBeat=SceneBeat::ExplorationBerryText;
-    for(unsigned scene=0;scene<6;++scene) {
+    for(unsigned scene=0;scene<7;++scene) {
         if(scene==1) {g.sceneBeat=SceneBeat::None;g.life=LifePhase::Dialogue;g.dialogueStage=DialogueStage::Player;}
         if(scene==2) g.dialogueStage=DialogueStage::Npc;
         if(scene==3) {g.life=LifePhase::Sleep;g.sceneBeat=SceneBeat::BedFace;}
         if(scene==4) {g.life=LifePhase::Ready;g.sceneBeat=SceneBeat::MorningFace;}
         if(scene==5) {g.life=LifePhase::Death;g.sceneBeat=SceneBeat::None;g.deathStage=DeathStage::Blackout;}
+        if(scene==6) {g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::WakeDelay;}
         Surface surface(200,200);gameplayOverlay(surface,g,0);
         std::memcpy(bits,surface.pixels.data(),surface.pixels.size());
         renderer.draw(dc,bits,200,gameplayText(g),scene==5);
@@ -33,5 +34,5 @@ int main() {try {
         if(ink<50) throw std::runtime_error("text missing from actual GDI raster");
     }
     SelectObject(dc,previous);DeleteObject(bitmap);DeleteDC(dc);
-    std::cout<<"six Korean text scenes have visible opaque GDI ink\n";
+    std::cout<<"seven Korean text scenes have visible opaque GDI ink\n";
 } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}}

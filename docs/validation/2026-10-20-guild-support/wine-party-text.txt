@@ -1,0 +1,42 @@
+seven Korean text scenes have visible opaque GDI ink
+guild startup / stale entity goal migration / alarm / day progression pass
+16 directional/reversal cases, pause/partial restore, MDES6 migration and 9523 restored party actions pass
+PARTY_AI R01 observed=125->126->127->128->129
+PARTY_AI PASS R01_unobstructed_straight_path
+PARTY_AI R02 HP5 1000 1400 1800 2200 HP1 1000 1400 1800 2200
+PARTY_AI PASS R02_hp_alone_does_not_delay_walking
+PARTY_AI PASS R03_hp1_surrounded_fights_without_returning
+PARTY_AI PASS R03_no_legal_action_waits_without_returning
+PARTY_AI R04 leader target=2 round=1
+PARTY_AI R04 companion target=1 round=1
+PARTY_AI R04 leader target=2 round=2
+PARTY_AI PASS R04_both_allies_attack_their_own_enemy_in_one_round
+PARTY_AI PASS R05_one_enemy_faints_other_fight_continues
+PARTY_AI PASS R06_leader_retreat_does_not_cancel_companion_combat
+PARTY_AI PASS R06_separated_combat_state_roundtrips
+PARTY_AI PASS R07_R08_owner_and_damage_survive_restore
+PARTY_AI PASS R08_navigation_matches_uninterrupted_execution
+PARTY_AI PASS R10_keyed_completion_is_actor_action_and_run_specific
+PARTY_AI PASS R11_mdes7_pending_hit_finishes_before_party_upgrade
+PARTY_AI PASS R12_party_greets_and_passes_a_friendly_corridor
+PARTY_AI PASS R13_recovery_decision_refreshes_room_visibility
+PARTY_AI PASS R14_exhausted_old_probe_budget_keeps_exploring
+PARTY_AI PASS R15_companion_ignores_distant_threat
+PARTY_AI PASS R16_shortest_paths_prefer_axes_and_preserve_corners
+PARTY_AI PASS R17_companion_return_is_straight_or_a_legal_shortest_detour
+PARTY_AI R18 HP5 1000 1400 1800 2200
+PARTY_AI R18 HP1 1000 1400 1800 2200
+PARTY_AI PASS R18_chasing_enemy_shares_hp1_hp5_walking_interval
+PARTY_AI PASS R19_separated_companion_returns_instead_of_hunting
+PARTY_AI PASS R19_local_player_combat_gets_support
+PARTY_AI PASS R19_idle_room_enemy_does_not_trigger_hunt
+PARTY_AI PASS R20_cached_path_suffix_matches_a_fresh_search
+PARTY_AI PASS R21_legacy_exhausted_budget_resumes_reachable_goals
+PARTY_AI PASS R22_legacy_cornered_combat_does_not_cancel_before_attack
+PARTY_AI R23 seedA=340 seedB=1041 rawEqual=0 translatedEqual=0
+PARTY_AI PASS R23_translated_floor_shape_is_not_reused
+PARTY_AI PASS R24_next_day_remembers_the_previous_floor_shape
+PARTY_AI PASS R25_layout_memory_is_bounded_and_restored
+PARTY_AI R26 room rectangles checked=1269 seeds=512
+PARTY_AI PASS R26_generated_room_rectangles_do_not_overlap
+PARTY_AI SUMMARY failures=0 cases=29

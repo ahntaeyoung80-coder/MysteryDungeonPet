@@ -43,12 +43,15 @@ def prepare(root, output):
     dining = FileType.SSA.deserialize(raw(dining_source+'.ssa'), config.script_data)
     sleeping = FileType.SSA.deserialize(raw(sleeping_source+'.ssa'), config.script_data)
     text = FileType.SSB.deserialize(raw(dining_source+'.ssb'), byte_codec).to_ssb_script()[0]
-    raw(sleeping_source+'.ssb')
+    wake_text = FileType.SSB.deserialize(raw(sleeping_source+'.ssb'), byte_codec).to_ssb_script()[0]
+    if 'SetAnimation(18)' not in wake_text:
+        raise ValueError('original wake alarm script changed')
     overlay = rom.loadArm9Overlays([11])[11]
     table_offset = 0x023218CC - overlay.ramAddress
     table = struct.unpack_from('<84H', overlay.data, table_offset)
     if table[42] != 0x080D or table[64] != 0x080F or table[76] != 0x081B:
         raise ValueError('original animation table address/edition mismatch')
+    if table[18]&255 != 3: raise ValueError('original Loudred alarm clip changed')
     actor_codes, actor_effects = {}, {}
     actor = None
     for line in text.splitlines():
@@ -81,6 +84,11 @@ def prepare(root, output):
             'direction':a.pos.direction.ssb_id,'scriptCode':62,'rawAnimationWord':table[62],'clip':13,'effectId':0})
     if len(rooms[0]['actors']) != 12 or len(rooms[1]['actors']) != 2:
         raise ValueError('original guild cast/bed count mismatch')
+    alarm = next(a for a in sleeping.layer_list[0].actors if a.actor.id==109)
+    alarm_pos=position(alarm.pos)
+    rooms[1]['actors'].append({'id':109,'name':alarm.actor.name,'mdIndex':alarm.actor.entid,
+        'kind':2,'asset':'guild/actor-109/asset.mdpa','sourcePosition':alarm_pos,'position':alarm_pos,
+        'direction':alarm.pos.direction.ssb_id,'scriptCode':18,'rawAnimationWord':table[18],'clip':3,'effectId':0})
     md = FileType.MD.deserialize(raw('BALANCE/monster.md'))
     packs = {path:checked_pack(raw(path)) for path in ('MONSTER/monster.bin','MONSTER/m_ground.bin','MONSTER/m_attack.bin')}
     with tempfile.TemporaryDirectory() as workspace:
@@ -99,8 +107,9 @@ def prepare(root, output):
             CharaWanHandler.export_sheets(str(sheets),merged,config.animation_names.get(sprite,config.animation_names[0]))
             raw_meta=raw_wan_metadata(merged)
             names={int(n.findtext('Index')):n.findtext('Name') for n in ET.parse(sheets/'AnimData.xml').findall('Anims/Anim') if n.find('Index') is not None}
-            wanted={names[i]:i for i in {7,a['clip']} if i in names}
-            if {7,a['clip']} != set(wanted.values()): raise ValueError(f'original guild actor clip missing: {a["name"]}')
+            clips={7,a['clip']} | ({0,3} if a['id']==109 else set())
+            wanted={names[i]:i for i in clips if i in names}
+            if clips != set(wanted.values()): raise ValueError(f'original guild actor clip missing: {a["name"]}')
             audit=temp/f'audit-{a["id"]}';audit.mkdir()
             source={'sourceKind':'rom','romHash':before,'edition':config.game_edition,'mdIndex':a['mdIndex'],'spriteIndex':sprite,
                 'toolCommit':'5ed359a2560a1f04666b9ea02b71649b89cb16d7','sourceRefs':source_refs,'license':'game_assets_user_local_only','credit':'Nintendo / Pokémon / CHUNSOFT'}
@@ -143,7 +152,8 @@ def prepare(root, output):
         (generated/'guild.mdgs').write_bytes(data)
         report={'romHashUnchanged':file_hash(rom_path)==before,'romHash':before,'rooms':rooms,'sourceRefs':refs,'originalWANChecks':checks,
             'dialogue':'original unknown encoded strings preserved for opcode parsing; dialogue decoding unresolved',
-            'effects':'Eating642/EatingSlow643/AppleOnHead624 provenance retained; separate effect renderer unresolved',
+            'effects':'AppleOnHead624 uses the original item109 apple sprite attached to Wigglytuff; Eating642/643 full effects remain unresolved',
+            'wakeAlarm':{'actorId':109,'sourceScript':sleeping_source+'.ssb','scriptCode':18,'clip':3,'sourcePosition':alarm_pos,'durationMs':2000,'audio':'not extracted'},
             'sleepPolicy':'original bed positions/directions; EventSleep13 loop then Wake14; Laying27 source recorded',
             'mealPolicy':'original cast clips/loop flags; finite 8-second communal scene; meal consumption once'}
         if not report['romHashUnchanged']:raise ValueError('ROM changed')

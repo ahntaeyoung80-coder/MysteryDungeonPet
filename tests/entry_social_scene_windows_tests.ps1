@@ -40,7 +40,7 @@ $NpcAfter=Inspect 'npc'
 if($NpcAfter.greetings -ne 1 -or @($NpcRows|Where-Object {$_.life -eq '10'}).Count -lt 3){throw 'off-path friendly NPC did not approach/greet/respond once'}
 & $Tests --wake-fixture $Package $Output
 if($LASTEXITCODE -ne 0){throw 'wake fixture failed'}
-$WakeRows=@(Run 'wake' 7)
+$WakeRows=@(Run 'wake' 10)
 $WakeAfter=Inspect 'wake'
 $Poses=Get-Content -Raw "$Output/poses.json"|ConvertFrom-Json
 $Sleeping=@($WakeRows|Where-Object {$_.life -eq '6' -and $_.scene_beat -eq '12'})

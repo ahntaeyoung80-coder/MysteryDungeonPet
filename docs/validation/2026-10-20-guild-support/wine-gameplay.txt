@@ -1,0 +1,14 @@
+{"guildMembers":10,"animatedGuildMembers":10,"bedPlacement":"pass"}
+{"scenario":1,"status":"pass","evidence":"actual Pose17 and communal Eat15 EventSleep13 Wake14; next day Explore"}
+{"scenario":2,"status":"pass","evidence":"return 1500ms; zero position/floorStep/BFS change; cached target cleared"}
+{"scenario":3,"status":"pass","evidence":"recognition -> player Move355 Attack1 -> enemy Move355 counterattack"}
+{"scenario":4,"status":"pass","evidence":"two normal player hits -> enemy Faint33 completion -> Explore"}
+{"scenario":11,"status":"pass","evidence":"victory preserves original floor and tile; no ReturnHome transaction"}
+{"scenario":5,"status":"pass","evidence":"player critical applies two damage and removes two internal hit counts"}
+{"scenario":6,"status":"pass","evidence":"three enemy normal hits -> defeat -> return -> expression -> meal -> sleep -> wake"}
+{"scenario":7,"status":"pass","evidence":"enemy critical removes two hearts"}
+{"scenario":8,"status":"pass","evidence":"low HP retreats to previously discovered stairs before searching for an unseen berry"}
+{"scenario":9,"status":"pass","evidence":"text only; one berry consumed; 1->3 hearts; enemy turn follows"}
+{"scenario":10,"status":"pass","evidence":"friendly waits; adjacent greeting; no attack; Explore resumes"}
+{"scenario":12,"status":"pass","evidence":"every scenario transition restored with matching state/RNG/journals; no duplicate damage meal or return"}
+{"checks":13519,"restores":6644,"relationshipHostile":1510,"relationshipTotal":2000,"playerHits":80195,"enemyHits":80088,"playerCriticals":16156,"enemyCriticals":3904}

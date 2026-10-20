@@ -251,6 +251,7 @@ public:
     GoalKind goal() const { return state_.goalKind; }
     std::uint64_t bfsCalls() const { return bfsCalls_; }
     void enableGameplay(std::uint64_t utcMs);
+    void startGuildMorning(std::uint64_t utcMs);
     bool enableCompanion();
     void setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors);
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
@@ -300,6 +301,8 @@ private:
 };
 
 void validateState(const ExplorationState&);
+// Entity positions can change after planning; the route is only a cache.
+bool discardStaleEntityGoal(ExplorationState&);
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState&);
 ExplorationState decodeSnapshot(const std::vector<std::uint8_t>&,
                                 const std::string& expectedAssetVersion);

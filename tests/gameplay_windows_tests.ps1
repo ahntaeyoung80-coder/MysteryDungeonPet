@@ -24,9 +24,9 @@ if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     foreach ($Pattern in @('select clip=17', 'life=ReturnHome', 'life=HomeScene', 'guild room=GuildDining characters=12 objectCount=1', 'guild room=PlayerRoom characters=2', 'guild partner wake finished', 'life=Eat', 'life=Sleep', 'life=Wake', 'life=Ready', 'life=Explore.*day=2', 'sceneBeat=13 ', 'sceneBeat=2 ', 'sceneBeat=6 ', 'sceneBeat=7 ', 'sceneBeat=3 ', 'sceneBeat=4 ', 'sceneBeat=5 ', 'sceneBeat=12 ', 'sceneBeat=8 ', 'sceneBeat=9 ', 'sceneBeat=16 ')) {
         if ($Joined -notmatch $Pattern) { throw "missing production life event: $Pattern" }
     }
-    if ($Joined -match 'sceneBeat=15 ') { throw 'old wake delay replayed' }
+    if ($Joined -notmatch 'sceneBeat=15 ' -or $Joined -notmatch 'guild room=PlayerRoom characters=3') { throw 'Loudred alarm absent' }
     $PreviousBeatIndex = -1
-    foreach ($Beat in @(2,6,3,4,7,5,12,8,9,16,10,11)) {
+    foreach ($Beat in @(2,6,3,4,7,5,12,15,8,9,16,10,11)) {
         $BeatIndex = 0
         while ($BeatIndex -lt $Events.Count -and $Events[$BeatIndex] -notmatch "sceneBeat=$Beat ") { $BeatIndex++ }
         if ($BeatIndex -le $PreviousBeatIndex -or $BeatIndex -eq $Events.Count) { throw "bedtime/wake ordering failed at beat $Beat" }
