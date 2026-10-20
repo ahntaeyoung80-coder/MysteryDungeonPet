@@ -17,13 +17,30 @@
     "overlapPlayerPixels": "285/285;148 overlap pixels",
     "alarm": "Walk0 right -> clip3 -> Walk0 left; actual submitted positions in alarm-route.json",
     "defaultLaunch": "guild -> new seven-floor run; GDI7 scenes pass",
-    "limitations": "Wine is not native Windows; Wine font lacks Korean glyphs; native CI pending"
+    "limitations": "Wine is not native Windows; Wine lacks Korean glyphs. Separate native CI passed.",
+    "defaultScreenCoverage": {
+      "schema": 9,
+      "enabled": true,
+      "viewportSize": 200,
+      "submittedFloorTiles": 46
+    }
   },
   "assets": {
     "apple": "original effect624,13frames52ticks, offsets/hFlip retained; deterministic ROM re-export passed",
     "dialogue": "original frame_b0 CHR/PAL border; Malgun Gothic12px; original glyphs/VM not implemented",
     "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf"
   },
-  "nativeCi": "pending",
+  "nativeCi": {
+    "run": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39379717326",
+    "sourceCommit": "0bdf1f94f43e20d01c4cbc7135554a7c5d244bf9",
+    "core": "success; ASan14/14 and Python27/27",
+    "windows": "success; native MSVC15/15,GUI,root/installed EXE startup and migration",
+    "actualWindows11": "user machine not observed",
+    "overlapPixels": {
+      "matchedPlayerPixels": 289,
+      "testedPlayerPixels": 289,
+      "overlappingBodyPixels": 176
+    }
+  },
   "runtimeSha256": "4bb153630203dec8b433c9bbe81c338969f0f840bc8620c2e2b7a67a060a4c36"
 }

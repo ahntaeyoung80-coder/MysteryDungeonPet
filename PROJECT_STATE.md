@@ -11,8 +11,8 @@
 - 일반 실행은 매번 길드 아침에서 시작한다. 누적 획득품·열매·날짜·식사 횟수·최근 지형은 유지하고 탐험 위치·목표·전투는 재개하지 않는다. MDES9/1~9 읽기, 명시 `--explore`는 상세 복원 회귀다.
 - 전투는 주인공→동료→ID 순서의 적→다음 주인공이다. 동료의 가까운 전투에서는 저체력 주인공도 지원한다. 평시400ms 공유 이동, 동료 인식2칸·플레이어 leash3칸·피해 소유권은 유지한다. 일반 실행은 실제 화면의 방 바닥 전체 노출을 기록하며 배율별 미표시 영역을 확인한다.
 - 겹침은 주인공이 위에 표시되고 주인공이 퇴실을 이끈다. 노공룡은800ms 입장→2초 알람→800ms 퇴장한다. 푸크린 사과는 원작 효과624의13프레임/52tick이다. 대화창은 원작 테두리/순차 출력이며 한글은 맑은 고딕12px이다. 원작 알람 음원·glyph/전체 대사 VM은 남아 있다.
-- Linux ASan/UBSan14/14, Python27/27, 추가 MDES8 호환을 포함한 party34/34가 통과했다. 새 PE의 Wine10 실제 출력에서 겹침285/285·공격 중첩0·노공룡 경로·기상/퇴실·기본7층 출발·GDI7장면을 확인했다. native Windows CI는 진행 전이다. [검증](docs/validation/2026-10-20-party-scene/summary.json), [실행 안내](docs/WINDOWS_QUICKSTART.md).
+- Linux ASan/UBSan14/14, Python27/27, 추가 MDES8 호환을 포함한 party34/34가 통과했다. 새 PE의 Wine10 실제 출력에서 겹침285/285·공격 중첩0·노공룡 경로·기상/퇴실·기본7층 출발·GDI7장면을 확인했다. [CI39379717326](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39379717326)에서 Linux14/14·Python27/27·native MSVC15/15·실제 GUI·설치본/루트 EXE·저장 이행이 모두 통과했다. [검증](docs/validation/2026-10-20-party-scene/summary.json), [실행 안내](docs/WINDOWS_QUICKSTART.md).
 
 ## 진행·바로 다음 작업
 
-새 소스·자산·루트 EXE/hash를 함께 work에 반영하고 필수 CI와 원격 SHA를 확인한다. 그 뒤 사용자 Windows11 실행과 B의 남은 인수 기준을 확인한다. [로그](docs/logs/2026-10-20-party-scene.md).
+새 소스·자산·루트 EXE/hash를 work에 반영했고 필수 CI·원격 SHA 일치를 확인했다. 다음은 사용자 Windows11 실행과 B의 남은 인수 기준 확인이다. [로그](docs/logs/2026-10-20-party-scene.md).

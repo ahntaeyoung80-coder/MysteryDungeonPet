@@ -1,0 +1,11 @@
+CI39379717326 source0bdf1f94f43e20d01c4cbc7135554a7c5d244bf9
+core/windows jobs: completed success
+2026-10-20T06:24:06.1010640Z {"status": "pass", "matchedPlayerPixels": 289, "testedPlayerPixels": 289, "overlappingBodyPixels": 176}
+2026-10-20T06:19:39.8537752Z Windows x64 runtime/source/assets hashes match; no ZIP required
+2026-10-20T06:22:52.8896956Z 100% tests passed, 0 tests failed out of 14
+2026-10-20T06:23:14.6965712Z Ran 27 tests in 11.134s
+2026-10-20T06:22:21.3134170Z 15/15 Test #15: pet_text_overlay_tests ...........   Passed    0.24 sec
+2026-10-20T06:22:21.3144248Z 100% tests passed out of 15
+2026-10-20T06:24:18.3824306Z   "exit": "corridor endpoint held during fade-out; actual submitted pixels darken/brighten; next day commits once and movement waits for fade-in",
+2026-10-20T06:24:18.3825165Z   "wake": "both original Sleep13 final frames held through daylight fade before Wake14",
+2026-10-20T06:27:53.6975456Z Installed selected package bytes: 2273731 (selected runtime only; ROM excluded)

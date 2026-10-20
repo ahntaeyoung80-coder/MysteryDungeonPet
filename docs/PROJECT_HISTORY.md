@@ -47,3 +47,8 @@
 ## 2026-10-20 — 길드 재시작·전투 보조·생활 장면
 
 `invalid entity goal`의 낡은 NPC 목표를 수정·이행했다. 일반 실행은 누적 진행을 유지하며 매번 길드의 아침에서 시작한다. 동료는 가까운 전투만 보조하고 멀어지면 합류한다. 푸크린 머리 위 원작 사과, 노공룡 원작 동작/기상 대사/화면 흔들림, 두 배우 공동 퇴실을 추가했다. 새 exe/소스를 work63d32ed에 함께 반영했다. [CI39355943438](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39355943438)에서 Linux14/14·Python26/26·Windows15/15와 GUI/설치/루트 실행·저장 이행이 통과했다. 원작 알람 음원·전체 효과·사용자 Windows11 확인은 남아 있다. [실측/검증 로그](logs/2026-10-20-guild-support.md).
+
+
+## 2026-10-20 — 순차 전투·화면 탐험·길드 연출 보정
+
+주인공 우선 합성·선도 퇴실, 주인공→동료→각 적 순차 턴, 저체력 동료 지원을 구현했다. 실제 화면에 표시된 방 영역을 기록하고 미표시 영역을 확인한다. 원작 AppleOnHead624 효과·대화창 테두리/순차 출력과 노공룡의 걸어오는 입장/퇴장을 적용했다. MDES9/구형 저장 호환과 새 루트 EXE를 반영했다. [CI39379717326](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39379717326)에서 Linux14/14·Python27/27·native MSVC15/15·GUI·루트/설치 EXE·저장 이행이 통과했다. 첫 CI의 테스트 저장 시각 문제는 wake 직전 fixture 갱신으로 수정했다. 원작 알람 음원·한글 glyph/전체 대사 VM과 사용자 Windows11 확인은 남아 있다. [실측/검증 로그](logs/2026-10-20-party-scene.md).

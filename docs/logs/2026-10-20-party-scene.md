@@ -29,3 +29,12 @@ MinGW GCC14.2 x64 static EXE를 빌드·루트 반영하고 hash를 확인했다
 ## Windows 검사 시각 fixture 보정
 
 첫 push 뒤 스크립트 재검토에서 overlap 실행1초 뒤 같은 시각의 wake fixture를 재사용하면750ms BedFadeIn이 이미 만료되는 점을 확인했다. Wine 수동 검사는 각 실행 직전 fixture를 새로 생성했으므로 이 문제를 드러내지 못했다. PowerShell도 wake 실행 직전에 fixture를 새로 만든다. 제품 소스/EXE 변경은 없으며 hash 검사와 해당 스크립트 내용을 확인했다. 자동 push trigger 때문에 새 검사 커밋의 필수 CI가 다시 실행되며, 이 추가 실행 사유를 기록한다. 이전 CI 결과를 새 스크립트의 완료 근거로 재사용하지 않는다.
+
+첫 CI39379463484의 native MSVC15/15·동료 GUI·겹침289/289픽셀(180픽셀 교차)은 통과했고, 예상한 기존 wake fixture 만료로 `morning sleep pose not observed`에서 실패했다. 새0bdf1f9 커밋의 CI39379717326은 해당 fixture 생성 순서를 수정한 전체 필수 실행이다.
+
+## 원격 검증 마감
+
+- 제품 소스·자산·EXE는 `1b8e1400fa4a032da365c3a96540f556119633f7`, 시각 fixture 보정은 `0bdf1f94f43e20d01c4cbc7135554a7c5d244bf9`로 work에 반영했다. git ls-remote와 로컬 HEAD 일치를 확인했다.
+- [최종 CI39379717326](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39379717326)의 source SHA를 확인했다. Linux ASan14/14·Python27/27, native Windows MSVC15/15·WIC/재생/이동/생활/동료·알람 입퇴장/선도 퇴실/겹침·설치본/루트 EXE 기본 실행·이전 저장 이행이 모두 success다. root MinGW 실행물과 MSVC 빌드를 구분해 검사했다. 선택 설치 패키지는2,273,731bytes(ROM 제외)다. 사용자 Windows11 자체의 확인으로 표현하지 않는다.
+- 최종 CI 성공과 원격 SHA를 UTC06:28:19에 확인했다. 통합 시계 시작06:10:45부터 **17분34초**이며 빌드·검사·문서·CI 대기가 병행된 값이다. 항목별 순수 시간/대기는 따로 계측하지 않았다. 초기 조사·중단/재개 구간은 미계측이다.
+- 새 제품 core에 대한 로컬 전체 검사는1회였다. MDES8 회귀 추가는 관련 검사만 재실행했다. Windows 시각 fixture 수정으로 필수 CI를1회 추가 실행한 이유와 이전 실패를 기록했다. 최종 성공 후 문서 기록만 바꾸는 커밋은 skip-ci로 처리하며 링크/diff/hash/원격 일치만 확인한다. 사전 범위/예상·관련 검사 우선·최종 통합 이유·실제 측정 범위를 마감 시 확인했다.
