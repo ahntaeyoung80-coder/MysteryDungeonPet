@@ -12,6 +12,7 @@
 #include "core/exploration_package.hpp"
 #include "core/gameplay_scene.hpp"
 #include "core/guild_scene.hpp"
+#include "core/completion_scene.hpp"
 #include "core/motion.hpp"
 #include <algorithm>
 #include <chrono>
@@ -182,7 +183,9 @@ class App {
     std::optional<Assets> appleAssets_,uiAssets_,portraitAssets_;
     Animator appleAnimator_;
     std::size_t appleFrame_=0;
-    std::optional<Surface> dialoguePanel_,portraitFrame_,speakerNameplate_;
+    std::optional<Surface> dialoguePanel_,portraitFrame_;
+    CompletionRegistry completionRegistry_;
+    std::map<std::uint32_t,Assets> completionAssets_;
     std::vector<GuildRoom> guildRooms_;
     std::map<std::string, Assets> guildAssets_;
     struct GuildLiveActor {
@@ -244,8 +247,8 @@ class App {
     bool loop_;
     size_t frame_ = 0;
     std::optional<int64_t> nextFrameDeadline_;
-    bool finalSampled_ = false;
-    std::wstring submittedText_;
+    bool finalSampled_ = false,traceCompletionImage_=false;
+    std::wstring submittedText_,submittedHud_;
     uint64_t submissions_ = 0, decodes_ = 0, markers_ = 0, finishes_ = 0, skippedCycles_ = 0, switches_ = 0;
     uint64_t hiddenSubmissions_ = 0;
     int64_t start_ = 0, metricDeadline_ = 0, stopDeadline_ = 0, scenarioDeadline_ = 0, sessionRetry_ = 0;
@@ -276,24 +279,43 @@ class App {
         if(g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut) {const auto p=bedroomExitCamera(g,utcMs());center={double(p.x),double(p.y)};}
         return cameraFor(center,room.width,room.height,int((size_+scale_-1)/scale_));
     }
+    const CompletionDestination* completionDestination() const {
+        if(!explorer_ || !completionScene(explorer_->state().gameplay))return nullptr;
+        return completionRegistry_.destination(explorer_->state().floors[explorer_->state().floorIndex].dungeonId);
+    }
+    Point endingPosition(bool partner=false) const {
+        return completionPosition(*completionDestination(),explorer_->state().gameplay,utcMs(),partner);
+    }
+    Point endingCamera() const {
+        const auto* d=completionDestination();const auto player=endingPosition(),partner=endingPosition(true);
+        const WorldPoint center{double(player.x+partner.x)/2,double(player.y+partner.y)/2-24};
+        return cameraFor(center,d->width,d->height,int((size_+scale_-1)/scale_));
+    }
+    std::wstring mapHud() const {
+        if(!explorer_)return {};
+        const auto& state=explorer_->state();const auto& g=state.gameplay;
+        if(!dungeonScene(g) || g.life==LifePhase::Death || g.life==LifePhase::ReturnHome)return {};
+        return wide(completionRegistry_.mapLabel(state.floors[state.floorIndex].dungeonId,state.floorIndex,completionScene(g)));
+    }
     void traceMovement(int64_t now,bool submitted) {
         if(!movementTrace_ || !explorer_) return;
         const auto& state=explorer_->state();const auto& g=state.gameplay;const bool dungeon=dungeonScene(g);
-        const auto scene=dungeon?raster(playerMotion_.sample(now)):currentPlayback().scenePosition;
-        const auto world=dungeon?playerMotion_.sample(now):WorldPoint{double(scene.x),double(scene.y)};
-        const auto camera=dungeon?cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_)):homeCamera(now);
+        const auto scene=completionDestination()?endingPosition():dungeon?raster(playerMotion_.sample(now)):currentPlayback().scenePosition;
+        const auto world=dungeon && !completionDestination()?playerMotion_.sample(now):WorldPoint{double(scene.x),double(scene.y)};
+        const auto camera=completionDestination()?endingCamera():dungeon?cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_)):homeCamera(now);
         uint64_t hash=14695981039346656037ULL,light=0;unsigned opaque=0;
         for(size_t i=0;i<surface_.pixels.size();++i) {hash^=surface_.pixels[i];hash*=1099511628211ULL;if(i%4==3){if(surface_.pixels[i]==255) ++opaque;}else light+=surface_.pixels[i];}
         movementTrace_ << now-start_ << ',' << g.movement.actionId << ',' << g.movement.startedMs << ',' << g.movement.durationMs << ','
             << g.movement.from << ',' << g.movement.to << ',' << std::setprecision(12) << world.x << ',' << world.y << ','
             << scene.x << ',' << scene.y << ',' << camera.x << ',' << camera.y << ',' << direction_ << ',' << clip_ << ',' << frame_ << ','
-            << scale_ << ',' << playerMotion_.active(now) << ',' << opaque << ',' << hash << ',' << submitted << ','
+            << scale_ << ',' << (g.sceneBeat==SceneBeat::CompletionWalk || playerMotion_.active(now)) << ',' << opaque << ',' << hash << ',' << submitted << ','
             << markers_ << ',' << static_cast<unsigned>(g.life) << ',' << static_cast<unsigned>(g.sceneBeat) << ',' << utcMs() << ',' << g.walkStartedMs << ','
             << state.floorIndex << ',' << state.world.start << ',' << state.world.stairs << ',' << state.position << ','
             << std::count_if(state.population.entities.begin(),state.population.entities.end(),[&](const auto& e){return e.tile==state.world.start;}) << ',' << holdingScenePose();
         const auto partner=std::find_if(guildLive_.begin(),guildLive_.end(),[](const auto& a){return a.cue->kind==GuildActorKind::Partner;});
         movementTrace_ << ',' << (partner==guildLive_.end()?0:partner->clip) << ',' << (partner==guildLive_.end()?0:partner->frame) << ',' << light;
-        const auto& p=g.companion;const auto point=companionMotion_.sample(now);
+        const auto& p=g.companion;const auto end=completionDestination()?endingPosition(true):Point{};
+        const auto point=completionDestination()?WorldPoint{double(end.x),double(end.y)}:companionMotion_.sample(now);
         movementTrace_ << ',' << p.enabled << ',' << p.tile << ',' << point.x << ',' << point.y << ',' << companionClip_ << ',' << companionFrame_ << ',' << companionMotion_.active(now)
             << ',' << g.hearts << ',' << p.hearts << ',' << g.actionRound << ',' << g.playerActionRound << ',' << p.actionRound << ',' << g.enemyTargetsCompanion << ',' << static_cast<unsigned>(g.combat)
             << ',' << g.independentParty << ',' << static_cast<unsigned>(g.partyPhase)
@@ -329,6 +351,7 @@ class App {
         movementTrace_ << ',' << partnerPoint.x << ',' << partnerPoint.y << ',' << (partner==guildLive_.end()?-1:int(partner->direction))
             << ',' << guildAppleVisible(g) << ',' << appleFrame_ << '\n';
         const bool textReady=!gameplayText(g).empty() && revealedGameplayText(g,utcMs())==gameplayText(g);
+        if(submitted && !traceCompletionImage_ && g.sceneBeat==SceneBeat::CompletionText && utcMs()>=g.phaseStartedMs+1500){traceImage("-completion.bmp");traceCompletionImage_=true;}
         if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay && textReady){traceImage("-alarm.bmp");traceAlarmImage_=true;}
         if(submitted && textReady) {
             int capture=-1;const char* suffix="";
@@ -433,7 +456,7 @@ class App {
         Point scene{int32_t(size_ / (2 * scale_)), int32_t(size_ / (2 * scale_))};
         if (explorer_ && dungeonScene(explorer_->state().gameplay)) {
             const int tile = explorer_->state().position;
-            scene = raster(playerMotion_.sample(presentationNow_));
+            scene = completionDestination()?endingPosition():raster(playerMotion_.sample(presentationNow_));
             (void)tile;
         } else if (explorer_ && !guildRooms_.empty()) {
             scene = guildRooms_[bedroomScene(explorer_->state().gameplay) ? 1 : 0].player().position;
@@ -874,6 +897,7 @@ class App {
             playerMotion_.begin(0, g.movement.actionId, tilePoint(oldPosition),tilePoint(pos),now,direction_);
             (void)dx; (void)dy;
         }
+        if(completionScene(g))direction_=g.playerDirection;
         if(companionDialogue(g)) direction_=g.playerDirection;
         else if (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) {
             const auto entity = std::find_if(explorer_->state().population.entities.begin(), explorer_->state().population.entities.end(), [&](const auto& e) { return e.instanceId == g.enemyInstance; });
@@ -900,7 +924,7 @@ class App {
         if (event.event == GameplayEvent::UseOranBerry) log("OranBerry70 text: healed 2 hearts (capped at 5); consumes one player action");
         if (event.event == GameplayEvent::PlayerAttack || event.event == GameplayEvent::EnemyAttack)
             log("move355 damage=" + std::to_string(event.damage) + " critical=" + std::to_string(event.critical));
-        if (event.event == GameplayEvent::HomeScene) log(std::string("life=HomeScene opaque original ")+(bedroomScene(g)?(nightScene(g)?"night bedroom":"day bedroom"):"dining map"));
+        if (event.event == GameplayEvent::HomeScene || (event.event==GameplayEvent::ReturnHome && g.homeScene)) log(std::string("life=HomeScene opaque original ")+(bedroomScene(g)?(nightScene(g)?"night bedroom":"day bedroom"):"dining map"));
         if(event.navigationDetour) log("navigation detour reason=repeated-joint-state from="+std::to_string(oldPosition)+" to="+std::to_string(explorer_->state().position));
         if(g.life==LifePhase::ReturnHome) dirty_=true;
         dirty_ = true;
@@ -1064,7 +1088,11 @@ class App {
         std::vector<Layer> layers;
         std::optional<Layer> playerLayer;
         Point camera{0, 0};
-        if (explorer_ && dungeonScene(explorer_->state().gameplay)) {
+        if(completionDestination()) {
+            const auto& background=completionAssets_.at(completionDestination()->dungeonId);
+            const auto& frame=background.package.frames(0,0).front();camera=endingCamera();
+            layers.push_back({background.atlas.get(),frame.rect,frame.anchor,{0,0}});
+        } else if (explorer_ && dungeonScene(explorer_->state().gameplay)) {
             const auto& state = explorer_->state();
             const auto tileId = state.floors[state.floorIndex].tilesetId;
             const auto& tileAssets = tiles_.at(tileId);
@@ -1143,7 +1171,7 @@ class App {
             const auto& p=explorer_->state().gameplay.companion;
             if(p.enabled && !p.hidden) {
                 const auto& f=companionAssets_->package.frames(companionClip_,companionDirection_)[companionFrame_];
-                layers.push_back({companionAssets_->atlas.get(),f.rect,f.anchor,raster(companionMotion_.sample(now))});
+                layers.push_back({companionAssets_->atlas.get(),f.rect,f.anchor,completionDestination()?endingPosition(true):raster(companionMotion_.sample(now))});
             }
         }
         if(playerLayer)layers.push_back(*playerLayer); // player wins any sprite overlap
@@ -1151,25 +1179,26 @@ class App {
         (void)compose(surface_, layers, camera, scale_);
         if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr);
         const auto speaker=explorer_?dialoguePortraits(explorer_->state().gameplay):DialoguePortraits{};
-        if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_,*speakerNameplate_);
+        if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_);
         std::wstring overlayText=explorer_?revealedGameplayText(explorer_->state().gameplay,utcMs()):std::wstring{};
-        const bool textChanged=overlayText!=submittedText_;
+        const auto hud=mapHud();
+        const bool textChanged=overlayText!=submittedText_ || hud!=submittedHud_;
         bool changed = previous != surface_.pixels;
         dirty_ = false;
         if (!changed && !textChanged && submitted_) {traceMovement(now,false);return;}
         std::memcpy(dib_->bits, surface_.pixels.data(), surface_.pixels.size());
         textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,
             explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout);
-        if(speaker.speaker!=PortraitRole::None)textOverlay_.drawSpeaker(dib_->dc,dib_->bits,size_,wide(dialogueCast_.label(speaker.speaker)),speaker.speaker!=PortraitRole::Player);
+        textOverlay_.drawMapHud(dib_->dc,dib_->bits,size_,hud);
         RECT rect{}; winCheck(GetWindowRect(window_, &rect) != 0, "submit rect");
         POINT position{rect.left, rect.top}, source{0, 0}; SIZE size{LONG(size_), LONG(size_)};
         BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
         winCheck(UpdateLayeredWindow(window_, nullptr, &position, &size, dib_->dc, &source, 0, &blend, ULW_ALPHA) != 0, "UpdateLayeredWindow");
         ++submissions_; submitted_ = true;
-        if(explorer_ && explorer_->state().screenExploration) {
+        if(explorer_ && explorer_->state().screenExploration && !completionScene(explorer_->state().gameplay)) {
             explorer_->enableScreenExploration((size_+scale_-1)/scale_);
             explorer_->observeViewport(camera.x,camera.y);
-        } submittedText_=std::move(overlayText);
+        } submittedText_=std::move(overlayText);submittedHud_=hud;
         traceMovement(now,true);
         if (blocked()) ++hiddenSubmissions_;
     }
@@ -1211,12 +1240,20 @@ public:
             decodes_+=portraitAssets_->decoded?1:0;
             dialoguePanel_=originalDialoguePanel(*uiAssets_->atlas,uiAssets_->package);
             portraitFrame_=originalWindowPanel(*uiAssets_->atlas,uiAssets_->package,56,56);
-            speakerNameplate_=originalWindowPanel(*uiAssets_->atlas,uiAssets_->package,112,24);
             decodes_+=appleAssets_->decoded?1:0;decodes_+=uiAssets_->decoded?1:0;
             decodes_+=propsAssets_->decoded?1:0;
             guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");
             decodes_ += (enemyAssets_->decoded ? 1 : 0) + (homeAssets_->decoded ? 1 : 0);
             explorationPackage_ = loadExplorationPackage(options_.exploration);
+            completionRegistry_=loadCompletionRegistry(options_.gameplayAssets / L"completion/destinations.mdec");
+            if(completionRegistry_.romHash!=explorationPackage_->romHash)throw std::runtime_error("completion/exploration ROM mismatch");
+            for(const auto& destination:completionRegistry_.destinations) {
+                auto asset=Assets::load(options_.gameplayAssets / L"completion" / destination.assetFile);
+                const auto& rect=asset.package.frames(0,0).front().rect;
+                if(rect.w!=int(destination.width) || rect.h!=int(destination.height) || rect.x || rect.y)
+                    throw std::runtime_error("completion background dimensions mismatch");
+                decodes_+=asset.decoded?1:0;completionAssets_.emplace(destination.dungeonId,std::move(asset));
+            }
             auto explorationDirectory=options_.exploration.parent_path();
             if (options_.snapshot.empty()) options_.snapshot = directory_ / L"exploration.mdes";
             const bool restoring = !options_.newRun && std::filesystem::exists(options_.snapshot);
@@ -1367,7 +1404,7 @@ public:
                    g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::BedFadeIn ||
                    g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::ExploreFadeIn ||
                    g.life==LifePhase::Eat || g.sceneBeat==SceneBeat::AlarmEnter || g.sceneBeat==SceneBeat::AlarmLeave ||
-                   g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn || g.sceneBeat==SceneBeat::RoomExit) deadline=std::min(deadline,now+16667);
+                   completionScene(g) || g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn || g.sceneBeat==SceneBeat::RoomExit) deadline=std::min(deadline,now+16667);
                 if(auto cameraDeadline=guildCamera_.nextDeadline(now)) deadline=std::min(deadline,*cameraDeadline);
                 if(auto d=companionMotion_.nextDeadline(now)) deadline=std::min(deadline,*d);
                 if(auto motionDeadline=playerMotion_.nextDeadline(now)) deadline=std::min(deadline,*motionDeadline);

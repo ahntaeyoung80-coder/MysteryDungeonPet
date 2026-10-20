@@ -73,7 +73,7 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     check(target == -1, "return retains a dungeon target");
     if(e.state().gameplay.fadeInOnly) {
         check(e.state().gameplay.homeScene,"defeat target scene not ready for fade-in");
-        next(e);check(e.state().gameplay.life==LifePhase::Emotion,"defeat fade-in stuck");
+        next(e);check(e.state().gameplay.life==(defeat?LifePhase::Emotion:LifePhase::Eat),"home fade-in stuck");
     } else {
     for (auto time : {start, start+500, start+749}) {
         advance(e, time);
@@ -90,7 +90,7 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     check(e.state().gameplay.meals == meals && meals == 1, "meal consumed twice");
     advance(e, e.state().gameplay.phaseStartedMs+1000, true);
     check(e.state().gameplay.life == LifePhase::Eat && gameplayLoop(e.state().gameplay), "communal meal ended after one Eat clip");
-    check(e.state().gameplay.deadlineMs-e.state().gameplay.phaseStartedMs==7000,"meal not shortened by one second");
+    check(e.state().gameplay.deadlineMs-e.state().gameplay.phaseStartedMs==6000,"meal not cut at six seconds");
     check(next(e).event==GameplayEvent::Sleep && e.state().gameplay.sceneBeat==SceneBeat::DiningExit,"meal exit fade missing");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::NightFadeIn && bedroomScene(e.state().gameplay) && nightScene(e.state().gameplay),"bedtime exposed day background");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFace && gameplayClip(e.state().gameplay)==22,"bedtime greeting missing");
@@ -141,7 +141,7 @@ int main(int argc, char** argv) {
             check(!asset.frames(actor.actionClip, actor.direction).empty(), "guild original clip missing");
             std::uint64_t ticks=0;for(const auto& frame:asset.frames(actor.actionClip,actor.direction)) ticks+=frame.ticks;
             const auto& rate=asset.resolve(actor.actionClip);
-            check(ticks*1000*rate.speedDenominator <= 7000ULL*asset.tickHz*rate.speedNumerator,"meal cuts a communal animation cycle");
+            check(ticks>0 && rate.speedNumerator==1 && rate.speedDenominator==1,"meal animation speed changed while trimming its tail");
             Animator animation; animation.start(asset, actor.actionClip, actor.direction, true, 0);
             const auto initial = animation.advance(0).frame;
             bool changed = false;
@@ -156,15 +156,18 @@ int main(int argc, char** argv) {
         s.position = s.world.stairs; s.visited = s.world.terrain;
         clear = Explorer(s);
         advance(clear,1000);
-        check(advance(clear,2000).event == GameplayEvent::Pose && gameplayClip(clear.state().gameplay) == 17, "stairs missing Pose17");
+        check(advance(clear,2000).event == GameplayEvent::Pose && clear.state().gameplay.sceneBeat==SceneBeat::CompletionFadeIn, "stairs missing completion destination fade");
         advance(clear,2001); check(clear.state().gameplay.life == LifePhase::Pose, "Pose repeated");
+        next(clear);next(clear);check(gameplayClip(clear.state().gameplay)==17,"completion missing Pose17");
         Animator pose; pose.start(player,17,0,false,0);
         std::int64_t at = 0; Advance result;
         do { result = pose.advance(at); if (result.nextDeadlineUs) at = *result.nextDeadlineUs; } while (!result.finished);
-        check(advance(clear,2000+static_cast<std::uint64_t>(at/1000),true).event == GameplayEvent::ReturnHome, "Pose completion missing return");
+        advance(clear,clear.state().gameplay.phaseStartedMs+static_cast<std::uint64_t>(at/1000),true);
+        check(gameplayText(clear.state().gameplay)==L"탐험을 성공적으로 마쳤다","success text missing");
+        next(clear);check(next(clear).event==GameplayEvent::ReturnHome,"success did not return home");
         homePipeline(clear,false);
         pass(1,"actual Pose17 and communal Eat15 EventSleep13 Wake14; next day Explore");
-        pass(2,"return 1500ms; zero position/floorStep/BFS change; cached target cleared");
+        pass(2,"bounded return fade; zero position/floorStep/BFS change; cached target cleared");
 
         auto fight = encounter(); check(advance(fight,1000).event == GameplayEvent::HostileEncounter, "recognition did not start combat");
         check(fight.state().gameplay.combat == CombatPhase::PlayerTurn, "enemy acts first");

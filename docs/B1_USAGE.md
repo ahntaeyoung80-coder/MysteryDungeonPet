@@ -1,4 +1,4 @@
-최신 제품은 파이리 동료와 켈리몬 NPC/적을 포함하며 MDES7을 쓴다. [실행 안내](WINDOWS_QUICKSTART.md)와 [동료 명세](COMPANION_SPEC.md)를 우선한다.
+최신 제품은 파이리 동료와 켈리몬 NPC/적을 포함하며 MDES10을 쓰며 MDES1~9도 읽는다. [실행 안내](WINDOWS_QUICKSTART.md)와 [동료 명세](COMPANION_SPEC.md)를 우선한다.
 
 > 2026-10-13 당시 실행 범위: ZIP 전체 해제 후 `MysteryDungeonPet.exe`를 더블클릭하면 자동 탐험·기본공격 전투·길드 공동 식사·침실 수면·기상·다음날 탐험을 시작한다. `Run-B1.ps1`도 호환 유지한다. 방향·애니메이션 검사에는 `--diagnostics`를 명시한다. 현재 실행 안내는 [WINDOWS_QUICKSTART.md](WINDOWS_QUICKSTART.md), 완료·미완료 항목은 [B1_GAMEPLAY_TASK.md](B1_GAMEPLAY_TASK.md)를 따른다. 아래 본문은 B-1 독립 코어의 과거 비전투 체크포인트다.
 

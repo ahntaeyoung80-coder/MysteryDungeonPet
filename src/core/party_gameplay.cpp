@@ -469,7 +469,8 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         }
         if(step.kind==EventKind::Pose) {
             g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
-            g.life=LifePhase::Pose;g.phaseStartedMs=now;g.deadlineMs=now+5000;
+            g.life=LifePhase::Pose;g.sceneBeat=SceneBeat::CompletionFadeIn;g.phaseStartedMs=now;g.deadlineMs=now+750;
+            g.walkStartedMs=g.companion.walkStartedMs=0;g.playerDirection=g.companion.direction=4;
             event(GameplayEvent::Pose,0,0,0);result.onceKey=step.onceKey;return;
         }
         if(adjacent){start(0,PartyActionKind::Attack,adjacent,5000);return;}

@@ -10,10 +10,16 @@ else()
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 add_library(pet_core src/core/package.cpp src/core/animator.cpp src/core/surface.cpp
-  src/core/exploration.cpp src/core/gameplay.cpp src/core/party_gameplay.cpp src/core/gameplay_scene.cpp src/core/guild_scene.cpp src/core/state_store.cpp src/core/exploration_package.cpp)
+  src/core/exploration.cpp src/core/gameplay.cpp src/core/party_gameplay.cpp src/core/gameplay_scene.cpp src/core/guild_scene.cpp src/core/completion_scene.cpp src/core/state_store.cpp src/core/exploration_package.cpp)
 target_include_directories(pet_core PUBLIC src)
 include(CTest)
 if(BUILD_TESTING)
+  add_executable(pet_completion_scene_tests tests/completion_scene_tests.cpp)
+  target_link_libraries(pet_completion_scene_tests PRIVATE pet_core)
+  add_test(NAME pet_completion_scene_tests COMMAND pet_completion_scene_tests
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets/original/gameplay/completion/destinations.mdec"
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets/original/exploration/dungeon-15/exploration.mdpe"
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets/original/exploration/dungeon-0/exploration.mdpe")
   add_executable(pet_dialogue_portrait_tests tests/dialogue_portrait_tests.cpp)
   target_link_libraries(pet_dialogue_portrait_tests PRIVATE pet_core)
   add_test(NAME pet_dialogue_portrait_tests COMMAND pet_dialogue_portrait_tests)

@@ -10,6 +10,7 @@ bool partyHealing(const GameplayState& g) {
     return g.independentParty && std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return a.kind==PartyActionKind::Berry && !a.finished;});
 }
 std::wstring gameplayText(const GameplayState& g) {
+    if(g.sceneBeat==SceneBeat::CompletionText && completionScene(g))return L"탐험을 성공적으로 마쳤다";
     if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText) return L"오랭열매! 2하트 회복";
     if(companionDialogue(g)) return g.dialogueStage==DialogueStage::Player?L"잘 따라오고 있지? 잠깐 쉬어 가자.":L"물론이지! 함께라면 든든해.";
     if(g.life==LifePhase::Dialogue) return g.dialogueStage==DialogueStage::Player?L"안녕! 같이 탐험하자.":L"조심해서 다녀와!";
@@ -93,7 +94,7 @@ DialoguePortraits dialoguePortraits(const GameplayState& g) {
     return {};
 }
 void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& package,DialoguePortraits portraits,
-    const DialogueCast& cast,const Surface& frame,const Surface& nameplate) {
+    const DialogueCast& cast,const Surface& frame) {
     if(portraits.speaker==PortraitRole::None)return;
     const auto& actor=cast.actor(portraits.speaker);
     const auto& rect=package.frames(actor.portraitClip,0).front().rect;
@@ -110,7 +111,6 @@ void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& pack
     const bool player=portraits.speaker==PortraitRole::Player;const unsigned left=player?8:136;
     blit(frame,{0,0,int32_t(frame.width),int32_t(frame.height)},left,88);
     blit(atlas,rect,left+8,96);
-    blit(nameplate,{0,0,int32_t(nameplate.width),int32_t(nameplate.height)},player?72:16,120);
 }
 bool guildAppleVisible(const GameplayState& g) {
     return g.homeScene && !bedroomScene(g);
@@ -163,7 +163,7 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const
         s.pixels[i] = static_cast<std::uint8_t>(blue); s.pixels[i+1] = static_cast<std::uint8_t>(green);
         s.pixels[i+2] = static_cast<std::uint8_t>(red); s.pixels[i+3] = 255;
     };
-    if (dungeonScene(g)) {
+    if (dungeonScene(g) && !completionScene(g)) {
         static const char* heart[]{"0110110", "1111111", "1111111", "0111110", "0011100", "0001000"};
         for (unsigned h = 0; h < kMaxHp; ++h) for (unsigned y = 0; y < 6; ++y) for (unsigned x = 0; x < 7; ++x)
             if (heart[y][x] == '1') for(unsigned yy=0;yy<2;++yy) for(unsigned xx=0;xx<2;++xx)
@@ -180,8 +180,8 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const
             s.pixels[i+3]=255; // death is an opaque blackout, never desktop transparency
         }
     }
-    const bool out=g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::FloorFadeOut;
-    const bool in=g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::ExploreFadeIn || g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::FloorFadeIn;
+    const bool out=g.sceneBeat==SceneBeat::CompletionFadeOut || g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::FloorFadeOut;
+    const bool in=g.sceneBeat==SceneBeat::CompletionFadeIn || g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::ExploreFadeIn || g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::FloorFadeIn;
     if(out||in) {
         const auto elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
         const auto duration=(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn)?kFloorFadeMs:750;

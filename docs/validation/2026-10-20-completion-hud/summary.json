@@ -1,0 +1,87 @@
+{
+  "platform": "MinGW GCC14.2 static x64 Release, Wine10/Xvfb; test-only unlock/font substitute",
+  "runtimeSha256": "6a9aa6a1f0403e74d9c75b0e686b02e3e19d255c147c32278f7761ef48390923",
+  "onlySpeakerAndNoNameplate": [
+    "npc-player",
+    "npc-reply",
+    "companion-player",
+    "companion-reply",
+    "bed-greeting",
+    "wake-morning-greeting",
+    "wake-alarm",
+    "swapped-companion-player",
+    "swapped-companion-reply"
+  ],
+  "originalSteamCavePeakBackground": true,
+  "playerWalk": "344,364 -> 344,228",
+  "partnerWalk": "304,348 -> 304,228",
+  "completionOrder": [
+    [
+      0,
+      13
+    ],
+    [
+      1,
+      20
+    ],
+    [
+      1,
+      21
+    ],
+    [
+      1,
+      22
+    ],
+    [
+      1,
+      23
+    ],
+    [
+      1,
+      24
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      5,
+      4
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      5,
+      5
+    ],
+    [
+      6,
+      12
+    ]
+  ],
+  "mealDurationMs": 5999.289,
+  "mealAnimationSpeed": "unchanged",
+  "relatedNativeTests": "8 unique targets passed; initial signed interpolation failure fixed and completion test rerun",
+  "gdi": "8 Korean text scenes including success + 3 map/floor labels passed",
+  "nativeWindows11": "pending",
+  "fullMemorySuite": "not run; scoped related tests and actual EXE first",
+  "ci": "background after push"
+}

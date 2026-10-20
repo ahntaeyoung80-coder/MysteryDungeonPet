@@ -26,7 +26,7 @@ if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     }
     if ($Joined -notmatch 'sceneBeat=15 ' -or $Joined -notmatch 'guild room=PlayerRoom characters=3') { throw 'Loudred alarm absent' }
     $PreviousBeatIndex = -1
-    foreach ($Beat in @(2,6,3,4,7,5,12,18,15,19,8,9,16,10,11)) {
+    foreach ($Beat in @(20,21,22,23,24,2,6,3,4,7,5,12,18,15,19,8,9,16,10,11)) {
         $BeatIndex = 0
         while ($BeatIndex -lt $Events.Count -and $Events[$BeatIndex] -notmatch "sceneBeat=$Beat ") { $BeatIndex++ }
         if ($BeatIndex -le $PreviousBeatIndex -or $BeatIndex -eq $Events.Count) { throw "bedtime/wake ordering failed at beat $Beat" }

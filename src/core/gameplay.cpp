@@ -7,7 +7,7 @@
 
 namespace pet {
 namespace {
-constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750, kMealMs = 7000;
+constexpr std::uint64_t kFiniteTimeoutMs = 5000, kFadeMs = 750;
 std::string pendingHit(const ExplorationState& s) {
     const auto& g=s.gameplay;
     return "pending-hit:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
@@ -39,6 +39,9 @@ const char* combatName(CombatPhase phase) {
     return names[static_cast<unsigned>(phase)];
 }
 bool dungeonScene(const GameplayState& g) { return !g.homeScene; }
+bool completionScene(const GameplayState& g) {
+    return g.life==LifePhase::Pose && g.sceneBeat>=SceneBeat::CompletionFadeIn && g.sceneBeat<=SceneBeat::CompletionFadeOut;
+}
 bool bedroomScene(const GameplayState& g) {
     return g.homeScene && ((g.life==LifePhase::Sleep && g.sceneBeat!=SceneBeat::DiningExit) ||
         g.life==LifePhase::Wake || g.life==LifePhase::Ready);
@@ -55,7 +58,9 @@ bool companionDialogue(const GameplayState& g) {
 std::uint32_t gameplayClip(const GameplayState& g) {
     if(g.independentParty && !g.homeScene && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && g.sceneBeat==SceneBeat::None) return partyClip(g,0);
     switch (g.life) {
-    case LifePhase::Pose: return 17;
+    case LifePhase::Pose:
+        if(g.sceneBeat==SceneBeat::CompletionWalk)return 0;
+        return completionScene(g) && g.sceneBeat!=SceneBeat::CompletionPose?7:17;
     case LifePhase::Emotion: return 6; // New defeat expression cue using the supported Hurt body clip.
     case LifePhase::Eat: return 15;
     case LifePhase::Sleep:
@@ -229,7 +234,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         const auto event=advance(); // The existing stairs journal and generation run once, at black.
         g.phaseStartedMs=now;g.walkStartedMs=0;
         if(event.kind==EventKind::Pose) {
-            g.life=LifePhase::Pose;g.deadlineMs=now+kFiniteTimeoutMs;
+            g.life=LifePhase::Pose;g.sceneBeat=SceneBeat::CompletionFadeIn;g.deadlineMs=now+kFadeMs;
+            g.walkStartedMs=g.companion.walkStartedMs=0;g.playerDirection=g.companion.direction=4;
             return {GameplayEvent::Pose,event.onceKey};
         }
         if(event.kind!=EventKind::FloorChanged) throw std::logic_error("stairs transition did not advance");
@@ -244,9 +250,28 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
     if(beginCompanionDialogue(now)) return {GameplayEvent::DialoguePlayer,{}};
     if(g.independentParty && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && g.sceneBeat==SceneBeat::None) return advanceParty(now,completed);
     if (g.life == LifePhase::Pose) {
-        if (!finiteDone || (g.companion.enabled && !completed.partner && now<g.deadlineMs)) return {};
-        (void)advance(true);
-        return beginReturn(now, false);
+        auto beat=[&](SceneBeat next,std::uint64_t duration,unsigned direction) {
+            g.sceneBeat=next;g.phaseStartedMs=now;g.deadlineMs=now+duration;
+            g.playerDirection=g.companion.direction=direction;
+            g.walkStartedMs=g.companion.walkStartedMs=next==SceneBeat::CompletionWalk?now:0;
+            return GameplayUpdate{GameplayEvent::Pose,{}};
+        };
+        if(!completionScene(g))return beat(SceneBeat::CompletionFadeIn,kFadeMs,4); // MDES1–9 clear pose.
+        if(now<g.deadlineMs && g.sceneBeat!=SceneBeat::CompletionPose)return {};
+        switch(g.sceneBeat) {
+        case SceneBeat::CompletionFadeIn:return beat(SceneBeat::CompletionWalk,kCompletionWalkMs,4);
+        case SceneBeat::CompletionWalk:return beat(SceneBeat::CompletionPose,kFiniteTimeoutMs,0);
+        case SceneBeat::CompletionPose:
+            if(!finiteDone || (g.companion.enabled && !completed.partner && now<g.deadlineMs))return {};
+            return beat(SceneBeat::CompletionText,2400,0);
+        case SceneBeat::CompletionText:return beat(SceneBeat::CompletionFadeOut,kFadeMs,0);
+        case SceneBeat::CompletionFadeOut: {
+            (void)advance(true);
+            auto result=beginReturn(now,false);g.homeScene=true;g.fadeInOnly=true;g.deadlineMs=now+kFadeMs;
+            return result;
+        }
+        default:throw std::logic_error("invalid completion stage");
+        }
     }
     if (g.life == LifePhase::ReturnHome) {
         if (now < g.deadlineMs) return {};
@@ -294,6 +319,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         g.sceneBeat=SceneBeat::None;g.phaseStartedMs=g.deadlineMs=now;return {GameplayEvent::Explore,{}};
     }
     if(g.life==LifePhase::Eat) {
+        g.deadlineMs=std::min(g.deadlineMs,g.phaseStartedMs+kMealMs);
         if(now<g.deadlineMs) return {};
         g.sceneBeat=SceneBeat::DiningExit;return life(LifePhase::Sleep,GameplayEvent::Sleep,750);
     }
@@ -777,7 +803,9 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     if(update.kind!=EventKind::Move) g.walkStartedMs=0;
     switch(update.kind) {
     case EventKind::Pose:
-        g.life=LifePhase::Pose;g.deadlineMs=now+5000;return {GameplayEvent::Pose,update.onceKey};
+        g.life=LifePhase::Pose;g.sceneBeat=SceneBeat::CompletionFadeIn;g.deadlineMs=now+750;
+        g.walkStartedMs=g.companion.walkStartedMs=0;g.playerDirection=g.companion.direction=4;
+        return {GameplayEvent::Pose,update.onceKey};
     case EventKind::ReturnedHome:
         if(state_.completed)return beginReturn(now,false);
         // A temporary empty plan is not a completed dungeon or a reset.

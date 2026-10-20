@@ -1,0 +1,30 @@
+Internal ctest changing into directory: /workspace/MysteryDungeonPet/build/dialogue-linux
+Test project /workspace/MysteryDungeonPet/build/dialogue-linux
+    Start  1: pet_completion_scene_tests
+1/8 Test  #1: pet_completion_scene_tests .......***Failed    0.08 sec
+original entry walking path wrong
+
+    Start  2: pet_dialogue_portrait_tests
+2/8 Test  #2: pet_dialogue_portrait_tests ......   Passed    0.12 sec
+    Start  3: pet_package_transition_tests
+3/8 Test  #3: pet_package_transition_tests .....   Passed    3.90 sec
+    Start  4: pet_companion_tests
+4/8 Test  #4: pet_companion_tests ..............   Passed   26.57 sec
+    Start  6: pet_entry_social_scene_tests
+5/8 Test  #6: pet_entry_social_scene_tests .....   Passed    1.78 sec
+    Start 10: pet_survival_tests
+6/8 Test #10: pet_survival_tests ...............   Passed    0.03 sec
+    Start 12: pet_improvement_tests
+7/8 Test #12: pet_improvement_tests ............   Passed    0.01 sec
+    Start 13: pet_gameplay_tests
+8/8 Test #13: pet_gameplay_tests ...............   Passed   12.24 sec
+
+88% tests passed, 1 tests failed out of 8
+
+Total Test time (real) =  44.73 sec
+
+The following tests FAILED:
+	  1 - pet_completion_scene_tests (Failed)
+Errors while running CTest
+
+최초 완료 경로의 signed/unsigned 보간 오류는 수정 후 completion/gameplay 2/2 및 snapshot/transition 4/4 재검사 통과. 다른 7개 관련 target은 위의 통과 결과를 재사용했다. 전체 메모리 검사는 실행하지 않았다.

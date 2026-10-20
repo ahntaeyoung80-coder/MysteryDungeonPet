@@ -83,23 +83,24 @@ void portraits() {
     Surface atlas(p.width,40);for(unsigned y=0;y<40;++y)for(unsigned x=0;x<p.width;++x){const auto i=(y*p.width+x)*4;atlas.pixels[i]=x/40+1;atlas.pixels[i+3]=255;}
     const auto ui=loadPackage(folder/"ui/ui.mdpa");Surface tiles(144,8);
     for(unsigned y=0;y<8;++y)for(unsigned x=0;x<144;++x){const auto i=(y*144+x)*4;tiles.pixels[i]=x/8;tiles.pixels[i+3]=255;}
-    const auto frame=originalWindowPanel(tiles,ui,56,56),nameplate=originalWindowPanel(tiles,ui,112,24);
+    const auto frame=originalWindowPanel(tiles,ui,56,56);
     for(const auto role:{PortraitRole::Player,PortraitRole::Partner,PortraitRole::Friendly,PortraitRole::Alarm}) {
-        Surface screen(200,200);dialoguePortraitOverlay(screen,atlas,p,{role,0},cast,frame,nameplate);
+        Surface screen(200,200);dialoguePortraitOverlay(screen,atlas,p,{role,0},cast,frame);
         const unsigned left=role==PortraitRole::Player?8:136,other=role==PortraitRole::Player?144:16;
         const auto& rect=p.frames(cast.actor(role).portraitClip,0).front().rect;
         check(screen.pixels[(96*200+left+8)*4]==unsigned(rect.x/40+1),"speaker did not resolve its character portrait");
         check(screen.pixels[(100*200+other)*4+3]==0,"listener portrait remained visible");
+        check(screen.pixels[(130*200+100)*4+3]==0,"removed nameplate still occupies screen");
         for(const auto sample:std::vector<std::array<unsigned,3>>{{0,0,2},{8,0,3},{48,0,4},{0,8,5},{48,8,6},{0,48,7},{8,48,8},{48,48,9}})
             check(screen.pixels[((88+sample[1])*200+left+sample[0])*4]==sample[2],"portrait did not use original dialogue corner/edge tiles");
-        check(screen.pixels[(144*200+8)*4+3]==0,"portrait/nameplate overwrote dialogue text");screen.validatePbgra();
+        check(screen.pixels[(144*200+8)*4+3]==0,"portrait overwrote dialogue text");screen.validatePbgra();
     }
     auto swapped=cast;auto player=cast.actor(PortraitRole::Partner),partner=cast.actor(PortraitRole::Player);
     player.role=PortraitRole::Player;partner.role=PortraitRole::Partner;swapped.actors[0]=player;swapped.actors[1]=partner;
     validateDialogueActor(player,loadPackage(folder/player.bodyManifest),p);validateDialogueActor(partner,loadPackage(folder/partner.bodyManifest),p);
-    Surface screen(200,200);dialoguePortraitOverlay(screen,atlas,p,{PortraitRole::Player,0},swapped,frame,nameplate);
+    Surface screen(200,200);dialoguePortraitOverlay(screen,atlas,p,{PortraitRole::Player,0},swapped,frame);
     check(screen.pixels[(96*200+16)*4]==2 && swapped.label(PortraitRole::Player)=="나 · 파이리","player replacement retained former portrait/name");
-    screen.clear();dialoguePortraitOverlay(screen,atlas,p,{PortraitRole::Partner,kCompanionActorId},swapped,frame,nameplate);
+    screen.clear();dialoguePortraitOverlay(screen,atlas,p,{PortraitRole::Partner,kCompanionActorId},swapped,frame);
     check(screen.pixels[(96*200+144)*4]==1 && swapped.label(PortraitRole::Partner)=="동료 · 이상해씨","partner replacement retained former portrait/name");
     bool rejected=false;try{validateDialogueActor(player,loadPackage(folder/partner.bodyManifest),p);}catch(const std::exception&){rejected=true;}
     check(rejected,"mismatched body/portrait binding accepted");
@@ -109,7 +110,7 @@ void portraits() {
     auto invalid=player;invalid.characterId=partner.characterId;rejected=false;
     try{validateDialogueActor(invalid,loadPackage(folder/player.bodyManifest),p);}catch(const std::exception&){rejected=true;}
     check(rejected,"mismatched character identity accepted");
-    Surface clipped(20,110);dialoguePortraitOverlay(clipped,atlas,p,{PortraitRole::Player,0},cast,frame,nameplate);clipped.validatePbgra();
+    Surface clipped(20,110);dialoguePortraitOverlay(clipped,atlas,p,{PortraitRole::Player,0},cast,frame);clipped.validatePbgra();
 }
 int main(int argc,char** argv)try {
     if(argc==4 && std::string(argv[1])=="--fixtures") {

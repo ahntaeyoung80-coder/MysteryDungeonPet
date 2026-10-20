@@ -33,6 +33,6 @@ void validateDialogueActor(const DialogueActor&,const Package& body,const Packag
 DialoguePortraits dialoguePortraits(const GameplayState&);
 // Portraits remain 40x40 screen pixels, independent of the dungeon camera/scale.
 void dialoguePortraitOverlay(Surface&,const Surface& atlas,const Package&,DialoguePortraits,
-    const DialogueCast&,const Surface& frame,const Surface& nameplate);
+    const DialogueCast&,const Surface& frame);
 void gameplayOverlay(Surface&, const GameplayState&, std::uint64_t utcMs,const Surface* dialoguePanel=nullptr);
 }
