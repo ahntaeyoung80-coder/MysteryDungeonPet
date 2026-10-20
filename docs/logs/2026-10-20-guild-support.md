@@ -28,6 +28,14 @@ Windows PE를 MinGW-w64 GCC14.2.0 Release/static으로 빌드했다. Wine10/Xvfb
 
 증거: [summary.json](../validation/2026-10-20-guild-support/summary.json), 같은 폴더의 검사 로그/실제 알람 캡처/MDPA 식사 미리보기. Wine의 캡처에서 한글이 네모로 보이는 것은 Wine 폰트 환경이며 Windows native 한글 결과는 CI를 기다린다.
 
+## 원격 반영·필수 CI 마감
+
+- 코드·자산·새 루트 EXE를 `63d32ed55805d1b4af5043a8cc2810ded85066a3`로 work에 push했고 `git ls-remote`와 로컬 SHA 일치를 확인했다.
+- [CI39355943438](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39355943438)의 소스 SHA 표시를 대조했다. Linux ASan/UBSan14/14·Python26/26, Windows MSVC15/15·WIC/재생/이동/생활/동료/GUI·설치본/루트 EXE의 다른 작업 폴더 기본 실행·구형 저장 이행이 모두 success다. 루트의 MinGW EXE도 native Windows에서 실행됐으며 이는 Wine만의 결과가 아니다.
+- 원격 검증 완료를 UTC02:02:03에 확인했다. 최종 통합 시작01:47:47에서 **14분16초**(병행 빌드/검사·CI 대기 포함), 코드 커밋/원격 검증 시작01:53:39에서 **8분24초**다. 순수 작업/대기 비용은 분리 계측하지 않았다. 초기 구현 구간은 미계측이다.
+- 전체 CI는 저장/패키지/실행물 배포 경계이므로1회 수행했다. 성공 후 기록만 갱신하는 문서 커밋은 skip-ci로 중복 실행을 피한다. 해당 문서 변경은 내용·링크·diff·원격 SHA만 확인한다.
+- 사전 범위·예상 시간 보고, 관련 검사 우선, 새 실패에 대한 검사 재실행 이유, 통합검사 이유, 실제 측정 범위를 확인했다. 관리형 호스트의 apt 설치는 비권한 사용자라 실패하여 별도 Docker 도구 환경을 사용했다. 그 환경 준비와 작업은 병행됐고 개별 소요는 미계측이다.
+
 ## 남은 단계
 
-work push/원격 SHA 확인 및 native Windows 필수 CI 확인. 실제 사용자 Windows11 재실행, 원작 알람 음원과 전체 효과, 기존 A/C 잔여 gate는 별도다.
+실제 사용자 Windows11 재실행, 원작 알람 음원과 전체 효과, 기존 A/C 잔여 gate는 별도다.

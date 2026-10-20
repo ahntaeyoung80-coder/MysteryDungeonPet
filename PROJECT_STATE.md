@@ -11,8 +11,8 @@
 - 일반 실행은 매번 길드 아침에서 시작한다. 누적 획득품·열매·날짜·식사 횟수·최근 지형은 유지하고, 탐험 위치·목표·전투는 재개하지 않는다. 재시작만으로 날짜·식사가 늘지 않는다. 기존3층도 출발할 때7층으로 바뀐다. MDES8/1~8 읽기 유지. 명시 `--explore`는 상세 복원 회귀용이다.
 - 동료는2칸 내의 가까운 교전만 보조하고, 멀어진 적의 추격을 중단해 합류한다. 플레이어/동료 인접 전투·독립 행동권·400ms·피해 소유권은 유지한다. `invalid entity goal`이 남은 이전 저장은 낡은 목표만 정리해 읽는다.
 - 푸크린 머리 위 원작 사과 표시, 노공룡 원작 동작3·기상 대사·화면 흔들림2초, 두 배우의 직선 공동 퇴실을 연결했다. 원작 알람 음원·AppleOnHead 전체 효과는 미이식이다.
-- Linux ASan/UBSan: 전체14개 중13개 통과 후 알람 순서 기대값 수정·해당1개 통과. Python26/26. Windows PE의 Wine10 실행: 동료29/29·9523 복원 행동·생활13519검사·한글 GDI7장면·GUI/루트 재시작 통과. 실제 Windows native CI/사용자 Windows11 확인은 아직 대기다. [검증](docs/validation/2026-10-20-guild-support/summary.json), [실행 안내](docs/WINDOWS_QUICKSTART.md).
+- Linux ASan/UBSan: 전체14개 중13개 통과 후 알람 순서 기대값 수정·해당1개 통과. Python26/26. Windows PE의 Wine10 실행: 동료29/29·9523 복원 행동·생활13519검사·한글 GDI7장면·GUI/루트 재시작 통과. [현재 소스63d32ed의 CI](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39355943438)에서 Linux14/14·Python26/26, MSVC native15/15·GUI·설치본/루트 EXE 기본 실행·구형 저장 이행이 모두 통과했다. 사용자 Windows11 확인은 별도다. [검증](docs/validation/2026-10-20-guild-support/summary.json), [실행 안내](docs/WINDOWS_QUICKSTART.md).
 
 ## 진행·바로 다음 작업
 
-소스·자산·루트 EXE와 hash를 갱신했다. `work` push 후 필수 native Windows CI를 확인하고 실패 시 해당 검사부터 수정한다. 사용자 Windows11에서 저장 삭제 없이 길드로 시작하는지 확인하는 단계는 별도다. [로그](docs/logs/2026-10-20-guild-support.md).
+소스·자산·루트 EXE와 hash를 함께 `work`에 반영했고 원격 SHA 일치·필수 CI 성공을 확인했다. 다음은 사용자 Windows11에서 저장 삭제 없이 길드로 시작하는지 확인하고 B의 남은 인수 기준을 정리하는 일이다. 원작 알람 음원/전체 효과·A/C 잔여 gate는 별도다. [로그](docs/logs/2026-10-20-guild-support.md).

@@ -199,9 +199,16 @@
     "apple": "original item109 sprite3 palette6; export reproduction pass"
   },
   "pending": [
-    "Native Windows CI for this commit",
     "User Windows11 replay",
     "Original alarm audio; full AppleOnHead624/Eating effects"
   ],
-  "scope": "No A/C full completion claim; no activity integration or broad platform rewrite"
+  "scope": "No A/C full completion claim; no activity integration or broad platform rewrite",
+  "ci": {
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39355943438",
+    "commit": "63d32ed55805d1b4af5043a8cc2810ded85066a3",
+    "core": "success: ASan/UBSan14/14, Python26/26",
+    "windows": "success: MSVC native15/15, WIC/playback/movement/entry/companion/gameplay GUI, installed and tracked root EXE default launch, legacy package migration",
+    "rootExe": "MinGW static EXE executed successfully by native Windows CI from another working directory",
+    "observedCompleteUtc": "2026-10-20 02:02:03 UTC"
+  }
 }

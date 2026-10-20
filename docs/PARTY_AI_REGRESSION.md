@@ -1,6 +1,6 @@
 # 동료 AI 후속 회귀 — 실행과 기준선
 
-이번 검사는 [최신 요구](TEMP_HANDOFF_2026-10-15_PARTY_AI.md)를 고정한 B 단계 회귀다. 아래의 최초 실패 표는 당시 기준선이며 현재 결과는 [현재 상태](../PROJECT_STATE.md)와 단계별 로그를 따른다. 검사는 [tests/party_ai_regressions.hpp](../tests/party_ai_regressions.hpp)에 있고 기존 `pet_companion_tests`에서 명시적으로 실행한다.
+이번 검사는 B 단계 회귀다. 2026-10-20 사용자 지시에 따라 R15는 먼 적 무시, R19는 멀어진 교전 중단/복귀로 바꾸고 근거리 지원·인식 범위 회귀를 추가했다. [현재 실행 정책](WINDOWS_QUICKSTART.md), [이전 요구](TEMP_HANDOFF_2026-10-15_PARTY_AI.md)를 구분한다. 아래의 최초 실패 표는 당시 기준선이며 현재 결과는 [현재 상태](../PROJECT_STATE.md)와 단계별 로그를 따른다. 검사는 [tests/party_ai_regressions.hpp](../tests/party_ai_regressions.hpp)에 있고 기존 `pet_companion_tests`에서 명시적으로 실행한다.
 
 ## 실행
 
@@ -12,7 +12,7 @@ build/linux/pet_companion_tests --party-ai-followup
 
 Windows MSVC에서는 `cmake --build build/windows --config Release --target pet_companion_tests` 뒤 `build/windows/Release/pet_companion_tests.exe --party-ai-followup`을 실행한다. 한 항목이라도 요구를 만족하지 않으면 종료코드1이다.
 
-현재 후속27검사는 CTest의 필수 검사다. 명시 실행도 같은 검사를 수행하며 GUI fixture/inspect 인자는 유지한다. 기존 기본 CTest 통과와 실제 Windows 픽셀·저장 복원·구형 패키지 이행의 증거는 각각 기록한다.
+현재 후속29검사는 CTest의 필수 검사다. 명시 실행도 같은 검사를 수행하며 GUI fixture/inspect 인자는 유지한다. 기존 기본 CTest 통과와 실제 Windows 픽셀·저장 복원·구형 패키지 이행의 증거는 각각 기록한다.
 
 ## 실제 기준선
 

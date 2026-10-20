@@ -1,0 +1,19 @@
+1028727110 startup=guild-morning exploration-goal=discarded
+1028728470 exploration snapshot=restored day=1 runId=581787697
+1028743010 mode=automatic-exploration
+1028944061 guild room=PlayerRoom characters=2 objectCount=0
+1029678942 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=15 dialogueStage=0
+1029681223 guild room=PlayerRoom characters=3 objectCount=0
+1031678891 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=8 dialogueStage=0
+1031678912 guild room=PlayerRoom characters=2 objectCount=0
+1032376069 guild partner wake finished
+1032380177 life=Ready combat=PlayerTurn day=1 hearts=5 sceneBeat=9 dialogueStage=0
+1032380199 guild room=PlayerRoom characters=2 objectCount=0
+1032714564 life=Ready combat=PlayerTurn day=1 hearts=5 sceneBeat=16 dialogueStage=0
+1032714586 guild room=PlayerRoom characters=2 objectCount=0
+1034583988 life=Ready combat=PlayerTurn day=1 hearts=5 sceneBeat=10 dialogueStage=0
+1034584010 guild room=PlayerRoom characters=2 objectCount=0
+1035334137 life=Explore combat=PlayerTurn day=1 hearts=5 sceneBeat=11 dialogueStage=0
+1038886825 life=Dialogue combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=0
+1040086982 life=Dialogue combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=1
+1040736526 exit submissions=503 decodes=8 switches=0

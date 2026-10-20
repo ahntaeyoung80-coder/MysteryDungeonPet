@@ -42,3 +42,8 @@
 - 이 문서: A/B/C의 맥락, 주요 경과와 과거 규칙의 대체 관계.
 - [DECISIONS](DECISIONS.md): 설계 판단과 근거. [logs](logs/): 날짜·주제별 변경·검증·예상/실제 시간·커밋.
 - [README](../README.md): 프로젝트 소개·실행·문서 진입 링크. 누적 작업 일지를 넣지 않는다.
+
+
+## 2026-10-20 — 길드 재시작·전투 보조·생활 장면
+
+`invalid entity goal`의 낡은 NPC 목표를 수정·이행했다. 일반 실행은 누적 진행을 유지하며 매번 길드의 아침에서 시작한다. 동료는 가까운 전투만 보조하고 멀어지면 합류한다. 푸크린 머리 위 원작 사과, 노공룡 원작 동작/기상 대사/화면 흔들림, 두 배우 공동 퇴실을 추가했다. 새 exe/소스를 work63d32ed에 함께 반영했다. [CI39355943438](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39355943438)에서 Linux14/14·Python26/26·Windows15/15와 GUI/설치/루트 실행·저장 이행이 통과했다. 원작 알람 음원·전체 효과·사용자 Windows11 확인은 남아 있다. [실측/검증 로그](logs/2026-10-20-guild-support.md).

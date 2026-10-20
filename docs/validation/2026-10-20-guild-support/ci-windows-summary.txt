@@ -1,0 +1,72 @@
+2026-10-20T01:55:42.0090909Z  1/15 Test  #1: pet_package_transition_tests .....   Passed    0.48 sec
+2026-10-20T01:55:48.8036736Z  2/15 Test  #2: pet_companion_tests ..............   Passed    6.79 sec
+2026-10-20T01:55:48.9215057Z  3/15 Test  #3: pet_party_ai_followup ............   Passed    0.12 sec
+2026-10-20T01:55:49.8787350Z  4/15 Test  #4: pet_entry_social_scene_tests .....   Passed    0.96 sec
+2026-10-20T01:55:50.5278278Z  5/15 Test  #5: pet_navigation_recovery_tests ....   Passed    0.65 sec
+2026-10-20T01:55:51.0065991Z  6/15 Test  #6: pet_camera_tests .................   Passed    0.48 sec
+2026-10-20T01:55:51.1982828Z  7/15 Test  #7: pet_movement_tests ...............   Passed    0.19 sec
+2026-10-20T01:55:51.2208278Z  8/15 Test  #8: pet_survival_tests ...............   Passed    0.02 sec
+2026-10-20T01:55:51.2361771Z  9/15 Test  #9: pet_revision_tests ...............   Passed    0.01 sec
+2026-10-20T01:55:51.2519070Z 10/15 Test #10: pet_improvement_tests ............   Passed    0.01 sec
+2026-10-20T01:55:57.2630142Z 11/15 Test #11: pet_gameplay_tests ...............   Passed    6.01 sec
+2026-10-20T01:56:08.2355284Z 12/15 Test #12: pet_exploration_tests ............   Passed   10.97 sec
+2026-10-20T01:56:08.6608029Z 13/15 Test #13: pet_core_tests ...................   Passed    0.42 sec
+2026-10-20T01:56:08.6714689Z 14/15 Test #14: pet_package_playback .............   Passed    0.01 sec
+2026-10-20T01:56:08.8251393Z 15/15 Test #15: pet_text_overlay_tests ...........   Passed    0.15 sec
+2026-10-20T01:56:08.8266385Z 100% tests passed out of 15
+
+2026-10-20T02:01:16.3778592Z {
+2026-10-20T02:01:16.3779268Z   "newRun": "new run, same day; seven original floors; meal/inventory retained",
+2026-10-20T02:01:16.3780279Z   "activeLegacy": "progress retained during guild alarm; old run abandoned on departure",
+2026-10-20T02:01:16.3781029Z   "status": "pass",
+2026-10-20T02:01:16.3781383Z   "actualWindows11": "pending"
+2026-10-20T02:01:16.3781761Z }
+2026-10-20T02:01:16.3781909Z
+2026-10-20T02:01:16.3788411Z {
+2026-10-20T02:01:16.3788743Z   "snapshotRestore": "pass",
+2026-10-20T02:01:16.3789176Z   "minimumDecodeCount": 5,
+2026-10-20T02:01:16.3789601Z   "status": "pass",
+2026-10-20T02:01:16.3789980Z   "a3Remaining": "pending",
+2026-10-20T02:01:16.3790738Z   "uiMovement": "pending: dialogue/combat held player during the observation window",
+2026-10-20T02:01:16.3791498Z   "desktopWindowFixed": "pass",
+2026-10-20T02:01:16.3791906Z   "physicalSize": 200,
+2026-10-20T02:01:16.3792320Z   "actualWindows11Exploration": "pending"
+2026-10-20T02:01:16.3792766Z }
+2026-10-20T02:01:16.3792926Z
+2026-10-20T02:01:16.3793041Z {
+2026-10-20T02:01:16.3793323Z   "guildMembers": 10,
+2026-10-20T02:01:16.3793699Z   "guildDiningCharacters": 12,
+2026-10-20T02:01:16.3794401Z   "test": "production Pose -> fade -> original home -> Eat -> Sleep -> Wake -> Explore",
+2026-10-20T02:01:16.3795129Z   "status": "pass",
+2026-10-20T02:01:16.3795482Z   "bedroomCharacters": 2,
+2026-10-20T02:01:16.3795865Z   "coreScenarios": 12,
+2026-10-20T02:01:16.3796218Z   "actualWindows11": "pending"
+2026-10-20T02:01:16.3796592Z }
+2026-10-20T02:01:16.3796751Z
+2026-10-20T02:01:16.3796871Z {
+2026-10-20T02:01:16.3797878Z   "test": "production player first Attack1 Hurt6 finite Kecleon exit victory resumes dungeon",
+2026-10-20T02:01:16.3798697Z   "status": "pass",
+2026-10-20T02:01:16.3799051Z   "actualWindows11": "pending"
+2026-10-20T02:01:16.3799418Z }
+2026-10-20T02:01:16.3799556Z
+2026-10-20T02:01:16.3801228Z {
+2026-10-20T02:01:16.3801749Z   "launch": "installed EXE with zero arguments from another directory",
+2026-10-20T02:01:16.3802747Z   "physicalSize": 200,
+2026-10-20T02:01:16.3803137Z   "actualWindows11": "pending",
+2026-10-20T02:01:16.3803559Z   "diagnosticsMenu": "absent",
+2026-10-20T02:01:16.3803945Z   "status": "pass",
+2026-10-20T02:01:16.3804418Z   "snapshot": "progress retained; guild morning on every launch",
+2026-10-20T02:01:16.3805197Z   "explicitDiagnostics": "pass, exploration save unchanged"
+2026-10-20T02:01:16.3805692Z }
+2026-10-20T02:01:16.3805813Z
+2026-10-20T02:01:16.3805925Z {
+2026-10-20T02:01:16.3806364Z   "launch": "installed EXE with zero arguments from another directory",
+2026-10-20T02:01:16.3806995Z   "physicalSize": 200,
+2026-10-20T02:01:16.3807327Z   "actualWindows11": "pending",
+2026-10-20T02:01:16.3807703Z   "diagnosticsMenu": "absent",
+2026-10-20T02:01:16.3808044Z   "status": "pass",
+2026-10-20T02:01:16.3808496Z   "snapshot": "progress retained; guild morning on every launch",
+2026-10-20T02:01:16.3809186Z   "explicitDiagnostics": "pass, exploration save unchanged"
+2026-10-20T02:01:16.3809714Z }
+2026-10-20T02:01:16.3809859Z
+2026-10-20T02:01:16.3939354Z Installed selected package bytes: 2249085 (selected runtime only; ROM excluded)
