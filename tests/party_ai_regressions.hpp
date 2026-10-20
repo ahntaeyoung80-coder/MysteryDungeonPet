@@ -1,5 +1,6 @@
 #pragma once
 #include "core/exploration.hpp"
+#include "core/motion.hpp"
 #include "legacy_snapshot.hpp"
 #include <algorithm>
 #include <iostream>
@@ -210,6 +211,7 @@ inline unsigned run(const ExplorationState& base) {
         g.hearts=1;g.life=LifePhase::Combat;g.combat=CombatPhase::CompanionTurn;
         g.enemyInstance=1;g.enemyHits=2;
         g.companionIntent=CompanionIntent::Engage;g.companionTarget=1;forceHit(s);
+        g.playerActionRound=g.actionRound; // leader already spent this turn
         Explorer e(s);const auto event=restoredStep(e,1000);
         const auto action=std::find_if(event.actors.begin(),event.actors.end(),[](const auto& a){
             return a.event==GameplayEvent::CompanionAttack && a.targetId==1;
@@ -262,7 +264,7 @@ inline unsigned run(const ExplorationState& base) {
         }
     });
     test("R10_keyed_completion_is_actor_action_and_run_specific",[&] {
-        auto s=corridor(base);forceHit(s);Explorer e(s);
+        auto s=corridor(base);s.gameplay.playerActionRound=s.gameplay.actionRound;forceHit(s);Explorer e(s);
         const auto event=restoredStep(e,1000);
         const auto c=std::find_if(event.actors.begin(),event.actors.end(),[](const auto& a){
             return a.event==GameplayEvent::CompanionAttack;
@@ -604,6 +606,116 @@ inline unsigned run(const ExplorationState& base) {
             }
         }
         std::cout<<"PARTY_AI R26 room rectangles checked="<<checked<<" seeds=512"<<std::endl;
+    });
+    test("R27_combat_turn_order_player_partner_three_enemies",[&] {
+        auto s=party(base);s.population.entities={{1,4,EntityKind::Friend,126,false},
+            {2,4,EntityKind::Friend,100,false},{3,4,EntityKind::Friend,150,false}};
+        s.gameplay.hostile={1,2,3};
+        bool found=false;
+        for(uint64_t seed=0;seed<100000 && !found;++seed) {
+            Rng r{seed};bool misses=true;
+            for(unsigned i=0;i<5;++i)misses=(!rollBasicAttack(r,i<2).hit)&&misses;
+            if(misses){s.rng.state=seed;found=true;}
+        }
+        require(found,"five miss fixture missing");
+        Explorer e(s);ActorCompletion done;done.keyed=true;
+        std::vector<uint32_t> order;std::vector<uint64_t> rounds;
+        uint64_t now=1000;
+        for(unsigned tick=0;tick<24 && order.size()<6;++tick) {
+            const auto u=restoredStep(e,now,done);done.actions.clear();
+            unsigned started=0;
+            for(const auto& a:u.actors)if(a.event==GameplayEvent::PlayerAttack ||
+                a.event==GameplayEvent::CompanionAttack || a.event==GameplayEvent::EnemyAttack) {
+                ++started;order.push_back(a.actorId);rounds.push_back(a.round);
+                done.actions.push_back({s.runId,a.round,a.actionId,s.floorIndex,a.actorId});
+            }
+            require(started<=1,"two actors started combat in the same update");
+            require(std::count_if(e.state().gameplay.partyActions.begin(),e.state().gameplay.partyActions.end(),
+                [](const auto& a){return !a.finished;})<=1,"combat actions overlapped");
+            if(!done.actions.empty()) {
+                const auto frozen=encodeSnapshot(e.state());ActorCompletion none;none.keyed=true;
+                restoredStep(e,now+1,none);
+                require(frozen==encodeSnapshot(e.state()),"next actor acted before owner completion");
+            }
+            now+=2;
+        }
+        require(order==std::vector<uint32_t>({0,kCompanionActorId,1,2,3,0}),"combat actor order differs from leader/partner/enemies/leader");
+        require(rounds==std::vector<uint64_t>({1,1,1,1,1,2}),"round advanced before all actors finished");
+    });
+    test("R28_low_hp_leader_supports_fighting_companion",[&] {
+        for(unsigned hp:{1U,2U})for(int enemyTile:{123,100}) {
+            auto s=party(base);s.gameplay.hearts=hp;s.gameplay.oran=0;
+            s.population.entities={{1,4,EntityKind::Friend,enemyTile,false}};s.gameplay.hostile={1};
+            s.gameplay.companionIntent=CompanionIntent::Engage;s.gameplay.companionTarget=1;
+            Explorer e(s);const auto u=restoredStep(e,1000);
+            const auto action=std::find_if(e.state().gameplay.partyActions.begin(),e.state().gameplay.partyActions.end(),[](const auto& a){return a.actorId==0;});
+            require(action!=e.state().gameplay.partyActions.end(),"support did not consume player turn");
+            if(canAttack(s.world,s.position,enemyTile))require(action->kind==PartyActionKind::Attack && action->targetId==1,"low HP leader fled adjacent companion battle");
+            else require(action->kind==PartyActionKind::Move && canAttack(s.world,e.state().position,enemyTile),"low HP leader did not approach companion battle");
+            (void)u;
+        }
+    });
+    test("R29_room_completion_requires_actual_screen_coverage",[&] {
+        for(unsigned size:{200U,100U,67U}) {
+            auto s=party(base);s.population.entities.clear();s.gameplay.hostile.clear();
+            Explorer e(s);e.enableScreenExploration(size);
+            const int room=s.world.room[s.position];
+            require(!e.roomFullyShown(room),"logical room discovery completed screen coverage");
+            const auto rng=e.state().rng.state;
+            auto camera=cameraFor(tilePoint(e.state().position),kWidth*24,kHeight*24,size);
+            e.observeViewport(camera.x,camera.y);
+            require(e.state().rng.state==rng && !e.roomFullyShown(room),"first viewport marked unseen room edges or consumed RNG");
+            bool complete=false;
+            for(unsigned tick=0;tick<1500;++tick) {
+                camera=cameraFor(tilePoint(e.state().position),kWidth*24,kHeight*24,size);
+                e.observeViewport(camera.x,camera.y);
+                complete=e.roomFullyShown(room);
+                e=Explorer(decodeSnapshot(encodeSnapshot(e.state()),e.state().assetVersion));
+                if(complete)break;
+                restoredStep(e,1000+tick*400);
+                require(e.state().world.room[e.state().position]==room,"leader left a room before its unseen area appeared");
+            }
+            require(complete,"room coverage planner failed to show every floor tile");
+            auto hidden=e.state();hidden.screenSeen.fill(0);hidden.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;
+            hidden.gameplay.partyActions.clear();hidden.gameplay.partyPlaybacks.clear();hidden.gameplay.partyPhase=PartyPhase::Idle;
+            hidden.gameplay.deadlineMs=hidden.gameplay.phaseStartedMs+750;
+            Explorer fade(hidden);fade.observeViewport(0,0);
+            require(std::none_of(fade.state().screenSeen.begin(),fade.state().screenSeen.end(),[](auto n){return n!=0;}),"fade counted as shown map");
+        }
+    });
+    test("R30_walking_into_contact_preserves_combat_order",[&] {
+        auto s=party(base);s.population.entities={{1,4,EntityKind::Friend,127,false},{2,4,EntityKind::Friend,103,false},{3,4,EntityKind::Friend,151,false},{4,10,EntityKind::Item,129,false}};
+        s.gameplay.hostile={1,2,3};Explorer e(s);uint64_t now=1000;ActorCompletion done;done.keyed=true;
+        bool sawEnemy=false;
+        for(unsigned tick=0;tick<20 && !sawEnemy;++tick) {
+            const auto u=restoredStep(e,now,done);done.actions.clear();unsigned attacks=0;
+            for(const auto& a:u.actors)if(a.event==GameplayEvent::PlayerAttack || a.event==GameplayEvent::CompanionAttack || a.event==GameplayEvent::EnemyAttack) {
+                ++attacks;sawEnemy=sawEnemy || a.event==GameplayEvent::EnemyAttack;
+                done.actions.push_back({s.runId,a.round,a.actionId,s.floorIndex,a.actorId});
+            }
+            require(attacks<=1,"new contact started simultaneous attacks");
+            require(std::count_if(e.state().gameplay.partyActions.begin(),e.state().gameplay.partyActions.end(),[](const auto& a){return !a.finished;})<=1,"new contact overlapped actor turns");
+            now+=400;
+        }
+        require(sawEnemy,"walking contact never gave enemies a turn");
+    });
+    test("R31_mdes8_pending_attack_migrates_to_ordered_turns",[&] {
+        auto s=party(base);s.population.entities={{1,4,EntityKind::Friend,126,false}};s.gameplay.hostile={1};
+        Explorer e(s);restoredStep(e,1000);auto old=e.state();old.gameplay.partyPhase=PartyPhase::Allies;
+        auto bytes=encodeSnapshot(old);
+        const unsigned extension=8+kTiles*4;
+        uint32_t length=0;for(unsigned i=0;i<4;++i)length|=uint32_t(bytes[bytes.size()-8+i])<<(8*i);
+        bytes.erase(bytes.end()-8-extension,bytes.end()-8);bytes[4]=8;length-=extension;
+        for(unsigned i=0;i<4;++i)bytes[bytes.size()-8+i]=uint8_t(length>>(8*i));
+        uint32_t crc=0xffffffff;
+        for(size_t i=0;i<bytes.size()-4;++i){crc^=bytes[i];for(int bit=0;bit<8;++bit)crc=(crc>>1)^((crc&1)?0xedb88320U:0);}
+        crc=~crc;for(unsigned i=0;i<4;++i)bytes[bytes.size()-4+i]=uint8_t(crc>>(8*i));
+        const auto imported=decodeSnapshot(bytes,s.assetVersion);
+        require(imported.gameplay.partyPhase==PartyPhase::Player && !imported.screenExploration,"MDES8 migration skipped pending attack or invented coverage");
+        require(imported.gameplay.partyActions.front().id==old.gameplay.partyActions.front().id && imported.rng.state==old.rng.state,"MDES8 import changed frozen attack/RNG");
+        e=Explorer(imported);ActorCompletion none;none.keyed=true;
+        const auto frozen=encodeSnapshot(e.state());restoredStep(e,1001,none);
+        require(frozen==encodeSnapshot(e.state()),"MDES8 pending attack completed without owner");
     });
     std::cout<<"PARTY_AI SUMMARY failures="<<failures<<" cases="<<cases<<std::endl;
     return failures;

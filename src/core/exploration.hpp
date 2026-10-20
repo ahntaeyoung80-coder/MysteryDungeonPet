@@ -111,7 +111,7 @@ constexpr std::uint32_t MOVE_REGULAR_ATTACK = 355, ITEM_ORAN_BERRY = 70;
 enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat, Death, Dialogue };
 enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat, PlayerFaint,
     CompanionTurn, CompanionAttack, CompanionHurt, CompanionFaint, PlayerApproach, CompanionApproach, CompanionBerryText };
-enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit, ExplorationBerryText };
+enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit, ExplorationBerryText, AlarmEnter, AlarmLeave };
 enum class DialogueStage : std::uint8_t { Player, Npc };
 enum class DeathStage : std::uint8_t { FadeOut, Blackout };
 struct ActorFinished {
@@ -123,7 +123,7 @@ struct ActorCompletion {
     std::vector<ActorFinished> actions;
     bool keyed=false;
 };
-enum class PartyPhase : std::uint8_t { Idle, Allies, Enemies };
+enum class PartyPhase : std::uint8_t { Idle, Allies, Enemies, Player, Companion, OrderedEnemies };
 enum class PartyActionKind : std::uint8_t { Wait, Move, Attack, Berry };
 enum class CompanionIntent : std::uint8_t { Follow, Engage, Return };
 struct PartyAction {
@@ -200,7 +200,7 @@ bool dungeonScene(const GameplayState&);
 bool bedroomScene(const GameplayState&);
 bool nightScene(const GameplayState&);
 bool showFriendlyDisc(const GameplayState&, bool friendly, bool player);
-constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=1870;
+constexpr std::uint64_t kFloorFadeMs=1000, kWakeDelayMs=2000, kRoomExitMs=2200;
 std::uint32_t gameplayClip(const GameplayState&);
 bool gameplayLoop(const GameplayState&);
 bool holdGameplayPose(const GameplayState&);
@@ -220,7 +220,9 @@ struct ExplorationState {
     World world;
     Population population;
     int position = 0;
-    Mask visited{}, blocked{}, discovered{}, failedTargets{};
+    Mask visited{}, blocked{}, discovered{}, failedTargets{}, screenSeen{};
+    bool screenExploration=false;
+    std::uint32_t viewportSize=200;
     std::uint32_t visitedRooms = 0, stalledActions = 0, targetFailures = 0;
     int knownStairs = -1;
     SurvivalFirst survivalFirst=SurvivalFirst::None;
@@ -253,6 +255,9 @@ public:
     void enableGameplay(std::uint64_t utcMs);
     void startGuildMorning(std::uint64_t utcMs);
     bool enableCompanion();
+    void enableScreenExploration(std::uint32_t viewportSize);
+    void observeViewport(int cameraX,int cameraY);
+    bool roomFullyShown(int room) const;
     void setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors);
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
     GameplayUpdate resetExploration(std::uint64_t utcMs);
@@ -279,6 +284,8 @@ private:
     Mask occupancy(bool playerPath = false) const;
     bool friendly(const Entity&) const;
     bool lowHealth() const;
+    std::uint32_t companionOpponent() const;
+    bool selectRoomView(const Search&);
     bool mustRetreat() const;
     int nearestPartyTile(const Entity&) const;
     int combatApproach(const Entity&,bool companion) const;

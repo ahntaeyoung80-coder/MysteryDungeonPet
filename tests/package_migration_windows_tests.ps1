@@ -39,7 +39,7 @@ try {
  foreach($Key in $Before.inventoryKeys){if($After.inventoryKeys -notcontains $Key){throw 'legacy active inventory lost'}}
  $Before=Inspect $OldPackage "$Fixtures/legacy-ready.mdes"
  $Before|ConvertTo-Json -Depth 4|Set-Content "$Output/legacy-ready-before.json"
- Launch 'legacy-ready' 8
+ Launch 'legacy-ready' 12
  $After=Inspect $NewPackage "$Fixtures/legacy-ready.mdes"
  $After|ConvertTo-Json -Depth 4|Set-Content "$Output/legacy-ready-after.json"
  if($After.runId -ne ($Before.runId+1) -or $After.day -ne $Before.day -or $After.floorCount -ne 7 -or

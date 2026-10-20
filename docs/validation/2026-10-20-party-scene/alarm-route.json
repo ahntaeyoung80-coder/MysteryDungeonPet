@@ -1,0 +1,26 @@
+[
+  {
+    "beat": 18,
+    "clip": "0",
+    "direction": "2",
+    "fromX": 64,
+    "toX": 111,
+    "submitted": 44
+  },
+  {
+    "beat": 15,
+    "clip": "3",
+    "direction": "2",
+    "fromX": 112,
+    "toX": 112,
+    "submitted": 65
+  },
+  {
+    "beat": 19,
+    "clip": "0",
+    "direction": "6",
+    "fromX": 112,
+    "toX": 72,
+    "submitted": 44
+  }
+]

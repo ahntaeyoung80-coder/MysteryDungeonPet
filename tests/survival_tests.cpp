@@ -19,13 +19,15 @@ Explorer restore(const Explorer& e) {return Explorer(decodeSnapshot(encodeSnapsh
 int main() {try {
     GameplayState g;g.sceneBeat=SceneBeat::RoomExit;g.phaseStartedMs=1000;
     auto bed=bedroomExit({204,184},g,1000);check(bed.position.x==204&&bed.position.y==184&&!bed.finished,"exit start teleport");
-    auto outside=bedroomExit({204,184},g,1000+kRoomExitMs);check(outside.position.x==104&&outside.position.y==184&&outside.finished,"exit did not stop at left corridor entrance");
+    auto outside=bedroomExit({204,184},g,1000+kRoomExitMs);check(outside.position.x==80&&outside.position.y==184&&outside.finished,"exit did not stop at left corridor entrance");
     int previousX=204;
     for(uint64_t time=1000;time<=1000+kRoomExitMs;time+=10) {
         const auto p=bedroomExit({204,184},g,time).position;
-        check(p.x<=previousX && p.x>=104 && p.y>=184 && p.y<=200,"exit detoured or crossed map boundary");
+        check(p.x<=previousX && p.x>=80 && p.y>=184 && p.y<=200,"exit detoured or crossed map boundary");
         const auto partner=bedroomExit({156,184},g,time,true).position;
-        check(p.y==184 && partner.y==184 && partner.x<p.x && p.x-partner.x>=24,"party exit overlapped or detoured");previousX=p.x;
+        check(p.y==184 && partner.y==184,"party exit detoured");
+        if(time>=2200)check(p.x<=partner.x-23,"partner led the exit");
+        else check(partner.x==156,"partner moved before leader passed");previousX=p.x;
     }
     auto s=fixture();s.gameplay.oran=1;s.gameplay.hearts=4;Explorer one(s);
     check(one.advanceGameplay(1000).event!=GameplayEvent::UseOranBerry&&one.state().gameplay.oran==1&&one.state().gameplay.hearts==4,"one missing heart wastes berry");

@@ -20,7 +20,7 @@ uint32_t partyClip(const GameplayState& g,uint32_t actor) {
 void validatePartyState(const ExplorationState& s) {
     const auto& g=s.gameplay;
     auto check=[](bool ok,const char* message){if(!ok)throw std::runtime_error(message);};
-    check(g.nextPartyId>0 && static_cast<unsigned>(g.partyPhase)<=2 &&
+    check(g.nextPartyId>0 && static_cast<unsigned>(g.partyPhase)<=5 &&
         static_cast<unsigned>(g.companionIntent)<=2,"invalid independent party state");
     check(g.partyActions.size()<=kTiles+2 && g.partyPlaybacks.size()<=kTiles+2,
         "party state exceeds actor bound");
@@ -368,6 +368,16 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         discover();
         if(heal(0))return;
         const auto adjacent=nearestEnemy(0,true);
+        const auto support=companionOpponent();
+        if(adjacent && support){start(0,PartyActionKind::Attack,adjacent,5000);return;}
+        if(support) {
+            if(const auto* foe=entity(support)) {
+                const int next=approach(0,foe->tile);
+                if(next>=0){const int from=s.position;
+                    if(moveTo(next).kind==EventKind::Move){move(0,from,next);return;}
+                }
+            }
+        }
         if(adjacent && g.hearts<=kLowHp) {
             const auto occupied=occupancy(true);bool safeExit=false;
             for(auto [dx,dy]:kDirections) {
@@ -384,7 +394,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         if(adjacent && g.hearts>kLowHp) {
             start(0,PartyActionKind::Attack,adjacent,5000);return;
         }
-        if(s.position==s.world.stairs) {start(0,PartyActionKind::Wait,0,400);return;}
+        if(s.position==s.world.stairs && (lowHealth() || roomFullyShown(s.world.room[s.position]))) {start(0,PartyActionKind::Wait,0,400);return;}
         // Actor action rights affect occupancy. Rebuild at the decision boundary
         // so an in-memory path and a restored path cannot use different rounds.
         if(s.knownStairs>=0)s.failedTargets[s.knownStairs]=0;
@@ -498,7 +508,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     for(unsigned transition=0;transition<4;++transition) {
         if(!g.hearts || !g.companion.hearts)break;
         if(g.partyPhase==PartyPhase::Idle) {
-            if(s.position==s.world.stairs && g.companionIntent!=CompanionIntent::Engage &&
+            if(s.position==s.world.stairs && (lowHealth() || roomFullyShown(s.world.room[s.position])) && g.companionIntent!=CompanionIntent::Engage &&
                canAttack(s.world,s.position,g.companion.tile)) {
                 invalidate();g.movement={};g.companion.movement={};
                 g.walkStartedMs=g.companion.walkStartedMs=0;
@@ -506,7 +516,39 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
                 g.life=LifePhase::Explore;g.sceneBeat=SceneBeat::FloorFadeOut;
                 g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;return result;
             }
-            g.partyPhase=PartyPhase::Allies;changed=true;
+            const bool contact=std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e) {
+                return hostile(e) && (canAttack(s.world,s.position,e.tile) || canAttack(s.world,g.companion.tile,e.tile));
+            });
+            g.partyPhase=contact || !g.partyPlaybacks.empty()?PartyPhase::Player:PartyPhase::Allies;changed=true;
+        }
+        const auto turnSettled=[&] {
+            return g.partyPlaybacks.empty() && std::none_of(g.partyActions.begin(),g.partyActions.end(),
+                [](const auto& a){return !a.finished;});
+        };
+        if(g.partyPhase==PartyPhase::Player) {
+            // Finish a restored MDES8 simultaneous action before granting any
+            // new turn. Started hits retain their original owners and tokens.
+            if(!turnSettled())break;
+            planPlayer();
+            if(g.life==LifePhase::Dialogue || g.life==LifePhase::Pose)return result;
+            if(g.playerActionRound!=g.actionRound || !turnSettled())break;
+            g.partyPhase=PartyPhase::Companion;changed=true;
+        }
+        if(g.partyPhase==PartyPhase::Companion) {
+            if(!turnSettled())break;
+            planCompanion();
+            if(g.companion.actionRound!=g.actionRound || !turnSettled())break;
+            g.partyPhase=PartyPhase::OrderedEnemies;changed=true;
+        }
+        if(g.partyPhase==PartyPhase::OrderedEnemies) {
+            if(!turnSettled())break;
+            Entity* next=nullptr;
+            for(auto& e:s.population.entities)if(hostile(e) && e.actionRound!=g.actionRound &&
+                (!next || e.instanceId<next->instanceId))next=&e;
+            if(next) {planEnemy(*next,false);if(!turnSettled())break;continue;}
+            if(g.actionRound==UINT64_MAX)throw std::runtime_error("action round exhausted");
+            ++g.actionRound;g.partyActions.clear();g.partyPhase=PartyPhase::Idle;
+            invalidate(false);changed=true;continue;
         }
         if(g.partyPhase==PartyPhase::Allies) {
             if(g.companionIntent==CompanionIntent::Follow && available(kCompanionActorId) &&
@@ -517,6 +559,10 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             }
             planPlayer();
             if(g.life==LifePhase::Dialogue || g.life==LifePhase::Pose)return result;
+            const bool contact=std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e) {
+                return hostile(e) && (canAttack(s.world,s.position,e.tile) || canAttack(s.world,g.companion.tile,e.tile));
+            });
+            if(contact || !g.partyPlaybacks.empty()){g.partyPhase=PartyPhase::Player;changed=true;continue;}
             planCompanion();
             const bool attacking=std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){
                 return (a.actorId==0 || a.actorId==kCompanionActorId) && a.kind==PartyActionKind::Attack;
@@ -528,14 +574,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             g.partyPhase=PartyPhase::Enemies;changed=true;
         }
         if(g.partyPhase==PartyPhase::Enemies) {
-            for(auto& e:s.population.entities)planEnemy(e,false);
-            bool done=true;
-            for(const auto& e:s.population.entities)
-                if(hostile(e) && (e.actionRound!=g.actionRound || pending(e.instanceId)))done=false;
-            if(!done)break;
-            if(g.actionRound==UINT64_MAX)throw std::runtime_error("action round exhausted");
-            ++g.actionRound;g.partyActions.clear();g.partyPhase=PartyPhase::Idle;
-            invalidate(false);changed=true;
+            g.partyPhase=PartyPhase::OrderedEnemies;changed=true;
         }
     }
     const bool fighting=!g.partyPlaybacks.empty() ||

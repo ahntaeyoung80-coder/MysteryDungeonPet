@@ -1,4 +1,5 @@
 #include "core/exploration.hpp"
+#include "core/motion.hpp"
 
 #include <algorithm>
 #include <charconv>
@@ -411,7 +412,7 @@ void Explorer::enterFloor() {
     state_.population = populate(state_.world, state_.floors[state_.floorIndex],
                                  state_.rng, state_.spawnPolicy,entryExclusion);
     state_.position = state_.world.start;
-    state_.visited.fill(0);
+    state_.visited.fill(0);state_.screenSeen.fill(0);
     state_.visited[state_.position] = 1;
     state_.blocked.fill(0);
     state_.discovered.fill(0); state_.failedTargets.fill(0);
@@ -439,7 +440,17 @@ bool Explorer::friendly(const Entity& e) const {
     return state_.gameplay.enabled && e.kind==EntityKind::Friend && e.visible &&
         std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)==state_.gameplay.hostile.end();
 }
-bool Explorer::lowHealth() const {const auto& g=state_.gameplay;return g.enabled && (g.hearts<=kLowHp || (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp));}
+std::uint32_t Explorer::companionOpponent() const {
+    const auto& g=state_.gameplay;
+    if(!g.independentParty || !g.companion.enabled || !g.companion.hearts)return 0;
+    const auto reach=bfs(state_.world,state_.position);
+    if(reach.distance[g.companion.tile]<0 || reach.distance[g.companion.tile]>3)return 0;
+    for(const auto& e:state_.population.entities)
+        if(e.kind==EntityKind::Friend && e.visible && !e.done && !friendly(e) &&
+           canAttack(state_.world,g.companion.tile,e.tile))return e.instanceId;
+    return 0;
+}
+bool Explorer::lowHealth() const {const auto& g=state_.gameplay;return g.enabled && !companionOpponent() && (g.hearts<=kLowHp || (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp));}
 bool Explorer::mustRetreat() const {
     const auto& g=state_.gameplay;
     // A targetless cornered encounter commits to this existing enemy. Persist
@@ -535,6 +546,41 @@ Mask Explorer::playerOccupancy() const {
     const auto reach=bfs(state_.world,state_.position,safe);
     const bool escape=std::any_of(reach.distance.begin(),reach.distance.end(),[](int d){return d>0;});
     return escape?safe:occupied;
+}
+void Explorer::enableScreenExploration(std::uint32_t size) {
+    require(size>=24 && size<=200,"invalid exploration viewport");
+    if(state_.screenExploration && state_.viewportSize==size)return;
+    state_.screenExploration=true;state_.viewportSize=size;invalidate();
+}
+bool Explorer::roomFullyShown(int room) const {
+    if(!state_.screenExploration || room<0)return true;
+    for(int p=0;p<kTiles;++p)if(state_.world.walkable(p) && state_.world.room[p]==room && !state_.screenSeen[p])return false;
+    return true;
+}
+void Explorer::observeViewport(int x,int y) {
+    if(!state_.screenExploration || !dungeonScene(state_.gameplay) || state_.gameplay.sceneBeat!=SceneBeat::None)return;
+    bool changed=false;const int size=static_cast<int>(state_.viewportSize);
+    for(int p=0;p<kTiles;++p)if(state_.world.walkable(p) && !state_.screenSeen[p] &&
+        p%kWidth*24>=x && p/kWidth*24>=y && p%kWidth*24+24<=x+size && p/kWidth*24+24<=y+size) {
+        state_.screenSeen[p]=1;changed=true;
+    }
+    if(changed){state_.stalledActions=0;invalidate();}
+}
+bool Explorer::selectRoomView(const Search& search) {
+    const int room=state_.world.room[state_.position];
+    if(roomFullyShown(room))return false;
+    int best=-1,bestCount=0,bestDistance=kTiles+1;
+    for(int p=0;p<kTiles;++p)if(search.distance[p]>0 && state_.world.room[p]==room) {
+        const auto camera=cameraFor(tilePoint(p),kWidth*24,kHeight*24,state_.viewportSize);
+        int count=0;
+        for(int q=0;q<kTiles;++q)if(state_.world.room[q]==room && state_.world.walkable(q) && !state_.screenSeen[q] &&
+            q%kWidth*24>=camera.x && q/kWidth*24>=camera.y && q%kWidth*24+24<=camera.x+int(state_.viewportSize) && q/kWidth*24+24<=camera.y+int(state_.viewportSize))++count;
+        if(count>bestCount || (count==bestCount && count && search.distance[p]<bestDistance)) {
+            best=p;bestCount=count;bestDistance=search.distance[p];
+        }
+    }
+    if(best<0)return false;
+    state_.target=best;state_.goalKind=GoalKind::Auxiliary;return true;
 }
 void Explorer::discover() {
     const auto before=std::count(state_.discovered.begin(),state_.discovered.end(),1);
@@ -643,7 +689,7 @@ void Explorer::plan() {
     if(state_.position!=state_.world.stairs) occupied[state_.world.stairs]=1;
     const auto explore=bfs(state_.world,state_.position,occupied);++bfsCalls_;invalidate();
     const bool survival=selectSurvival(explore);
-    if(!survival) selectPriority(explore,!lowHealth(),true);
+    if(!survival && !selectRoomView(explore)) selectPriority(explore,!lowHealth(),true);
     if(state_.target<0) {
         const auto reach=bfs(state_.world,state_.position,playerOccupancy());++bfsCalls_;
         if(state_.knownStairs>=0 && state_.failedTargets[state_.knownStairs]<3 && reach.distance[state_.knownStairs]>=0) {
@@ -705,7 +751,7 @@ Event Explorer::advance(bool poseFinished) {
     // Resolve the next step from the same current decision in continuous play.
     // The standalone explorer retains its across-step path cache.
     if(state_.gameplay.enabled) invalidate(false);
-    if(state_.position==state_.world.stairs) {invalidate();state_.target=state_.world.stairs;state_.goalKind=GoalKind::Stairs;}
+    if(state_.position==state_.world.stairs && (lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {invalidate();state_.target=state_.world.stairs;state_.goalKind=GoalKind::Stairs;}
     else for(unsigned attempt=0;attempt<4;++attempt) {
         if(state_.target>=0 && state_.position==state_.target) {
             if(state_.goalKind==GoalKind::Item || state_.goalKind==GoalKind::Friend) break;
@@ -764,16 +810,18 @@ Event Explorer::advance(bool poseFinished) {
     return event;
 }
 void validateState(const ExplorationState& s) {
+    require(s.viewportSize>=24 && s.viewportSize<=200,"invalid exploration viewport");
+    for(int p=0;p<kTiles;++p)require(s.screenSeen[p]<=1 && (!s.screenSeen[p] || s.world.walkable(p)),"invalid screen coverage");
     const auto& g = s.gameplay;
     validatePartyState(s);
     (void)layoutMemory(g);
     require(g.navigationHistory.size()<=32,"navigation history exceeds bound");
-    require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=17 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
+    require(static_cast<unsigned>(g.deathStage)<=1 && static_cast<unsigned>(g.sceneBeat)<=19 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
     if(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn) {
         require(g.enabled && g.life==LifePhase::Explore && !g.homeScene && s.target==-1 && !g.movement.actionId,"invalid floor presentation");
         require(g.sceneBeat==SceneBeat::FloorFadeOut ? s.position==s.world.stairs : (s.floorIndex>0 && s.position==s.world.start),"invalid floor transition position");
     }
-    if(g.sceneBeat==SceneBeat::WakeDelay) require(g.life==LifePhase::Wake && g.homeScene,"invalid wake delay");
+    if(g.sceneBeat==SceneBeat::WakeDelay || g.sceneBeat==SceneBeat::AlarmEnter || g.sceneBeat==SceneBeat::AlarmLeave) require(g.life==LifePhase::Wake && g.homeScene,"invalid wake delay");
     if(g.sceneBeat==SceneBeat::RoomExit) require(g.life==LifePhase::Ready && g.homeScene,"invalid bedroom exit");
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
     require(g.walkStartedMs<=g.phaseStartedMs,"invalid saved walking clock");

@@ -178,6 +178,8 @@ class App {
     std::filesystem::path directory_;
     Assets assets_;
     std::optional<Assets> enemyAssets_, friendlyAssets_, companionAssets_, homeAssets_, propsAssets_;
+    std::optional<Assets> appleAssets_,uiAssets_;
+    std::optional<Surface> dialoguePanel_;
     std::vector<GuildRoom> guildRooms_;
     std::map<std::string, Assets> guildAssets_;
     struct GuildLiveActor {
@@ -249,6 +251,7 @@ class App {
     uint64_t previousCpu_ = 0;
     std::ofstream metrics_, events_, movementTrace_;
     unsigned traceImages_ = 0;
+    bool traceAlarmImage_=false;
     void traceImage(const char* suffix) {
         if(!movementTrace_ || !dib_ || !submitted_) return;
         auto path=options_.movementTrace;path.replace_extension();path+=suffix;
@@ -310,7 +313,13 @@ class App {
             movementTrace_ << e.instanceId << ':' << e.movement.startedMs << ':' << e.movement.durationMs
                 << ':' << e.movement.from << ':' << e.movement.to << ':' << e.movement.actionId;
         }
-        movementTrace_ << '\n';
+        const auto alarm=std::find_if(guildLive_.begin(),guildLive_.end(),[](const auto& a){return a.cue->id==109;});
+        const auto alarmPoint=alarm==guildLive_.end()?Point{-1,-1}:loudredAlarm(alarm->cue->position,g,utcMs()).position;
+        unsigned shown=0,total=0;
+        if(dungeon)for(int tile=0;tile<kTiles;++tile)if(state.world.walkable(tile) && state.world.room[tile]==state.world.room[state.position]){++total;shown+=state.screenSeen[tile];}
+        movementTrace_ << ',' << alarmPoint.x << ',' << alarmPoint.y << ',' << (alarm==guildLive_.end()?-1:int(alarm->clip))
+            << ',' << (alarm==guildLive_.end()?-1:int(alarm->direction)) << ',' << shown << ',' << total << '\n';
+        if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay){traceImage("-alarm.bmp");traceAlarmImage_=true;}
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
     }
@@ -883,7 +892,7 @@ class App {
             guildLive_.clear(); guildRoom_ = room; guildLife_ = g.life;guildBeat_=g.sceneBeat;
             for (const auto& cue : guildRooms_[room].actors) {
                 if (cue.kind == GuildActorKind::Player) continue;
-                if(room==1 && cue.id==109 && g.sceneBeat!=SceneBeat::WakeDelay)continue;
+                if(room==1 && cue.id==109 && g.sceneBeat!=SceneBeat::WakeDelay && g.sceneBeat!=SceneBeat::AlarmEnter && g.sceneBeat!=SceneBeat::AlarmLeave)continue;
                 const Assets* source = nullptr;
                 if (cue.kind == GuildActorKind::Partner) source = &*companionAssets_;
                 else {
@@ -900,7 +909,7 @@ class App {
                 actor.clip = cue.kind == GuildActorKind::Object ? cue.actionClip :
                     cue.kind == GuildActorKind::Partner ? (room == 1 ? gameplayClip(g) : g.life == LifePhase::Eat ? 15U : 7U) :
                     g.life == LifePhase::Eat ? cue.actionClip : 7U;
-                if(room==1 && cue.id==109)actor.clip=cue.actionClip;
+                if(room==1 && cue.id==109) {actor.clip=g.sceneBeat==SceneBeat::WakeDelay?cue.actionClip:0;actor.direction=g.sceneBeat==SceneBeat::AlarmLeave?6:2;}
                 if(room==1 && cue.kind==GuildActorKind::Partner && (g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut)) {
                     actor.clip=g.sceneBeat==SceneBeat::RoomExit?0:7;actor.direction=6;
                 }
@@ -911,6 +920,10 @@ class App {
             dirty_ = true;
         }
         for (auto& actor : guildLive_) {
+            if(g.sceneBeat==SceneBeat::RoomExit && actor.cue->kind==GuildActorKind::Partner) {
+                const unsigned clip=utcMs()<g.phaseStartedMs+1200?7U:0U;
+                if(actor.clip!=clip){actor.clip=clip;actor.animator.start(actor.assets->package,clip,6,true,now);dirty_=true;}
+            }
             if (g.life == LifePhase::Eat && actor.cue->id == 79) {
                 const auto elapsed = utcMs() > g.phaseStartedMs ? utcMs()-g.phaseStartedMs : 0;
                 const unsigned direction = (elapsed*60/1000/20)%2 ? 0 : 4;
@@ -1008,8 +1021,10 @@ class App {
         }
         if(partyRendering())poseFinished_=!completion_.actions.empty();
         (void)playerFinished;
+        if(explorer_ && revealedGameplayText(explorer_->state().gameplay,utcMs())!=submittedText_)dirty_=true;
         if (!dirty_) {traceMovement(now,false);return;}
         std::vector<Layer> layers;
+        std::optional<Layer> playerLayer;
         Point camera{0, 0};
         if (explorer_ && dungeonScene(explorer_->state().gameplay)) {
             const auto& state = explorer_->state();
@@ -1061,16 +1076,23 @@ class App {
             for (const auto& cue : guildRooms_[bedroom ? 1 : 0].actors) {
                 if (cue.kind == GuildActorKind::Player) {
                     const auto sample = currentPlayback();
-                    if (sample.frame) layers.push_back({assets_.atlas.get(), sample.frame->rect, sample.frame->anchor, sample.scenePosition});
+                    if (sample.frame) playerLayer=Layer{assets_.atlas.get(), sample.frame->rect, sample.frame->anchor, sample.scenePosition};
                 } else {
                     const auto it = std::find_if(guildLive_.begin(), guildLive_.end(), [&](const auto& a) { return a.cue->id == cue.id; });
                     if(it==guildLive_.end()) continue;
                     const auto& frame = it->assets->package.frames(it->clip, it->direction)[it->frame];
-                    const auto position=bedroom && cue.kind==GuildActorKind::Partner &&
+                    const auto position=bedroom && cue.id==109?loudredAlarm(cue.position,g,utcMs()).position:bedroom && cue.kind==GuildActorKind::Partner &&
                         (g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut)?
                         bedroomExit(cue.position,g,utcMs(),true).position:cue.position;
                     layers.push_back({it->assets->atlas.get(), frame.rect, frame.anchor, position});
-                    if(g.life==LifePhase::Eat && cue.id==79) addProp(layers,4,{position.x,position.y-frame.anchor.y-2});
+                    if(g.life==LifePhase::Eat && cue.id==79) {
+                        const auto elapsed=utcMs()>g.phaseStartedMs?utcMs()-g.phaseStartedMs:0;
+                        const auto& apple=appleAssets_->package.frames(624,0)[loopFrameAt(appleAssets_->package,624,elapsed)];
+                        const auto head=std::find_if(frame.markers.begin(),frame.markers.end(),[](const auto& m){return m.kind==0;});
+                        if(head==frame.markers.end())throw std::runtime_error("Wigglytuff head marker missing");
+                        const Point attachment{position.x+head->point.x-frame.anchor.x,position.y+head->point.y-frame.anchor.y};
+                        layers.push_back({appleAssets_->atlas.get(),apple.rect,apple.anchor,attachment});
+                    }
                 }
             }
         }
@@ -1078,7 +1100,7 @@ class App {
         const auto playback = currentPlayback();
         if (playback.frame && (!explorer_ || (!explorer_->state().gameplay.playerHidden && dungeonScene(explorer_->state().gameplay)))) {
             const auto& f = *playback.frame;
-            layers.push_back({assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition});
+            playerLayer=Layer{assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition};
         }
         if(explorer_ && dungeonScene(explorer_->state().gameplay)) {
             const auto& p=explorer_->state().gameplay.companion;
@@ -1087,10 +1109,11 @@ class App {
                 layers.push_back({companionAssets_->atlas.get(),f.rect,f.anchor,raster(companionMotion_.sample(now))});
             }
         }
+        if(playerLayer)layers.push_back(*playerLayer); // player wins any sprite overlap
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
-        if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs());
-        std::wstring overlayText=explorer_?gameplayText(explorer_->state().gameplay):std::wstring{};
+        if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr);
+        std::wstring overlayText=explorer_?revealedGameplayText(explorer_->state().gameplay,utcMs()):std::wstring{};
         const bool textChanged=overlayText!=submittedText_;
         bool changed = previous != surface_.pixels;
         dirty_ = false;
@@ -1102,7 +1125,11 @@ class App {
         POINT position{rect.left, rect.top}, source{0, 0}; SIZE size{LONG(size_), LONG(size_)};
         BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
         winCheck(UpdateLayeredWindow(window_, nullptr, &position, &size, dib_->dc, &source, 0, &blend, ULW_ALPHA) != 0, "UpdateLayeredWindow");
-        ++submissions_; submitted_ = true; submittedText_=std::move(overlayText);
+        ++submissions_; submitted_ = true;
+        if(explorer_ && explorer_->state().screenExploration) {
+            explorer_->enableScreenExploration((size_+scale_-1)/scale_);
+            explorer_->observeViewport(camera.x,camera.y);
+        } submittedText_=std::move(overlayText);
         traceMovement(now,true);
         if (blocked()) ++hiddenSubmissions_;
     }
@@ -1120,7 +1147,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
@@ -1134,6 +1161,10 @@ public:
             decodes_+=companionAssets_->decoded?1:0;
             homeAssets_ = Assets::load(options_.gameplayAssets / L"home/home.mdpa");
             propsAssets_=Assets::load(options_.gameplayAssets / L"props/props.mdpa");
+            appleAssets_=Assets::load(options_.gameplayAssets / L"effects/apple.mdpa");
+            uiAssets_=Assets::load(options_.gameplayAssets / L"ui/ui.mdpa");
+            dialoguePanel_=originalDialoguePanel(*uiAssets_->atlas,uiAssets_->package);
+            decodes_+=appleAssets_->decoded?1:0;decodes_+=uiAssets_->decoded?1:0;
             decodes_+=propsAssets_->decoded?1:0;
             guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");
             decodes_ += (enemyAssets_->decoded ? 1 : 0) + (homeAssets_->decoded ? 1 : 0);
@@ -1167,6 +1198,7 @@ public:
             explorer_->enableGameplay(utcMs());
             if(!options_.solo) explorer_->enableCompanion();
             if(options_.defaultExploration) {
+                explorer_->enableScreenExploration((size_+scale_-1)/scale_);
                 explorer_->startGuildMorning(utcMs());
                 log("startup=guild-morning exploration-goal=discarded");
             }
@@ -1286,12 +1318,14 @@ public:
                 if(g.life==LifePhase::ReturnHome || (g.life==LifePhase::Death && g.deathStage==DeathStage::FadeOut) ||
                    g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::BedFadeIn ||
                    g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::ExploreFadeIn ||
+                   g.life==LifePhase::Eat || g.sceneBeat==SceneBeat::AlarmEnter || g.sceneBeat==SceneBeat::AlarmLeave ||
                    g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn || g.sceneBeat==SceneBeat::RoomExit) deadline=std::min(deadline,now+16667);
                 if(auto cameraDeadline=guildCamera_.nextDeadline(now)) deadline=std::min(deadline,*cameraDeadline);
                 if(auto d=companionMotion_.nextDeadline(now)) deadline=std::min(deadline,*d);
                 if(auto motionDeadline=playerMotion_.nextDeadline(now)) deadline=std::min(deadline,*motionDeadline);
                 for(const auto& entry:actorMotions_) if(auto d=entry.second.nextDeadline(now)) deadline=std::min(deadline,*d);
             }
+            if(!blocked() && explorer_ && revealedGameplayText(explorer_->state().gameplay,utcMs())!=gameplayText(explorer_->state().gameplay)) deadline=std::min(deadline,now+25000);
             if (!blocked() && animator_.active() && nextFrameDeadline_) deadline = std::min(deadline, *nextFrameDeadline_);
             // Relative timer, one shot; no high-resolution request or 1ms polling.
             LARGE_INTEGER due{}; due.QuadPart = -std::max<int64_t>(1, deadline - nowUs()) * 10;

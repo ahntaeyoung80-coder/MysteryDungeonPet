@@ -99,7 +99,9 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Sleeping && gameplayClip(e.state().gameplay)==13 && !gameplayLoop(e.state().gameplay),"sleep onset must be one finite animation");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeOut && nightScene(e.state().gameplay),"sleep onset did not fade directly");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::BedFadeIn && !nightScene(e.state().gameplay),"morning fade-in exposed night");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::AlarmEnter,"Loudred entrance missing");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::WakeDelay && !gameplayText(e.state().gameplay).empty(),"Loudred alarm missing");
+    next(e);check(e.state().gameplay.sceneBeat==SceneBeat::AlarmLeave,"Loudred exit missing");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Waking && gameplayClip(e.state().gameplay)==14,"Wake14 daylight missing");
     const auto oldDay=e.state().gameplay.day;const auto oldHearts=e.state().gameplay.hearts;
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{false,true,true});check(e.state().gameplay.life==LifePhase::Wake,"other actor finished player Wake");

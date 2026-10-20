@@ -54,13 +54,14 @@ $Faint=@(Run 'faint' 7)
 if(@($Faint|Where-Object {$_.companion_clip -eq '33' -and $_.combat -eq '14'}).Count -lt 2 -or
  @($Faint|Where-Object {$_.life -eq '9'}).Count -lt 2){throw 'companion Faint33/death not presented'}
 # Compare the actual submitted body pixels with the retained original packages.
-$Two=Run 'two-sided' 6
+$Two=Run 'two-sided' 16
 $Both=@($Two|Where-Object {
  $_.independent_party -eq '1' -and $_.clip -eq '1' -and $_.companion_clip -eq '1' -and
  [uint64]$_.player_party_action -gt 0 -and [uint64]$_.companion_party_action -gt 0 -and
  $_.player_party_action -ne $_.companion_party_action
 })
-if($Both.Count -lt 2){throw 'independent player and companion attacks were not presented together'}
+if($Both.Count -ne 0){throw 'player and companion attack animations overlapped'}
+if(@($Two|Where-Object {$_.clip -eq '1'}).Count -lt 2 -or @($Two|Where-Object {$_.companion_clip -eq '1'}).Count -lt 2){throw 'sequential ally attacks missing'}
 $Surviving=@($Two|Where-Object {
  $_.actor_states -notmatch '(^|;)1:' -and $_.actor_states -match '(^|;)2:[0-9]+:(1|6|33):'
 })
@@ -69,7 +70,7 @@ $PlayerAttacks=@($Two|Where-Object {$_.clip -eq '1'}|Select-Object -ExpandProper
 if($Surviving.Count -lt 2 -or $Finished.Count -lt 1 -or $PlayerAttacks.Count -lt 2){
  throw 'right encounter failed to progress and finish independently of left faint animation'
 }
-@{status='pass';simultaneousSubmittedFrames=$Both.Count;afterLeftRemovalFrames=$Surviving.Count;bothRemovedFrames=$Finished.Count}|
+@{status='pass';overlappingAttackFrames=$Both.Count;afterLeftRemovalFrames=$Surviving.Count;bothRemovedFrames=$Finished.Count}|
  ConvertTo-Json|Set-Content -Encoding UTF8 "$Output/two-sided-result.json"
 $ChaseResults=@()
 foreach($Hp in @(5,1)) {

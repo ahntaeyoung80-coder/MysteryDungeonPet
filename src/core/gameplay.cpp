@@ -17,12 +17,13 @@ std::string pendingHit(const ExplorationState& s) {
 uint64_t navigationFingerprint(const ExplorationState& s) {
     uint64_t hash=14695981039346656037ULL;
     auto add=[&](uint64_t value){for(unsigned byte=0;byte<8;++byte){hash^=uint8_t(value>>(byte*8));hash*=1099511628211ULL;}};
+    add(s.screenExploration);add(s.viewportSize);
     add(s.floorIndex);add(s.world.version);add(s.mapSeed);add(s.rng.state);add(s.position);
     add(s.target+1);add(static_cast<unsigned>(s.goalKind));add(s.targetInstance);add(s.knownStairs+1);
     add(s.inventory.size());add(s.onceKeys.size());add(s.gameplay.onceKeys.size());add(s.gameplay.hearts);add(s.gameplay.oran);
     const auto& partner=s.gameplay.companion;
     if(partner.enabled){add(partner.tile);add(partner.hearts);add(partner.oran);add(partner.actionRound==s.gameplay.actionRound);}
-    for(int tile=0;tile<kTiles;++tile){add(s.visited[tile]);add(s.discovered[tile]);add(s.failedTargets[tile]);add(s.blocked[tile]);}
+    for(int tile=0;tile<kTiles;++tile){add(s.screenSeen[tile]);add(s.visited[tile]);add(s.discovered[tile]);add(s.failedTargets[tile]);add(s.blocked[tile]);}
     for(const auto& e:s.population.entities){add(e.instanceId);add(e.tile);add(e.done);add(e.visible);
         add(static_cast<unsigned>(e.tracking));add(e.lastSeen+1);add(e.chaseTarget+1);add(e.blockedTurns);
         add(e.actionRound==s.gameplay.actionRound);}
@@ -62,7 +63,7 @@ std::uint32_t gameplayClip(const GameplayState& g) {
         return 13;
     case LifePhase::Ready: if(g.sceneBeat==SceneBeat::RoomExit) return 0; return g.sceneBeat==SceneBeat::MorningFace ? 22:7;
     case LifePhase::Dialogue:return g.dialogueStage==DialogueStage::Player?22:7;
-    case LifePhase::Wake: return g.sceneBeat==SceneBeat::WakeDelay || g.sceneBeat==SceneBeat::BedFadeIn?13:14;
+    case LifePhase::Wake: return g.sceneBeat==SceneBeat::WakeDelay || g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::AlarmEnter || g.sceneBeat==SceneBeat::AlarmLeave?13:14;
     case LifePhase::Combat:
         if (g.combat == CombatPhase::PlayerAttack) return 1;
         if (g.combat == CombatPhase::PlayerHurt) return 6;
@@ -74,7 +75,7 @@ std::uint32_t gameplayClip(const GameplayState& g) {
 }
 bool holdGameplayPose(const GameplayState& g) {
     return (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFadeOut) ||
-        (g.life==LifePhase::Wake && (g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::WakeDelay));
+        (g.life==LifePhase::Wake && (g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::WakeDelay || g.sceneBeat==SceneBeat::AlarmEnter || g.sceneBeat==SceneBeat::AlarmLeave));
 }
 bool gameplayLoop(const GameplayState& g) {
     if(holdGameplayPose(g)) return false;
@@ -311,9 +312,17 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
     if(g.life==LifePhase::Wake) {
         if(g.sceneBeat==SceneBeat::BedFadeIn) {
             if(now<g.deadlineMs) return {};
+            g.sceneBeat=SceneBeat::AlarmEnter;return life(LifePhase::Wake,GameplayEvent::Wake,800);
+        }
+        if(g.sceneBeat==SceneBeat::AlarmEnter) {
+            if(now<g.deadlineMs)return {};
             g.sceneBeat=SceneBeat::WakeDelay;return life(LifePhase::Wake,GameplayEvent::Wake,kWakeDelayMs);
         }
         if(g.sceneBeat==SceneBeat::WakeDelay) {
+            if(now<g.deadlineMs)return {};
+            g.sceneBeat=SceneBeat::AlarmLeave;return life(LifePhase::Wake,GameplayEvent::Wake,800);
+        }
+        if(g.sceneBeat==SceneBeat::AlarmLeave) {
             if(now<g.deadlineMs) return {};
             g.sceneBeat=SceneBeat::Waking;return life(LifePhase::Wake,GameplayEvent::Wake,kFiniteTimeoutMs);
         }
@@ -339,6 +348,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             nextRunAssetVersion_.empty()?state_.assetVersion:nextRunAssetVersion_,
             nextRunFloors_.empty()?state_.floors:nextRunFloors_,state_.spawnPolicy,recentLayouts());
         next.state_.inventory=inventory;
+        if(state_.screenExploration)next.enableScreenExploration(state_.viewportSize);
         for(const auto& entry:inventory) next.state_.onceKeys.insert(entry.onceKey);
         next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+
             (previous.onceKeys.count("guild-start:"+std::to_string(state_.runId))?0:1);
@@ -608,7 +618,7 @@ GameplayUpdate Explorer::healCompanion(std::uint64_t now) {
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;
     retreatProgress_=false;
-    if(state_.position==state_.world.stairs) {
+    if(state_.position==state_.world.stairs && (lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {
         invalidate();g.movement={};g.walkStartedMs=0;
         g.sceneBeat=SceneBeat::FloorFadeOut;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
         return {};

@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(8); // MDES8 appends actor-owned actions and playback tokens.
+    w.u32(0x5345444d); w.u32(9); // MDES9 records sequential combat phases and screen coverage.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -151,6 +151,8 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
         w.u64(v.id);w.u64(v.round);w.u64(v.startedMs);w.u64(v.deadlineMs);
         w.u32(v.actorId);w.u32(v.clip);w.u32(v.direction);
     }
+    w.u32(s.screenExploration);w.u32(s.viewportSize);
+    for(auto v:s.screenSeen)w.u32(v);
     w.u32(static_cast<uint32_t>(w.bytes.size()-partyStart));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
@@ -160,7 +162,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 8) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 9) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -221,7 +223,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         s.visitedRooms=r.count(7);s.stalledActions=r.count(Explorer::kFloorStepLimit+kTiles+1);s.targetFailures=r.u32();
         s.knownStairs=static_cast<int>(r.count(kTiles))-1;s.targetInstance=r.count(kTiles);
         auto& g=s.gameplay;g.actionRound=r.u64();g.playerActionRound=r.u64();g.playerDirection=r.count(7);
-        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=5?17:schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
+        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=9?19:schema>=5?17:schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
         for(auto& e:s.population.entities) {
             e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
             e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();
@@ -280,7 +282,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     if(schema>=8) {
         const auto partyStart=r.offset;auto& g=s.gameplay;
         g.independentParty=r.boolean();g.nextPartyId=r.u64();
-        g.partyPhase=static_cast<PartyPhase>(r.count(2));
+        g.partyPhase=static_cast<PartyPhase>(r.count(schema>=9?5:2));
         g.companionIntent=static_cast<CompanionIntent>(r.count(2));
         g.companionTarget=r.u32();
         auto count=r.count(kTiles+2);
@@ -296,9 +298,16 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
             PartyPlayback v;v.id=r.u64();v.round=r.u64();v.startedMs=r.u64();v.deadlineMs=r.u64();
             v.actorId=r.u32();v.clip=r.u32();v.direction=r.count(7);g.partyPlaybacks.push_back(v);
         }
+        if(schema>=9) {
+            s.screenExploration=r.boolean();s.viewportSize=r.count(200);
+            for(auto& v:s.screenSeen)v=static_cast<uint8_t>(r.count(1));
+        }
         const auto length=r.u32();
         if(length!=r.offset-partyStart-4)throw std::runtime_error("party snapshot block length mismatch");
     }
+    if(schema<9 && s.gameplay.independentParty &&
+       (!s.gameplay.partyPlaybacks.empty() || std::any_of(s.gameplay.partyActions.begin(),s.gameplay.partyActions.end(),
+        [](const auto& a){return a.kind==PartyActionKind::Attack;})))s.gameplay.partyPhase=PartyPhase::Player;
     r.u32(); r.end();
     discardStaleEntityGoal(s);
     validateState(s);

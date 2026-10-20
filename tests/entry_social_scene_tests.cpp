@@ -77,14 +77,36 @@ void scenes(){
   Animator pose;pose.start(p,13,2,false,0);const auto held=pose.advance(60000000);
   check(held.finished && held.frame+1==p.frames(13,2).size(),"original sleep clip does not hold final frame");
  }
+ const auto apple=loadPackage(root/"assets/original/gameplay/effects/apple.mdpa");
+ check(apple.frames(624,0).size()==13 && apple.tickHz==60,"original apple sequence absent");
+ check(loopFrameAt(apple,624,0)==0 && loopFrameAt(apple,624,66)==0 && loopFrameAt(apple,624,67)==1 && loopFrameAt(apple,624,867)==0,"original apple ticks changed");
+ const auto ui=loadPackage(root/"assets/original/gameplay/ui/ui.mdpa");Surface atlas(144,8);
+ for(unsigned y=0;y<8;++y)for(unsigned x=0;x<144;++x){auto i=(y*144+x)*4;atlas.pixels[i]=x/8;atlas.pixels[i+3]=255;}
+ const auto panel=originalDialoguePanel(atlas,ui);
+ for(const auto v:std::vector<std::array<unsigned,3>>{{0,0,2},{8,0,3},{176,0,4},{0,8,5},{8,8,1},{176,8,6},{0,40,7},{8,40,8},{176,40,9}})
+  check(panel.pixels[(v[1]*184+v[0])*4]==v[2],"dialogue border tile position changed");
+ auto text=s.gameplay;text.sceneBeat=SceneBeat::WakeDelay;
+ check(revealedGameplayText(text,1000).size()==1 && revealedGameplayText(text,1050).size()==3 && revealedGameplayText(text,3000)==gameplayText(text),"text reveal timing changed");
  Explorer e(s);e=restore(e);e.advanceGameplay(1750);
+ check(e.state().gameplay.sceneBeat==SceneBeat::AlarmEnter,"Loudred entrance absent");
+ for(unsigned ms=0;ms<=800;ms+=100) {
+  const auto a=loudredAlarm({112,180},e.state().gameplay,1750+ms);
+  check(a.position.x==64+int(48*ms/800) && a.position.y==180 && a.direction==2,"Loudred entrance teleported");
+ }
+ e=restore(e);e.advanceGameplay(2550);
  check(e.state().gameplay.sceneBeat==SceneBeat::WakeDelay && gameplayClip(e.state().gameplay)==13 && holdGameplayPose(e.state().gameplay),"alarm did not hold sleeping bodies");
- e=restore(e);e.advanceGameplay(1750+kWakeDelayMs);check(gameplayClip(e.state().gameplay)==14,"Wake14 missing after Loudred alarm");
+ e=restore(e);e.advanceGameplay(2550+kWakeDelayMs);
+ check(e.state().gameplay.sceneBeat==SceneBeat::AlarmLeave && holdGameplayPose(e.state().gameplay),"Loudred exit did not hold sleepers");
+ for(unsigned ms=0;ms<=800;ms+=100) {
+  const auto a=loudredAlarm({112,180},e.state().gameplay,4550+ms);
+  check(a.position.x==112-int(48*ms/800) && a.position.y==180 && a.direction==6,"Loudred exit teleported");
+ }
+ e=restore(e);e.advanceGameplay(5350);check(gameplayClip(e.state().gameplay)==14,"Wake14 missing after Loudred left");
  s=e.state();s.gameplay.life=LifePhase::Ready;s.gameplay.sceneBeat=SceneBeat::RoomExit;s.gameplay.phaseStartedMs=2000;s.gameplay.deadlineMs=2000+kRoomExitMs;
  e=Explorer(s);e.advanceGameplay(s.gameplay.deadlineMs,true);
  check(e.state().gameplay.sceneBeat==SceneBeat::MorningFadeOut && e.state().gameplay.day==1 && e.state().gameplay.homeScene,"room exit skipped fade-out");
  const auto exit=bedroomExit({204,184},e.state().gameplay,e.state().gameplay.phaseStartedMs);
- check(exit.finished && exit.position.x==104 && exit.position.y==184 && gameplayClip(e.state().gameplay)==7,"fade-out teleported to bed or replayed greeting");
+ check(exit.finished && exit.position.x==80 && exit.position.y==184 && gameplayClip(e.state().gameplay)==7,"fade-out teleported to bed or replayed greeting");
  const auto start=e.state().gameplay.phaseStartedMs;e=restore(e);e.advanceGameplay(start+749,true);check(e.state().gameplay.day==1,"next day committed before blackout");
  e.advanceGameplay(start+750,true);check(e.state().gameplay.sceneBeat==SceneBeat::ExploreFadeIn && e.state().gameplay.day==2 && e.state().gameplay.hearts==kMaxHp,"black frame did not commit next day/fade-in");
  auto bytes=encodeSnapshot(e.state());e=restore(e);e.advanceGameplay(start+1499,true);check(bytes==encodeSnapshot(e.state()),"exploration moved during fade-in");
@@ -108,6 +130,8 @@ int main(int argc,char** argv){unsigned failed=0;
    auto& g=s.gameplay;g.homeScene=true;g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::BedFadeIn;g.hearts=3;g.meals=1;
    g.phaseStartedMs=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();g.deadlineMs=g.phaseStartedMs+750;
    g.onceKeys={"return:920","meal:920"};saveSnapshot(out/"wake.mdes",s);
+   g.life=LifePhase::Ready;g.sceneBeat=SceneBeat::RoomExit;g.phaseStartedMs-=800;g.deadlineMs=g.phaseStartedMs+kRoomExitMs;
+   saveSnapshot(out/"overlap.mdes",s);
   }
   return 0;
  }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

@@ -1,0 +1,29 @@
+{
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "chrPath": "FONT/frame_b0.chr",
+  "chrSha256": "09329aa9a77bb919b6858bf70b4d8c0e86dfe919498831684caf36a79cd78aad",
+  "palPath": "FONT/frame_b0.pal",
+  "palSha256": "133e3849bdfcab91e84af1cf11e25f5d288fd42e9e85a0d5c44d7f629ee94a26",
+  "rgbaSha256": "ae9530824a1071c5e01427786be397979518f5b2ba3daf463650db3826f3b9d4",
+  "nineSliceTiles": [
+    [
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      1,
+      6
+    ],
+    [
+      7,
+      8,
+      9
+    ]
+  ],
+  "tileSize": 8,
+  "originalDialogueParamsHex": "88f4020202111c0500fd000000000000",
+  "layout": "original 8px border tiles; 184x48 adaptation for fixed 200px viewport; left aligned text",
+  "font": "Korean UI text uses Windows Malgun Gothic at12px; original glyph decoding is not claimed"
+}

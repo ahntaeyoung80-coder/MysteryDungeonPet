@@ -1,0 +1,29 @@
+{
+  "local": {
+    "asan": "14/14",
+    "python": "27/27",
+    "additionalMdes8Party": "34/34; related ASan test rerun after test addition"
+  },
+  "wine": {
+    "submittedCombatFrames": 717,
+    "attackActorOrder": [
+      0,
+      4294967294,
+      2,
+      0
+    ],
+    "overlappingAttackFrames": 0,
+    "finalEnemyActors": "",
+    "overlapPlayerPixels": "285/285;148 overlap pixels",
+    "alarm": "Walk0 right -> clip3 -> Walk0 left; actual submitted positions in alarm-route.json",
+    "defaultLaunch": "guild -> new seven-floor run; GDI7 scenes pass",
+    "limitations": "Wine is not native Windows; Wine font lacks Korean glyphs; native CI pending"
+  },
+  "assets": {
+    "apple": "original effect624,13frames52ticks, offsets/hFlip retained; deterministic ROM re-export passed",
+    "dialogue": "original frame_b0 CHR/PAL border; Malgun Gothic12px; original glyphs/VM not implemented",
+    "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf"
+  },
+  "nativeCi": "pending",
+  "runtimeSha256": "4bb153630203dec8b433c9bbe81c338969f0f840bc8620c2e2b7a67a060a4c36"
+}

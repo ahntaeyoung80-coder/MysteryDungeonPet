@@ -95,10 +95,12 @@ void startupCases() {
   g.partyActions.empty() && g.partyPlaybacks.empty(),"guild startup resumed exploration or lost progress");
  e=Explorer(decodeSnapshot(encodeSnapshot(boot),"companion"));
  e.advanceGameplay(1750,ActorCompletion{true,true,true});
+ check(e.state().gameplay.sceneBeat==SceneBeat::AlarmEnter,"Loudred did not walk in");
+ e.advanceGameplay(2550,ActorCompletion{true,true,true});
  check(e.state().gameplay.sceneBeat==SceneBeat::WakeDelay && !gameplayText(e.state().gameplay).empty(),"boot skipped Loudred alarm");
- auto early=encodeSnapshot(e.state());e.advanceGameplay(3749,ActorCompletion{true,true,true});
+ auto early=encodeSnapshot(e.state());e.advanceGameplay(4549,ActorCompletion{true,true,true});
  check(early==encodeSnapshot(e.state()),"alarm ended before its deadline");
- uint64_t now=3750;
+ uint64_t now=4550;
  for(unsigned tick=0;tick<12 && e.state().gameplay.homeScene;++tick) {
   e.advanceGameplay(now,ActorCompletion{true,true,true});
   now=std::max(now+1,e.state().gameplay.deadlineMs);

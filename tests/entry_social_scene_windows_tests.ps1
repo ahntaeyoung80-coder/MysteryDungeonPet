@@ -40,8 +40,20 @@ $NpcAfter=Inspect 'npc'
 if($NpcAfter.greetings -ne 1 -or @($NpcRows|Where-Object {$_.life -eq '10'}).Count -lt 3){throw 'off-path friendly NPC did not approach/greet/respond once'}
 & $Tests --wake-fixture $Package $Output
 if($LASTEXITCODE -ne 0){throw 'wake fixture failed'}
-$WakeRows=@(Run 'wake' 10)
+$OverlapRows=@(Run 'overlap' 1)
+python tools/check_scene_overlap.py --inspector (Join-Path (Split-Path $Tests) 'pet_package_inspect.exe') --trace "$Output/overlap.csv"
+if($LASTEXITCODE -ne 0){throw 'overlapping player sprite did not render above partner'}
+$WakeRows=@(Run 'wake' 12)
 $WakeAfter=Inspect 'wake'
+foreach($Beat in @(18,15,19)) {
+ $Alarm=@($WakeRows|Where-Object {[int]$_.scene_beat -eq $Beat})
+ if($Alarm.Count -lt 3){throw "Loudred movement beat $Beat absent"}
+ $ExpectedClip=if($Beat -eq 15){'3'}else{'0'}
+ $ExpectedDirection=if($Beat -eq 19){'6'}else{'2'}
+ if(@($Alarm|Where-Object {$_.guild_alarm_clip -ne $ExpectedClip -or $_.guild_alarm_direction -ne $ExpectedDirection -or $_.guild_alarm_y -ne '180'}).Count){throw 'Loudred clip/direction/route changed'}
+ if($Beat -eq 18 -and ([int]$Alarm[-1].guild_alarm_x -le [int]$Alarm[0].guild_alarm_x)){throw 'Loudred entrance did not walk forward'}
+ if($Beat -eq 19 -and ([int]$Alarm[-1].guild_alarm_x -ge [int]$Alarm[0].guild_alarm_x)){throw 'Loudred departure did not walk out'}
+}
 $Poses=Get-Content -Raw "$Output/poses.json"|ConvertFrom-Json
 $Sleeping=@($WakeRows|Where-Object {$_.life -eq '6' -and $_.scene_beat -eq '12'})
 if($Sleeping.Count -lt 3){throw 'morning sleep pose not observed'}
@@ -52,7 +64,7 @@ foreach($Row in $Sleeping){
 $Out=@($WakeRows|Where-Object {$_.scene_beat -eq '10'})
 $In=@($WakeRows|Where-Object {$_.scene_beat -eq '11'})
 if($Out.Count -lt 3 -or $In.Count -lt 3 -or $WakeAfter.day -ne 2 -or $WakeAfter.hearts -ne 5){throw 'room exit fade/next day not observed'}
-foreach($Row in $Out){if($Row.scene_x -ne '104' -or $Row.scene_y -ne '184' -or $Row.clip -ne '7'){throw 'exit fade teleported to bed or replayed greeting'}}
+foreach($Row in $Out){if($Row.scene_x -ne '80' -or $Row.scene_y -ne '184' -or $Row.clip -ne '7'){throw 'exit fade teleported to bed or replayed greeting'}}
 if([long]$Out[-1].rgb_sum -ge [long]$Out[0].rgb_sum -or [long]$In[0].rgb_sum -ge [long]$In[-1].rgb_sum){throw 'exit fade did not darken and brighten actual submitted pixels'}
 if(@($Out+$In|Where-Object {$_.opaque_pixels -ne '40000'}).Count -ne 0){throw 'exit fade exposed desktop transparency'}
 if(@($In|Where-Object {$_.action_id -ne '0' -or $_.player_tile -ne $_.entry_tile}).Count -ne 0){throw 'new day moved before fade-in completed'}
