@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "greetingIntervalUs": 1600400,
+  "greetingSubmittedFrames": 21,
+  "originalPoses": [
+    0,
+    1,
+    2
+  ],
+  "bothFacingBeforeGreeting": true,
+  "exitSubmittedFrames": 170,
+  "stationaryArrival": true,
+  "cameraNoJump": true,
+  "bedTraceRows": 155
+}

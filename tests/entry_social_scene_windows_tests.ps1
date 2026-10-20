@@ -38,6 +38,22 @@ foreach($Row in $Arrival){
 $NpcRows=@(Run 'npc' 5)
 $NpcAfter=Inspect 'npc'
 if($NpcAfter.greetings -ne 1 -or @($NpcRows|Where-Object {$_.life -eq '10'}).Count -lt 3){throw 'off-path friendly NPC did not approach/greet/respond once'}
+& $Tests --bed-fixture $Package $Output
+if($LASTEXITCODE -ne 0){throw 'bedtime fixture failed'}
+$BedRows=@(Run 'bed' 4)
+$BeforeGreeting=@($BedRows|Where-Object {$_.scene_beat -eq '6'})
+$Greeting=@($BedRows|Where-Object {$_.scene_beat -eq '3'})
+if($BeforeGreeting.Count -lt 3 -or $Greeting.Count -lt 10){throw 'bedtime facing/greeting not presented'}
+foreach($Row in @($BeforeGreeting+$Greeting)) {
+ if($Row.direction -ne '6' -or $Row.guild_partner_direction -ne '2'){throw 'bedtime actors did not face each other'}
+}
+$AfterGreeting=@($BedRows|Where-Object {$_.scene_beat -eq '4'}|Select-Object -First 1)
+if($AfterGreeting.Count -ne 1 -or [long]$AfterGreeting[0].elapsed_us-[long]$Greeting[0].elapsed_us -lt 1400000){throw 'bedtime greeting still too short'}
+foreach($ActorField in @('frame_index','partner_frame')) {
+ foreach($Pose in @('0','1','2')) {
+  if(@($Greeting|Where-Object {$_.$ActorField -eq $Pose}).Count -lt 1){throw 'slow greeting original pose missing'}
+ }
+}
 & $Tests --wake-fixture $Package $Output
 if($LASTEXITCODE -ne 0){throw 'wake fixture failed'}
 $OverlapRows=@(Run 'overlap' 1)
@@ -63,6 +79,15 @@ if($Sleeping.Count -lt 3){throw 'morning sleep pose not observed'}
 foreach($Row in $Sleeping){
  if($Row.clip -ne '13' -or [int]$Row.frame_index -ne $Poses.playerLast -or $Row.holding_pose -ne '1' -or
   $Row.partner_clip -ne '13' -or [int]$Row.partner_frame -ne $Poses.partnerLast){throw 'morning fade stood up or replayed sleep onset'}
+}
+$Exit=@($WakeRows|Where-Object {$_.scene_beat -eq '16'})
+if(@($Exit|Where-Object {$_.scene_y -eq '196' -and $_.direction -eq '6'}).Count -lt 10){throw 'leader did not use the bedding aisle'}
+if(@($Exit|Where-Object {$_.guild_partner_y -eq '196' -and $_.guild_partner_direction -eq '6'}).Count -lt 3){throw 'partner did not follow the same aisle'}
+if(@($Exit|Where-Object {$_.clip -eq '7' -and $_.scene_x -eq '80'}).Count -lt 1){throw 'arrived leader walked in place'}
+$PreviousCamera=80
+foreach($Row in $Exit) {
+ if([int]$Row.camera_x -gt $PreviousCamera -or $Row.camera_y -ne '84'){throw 'exit camera jumped right or moved vertically'}
+ $PreviousCamera=[int]$Row.camera_x
 }
 $Out=@($WakeRows|Where-Object {$_.scene_beat -eq '10'})
 $In=@($WakeRows|Where-Object {$_.scene_beat -eq '11'})

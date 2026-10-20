@@ -2,12 +2,13 @@
 #include <algorithm>
 #include <stdexcept>
 namespace pet {
-void Animator::start(const Package& p, uint32_t id, unsigned dir, bool loop, int64_t now) {
+void Animator::start(const Package& p, uint32_t id, unsigned dir, bool loop, int64_t now, uint32_t durationScale) {
     if (now < 0) throw std::runtime_error("negative clock");
+    if(!durationScale || durationScale>16)throw std::runtime_error("invalid playback duration scale");
     const auto it = std::find_if(p.clips.begin(), p.clips.end(), [id](const Clip& c) { return c.id == id; });
     if (it == p.clips.end()) throw std::runtime_error("unknown clip");
     const auto& c = *it;
-    frames_ = &p.frames(id, dir); hz_ = p.tickHz; numerator_ = c.speedNumerator; denominator_ = c.speedDenominator;
+    frames_ = &p.frames(id, dir); hz_ = p.tickHz; numerator_ = c.speedNumerator; denominator_ = c.speedDenominator*durationScale;
     duration_ = 0;
     for (const auto& f : *frames_) duration_ += f.ticks;
     startUs_ = lastNow_ = now; lastTick_ = 0; loop_ = loop; sampled_ = paused_ = finishedSent_ = false;

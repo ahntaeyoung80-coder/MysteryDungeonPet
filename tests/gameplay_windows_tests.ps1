@@ -37,7 +37,7 @@ if (@($Rows | Where-Object { [int]$_.render_paused -eq 0 }).Count -gt 1) {
     if ($SleepFade-$SleepStart -gt 6000000) { throw 'sleep onset retained the old ten-second idle' }
     $ExitStart = [long]((@($Events | Where-Object { $_ -match 'sceneBeat=16 ' })[0] -split ' ')[0])
     $NextDay = [long]((@($Events | Where-Object { $_ -match 'life=Explore.*day=2' })[0] -split ' ')[0])
-    if ($NextDay-$ExitStart -lt 2500000 -or $NextDay-$ExitStart -gt 3500000) { throw 'room exit did not include the short route and fade-out' }
+    if ($NextDay-$ExitStart -lt 3100000 -or $NextDay-$ExitStart -gt 3900000) { throw 'room exit did not include the short route and fade-out' }
     $Returning = @($Events | Where-Object { $_ -match 'life=ReturnHome' })[0]
     $Eating = @($Events | Where-Object { $_ -match 'life=Eat' })[0]
     $ReturnUs = [long]($Returning -split ' ')[0]

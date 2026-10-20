@@ -269,7 +269,7 @@ class App {
         const auto& g=explorer_->state().gameplay;const bool bedroom=bedroomScene(g);
         const auto& room=guildRooms_[bedroom?1:0];
         WorldPoint center=bedroom?WorldPoint{180,184}:g.sceneBeat==SceneBeat::DiningPan?guildCamera_.sample(now):g.sceneBeat==SceneBeat::DiningExit?WorldPoint{168,212}:WorldPoint{368,212};
-        if(g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut) {const auto p=bedroomExit(room.player().position,g,utcMs()).position;center={double(p.x),double(p.y)};}
+        if(g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut) {const auto p=bedroomExitCamera(g,utcMs());center={double(p.x),double(p.y)};}
         return cameraFor(center,room.width,room.height,int((size_+scale_-1)/scale_));
     }
     void traceMovement(int64_t now,bool submitted) {
@@ -318,7 +318,11 @@ class App {
         unsigned shown=0,total=0;
         if(dungeon)for(int tile=0;tile<kTiles;++tile)if(state.world.walkable(tile) && state.world.room[tile]==state.world.room[state.position]){++total;shown+=state.screenSeen[tile];}
         movementTrace_ << ',' << alarmPoint.x << ',' << alarmPoint.y << ',' << (alarm==guildLive_.end()?-1:int(alarm->clip))
-            << ',' << (alarm==guildLive_.end()?-1:int(alarm->direction)) << ',' << shown << ',' << total << '\n';
+            << ',' << (alarm==guildLive_.end()?-1:int(alarm->direction)) << ',' << shown << ',' << total;
+        const auto partnerPoint=partner==guildLive_.end()?Point{-1,-1}:
+            g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
+            bedroomExit(partner->cue->position,g,utcMs(),true).position:partner->cue->position;
+        movementTrace_ << ',' << partnerPoint.x << ',' << partnerPoint.y << ',' << (partner==guildLive_.end()?-1:int(partner->direction)) << '\n';
         if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay){traceImage("-alarm.bmp");traceAlarmImage_=true;}
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
@@ -397,7 +401,7 @@ class App {
                 const auto since=explorer_->state().gameplay.walkStartedMs,utc=utcMs();
                 start=std::max<int64_t>(0,now-int64_t(std::min<uint64_t>(utc>since?utc-since:0,60000))*1000);
             }
-            animator_.start(assets_.package,clip_,direction_,loop_,start);
+            animator_.start(assets_.package,clip_,direction_,loop_,start,explorer_?bedroomPlaybackScale(explorer_->state().gameplay):1);
             if (paused_) animator_.pause(now);
         }
         dirty_ = true;
@@ -863,7 +867,7 @@ class App {
         }
         if (g.homeScene) direction_ = g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
             bedroomExit(guildRooms_[1].player().position,g,utcMs()).direction:guildRooms_[bedroomScene(g)?1:0].player().direction;
-        if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace) direction_=6;
+        direction_=bedroomDirection(g,direction_);
         if(g.sceneBeat==SceneBeat::DiningPan && oldBeat!=g.sceneBeat) guildCamera_.begin(UINT32_MAX,g.day,{368,212},{168,212},now,6,4000000);
         if (clip_ == 0 && nextClip == 0 && loop_ && oldLife == g.life && oldCombat == g.combat) {
             if(oldDirection != direction_) animator_.changeDirection(assets_.package,0,direction_);
@@ -905,15 +909,16 @@ class App {
                     source = &it->second;
                 }
                 GuildLiveActor actor; actor.cue = &cue; actor.assets = source; actor.direction = cue.direction;
-                if(cue.kind==GuildActorKind::Partner && (g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace)) actor.direction=2;
+                if(cue.kind==GuildActorKind::Partner)actor.direction=bedroomDirection(g,actor.direction,true);
                 actor.clip = cue.kind == GuildActorKind::Object ? cue.actionClip :
                     cue.kind == GuildActorKind::Partner ? (room == 1 ? gameplayClip(g) : g.life == LifePhase::Eat ? 15U : 7U) :
                     g.life == LifePhase::Eat ? cue.actionClip : 7U;
                 if(room==1 && cue.id==109) {actor.clip=g.sceneBeat==SceneBeat::WakeDelay?cue.actionClip:0;actor.direction=g.sceneBeat==SceneBeat::AlarmLeave?6:2;}
                 if(room==1 && cue.kind==GuildActorKind::Partner && (g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut)) {
-                    actor.clip=g.sceneBeat==SceneBeat::RoomExit?0:7;actor.direction=6;
+                    const auto sample=bedroomExit(cue.position,g,utcMs(),true);
+                    actor.clip=sample.moving?0:7;actor.direction=sample.direction;
                 }
-                actor.animator.start(source->package, actor.clip, actor.direction, room==1?(cue.id==109?true:gameplayLoop(g)):true, cue.id==109 && room==1?restoredClipStart(now):sceneClipStart(now));
+                actor.animator.start(source->package, actor.clip, actor.direction, room==1?(cue.id==109?true:gameplayLoop(g)):true, cue.id==109 && room==1?restoredClipStart(now):sceneClipStart(now),cue.kind==GuildActorKind::Partner?bedroomPlaybackScale(g):1);
                 guildLive_.push_back(std::move(actor));
             }
             log("guild room=" + guildRooms_[room].name + " characters=" + std::to_string(1+std::count_if(guildLive_.begin(),guildLive_.end(),[](const auto& actor){return actor.cue->kind!=GuildActorKind::Object;})) + " objectCount=" + std::to_string(room == 0 ? 1 : 0));
@@ -921,8 +926,14 @@ class App {
         }
         for (auto& actor : guildLive_) {
             if(g.sceneBeat==SceneBeat::RoomExit && actor.cue->kind==GuildActorKind::Partner) {
-                const unsigned clip=utcMs()<g.phaseStartedMs+1200?7U:0U;
-                if(actor.clip!=clip){actor.clip=clip;actor.animator.start(actor.assets->package,clip,6,true,now);dirty_=true;}
+                const auto sample=bedroomExit(actor.cue->position,g,utcMs(),true);
+                const unsigned clip=sample.moving?0U:7U;
+                if(actor.clip!=clip) {
+                    actor.clip=clip;actor.direction=sample.direction;
+                    actor.animator.start(actor.assets->package,clip,actor.direction,true,now);dirty_=true;
+                } else if(actor.direction!=sample.direction) {
+                    actor.direction=sample.direction;actor.animator.changeDirection(actor.assets->package,clip,actor.direction);dirty_=true;
+                }
             }
             if (g.life == LifePhase::Eat && actor.cue->id == 79) {
                 const auto elapsed = utcMs() > g.phaseStartedMs ? utcMs()-g.phaseStartedMs : 0;
@@ -956,7 +967,9 @@ class App {
         advanceExploration(now);
         if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::RoomExit) {
             const auto sample=bedroomExit(guildRooms_[1].player().position,explorer_->state().gameplay,utcMs());
-            if(direction_!=sample.direction) {direction_=sample.direction;animator_.changeDirection(assets_.package,0,direction_);dirty_=true;}
+            const unsigned clip=sample.moving?0U:7U;
+            if(clip_!=clip) {clip_=clip;direction_=sample.direction;loop_=true;startClip(now);}
+            else if(direction_!=sample.direction) {direction_=sample.direction;animator_.changeDirection(assets_.package,clip,direction_);dirty_=true;}
         }
         bool playerFinished = false;
         if (animator_.active()) {
@@ -1019,6 +1032,7 @@ class App {
             });
             poseFinished_=completion_.player && completion_.partner;
         }
+        if(explorer_ && explorer_->state().gameplay.sceneBeat==SceneBeat::BedFace && utcMs()<explorer_->state().gameplay.deadlineMs)poseFinished_=false;
         if(partyRendering())poseFinished_=!completion_.actions.empty();
         (void)playerFinished;
         if(explorer_ && revealedGameplayText(explorer_->state().gameplay,utcMs())!=submittedText_)dirty_=true;
@@ -1147,7 +1161,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
@@ -1219,7 +1233,7 @@ public:
             direction_=g.playerDirection;
             if(g.homeScene) direction_=g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut?
                 bedroomExit(guildRooms_[1].player().position,g,utcMs()).direction:guildRooms_[bedroomScene(g)?1:0].player().direction;
-            if(g.sceneBeat==SceneBeat::BedFace || g.sceneBeat==SceneBeat::MorningFace) direction_=6;
+            direction_=bedroomDirection(g,direction_);
             if(g.life==LifePhase::Combat || g.life==LifePhase::Dialogue) {
                 const auto enemy=std::find_if(explorer_->state().population.entities.begin(),explorer_->state().population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance;});
                 enemyDirection_=enemy->direction;

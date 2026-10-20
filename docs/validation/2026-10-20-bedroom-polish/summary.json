@@ -1,0 +1,28 @@
+{
+  "scope": [
+    "bedtime greeting duration",
+    "mutual facing before bedtime greeting",
+    "natural led morning exit"
+  ],
+  "related": "3/3 before and after",
+  "wine": {
+    "status": "pass",
+    "greetingIntervalUs": 1600400,
+    "greetingSubmittedFrames": 21,
+    "originalPoses": [
+      0,
+      1,
+      2
+    ],
+    "bothFacingBeforeGreeting": true,
+    "exitSubmittedFrames": 170,
+    "stationaryArrival": true,
+    "cameraNoJump": true,
+    "bedTraceRows": 155
+  },
+  "preview": "original MDPA pixels and production core path/animation samples; preview excludes GDI text",
+  "runtimeSha256": "720b8734d25d97b0f6c7108c5bd173dc5fc8d127f3f883bb088e117efc6e5d1c",
+  "nativeCi": "background on push; not yet verified",
+  "asan": "already running; completion does not gate release",
+  "deploymentPolicy": "user requested immediate deployment after focused tests and actual EXE check; full memory/CI completion does not gate release"
+}

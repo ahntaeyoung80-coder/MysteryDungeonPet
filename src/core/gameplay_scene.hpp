@@ -3,7 +3,10 @@
 #include "core/surface.hpp"
 namespace pet {
 // Hearts, berry text-box background and fade-to-black share the production/test compositor.
-struct BedroomExitSample {Point position;unsigned direction;bool finished;};
+struct BedroomExitSample {Point position;unsigned direction;bool finished;bool moving=false;};
+unsigned bedroomDirection(const GameplayState&,unsigned fallback,bool partner=false);
+unsigned bedroomPlaybackScale(const GameplayState&);
+Point bedroomExitCamera(const GameplayState&,std::uint64_t utcMs);
 BedroomExitSample bedroomExit(Point start,const GameplayState&,std::uint64_t utcMs,bool partner=false);
 BedroomExitSample loudredAlarm(Point original,const GameplayState&,std::uint64_t utcMs);
 std::wstring gameplayText(const GameplayState&);

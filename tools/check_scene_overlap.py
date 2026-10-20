@@ -22,7 +22,7 @@ def check(inspector, trace):
     partner_path=root/'assets/original/gameplay/actors/asset-1/asset.mdpa'
     partner_data=json.loads(subprocess.check_output([str(inspector),str(partner_path)],text=True))
     partner_clip=next(c for c in partner_data['clips'] if c['id']==int(row['partner_clip']))
-    partner=partner_clip['rows'][6][int(row['partner_frame'])]
+    partner=partner_clip['rows'][int(row.get('guild_partner_direction',6))][int(row['partner_frame'])]
     partner_atlas=Image.open(partner_path.parent/'atlas.png').convert('RGBA')
     bx,by,bw,bh=partner['rect'];bax,bay=partner['anchor'];overlap=0
     for yy in range(h):
@@ -32,7 +32,7 @@ def check(inspector, trace):
             py=int(row['scene_y'])-int(row['camera_y'])+yy-ay
             if color[3]!=255 or not(0<=px<200 and 0<=py<200):continue
             tested+=1;matched+=actual.getpixel((px,py))==color[:3]
-            qx=px+int(row['camera_x'])-156+bax;qy=py+int(row['camera_y'])-184+bay
+            qx=px+int(row['camera_x'])-int(row.get('guild_partner_x',156))+bax;qy=py+int(row['camera_y'])-int(row.get('guild_partner_y',184))+bay
             if 0<=qx<bw and 0<=qy<bh and partner_atlas.getpixel((bx+qx,by+qy))[3]==255:overlap+=1
     if overlap<8:raise ValueError(f'overlap fixture missed partner body: {overlap} pixels')
     if tested<50 or matched/tested<0.99:raise ValueError(f'player overlap pixels {matched}/{tested}')

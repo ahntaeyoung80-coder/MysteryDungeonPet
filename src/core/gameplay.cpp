@@ -292,9 +292,9 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             g.sceneBeat=SceneBeat::NightFadeIn;return life(LifePhase::Sleep,GameplayEvent::HomeScene,kFadeMs);
         case SceneBeat::NightFadeIn: case SceneBeat::BedFadeIn:
             if(now<g.deadlineMs) return {};
-            g.sceneBeat=SceneBeat::BedFace;return life(LifePhase::Sleep,GameplayEvent::Sleep,kFiniteTimeoutMs);
+            g.sceneBeat=SceneBeat::BedFace;return life(LifePhase::Sleep,GameplayEvent::Sleep,kBedGreetingMs);
         case SceneBeat::BedFace:
-            if(!(completed.player&&completed.partner)) return {};
+            if(now<g.deadlineMs || !(completed.player&&completed.partner)) return {};
             g.sceneBeat=SceneBeat::BedLay;return life(LifePhase::Sleep,GameplayEvent::Sleep,400);
         case SceneBeat::BedLay:
             if(now<g.deadlineMs || !(completed.player&&completed.partner)) return {};

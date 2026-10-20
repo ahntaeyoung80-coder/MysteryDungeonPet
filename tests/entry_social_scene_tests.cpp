@@ -66,6 +66,34 @@ void npc(){
  s.gameplay.hearts=5;s.gameplay.hostile={1};s.population.entities.pop_back();Explorer hostile(s);hostile.advanceGameplay(1000);check(hostile.goal()!=GoalKind::Friend,"hostile selected for greeting");
  std::cout<<"friendly priority/dialogue regression pass\n";
 }
+void bedtime(){
+ auto s=socialFixture();s.phase=Phase::Home;
+ auto& g=s.gameplay;g.homeScene=true;g.life=LifePhase::Sleep;g.sceneBeat=SceneBeat::NightFadeIn;
+ g.phaseStartedMs=1000;g.deadlineMs=1750;g.meals=1;g.onceKeys={"return:920","meal:920"};
+ check(bedroomDirection(g,2)==6 && bedroomDirection(g,6,true)==2,"actors did not face each other before greeting");
+ Explorer e(s);e.advanceGameplay(1750);
+ check(e.state().gameplay.sceneBeat==SceneBeat::BedFace && e.state().gameplay.deadlineMs==1750+kBedGreetingMs,"bedtime greeting duration missing");
+ const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+ for(const auto actor:{"asset-0","asset-1"}) {
+  const auto p=loadPackage(root/"assets/original/gameplay/actors"/actor/"asset.mdpa");
+  check(p.frames(22,6).size()==3,"original nod frames changed");
+  Animator nod;nod.start(p,22,6,false,0,bedroomPlaybackScale(e.state().gameplay));
+  auto first=nod.advance(0);check(first.nextDeadlineUs==400000,"first greeting pose was not extended four times");
+  check(nod.advance(800000).frame==1 && !nod.advance(1333333).finished && nod.advance(1333334).finished,"greeting did not show every original pose at the slower rate");
+  Animator resumed;resumed.start(p,22,6,false,0,4);resumed.advance(400000);resumed.pause(400000);resumed.resume(900000);
+  check(!resumed.advance(1833333).finished && resumed.advance(1833334).finished,"slow greeting pause changed playback duration");
+ }
+ e=restore(e);const auto before=encodeSnapshot(e.state());
+ e.advanceGameplay(1750+kBedGreetingMs-1,ActorCompletion{true,true,true});
+ check(encodeSnapshot(e.state())==before,"bedtime greeting ended before the reading interval");
+ e.advanceGameplay(1750+kBedGreetingMs,ActorCompletion{true,true,false});
+ check(e.state().gameplay.sceneBeat==SceneBeat::BedFace,"greeting skipped partner completion");
+ e=restore(e);e.advanceGameplay(1750+kBedGreetingMs,ActorCompletion{true,true,true});
+ check(e.state().gameplay.sceneBeat==SceneBeat::BedLay && bedroomPlaybackScale(e.state().gameplay)==1,"greeting did not finish or slowed bedtime laying");
+ auto morning=e.state().gameplay;morning.life=LifePhase::Ready;morning.sceneBeat=SceneBeat::MorningFace;
+ check(bedroomPlaybackScale(morning)==1,"bedtime change slowed morning greeting");
+ std::cout<<"bedtime facing/slow original poses/reading interval/owner/pause/restore pass\n";
+}
 void scenes(){
  auto s=socialFixture();s.phase=Phase::Home;s.gameplay.homeScene=true;s.gameplay.life=LifePhase::Wake;
  s.gameplay.sceneBeat=SceneBeat::BedFadeIn;s.gameplay.phaseStartedMs=1000;s.gameplay.deadlineMs=1750;s.gameplay.meals=1;s.gameplay.onceKeys={"return:920","meal:920"};
@@ -114,7 +142,7 @@ void scenes(){
  std::cout<<"sleep pose/exit fade/restore regression pass\n";
 }
 int main(int argc,char** argv){unsigned failed=0;
- if(argc==4 && (std::string(argv[1])=="--fixtures" || std::string(argv[1])=="--wake-fixture"))try{
+ if(argc==4 && (std::string(argv[1])=="--fixtures" || std::string(argv[1])=="--wake-fixture" || std::string(argv[1])=="--bed-fixture"))try{
   const auto p=loadExplorationPackage(argv[2]);const std::filesystem::path out=argv[3];std::filesystem::create_directories(out);
   if(std::string(argv[1])=="--fixtures"){
    Explorer floor(930,196,p.assetVersion,p.floors);auto s=floor.state();s.position=s.world.stairs;s.visited[s.position]=1;
@@ -129,8 +157,12 @@ int main(int argc,char** argv){unsigned failed=0;
    auto s=socialFixture();s.assetVersion=p.assetVersion;s.floors=p.floors;s.phase=Phase::Home;
    auto& g=s.gameplay;g.homeScene=true;g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::BedFadeIn;g.hearts=3;g.meals=1;
    g.phaseStartedMs=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();g.deadlineMs=g.phaseStartedMs+750;
-   g.onceKeys={"return:920","meal:920"};saveSnapshot(out/"wake.mdes",s);
-   g.life=LifePhase::Ready;g.sceneBeat=SceneBeat::RoomExit;g.phaseStartedMs-=800;g.deadlineMs=g.phaseStartedMs+kRoomExitMs;
+   g.onceKeys={"return:920","meal:920"};
+   if(std::string(argv[1])=="--bed-fixture") {
+    g.life=LifePhase::Sleep;g.sceneBeat=SceneBeat::NightFadeIn;saveSnapshot(out/"bed.mdes",s);return 0;
+   }
+   saveSnapshot(out/"wake.mdes",s);
+   g.life=LifePhase::Ready;g.sceneBeat=SceneBeat::RoomExit;g.phaseStartedMs-=950;g.deadlineMs=g.phaseStartedMs+kRoomExitMs;
    saveSnapshot(out/"overlap.mdes",s);
   }
   return 0;
@@ -142,7 +174,7 @@ int main(int argc,char** argv){unsigned failed=0;
    <<",\"player\":"<<s.position<<",\"day\":"<<s.gameplay.day<<",\"hearts\":"<<s.gameplay.hearts<<",\"greetings\":"<<greetings
    <<",\"completed\":"<<(s.completed?"true":"false")<<",\"life\":\""<<lifeName(s.gameplay.life)<<"\"}\n";return 0;
  }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
- for(const auto& entry:{std::make_pair("floor",floors),std::make_pair("npc",npc),std::make_pair("scene",scenes)}){
+ for(const auto& entry:{std::make_pair("floor",floors),std::make_pair("npc",npc),std::make_pair("scene",scenes),std::make_pair("bedtime",bedtime)}){
   if(argc>1 && std::string(argv[1])!=entry.first)continue;
   try{entry.second();}catch(const std::exception& e){++failed;std::cerr<<entry.first<<": "<<e.what()<<'\n';}
  }

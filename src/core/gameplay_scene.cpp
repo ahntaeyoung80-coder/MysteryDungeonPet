@@ -38,13 +38,22 @@ Surface originalDialoguePanel(const Surface& atlas,const Package& package) {
     }
     compose(panel,layers,{0,0},1);return panel;
 }
+unsigned bedroomDirection(const GameplayState& g,unsigned fallback,bool partner) {
+    const bool beforeBed=g.life==LifePhase::Sleep && (g.sceneBeat==SceneBeat::NightFadeIn ||
+        g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::BedFace);
+    return beforeBed || g.sceneBeat==SceneBeat::MorningFace?(partner?2U:6U):fallback;
+}
+unsigned bedroomPlaybackScale(const GameplayState& g) {
+    return g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace?4U:1U;
+}
 BedroomExitSample bedroomExit(Point start,const GameplayState& g,std::uint64_t now,bool partner) {
-    // The leader passes the waiting partner, then the partner follows one tile behind.
-    const std::array<Point,2> path{{start,{partner?104:80,184}}};
+    // Step off the bedding into the shared aisle, then follow the leader to the doorway.
+    const int end=partner?104:80;
+    const std::array<Point,4> path{{start,{start.x,196},{end,196},{end,184}}};
     std::uint64_t elapsed=g.sceneBeat==SceneBeat::MorningFadeOut?kRoomExitMs:now>g.phaseStartedMs?now-g.phaseStartedMs:0;
     if(partner) {
-        constexpr std::uint64_t followDelay=1200; // leader: 204 -> 132, ahead of partner at156
-        if(elapsed<followDelay)return {start,6,false};
+        constexpr std::uint64_t followDelay=1200;
+        if(elapsed<followDelay)return {start,2,false,false};
         elapsed-=followDelay;
     }
     for(unsigned i=1;i<path.size();++i) {
@@ -52,10 +61,17 @@ BedroomExitSample bedroomExit(Point start,const GameplayState& g,std::uint64_t n
         const auto dx=to.x-from.x,dy=to.y-from.y;
         const auto duration=std::uint64_t(std::lround(std::hypot(dx,dy)*400/24));
         const unsigned direction=dx<0?(dy<0?5:dy>0?7:6):dx>0?(dy<0?3:dy>0?1:2):dy<0?4:0;
-        if(elapsed<duration) return {{from.x+int32_t(dx*int64_t(elapsed)/int64_t(duration)),from.y+int32_t(dy*int64_t(elapsed)/int64_t(duration))},direction,false};
+        if(elapsed<duration) return {{from.x+int32_t(dx*int64_t(elapsed)/int64_t(duration)),from.y+int32_t(dy*int64_t(elapsed)/int64_t(duration))},direction,false,true};
         elapsed-=duration;
     }
-    return {path.back(),6,true};
+    return {path.back(),6,true,false};
+}
+Point bedroomExitCamera(const GameplayState& g,std::uint64_t now) {
+    const auto p=bedroomExit({204,184},g,now).position;
+    const int left=std::max(0,180-p.x);
+    // Start at the greeting's camera and ease into tracking; keep the vertical view steady.
+    const int shift=left<24?left*left/48:left-12;
+    return {180-shift,184};
 }
 BedroomExitSample loudredAlarm(Point original,const GameplayState& g,std::uint64_t now) {
     const auto elapsed=std::min<std::uint64_t>(800,now>g.phaseStartedMs?now-g.phaseStartedMs:0);
