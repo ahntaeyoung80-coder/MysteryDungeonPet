@@ -29,3 +29,7 @@
 시각 측정은22:42:17 KST에 시작했다. 원작 읽기·데이터 정리·문서 작성이 교차했고 순수 단계별 시간은 분리 측정하지 않았다. 완료 시각/총 경과와 커밋·원격 확인은 아래에 기록한다. source/assets/rootEXE가 그대로이므로 실행 파일 재생성이나 실제GUI 검사를 하지 않는다. 문서 전용 커밋은 `[skip ci]`로 전체Linux/Windows CI 중복 실행을 피한다. CI 대기/사용자 응답 대기는 없다.
 
 23:08:38 KST에 문서/데이터 검토를 마쳤다. 최초 측정부터 **26분21초**이며 조사·작성·검토가 교차한 총 경과다. 검증 결과는 [validation.json](../research/2026-10-20-variety-data/validation.json)에 기록했다. 원작/제품 코드와 runtime 자산/EXE의 변경이 없는 것을 확인했고, 자료17개(자기 자신 제외)의 byte size/SHA256은files.json에 보존했다. 커밋·push 마감은 별도다.
+
+최초 staged whitespace 검사에서 Python CSV writer의CRLF가 trailing whitespace로 검출되어 커밋이 중단됐다. 문서 CSV만LF로 정규화하고 자료 해시를 갱신한 뒤 staged 검사를 통과했다. 제품 코드/테스트는 변경하거나 재실행하지 않았다.
+
+문서 커밋 `e111b50b55662f27766a0f745962c60a5912391e`를 `work`로 push했고,23:09:49 KST에 명시fetch 후 HEAD/origin/work 일치를 확인했다. 최초 측정부터 **27분32초**이며 뒤이은 이 마감 기록 커밋은 별도다. 최종 자료17개의 크기/hash도 일치했다. 기준 커밋 대비 source/tools/tests/assets/EXE/runtime manifest의 diff는 비어 있다. 문서 전용 `[skip ci]`를 적용해 불필요한 전체CI는 실행하지 않았다. 후속 구현은 사용자 지시 전까지 착수하지 않는다.
