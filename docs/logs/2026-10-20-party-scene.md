@@ -25,3 +25,7 @@ MinGW GCC14.2 x64 static EXE를 빌드·루트 반영하고 hash를 확인했다
 최종 통합 시작 시각 UTC06:10:45 이후를 측정했다. 종료·원격 CI 결과는 마감 후 추가한다. 빌드/검사/기록 병행이므로 순수 작업과 대기를 임의 분리하지 않는다. 필수 push CI는 코드·자산·EXE를 모아1회 실행하고, 성공 뒤 문서 기록만 skip-ci로 갱신한다.
 
 검증 자료: [summary.json](../validation/2026-10-20-party-scene/summary.json), 동일 폴더의 ASan/Python/알람 경로/겹침 픽셀/미리보기. 실제 사용자 Windows11·원작 게임 실시간 비교/음원·한글 glyph는 별도다.
+
+## Windows 검사 시각 fixture 보정
+
+첫 push 뒤 스크립트 재검토에서 overlap 실행1초 뒤 같은 시각의 wake fixture를 재사용하면750ms BedFadeIn이 이미 만료되는 점을 확인했다. Wine 수동 검사는 각 실행 직전 fixture를 새로 생성했으므로 이 문제를 드러내지 못했다. PowerShell도 wake 실행 직전에 fixture를 새로 만든다. 제품 소스/EXE 변경은 없으며 hash 검사와 해당 스크립트 내용을 확인했다. 자동 push trigger 때문에 새 검사 커밋의 필수 CI가 다시 실행되며, 이 추가 실행 사유를 기록한다. 이전 CI 결과를 새 스크립트의 완료 근거로 재사용하지 않는다.

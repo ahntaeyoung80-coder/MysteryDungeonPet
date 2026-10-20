@@ -43,6 +43,9 @@ if($LASTEXITCODE -ne 0){throw 'wake fixture failed'}
 $OverlapRows=@(Run 'overlap' 1)
 python tools/check_scene_overlap.py --inspector (Join-Path (Split-Path $Tests) 'pet_package_inspect.exe') --trace "$Output/overlap.csv"
 if($LASTEXITCODE -ne 0){throw 'overlapping player sprite did not render above partner'}
+# Each wall-clock fixture must start immediately before its own process.
+& $Tests --wake-fixture $Package $Output
+if($LASTEXITCODE -ne 0){throw 'fresh wake fixture failed'}
 $WakeRows=@(Run 'wake' 12)
 $WakeAfter=Inspect 'wake'
 foreach($Beat in @(18,15,19)) {
