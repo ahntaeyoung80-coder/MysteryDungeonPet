@@ -702,7 +702,7 @@ inline unsigned run(const ExplorationState& base) {
     test("R31_mdes8_pending_attack_migrates_to_ordered_turns",[&] {
         auto s=party(base);s.population.entities={{1,4,EntityKind::Friend,126,false}};s.gameplay.hostile={1};
         Explorer e(s);restoredStep(e,1000);auto old=e.state();old.gameplay.partyPhase=PartyPhase::Allies;
-        auto bytes=encodeSnapshot(old);
+        auto bytes=encodeSnapshot(old);removeVarietyBlock(bytes);
         const unsigned extension=8+kTiles*4;
         uint32_t length=0;for(unsigned i=0;i<4;++i)length|=uint32_t(bytes[bytes.size()-8+i])<<(8*i);
         bytes.erase(bytes.end()-8-extension,bytes.end()-8);bytes[4]=8;length-=extension;

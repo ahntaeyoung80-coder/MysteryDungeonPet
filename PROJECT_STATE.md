@@ -8,7 +8,7 @@
 
 ## 실행·검증 기준
 
-- 일반 실행은 매번 길드 아침에서 시작한다. 누적 획득품·열매·날짜·식사 횟수·최근 지형은 유지하고 탐험 위치·목표·전투는 재개하지 않는다. MDES11/1~11 읽기, 명시 `--explore`는 상세 복원 회귀다.
+- 일반 실행은 매번 길드 아침에서 시작한다. 누적 획득품·열매·날짜·식사 횟수·최근 지형은 유지하고 탐험 위치·목표·전투는 재개하지 않는다. MDES12/1~12 읽기, 명시 `--explore`는 상세 복원 회귀다.
 - 전투는 주인공→동료→ID 순서의 적→다음 주인공이다. 동료의 가까운 전투에서는 저체력 주인공도 지원한다. 평시400ms 공유 이동, 동료 인식2칸·플레이어 leash3칸·피해 소유권은 유지한다. 일반 실행은 실제 화면의 방 바닥 전체 노출을 기록하며 배율별 미표시 영역을 확인한다.
 - 겹침은 주인공이 위에 표시된다. 취침 인사 전부터 서로 보고 Nod22를4배 느리게·최소1.6초 재생한다. 기상 퇴실은 주인공이 왼쪽으로 직진하고 동료가 같은 줄에서 뒤따르며, 도착 후 정지하고 카메라의 초기 점프를 없앴다. 노공룡은800ms 입장→2초 알람→800ms 퇴장한다. 푸크린 사과는 원작 효과624의13프레임/52tick이며 첫 식당 표시부터 퇴장 fade까지 계속 표시·재생한다. 원작 눕기27/수면13은1/2프레임으로8방향48개 그림/시간을 대조했고 누락이 없었다. 대화창은 원작 테두리/순차 출력이며 한글은 맑은 고딕12px이다. 원작 알람 음원·glyph/전체 대사 VM은 남아 있다.
 - Linux ASan/UBSan14/14, Python27/27, 추가 MDES8 호환을 포함한 party34/34가 통과했다. 새 PE의 Wine10 실제 출력에서 겹침285/285·공격 중첩0·노공룡 경로·기상/퇴실·기본7층 출발·GDI7장면을 확인했다. [CI39379717326](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39379717326)에서 Linux14/14·Python27/27·native MSVC15/15·실제 GUI·설치본/루트 EXE·저장 이행이 모두 통과했다. [검증](docs/validation/2026-10-20-party-scene/summary.json), [실행 안내](docs/WINDOWS_QUICKSTART.md).
@@ -19,6 +19,6 @@
 
 관련 native9개 target·Python7개, 실제 EXE22몸체·11감정 장면·동료/주인공 기절·선택한 리오르의 생활 연속성을 앞서 확인했다. 이번 선택 정책 변경은 native2/2·Python4/4, 420개 조합 허용/21개 중복 차단, 실제 메뉴 선택/중복 거부/재시작/구형 중복 저장 보정, 나옹·먹고자 몸체/초상화 픽셀 대조를 통과했다. 전체 메모리 검사는 반복하지 않았고 source/assets/root EXE를 함께 반영한다. 자동 CI는 배포 후 백그라운드이며 사용자 Windows11 확인은 남아 있다. 다음은 Windows11 실제 표시와 B의 남은 인수 기준이다. [최신 로그](docs/logs/2026-10-20-starter-union.md), [선택 검증](docs/validation/2026-10-20-starter-union/summary.json), [앞선 연출 검증](docs/validation/2026-10-20-character-settings/summary.json).
 
-사용자의 최신 지시로 다양성 확장은 **자료 조사·문서 작성 단계**다. [원작 데이터 자료](docs/research/2026-10-20-variety-original-data.md)와 [공통 대사 분류](docs/research/2026-10-20-variety-dialogue-catalogue.md)에 이어 [이벤트 10종 명세](docs/research/2026-10-21-ten-events.md), [24묶음·120문장 대사 초안](docs/research/2026-10-21-ten-event-dialogues.md), [원본 리소스 자료](docs/research/2026-10-21-event-resources/README.md)를 정리했다. E10은 던전 쉼터가 아닌 마을/온천 휴일이다. 온천 ground·코터스 배치·Float20·물결625~629를 확인했으며, 기본 던전15에는 상점/MH/워프의 원작 양수 조건이 없다. 김 효과43의 팔레트·워프 연출 ID·원작 문자열 해독은 미해결이다. 코드·제품 에셋·EXE는 변경하지 않았다. [구현 계획](docs/plans/2026-10-21-event-variety-implementation.md)에 공통 저장/ID→실제 배우→상황 대사→첫 사건→맵/재고→이동/전투 사건→휴일→통합 순서를 정리했다. 다음 착수 제안은 P0의 ID·별도 RNG·대화/사건/일정 저장·복원 계약이며 구현은 아직 착수하지 않는다. 발생 빈도·거래/보상·휴일 주기는 제안/미정으로 구분했다. [최신 조사 로그](docs/logs/2026-10-21-ten-event-documentation.md).
+사용자의 2026-10-21 구현 착수 지시로 [다양성 계획](docs/plans/2026-10-21-event-variety-implementation.md)의 **P0 공통 상태·저장**을 구현했다. MDES12의 별도 RNG/대화·사건/예약·결과/하루 일정, 일반 시작 취소·상세 복원·새 Explorer 인계·식사 once를 추가했다. [상태 계약](docs/EVENT_VARIETY_STATE.md). 자동 사건·새 대사·실제 배우 변경·휴일은 아직 활성화하지 않았다. 빈도·거래·보상·휴일 주기는 미정이다.
 
-최신 작업은 코드 변경 없는 구현 계획 작성이다. [계획 작업 로그](docs/logs/2026-10-21-event-implementation-plan.md).
+관련 저장2/2·ASan/UBSan 통합18/18·Windows 형식 저장/패키지2개가 통과했다. 새 EXE의 Wine10 실제 창에서 길드 아침→탐험, 일반 재시작의 같은 날 일정/RNG 보존, 명시 상세 복원을 확인하고 루트 EXE/해시를 갱신했다. [검증 근거](docs/validation/2026-10-21-event-variety-p0/summary.json). 자동 CI는 push 후 별도 확인한다. 사용자 Windows11 직접 확인과 A/C의 기존 미검증 gate는 남아 있다. 다음 구현 단계는 P1의 기본 던전15 출현 MD별 몸체·얼굴 일치다. [조사 자료](docs/research/2026-10-20-variety-original-data.md), [P0 로그](docs/logs/2026-10-21-event-variety-p0.md).

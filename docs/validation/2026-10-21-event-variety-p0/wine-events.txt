@@ -1,0 +1,103 @@
+748831317 startup=guild-morning exploration-goal=discarded
+748868111 exploration snapshot=new day=1 runId=748816065
+748900128 initial session unknown; render paused OS=0
+748968344 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+748968502 mode=automatic-exploration
+748968517 select clip=13 direction=2 loop=0
+748968528 render_pause
+748972382 show
+748982358 render_resume (not user activity)
+748982377 session=8
+748982400 guild room=PlayerRoom characters=2 objectCount=0
+749600138 select clip=13 direction=2 loop=0
+749600180 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=18 dialogueStage=0
+749601908 guild room=PlayerRoom characters=3 objectCount=0
+750400370 select clip=13 direction=2 loop=0
+750404029 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=15 dialogueStage=0
+750404058 guild room=PlayerRoom characters=3 objectCount=0
+752409268 select clip=13 direction=2 loop=0
+752410793 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=19 dialogueStage=0
+752412054 guild room=PlayerRoom characters=3 objectCount=0
+753209266 select clip=14 direction=2 loop=0
+753211142 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=8 dialogueStage=0
+753211341 guild room=PlayerRoom characters=2 objectCount=0
+753883242 guild partner wake finished
+753899247 finite finished assetKey=rom:EoS_NA:md:1
+753919269 select clip=22 direction=6 loop=0
+753920246 life=Ready combat=PlayerTurn day=1 hearts=5 sceneBeat=9 dialogueStage=0
+753922266 guild room=PlayerRoom characters=2 objectCount=0
+754275545 finite finished assetKey=rom:EoS_NA:md:1
+755521064 select clip=0 direction=6 loop=1
+755521747 life=Ready combat=PlayerTurn day=1 hearts=5 sceneBeat=16 dialogueStage=0
+755523258 guild room=PlayerRoom characters=2 objectCount=0
+757583842 select clip=7 direction=6 loop=1
+757722277 select clip=7 direction=6 loop=1
+757723262 life=Ready combat=PlayerTurn day=1 hearts=5 sceneBeat=10 dialogueStage=0
+757723432 guild room=PlayerRoom characters=2 objectCount=0
+758486297 select clip=7 direction=6 loop=1
+758487686 life=Explore combat=PlayerTurn day=1 hearts=5 sceneBeat=11 dialogueStage=0
+759275366 party actor=0 target=0 action=1 round=1 event=21 damage=0
+759275410 party actor=4294967294 target=0 action=2 round=1 event=29 damage=0
+759677403 party actor=0 target=0 action=4 round=2 event=21 damage=0
+759677489 party actor=4294967294 target=0 action=5 round=2 event=29 damage=0
+760076205 party actor=0 target=0 action=7 round=3 event=21 damage=0
+760076275 party actor=4294967294 target=0 action=8 round=3 event=29 damage=0
+760485690 party actor=0 target=0 action=10 round=4 event=21 damage=0
+760485781 party actor=4294967294 target=0 action=11 round=4 event=29 damage=0
+760883639 party actor=0 target=0 action=13 round=5 event=21 damage=0
+760883702 party actor=4294967294 target=0 action=14 round=5 event=29 damage=0
+761283456 party actor=0 target=0 action=16 round=6 event=21 damage=0
+761283619 party actor=4294967294 target=0 action=17 round=6 event=29 damage=0
+761684418 party actor=0 target=0 action=19 round=7 event=21 damage=0
+761684460 party actor=4294967294 target=0 action=20 round=7 event=29 damage=0
+762085440 party actor=0 target=0 action=22 round=8 event=21 damage=0
+762085485 party actor=4294967294 target=0 action=23 round=8 event=29 damage=0
+762483452 party actor=0 target=0 action=25 round=9 event=21 damage=0
+762483497 party actor=4294967294 target=0 action=26 round=9 event=29 damage=0
+762885443 party actor=0 target=0 action=28 round=10 event=21 damage=0
+762885488 party actor=4294967294 target=0 action=29 round=10 event=29 damage=0
+763304294 exit submissions=541 decodes=12 switches=0
+764576563 startup=guild-morning exploration-goal=discarded
+764581398 exploration snapshot=restored day=1 runId=748816066
+764582925 initial session unknown; render paused OS=0
+764584768 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+764584804 mode=automatic-exploration
+764584822 select clip=13 direction=2 loop=0
+764584851 render_pause
+764585292 show
+764679148 render_resume (not user activity)
+764679191 session=8
+764679220 guild room=PlayerRoom characters=2 objectCount=0
+765423443 select clip=13 direction=2 loop=0
+765423490 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=18 dialogueStage=0
+765425351 guild room=PlayerRoom characters=3 objectCount=0
+766227809 select clip=13 direction=2 loop=0
+766227856 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=15 dialogueStage=0
+766227869 guild room=PlayerRoom characters=3 objectCount=0
+767693351 exit submissions=114 decodes=12 switches=0
+770689601 exploration snapshot=restored day=1 runId=748816066
+770690908 initial session unknown; render paused OS=0
+770699035 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+770699060 mode=automatic-exploration
+770699071 select clip=0 direction=6 loop=1
+770699079 render_pause
+770699597 show
+770775338 render_resume (not user activity)
+770775360 session=8
+770776908 party actor=0 target=0 action=31 round=11 event=21 damage=0
+770776922 party actor=4294967294 target=0 action=32 round=11 event=29 damage=0
+771178386 party actor=0 target=0 action=34 round=12 event=21 damage=0
+771178426 party actor=4294967294 target=0 action=35 round=12 event=29 damage=0
+771579740 party actor=0 target=0 action=37 round=13 event=21 damage=0
+771579780 party actor=4294967294 target=0 action=38 round=13 event=29 damage=0
+771979255 party actor=0 target=0 action=40 round=14 event=21 damage=0
+771979293 party actor=4294967294 target=0 action=41 round=14 event=29 damage=0
+772379517 party actor=0 target=0 action=43 round=15 event=21 damage=0
+772379558 party actor=4294967294 target=0 action=44 round=15 event=29 damage=0
+772779543 party actor=0 target=0 action=46 round=16 event=21 damage=0
+772779583 party actor=4294967294 target=0 action=47 round=16 event=29 damage=0
+773179446 party actor=0 target=0 action=49 round=17 event=21 damage=0
+773179486 party actor=4294967294 target=0 action=50 round=17 event=29 damage=0
+773579644 party actor=0 target=0 action=52 round=18 event=21 damage=0
+773579691 party actor=4294967294 target=0 action=53 round=18 event=29 damage=0
+773779779 exit submissions=193 decodes=11 switches=0

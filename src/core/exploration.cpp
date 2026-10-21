@@ -310,6 +310,7 @@ Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVer
     validatePolicy(policy);
     for (const auto& p : floors) validateProfile(p);
     state_.runId = runId;
+    state_.variety = initialVarietyState(runId,seed,1);
     state_.rng.state = seed;
     state_.assetVersion = std::move(assetVersion);
     state_.floors = std::move(floors);
@@ -732,6 +733,7 @@ Event Explorer::moveTo(int next) {
     return {EventKind::Move,{},0};
 }
 Event Explorer::advance(bool poseFinished) {
+    if(varietyBusy(state_.variety))return {};
     if (state_.gameplay.enabled && (state_.gameplay.life!=LifePhase::Explore || state_.gameplay.sceneBeat!=SceneBeat::None) &&
         !(state_.gameplay.life == LifePhase::Pose && poseFinished) &&
         !(state_.gameplay.independentParty && state_.gameplay.sceneBeat==SceneBeat::None &&
@@ -810,6 +812,7 @@ Event Explorer::advance(bool poseFinished) {
     return event;
 }
 void validateState(const ExplorationState& s) {
+    validateVarietyState(s);
     require(s.viewportSize>=24 && s.viewportSize<=200,"invalid exploration viewport");
     for(int p=0;p<kTiles;++p)require(s.screenSeen[p]<=1 && (!s.screenSeen[p] || s.world.walkable(p)),"invalid screen coverage");
     const auto& g = s.gameplay;

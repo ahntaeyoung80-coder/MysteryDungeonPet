@@ -405,7 +405,7 @@ class App {
             if(explorer_) {
                 auto candidate=*explorer_;const auto utc=utcMs();candidate.shiftPausedClocks(utc>pauseUtc_?utc-pauseUtc_:0,pauseUtc_);
                 saveRunSnapshot(options_.snapshot,candidate.state());*explorer_=std::move(candidate);
-                const auto deadline=explorer_->state().gameplay.deadlineMs;
+                const auto deadline=nextGameplayDeadline(explorer_->state());
                 exploreDeadline_=deadlineFromUtc(now,utcMs(),deadline);
             }
             playerMotion_.resume(now);guildCamera_.resume(now);animator_.resume(now);appleAnimator_.resume(now);enemyAnimator_.resume(now);companionAnimator_.resume(now);companionMotion_.resume(now);
@@ -602,7 +602,7 @@ class App {
     void applyCharacterSelection(int64_t now) {
         if(!pendingCharacterSelection_ || !explorer_)return;
         const auto& state=explorer_->state();const auto& g=state.gameplay;
-        if(g.life==LifePhase::Dialogue || g.life==LifePhase::Combat || g.life==LifePhase::Death || g.life==LifePhase::Pose ||
+        if(varietyBusy(state.variety) || g.life==LifePhase::Dialogue || g.life==LifePhase::Combat || g.life==LifePhase::Death || g.life==LifePhase::Pose ||
            std::any_of(g.partyPlaybacks.begin(),g.partyPlaybacks.end(),[](const auto& v){return v.clip==1 || v.clip==6 || v.clip==33;}) ||
            (!g.homeScene && g.sceneBeat!=SceneBeat::None))return;
         const auto next=*pendingCharacterSelection_;
@@ -881,7 +881,7 @@ class App {
         playerMotion_.reset(playerMotion_.sample(now));companionMotion_.reset(companionMotion_.sample(now));companionAnimator_.stop();
         actorMotions_.clear();actorAnimators_.clear();actorFrames_.clear();enemyAnimator_.stop();
         completion_={};poseFinished_=false;clip_=gameplayClip(explorer_->state().gameplay);loop_=gameplayLoop(explorer_->state().gameplay);
-        exploreDeadline_=deadlineFromUtc(now,utcMs(),explorer_->state().gameplay.deadlineMs);
+        exploreDeadline_=deadlineFromUtc(now,utcMs(),nextGameplayDeadline(explorer_->state()));
         startClip(now);dirty_=true;
     }
     static std::map<uint32_t,Assets> loadExplorationTiles(const ExplorationPackage& package,const std::filesystem::path& directory) {
@@ -909,7 +909,7 @@ class App {
         const auto event = candidate.advanceGameplay(utcMs(), completion_);
         poseFinished_ = false; completion_={};
         if (encodeSnapshot(candidate.state()) == encodeSnapshot(explorer_->state())) {
-            exploreDeadline_=deadlineFromUtc(now,utcMs(),candidate.state().gameplay.deadlineMs);
+            exploreDeadline_=deadlineFromUtc(now,utcMs(),nextGameplayDeadline(candidate.state()));
             if (candidate.state().gameplay.life == LifePhase::ReturnHome) dirty_ = true;
             return;
         }
@@ -932,7 +932,7 @@ class App {
             else if(oldCompanion.tile!=g.companion.tile) companionMotion_.begin(kCompanionActorId,g.companion.movement.actionId,tilePoint(oldCompanion.tile),tilePoint(g.companion.tile),now,g.companion.direction);
         }
         syncCompanion(now);
-        exploreDeadline_=deadlineFromUtc(now,utcMs(),g.deadlineMs);
+        exploreDeadline_=deadlineFromUtc(now,utcMs(),nextGameplayDeadline(explorer_->state()));
         for(const auto& e:explorer_->state().population.entities) {
             const auto old=std::find_if(oldEntities.begin(),oldEntities.end(),[&](const auto& x){return x.instanceId==e.instanceId;});
             if(old!=oldEntities.end() && old->tile!=e.tile && e.kind==EntityKind::Friend) {
@@ -1455,7 +1455,7 @@ public:
         log("start assetKey=" + assets_.package.assetKey + " atlasSha256=" + assets_.package.pngSha256 + " testTimingHz=" + std::to_string(assets_.package.tickHz));
         log(explorer_ ? "mode=automatic-exploration" : "mode=animation-diagnostics");
         startClip(nowUs(), true);
-        if(explorer_) {const auto deadline=explorer_->state().gameplay.deadlineMs;exploreDeadline_=deadlineFromUtc(nowUs(),utcMs(),deadline);}
+        if(explorer_) {const auto deadline=nextGameplayDeadline(explorer_->state());exploreDeadline_=deadlineFromUtc(nowUs(),utcMs(),deadline);}
         synchronizePause(nowUs());
         MSG initial{};
         while (PeekMessageW(&initial, nullptr, 0, 0, PM_REMOVE)) { TranslateMessage(&initial); DispatchMessageW(&initial); }

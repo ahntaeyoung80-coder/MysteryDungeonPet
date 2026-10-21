@@ -87,7 +87,7 @@ void startupCases() {
  // Current movement invalidates exactly the same route before the next save.
  s.population.entities[0].tile=152;
  check(discardStaleEntityGoal(s),"moved NPC retained stale goal");validateState(s);
- s.gameplay.meals=7;s.gameplay.day=4;s.gameplay.hearts=2;s.gameplay.companion.hearts=1;
+ s.gameplay.meals=7;s.gameplay.day=4;s.variety.schedule.day=4;s.gameplay.hearts=2;s.gameplay.companion.hearts=1;
  Explorer e(s);e.startGuildMorning(1000);
  const auto boot=e.state();const auto& g=boot.gameplay;
  check(g.homeScene && g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::BedFadeIn &&

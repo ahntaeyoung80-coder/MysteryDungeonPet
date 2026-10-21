@@ -1,0 +1,76 @@
+{
+  "status": "pass",
+  "scope": "P0 공통 상태·저장. 자동 사건/새 대사/배우/휴일 미활성",
+  "relatedTests": "2/2",
+  "asanUbsan": "18/18; 95.58s; GNU14.2 Debug, address+undefined, -fno-omit-frame-pointer",
+  "windowsBinaryTests": [
+    "pet_variety_state_tests",
+    "pet_package_transition_tests (358 restored decisions)"
+  ],
+  "guiPlatform": "MinGW GCC14.2 / Wine10 / Xvfb; test-only WTS unlock, Malgun Gothic -> NanumGothic substitute",
+  "gui": [
+    "default morning -> exploration",
+    "zero-argument restart -> same-day morning",
+    "explicit --explore -> detailed exploration restore"
+  ],
+  "snapshotAfterNormalRestart": {
+    "schema": 12,
+    "run": 748816066,
+    "day": 1,
+    "meals": 0,
+    "oran": 0,
+    "life": 6,
+    "scheduleDay": 1,
+    "destination": 1,
+    "dungeon": 15,
+    "eventRng": "13231538431448911356",
+    "dialogueRng": "16313786077043431164",
+    "scheduleRng": "1765295445128343064",
+    "results": 0,
+    "busy": 0
+  },
+  "traces": {
+    "default": {
+      "rows": 885,
+      "submissions": 541,
+      "playerTiles": 12,
+      "life": [
+        0,
+        6,
+        7
+      ]
+    },
+    "explicit": {
+      "rows": 388,
+      "submissions": 193,
+      "playerTiles": 8,
+      "life": [
+        0
+      ]
+    }
+  },
+  "exeSha256": "45dc61f453315fefa70ddb1b754b2196726de4fe61fdc68212fbda068e69d295",
+  "actualWindows11": "pending",
+  "automaticCI": "push 후 별도 확인; 미완료를 성공에 포함하지 않음",
+  "limitations": [
+    "P1 이후 미구현",
+    "신규 사건·대화는 core 강제 상태로 검사; GUI 자동 등록 없음",
+    "실제 OS lock/power·장기 성능 미검증"
+  ],
+  "snapshotAfterExplicitRestore": {
+    "schema": 12,
+    "run": 748816066,
+    "day": 1,
+    "meals": 0,
+    "oran": 0,
+    "life": 0,
+    "scheduleDay": 1,
+    "destination": 1,
+    "dungeon": 15,
+    "eventRng": "13231538431448911356",
+    "dialogueRng": "16313786077043431164",
+    "scheduleRng": "1765295445128343064",
+    "results": 0,
+    "busy": 0
+  }
+}

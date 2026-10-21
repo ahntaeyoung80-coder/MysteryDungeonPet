@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(11); // MDES11 adds the partner defeat dialogue; field layout remains MDES9.
+    w.u32(0x5345444d); w.u32(12); // MDES12 appends the bounded variety block; MDES1..11 remain readable.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -154,6 +154,21 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u32(s.screenExploration);w.u32(s.viewportSize);
     for(auto v:s.screenSeen)w.u32(v);
     w.u32(static_cast<uint32_t>(w.bytes.size()-partyStart));
+    const auto varietyStart=w.bytes.size();
+    const auto& v=s.variety;const auto& d=v.dialogue;const auto& e=v.event;
+    w.u64(v.eventRng);w.u64(v.dialogueRng);w.u64(v.scheduleRng);
+    w.u32(d.active);w.u64(d.startedMs);w.u64(d.deadlineMs);w.u32(d.catalogueVersion);w.u32(d.line);w.u32(d.revealed);w.u32(d.readRemainingMs);
+    w.str(d.context);w.str(d.bundle);w.str(d.lineId);w.u32(d.speaker);w.u32(d.listener);
+    w.u32(static_cast<uint32_t>(e.id.type));w.u64(e.id.run);w.u64(e.id.trigger);w.u32(e.id.day);w.u32(e.id.floor);
+    w.u32(static_cast<uint32_t>(e.progress));w.str(e.variant);w.u64(e.startedMs);w.u64(e.deadlineMs);
+    w.u32(static_cast<uint32_t>(e.actors.size()));for(auto id:e.actors)w.u32(id);
+    w.u32(static_cast<uint32_t>(e.reservations.size()));
+    for(const auto& item:e.reservations){w.u32(item.owner);w.u32(item.item);w.u32(item.quantity);}
+    w.u32(v.schedule.day);w.u32(v.schedule.dungeon);w.u32(static_cast<uint32_t>(v.schedule.destination));w.u32(v.schedule.mealCommitted);
+    w.u32(static_cast<uint32_t>(v.recent.size()));
+    for(const auto& recent:v.recent){w.str(recent.context);w.str(recent.bundle);w.u64(recent.eligibleAfter);}
+    w.u32(static_cast<uint32_t>(v.committed.size()));for(const auto& key:v.committed)w.str(key);
+    w.u32(static_cast<uint32_t>(w.bytes.size()-varietyStart));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -162,7 +177,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 11) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 12) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -311,6 +326,32 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     if(schema<9 && s.gameplay.independentParty &&
        (!s.gameplay.partyPlaybacks.empty() || std::any_of(s.gameplay.partyActions.begin(),s.gameplay.partyActions.end(),
         [](const auto& a){return a.kind==PartyActionKind::Attack;})))s.gameplay.partyPhase=PartyPhase::Player;
+    s.variety=initialVarietyState(s.runId,s.mapSeed,s.gameplay.day);
+    if(schema>=12) {
+        const auto start=r.offset;
+        auto& v=s.variety;auto& d=v.dialogue;auto& e=v.event;
+        v.eventRng=r.u64();v.dialogueRng=r.u64();v.scheduleRng=r.u64();
+        d.active=r.boolean();d.startedMs=r.u64();d.deadlineMs=r.u64();d.catalogueVersion=r.u32();d.line=r.count(255);d.revealed=r.count(4096);d.readRemainingMs=r.count(60000);
+        d.context=r.str();d.bundle=r.str();d.lineId=r.str();d.speaker=r.u32();d.listener=r.u32();
+        e.id.type=static_cast<VarietyEvent>(r.count(10));e.id.run=r.u64();e.id.trigger=r.u64();e.id.day=r.u32();e.id.floor=r.count(127);
+        e.progress=static_cast<EventProgress>(r.count(7));e.variant=r.str();e.startedMs=r.u64();e.deadlineMs=r.u64();
+        auto count=r.count(kTiles);for(uint32_t i=0;i<count;++i)e.actors.push_back(r.u32());
+        count=r.count(16);for(uint32_t i=0;i<count;++i) {
+            EventReservation item;item.owner=r.u32();item.item=r.u32();item.quantity=r.u32();e.reservations.push_back(item);
+        }
+        v.schedule.day=r.u32();v.schedule.dungeon=r.u32();v.schedule.destination=static_cast<DayDestination>(r.count(3));v.schedule.mealCommitted=r.boolean();
+        count=r.count(64);for(uint32_t i=0;i<count;++i) {
+            RecentDialogue recent;recent.context=r.str();recent.bundle=r.str();recent.eligibleAfter=r.u64();v.recent.push_back(recent);
+        }
+        count=r.count(4096);for(uint32_t i=0;i<count;++i)
+            if(!v.committed.insert(r.str()).second)throw std::runtime_error("duplicate event result");
+        const auto length=r.u32();
+        if(length!=r.offset-start-4)throw std::runtime_error("variety snapshot block length mismatch");
+    } else {
+        // Never reconstruct consumable stock from acquisition history.
+        const auto& g=s.gameplay;
+        s.variety.schedule.mealCommitted=g.onceKeys.count("meal:"+std::to_string(s.runId))!=0;
+    }
     r.u32(); r.end();
     discardStaleEntityGoal(s);
     validateState(s);

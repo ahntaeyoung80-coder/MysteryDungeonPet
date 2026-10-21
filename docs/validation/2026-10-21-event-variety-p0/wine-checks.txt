@@ -1,0 +1,4 @@
+variety: RNG isolation/replay, hold/cancel/timeout, atomic result retry, catalogue mismatch, same-day handoff/meal/day, MDES9..12 corruption/migration pass
+original 3-floor MDES7 -> full legacy run -> same inventory/new day -> 7-floor clear; 358 restored decisions; explicit package unchanged
+reg: The operation completed successfully
+X connection to :99 broken (explicit kill or server shutdown).

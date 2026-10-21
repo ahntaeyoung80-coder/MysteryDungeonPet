@@ -138,6 +138,7 @@ void Explorer::enableGameplay(std::uint64_t now) {
 }
 void Explorer::startGuildMorning(std::uint64_t now) {
     enableGameplay(now);
+    cancelVariety(state_);
     auto& g=state_.gameplay;
     invalidate();state_.phase=Phase::Home;
     g.onceKeys.insert("return:"+std::to_string(state_.runId));
@@ -153,6 +154,7 @@ void Explorer::startGuildMorning(std::uint64_t now) {
     for(auto& e:state_.population.entities)e.movement={};
 }
 GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
+    cancelVariety(state_);
     invalidate();
     state_.phase = Phase::Home;
     auto& g = state_.gameplay;
@@ -203,6 +205,15 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,bool finished) {
 GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion completed) {
     if (!state_.gameplay.enabled) throw std::logic_error("gameplay is disabled");
     auto& g = state_.gameplay;
+    if(varietyBusy(state_.variety)) {
+        // Never hold pending damage, survival recovery or a mandatory scene transition.
+        if((state_.variety.dialogue.active && now>=state_.variety.dialogue.deadlineMs) ||
+           (state_.variety.event.progress>=EventProgress::Approach && state_.variety.event.progress<=EventProgress::Dismiss && now>=state_.variety.event.deadlineMs) ||
+           g.life!=LifePhase::Explore || g.sceneBeat!=SceneBeat::None || g.hearts<=kLowHp ||
+           (g.companion.enabled && g.companion.hearts<=kLowHp) || !g.partyActions.empty() || !g.partyPlaybacks.empty()) {
+            cancelVariety(state_);invalidate();
+        } else return {};
+    }
     const bool enemyOwner=g.life==LifePhase::Combat && (g.combat==CombatPhase::EnemyAttack || g.combat==CombatPhase::EnemyHurt || g.combat==CombatPhase::Faint);
     const bool partnerOwner=g.life==LifePhase::Combat && (g.combat==CombatPhase::CompanionAttack || g.combat==CombatPhase::CompanionHurt || g.combat==CombatPhase::CompanionFaint);
     const bool finished=enemyOwner?completed.enemy:partnerOwner?completed.partner:completed.player;
@@ -289,7 +300,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         g.sceneBeat=SceneBeat::DiningPan;
         auto update = life(LifePhase::Eat, GameplayEvent::Eat, kMealMs);
         update.onceKey = "meal:" + std::to_string(state_.runId);
-        if (g.onceKeys.insert(update.onceKey).second) ++g.meals;
+        g.onceKeys.insert(update.onceKey);
+        if(!state_.variety.schedule.mealCommitted) {++g.meals;state_.variety.schedule.mealCommitted=true;}
         return update;
     }
     if (g.life == LifePhase::Emotion) {
@@ -297,7 +309,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         g.sceneBeat=SceneBeat::DiningPan;
         auto update = life(LifePhase::Eat, GameplayEvent::Eat, kMealMs);
         update.onceKey = "meal:" + std::to_string(state_.runId);
-        if (g.onceKeys.insert(update.onceKey).second) ++g.meals;
+        g.onceKeys.insert(update.onceKey);
+        if(!state_.variety.schedule.mealCommitted) {++g.meals;state_.variety.schedule.mealCommitted=true;}
         return update;
     }
     if(g.life==LifePhase::Dialogue) {
@@ -386,14 +399,29 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         if(now<g.deadlineMs) return {};
         if(state_.runId==UINT64_MAX || g.day==UINT32_MAX) throw std::runtime_error("day counter exhausted");
         const auto previous=g;const auto inventory=state_.inventory;
+        const auto nextDay=previous.day+(previous.onceKeys.count("guild-start:"+std::to_string(state_.runId))?0:1);
+        const bool sameScheduledDay=nextDay==state_.variety.schedule.day &&
+            state_.variety.schedule.destination==DayDestination::Exploration;
+        const bool changePackage=!sameScheduledDay && !nextRunFloors_.empty();
         Explorer next(state_.runId+1,state_.rng.state,
-            nextRunAssetVersion_.empty()?state_.assetVersion:nextRunAssetVersion_,
-            nextRunFloors_.empty()?state_.floors:nextRunFloors_,state_.spawnPolicy,recentLayouts());
+            changePackage?nextRunAssetVersion_:state_.assetVersion,
+            changePackage?nextRunFloors_:state_.floors,state_.spawnPolicy,recentLayouts());
+        // Keep a deferred package upgrade available until the scheduled day ends.
+        if(!changePackage && !nextRunFloors_.empty())next.setNextRunPackage(nextRunAssetVersion_,nextRunFloors_);
         next.state_.inventory=inventory;
         if(state_.screenExploration)next.enableScreenExploration(state_.viewportSize);
         for(const auto& entry:inventory) next.state_.onceKeys.insert(entry.onceKey);
-        next.state_.gameplay.enabled=true;next.state_.gameplay.day=previous.day+
-            (previous.onceKeys.count("guild-start:"+std::to_string(state_.runId))?0:1);
+        next.state_.gameplay.enabled=true;next.state_.gameplay.day=nextDay;
+        cancelVariety(state_);
+        next.state_.variety=state_.variety;
+        if(next.state_.variety.schedule.day!=next.state_.gameplay.day) {
+            next.state_.variety.schedule={};next.state_.variety.schedule.day=next.state_.gameplay.day;
+        }
+        // P0 enables only the existing exploration destination. Holiday selection is P7.
+        auto& schedule=next.state_.variety.schedule;
+        if(schedule.destination==DayDestination::Unassigned) {
+            schedule.destination=DayDestination::Exploration;schedule.dungeon=next.state_.floors.front().dungeonId;
+        }
         next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
         next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+kFadeMs;
         next.state_.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;
@@ -530,6 +558,14 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
     return scheduleDungeon(now);
 }
 void Explorer::shiftPausedClocks(std::uint64_t delta,std::uint64_t pausedAt) {
+    auto& variety=state_.variety;
+    auto shiftVariety=[&](std::uint64_t& start,std::uint64_t& deadline) {
+        if(deadline>UINT64_MAX-delta || start>UINT64_MAX-delta)throw std::runtime_error("variety pause clock overflow");
+        start+=delta;deadline+=delta;
+    };
+    if(variety.dialogue.active)shiftVariety(variety.dialogue.startedMs,variety.dialogue.deadlineMs);
+    if(variety.event.progress>=EventProgress::Approach && variety.event.progress<=EventProgress::Dismiss)
+        shiftVariety(variety.event.startedMs,variety.event.deadlineMs);
     auto& g=state_.gameplay;
     {
         if(g.deadlineMs>UINT64_MAX-delta) throw std::runtime_error("pause clock overflow");

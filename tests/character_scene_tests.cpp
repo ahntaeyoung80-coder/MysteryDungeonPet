@@ -1,3 +1,4 @@
+#include "legacy_snapshot.hpp"
 #include "core/character_selection.hpp"
 #include "core/exploration_package.hpp"
 #include <algorithm>
@@ -109,7 +110,7 @@ int main(int argc,char** argv){try {
             if(!stage)talk.advanceGameplay(talk.state().gameplay.deadlineMs,ActorCompletion{true,true,true});
         }
     }
-    auto legacy=encodeSnapshot(s);legacy[4]=10;
+    auto legacy=encodeSnapshot(s);removeVarietyBlock(legacy);legacy[4]=10;
     std::uint32_t crc=0xffffffff;
     for(std::size_t i=0;i<legacy.size()-4;++i){crc^=legacy[i];for(unsigned b=0;b<8;++b)crc=(crc>>1)^((crc&1)?0xedb88320U:0);}
     crc=~crc;for(unsigned b=0;b<4;++b)legacy[legacy.size()-4+b]=std::uint8_t(crc>>(b*8));
