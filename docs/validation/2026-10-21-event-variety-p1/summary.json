@@ -1,0 +1,370 @@
+{
+  "status": "pass",
+  "scope": "P1 기본 던전15·구형0의 실제 NPC + 길드 방문 자산; 자동 사건/방문과 새 대사는 후속 단계",
+  "characters": 17,
+  "newBodies": 14,
+  "reusedBodyMds": [
+    383,
+    384,
+    425
+  ],
+  "wanFramesCompared": 2730,
+  "reproducible": "실행 catalogue·몸체·초상화 바이트 일치, 감사 JSON 의미 일치",
+  "python": "11/11",
+  "nativeRelated": "NPC/character/dialogue 3/3 + NPC/core/movement 재생 회귀 3/3",
+  "asanUbsan": "19/19;85.20s;공통 Animator 수정 후 한 번 전체 통합",
+  "windowsBinaryTests": [
+    "pet_npc_character_tests",
+    "pet_character_scene_tests",
+    "pet_dialogue_portrait_tests"
+  ],
+  "guiCases": {
+    "16-friendly": {
+      "opaqueBodyPixels": 183,
+      "rows": 171,
+      "cacheBodies": 1,
+      "portraitMd": 16,
+      "actualEmotion": 0
+    },
+    "16-hostile": {
+      "opaqueBodyPixels": 168,
+      "rows": 310,
+      "cacheBodies": 1
+    },
+    "83-friendly": {
+      "opaqueBodyPixels": 218,
+      "rows": 155,
+      "cacheBodies": 1,
+      "portraitMd": 83,
+      "actualEmotion": 0
+    },
+    "83-hostile": {
+      "opaqueBodyPixels": 239,
+      "rows": 293,
+      "cacheBodies": 1
+    },
+    "102-friendly": {
+      "opaqueBodyPixels": 367,
+      "rows": 178,
+      "cacheBodies": 1,
+      "portraitMd": 102,
+      "actualEmotion": 0
+    },
+    "102-hostile": {
+      "opaqueBodyPixels": 403,
+      "rows": 312,
+      "cacheBodies": 1
+    },
+    "126-friendly": {
+      "opaqueBodyPixels": 349,
+      "rows": 164,
+      "cacheBodies": 1,
+      "portraitMd": 126,
+      "actualEmotion": 0
+    },
+    "126-hostile": {
+      "opaqueBodyPixels": 350,
+      "rows": 293,
+      "cacheBodies": 1
+    },
+    "191-friendly": {
+      "opaqueBodyPixels": 135,
+      "rows": 165,
+      "cacheBodies": 1,
+      "portraitMd": 191,
+      "actualEmotion": 0
+    },
+    "191-hostile": {
+      "opaqueBodyPixels": 229,
+      "rows": 283,
+      "cacheBodies": 1
+    },
+    "193-friendly": {
+      "opaqueBodyPixels": 232,
+      "rows": 238,
+      "cacheBodies": 1,
+      "portraitMd": 193,
+      "actualEmotion": 0
+    },
+    "193-hostile": {
+      "opaqueBodyPixels": 261,
+      "rows": 395,
+      "cacheBodies": 1
+    },
+    "237-friendly": {
+      "opaqueBodyPixels": 326,
+      "rows": 157,
+      "cacheBodies": 1,
+      "portraitMd": 237,
+      "actualEmotion": 0
+    },
+    "237-hostile": {
+      "opaqueBodyPixels": 371,
+      "rows": 285,
+      "cacheBodies": 1
+    },
+    "240-friendly": {
+      "opaqueBodyPixels": 311,
+      "rows": 149,
+      "cacheBodies": 1,
+      "portraitMd": 240,
+      "actualEmotion": 0
+    },
+    "240-hostile": {
+      "opaqueBodyPixels": 297,
+      "rows": 291,
+      "cacheBodies": 1
+    },
+    "293-friendly": {
+      "opaqueBodyPixels": 241,
+      "rows": 196,
+      "cacheBodies": 1,
+      "portraitMd": 293,
+      "actualEmotion": 0
+    },
+    "293-hostile": {
+      "opaqueBodyPixels": 186,
+      "rows": 318,
+      "cacheBodies": 1
+    },
+    "341-friendly": {
+      "opaqueBodyPixels": 331,
+      "rows": 185,
+      "cacheBodies": 1,
+      "portraitMd": 341,
+      "actualEmotion": 0
+    },
+    "341-hostile": {
+      "opaqueBodyPixels": 383,
+      "rows": 327,
+      "cacheBodies": 1
+    },
+    "342-friendly": {
+      "opaqueBodyPixels": 236,
+      "rows": 160,
+      "cacheBodies": 1,
+      "portraitMd": 342,
+      "actualEmotion": 0
+    },
+    "342-hostile": {
+      "opaqueBodyPixels": 310,
+      "rows": 300,
+      "cacheBodies": 1
+    },
+    "369-friendly": {
+      "opaqueBodyPixels": 265,
+      "rows": 165,
+      "cacheBodies": 1,
+      "portraitMd": 369,
+      "actualEmotion": 4
+    },
+    "369-hostile": {
+      "opaqueBodyPixels": 295,
+      "rows": 302,
+      "cacheBodies": 1
+    },
+    "383-friendly": {
+      "opaqueBodyPixels": 333,
+      "rows": 168,
+      "cacheBodies": 1,
+      "portraitMd": 383,
+      "actualEmotion": 4
+    },
+    "383-hostile": {
+      "opaqueBodyPixels": 286,
+      "rows": 296,
+      "cacheBodies": 1
+    },
+    "384-friendly": {
+      "opaqueBodyPixels": 333,
+      "rows": 174,
+      "cacheBodies": 1,
+      "portraitMd": 384,
+      "actualEmotion": 0
+    },
+    "384-hostile": {
+      "opaqueBodyPixels": 286,
+      "rows": 299,
+      "cacheBodies": 1
+    },
+    "425-friendly": {
+      "opaqueBodyPixels": 178,
+      "rows": 176,
+      "cacheBodies": 1,
+      "portraitMd": 425,
+      "actualEmotion": 4
+    },
+    "425-hostile": {
+      "opaqueBodyPixels": 198,
+      "rows": 304,
+      "cacheBodies": 1
+    },
+    "434-friendly": {
+      "opaqueBodyPixels": 303,
+      "rows": 163,
+      "cacheBodies": 1,
+      "portraitMd": 434,
+      "actualEmotion": 0
+    },
+    "434-hostile": {
+      "opaqueBodyPixels": 296,
+      "rows": 297,
+      "cacheBodies": 1
+    },
+    "437-friendly": {
+      "opaqueBodyPixels": 252,
+      "rows": 181,
+      "cacheBodies": 1,
+      "portraitMd": 437,
+      "actualEmotion": 0
+    },
+    "437-hostile": {
+      "opaqueBodyPixels": 375,
+      "rows": 319,
+      "cacheBodies": 1
+    }
+  },
+  "floorTransitions": [
+    {
+      "fromFloor": 0,
+      "toFloor": 1,
+      "rows": 225,
+      "maxCacheBodies": 2
+    },
+    {
+      "fromFloor": 1,
+      "toFloor": 2,
+      "rows": 465,
+      "maxCacheBodies": 2
+    },
+    {
+      "fromFloor": 2,
+      "toFloor": 3,
+      "rows": 468,
+      "maxCacheBodies": 3
+    },
+    {
+      "fromFloor": 3,
+      "toFloor": 4,
+      "rows": 372,
+      "maxCacheBodies": 2
+    },
+    {
+      "fromFloor": 4,
+      "toFloor": 5,
+      "rows": 301,
+      "maxCacheBodies": 2
+    },
+    {
+      "fromFloor": 5,
+      "toFloor": 6,
+      "rows": 211,
+      "maxCacheBodies": 3
+    }
+  ],
+  "defaultRestart": "길드 아침→탐험; 재시작은 길드 아침 유지; 현재 층의 2개 몸체 캐시",
+  "platform": "MinGW GCC14.2 static x64 Release / Wine10 / Xvfb; test-only WTS unlock; NanumGothic substitute",
+  "exeSha256": "06783e168cb1d309147cc32cf46dd8ae40da27e502c028e58f34eede7fe09ced",
+  "defaultWorkingSetMaxBytes": 42835968,
+  "defaultPrivateBytesReportedByWine": 0,
+  "originalMdpeUnchanged": {
+    "0": "d35e7b0603a52540e68a24d54f77888b06b2815e8a8c6f868032b8dfeb963558",
+    "15": "539da061971262286524b13acb3e8361062b78dccc97a73a973a22429471868b"
+  },
+  "actualWindows11": "pending",
+  "automaticCI": "push 후 확인; 완료를 대기 조건으로 삼지 않음",
+  "limitations": [
+    "실제 Windows/OS lock/power·장기 성능 미검증",
+    "Wine 수치는 최종 Windows 성능 판정이 아님",
+    "P2 상황 대사/P3 자동 사건·방문은 미구현"
+  ],
+  "selectedDataExeBytes": 10839419,
+  "installedBytes": 10872989,
+  "installation": "EXE/전 gameplay·exploration·runtime·fixture 파일 바이트 일치; ROM/오프라인 도구 미포함",
+  "installedExeRun": "pass: 설치 디렉터리의 실제 EXE/자산으로 길드 화면 표시 및 저장",
+  "legacyFixtureCompatibility": {
+    "status": "pass",
+    "platform": "Wine10; root tracked EXE",
+    "launches": 9,
+    "fixtures": "Windows exporters: 24 snapshots / 24 actors validated; native exporters: 16 snapshots / 17 actors validated",
+    "submittedRows": {
+      "follow": 182,
+      "attack": 72,
+      "navigation": 196,
+      "entry": 279,
+      "party": 729
+    },
+    "relationships": [
+      {
+        "name": "friendly",
+        "runId": 940,
+        "hostileCount": 0
+      },
+      {
+        "name": "hostile",
+        "runId": 940,
+        "hostileCount": 1
+      }
+    ],
+    "checks": [
+      "companion Walk/Attack",
+      "relationship restore",
+      "navigation detour",
+      "NPC greeting",
+      "sequential ally attacks",
+      "one enemy removed while the other continues",
+      "both enemies removed"
+    ],
+    "bodyPixels": [
+      {
+        "scenario": "follow",
+        "asset": "asset-1",
+        "trace": "trace",
+        "matchedPixels": 264,
+        "testedPixels": 264,
+        "status": "pass"
+      },
+      {
+        "scenario": "attack",
+        "asset": "md:384",
+        "trace": "trace",
+        "matchedPixels": 286,
+        "testedPixels": 286,
+        "status": "pass"
+      },
+      {
+        "scenario": "friendly",
+        "asset": "md:383",
+        "trace": "trace",
+        "matchedPixels": 286,
+        "testedPixels": 286,
+        "status": "pass"
+      },
+      {
+        "scenario": "friendly",
+        "asset": "md:383",
+        "trace": "restored-trace",
+        "matchedPixels": 286,
+        "testedPixels": 286,
+        "status": "pass"
+      },
+      {
+        "scenario": "hostile",
+        "asset": "md:384",
+        "trace": "trace",
+        "matchedPixels": 286,
+        "testedPixels": 286,
+        "status": "pass"
+      },
+      {
+        "scenario": "hostile",
+        "asset": "md:384",
+        "trace": "restored-trace",
+        "matchedPixels": 286,
+        "testedPixels": 286,
+        "status": "pass"
+      }
+    ]
+  },
+  "resumedNativeRelated": "4/4;21.28s;NPC/companion/entry/navigation; GUI exporter compatibility changes only"
+}

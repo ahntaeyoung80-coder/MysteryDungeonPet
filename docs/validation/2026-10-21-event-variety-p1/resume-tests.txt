@@ -1,0 +1,13 @@
+Test project /workspace/MysteryDungeonPet/build/p0
+    Start  1: pet_npc_character_tests
+1/4 Test  #1: pet_npc_character_tests ..........   Passed    0.08 sec
+    Start  7: pet_companion_tests
+2/4 Test  #7: pet_companion_tests ..............   Passed   17.78 sec
+    Start  9: pet_entry_social_scene_tests
+3/4 Test  #9: pet_entry_social_scene_tests .....   Passed    1.88 sec
+    Start 10: pet_navigation_recovery_tests
+4/4 Test #10: pet_navigation_recovery_tests ....   Passed    1.54 sec
+
+100% tests passed out of 4
+
+Total Test time (real) =  21.28 sec

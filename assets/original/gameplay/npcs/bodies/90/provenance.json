@@ -1,0 +1,42 @@
+{
+  "missingSceneClips": {
+    "22": "finite Idle7 for NPC response",
+    "33": "finite Hurt6 before removal"
+  },
+  "selection": "explicit MD record from retained ROM",
+  "source": {
+    "credit": "Nintendo / Pokémon / CHUNSOFT",
+    "edition": "EoS_NA",
+    "license": "game_assets_user_local_only",
+    "mdIndex": 83,
+    "nationalDex": 83,
+    "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+    "sourceKind": "rom",
+    "sourceRefs": [
+      {
+        "contentHash": "27ff4d6528781efc80f9b88bf01edbaaf11904190ff1926e9b4730b0a911ce04",
+        "packSlot": 90,
+        "sourcePath": "MONSTER/monster.bin"
+      },
+      {
+        "contentHash": "4d7bbc041ba5116b39e7a83c65c1b46146855f9af681542fb10d16930d14cebd",
+        "packSlot": 90,
+        "sourcePath": "MONSTER/m_ground.bin"
+      },
+      {
+        "contentHash": "f0516d1279d0e33c364f109e5f4bd608aec153ebeb2b28e7d53be898dd34bb15",
+        "packSlot": 90,
+        "sourcePath": "MONSTER/m_attack.bin"
+      }
+    ],
+    "spriteIndex": 90,
+    "toolCommit": "5ed359a2560a1f04666b9ea02b71649b89cb16d7"
+  },
+  "verification": {
+    "comparedFrames": 160,
+    "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+    "originalSourceFrames": 240,
+    "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending",
+    "status": "pass"
+  }
+}

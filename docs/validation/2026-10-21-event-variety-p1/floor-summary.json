@@ -1,0 +1,38 @@
+[
+  {
+    "fromFloor": 0,
+    "toFloor": 1,
+    "rows": 225,
+    "maxCacheBodies": 2
+  },
+  {
+    "fromFloor": 1,
+    "toFloor": 2,
+    "rows": 465,
+    "maxCacheBodies": 2
+  },
+  {
+    "fromFloor": 2,
+    "toFloor": 3,
+    "rows": 468,
+    "maxCacheBodies": 3
+  },
+  {
+    "fromFloor": 3,
+    "toFloor": 4,
+    "rows": 372,
+    "maxCacheBodies": 2
+  },
+  {
+    "fromFloor": 4,
+    "toFloor": 5,
+    "rows": 301,
+    "maxCacheBodies": 2
+  },
+  {
+    "fromFloor": 5,
+    "toFloor": 6,
+    "rows": 211,
+    "maxCacheBodies": 3
+  }
+]

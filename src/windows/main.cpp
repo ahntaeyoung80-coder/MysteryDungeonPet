@@ -14,6 +14,7 @@
 #include "core/guild_scene.hpp"
 #include "core/completion_scene.hpp"
 #include "core/character_selection.hpp"
+#include "core/npc_characters.hpp"
 #include "core/motion.hpp"
 #include <algorithm>
 #include <chrono>
@@ -184,7 +185,11 @@ class App {
     std::optional<CharacterSelection> pendingCharacterSelection_;
     DialogueCast dialogueCast_;
     Assets assets_;
-    std::optional<Assets> enemyAssets_, friendlyAssets_, companionAssets_, homeAssets_, propsAssets_;
+    std::optional<Assets> companionAssets_, homeAssets_, propsAssets_;
+    NpcCatalogue npcCatalogue_;
+    using NpcAssetCache=std::map<std::string,std::shared_ptr<Assets>>;
+    NpcAssetCache npcAssets_;
+    struct NpcAssetsChange {NpcAssetCache cache;unsigned decodes=0;};
     std::optional<Assets> appleAssets_,uiAssets_,portraitAssets_;
     Animator appleAnimator_;
     std::size_t appleFrame_=0;
@@ -359,7 +364,18 @@ class App {
             << ',' << guildAppleVisible(g) << ',' << appleFrame_;
         const auto portrait=dialoguePortraits(g);const auto line=gameplayDialogue(g);
         movementTrace_<<','<<dialogueCast_.actor(PortraitRole::Player).portraitClip<<','<<dialogueCast_.actor(PortraitRole::Partner).portraitClip
-            <<','<<unsigned(portrait.speaker)<<','<<unsigned(portrait.emotion)<<','<<line.id<<','<<gameplayFadeOpacity(g,utcMs())<<'\n';
+            <<','<<unsigned(portrait.speaker)<<','<<unsigned(portrait.emotion)<<','<<line.id<<','<<gameplayFadeOpacity(g,utcMs());
+        const auto actual=currentPortrait();const auto* npc=npcSpeaker(actual);
+        movementTrace_<<','<<(npc?npc->portraitClip:actual.speaker==PortraitRole::None?0:dialogueCast_.actor(actual.speaker).portraitClip)
+            <<','<<unsigned(actual.emotion)<<',';
+        bool firstNpc=true;
+        for(const auto& e:state.population.entities)if(e.kind==EntityKind::Friend) {
+            if(!firstNpc)movementTrace_<<';';
+            firstNpc=false;
+            const auto& c=npcCatalogue_.select(e.originalId);
+            movementTrace_<<e.instanceId<<':'<<c.id<<':'<<c.spriteIndex;
+        }
+        movementTrace_<<','<<npcAssets_.size()<<'\n';
         const bool textReady=!gameplayText(g).empty() && revealedGameplayText(g,utcMs())==gameplayText(g);
         if(submitted && traceCharacterImagePending_){traceImage("-characters.bmp");traceCharacterImagePending_=false;}
         if(submitted && !traceDeathImage_ && g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk && textReady){traceImage("-defeat-dialogue.bmp");traceDeathImage_=true;}
@@ -801,9 +817,46 @@ class App {
         sessionRetry_ = sessionAttempts_ < 3 ? now + 5000000 : 0;
     }
     const Assets& npcAssets(uint32_t actor) const {
-        if(!explorer_)return *friendlyAssets_;
-        const auto& hostile=explorer_->state().gameplay.hostile;
-        return std::find(hostile.begin(),hostile.end(),actor)!=hostile.end()?*enemyAssets_:*friendlyAssets_;
+        const auto& character=npcCatalogue_.forActor(explorer_->state(),actor);
+        const auto found=npcAssets_.find(character.actor.bodyManifest);
+        if(found==npcAssets_.end())throw std::runtime_error("NPC body is not loaded: "+std::to_string(character.id));
+        return *found->second;
+    }
+    std::optional<NpcAssetsChange> stageNpcAssets(const ExplorationState& state) {
+        std::set<std::string> needed;
+        for(const auto& e:state.population.entities)if(e.kind==EntityKind::Friend)
+            needed.insert(npcCatalogue_.select(e.originalId).actor.bodyManifest);
+        if(needed.size()==npcAssets_.size() && std::all_of(needed.begin(),needed.end(),[&](const auto& key){return npcAssets_.count(key);}))return {};
+        NpcAssetsChange change;
+        for(const auto& key:needed) {
+            const auto old=npcAssets_.find(key);
+            auto asset=old!=npcAssets_.end()?old->second:std::make_shared<Assets>(Assets::load(options_.gameplayAssets/key));
+            if(old==npcAssets_.end())change.decodes+=asset->decoded?1:0;
+            for(const auto& e:state.population.entities)if(e.kind==EntityKind::Friend) {
+                const auto& character=npcCatalogue_.select(e.originalId);
+                if(character.actor.bodyManifest==key)validateNpcCharacter(character,asset->package,portraitAssets_->package);
+            }
+            change.cache.emplace(key,std::move(asset));
+        }
+        return change;
+    }
+    void commitNpcAssets(std::optional<NpcAssetsChange> change) {
+        if(!change)return;
+        // Animators retain frame pointers. Stop them before dropping a previous floor's body.
+        enemyAnimator_.stop();enemyFrame_=0;actorAnimators_.clear();actorMotions_.clear();actorFrames_.clear();
+        partyActorClips_.clear();partyActorDirections_.clear();partyActorTokens_.clear();
+        decodes_+=change->decodes;npcAssets_=std::move(change->cache);
+        log("NPC cache bodies="+std::to_string(npcAssets_.size())+" decoded="+std::to_string(change->decodes));
+    }
+    const DialogueActor* npcSpeaker(DialoguePortraits portrait) const {
+        return portrait.speaker==PortraitRole::Friendly?
+            &npcCatalogue_.forActor(explorer_->state(),portrait.actorId).actor:nullptr;
+    }
+    DialoguePortraits currentPortrait() const {
+        auto portrait=dialoguePortraits(explorer_->state().gameplay);
+        if(portrait.speaker==PortraitRole::Friendly)
+            portrait.emotion=npcEmotion(npcCatalogue_.forActor(explorer_->state(),portrait.actorId),portrait.emotion);
+        return portrait;
     }
     uint32_t npcClip(uint32_t requested,const Assets& source) const {
         const auto& clips=source.package.clips;
@@ -852,7 +905,8 @@ class App {
                 animator.start(source.package,actual,dir,loop,
                     std::max<int64_t>(0,now-int64_t(elapsed)*1000));
                 frame=0;dirty_=true;
-            } else if(facing!=dir)animator.changeDirection(source.package,actual,dir);
+            } else if(facing!=dir && !animator.tryChangeDirection(source.package,actual,dir))
+                animator.start(source.package,actual,dir,loop,now);
             clip=actual;facing=dir;token=action;
         };
         sync(0,assets_,animator_,clip_,direction_,frame_,partyPlayerToken_);
@@ -874,7 +928,8 @@ class App {
             auto utc=utcMs();auto started=clip==0?g.companion.walkStartedMs:g.phaseStartedMs;
             const auto elapsed=std::min<uint64_t>(60000,utc>started?utc-started:0);
             companionAnimator_.start(companionAssets_->package,clip,dir,loop,std::max<int64_t>(0,now-int64_t(elapsed)*1000));companionFrame_=0;
-        } else if(dir!=companionDirection_) companionAnimator_.changeDirection(companionAssets_->package,clip,dir);
+        } else if(dir!=companionDirection_ && !companionAnimator_.tryChangeDirection(companionAssets_->package,clip,dir))
+            companionAnimator_.start(companionAssets_->package,clip,dir,true,now);
         companionClip_=clip;companionDirection_=dir;companionPhaseStarted_=g.phaseStartedMs;
     }
     void settleNavigationReset(int64_t now) {
@@ -917,7 +972,9 @@ class App {
             candidate.state().assetVersion==pendingDefaultPackage_->assetVersion;
         std::map<uint32_t,Assets> nextTiles;
         if(changePackage)nextTiles=loadExplorationTiles(*pendingDefaultPackage_,options_.exploration.parent_path());
+        auto nextNpcs=stageNpcAssets(candidate.state());
         saveRunSnapshot(options_.snapshot, candidate.state());
+        commitNpcAssets(std::move(nextNpcs));
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
         if(changePackage) {
             for(const auto& entry:nextTiles)decodes_+=entry.second.decoded?1:0;
@@ -938,13 +995,11 @@ class App {
             if(old!=oldEntities.end() && old->tile!=e.tile && e.kind==EntityKind::Friend) {
                 actorMotions_[e.instanceId].begin(e.instanceId,g.actionRound,tilePoint(old->tile),tilePoint(e.tile),now,e.direction);
                 auto& animation=actorAnimators_[e.instanceId];
-                // The party cache can currently hold Idle/Attack/Hurt. Only the
-                // legacy walk cache guarantees changeDirection stays in Walk.
-                // syncPartyActors selects the actual clip after this move.
+                // A prior dialogue may leave Idle/Nod in the cache. Preserve
+                // phase only within a compatible Walk; never relabel another clip.
                 if(!partyRendering()) {
-                    if(!g.independentParty && animation.active())
-                        animation.changeDirection(npcAssets(e.instanceId).package,0,e.direction);
-                    else animation.start(npcAssets(e.instanceId).package,0,e.direction,true,now);
+                    if(g.independentParty || !animation.tryChangeDirection(npcAssets(e.instanceId).package,0,e.direction))
+                        animation.start(npcAssets(e.instanceId).package,0,e.direction,true,now);
                 }
             }
         }
@@ -1263,8 +1318,8 @@ class App {
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
         if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr,false);
-        const auto speaker=explorer_?dialoguePortraits(explorer_->state().gameplay):DialoguePortraits{};
-        if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_);
+        const auto speaker=explorer_?currentPortrait():DialoguePortraits{};
+        if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_,npcSpeaker(speaker));
         std::wstring overlayText=explorer_?revealedGameplayText(explorer_->state().gameplay,utcMs()):std::wstring{};
         const auto hud=mapHud();
         const auto fade=explorer_?gameplayFadeOpacity(explorer_->state().gameplay,utcMs()):0;
@@ -1308,7 +1363,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
@@ -1316,9 +1371,6 @@ public:
         decodes_ = assets_.decoded ? 1 : 0;
         if (!options_.exploration.empty()) {
             companionAssets_ = Assets::load(options_.gameplayAssets / dialogueCast_.actor(PortraitRole::Partner).bodyManifest);
-            friendlyAssets_ = Assets::load(options_.gameplayAssets / dialogueCast_.actor(PortraitRole::Friendly).bodyManifest);
-            enemyAssets_ = Assets::load(options_.gameplayAssets / L"actors/asset-3/asset.mdpa");
-            decodes_+=friendlyAssets_->decoded?1:0;
             decodes_+=companionAssets_->decoded?1:0;
             homeAssets_ = Assets::load(options_.gameplayAssets / L"home/home.mdpa");
             propsAssets_=Assets::load(options_.gameplayAssets / L"props/props.mdpa");
@@ -1327,15 +1379,17 @@ public:
             portraitAssets_=Assets::load(options_.gameplayAssets / L"portraits/portraits.mdpa");
             validateDialogueActor(dialogueCast_.actor(PortraitRole::Player),assets_.package,portraitAssets_->package);
             validateDialogueActor(dialogueCast_.actor(PortraitRole::Partner),companionAssets_->package,portraitAssets_->package);
-            validateDialogueActor(dialogueCast_.actor(PortraitRole::Friendly),friendlyAssets_->package,portraitAssets_->package);
             decodes_+=portraitAssets_->decoded?1:0;
             dialoguePanel_=originalDialoguePanel(*uiAssets_->atlas,uiAssets_->package);
             portraitFrame_=originalWindowPanel(*uiAssets_->atlas,uiAssets_->package,56,56);
             decodes_+=appleAssets_->decoded?1:0;decodes_+=uiAssets_->decoded?1:0;
             decodes_+=propsAssets_->decoded?1:0;
             guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");
-            decodes_ += (enemyAssets_->decoded ? 1 : 0) + (homeAssets_->decoded ? 1 : 0);
+            decodes_ += homeAssets_->decoded ? 1 : 0;
             explorationPackage_ = loadExplorationPackage(options_.exploration);
+            npcCatalogue_=loadNpcCatalogue(options_.gameplayAssets/L"npcs/characters.mdnc");
+            if(npcCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("NPC/exploration ROM mismatch");
+            validateNpcCoverage(npcCatalogue_,explorationPackage_->floors);
             if(characterCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("starter/exploration ROM mismatch");
             completionRegistry_=loadCompletionRegistry(options_.gameplayAssets / L"completion/destinations.mdec");
             if(completionRegistry_.romHash!=explorationPackage_->romHash)throw std::runtime_error("completion/exploration ROM mismatch");
@@ -1369,6 +1423,8 @@ public:
                             explorationPackage_->assetVersion, explorationPackage_->floors);
                 saveRunSnapshot(options_.snapshot, explorer_->state());
             }
+            validateNpcCoverage(npcCatalogue_,explorer_->state().floors);
+            commitNpcAssets(stageNpcAssets(explorer_->state()));
             tiles_=loadExplorationTiles(*explorationPackage_,explorationDirectory);
             for(const auto& entry:tiles_)decodes_+=entry.second.decoded?1:0;
             playerMotion_.reset(tilePoint(explorer_->state().position));

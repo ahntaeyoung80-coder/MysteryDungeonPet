@@ -126,7 +126,8 @@ int main(int argc,char** argv){try{
   for(const std::string name:{"friendly","hostile"}) {
    auto s=party_ai_regression::party(companionFixture());auto& g=s.gameplay;
    s.assetVersion=package.assetVersion;s.floors=package.floors;
-   s.population.entities={{1,4,EntityKind::Friend,126,false}};
+   // GUI fixtures retain explicit original actors; relationship does not choose a body.
+   s.population.entities={{1,name=="hostile"?384U:383U,EntityKind::Friend,126,false}};
    g.hostile=name=="hostile"?std::vector<uint32_t>{1}:std::vector<uint32_t>{};
    // Hold the decision while the ordinary app loads/saves/restores the role.
    g.phaseStartedMs=now;g.deadlineMs=now+10000;party_ai_regression::forceHit(s);
@@ -140,6 +141,7 @@ int main(int argc,char** argv){try{
   auto s=party_ai_regression::corridor(companionFixture());auto& g=s.gameplay;
   s.assetVersion=package.assetVersion;s.floors=package.floors;
   s.population.entities[0].remainingHits=1;
+  for(auto& actor:s.population.entities)if(actor.kind==EntityKind::Friend)actor.originalId=384;
   const auto now=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
   g.phaseStartedMs=now;g.deadlineMs=now+1000;party_ai_regression::forceHit(s);
   saveSnapshot(out/"two-sided.mdes",s);
@@ -147,7 +149,7 @@ int main(int argc,char** argv){try{
    auto chase=party_ai_regression::party(companionFixture());auto& cg=chase.gameplay;
    chase.assetVersion=package.assetVersion;chase.floors=package.floors;cg.hearts=hp;
    cg.phaseStartedMs=now;cg.deadlineMs=now+1000;
-   chase.population.entities={{1,10,EntityKind::Item,129,false},{2,4,EntityKind::Friend,260,false}};
+   chase.population.entities={{1,10,EntityKind::Item,129,false},{2,384,EntityKind::Friend,260,false}};
    cg.hostile={2};auto& enemy=chase.population.entities[1];
    enemy.tracking=Tracking::Chase;enemy.lastSeen=enemy.chaseTarget=156;
    saveSnapshot(out/("chase"+std::to_string(hp)+".mdes"),chase);
@@ -163,7 +165,7 @@ int main(int argc,char** argv){try{
    if(name=="follow") s.population.entities={{1,10,EntityKind::Item,129,false}};
    else {
     const bool target=name=="target" || name=="faint";
-    s.population.entities={{1,4,EntityKind::Friend,target?123:126,false}};g.hostile={1};g.life=LifePhase::Combat;g.enemyInstance=1;g.enemyHits=2;
+    s.population.entities={{1,384,EntityKind::Friend,target?123:126,false}};g.hostile={1};g.life=LifePhase::Combat;g.enemyInstance=1;g.enemyHits=2;
     if(target) {g.combat=CombatPhase::EnemyTurn;g.playerActionRound=g.companion.actionRound=1;g.enemyTargetsCompanion=true;}
     else if(name=="attack") {g.companion.tile=150;g.combat=CombatPhase::CompanionTurn;g.playerActionRound=1;}
     else {g.combat=CombatPhase::CompanionTurn;g.playerActionRound=1;s.population.entities[0].actionRound=1;}

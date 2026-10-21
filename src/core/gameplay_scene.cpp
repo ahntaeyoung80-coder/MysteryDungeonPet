@@ -110,9 +110,10 @@ DialoguePortraits dialoguePortraits(const GameplayState& g) {
     return {line.speaker,id,line.emotion};
 }
 void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& package,DialoguePortraits portraits,
-    const DialogueCast& cast,const Surface& frame) {
+    const DialogueCast& cast,const Surface& frame,const DialogueActor* speaker) {
     if(portraits.speaker==PortraitRole::None)return;
-    const auto& actor=cast.actor(portraits.speaker);
+    const auto& actor=speaker?*speaker:cast.actor(portraits.speaker);
+    if(actor.role!=portraits.speaker)throw std::runtime_error("dialogue speaker role mismatch");
     const auto& faces=package.frames(actor.portraitClip,0);
     const auto emotion=static_cast<unsigned>(portraits.emotion);
     const auto& rect=faces[emotion<faces.size()?emotion:0].rect;

@@ -1,4 +1,4 @@
-"""Compare submitted original actor pixels, including relationship restoration."""
+"""Compare submitted body pixels using each restored NPC's original MD binding."""
 import argparse
 import csv
 import json
@@ -9,6 +9,8 @@ from PIL import Image
 
 def check(inspector, root, output):
     results = []
+    bodies = {str(c['mdIndex']): c['bodyManifest'] for c in json.loads(
+        (root / 'assets/original/gameplay/npcs/catalogue.json').read_text(encoding='utf-8'))['characters']}
     scenarios = [
         ('follow', 'asset-1', 'companion_tile', 'trace'),
         ('attack', 'asset-3', None, 'trace'),
@@ -22,6 +24,10 @@ def check(inspector, root, output):
         with (directory / f'{trace}.csv').open(newline='') as stream:
             row = next(r for r in csv.DictReader(stream) if r['submitted'] == '1')
         package_path = root / 'assets/original/gameplay/actors' / asset / 'asset.mdpa'
+        if not tile_field:
+            binding = next(s.split(':') for s in row['npc_bindings'].split(';') if s.startswith('1:'))
+            package_path = root / 'assets/original/gameplay' / bodies[binding[1]]
+            asset = f'md:{binding[1]}'
         package = json.loads(subprocess.check_output([str(inspector), str(package_path)], text=True))
         if tile_field:
             tile = int(row[tile_field])

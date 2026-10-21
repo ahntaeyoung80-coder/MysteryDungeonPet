@@ -152,7 +152,7 @@ int main(int argc,char** argv){unsigned failed=0;
    Explorer floor(930,196,p.assetVersion,p.floors);auto s=floor.state();s.position=s.world.stairs;s.visited[s.position]=1;
    floor=Explorer(s);floor.advance();s=floor.state();s.position=s.world.stairs;s.visited[s.position]=1;
    floor=Explorer(s);floor.enableGameplay(0);saveSnapshot(out/"entry.mdes",floor.state());
-   s=socialFixture();s.assetVersion=p.assetVersion;s.floors=p.floors;s.population.entities={{1,4,EntityKind::Friend,6*24+6,false}};
+   s=socialFixture();s.assetVersion=p.assetVersion;s.floors=p.floors;s.population.entities={{1,383,EntityKind::Friend,6*24+6,false}};
    saveSnapshot(out/"npc.mdes",s);
    const auto actors=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original/gameplay/actors";
    const auto player=loadPackage(actors/"asset-0/asset.mdpa"),partner=loadPackage(actors/"asset-1/asset.mdpa");

@@ -1,0 +1,11 @@
+PASS EXE follow/follow/trace
+PASS EXE attack/attack/trace
+PASS EXE friendly/friendly/trace
+PASS EXE friendly/friendly/restored-trace
+PASS EXE hostile/hostile/trace
+PASS EXE hostile/hostile/restored-trace
+PASS EXE navigation/cycle/trace
+PASS EXE entry/npc/trace
+PASS EXE party/two-sided/trace
+GUI fixture catalogue coverage: 24 snapshots, 24 actors pass
+X connection to :99 broken (explicit kill or server shutdown).

@@ -2,7 +2,7 @@
 
 작성: 2026-10-21 KST. 조회 기준 `work` `44d8634ddf74a2a0992471295abfe8e1e3748152`. **계획 문서이며 제품 구현은 착수하지 않았다.** 이번 변경 범위는 문서뿐이다. 아래 함수·형식·데이터 명칭 중 “신규/제안”은 구현 시 조정할 설계안이다.
 
-**구현 진행 — 2026-10-21:** 후속 사용자 지시로 P0 공통 상태·저장을 구현·검증했다. [상태 계약](../EVENT_VARIETY_STATE.md), [검증](../validation/2026-10-21-event-variety-p0/summary.json), [로그](../logs/2026-10-21-event-variety-p0.md). 아래의 “미착수/제안” 설명은 계획 작성 시점이며 P1~P8과 미정 정책은 계속 후속 범위다.
+**구현 진행 — 2026-10-21:** 후속 사용자 지시로 P0 공통 상태·저장과 P1 실제 NPC를 구현·검증했다. [상태 계약](../EVENT_VARIETY_STATE.md), [검증](../validation/2026-10-21-event-variety-p0/summary.json), [로그](../logs/2026-10-21-event-variety-p0.md). [P1 연결 계약](../EVENT_VARIETY_NPCS.md), [P1 검증](../validation/2026-10-21-event-variety-p1/summary.json). 아래의 “미착수/제안” 설명은 계획 작성 시점이며 P2~P8과 미정 정책은 계속 후속 범위다.
 
 ## 1. 목표와 근거
 

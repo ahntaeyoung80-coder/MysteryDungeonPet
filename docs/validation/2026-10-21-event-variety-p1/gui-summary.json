@@ -1,0 +1,206 @@
+{
+  "16-friendly": {
+    "opaqueBodyPixels": 183,
+    "rows": 171,
+    "cacheBodies": 1,
+    "portraitMd": 16,
+    "actualEmotion": 0
+  },
+  "16-hostile": {
+    "opaqueBodyPixels": 168,
+    "rows": 310,
+    "cacheBodies": 1
+  },
+  "83-friendly": {
+    "opaqueBodyPixels": 218,
+    "rows": 155,
+    "cacheBodies": 1,
+    "portraitMd": 83,
+    "actualEmotion": 0
+  },
+  "83-hostile": {
+    "opaqueBodyPixels": 239,
+    "rows": 293,
+    "cacheBodies": 1
+  },
+  "102-friendly": {
+    "opaqueBodyPixels": 367,
+    "rows": 178,
+    "cacheBodies": 1,
+    "portraitMd": 102,
+    "actualEmotion": 0
+  },
+  "102-hostile": {
+    "opaqueBodyPixels": 403,
+    "rows": 312,
+    "cacheBodies": 1
+  },
+  "126-friendly": {
+    "opaqueBodyPixels": 349,
+    "rows": 164,
+    "cacheBodies": 1,
+    "portraitMd": 126,
+    "actualEmotion": 0
+  },
+  "126-hostile": {
+    "opaqueBodyPixels": 350,
+    "rows": 293,
+    "cacheBodies": 1
+  },
+  "191-friendly": {
+    "opaqueBodyPixels": 135,
+    "rows": 165,
+    "cacheBodies": 1,
+    "portraitMd": 191,
+    "actualEmotion": 0
+  },
+  "191-hostile": {
+    "opaqueBodyPixels": 229,
+    "rows": 283,
+    "cacheBodies": 1
+  },
+  "193-friendly": {
+    "opaqueBodyPixels": 232,
+    "rows": 238,
+    "cacheBodies": 1,
+    "portraitMd": 193,
+    "actualEmotion": 0
+  },
+  "193-hostile": {
+    "opaqueBodyPixels": 261,
+    "rows": 395,
+    "cacheBodies": 1
+  },
+  "237-friendly": {
+    "opaqueBodyPixels": 326,
+    "rows": 157,
+    "cacheBodies": 1,
+    "portraitMd": 237,
+    "actualEmotion": 0
+  },
+  "237-hostile": {
+    "opaqueBodyPixels": 371,
+    "rows": 285,
+    "cacheBodies": 1
+  },
+  "240-friendly": {
+    "opaqueBodyPixels": 311,
+    "rows": 149,
+    "cacheBodies": 1,
+    "portraitMd": 240,
+    "actualEmotion": 0
+  },
+  "240-hostile": {
+    "opaqueBodyPixels": 297,
+    "rows": 291,
+    "cacheBodies": 1
+  },
+  "293-friendly": {
+    "opaqueBodyPixels": 241,
+    "rows": 196,
+    "cacheBodies": 1,
+    "portraitMd": 293,
+    "actualEmotion": 0
+  },
+  "293-hostile": {
+    "opaqueBodyPixels": 186,
+    "rows": 318,
+    "cacheBodies": 1
+  },
+  "341-friendly": {
+    "opaqueBodyPixels": 331,
+    "rows": 185,
+    "cacheBodies": 1,
+    "portraitMd": 341,
+    "actualEmotion": 0
+  },
+  "341-hostile": {
+    "opaqueBodyPixels": 383,
+    "rows": 327,
+    "cacheBodies": 1
+  },
+  "342-friendly": {
+    "opaqueBodyPixels": 236,
+    "rows": 160,
+    "cacheBodies": 1,
+    "portraitMd": 342,
+    "actualEmotion": 0
+  },
+  "342-hostile": {
+    "opaqueBodyPixels": 310,
+    "rows": 300,
+    "cacheBodies": 1
+  },
+  "369-friendly": {
+    "opaqueBodyPixels": 265,
+    "rows": 165,
+    "cacheBodies": 1,
+    "portraitMd": 369,
+    "actualEmotion": 4
+  },
+  "369-hostile": {
+    "opaqueBodyPixels": 295,
+    "rows": 302,
+    "cacheBodies": 1
+  },
+  "383-friendly": {
+    "opaqueBodyPixels": 333,
+    "rows": 168,
+    "cacheBodies": 1,
+    "portraitMd": 383,
+    "actualEmotion": 4
+  },
+  "383-hostile": {
+    "opaqueBodyPixels": 286,
+    "rows": 296,
+    "cacheBodies": 1
+  },
+  "384-friendly": {
+    "opaqueBodyPixels": 333,
+    "rows": 174,
+    "cacheBodies": 1,
+    "portraitMd": 384,
+    "actualEmotion": 0
+  },
+  "384-hostile": {
+    "opaqueBodyPixels": 286,
+    "rows": 299,
+    "cacheBodies": 1
+  },
+  "425-friendly": {
+    "opaqueBodyPixels": 178,
+    "rows": 176,
+    "cacheBodies": 1,
+    "portraitMd": 425,
+    "actualEmotion": 4
+  },
+  "425-hostile": {
+    "opaqueBodyPixels": 198,
+    "rows": 304,
+    "cacheBodies": 1
+  },
+  "434-friendly": {
+    "opaqueBodyPixels": 303,
+    "rows": 163,
+    "cacheBodies": 1,
+    "portraitMd": 434,
+    "actualEmotion": 0
+  },
+  "434-hostile": {
+    "opaqueBodyPixels": 296,
+    "rows": 297,
+    "cacheBodies": 1
+  },
+  "437-friendly": {
+    "opaqueBodyPixels": 252,
+    "rows": 181,
+    "cacheBodies": 1,
+    "portraitMd": 437,
+    "actualEmotion": 0
+  },
+  "437-hostile": {
+    "opaqueBodyPixels": 375,
+    "rows": 319,
+    "cacheBodies": 1
+  }
+}

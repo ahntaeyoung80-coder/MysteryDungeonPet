@@ -1,0 +1,50 @@
+[
+  {
+    "scenario": "follow",
+    "asset": "asset-1",
+    "trace": "trace",
+    "matchedPixels": 264,
+    "testedPixels": 264,
+    "status": "pass"
+  },
+  {
+    "scenario": "attack",
+    "asset": "md:384",
+    "trace": "trace",
+    "matchedPixels": 286,
+    "testedPixels": 286,
+    "status": "pass"
+  },
+  {
+    "scenario": "friendly",
+    "asset": "md:383",
+    "trace": "trace",
+    "matchedPixels": 286,
+    "testedPixels": 286,
+    "status": "pass"
+  },
+  {
+    "scenario": "friendly",
+    "asset": "md:383",
+    "trace": "restored-trace",
+    "matchedPixels": 286,
+    "testedPixels": 286,
+    "status": "pass"
+  },
+  {
+    "scenario": "hostile",
+    "asset": "md:384",
+    "trace": "trace",
+    "matchedPixels": 286,
+    "testedPixels": 286,
+    "status": "pass"
+  },
+  {
+    "scenario": "hostile",
+    "asset": "md:384",
+    "trace": "restored-trace",
+    "matchedPixels": 286,
+    "testedPixels": 286,
+    "status": "pass"
+  }
+]

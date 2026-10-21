@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "characters": [
+    {
+      "mdIndex": 16,
+      "kaoIndex": 15,
+      "displayName": "구구"
+    },
+    {
+      "mdIndex": 83,
+      "kaoIndex": 82,
+      "displayName": "파오리"
+    },
+    {
+      "mdIndex": 102,
+      "kaoIndex": 101,
+      "displayName": "아라리"
+    },
+    {
+      "mdIndex": 126,
+      "kaoIndex": 125,
+      "displayName": "마그마"
+    },
+    {
+      "mdIndex": 191,
+      "kaoIndex": 190,
+      "displayName": "해너츠"
+    },
+    {
+      "mdIndex": 193,
+      "kaoIndex": 192,
+      "displayName": "왕자리"
+    },
+    {
+      "mdIndex": 237,
+      "kaoIndex": 236,
+      "displayName": "그랑블루"
+    },
+    {
+      "mdIndex": 240,
+      "kaoIndex": 239,
+      "displayName": "단단지"
+    },
+    {
+      "mdIndex": 293,
+      "kaoIndex": 292,
+      "displayName": "개무소"
+    },
+    {
+      "mdIndex": 341,
+      "kaoIndex": 340,
+      "displayName": "볼비트"
+    },
+    {
+      "mdIndex": 342,
+      "kaoIndex": 341,
+      "displayName": "네오비트"
+    },
+    {
+      "mdIndex": 369,
+      "kaoIndex": 368,
+      "displayName": "가재군",
+      "visitorActorId": 115
+    },
+    {
+      "mdIndex": 383,
+      "kaoIndex": 382,
+      "displayName": "켈리몬"
+    },
+    {
+      "mdIndex": 384,
+      "kaoIndex": 383,
+      "displayName": "켈리몬"
+    },
+    {
+      "mdIndex": 425,
+      "kaoIndex": 424,
+      "displayName": "불꽃숭이"
+    },
+    {
+      "mdIndex": 434,
+      "kaoIndex": 433,
+      "displayName": "비버니",
+      "visitorActorId": 124
+    },
+    {
+      "mdIndex": 437,
+      "kaoIndex": 436,
+      "displayName": "귀뚤톡크"
+    }
+  ]
+}

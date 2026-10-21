@@ -21,6 +21,7 @@ int main(int argc,char** argv){try{
  if(argc==4 && std::string(argv[1])=="--fixtures"){
   const auto p=loadExplorationPackage(argv[2]);const std::filesystem::path output=argv[3];std::filesystem::create_directories(output);
   auto s=cycleFixture();s.assetVersion=p.assetVersion;s.floors=p.floors;
+  s.population.entities[0].originalId=384; // Explicit original actor for the GUI export only.
   saveSnapshot(output/"cycle.mdes",s);saveSnapshot(output/"manual.mdes",s);
   Explorer observed(s);observed.advanceGameplay(1000);s.gameplay.navigationHistory=observed.state().gameplay.navigationHistory;
   saveSnapshot(output/"watch.mdes",s);return 0;

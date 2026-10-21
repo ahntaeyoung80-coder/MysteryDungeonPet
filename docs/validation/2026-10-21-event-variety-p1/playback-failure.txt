@@ -1,0 +1,9 @@
+1845525269 show
+1845556711 render_resume (not user activity)
+1845556771 session=8
+1845558414 select clip=22 direction=2 loop=0
+1845558436 life=Dialogue combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=0
+1845891298 finite finished assetKey=rom:EoS_NA:md:1
+1846760762 select clip=7 direction=2 loop=1
+1846760840 life=Dialogue combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=1
+1847965557 fatal direction phase incompatible

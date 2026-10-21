@@ -1,0 +1,84 @@
+{
+  "status": "pass",
+  "platform": "Wine10; root tracked EXE",
+  "launches": 9,
+  "fixtures": "Windows exporters: 24 snapshots / 24 actors validated; native exporters: 16 snapshots / 17 actors validated",
+  "submittedRows": {
+    "follow": 182,
+    "attack": 72,
+    "navigation": 196,
+    "entry": 279,
+    "party": 729
+  },
+  "relationships": [
+    {
+      "name": "friendly",
+      "runId": 940,
+      "hostileCount": 0
+    },
+    {
+      "name": "hostile",
+      "runId": 940,
+      "hostileCount": 1
+    }
+  ],
+  "checks": [
+    "companion Walk/Attack",
+    "relationship restore",
+    "navigation detour",
+    "NPC greeting",
+    "sequential ally attacks",
+    "one enemy removed while the other continues",
+    "both enemies removed"
+  ],
+  "bodyPixels": [
+    {
+      "scenario": "follow",
+      "asset": "asset-1",
+      "trace": "trace",
+      "matchedPixels": 264,
+      "testedPixels": 264,
+      "status": "pass"
+    },
+    {
+      "scenario": "attack",
+      "asset": "md:384",
+      "trace": "trace",
+      "matchedPixels": 286,
+      "testedPixels": 286,
+      "status": "pass"
+    },
+    {
+      "scenario": "friendly",
+      "asset": "md:383",
+      "trace": "trace",
+      "matchedPixels": 286,
+      "testedPixels": 286,
+      "status": "pass"
+    },
+    {
+      "scenario": "friendly",
+      "asset": "md:383",
+      "trace": "restored-trace",
+      "matchedPixels": 286,
+      "testedPixels": 286,
+      "status": "pass"
+    },
+    {
+      "scenario": "hostile",
+      "asset": "md:384",
+      "trace": "trace",
+      "matchedPixels": 286,
+      "testedPixels": 286,
+      "status": "pass"
+    },
+    {
+      "scenario": "hostile",
+      "asset": "md:384",
+      "trace": "restored-trace",
+      "matchedPixels": 286,
+      "testedPixels": 286,
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+17 NPC bindings; complete dungeon 0/15 coverage; exact MD/species/sprite/KAO; roles, Normal fallback, eight directions, missing body/ID/schema rejected; single-speaker overlay pass
+34 character IDs / 21 options per role, 420 distinct pairs / 21 duplicates blocked, gender duplicate migration, 14 moods, exact Kecleon mapping, profile replace/restore, defeat dialogue replay and final fade passed
+NPC/partner/bed/wake portraits, speaker/layout/clipping, safe party chat, completion ownership, save/restore and exploration resume pass
+PASS GUI 16-friendly
+PASS GUI 16-hostile
+PASS GUI 83-friendly
+PASS GUI 83-hostile
+PASS GUI 102-friendly
+PASS GUI 102-hostile
+PASS GUI 126-friendly
+PASS GUI 126-hostile
+PASS GUI 191-friendly
+PASS GUI 191-hostile
+PASS GUI 193-friendly
+PASS GUI 193-hostile
+PASS GUI 237-friendly
+PASS GUI 237-hostile
+PASS GUI 240-friendly
+PASS GUI 240-hostile
+PASS GUI 293-friendly
+PASS GUI 293-hostile
+PASS GUI 341-friendly
+PASS GUI 341-hostile
+PASS GUI 342-friendly
+PASS GUI 342-hostile
+PASS GUI 369-friendly
+PASS GUI 369-hostile
+PASS GUI 383-friendly
+PASS GUI 383-hostile
+PASS GUI 384-friendly
+PASS GUI 384-hostile
+PASS GUI 425-friendly
+PASS GUI 425-hostile
+PASS GUI 434-friendly
+PASS GUI 434-hostile
+PASS GUI 437-friendly
+PASS GUI 437-hostile
+PASS floor cache 0
+PASS floor cache 1
+PASS floor cache 2
+PASS floor cache 3
+PASS floor cache 4
+PASS floor cache 5
+X connection to :99 broken (explicit kill or server shutdown).

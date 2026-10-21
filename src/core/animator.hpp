@@ -18,6 +18,7 @@ class Animator {
 public:
     void start(const Package&, uint32_t clipId, unsigned direction, bool loop, int64_t nowUs, std::uint32_t durationScale=1);
     void changeDirection(const Package&, uint32_t clipId, unsigned direction);
+    bool tryChangeDirection(const Package&, uint32_t clipId, unsigned direction);
     Advance advance(int64_t nowUs);
     void pause(int64_t nowUs);
     void resume(int64_t nowUs);
