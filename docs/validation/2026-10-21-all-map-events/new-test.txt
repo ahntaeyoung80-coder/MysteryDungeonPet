@@ -1,0 +1,1 @@
+171 map/floor/event starts+restore; per-map identical 1024-seed regular outcomes: 0=354 1=108 2=83 3=105 4=0 5=96 6=91 7=89 8=4 9=94; room MH=48/1024; local stock/species, wonder/reunion finish once, safety/budget/frequency and map alternation pass

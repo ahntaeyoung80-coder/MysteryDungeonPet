@@ -23,7 +23,7 @@ GameplayUpdate route(ExplorationState& s,unsigned leader,int target,unsigned sto
 }
 }
 bool movementEvent(VarietyEvent type){return type==VarietyEvent::LostPokemon || type==VarietyEvent::LostProperty || type==VarietyEvent::Reunion;}
-bool startMovementEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,const DialogueCatalogue& c,unsigned actorId,const EventRegistry* maps) {
+bool startMovementEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,const DialogueCatalogue& c,unsigned actorId,const EventRegistry*) {
     auto& g=s.gameplay;const auto distances=bfs(s.world,s.position,s.blocked).distance;
     Entity* owner=nullptr;std::string variant;int target=-1,object=-1,source=-1;unsigned victim=0;
     if(type==VarietyEvent::LostPokemon || type==VarietyEvent::LostProperty) {
@@ -43,8 +43,6 @@ bool startMovementEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,
             variant=drawVariety(s.variety,VarietyRandomStream::Event,2)?"E06.return_a":"E06.return_b";
         }
     } else {
-        const auto* f=maps?maps->floor(s):nullptr;
-        if(!f || !f->trapDensity || std::none_of(f->traps.begin(),f->traps.end(),[](const auto& w){return w.originalId==6 && w.value;}))return false;
         victim=drawVariety(s.variety,VarietyRandomStream::Event,2)?kCompanionActorId:0;
         source=victim==0?s.position:g.companion.tile;target=victim==0?g.companion.tile:s.position;
         const auto contact="warp-contact:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(source);

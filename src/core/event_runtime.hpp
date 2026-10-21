@@ -2,6 +2,9 @@
 #include "core/dialogue_catalogue.hpp"
 #include "core/event_registry.hpp"
 namespace pet {
+// Product event opportunities are shared by every supported dungeon. ROM facts retain their original values.
+constexpr std::uint32_t kMonsterHouseEventPercent=5;
+constexpr std::uint32_t kReunionEventWeight=834,kReunionEventScale=10000;
 bool eventActive(const ExplorationState&);
 // Direct scenario entry bypasses frequency only; all safety/actor/space checks still apply.
 bool startVarietyEvent(ExplorationState&,VarietyEvent,std::uint64_t,const DialogueCatalogue&,std::uint32_t actor=0,const EventRegistry* maps=nullptr);

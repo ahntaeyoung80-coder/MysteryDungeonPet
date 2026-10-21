@@ -51,7 +51,7 @@ bool startVarietyEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,c
     if(type!=VarietyEvent::Wonder && type!=VarietyEvent::GuildVisit && type!=VarietyEvent::TiredExplorer)return false;
     const auto distance=bfs(s.world,s.position,s.blocked).distance;std::string variant;unsigned selectedActor=0,shareOwner=0;bool share=false;
     if(type==VarietyEvent::Wonder) {
-        if(s.floors[s.floorIndex].dungeonId!=15 || !c.find("E05.view_a.view"))return false;
+        if(!c.find("E05.view_a.view"))return false;
         variant=drawVariety(s.variety,VarietyRandomStream::Event,2)?"E05.view_a":"E05.view_b";
     } else if(type==VarietyEvent::TiredExplorer) {
         const auto i=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& a){return
@@ -83,25 +83,24 @@ bool tryAutomaticEvent(ExplorationState& s,std::uint64_t now,const DialogueCatal
     if(!canStartVariety(s,now) || !s.gameplay.companion.enabled || s.gameplay.onceKeys.count(floorKey(s)))return false;
     const auto prefix="event-start:"+std::to_string(s.runId)+":";
     if(std::count_if(s.gameplay.onceKeys.begin(),s.gameplay.onceKeys.end(),[&](const auto& k){return k.rfind(prefix,0)==0;})>=2)return false;
-    const auto* facts=maps?maps->floor(s):nullptr;const auto& move=s.gameplay.movement;
+    const auto& move=s.gameplay.movement;
     const int room=s.world.room[s.position];
-    if(facts && facts->monsterHouseChance && room>=0 && move.actionId && move.to==s.position && move.from>=0 && s.world.room[move.from]!=room) {
+    if(room>=0 && move.actionId && move.to==s.position && move.from>=0 && s.world.room[move.from]!=room) {
         const auto entry="event-room:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(room);
-        if(s.gameplay.onceKeys.insert(entry).second && drawVariety(s.variety,VarietyRandomStream::Event,100)<facts->monsterHouseChance &&
+        if(s.gameplay.onceKeys.insert(entry).second && drawVariety(s.variety,VarietyRandomStream::Event,100)<kMonsterHouseEventPercent &&
            startVarietyEvent(s,VarietyEvent::MonsterHouse,now,c,0,maps))return true;
     }
     if(s.floorSteps<16 || s.floorSteps%32!=16)return false;
     const auto trigger="event-evaluated:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(s.floorSteps);
     if(!s.gameplay.onceKeys.insert(trigger).second)return false;
     // Conservative first policy: one opportunity per 32 completed moves, at most one per floor/two per run.
-    // The original spawn/item weights and encounter/combat RNG are not modified.
+    // Event occurrence is map-independent; original item/monster weights and combat RNG remain separate.
     const auto draw=drawVariety(s.variety,VarietyRandomStream::Event,11);
     if(draw>=8)return false;
     const VarietyEvent types[]{VarietyEvent::Wonder,VarietyEvent::GuildVisit,VarietyEvent::TiredExplorer,VarietyEvent::LostPokemon,VarietyEvent::LostProperty,VarietyEvent::Reunion,VarietyEvent::Shop,VarietyEvent::JointBattle};
     if(types[draw]==VarietyEvent::Reunion) {
-        const auto* f=maps?maps->floor(s):nullptr;unsigned trap=0;
-        if(!f || !f->trapDensity)return false;Rng rng{s.variety.eventRng};const bool selected=sample(f->traps,rng,trap);s.variety.eventRng=rng.state;
-        if(!selected || trap!=6)return false;
+        // Preserve the former dungeon18 warp rate, now shared across maps.
+        if(drawVariety(s.variety,VarietyRandomStream::Event,kReunionEventScale)>=kReunionEventWeight)return false;
     }
     return startVarietyEvent(s,types[draw],now,c,0,maps);
 }

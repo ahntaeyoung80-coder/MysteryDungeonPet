@@ -34,7 +34,7 @@ int main(){try {
         if(type==VarietyEvent::LostProperty)check(propertySeen && ownerTalk && !s.variety.event.carrying,"property skipped pickup/owner/return");
         if(type==VarietyEvent::Reunion)check(canAttack(s.world,s.position,s.gameplay.companion.tile),"reunion dialogue before actual adjacency");
     }
-    auto s=eventFixture(p);check(!startVarietyEvent(s,VarietyEvent::Reunion,1000,c,0,&maps),"warp fabricated on zero-weight default map");
+    auto s=eventFixture(p);check(startVarietyEvent(s,VarietyEvent::Reunion,1000,c,0,&maps),"reunion excluded by original zero warp weight");
     s=eventFixture(p);check(startVarietyEvent(s,VarietyEvent::LostProperty,1000,c,1,&maps),"property cancellation fixture");
     s.variety.event.carrying=true;s.variety.event.objectTile=-1;cancelVariety(s);
     check(!s.variety.event.carrying && !s.variety.event.item && s.inventory.empty() && s.variety.event.actors.empty(),"cancel converted lost property to inventory");

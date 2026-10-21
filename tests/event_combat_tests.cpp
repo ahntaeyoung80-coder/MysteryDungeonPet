@@ -10,7 +10,8 @@ int main(){try {
     const auto p=loadExplorationPackage(root/"exploration/dungeon-18/exploration.mdpe");
     const auto base=loadExplorationPackage(root/"exploration/dungeon-15/exploration.mdpe");
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");const auto maps=loadEventRegistry(root/"gameplay/events/contexts.mder");
-    auto s=eventFixture(base);check(!startVarietyEvent(s,VarietyEvent::Shop,1000,c,0,&maps) && !startVarietyEvent(s,VarietyEvent::MonsterHouse,1000,c,0,&maps),"zero original special conditions ignored");
+    auto s=eventFixture(base);check(startVarietyEvent(s,VarietyEvent::Shop,1000,c,0,&maps),"shop excluded by original zero chance");
+    s=eventFixture(base);check(startVarietyEvent(s,VarietyEvent::MonsterHouse,1000,c,0,&maps),"monster house excluded by original zero chance");
     bool traded=false;
     for(unsigned seed=0;seed<64 && !traded;++seed) {
         s=eventFixture(p);s.variety.eventRng=seed;check(changeStock(s,0,109,3),"trade fixture stock");

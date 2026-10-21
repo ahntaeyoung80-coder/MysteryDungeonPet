@@ -17,7 +17,9 @@ bool combatEvent(VarietyEvent type){return type==VarietyEvent::Shop || type==Var
 bool startCombatEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,const DialogueCatalogue& c,unsigned actorId,const EventRegistry* maps) {
     auto candidate=s;auto& g=candidate.gameplay;auto& e=candidate.variety.event;
     const auto* facts=maps?maps->floor(candidate):nullptr;
-    if(!facts || (type==VarietyEvent::Shop && !facts->shopChance) || (type==VarietyEvent::MonsterHouse && !facts->monsterHouseChance))return false;
+    const auto& floor=candidate.floors[candidate.floorIndex];
+    // Legacy maps may have no extra event registry. Reuse their own floor data.
+    const auto& shopItems=facts && std::any_of(facts->shopItems.begin(),facts->shopItems.end(),[](const auto& category){return category.weight && std::any_of(category.items.begin(),category.items.end(),[](const auto& item){return item.value>0;});})?facts->shopItems:floor.floorItems;
     const int room=s.world.room[s.position];if(room<0)return false;
     const auto distances=bfs(s.world,s.position,s.blocked).distance;
     const auto count=std::count_if(s.population.entities.begin(),s.population.entities.end(),[](const auto& a){return a.kind==EntityKind::Friend && a.visible && !a.done;});
@@ -35,7 +37,7 @@ bool startCombatEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,co
     if(type==VarietyEvent::Shop) {
         const auto id=nextId(candidate);if(!id)return false;
         candidate.population.entities.push_back({id,383,EntityKind::Friend,tiles.front(),false});e.actors=e.temporaryActors={id};e.sourceTile=tiles.front();
-        for(unsigned i=0;i<7;++i){const auto item=sampleItem(candidate,facts->shopItems);if(item)e.goods.push_back({item,1});}
+        for(unsigned i=0;i<7;++i){const auto item=sampleItem(candidate,shopItems);if(item)e.goods.push_back({item,1});}
         if(e.goods.empty())return false;
         const bool oran=std::any_of(e.goods.begin(),e.goods.end(),[](const auto& x){return x.item==ITEM_ORAN_BERRY;});
         if(oran && stockQuantity(candidate,0,109)>=3 && g.oran<kMaxStock) {
@@ -45,7 +47,7 @@ bool startCombatEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,co
         e.variant=type==VarietyEvent::MonsterHouse?(drawVariety(candidate.variety,VarietyRandomStream::Event,2)?"E04.house_a":"E04.house_b"):
             (drawVariety(candidate.variety,VarietyRandomStream::Event,2)?"E07.assist_a":"E07.assist_b");
         if(helper)e.actors={helper};
-        const auto& weights=type==VarietyEvent::MonsterHouse?facts->monsterHouse:candidate.floors[candidate.floorIndex].normalFriends;
+        const auto& weights=type==VarietyEvent::MonsterHouse && facts && std::any_of(facts->monsterHouse.begin(),facts->monsterHouse.end(),[](const auto& entry){return entry.value>0;})?facts->monsterHouse:floor.normalFriends;
         for(unsigned i=0;i<needed;++i) {
             const auto md=sampleEvent(candidate,weights),id=nextId(candidate);if(!md || !id)return false;
             candidate.population.entities.push_back({id,md,EntityKind::Friend,tiles[i],false});g.hostile.push_back(id);e.opponents.push_back(id);
