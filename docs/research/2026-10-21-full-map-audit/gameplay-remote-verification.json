@@ -1,0 +1,11 @@
+{
+  "checkedAtUtc": "2026-10-21T23:29:11.389496+00:00",
+  "dataCommit": "96b1514",
+  "documentationCommit": "14008834a038121d44201f779ed0abe5591c4cb8",
+  "originWorkAfterExplicitFetch": "14008834a038121d44201f779ed0abe5591c4cb8",
+  "match": true,
+  "cleanAtCheck": true,
+  "artifactManifests": "pass",
+  "ciPolicy": "documentation-only [skip ci]; no product rebuild/deployment",
+  "scope": "this receipt is recorded in a subsequent documentation-only commit"
+}
