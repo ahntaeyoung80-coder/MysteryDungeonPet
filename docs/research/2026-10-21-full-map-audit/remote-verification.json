@@ -1,0 +1,9 @@
+{
+  "verifiedUtc": "2026-10-21T21:33:15.619547+00:00",
+  "elapsedSecondsFromFirstMeasurement": 1287.619547,
+  "head": "5d36770f75cf549514dfe64d9f4074dc763a9e5c",
+  "originWork": "5d36770f75cf549514dfe64d9f4074dc763a9e5c",
+  "cleanBeforeVerificationRecord": true,
+  "scope": "docs/research only; product source/assets/EXE unchanged",
+  "ci": "문서 전용 skip ci; 제품 검사 재실행 없음"
+}

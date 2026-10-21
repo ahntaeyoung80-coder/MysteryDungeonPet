@@ -67,6 +67,10 @@
     "bytes": 94625,
     "sha256": "a0bb22ed7e0fbcabb23f0886502bd343004317dcbc64e8fdc0af3ced4c1c8001"
   },
+  "remote-verification.json": {
+    "bytes": 399,
+    "sha256": "edd10e92d2a21d975f72967f43a8798550fc752fdc4c2511785c5de30c8aaabd"
+  },
   "web-rom-comparison.csv": {
     "bytes": 14538,
     "sha256": "cb1ac3530a27089c2c8e85eac64dddaf02f47eb908fd66065ce1674fd1e7c3a6"
