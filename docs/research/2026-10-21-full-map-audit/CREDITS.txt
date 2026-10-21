@@ -1,0 +1,6 @@
+ROM graphics: Nintendo / Pokémon / CHUNSOFT; user-provided original ROM.
+Static tile samples are research artifacts, not new runtime assets.
+Parsing: SkyTemple / skytemple-files (GPL-3.0-or-later), pinned versions already used by this repository.
+Dungeon ID/group facts: UsernameFodder/pmdsky-debug, commit c72fe675919ec83cfe93f687973afae85e00d1a3.
+Dojo mapping reference: SkyTemple, commit f78d0ef387dbc121bad4c8f0186237f9a4ae035d.
+Web facts: Mystery Dungeon Franchise Wiki, Bulbapedia; URLs and observations recorded in web-plan.json/web-facts.json/web-reconciled.json.

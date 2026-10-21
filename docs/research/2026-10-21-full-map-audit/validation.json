@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "checks": [
+    "94route categories/105maze entries",
+    "192physical definitions+dojo99floors",
+    "8644FAT manifest",
+    "1892physical floors +mappa_gs match",
+    "1795prior logical floors match",
+    "91web documents resolved",
+    "125tile conversions and DMA",
+    "local Markdown links exist",
+    "ROM unchanged"
+  ],
+  "productCodeAssetsExeChanged": false
+}

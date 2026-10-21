@@ -1,0 +1,257 @@
+id,symbol,kind
+0,DUNGEON_TEST_DUNGEON,general definition
+1,DUNGEON_BEACH_CAVE,general definition
+2,DUNGEON_BEACH_CAVE_PIT,general definition
+3,DUNGEON_DRENCHED_BLUFF,general definition
+4,DUNGEON_MT_BRISTLE,general definition
+5,DUNGEON_MT_BRISTLE_PEAK,general definition
+6,DUNGEON_WATERFALL_CAVE,general definition
+7,DUNGEON_APPLE_WOODS,general definition
+8,DUNGEON_CRAGGY_COAST,general definition
+9,DUNGEON_SIDE_PATH,general definition
+10,DUNGEON_MT_HORN,general definition
+11,DUNGEON_ROCK_PATH,general definition
+12,DUNGEON_FOGGY_FOREST,general definition
+13,DUNGEON_FOREST_PATH,general definition
+14,DUNGEON_STEAM_CAVE,general definition
+15,DUNGEON_UPPER_STEAM_CAVE,general definition
+16,DUNGEON_STEAM_CAVE_PEAK,general definition
+17,DUNGEON_AMP_PLAINS,general definition
+18,DUNGEON_FAR_AMP_PLAINS,general definition
+19,DUNGEON_AMP_CLEARING,general definition
+20,DUNGEON_NORTHERN_DESERT,general definition
+21,DUNGEON_QUICKSAND_CAVE,general definition
+22,DUNGEON_QUICKSAND_PIT,general definition
+23,DUNGEON_UNDERGROUND_LAKE,general definition
+24,DUNGEON_CRYSTAL_CAVE,general definition
+25,DUNGEON_CRYSTAL_CROSSING,general definition
+26,DUNGEON_CRYSTAL_LAKE,general definition
+27,DUNGEON_CHASM_CAVE,general definition
+28,DUNGEON_DARK_HILL,general definition
+29,DUNGEON_SEALED_RUIN,general definition
+30,DUNGEON_DEEP_SEALED_RUIN,general definition
+31,DUNGEON_SEALED_RUIN_PIT,general definition
+32,DUNGEON_DUSK_FOREST,general definition
+33,DUNGEON_DEEP_DUSK_FOREST,general definition
+34,DUNGEON_TREESHROUD_FOREST,general definition
+35,DUNGEON_BRINE_CAVE,general definition
+36,DUNGEON_LOWER_BRINE_CAVE,general definition
+37,DUNGEON_BRINE_CAVE_PIT,general definition
+38,DUNGEON_HIDDEN_LAND,general definition
+39,DUNGEON_HIDDEN_HIGHLAND,general definition
+40,DUNGEON_OLD_RUINS,general definition
+41,DUNGEON_TEMPORAL_TOWER,general definition
+42,DUNGEON_TEMPORAL_SPIRE,general definition
+43,DUNGEON_TEMPORAL_PINNACLE,general definition
+44,DUNGEON_MYSTIFYING_FOREST,general definition
+45,DUNGEON_MYSTIFYING_FOREST_CLEARING,general definition
+46,DUNGEON_BLIZZARD_ISLAND,general definition
+47,DUNGEON_CREVICE_CAVE,general definition
+48,DUNGEON_LOWER_CREVICE_CAVE,general definition
+49,DUNGEON_CREVICE_CAVE_PIT,general definition
+50,DUNGEON_SURROUNDED_SEA,general definition
+51,DUNGEON_MIRACLE_SEA,general definition
+52,DUNGEON_DEEP_MIRACLE_SEA,general definition
+53,DUNGEON_MIRACLE_SEABED,general definition
+54,DUNGEON_ICE_AEGIS_CAVE,general definition
+55,DUNGEON_REGICE_CHAMBER,general definition
+56,DUNGEON_ROCK_AEGIS_CAVE,general definition
+57,DUNGEON_REGIROCK_CHAMBER,general definition
+58,DUNGEON_STEEL_AEGIS_CAVE,general definition
+59,DUNGEON_REGISTEEL_CHAMBER,general definition
+60,DUNGEON_AEGIS_CAVE_PIT,general definition
+61,DUNGEON_REGIGIGAS_CHAMBER,general definition
+62,DUNGEON_MT_TRAVAIL,general definition
+63,DUNGEON_THE_NIGHTMARE,general definition
+64,DUNGEON_SPACIAL_RIFT,general definition
+65,DUNGEON_DEEP_SPACIAL_RIFT,general definition
+66,DUNGEON_SPACIAL_RIFT_BOTTOM,general definition
+67,DUNGEON_DARK_CRATER,general definition
+68,DUNGEON_DEEP_DARK_CRATER,general definition
+69,DUNGEON_DARK_CRATER_PIT,general definition
+70,DUNGEON_CONCEALED_RUINS,general definition
+71,DUNGEON_DEEP_CONCEALED_RUINS,general definition
+72,DUNGEON_MARINE_RESORT,general definition
+73,DUNGEON_BOTTOMLESS_SEA,general definition
+74,DUNGEON_BOTTOMLESS_SEA_DEPTHS,general definition
+75,DUNGEON_SHIMMER_DESERT,general definition
+76,DUNGEON_SHIMMER_DESERT_PIT,general definition
+77,DUNGEON_MT_AVALANCHE,general definition
+78,DUNGEON_MT_AVALANCHE_PEAK,general definition
+79,DUNGEON_GIANT_VOLCANO,general definition
+80,DUNGEON_GIANT_VOLCANO_PEAK,general definition
+81,DUNGEON_WORLD_ABYSS,general definition
+82,DUNGEON_WORLD_ABYSS_PIT,general definition
+83,DUNGEON_SKY_STAIRWAY,general definition
+84,DUNGEON_SKY_STAIRWAY_APEX,general definition
+85,DUNGEON_MYSTERY_JUNGLE,general definition
+86,DUNGEON_DEEP_MYSTERY_JUNGLE,general definition
+87,DUNGEON_SERENITY_RIVER,general definition
+88,DUNGEON_LANDSLIDE_CAVE,general definition
+89,DUNGEON_LUSH_PRAIRIE,general definition
+90,DUNGEON_TINY_MEADOW,general definition
+91,DUNGEON_LABYRINTH_CAVE,general definition
+92,DUNGEON_ORAN_FOREST,general definition
+93,DUNGEON_LAKE_AFAR,general definition
+94,DUNGEON_HAPPY_OUTLOOK,general definition
+95,DUNGEON_MY_MISTRAL,general definition
+96,DUNGEON_SHIMMER_HILL,general definition
+97,DUNGEON_LOST_WILDERNESS,general definition
+98,DUNGEON_MIDNIGHT_FOREST,general definition
+99,DUNGEON_ZERO_ISLE_NORTH,general definition
+100,DUNGEON_ZERO_ISLE_EAST,general definition
+101,DUNGEON_ZERO_ISLE_WEST,general definition
+102,DUNGEON_ZERO_ISLE_SOUTH,general definition
+103,DUNGEON_ZERO_ISLE_CENTER,general definition
+104,DUNGEON_DESTINY_TOWER,general definition
+105,DUNGEON_DUMMY_0x69,general definition
+106,DUNGEON_DUMMY_0x6A,general definition
+107,DUNGEON_OBLIVION_FOREST,general definition
+108,DUNGEON_TREACHEROUS_WATERS,general definition
+109,DUNGEON_SOUTHEASTERN_ISLANDS,general definition
+110,DUNGEON_INFERNO_CAVE,general definition
+111,DUNGEON_1ST_STATION_PASS,general definition
+112,DUNGEON_2ND_STATION_PASS,general definition
+113,DUNGEON_3RD_STATION_PASS,general definition
+114,DUNGEON_4TH_STATION_PASS,general definition
+115,DUNGEON_5TH_STATION_PASS,general definition
+116,DUNGEON_6TH_STATION_PASS,general definition
+117,DUNGEON_7TH_STATION_PASS,general definition
+118,DUNGEON_8TH_STATION_PASS,general definition
+119,DUNGEON_9TH_STATION_PASS,general definition
+120,DUNGEON_SKY_PEAK_SUMMIT_PASS,general definition
+121,DUNGEON_5TH_STATION_CLEARING,general definition
+122,DUNGEON_SKY_PEAK_SUMMIT,general definition
+123,DUNGEON_STAR_CAVE_SE1,general definition
+124,DUNGEON_DEEP_STAR_CAVE,general definition
+125,DUNGEON_DEEP_STAR_CAVE_TEAM_ROGUE,general definition
+126,DUNGEON_STAR_CAVE_DEPTHS,general definition
+127,DUNGEON_STAR_CAVE_PIT,general definition
+128,DUNGEON_MURKY_FOREST,general definition
+129,DUNGEON_EASTERN_CAVE,general definition
+130,DUNGEON_FORTUNE_RAVINE,general definition
+131,DUNGEON_FORTUNE_RAVINE_DEPTHS,general definition
+132,DUNGEON_FORTUNE_RAVINE_PIT,general definition
+133,DUNGEON_BARREN_VALLEY,general definition
+134,DUNGEON_DEEP_BARREN_VALLEY,general definition
+135,DUNGEON_BARREN_VALLEY_CLEARING,general definition
+136,DUNGEON_DARK_WASTELAND,general definition
+137,DUNGEON_TEMPORAL_TOWER_SE5,general definition
+138,DUNGEON_TEMPORAL_SPIRE_SE5,general definition
+139,DUNGEON_DUSK_FOREST_SE5,general definition
+140,DUNGEON_BLACK_SWAMP,general definition
+141,DUNGEON_SPACIAL_CLIFFS,general definition
+142,DUNGEON_DARK_ICE_MOUNTAIN,general definition
+143,DUNGEON_DARK_ICE_MOUNTAIN_PEAK,general definition
+144,DUNGEON_DARK_ICE_MOUNTAIN_PINNACLE,general definition
+145,DUNGEON_ICICLE_FOREST,general definition
+146,DUNGEON_VAST_ICE_MOUNTAIN,general definition
+147,DUNGEON_VAST_ICE_MOUNTAIN_PEAK,general definition
+148,DUNGEON_VAST_ICE_MOUNTAIN_PINNACLE,general definition
+149,DUNGEON_SOUTHERN_JUNGLE,general definition
+150,DUNGEON_BOULDER_QUARRY,general definition
+151,DUNGEON_DEEP_BOULDER_QUARRY,general definition
+152,DUNGEON_BOULDER_QUARRY_CLEARING,general definition
+153,DUNGEON_RIGHT_CAVE_PATH,general definition
+154,DUNGEON_LEFT_CAVE_PATH,general definition
+155,DUNGEON_LIMESTONE_CAVERN,general definition
+156,DUNGEON_DEEP_LIMESTONE_CAVERN,general definition
+157,DUNGEON_LIMESTONE_CAVERN_DEPTHS,general definition
+158,DUNGEON_SPRING_CAVE,general definition
+159,DUNGEON_UPPER_SPRING_CAVE_HAUNTER,general definition
+160,DUNGEON_UPPER_SPRING_CAVE,general definition
+161,DUNGEON_MIDDLE_SPRING_CAVE,general definition
+162,DUNGEON_LOWER_SPRING_CAVE,general definition
+163,DUNGEON_SPRING_CAVE_DEPTHS,general definition
+164,DUNGEON_SPRING_CAVE_PIT,general definition
+165,DUNGEON_LITTLE_PLAINS,general definition
+166,DUNGEON_MT_CLEAR,general definition
+167,DUNGEON_CHALLENGE_RIVER,general definition
+168,DUNGEON_TRIAL_FOREST,general definition
+169,DUNGEON_GUIDING_SEA,general definition
+170,DUNGEON_HIDDEN_SHOPKEEPER_VILLAGE,general definition
+171,DUNGEON_DUMMY_0xAB,general definition
+172,DUNGEON_DUMMY_0xAC,general definition
+173,DUNGEON_DUMMY_0xAD,general definition
+174,DUNGEON_STAR_CAVE,general definition
+175,DUNGEON_SHAYMIN_VILLAGE,general definition
+176,DUNGEON_ARMALDOS_SHELTER,general definition
+177,DUNGEON_LUMINOUS_SPRING,general definition
+178,DUNGEON_HOT_SPRING,general definition
+179,DUNGEON_RESCUE,general definition
+180,DUNGEON_NORMAL_FLY_MAZE,dojo mapping
+181,DUNGEON_DARK_FIRE_MAZE,dojo mapping
+182,DUNGEON_ROCK_WATER_MAZE,dojo mapping
+183,DUNGEON_GRASS_MAZE,dojo mapping
+184,DUNGEON_ELEC_STEEL_MAZE,dojo mapping
+185,DUNGEON_ICE_GROUND_MAZE,dojo mapping
+186,DUNGEON_FIGHT_PSYCH_MAZE,dojo mapping
+187,DUNGEON_POISON_BUG_MAZE,dojo mapping
+188,DUNGEON_DRAGON_MAZE,dojo mapping
+189,DUNGEON_GHOST_MAZE,dojo mapping
+190,DUNGEON_EXPLORER_MAZE,dojo mapping
+191,DUNGEON_FINAL_MAZE,dojo mapping
+192,DUNGEON_DOJO_0xC0,dojo alias/reserved id
+193,DUNGEON_DOJO_0xC1,dojo alias/reserved id
+194,DUNGEON_DOJO_0xC2,dojo alias/reserved id
+195,DUNGEON_DOJO_0xC3,dojo alias/reserved id
+196,DUNGEON_DOJO_0xC4,dojo alias/reserved id
+197,DUNGEON_DOJO_0xC5,dojo alias/reserved id
+198,DUNGEON_DOJO_0xC6,dojo alias/reserved id
+199,DUNGEON_DOJO_0xC7,dojo alias/reserved id
+200,DUNGEON_DOJO_0xC8,dojo alias/reserved id
+201,DUNGEON_DOJO_0xC9,dojo alias/reserved id
+202,DUNGEON_DOJO_0xCA,dojo alias/reserved id
+203,DUNGEON_DOJO_0xCB,dojo alias/reserved id
+204,DUNGEON_DOJO_0xCC,dojo alias/reserved id
+205,DUNGEON_DOJO_0xCD,dojo alias/reserved id
+206,DUNGEON_DOJO_0xCE,dojo alias/reserved id
+207,DUNGEON_DOJO_0xCF,dojo alias/reserved id
+208,DUNGEON_DOJO_0xD0,dojo alias/reserved id
+209,DUNGEON_DOJO_0xD1,dojo alias/reserved id
+210,DUNGEON_DOJO_0xD2,dojo alias/reserved id
+211,DUNGEON_DOJO_0xD3,dojo alias/reserved id
+212,DUNGEON_RESCUE_DUNGEON,system/name/metainfo id without general floor definition
+213,DUNGEON_BASE,system/name/metainfo id without general floor definition
+214,DUNGEON_JOINED_AT_QUESTION_MARKS,system/name/metainfo id without general floor definition
+215,DUNGEON_BEACH,system/name/metainfo id without general floor definition
+216,DUNGEON_JOINED_AT_UNKNOWN,system/name/metainfo id without general floor definition
+217,DUNGEON_JOINED_AT_BIDOOF,system/name/metainfo id without general floor definition
+218,DUNGEON_JOINED_AT_GROVYLE,system/name/metainfo id without general floor definition
+219,DUNGEON_JOINED_AT_CELEBI,system/name/metainfo id without general floor definition
+220,DUNGEON_JOINED_AT_CHATOT,system/name/metainfo id without general floor definition
+221,DUNGEON_JOINED_AT_CRESSELIA,system/name/metainfo id without general floor definition
+222,DUNGEON_DUMMY_0xDE,system/name/metainfo id without general floor definition
+223,DUNGEON_DUMMY_0xDF,system/name/metainfo id without general floor definition
+224,DUNGEON_DUMMY_0xE0,system/name/metainfo id without general floor definition
+225,DUNGEON_DUMMY_0xE1,system/name/metainfo id without general floor definition
+226,DUNGEON_DUMMY_0xE2,system/name/metainfo id without general floor definition
+227,DUNGEON_DUMMY_0xE3,system/name/metainfo id without general floor definition
+228,DUNGEON_DUMMY_0xE4,system/name/metainfo id without general floor definition
+229,DUNGEON_DUMMY_0xE5,system/name/metainfo id without general floor definition
+230,DUNGEON_DUMMY_0xE6,system/name/metainfo id without general floor definition
+231,DUNGEON_DUMMY_0xE7,system/name/metainfo id without general floor definition
+232,DUNGEON_DUMMY_0xE8,system/name/metainfo id without general floor definition
+233,DUNGEON_DUMMY_0xE9,system/name/metainfo id without general floor definition
+234,DUNGEON_DUMMY_0xEA,system/name/metainfo id without general floor definition
+235,DUNGEON_DUMMY_0xEB,system/name/metainfo id without general floor definition
+236,DUNGEON_DUMMY_0xEC,system/name/metainfo id without general floor definition
+237,DUNGEON_DUMMY_0xED,system/name/metainfo id without general floor definition
+238,DUNGEON_DUMMY_0xEE,system/name/metainfo id without general floor definition
+239,DUNGEON_DUMMY_0xEF,system/name/metainfo id without general floor definition
+240,DUNGEON_DUMMY_0xF0,system/name/metainfo id without general floor definition
+241,DUNGEON_JOINED_AT_MANAPHY_RECRUITED,system/name/metainfo id without general floor definition
+242,DUNGEON_JOINED_AT_CRESSELIA_RECRUITED,system/name/metainfo id without general floor definition
+243,DUNGEON_JOINED_AT_SHAYMIN_LAND_RECRUITED,system/name/metainfo id without general floor definition
+244,DUNGEON_DUMMY_0xF4,system/name/metainfo id without general floor definition
+245,DUNGEON_DUMMY_0xF5,system/name/metainfo id without general floor definition
+246,DUNGEON_DUMMY_0xF6,system/name/metainfo id without general floor definition
+247,DUNGEON_TREASURE_TOWN_0xF7,system/name/metainfo id without general floor definition
+248,DUNGEON_TREASURE_TOWN_0xF8,system/name/metainfo id without general floor definition
+249,DUNGEON_OUTSIDE,system/name/metainfo id without general floor definition
+250,DUNGEON_CLIENT,system/name/metainfo id without general floor definition
+251,DUNGEON_DUMMY_0xFB,system/name/metainfo id without general floor definition
+252,DUNGEON_DUMMY_0xFC,system/name/metainfo id without general floor definition
+253,DUNGEON_DUMMY_0xFD,system/name/metainfo id without general floor definition
+254,DUNGEON_DUMMY_0xFE,system/name/metainfo id without general floor definition
+255,DUNGEON_DUMMY_0xFF,system/name/metainfo id without general floor definition

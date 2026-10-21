@@ -1,0 +1,34 @@
+{
+  "source": "https://raw.githubusercontent.com/SkyTemple/skytemple/f78d0ef387dbc121bad4c8f0186237f9a4ae035d/skytemple/module/dungeon/module.py",
+  "regularDefinitions": "ARM9 DUNGEON_DATA_LIST[180]",
+  "dojo": [
+    {
+      "ids": [
+        180,
+        189
+      ],
+      "group": 53,
+      "startFormula": "(id-180)*5",
+      "floors": 5
+    },
+    {
+      "ids": [
+        190,
+        190
+      ],
+      "group": 53,
+      "startFormula": "50",
+      "floors": 1
+    },
+    {
+      "ids": [
+        191,
+        191
+      ],
+      "group": 53,
+      "startFormula": "51",
+      "floors": 48
+    }
+  ],
+  "idEvidence": "def get_number_floors(self, idx) -> int:\n        # End:\n        # Function that returns the number of floors in a dungeon:\n        # if ID >= 0xB4 && ID <= 0xBD {\n        #     return 5\n        # } else if ID == 0xBE {\n        #     return 1\n        # } else if ID >= 0xBF {\n        #     return 0x30\n        # } else {\n        #     Read the value from arm9.bin\n        # }\n        if DOJO_DUNGEONS_FIRST <= idx <= DOJO_DUNGEONS_LAST - 2:\n            return 5\n        if idx == DOJO_DUNGEONS_LAST - 1:\n            return 1\n        if idx == DOJO_DUNGEONS_LAST:\n            return 0x30\n        return self.get_dungeon_list()[idx].number_floors\n\n    def change_floor_count(self, dungeon_id, number_floors_new):  # TODO: Unchanged\n        \"\"\"\n        This will update the floor count for the given dungeon:\n        - Will add or remove floors from the dungeon's mappa entry, starting at the e"
+}

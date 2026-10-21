@@ -1,0 +1,98 @@
+{
+  "all-named-route-samples.png": {
+    "bytes": 831372,
+    "sha256": "39a9bb690391676c8d2ee82a6b76374862dbb4e271882b598fea5a9d790696c9"
+  },
+  "web-rom-comparison.json": {
+    "bytes": 35595,
+    "sha256": "f335b3cb2050d0e523717208f336e4875c0ff44691f75d19771adcf98521aecc"
+  },
+  "web-direct-http.json": {
+    "bytes": 520,
+    "sha256": "8d3e2690bb04784c6a109e9823f8507960db156c0732597954d4860a71012830"
+  },
+  "README.md": {
+    "bytes": 22277,
+    "sha256": "f3a3a7db98a2800d0eabbd0d3907544e02a95a2e42ae0ef5bd9340eadf956d68"
+  },
+  "all-regular-tilesets.png": {
+    "bytes": 943809,
+    "sha256": "a73468272148758b21297c77368192204852b3ce23e90bec0536d1816ffeefa4"
+  },
+  "CREDITS.txt": {
+    "bytes": 573,
+    "sha256": "bc7c7e60d9d2f902fc11308d86fa0df5a4fe329dce1798e3de2b60315ddfa1a8"
+  },
+  "rom-files.csv": {
+    "bytes": 861761,
+    "sha256": "e079c4cd8e256b68687c9e2c6f0b53b8cd6230d2b8a378195050779b37f0c154"
+  },
+  "all-256-identities.csv": {
+    "bytes": 13577,
+    "sha256": "59216914fddd9959e5ac59653251b7ee27a4e09d7246a08db4d4c6c8870b861f"
+  },
+  "audit_rom.py": {
+    "bytes": 10748,
+    "sha256": "c3dfe7fa2e1b21f323a9dc567f628ffdb3d9a8f1d1dc7a8a2eefb297208352e0"
+  },
+  "route-groups.json": {
+    "bytes": 41574,
+    "sha256": "05bb772581e6af749bba0b43b962a1e3eb7108a207c65fdc7ee0428fe46c0437"
+  },
+  "web-plan.json": {
+    "bytes": 16757,
+    "sha256": "97942361ea7fd2ff9942b5e55e0c26cfd801527d2c49631c54bc4b4e09f66045"
+  },
+  "physical-floors.csv": {
+    "bytes": 160509,
+    "sha256": "a5b529d73a4639157133931d48ff773ff53171e43c3f21e297a03ac0ab186b91"
+  },
+  "dojo-source.json": {
+    "bytes": 1545,
+    "sha256": "d5ad707b17a80fce30116f98ece92e1d632eeb5fd513c3e2bc36f19b5f2bd20e"
+  },
+  "tile-validation.json": {
+    "bytes": 21343,
+    "sha256": "cf80abf2538e1433126765ac12fe5f441d4698840d9bf23af7d5ee9695a572d9"
+  },
+  "web-facts.json": {
+    "bytes": 29290,
+    "sha256": "4472ad7395f37284034dceca08e049a8d005252bae7ae33ea00b39501d4fdc87"
+  },
+  "write_report.py": {
+    "bytes": 13878,
+    "sha256": "7bf2ec95b053b3f5a4019a0ac37de9fa0c266d7f7ec33b19900e3a9537ea31bd"
+  },
+  "dungeon-definitions.json": {
+    "bytes": 94625,
+    "sha256": "a0bb22ed7e0fbcabb23f0886502bd343004317dcbc64e8fdc0af3ced4c1c8001"
+  },
+  "web-rom-comparison.csv": {
+    "bytes": 14538,
+    "sha256": "cb1ac3530a27089c2c8e85eac64dddaf02f47eb908fd66065ce1674fd1e7c3a6"
+  },
+  "web-reconciled.json": {
+    "bytes": 29303,
+    "sha256": "0381e92d48da455f389a23c2f35023bc9b4404b133a8e829cd2f1d25d040ba39"
+  },
+  "validation.json": {
+    "bytes": 394,
+    "sha256": "f8ff58e5baa1bfebd6f0762f02e23b08dfc6c0243c00d428389e72d167233976"
+  },
+  "preview_tiles.py": {
+    "bytes": 4463,
+    "sha256": "62779072d438e1f682180272ec1da2f207e0d536ce320baf2ec0d99caaf3192a"
+  },
+  "DUNGEON_ID_INDEX.md": {
+    "bytes": 12512,
+    "sha256": "7271efd3acbda28c17ae3b31099c44e1b464664d8e51465ea7156cef9488ec2d"
+  },
+  "enum-identities.json": {
+    "bytes": 12935,
+    "sha256": "47cefe0c1a65fa193e54d4423bb5b5d2109dbd7c789ffb4a83fd335affb43b4e"
+  },
+  "summary.json": {
+    "bytes": 4481,
+    "sha256": "f3501d0cc7ecf2ad1a61923fbfa79cb078a8da903cc81d95c3e9e385dd138065"
+  }
+}

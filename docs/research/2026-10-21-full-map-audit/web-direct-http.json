@@ -1,0 +1,17 @@
+[
+  {
+    "key": "serebii",
+    "url": "https://www.serebii.net/dungeonsky/dungeon/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "key": "mdwiki",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:List_of_Locations",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "key": "bulbapedia",
+    "url": "https://bulbapedia.bulbagarden.net/wiki/Marowak_Dojo",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  }
+]

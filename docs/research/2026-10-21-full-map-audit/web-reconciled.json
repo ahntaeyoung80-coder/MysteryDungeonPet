@@ -1,0 +1,907 @@
+{
+  "method": "원작94 named group에 대응하는91개 고유 문서를 직접 조회. 3개 timeout 재조회와 데모6개 namespace 404의 Bulbapedia 보충을 포함. 첫 시도는 web-facts.json에 보존.",
+  "retry": [
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Side_Path",
+      "name": "Side Path",
+      "reference": "turn965579view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 8542,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_West",
+      "name": "Zero Isle West",
+      "reference": "turn905703view0",
+      "floorCount": 40,
+      "readOk": true,
+      "receivedCharacters": 8525,
+      "floorEvidence": "Total Floor Count  | 40"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southeastern_Islands",
+      "name": "Southeastern Islands",
+      "reference": "turn357330view0",
+      "floorCount": 25,
+      "readOk": true,
+      "receivedCharacters": 8394,
+      "floorEvidence": "Total Floor Count  | 25"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Little_Plains",
+      "name": "Little Plains",
+      "reference": "turn855593view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 10284,
+      "floorEvidence": "Floors: 5"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Mt._Clear",
+      "name": "Mt. Clear",
+      "reference": "turn307063view0",
+      "floorCount": 6,
+      "readOk": true,
+      "receivedCharacters": 10014,
+      "floorEvidence": "Floors: 6"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Challenge_River",
+      "name": "Challenge River",
+      "reference": "turn701297view0",
+      "floorCount": 7,
+      "readOk": true,
+      "receivedCharacters": 10028,
+      "floorEvidence": "Floors: 7"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Trial_Forest",
+      "name": "Trial Forest",
+      "reference": "turn916206view0",
+      "floorCount": 6,
+      "readOk": true,
+      "receivedCharacters": 10086,
+      "floorEvidence": "Floors: 6"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Guiding_Sea",
+      "name": "Guiding Sea",
+      "reference": "turn341899view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 10074,
+      "floorEvidence": "Floors: 5"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Hidden_Shopkeeper_Village",
+      "name": "Hidden Shopkeeper Village",
+      "reference": "turn347236view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 9288,
+      "floorEvidence": "Floors: 5"
+    }
+  ],
+  "resolved": [
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Beach_Cave",
+      "name": "Beach Cave",
+      "reference": "turn597579view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 9217,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Drenched_Bluff",
+      "name": "Drenched Bluff",
+      "reference": "turn714722view0",
+      "floorCount": 7,
+      "readOk": true,
+      "receivedCharacters": 9372,
+      "floorEvidence": "Total Floor Count  | 7"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Bristle",
+      "name": "Mt. Bristle",
+      "reference": "turn856266view0",
+      "floorCount": 10,
+      "readOk": true,
+      "receivedCharacters": 9122,
+      "floorEvidence": "Total Floor Count  | 10"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Waterfall_Cave",
+      "name": "Waterfall Cave",
+      "reference": "turn908324view0",
+      "floorCount": 8,
+      "readOk": true,
+      "receivedCharacters": 8345,
+      "floorEvidence": "Total Floor Count  | 8"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Apple_Woods",
+      "name": "Apple Woods",
+      "reference": "turn346693view0",
+      "floorCount": 12,
+      "readOk": true,
+      "receivedCharacters": 8210,
+      "floorEvidence": "Total Floor Count  | 12"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Craggy_Coast",
+      "name": "Craggy Coast",
+      "reference": "turn757568view0",
+      "floorCount": 9,
+      "readOk": true,
+      "receivedCharacters": 8438,
+      "floorEvidence": "Total Floor Count  | 9"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Side_Path",
+      "name": "Side Path",
+      "reference": "turn965579view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 8542,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Horn",
+      "name": "Mt. Horn",
+      "reference": "turn665550view0",
+      "floorCount": 14,
+      "readOk": true,
+      "receivedCharacters": 8199,
+      "floorEvidence": "Total Floor Count  | 14"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Rock_Path",
+      "name": "Rock Path",
+      "reference": "turn798633view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 8493,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Foggy_Forest",
+      "name": "Foggy Forest",
+      "reference": "turn851302view0",
+      "floorCount": 11,
+      "readOk": true,
+      "receivedCharacters": 8271,
+      "floorEvidence": "Total Floor Count  | 11"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Forest_Path",
+      "name": "Forest Path",
+      "reference": "turn640247view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 8637,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Steam_Cave",
+      "name": "Steam Cave",
+      "reference": "turn813118view0",
+      "floorCount": 15,
+      "readOk": true,
+      "receivedCharacters": 8606,
+      "floorEvidence": "Total Floor Count  | 15"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Amp_Plains",
+      "name": "Amp Plains",
+      "reference": "turn276697view0",
+      "floorCount": 19,
+      "readOk": true,
+      "receivedCharacters": 8805,
+      "floorEvidence": "Total Floor Count  | 19"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Northern_Desert",
+      "name": "Northern Desert",
+      "reference": "turn410994view0",
+      "floorCount": 15,
+      "readOk": true,
+      "receivedCharacters": 9492,
+      "floorEvidence": "Total Floor Count  | 15"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Quicksand_Cave",
+      "name": "Quicksand Cave",
+      "reference": "turn919578view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8603,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Cave",
+      "name": "Crystal Cave",
+      "reference": "turn476627view0",
+      "floorCount": 11,
+      "readOk": true,
+      "receivedCharacters": 8250,
+      "floorEvidence": "Total Floor Count  | 11"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Crossing",
+      "name": "Crystal Crossing",
+      "reference": "turn183329view0",
+      "floorCount": 14,
+      "readOk": true,
+      "receivedCharacters": 8696,
+      "floorEvidence": "Total Floor Count  | 14"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Chasm_Cave",
+      "name": "Chasm Cave",
+      "reference": "turn829994view0",
+      "floorCount": 8,
+      "readOk": true,
+      "receivedCharacters": 8131,
+      "floorEvidence": "Total Floor Count  | 8"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Hill",
+      "name": "Dark Hill",
+      "reference": "turn251593view0",
+      "floorCount": 15,
+      "readOk": true,
+      "receivedCharacters": 8238,
+      "floorEvidence": "Total Floor Count  | 15"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sealed_Ruin",
+      "name": "Sealed Ruin",
+      "reference": "turn622035view0",
+      "floorCount": 14,
+      "readOk": true,
+      "receivedCharacters": 8498,
+      "floorEvidence": "Total Floor Count  | 14"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest",
+      "name": "Dusk Forest",
+      "reference": "turn754701view0",
+      "floorCount": 8,
+      "readOk": true,
+      "receivedCharacters": 8143,
+      "floorEvidence": "Total Floor Count  | 8"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Deep_Dusk_Forest",
+      "name": "Deep Dusk Forest",
+      "reference": "turn167114view0",
+      "floorCount": 12,
+      "readOk": true,
+      "receivedCharacters": 8227,
+      "floorEvidence": "Total Floor Count  | 12"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treeshroud_Forest",
+      "name": "Treeshroud Forest",
+      "reference": "turn418376view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8412,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Brine_Cave",
+      "name": "Brine Cave",
+      "reference": "turn320887view0",
+      "floorCount": 14,
+      "readOk": true,
+      "receivedCharacters": 8427,
+      "floorEvidence": "Total Floor Count  | 14"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Hidden_Land",
+      "name": "Hidden Land",
+      "reference": "turn949744view0",
+      "floorCount": 24,
+      "readOk": true,
+      "receivedCharacters": 8728,
+      "floorEvidence": "Total Floor Count  | 24"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower",
+      "name": "Temporal Tower",
+      "reference": "turn959772view0",
+      "floorCount": 24,
+      "readOk": true,
+      "receivedCharacters": 9770,
+      "floorEvidence": "Total Floor Count  | 24"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mystifying_Forest",
+      "name": "Mystifying Forest",
+      "reference": "turn682603view0",
+      "floorCount": 13,
+      "readOk": true,
+      "receivedCharacters": 8967,
+      "floorEvidence": "Total Floor Count  | 13"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Midnight_Forest",
+      "name": "Midnight Forest",
+      "reference": "turn118482view0",
+      "floorCount": 25,
+      "readOk": true,
+      "receivedCharacters": 8397,
+      "floorEvidence": "Total Floor Count  | 25"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lake_Afar",
+      "name": "Lake Afar",
+      "reference": "turn315750view0",
+      "floorCount": 25,
+      "readOk": true,
+      "receivedCharacters": 8069,
+      "floorEvidence": "Total Floor Count  | 25"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Mistral",
+      "name": "Mt. Mistral",
+      "reference": "turn283579view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8192,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Hill",
+      "name": "Shimmer Hill",
+      "reference": "turn907032view0",
+      "floorCount": 18,
+      "readOk": true,
+      "receivedCharacters": 8403,
+      "floorEvidence": "Total Floor Count  | 18"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Bottomless_Sea",
+      "name": "Bottomless Sea",
+      "reference": "turn671419view0",
+      "floorCount": 49,
+      "readOk": true,
+      "receivedCharacters": 8560,
+      "floorEvidence": "Total Floor Count  | 49"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Surrounded_Sea",
+      "name": "Surrounded Sea",
+      "reference": "turn200422view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8543,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Miracle_Sea",
+      "name": "Miracle Sea",
+      "reference": "turn562319view0",
+      "floorCount": 22,
+      "readOk": true,
+      "receivedCharacters": 8632,
+      "floorEvidence": "Total Floor Count  | 22"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Concealed_Ruins",
+      "name": "Concealed Ruins",
+      "reference": "turn875855view0",
+      "floorCount": 30,
+      "readOk": true,
+      "receivedCharacters": 8374,
+      "floorEvidence": "Total Floor Count  | 30"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lost_Wilderness",
+      "name": "Lost Wilderness",
+      "reference": "turn369682view0",
+      "floorCount": 18,
+      "readOk": true,
+      "receivedCharacters": 8259,
+      "floorEvidence": "Total Floor Count  | 18"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mystery_Jungle",
+      "name": "Mystery Jungle",
+      "reference": "turn383205view0",
+      "floorCount": 30,
+      "readOk": true,
+      "receivedCharacters": 8550,
+      "floorEvidence": "Total Floor Count  | 30"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Happy_Outlook",
+      "name": "Happy Outlook",
+      "reference": "turn612842view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8378,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Serenity_River",
+      "name": "Serenity River",
+      "reference": "turn228012view0",
+      "floorCount": 8,
+      "readOk": true,
+      "receivedCharacters": 8336,
+      "floorEvidence": "Total Floor Count  | 8"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Landslide_Cave",
+      "name": "Landslide Cave",
+      "reference": "turn660504view0",
+      "floorCount": 13,
+      "readOk": true,
+      "receivedCharacters": 8449,
+      "floorEvidence": "Total Floor Count  | 13"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Blizzard_Island",
+      "name": "Blizzard Island",
+      "reference": "turn131371view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8340,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Desert",
+      "name": "Shimmer Desert",
+      "reference": "turn955490view0",
+      "floorCount": 10,
+      "readOk": true,
+      "receivedCharacters": 8258,
+      "floorEvidence": "Total Floor Count  | 10"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crevice_Cave",
+      "name": "Crevice Cave",
+      "reference": "turn518907view0",
+      "floorCount": 14,
+      "readOk": true,
+      "receivedCharacters": 8411,
+      "floorEvidence": "Total Floor Count  | 14"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Avalanche",
+      "name": "Mt. Avalanche",
+      "reference": "turn954091view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8547,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Giant_Volcano",
+      "name": "Giant Volcano",
+      "reference": "turn893542view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8707,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:World_Abyss",
+      "name": "World Abyss",
+      "reference": "turn130820view0",
+      "floorCount": 30,
+      "readOk": true,
+      "receivedCharacters": 8537,
+      "floorEvidence": "Total Floor Count  | 30"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lush_Prairie",
+      "name": "Lush Prairie",
+      "reference": "turn218933view0",
+      "floorCount": 6,
+      "readOk": true,
+      "receivedCharacters": 8778,
+      "floorEvidence": "Total Floor Count  | 6"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Tiny_Meadow",
+      "name": "Tiny Meadow",
+      "reference": "turn849595view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 8910,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Labyrinth_Cave",
+      "name": "Labyrinth Cave",
+      "reference": "turn732313view0",
+      "floorCount": 10,
+      "readOk": true,
+      "receivedCharacters": 8245,
+      "floorEvidence": "Total Floor Count  | 10"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oran_Forest",
+      "name": "Oran Forest",
+      "reference": "turn410740view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 7580,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Stairway",
+      "name": "Sky Stairway",
+      "reference": "turn689245view0",
+      "floorCount": 50,
+      "readOk": true,
+      "receivedCharacters": 8440,
+      "floorEvidence": "Total Floor Count  | 50"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Aegis_Cave",
+      "name": "Aegis Cave",
+      "reference": "turn362374view0",
+      "floorCount": 19,
+      "readOk": true,
+      "receivedCharacters": 8134,
+      "floorEvidence": "Total Floor Count  | 19"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Crater",
+      "name": "Dark Crater",
+      "reference": "turn997216view0",
+      "floorCount": 29,
+      "readOk": true,
+      "receivedCharacters": 8790,
+      "floorEvidence": "Total Floor Count  | 29"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Marine_Resort",
+      "name": "Marine Resort",
+      "reference": "turn702102view0",
+      "floorCount": 19,
+      "readOk": true,
+      "receivedCharacters": 8017,
+      "floorEvidence": "Total Floor Count  | 19"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Travail",
+      "name": "Mt. Travail",
+      "reference": "turn125981view0",
+      "floorCount": 19,
+      "readOk": true,
+      "receivedCharacters": 8928,
+      "floorEvidence": "Total Floor Count  | 19"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:The_Nightmare",
+      "name": "The Nightmare",
+      "reference": "turn720146view0",
+      "floorCount": 17,
+      "readOk": true,
+      "receivedCharacters": 8742,
+      "floorEvidence": "Total Floor Count  | 17"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Rift",
+      "name": "Spacial Rift",
+      "reference": "turn669354view0",
+      "floorCount": 24,
+      "readOk": true,
+      "receivedCharacters": 8725,
+      "floorEvidence": "Total Floor Count  | 24"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_North",
+      "name": "Zero Isle North",
+      "reference": "turn320929view0",
+      "floorCount": 75,
+      "readOk": true,
+      "receivedCharacters": 8166,
+      "floorEvidence": "Total Floor Count  | 75"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_West",
+      "name": "Zero Isle West",
+      "reference": "turn905703view0",
+      "floorCount": 40,
+      "readOk": true,
+      "receivedCharacters": 8525,
+      "floorEvidence": "Total Floor Count  | 40"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_East",
+      "name": "Zero Isle East",
+      "reference": "turn393221view0",
+      "floorCount": 40,
+      "readOk": true,
+      "receivedCharacters": 8663,
+      "floorEvidence": "Total Floor Count  | 40"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_South",
+      "name": "Zero Isle South",
+      "reference": "turn784546view0",
+      "floorCount": 99,
+      "readOk": true,
+      "receivedCharacters": 8443,
+      "floorEvidence": "Total Floor Count  | 99"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_Center",
+      "name": "Zero Isle Center",
+      "reference": "turn396712view0",
+      "floorCount": 50,
+      "readOk": true,
+      "receivedCharacters": 8442,
+      "floorEvidence": "Total Floor Count  | 50"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Destiny_Tower",
+      "name": "Destiny Tower",
+      "reference": "turn652376view0",
+      "floorCount": 99,
+      "readOk": true,
+      "receivedCharacters": 8434,
+      "floorEvidence": "Total Floor Count  | 99"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oblivion_Forest",
+      "name": "Oblivion Forest",
+      "reference": "turn223719view0",
+      "floorCount": 15,
+      "readOk": true,
+      "receivedCharacters": 8144,
+      "floorEvidence": "Total Floor Count  | 15"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treacherous_Waters",
+      "name": "Treacherous Waters",
+      "reference": "turn826128view0",
+      "floorCount": 20,
+      "readOk": true,
+      "receivedCharacters": 8268,
+      "floorEvidence": "Total Floor Count  | 20"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southeastern_Islands",
+      "name": "Southeastern Islands",
+      "reference": "turn357330view0",
+      "floorCount": 25,
+      "readOk": true,
+      "receivedCharacters": 8394,
+      "floorEvidence": "Total Floor Count  | 25"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Inferno_Cave",
+      "name": "Inferno Cave",
+      "reference": "turn863093view0",
+      "floorCount": 30,
+      "readOk": true,
+      "receivedCharacters": 8259,
+      "floorEvidence": "Total Floor Count  | 30"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Peak_Mountain_Path",
+      "name": "Sky Peak Mountain Path",
+      "reference": "turn361056view0",
+      "floorCount": 40,
+      "readOk": true,
+      "receivedCharacters": 8771,
+      "floorEvidence": "Total Floor Count  | 40"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave",
+      "name": "Star Cave",
+      "reference": "turn245462view0",
+      "floorCount": 16,
+      "readOk": true,
+      "receivedCharacters": 8506,
+      "floorEvidence": "Total Floor Count  | 16"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Murky_Forest",
+      "name": "Murky Forest",
+      "reference": "turn816774view0",
+      "floorCount": 7,
+      "readOk": true,
+      "receivedCharacters": 8224,
+      "floorEvidence": "Total Floor Count  | 7"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Eastern_Cave",
+      "name": "Eastern Cave",
+      "reference": "turn902715view0",
+      "floorCount": 10,
+      "readOk": true,
+      "receivedCharacters": 8283,
+      "floorEvidence": "Total Floor Count  | 10"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Fortune_Ravine",
+      "name": "Fortune Ravine",
+      "reference": "turn342786view0",
+      "floorCount": 15,
+      "readOk": true,
+      "receivedCharacters": 8668,
+      "floorEvidence": "Total Floor Count  | 15"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Barren_Valley",
+      "name": "Barren Valley",
+      "reference": "turn216617view0",
+      "floorCount": 11,
+      "readOk": true,
+      "receivedCharacters": 8725,
+      "floorEvidence": "Total Floor Count  | 11"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Wasteland",
+      "name": "Dark Wasteland",
+      "reference": "turn291333view0",
+      "floorCount": 4,
+      "readOk": true,
+      "receivedCharacters": 8940,
+      "floorEvidence": "Total Floor Count  | 4"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Cliffs",
+      "name": "Spacial Cliffs",
+      "reference": "turn169137view0",
+      "floorCount": 10,
+      "readOk": true,
+      "receivedCharacters": 8196,
+      "floorEvidence": "Total Floor Count  | 10"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Ice_Mountain",
+      "name": "Dark Ice Mountain",
+      "reference": "turn125034view0",
+      "floorCount": 15,
+      "readOk": true,
+      "receivedCharacters": 8936,
+      "floorEvidence": "Total Floor Count  | 15"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Icicle_Forest",
+      "name": "Icicle Forest",
+      "reference": "turn792382view0",
+      "floorCount": 10,
+      "readOk": true,
+      "receivedCharacters": 8947,
+      "floorEvidence": "Total Floor Count  | 10"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Vast_Ice_Mountain",
+      "name": "Vast Ice Mountain",
+      "reference": "turn757572view0",
+      "floorCount": 18,
+      "readOk": true,
+      "receivedCharacters": 8826,
+      "floorEvidence": "Total Floor Count  | 18"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southern_Jungle",
+      "name": "Southern Jungle",
+      "reference": "turn330658view0",
+      "floorCount": 10,
+      "readOk": true,
+      "receivedCharacters": 8504,
+      "floorEvidence": "Total Floor Count  | 10"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Boulder_Quarry",
+      "name": "Boulder Quarry",
+      "reference": "turn783117view0",
+      "floorCount": 11,
+      "readOk": true,
+      "receivedCharacters": 8755,
+      "floorEvidence": "Total Floor Count  | 11"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Right_Cave_Path",
+      "name": "Right Cave Path",
+      "reference": "turn470163view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 8240,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Left_Cave_Path",
+      "name": "Left Cave Path",
+      "reference": "turn979745view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 8236,
+      "floorEvidence": "Total Floor Count  | 5"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Limestone_Cavern",
+      "name": "Limestone Cavern",
+      "reference": "turn636746view0",
+      "floorCount": 11,
+      "readOk": true,
+      "receivedCharacters": 8687,
+      "floorEvidence": "Total Floor Count  | 11"
+    },
+    {
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spring_Cave",
+      "name": "Spring Cave",
+      "reference": "turn954816view0",
+      "floorCount": 19,
+      "readOk": true,
+      "receivedCharacters": 8652,
+      "floorEvidence": "Total Floor Count  | 19"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Little_Plains",
+      "name": "Little Plains",
+      "reference": "turn855593view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 10284,
+      "floorEvidence": "Floors: 5"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Mt._Clear",
+      "name": "Mt. Clear",
+      "reference": "turn307063view0",
+      "floorCount": 6,
+      "readOk": true,
+      "receivedCharacters": 10014,
+      "floorEvidence": "Floors: 6"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Challenge_River",
+      "name": "Challenge River",
+      "reference": "turn701297view0",
+      "floorCount": 7,
+      "readOk": true,
+      "receivedCharacters": 10028,
+      "floorEvidence": "Floors: 7"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Trial_Forest",
+      "name": "Trial Forest",
+      "reference": "turn916206view0",
+      "floorCount": 6,
+      "readOk": true,
+      "receivedCharacters": 10086,
+      "floorEvidence": "Floors: 6"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Guiding_Sea",
+      "name": "Guiding Sea",
+      "reference": "turn341899view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 10074,
+      "floorEvidence": "Floors: 5"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Hidden_Shopkeeper_Village",
+      "name": "Hidden Shopkeeper Village",
+      "reference": "turn347236view0",
+      "floorCount": 5,
+      "readOk": true,
+      "receivedCharacters": 9288,
+      "floorEvidence": "Floors: 5"
+    },
+    {
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Marowak_Dojo",
+      "name": "Marowak Dojo",
+      "reference": "turn990923view0",
+      "floorCount": null,
+      "readOk": true,
+      "receivedCharacters": 11256,
+      "floorEvidence": null
+    }
+  ]
+}

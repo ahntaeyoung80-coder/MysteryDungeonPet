@@ -1,0 +1,570 @@
+{
+  "masterSource": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:List_of_Locations",
+  "note": "장소명은 ROM group과 전체 웹 목록의 대응. SE의 Star Cave는 개별 문서/위치 template로 보충하며 중복 제목의 episode를 group으로 구분.",
+  "rows": [
+    {
+      "group": 1,
+      "name": "Beach Cave",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Beach_Cave"
+    },
+    {
+      "group": 2,
+      "name": "Drenched Bluff",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Drenched_Bluff"
+    },
+    {
+      "group": 3,
+      "name": "Mt. Bristle",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Bristle"
+    },
+    {
+      "group": 4,
+      "name": "Waterfall Cave",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Waterfall_Cave"
+    },
+    {
+      "group": 5,
+      "name": "Apple Woods",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Apple_Woods"
+    },
+    {
+      "group": 6,
+      "name": "Craggy Coast",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Craggy_Coast"
+    },
+    {
+      "group": 7,
+      "name": "Side Path",
+      "category": "side-path",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Side_Path"
+    },
+    {
+      "group": 8,
+      "name": "Mt. Horn",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Horn"
+    },
+    {
+      "group": 9,
+      "name": "Rock Path",
+      "category": "side-path",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Rock_Path"
+    },
+    {
+      "group": 10,
+      "name": "Foggy Forest",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Foggy_Forest"
+    },
+    {
+      "group": 11,
+      "name": "Forest Path",
+      "category": "side-path",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Forest_Path"
+    },
+    {
+      "group": 12,
+      "name": "Steam Cave",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Steam_Cave"
+    },
+    {
+      "group": 13,
+      "name": "Amp Plains",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Amp_Plains"
+    },
+    {
+      "group": 14,
+      "name": "Northern Desert",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Northern_Desert"
+    },
+    {
+      "group": 15,
+      "name": "Quicksand Cave",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Quicksand_Cave"
+    },
+    {
+      "group": 16,
+      "name": "Crystal Cave",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Cave"
+    },
+    {
+      "group": 17,
+      "name": "Crystal Crossing",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Crossing"
+    },
+    {
+      "group": 18,
+      "name": "Chasm Cave",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Chasm_Cave"
+    },
+    {
+      "group": 19,
+      "name": "Dark Hill",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Hill"
+    },
+    {
+      "group": 20,
+      "name": "Sealed Ruin",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sealed_Ruin"
+    },
+    {
+      "group": 21,
+      "name": "Dusk Forest",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest"
+    },
+    {
+      "group": 22,
+      "name": "Deep Dusk Forest",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Deep_Dusk_Forest"
+    },
+    {
+      "group": 23,
+      "name": "Treeshroud Forest",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treeshroud_Forest"
+    },
+    {
+      "group": 24,
+      "name": "Brine Cave",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Brine_Cave"
+    },
+    {
+      "group": 25,
+      "name": "Hidden Land",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Hidden_Land"
+    },
+    {
+      "group": 26,
+      "name": "Temporal Tower",
+      "category": "main-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower"
+    },
+    {
+      "group": 27,
+      "name": "Mystifying Forest",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mystifying_Forest"
+    },
+    {
+      "group": 28,
+      "name": "Midnight Forest",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Midnight_Forest"
+    },
+    {
+      "group": 29,
+      "name": "Lake Afar",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lake_Afar"
+    },
+    {
+      "group": 30,
+      "name": "Mt. Mistral",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Mistral"
+    },
+    {
+      "group": 31,
+      "name": "Shimmer Hill",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Hill"
+    },
+    {
+      "group": 32,
+      "name": "Bottomless Sea",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Bottomless_Sea"
+    },
+    {
+      "group": 33,
+      "name": "Surrounded Sea",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Surrounded_Sea"
+    },
+    {
+      "group": 34,
+      "name": "Miracle Sea",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Miracle_Sea"
+    },
+    {
+      "group": 35,
+      "name": "Concealed Ruins",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Concealed_Ruins"
+    },
+    {
+      "group": 36,
+      "name": "Lost Wilderness",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lost_Wilderness"
+    },
+    {
+      "group": 37,
+      "name": "Mystery Jungle",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mystery_Jungle"
+    },
+    {
+      "group": 38,
+      "name": "Happy Outlook",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Happy_Outlook"
+    },
+    {
+      "group": 39,
+      "name": "Serenity River",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Serenity_River"
+    },
+    {
+      "group": 40,
+      "name": "Landslide Cave",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Landslide_Cave"
+    },
+    {
+      "group": 41,
+      "name": "Blizzard Island",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Blizzard_Island"
+    },
+    {
+      "group": 42,
+      "name": "Shimmer Desert",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Desert"
+    },
+    {
+      "group": 43,
+      "name": "Crevice Cave",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crevice_Cave"
+    },
+    {
+      "group": 44,
+      "name": "Mt. Avalanche",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Avalanche"
+    },
+    {
+      "group": 45,
+      "name": "Giant Volcano",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Giant_Volcano"
+    },
+    {
+      "group": 46,
+      "name": "World Abyss",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:World_Abyss"
+    },
+    {
+      "group": 47,
+      "name": "Lush Prairie",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lush_Prairie"
+    },
+    {
+      "group": 48,
+      "name": "Tiny Meadow",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Tiny_Meadow"
+    },
+    {
+      "group": 49,
+      "name": "Labyrinth Cave",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Labyrinth_Cave"
+    },
+    {
+      "group": 50,
+      "name": "Oran Forest",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oran_Forest"
+    },
+    {
+      "group": 51,
+      "name": "Sky Stairway",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Stairway"
+    },
+    {
+      "group": 52,
+      "name": "Aegis Cave",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Aegis_Cave"
+    },
+    {
+      "group": 54,
+      "name": "Dark Crater",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Crater"
+    },
+    {
+      "group": 55,
+      "name": "Marine Resort",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Marine_Resort"
+    },
+    {
+      "group": 56,
+      "name": "Mt. Travail",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Travail"
+    },
+    {
+      "group": 57,
+      "name": "The Nightmare",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:The_Nightmare"
+    },
+    {
+      "group": 58,
+      "name": "Spacial Rift",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Rift"
+    },
+    {
+      "group": 59,
+      "name": "Zero Isle North",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_North"
+    },
+    {
+      "group": 60,
+      "name": "Zero Isle West",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_West"
+    },
+    {
+      "group": 61,
+      "name": "Zero Isle East",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_East"
+    },
+    {
+      "group": 62,
+      "name": "Zero Isle South",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_South"
+    },
+    {
+      "group": 64,
+      "name": "Zero Isle Center",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_Center"
+    },
+    {
+      "group": 65,
+      "name": "Destiny Tower",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Destiny_Tower"
+    },
+    {
+      "group": 68,
+      "name": "Oblivion Forest",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oblivion_Forest"
+    },
+    {
+      "group": 69,
+      "name": "Treacherous Waters",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treacherous_Waters"
+    },
+    {
+      "group": 70,
+      "name": "Southeastern Islands",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southeastern_Islands"
+    },
+    {
+      "group": 71,
+      "name": "Inferno Cave",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Inferno_Cave"
+    },
+    {
+      "group": 72,
+      "name": "Sky Peak Mountain Path",
+      "category": "post-story",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Peak_Mountain_Path"
+    },
+    {
+      "group": 91,
+      "name": "Star Cave",
+      "category": "optional",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave"
+    },
+    {
+      "group": 73,
+      "name": "Star Cave",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave"
+    },
+    {
+      "group": 74,
+      "name": "Murky Forest",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Murky_Forest"
+    },
+    {
+      "group": 75,
+      "name": "Eastern Cave",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Eastern_Cave"
+    },
+    {
+      "group": 76,
+      "name": "Fortune Ravine",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Fortune_Ravine"
+    },
+    {
+      "group": 77,
+      "name": "Barren Valley",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Barren_Valley"
+    },
+    {
+      "group": 78,
+      "name": "Dark Wasteland",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Wasteland"
+    },
+    {
+      "group": 79,
+      "name": "Temporal Tower",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower"
+    },
+    {
+      "group": 80,
+      "name": "Dusk Forest",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest"
+    },
+    {
+      "group": 81,
+      "name": "Spacial Cliffs",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Cliffs"
+    },
+    {
+      "group": 82,
+      "name": "Dark Ice Mountain",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Ice_Mountain"
+    },
+    {
+      "group": 83,
+      "name": "Icicle Forest",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Icicle_Forest"
+    },
+    {
+      "group": 84,
+      "name": "Vast Ice Mountain",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Vast_Ice_Mountain"
+    },
+    {
+      "group": 85,
+      "name": "Southern Jungle",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southern_Jungle"
+    },
+    {
+      "group": 86,
+      "name": "Boulder Quarry",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Boulder_Quarry"
+    },
+    {
+      "group": 87,
+      "name": "Right Cave Path",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Right_Cave_Path"
+    },
+    {
+      "group": 88,
+      "name": "Left Cave Path",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Left_Cave_Path"
+    },
+    {
+      "group": 89,
+      "name": "Limestone Cavern",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Limestone_Cavern"
+    },
+    {
+      "group": 90,
+      "name": "Spring Cave",
+      "category": "special",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spring_Cave"
+    },
+    {
+      "group": 92,
+      "name": "Little Plains",
+      "category": "demo",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Little_Plains"
+    },
+    {
+      "group": 93,
+      "name": "Mt. Clear",
+      "category": "demo",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Clear"
+    },
+    {
+      "group": 94,
+      "name": "Challenge River",
+      "category": "demo",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Challenge_River"
+    },
+    {
+      "group": 95,
+      "name": "Trial Forest",
+      "category": "demo",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Trial_Forest"
+    },
+    {
+      "group": 96,
+      "name": "Guiding Sea",
+      "category": "demo",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Guiding_Sea"
+    },
+    {
+      "group": 97,
+      "name": "Hidden Shopkeeper Village",
+      "category": "demo",
+      "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Hidden_Shopkeeper_Village"
+    },
+    {
+      "group": 53,
+      "name": "Marowak Dojo",
+      "category": "dojo",
+      "url": "https://bulbapedia.bulbagarden.net/wiki/Marowak_Dojo"
+    }
+  ]
+}

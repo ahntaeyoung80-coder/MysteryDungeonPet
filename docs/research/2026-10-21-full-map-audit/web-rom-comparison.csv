@@ -1,0 +1,95 @@
+group,category,name,ids,romDeclaredFloors,romResolvedFloors,nonFixedFloors,fixedFloors,webHeaderFloors,comparison,webUrl
+1,main-story,Beach Cave,"1,2",5,5,4,1,5,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Beach_Cave
+2,main-story,Drenched Bluff,3,6,6,6,0,7,차이 유지; 웹 header만으로 보정하지 않음,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Drenched_Bluff
+3,main-story,Mt. Bristle,"4,5",10,10,9,1,10,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Bristle
+4,main-story,Waterfall Cave,6,8,8,8,0,8,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Waterfall_Cave
+5,main-story,Apple Woods,7,12,12,12,0,12,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Apple_Woods
+6,main-story,Craggy Coast,8,9,9,9,0,9,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Craggy_Coast
+7,side-path,Side Path,9,5,5,5,0,5,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Side_Path
+8,main-story,Mt. Horn,10,14,14,14,0,14,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Horn
+9,side-path,Rock Path,11,5,5,5,0,5,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Rock_Path
+10,main-story,Foggy Forest,12,11,11,11,0,11,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Foggy_Forest
+11,side-path,Forest Path,13,5,5,5,0,5,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Forest_Path
+12,main-story,Steam Cave,"14,15,16",16,16,15,1,15,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Steam_Cave
+13,main-story,Amp Plains,"17,18,19",20,20,19,1,19,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Amp_Plains
+14,main-story,Northern Desert,20,15,15,15,0,15,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Northern_Desert
+15,main-story,Quicksand Cave,"21,22,23",21,21,20,1,20,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Quicksand_Cave
+16,main-story,Crystal Cave,24,11,11,11,0,11,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Cave
+17,main-story,Crystal Crossing,"25,26",14,14,13,1,14,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Crossing
+18,main-story,Chasm Cave,27,8,8,8,0,8,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Chasm_Cave
+19,main-story,Dark Hill,28,15,15,15,0,15,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Hill
+20,main-story,Sealed Ruin,"29,30,31",15,15,14,1,14,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sealed_Ruin
+21,main-story,Dusk Forest,32,8,8,8,0,8,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest
+22,main-story,Deep Dusk Forest,33,12,12,12,0,12,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Deep_Dusk_Forest
+23,main-story,Treeshroud Forest,34,20,20,20,0,20,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treeshroud_Forest
+24,main-story,Brine Cave,"35,36,37",15,15,14,1,14,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Brine_Cave
+25,main-story,Hidden Land,"38,39,40",24,24,23,1,24,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Hidden_Land
+26,main-story,Temporal Tower,"41,42,43",24,24,23,1,24,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower
+27,post-story,Mystifying Forest,"44,45",14,14,13,1,13,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mystifying_Forest
+28,optional,Midnight Forest,98,25,25,23,2,25,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Midnight_Forest
+29,optional,Lake Afar,93,25,25,23,2,25,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lake_Afar
+30,optional,Mt. Mistral,95,20,20,18,2,20,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Mistral
+31,optional,Shimmer Hill,96,18,18,16,2,18,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Hill
+32,optional,Bottomless Sea,"73,74",50,50,49,1,49,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Bottomless_Sea
+33,post-story,Surrounded Sea,50,20,20,19,1,20,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Surrounded_Sea
+34,post-story,Miracle Sea,"51,52,53",23,23,21,2,22,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Miracle_Sea
+35,optional,Concealed Ruins,"70,71",31,30,28,2,30,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Concealed_Ruins
+36,optional,Lost Wilderness,97,18,18,16,2,18,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lost_Wilderness
+37,optional,Mystery Jungle,"85,86",30,30,29,1,30,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mystery_Jungle
+38,optional,Happy Outlook,94,20,20,18,2,20,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Happy_Outlook
+39,optional,Serenity River,87,8,8,7,1,8,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Serenity_River
+40,optional,Landslide Cave,88,13,13,12,1,13,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Landslide_Cave
+41,post-story,Blizzard Island,46,20,20,20,0,20,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Blizzard_Island
+42,optional,Shimmer Desert,"75,76",10,10,9,1,10,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Desert
+43,post-story,Crevice Cave,"47,48,49",15,15,14,1,14,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crevice_Cave
+44,optional,Mt. Avalanche,"77,78",20,20,19,1,20,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Avalanche
+45,optional,Giant Volcano,"79,80",20,20,19,1,20,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Giant_Volcano
+46,optional,World Abyss,"81,82",30,30,29,1,30,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:World_Abyss
+47,optional,Lush Prairie,89,6,6,5,1,6,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lush_Prairie
+48,optional,Tiny Meadow,90,5,5,4,1,5,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Tiny_Meadow
+49,optional,Labyrinth Cave,91,10,10,9,1,10,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Labyrinth_Cave
+50,optional,Oran Forest,92,5,5,4,1,5,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oran_Forest
+51,optional,Sky Stairway,"83,84",50,50,49,1,50,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Stairway
+52,post-story,Aegis Cave,"54,55,56,57,58,59,60,61",19,19,15,4,19,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Aegis_Cave
+54,post-story,Dark Crater,"67,68,69",30,30,29,1,29,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Crater
+55,optional,Marine Resort,72,19,19,18,1,19,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Marine_Resort
+56,post-story,Mt. Travail,62,19,19,19,0,19,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Travail
+57,post-story,The Nightmare,63,17,17,17,0,17,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:The_Nightmare
+58,post-story,Spacial Rift,"64,65,66",25,25,23,2,24,별도1층 고정 구간을 제외한 합계와 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Rift
+59,optional,Zero Isle North,99,75,75,64,11,75,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_North
+60,optional,Zero Isle West,101,40,40,31,9,40,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_West
+61,optional,Zero Isle East,100,40,40,35,5,40,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_East
+62,optional,Zero Isle South,102,99,99,95,4,99,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_South
+64,optional,Zero Isle Center,103,50,50,49,1,50,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_Center
+65,optional,Destiny Tower,104,99,99,99,0,99,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Destiny_Tower
+68,optional,Oblivion Forest,107,15,15,14,1,15,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oblivion_Forest
+69,optional,Treacherous Waters,108,20,20,19,1,20,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treacherous_Waters
+70,optional,Southeastern Islands,109,25,25,24,1,25,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southeastern_Islands
+71,optional,Inferno Cave,110,30,30,29,1,30,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Inferno_Cave
+72,post-story,Sky Peak Mountain Path,"111,112,113,114,115,116,117,118,119,120,121,122",40,40,38,2,40,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Peak_Mountain_Path
+91,optional,Star Cave,174,16,16,16,0,16,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave
+73,special,Star Cave,"123,124,125,126,127",17,17,15,2,16,동명 본편/특별 에피소드 공용 문서; header 층수의 직접 비교 제외,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave
+74,special,Murky Forest,128,7,7,7,0,7,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Murky_Forest
+75,special,Eastern Cave,129,10,10,10,0,10,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Eastern_Cave
+76,special,Fortune Ravine,"130,131,132",15,15,14,1,15,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Fortune_Ravine
+77,special,Barren Valley,"133,134,135",11,11,10,1,11,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Barren_Valley
+78,special,Dark Wasteland,136,4,4,4,0,4,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Wasteland
+79,special,Temporal Tower,"137,138",20,20,20,0,24,동명 본편/특별 에피소드 공용 문서; header 층수의 직접 비교 제외,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower
+80,special,Dusk Forest,"139,140",8,8,7,1,8,동명 본편/특별 에피소드 공용 문서; header 층수의 직접 비교 제외,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest
+81,special,Spacial Cliffs,141,10,10,10,0,10,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Cliffs
+82,special,Dark Ice Mountain,"142,143,144",15,15,14,1,15,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Ice_Mountain
+83,special,Icicle Forest,145,10,10,10,0,10,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Icicle_Forest
+84,special,Vast Ice Mountain,"146,147,148",18,18,17,1,18,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Vast_Ice_Mountain
+85,special,Southern Jungle,149,10,10,10,0,10,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southern_Jungle
+86,special,Boulder Quarry,"150,151,152",11,11,10,1,11,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Boulder_Quarry
+87,special,Right Cave Path,153,5,5,5,0,5,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Right_Cave_Path
+88,special,Left Cave Path,154,5,5,5,0,5,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Left_Cave_Path
+89,special,Limestone Cavern,"155,156,157",11,11,10,1,11,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Limestone_Cavern
+90,special,Spring Cave,"158,159,160,161,162,163,164",19,19,16,3,19,ROM 유효 구간층 합계 일치,https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spring_Cave
+92,demo,Little Plains,165,5,5,5,0,5,ROM 유효 구간층 합계 일치,https://bulbapedia.bulbagarden.net/wiki/Little_Plains
+93,demo,Mt. Clear,166,6,6,6,0,6,ROM 유효 구간층 합계 일치,https://bulbapedia.bulbagarden.net/wiki/Mt._Clear
+94,demo,Challenge River,167,7,7,7,0,7,ROM 유효 구간층 합계 일치,https://bulbapedia.bulbagarden.net/wiki/Challenge_River
+95,demo,Trial Forest,168,6,6,6,0,6,ROM 유효 구간층 합계 일치,https://bulbapedia.bulbagarden.net/wiki/Trial_Forest
+96,demo,Guiding Sea,169,5,5,5,0,5,ROM 유효 구간층 합계 일치,https://bulbapedia.bulbagarden.net/wiki/Guiding_Sea
+97,demo,Hidden Shopkeeper Village,170,5,5,5,0,5,ROM 유효 구간층 합계 일치,https://bulbapedia.bulbagarden.net/wiki/Hidden_Shopkeeper_Village
+53,dojo,Marowak Dojo,"180,181,182,183,184,185,186,187,188,189,190,191",99,99,98,1,,도장12미로는별도5/1/48층 매핑; 단일 페이지 합계와 비교하지 않음,https://bulbapedia.bulbagarden.net/wiki/Marowak_Dojo

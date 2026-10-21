@@ -1,0 +1,2005 @@
+[
+  {
+    "group": 1,
+    "name": "Beach Cave",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Beach_Cave",
+    "dungeonIds": [
+      1,
+      2
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 4,
+    "tilesets": [
+      1,
+      170
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 2,
+    "name": "Drenched Bluff",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Drenched_Bluff",
+    "dungeonIds": [
+      3
+    ],
+    "declaredFloors": 6,
+    "resolvedFloors": 6,
+    "physicalFloors": 6,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 6,
+    "tilesets": [
+      2
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 3,
+    "name": "Mt. Bristle",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Bristle",
+    "dungeonIds": [
+      4,
+      5
+    ],
+    "declaredFloors": 10,
+    "resolvedFloors": 10,
+    "physicalFloors": 10,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 9,
+    "tilesets": [
+      3,
+      171
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 4,
+    "name": "Waterfall Cave",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Waterfall_Cave",
+    "dungeonIds": [
+      6
+    ],
+    "declaredFloors": 8,
+    "resolvedFloors": 8,
+    "physicalFloors": 8,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 8,
+    "tilesets": [
+      4
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 5,
+    "name": "Apple Woods",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Apple_Woods",
+    "dungeonIds": [
+      7
+    ],
+    "declaredFloors": 12,
+    "resolvedFloors": 12,
+    "physicalFloors": 12,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 12,
+    "tilesets": [
+      5
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 6,
+    "name": "Craggy Coast",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Craggy_Coast",
+    "dungeonIds": [
+      8
+    ],
+    "declaredFloors": 9,
+    "resolvedFloors": 9,
+    "physicalFloors": 9,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 9,
+    "tilesets": [
+      6
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 7,
+    "name": "Side Path",
+    "category": "side-path",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Side_Path",
+    "dungeonIds": [
+      9
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 5,
+    "tilesets": [
+      7
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 8,
+    "name": "Mt. Horn",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Horn",
+    "dungeonIds": [
+      10
+    ],
+    "declaredFloors": 14,
+    "resolvedFloors": 14,
+    "physicalFloors": 14,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 14,
+    "tilesets": [
+      8
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 9,
+    "name": "Rock Path",
+    "category": "side-path",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Rock_Path",
+    "dungeonIds": [
+      11
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 5,
+    "tilesets": [
+      9
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 10,
+    "name": "Foggy Forest",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Foggy_Forest",
+    "dungeonIds": [
+      12
+    ],
+    "declaredFloors": 11,
+    "resolvedFloors": 11,
+    "physicalFloors": 11,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 11,
+    "tilesets": [
+      10
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 11,
+    "name": "Forest Path",
+    "category": "side-path",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Forest_Path",
+    "dungeonIds": [
+      13
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 5,
+    "tilesets": [
+      11
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 12,
+    "name": "Steam Cave",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Steam_Cave",
+    "dungeonIds": [
+      14,
+      15,
+      16
+    ],
+    "declaredFloors": 16,
+    "resolvedFloors": 16,
+    "physicalFloors": 16,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 15,
+    "tilesets": [
+      12,
+      172
+    ],
+    "packagedIds": [
+      15
+    ]
+  },
+  {
+    "group": 13,
+    "name": "Amp Plains",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Amp_Plains",
+    "dungeonIds": [
+      17,
+      18,
+      19
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 19,
+    "tilesets": [
+      14,
+      15,
+      173
+    ],
+    "packagedIds": [
+      18
+    ]
+  },
+  {
+    "group": 14,
+    "name": "Northern Desert",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Northern_Desert",
+    "dungeonIds": [
+      20
+    ],
+    "declaredFloors": 15,
+    "resolvedFloors": 15,
+    "physicalFloors": 15,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 15,
+    "tilesets": [
+      17,
+      18
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 15,
+    "name": "Quicksand Cave",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Quicksand_Cave",
+    "dungeonIds": [
+      21,
+      22,
+      23
+    ],
+    "declaredFloors": 21,
+    "resolvedFloors": 21,
+    "physicalFloors": 21,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 20,
+    "tilesets": [
+      19,
+      20,
+      174
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 16,
+    "name": "Crystal Cave",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Cave",
+    "dungeonIds": [
+      24
+    ],
+    "declaredFloors": 11,
+    "resolvedFloors": 11,
+    "physicalFloors": 11,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 11,
+    "tilesets": [
+      22,
+      23
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 17,
+    "name": "Crystal Crossing",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Crossing",
+    "dungeonIds": [
+      25,
+      26
+    ],
+    "declaredFloors": 14,
+    "resolvedFloors": 14,
+    "physicalFloors": 14,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 13,
+    "tilesets": [
+      24,
+      175
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 18,
+    "name": "Chasm Cave",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Chasm_Cave",
+    "dungeonIds": [
+      27
+    ],
+    "declaredFloors": 8,
+    "resolvedFloors": 8,
+    "physicalFloors": 8,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 8,
+    "tilesets": [
+      26,
+      27
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 19,
+    "name": "Dark Hill",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Hill",
+    "dungeonIds": [
+      28
+    ],
+    "declaredFloors": 15,
+    "resolvedFloors": 15,
+    "physicalFloors": 15,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 15,
+    "tilesets": [
+      28,
+      29
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 20,
+    "name": "Sealed Ruin",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sealed_Ruin",
+    "dungeonIds": [
+      29,
+      30,
+      31
+    ],
+    "declaredFloors": 15,
+    "resolvedFloors": 15,
+    "physicalFloors": 15,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 14,
+    "tilesets": [
+      30,
+      31,
+      176
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 21,
+    "name": "Dusk Forest",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest",
+    "dungeonIds": [
+      32
+    ],
+    "declaredFloors": 8,
+    "resolvedFloors": 8,
+    "physicalFloors": 8,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 8,
+    "tilesets": [
+      33,
+      34
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 22,
+    "name": "Deep Dusk Forest",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Deep_Dusk_Forest",
+    "dungeonIds": [
+      33
+    ],
+    "declaredFloors": 12,
+    "resolvedFloors": 12,
+    "physicalFloors": 12,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 12,
+    "tilesets": [
+      35,
+      36
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 23,
+    "name": "Treeshroud Forest",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treeshroud_Forest",
+    "dungeonIds": [
+      34
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 20,
+    "tilesets": [
+      37,
+      38
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 24,
+    "name": "Brine Cave",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Brine_Cave",
+    "dungeonIds": [
+      35,
+      36,
+      37
+    ],
+    "declaredFloors": 15,
+    "resolvedFloors": 15,
+    "physicalFloors": 15,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 14,
+    "tilesets": [
+      39,
+      40,
+      177
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 25,
+    "name": "Hidden Land",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Hidden_Land",
+    "dungeonIds": [
+      38,
+      39,
+      40
+    ],
+    "declaredFloors": 24,
+    "resolvedFloors": 24,
+    "physicalFloors": 24,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 23,
+    "tilesets": [
+      42,
+      43,
+      178
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 26,
+    "name": "Temporal Tower",
+    "category": "main-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower",
+    "dungeonIds": [
+      41,
+      42,
+      43
+    ],
+    "declaredFloors": 24,
+    "resolvedFloors": 24,
+    "physicalFloors": 24,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 23,
+    "tilesets": [
+      45,
+      46,
+      179
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 27,
+    "name": "Mystifying Forest",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mystifying_Forest",
+    "dungeonIds": [
+      44,
+      45
+    ],
+    "declaredFloors": 14,
+    "resolvedFloors": 14,
+    "physicalFloors": 14,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 13,
+    "tilesets": [
+      48,
+      180
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 28,
+    "name": "Midnight Forest",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Midnight_Forest",
+    "dungeonIds": [
+      98
+    ],
+    "declaredFloors": 25,
+    "resolvedFloors": 25,
+    "physicalFloors": 25,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 23,
+    "tilesets": [
+      34
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 29,
+    "name": "Lake Afar",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lake_Afar",
+    "dungeonIds": [
+      93
+    ],
+    "declaredFloors": 25,
+    "resolvedFloors": 25,
+    "physicalFloors": 25,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 23,
+    "tilesets": [
+      113
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 30,
+    "name": "Mt. Mistral",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Mistral",
+    "dungeonIds": [
+      95
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 18,
+    "tilesets": [
+      119
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 31,
+    "name": "Shimmer Hill",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Hill",
+    "dungeonIds": [
+      96
+    ],
+    "declaredFloors": 18,
+    "resolvedFloors": 18,
+    "physicalFloors": 18,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 16,
+    "tilesets": [
+      106
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 32,
+    "name": "Bottomless Sea",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Bottomless_Sea",
+    "dungeonIds": [
+      73,
+      74
+    ],
+    "declaredFloors": 50,
+    "resolvedFloors": 50,
+    "physicalFloors": 50,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 49,
+    "tilesets": [
+      118
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 33,
+    "name": "Surrounded Sea",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Surrounded_Sea",
+    "dungeonIds": [
+      50
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 19,
+    "tilesets": [
+      51
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 34,
+    "name": "Miracle Sea",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Miracle_Sea",
+    "dungeonIds": [
+      51,
+      52,
+      53
+    ],
+    "declaredFloors": 23,
+    "resolvedFloors": 23,
+    "physicalFloors": 23,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 21,
+    "tilesets": [
+      52
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 35,
+    "name": "Concealed Ruins",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Concealed_Ruins",
+    "dungeonIds": [
+      70,
+      71
+    ],
+    "declaredFloors": 31,
+    "resolvedFloors": 30,
+    "physicalFloors": 30,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 28,
+    "tilesets": [
+      50
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 36,
+    "name": "Lost Wilderness",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lost_Wilderness",
+    "dungeonIds": [
+      97
+    ],
+    "declaredFloors": 18,
+    "resolvedFloors": 18,
+    "physicalFloors": 18,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 16,
+    "tilesets": [
+      108
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 37,
+    "name": "Mystery Jungle",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mystery_Jungle",
+    "dungeonIds": [
+      85,
+      86
+    ],
+    "declaredFloors": 30,
+    "resolvedFloors": 30,
+    "physicalFloors": 30,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 29,
+    "tilesets": [
+      61,
+      62
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 38,
+    "name": "Happy Outlook",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Happy_Outlook",
+    "dungeonIds": [
+      94
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 18,
+    "tilesets": [
+      91
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 39,
+    "name": "Serenity River",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Serenity_River",
+    "dungeonIds": [
+      87
+    ],
+    "declaredFloors": 8,
+    "resolvedFloors": 8,
+    "physicalFloors": 8,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 7,
+    "tilesets": [
+      96
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 40,
+    "name": "Landslide Cave",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Landslide_Cave",
+    "dungeonIds": [
+      88
+    ],
+    "declaredFloors": 13,
+    "resolvedFloors": 13,
+    "physicalFloors": 13,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 12,
+    "tilesets": [
+      103
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 41,
+    "name": "Blizzard Island",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Blizzard_Island",
+    "dungeonIds": [
+      46
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 20,
+    "tilesets": [
+      88
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 42,
+    "name": "Shimmer Desert",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Desert",
+    "dungeonIds": [
+      75,
+      76
+    ],
+    "declaredFloors": 10,
+    "resolvedFloors": 10,
+    "physicalFloors": 10,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 9,
+    "tilesets": [
+      85
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 43,
+    "name": "Crevice Cave",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crevice_Cave",
+    "dungeonIds": [
+      47,
+      48,
+      49
+    ],
+    "declaredFloors": 15,
+    "resolvedFloors": 15,
+    "physicalFloors": 15,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 14,
+    "tilesets": [
+      82
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 44,
+    "name": "Mt. Avalanche",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Avalanche",
+    "dungeonIds": [
+      77,
+      78
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 19,
+    "tilesets": [
+      111
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 45,
+    "name": "Giant Volcano",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Giant_Volcano",
+    "dungeonIds": [
+      79,
+      80
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 19,
+    "tilesets": [
+      123
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 46,
+    "name": "World Abyss",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:World_Abyss",
+    "dungeonIds": [
+      81,
+      82
+    ],
+    "declaredFloors": 30,
+    "resolvedFloors": 30,
+    "physicalFloors": 30,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 29,
+    "tilesets": [
+      59,
+      125
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 47,
+    "name": "Lush Prairie",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lush_Prairie",
+    "dungeonIds": [
+      89
+    ],
+    "declaredFloors": 6,
+    "resolvedFloors": 6,
+    "physicalFloors": 6,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 5,
+    "tilesets": [
+      90
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 48,
+    "name": "Tiny Meadow",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Tiny_Meadow",
+    "dungeonIds": [
+      90
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 4,
+    "tilesets": [
+      65
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 49,
+    "name": "Labyrinth Cave",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Labyrinth_Cave",
+    "dungeonIds": [
+      91
+    ],
+    "declaredFloors": 10,
+    "resolvedFloors": 10,
+    "physicalFloors": 10,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 9,
+    "tilesets": [
+      102
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 50,
+    "name": "Oran Forest",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oran_Forest",
+    "dungeonIds": [
+      92
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 4,
+    "tilesets": [
+      105
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 51,
+    "name": "Sky Stairway",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Stairway",
+    "dungeonIds": [
+      83,
+      84
+    ],
+    "declaredFloors": 50,
+    "resolvedFloors": 50,
+    "physicalFloors": 50,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 49,
+    "tilesets": [
+      99
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 52,
+    "name": "Aegis Cave",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Aegis_Cave",
+    "dungeonIds": [
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61
+    ],
+    "declaredFloors": 19,
+    "resolvedFloors": 19,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [
+      19
+    ],
+    "fixedFloors": 4,
+    "proceduralFloors": 15,
+    "tilesets": [
+      49,
+      126,
+      127,
+      181
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 54,
+    "name": "Dark Crater",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Crater",
+    "dungeonIds": [
+      67,
+      68,
+      69
+    ],
+    "declaredFloors": 30,
+    "resolvedFloors": 30,
+    "physicalFloors": 30,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 29,
+    "tilesets": [
+      57,
+      58,
+      182
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 55,
+    "name": "Marine Resort",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Marine_Resort",
+    "dungeonIds": [
+      72
+    ],
+    "declaredFloors": 19,
+    "resolvedFloors": 19,
+    "physicalFloors": 19,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 18,
+    "tilesets": [
+      117
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 56,
+    "name": "Mt. Travail",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Travail",
+    "dungeonIds": [
+      62
+    ],
+    "declaredFloors": 19,
+    "resolvedFloors": 19,
+    "physicalFloors": 19,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 19,
+    "tilesets": [
+      53
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 57,
+    "name": "The Nightmare",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:The_Nightmare",
+    "dungeonIds": [
+      63
+    ],
+    "declaredFloors": 17,
+    "resolvedFloors": 17,
+    "physicalFloors": 17,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 17,
+    "tilesets": [
+      54
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 58,
+    "name": "Spacial Rift",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Rift",
+    "dungeonIds": [
+      64,
+      65,
+      66
+    ],
+    "declaredFloors": 25,
+    "resolvedFloors": 25,
+    "physicalFloors": 25,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 23,
+    "tilesets": [
+      55,
+      56
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 59,
+    "name": "Zero Isle North",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_North",
+    "dungeonIds": [
+      99
+    ],
+    "declaredFloors": 75,
+    "resolvedFloors": 75,
+    "physicalFloors": 75,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 11,
+    "proceduralFloors": 64,
+    "tilesets": [
+      117,
+      124,
+      126,
+      127
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 60,
+    "name": "Zero Isle West",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_West",
+    "dungeonIds": [
+      101
+    ],
+    "declaredFloors": 40,
+    "resolvedFloors": 40,
+    "physicalFloors": 40,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 9,
+    "proceduralFloors": 31,
+    "tilesets": [
+      5,
+      8,
+      24,
+      31
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 61,
+    "name": "Zero Isle East",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_East",
+    "dungeonIds": [
+      100
+    ],
+    "declaredFloors": 40,
+    "resolvedFloors": 40,
+    "physicalFloors": 40,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 5,
+    "proceduralFloors": 35,
+    "tilesets": [
+      3,
+      7,
+      63,
+      64
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 62,
+    "name": "Zero Isle South",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_South",
+    "dungeonIds": [
+      102
+    ],
+    "declaredFloors": 99,
+    "resolvedFloors": 99,
+    "physicalFloors": 99,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 4,
+    "proceduralFloors": 95,
+    "tilesets": [
+      1,
+      2,
+      4,
+      6,
+      7,
+      8,
+      16,
+      25,
+      36
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 64,
+    "name": "Zero Isle Center",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_Center",
+    "dungeonIds": [
+      103
+    ],
+    "declaredFloors": 50,
+    "resolvedFloors": 50,
+    "physicalFloors": 50,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 49,
+    "tilesets": [
+      76,
+      83,
+      97,
+      109,
+      112,
+      114,
+      115,
+      116
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 65,
+    "name": "Destiny Tower",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Destiny_Tower",
+    "dungeonIds": [
+      104
+    ],
+    "declaredFloors": 99,
+    "resolvedFloors": 99,
+    "physicalFloors": 99,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 99,
+    "tilesets": [
+      1,
+      2,
+      4,
+      6,
+      7,
+      8,
+      16,
+      25,
+      36,
+      67
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 68,
+    "name": "Oblivion Forest",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oblivion_Forest",
+    "dungeonIds": [
+      107
+    ],
+    "declaredFloors": 15,
+    "resolvedFloors": 15,
+    "physicalFloors": 15,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 14,
+    "tilesets": [
+      84
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 69,
+    "name": "Treacherous Waters",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treacherous_Waters",
+    "dungeonIds": [
+      108
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 19,
+    "tilesets": [
+      51,
+      109
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 70,
+    "name": "Southeastern Islands",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southeastern_Islands",
+    "dungeonIds": [
+      109
+    ],
+    "declaredFloors": 25,
+    "resolvedFloors": 25,
+    "physicalFloors": 25,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 24,
+    "tilesets": [
+      75
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 71,
+    "name": "Inferno Cave",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Inferno_Cave",
+    "dungeonIds": [
+      110
+    ],
+    "declaredFloors": 30,
+    "resolvedFloors": 30,
+    "physicalFloors": 30,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 29,
+    "tilesets": [
+      110
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 72,
+    "name": "Sky Peak Mountain Path",
+    "category": "post-story",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Peak_Mountain_Path",
+    "dungeonIds": [
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122
+    ],
+    "declaredFloors": 40,
+    "resolvedFloors": 40,
+    "physicalFloors": 40,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 38,
+    "tilesets": [
+      11,
+      32,
+      66,
+      94,
+      105,
+      106,
+      142,
+      143,
+      195
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 91,
+    "name": "Star Cave",
+    "category": "optional",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave",
+    "dungeonIds": [
+      174
+    ],
+    "declaredFloors": 16,
+    "resolvedFloors": 16,
+    "physicalFloors": 16,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 16,
+    "tilesets": [
+      24,
+      80
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 73,
+    "name": "Star Cave",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave",
+    "dungeonIds": [
+      123,
+      124,
+      125,
+      126,
+      127
+    ],
+    "declaredFloors": 17,
+    "resolvedFloors": 17,
+    "physicalFloors": 17,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 2,
+    "proceduralFloors": 15,
+    "tilesets": [
+      24,
+      80,
+      184,
+      198
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 74,
+    "name": "Murky Forest",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Murky_Forest",
+    "dungeonIds": [
+      128
+    ],
+    "declaredFloors": 7,
+    "resolvedFloors": 7,
+    "physicalFloors": 7,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 7,
+    "tilesets": [
+      128
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 75,
+    "name": "Eastern Cave",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Eastern_Cave",
+    "dungeonIds": [
+      129
+    ],
+    "declaredFloors": 10,
+    "resolvedFloors": 10,
+    "physicalFloors": 10,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 10,
+    "tilesets": [
+      103
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 76,
+    "name": "Fortune Ravine",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Fortune_Ravine",
+    "dungeonIds": [
+      130,
+      131,
+      132
+    ],
+    "declaredFloors": 15,
+    "resolvedFloors": 15,
+    "physicalFloors": 15,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 14,
+    "tilesets": [
+      104,
+      126,
+      185
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 77,
+    "name": "Barren Valley",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Barren_Valley",
+    "dungeonIds": [
+      133,
+      134,
+      135
+    ],
+    "declaredFloors": 11,
+    "resolvedFloors": 11,
+    "physicalFloors": 11,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 10,
+    "tilesets": [
+      32,
+      132,
+      186
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 78,
+    "name": "Dark Wasteland",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Wasteland",
+    "dungeonIds": [
+      136
+    ],
+    "declaredFloors": 4,
+    "resolvedFloors": 4,
+    "physicalFloors": 16,
+    "unreferencedGroupFloors": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "fixedFloors": 0,
+    "proceduralFloors": 4,
+    "tilesets": [
+      133
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 79,
+    "name": "Temporal Tower",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower",
+    "dungeonIds": [
+      137,
+      138
+    ],
+    "declaredFloors": 20,
+    "resolvedFloors": 20,
+    "physicalFloors": 20,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 20,
+    "tilesets": [
+      134,
+      135
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 80,
+    "name": "Dusk Forest",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest",
+    "dungeonIds": [
+      139,
+      140
+    ],
+    "declaredFloors": 8,
+    "resolvedFloors": 8,
+    "physicalFloors": 8,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 7,
+    "tilesets": [
+      34,
+      187
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 81,
+    "name": "Spacial Cliffs",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Cliffs",
+    "dungeonIds": [
+      141
+    ],
+    "declaredFloors": 10,
+    "resolvedFloors": 10,
+    "physicalFloors": 10,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 10,
+    "tilesets": [
+      136
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 82,
+    "name": "Dark Ice Mountain",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Ice_Mountain",
+    "dungeonIds": [
+      142,
+      143,
+      144
+    ],
+    "declaredFloors": 15,
+    "resolvedFloors": 15,
+    "physicalFloors": 15,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 14,
+    "tilesets": [
+      137,
+      138,
+      188
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 83,
+    "name": "Icicle Forest",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Icicle_Forest",
+    "dungeonIds": [
+      145
+    ],
+    "declaredFloors": 10,
+    "resolvedFloors": 10,
+    "physicalFloors": 10,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 10,
+    "tilesets": [
+      139
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 84,
+    "name": "Vast Ice Mountain",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Vast_Ice_Mountain",
+    "dungeonIds": [
+      146,
+      147,
+      148
+    ],
+    "declaredFloors": 18,
+    "resolvedFloors": 18,
+    "physicalFloors": 18,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 17,
+    "tilesets": [
+      140,
+      141,
+      189
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 85,
+    "name": "Southern Jungle",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southern_Jungle",
+    "dungeonIds": [
+      149
+    ],
+    "declaredFloors": 10,
+    "resolvedFloors": 10,
+    "physicalFloors": 10,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 10,
+    "tilesets": [
+      44
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 86,
+    "name": "Boulder Quarry",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Boulder_Quarry",
+    "dungeonIds": [
+      150,
+      151,
+      152
+    ],
+    "declaredFloors": 11,
+    "resolvedFloors": 11,
+    "physicalFloors": 11,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 10,
+    "tilesets": [
+      102,
+      129,
+      190
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 87,
+    "name": "Right Cave Path",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Right_Cave_Path",
+    "dungeonIds": [
+      153
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 5,
+    "tilesets": [
+      109
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 88,
+    "name": "Left Cave Path",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Left_Cave_Path",
+    "dungeonIds": [
+      154
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 5,
+    "tilesets": [
+      122
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 89,
+    "name": "Limestone Cavern",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Limestone_Cavern",
+    "dungeonIds": [
+      155,
+      156,
+      157
+    ],
+    "declaredFloors": 11,
+    "resolvedFloors": 11,
+    "physicalFloors": 11,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 10,
+    "tilesets": [
+      130,
+      131,
+      191
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 90,
+    "name": "Spring Cave",
+    "category": "special",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spring_Cave",
+    "dungeonIds": [
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164
+    ],
+    "declaredFloors": 19,
+    "resolvedFloors": 19,
+    "physicalFloors": 19,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 3,
+    "proceduralFloors": 16,
+    "tilesets": [
+      4,
+      7,
+      8,
+      12,
+      192,
+      193,
+      194
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 92,
+    "name": "Little Plains",
+    "category": "demo",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Little_Plains",
+    "dungeonIds": [
+      165
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 5,
+    "tilesets": [
+      78
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 93,
+    "name": "Mt. Clear",
+    "category": "demo",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Clear",
+    "dungeonIds": [
+      166
+    ],
+    "declaredFloors": 6,
+    "resolvedFloors": 6,
+    "physicalFloors": 6,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 6,
+    "tilesets": [
+      114
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 94,
+    "name": "Challenge River",
+    "category": "demo",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Challenge_River",
+    "dungeonIds": [
+      167
+    ],
+    "declaredFloors": 7,
+    "resolvedFloors": 7,
+    "physicalFloors": 7,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 7,
+    "tilesets": [
+      96
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 95,
+    "name": "Trial Forest",
+    "category": "demo",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Trial_Forest",
+    "dungeonIds": [
+      168
+    ],
+    "declaredFloors": 6,
+    "resolvedFloors": 6,
+    "physicalFloors": 6,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 6,
+    "tilesets": [
+      11
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 96,
+    "name": "Guiding Sea",
+    "category": "demo",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Guiding_Sea",
+    "dungeonIds": [
+      169
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 5,
+    "tilesets": [
+      113
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 97,
+    "name": "Hidden Shopkeeper Village",
+    "category": "demo",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Hidden_Shopkeeper_Village",
+    "dungeonIds": [
+      170
+    ],
+    "declaredFloors": 5,
+    "resolvedFloors": 5,
+    "physicalFloors": 5,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 0,
+    "proceduralFloors": 5,
+    "tilesets": [
+      89
+    ],
+    "packagedIds": []
+  },
+  {
+    "group": 53,
+    "name": "Marowak Dojo",
+    "category": "dojo",
+    "url": "https://bulbapedia.bulbagarden.net/wiki/Marowak_Dojo",
+    "dungeonIds": [
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191
+    ],
+    "declaredFloors": 99,
+    "resolvedFloors": 99,
+    "physicalFloors": 99,
+    "unreferencedGroupFloors": [],
+    "fixedFloors": 1,
+    "proceduralFloors": 98,
+    "tilesets": [
+      68,
+      69,
+      74,
+      79,
+      81,
+      84,
+      85,
+      87,
+      88,
+      101,
+      104,
+      109,
+      112,
+      123
+    ],
+    "packagedIds": []
+  }
+]

@@ -1,5 +1,7 @@
 # 맵별 원작 출현·표시 가능 범위
 
+> 후속 전체 대조: [원작 맵 전수 조사](../2026-10-21-full-map-audit/README.md). 아래 제품 상태는 2026-10-20 당시 기록이다. 새 조사는 도장·데모·특별 에피소드를 포함하며 현재 맵 연결과 원작 전체를 구분한다.
+
 2026-10-20 KST. 숫자는 이 ROM의 MD ID다. 이름은 고정 pmdsky-debug enum이며 한국어 ROM 문자열을 해독한 결과가 아니다. 원작 normal 출현 후보를 적 후보로 분류했다. 원작 상점·고정 장면 인물은 별도이며 normal 표에 우호 NPC 역할 표시는 없다. 현재 제품의 우호 추첨은 패키지가 있는0/15에만 적용된다. 상세 층/레벨/비중/별도 MH 후보는 [map-encounters.csv](map-encounters.csv), [floor-profiles.jsonl](floor-profiles.jsonl.gz)을 따른다.
 
 | 던전 ID · 정적 이름 | 원작 층수 | 원작 일반 적 후보 (MD) | 우호 NPC: 현재 제품 / 원작 근거 | 타일셋 |
