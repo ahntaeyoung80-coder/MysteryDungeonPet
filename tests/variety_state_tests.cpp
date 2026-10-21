@@ -22,7 +22,9 @@ void put(std::vector<std::uint8_t>& bytes,std::size_t at,std::uint32_t value) {
     for(unsigned b=0;b<4;++b)bytes.at(at+b)=std::uint8_t(value>>(8*b));
 }
 std::size_t varietyStart(const std::vector<std::uint8_t>& bytes) {
-    detail::Reader tail(bytes);tail.offset=bytes.size()-8;return bytes.size()-8-tail.u32();
+    detail::Reader tail(bytes);auto end=bytes.size()-4;
+    for(unsigned version=bytes[4];version>12;--version){tail.offset=end-4;end-=tail.u32()+4;}
+    tail.offset=end-4;return end-4-tail.u32();
 }
 ExplorationState fixture() {
     Explorer e(700,42,"variety",fixtureProfiles(2),{0,0,0,0});e.enableGameplay(1000);e.enableCompanion();
@@ -153,7 +155,7 @@ void mealsAndDays() {
 }
 void malformedAndLegacy() {
     const auto valid=active();auto bytes=encodeSnapshot(valid);
-    check(bytes[4]==12,"new schema missing");
+    check(bytes[4]==13,"new schema missing");
     for(std::size_t size=0;size<bytes.size();size+=std::max<std::size_t>(1,bytes.size()/37)) {
         auto truncated=bytes;truncated.resize(size);
         rejects([&]{decodeSnapshot(truncated,"variety");},"truncation accepted");

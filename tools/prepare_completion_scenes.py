@@ -10,7 +10,7 @@ import struct
 from tools.package_format import encode_package
 
 
-def prepare(root, output):
+def prepare(root, output, dungeon=15, existing_registry=None):
     from ndspy.rom import NintendoDSRom
     from skytemple_files.common.types.file_types import FileType
     from skytemple_files.common.util import get_ppmdu_config_for_rom, get_binary_from_rom
@@ -28,16 +28,19 @@ def prepare(root, output):
     byte_codec = copy(config)
     byte_codec.string_encoding = 'latin-1'  # Only opcodes/positions; no dialogue decoding claim.
     # The runtime currently ships Test Dungeon0 and Upper Steam Cave15.
-    dungeon, terminal, level = 15, 16, 'D10P41A'
+    choices = {15: (16, 'D10P41A', 'm10a0901', (12, 8, 7, 12, 15, 1, 3), 'peak'),
+               18: (19, 'D12P41A', 'm12a0801', (13, 10, 9, 13, 19, 1, 4), 'amp-clearing')}
+    if dungeon not in choices: raise ValueError('completion route has not been verified')
+    terminal, level, scene, expected, asset_name = choices[dungeon]
     definition, end = definitions[dungeon], definitions[terminal]
     fixed = mappa.floor_lists[end.mappa_index][end.start_after].layout.fixed_floor_id
     if (definition.mappa_index, definition.start_after, definition.number_floors,
-        end.mappa_index, end.start_after, end.number_floors, fixed) != (12, 8, 7, 12, 15, 1, 3):
+        end.mappa_index, end.start_after, end.number_floors, fixed) != expected:
         raise ValueError('original Upper Steam Cave -> Steam Cave Peak mapping changed')
-    script_path = f'SCRIPT/{level}/m10a0901.ssb'
+    script_path = f'SCRIPT/{level}/{scene}.ssb'
     script_raw = rom.getFileByName(script_path)
     script = FileType.SSB.deserialize(script_raw, byte_codec).to_ssb_script()[0]
-    if 'back_SetDungeonBanner(16, 0)' not in script or f'back_SetGround(LEVEL_{level})' not in script:
+    if f'back_SetDungeonBanner({terminal}, 0)' not in script or f'back_SetGround(LEVEL_{level})' not in script:
         raise ValueError('original completion scene/banner relationship changed')
     targets, owner = {}, None
     for line in script.splitlines():
@@ -49,7 +52,7 @@ def prepare(root, output):
         match = re.search(r"MovePositionMark\([^,]+, Position<[^,]+, ([\d.]+), ([\d.]+)>", line)
         if match and owner and owner not in targets:
             targets[owner] = [round(float(match[1])*8), round(float(match[2])*8)]
-    layout_path = f'SCRIPT/{level}/m10a0901.ssa'
+    layout_path = f'SCRIPT/{level}/{scene}.ssa'
     layout_raw = rom.getFileByName(layout_path)
     layout = FileType.SSA.deserialize(layout_raw, config.script_data)
     def position(actor):
@@ -86,23 +89,24 @@ def prepare(root, output):
     if digest(source.read_bytes()) != before:
         raise ValueError('ROM changed')
     output.mkdir(parents=True)
-    image.save(output / 'peak.png')
+    png_name, package_name = asset_name+'.png', asset_name+'.mdpa'
+    image.save(output / png_name)
     provenance = {'romSha256': before, 'dungeonId': dungeon, 'terminalDungeonId': terminal,
-                  'mappaGroup': 12, 'groupLastFloor': 15, 'fixedFloorId': fixed, 'level': level,
+                  'mappaGroup': int(definition.mappa_index), 'groupLastFloor': int(end.start_after), 'fixedFloorId': fixed, 'level': level,
                   'script': {'path': script_path, 'sha256': digest(script_raw)},
                   'layout': {'path': layout_path, 'sha256': digest(layout_raw)},
                   'entryPoints': entry_points, 'endPoints': end_points, 'backgroundSources': refs,
                   'rgbaSha256': digest(image.tobytes()),
                   'scope': 'original static background, actor placement and initial walking targets; generic completion replaces original story/boss event'}
-    png = (output / 'peak.png').read_bytes()
+    png = (output / png_name).read_bytes()
     package = {'assetVersion': 1, 'tickHz': 60, 'width': image.width, 'height': image.height,
-               'pngBytes': len(png), 'sourceKind': 1, 'atlasName': 'peak.png',
-               'pngSha256': digest(png), 'assetKey': 'rom:EoS_NA:completion:15',
+               'pngBytes': len(png), 'sourceKind': 1, 'atlasName': png_name,
+               'pngSha256': digest(png), 'assetKey': f'rom:EoS_NA:completion:{dungeon}',
                'provenance': json.dumps(provenance, sort_keys=True),
                'clips': [{'id': 0, 'name': level, 'rows': [[{'rect': [0, 0, image.width, image.height],
                    'anchor': [0, 0], 'shadow': [0, 0], 'ticks': 1, 'markers': []}]]}]}
-    (output / 'peak.mdpa').write_bytes(encode_package(package))
-    localized = {0: '테스트 던전', 15: '뜨거운 동굴 상층', 16: '뜨거운 동굴 정상'}
+    (output / package_name).write_bytes(encode_package(package))
+    localized = {0: '테스트 던전', 15: '뜨거운 동굴 상층', 16: '뜨거운 동굴 정상', 18:'먼 전기의 평원',19:'전기의 평원 끝'}
     names = [(d.id, localized.get(d.id, d.name)) for d in config.dungeon_data.dungeons if d.id < len(definitions)]
     body = bytearray(struct.pack('<2I', 0x4345444D, 1))
     def u32(value): body.extend(struct.pack('<I', value))
@@ -115,10 +119,12 @@ def prepare(root, output):
     for identity, name in names:
         u32(identity); string(name); u32(identity == dungeon)
         if identity == dungeon:
-            u32(terminal); string(localized[terminal]); string('peak.mdpa')
+            u32(terminal); string(localized[terminal]); string(package_name)
             u32(image.width); u32(image.height)
             for point in entry_points+end_points:
                 for value in point: u32(value)
+    if existing_registry:
+        body = merge_registries(existing_registry.read_bytes(), bytes(body))
     (output / 'destinations.mdec').write_bytes(body)
     provenance['testDungeon0'] = 'original Test Dungeon; no official destination; use completion text in current map'
     (output / 'provenance.json').write_text(json.dumps(provenance, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
@@ -127,9 +133,37 @@ def prepare(root, output):
             'imageSize': image.size, 'selectedRuntimeDungeon': dungeon}
 
 
+def merge_registries(previous, current):
+    def parse(data):
+        offset = 0
+        def u32():
+            nonlocal offset
+            value, = struct.unpack_from('<I', data, offset); offset += 4; return value
+        def string():
+            nonlocal offset
+            size = u32(); value = data[offset:offset+size]; offset += size; return value
+        if (u32(), u32()) != (0x4345444D, 1): raise ValueError('invalid completion registry')
+        rom = string(); count = u32(); header = data[:offset]; rows = {}
+        for _ in range(count):
+            start = offset; identity = u32(); string(); bound = u32()
+            if bound:
+                u32(); string(); string()
+                for _ in range(10): u32()
+            rows[identity] = (bound, data[start:offset])
+        if offset != len(data): raise ValueError('completion registry trailing bytes')
+        return rom, header, rows
+    rom, header, rows = parse(current); old_rom, _, old = parse(previous)
+    if rom != old_rom or set(old) != set(rows): raise ValueError('completion registry source mismatch')
+    for identity, entry in old.items():
+        if entry[0]: rows[identity] = entry
+    return header + b''.join(rows[identity][1] for identity in rows)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--dungeon', type=int, choices=(15,18), default=15)
+    parser.add_argument('--existing-registry', type=Path)
     args = parser.parse_args()
-    print(json.dumps(prepare(args.root, args.out), ensure_ascii=False, indent=2))
+    print(json.dumps(prepare(args.root, args.out,args.dungeon,args.existing_registry), ensure_ascii=False, indent=2))

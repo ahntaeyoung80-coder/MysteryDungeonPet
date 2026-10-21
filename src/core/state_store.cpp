@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(12); // MDES12 appends the bounded variety block; MDES1..11 remain readable.
+    w.u32(0x5345444d); w.u32(13); // MDES13 appends current non-Oran stock; old berry quantities remain authoritative.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -169,6 +169,9 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     for(const auto& recent:v.recent){w.str(recent.context);w.str(recent.bundle);w.u64(recent.eligibleAfter);}
     w.u32(static_cast<uint32_t>(v.committed.size()));for(const auto& key:v.committed)w.str(key);
     w.u32(static_cast<uint32_t>(w.bytes.size()-varietyStart));
+    const auto stockStart=w.bytes.size();
+    w.u32(static_cast<uint32_t>(v.stock.size()));for(const auto& item:v.stock){w.u32(item.owner);w.u32(item.item);w.u32(item.quantity);}
+    w.u32(static_cast<uint32_t>(w.bytes.size()-stockStart));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -177,7 +180,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 12) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 13) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -223,7 +226,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         auto& g = s.gameplay;
         g.enabled = r.boolean(); g.defeated = r.boolean(); g.homeScene = r.boolean();
         g.life = static_cast<LifePhase>(r.count(schema>=3?10:8)); g.combat = static_cast<CombatPhase>(r.count(schema>=7?17:schema>=3?10:9));
-        g.hearts = r.count(schema>=3?kMaxHp:3); g.oran = r.count(1); g.enemyHits = r.count(2); g.enemyInstance = r.u32(); g.turn = r.u32();
+        g.hearts = r.count(schema>=3?kMaxHp:3); g.oran = r.count(schema>=13?kMaxStock:1); g.enemyHits = r.count(2); g.enemyInstance = r.u32(); g.turn = r.u32();
         if(g.enemyInstance>kTiles && g.enemyInstance!=kCompanionActorId)throw std::runtime_error("invalid dialogue/combat actor id");
         g.damage = r.count(2); g.meals = r.u32(); g.day = r.u32(); g.hit = r.boolean(); g.critical = r.boolean();
         g.phaseStartedMs = r.u64(); g.deadlineMs = r.u64();
@@ -291,7 +294,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     if(schema>=7) {
         auto& partner=s.gameplay.companion;
         partner.enabled=r.boolean();partner.tile=static_cast<int>(r.count(kTiles))-1;
-        partner.hearts=r.count(kMaxHp);partner.oran=r.count(1);partner.direction=r.count(7);
+        partner.hearts=r.count(kMaxHp);partner.oran=r.count(schema>=13?kMaxStock:1);partner.direction=r.count(7);
         partner.actionRound=r.u64();partner.walkStartedMs=r.u64();partner.movement=detail::readMove(r);
         partner.hidden=r.boolean();s.gameplay.enemyTargetsCompanion=r.boolean();
     }
@@ -351,6 +354,11 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         // Never reconstruct consumable stock from acquisition history.
         const auto& g=s.gameplay;
         s.variety.schedule.mealCommitted=g.onceKeys.count("meal:"+std::to_string(s.runId))!=0;
+    }
+    if(schema>=13) {
+        const auto start=r.offset;const auto count=r.count(512);
+        for(unsigned i=0;i<count;++i)s.variety.stock.push_back({r.u32(),r.u32(),r.count(kMaxStock)});
+        const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("stock snapshot block length mismatch");
     }
     r.u32(); r.end();
     discardStaleEntityGoal(s);

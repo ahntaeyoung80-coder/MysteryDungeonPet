@@ -42,7 +42,7 @@ bool eventActive(const ExplorationState& s){return s.variety.event.progress>=Eve
 bool startVarietyEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,const DialogueCatalogue& c,std::uint32_t actorId) {
     if(!canStartVariety(s,now) || !s.gameplay.companion.enabled || s.position==s.world.stairs)return false;
     if(type!=VarietyEvent::Wonder && type!=VarietyEvent::GuildVisit && type!=VarietyEvent::TiredExplorer)return false;
-    const auto distance=bfs(s.world,s.position,s.blocked).distance;std::string variant;unsigned selectedActor=0;
+    const auto distance=bfs(s.world,s.position,s.blocked).distance;std::string variant;unsigned selectedActor=0,shareOwner=0;bool share=false;
     if(type==VarietyEvent::Wonder) {
         if(s.floors[s.floorIndex].dungeonId!=15 || !c.find("E05.view_a.view"))return false;
         variant=drawVariety(s.variety,VarietyRandomStream::Event,2)?"E05.view_a":"E05.view_b";
@@ -52,6 +52,8 @@ bool startVarietyEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,c
             std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),a.instanceId)==s.gameplay.hostile.end();});
         if(i==s.population.entities.end() || !c.find("E01.encourage.intro"))return false;
         selectedActor=i->instanceId;variant="E01.encourage";
+        if(s.gameplay.oran>=2 && c.find("E01.share_a.intro")){variant="E01.share_a";share=true;}
+        else if(s.gameplay.companion.oran>=2 && c.find("E01.share_b.intro")){variant="E01.share_b";shareOwner=kCompanionActorId;share=true;}
     } else {
         const auto count=std::count_if(s.population.entities.begin(),s.population.entities.end(),[](const auto& a){return a.kind==EntityKind::Friend && a.visible && !a.done;});
         const auto mask=occupied(s);int spawn=-1;
@@ -64,6 +66,7 @@ bool startVarietyEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,c
     auto& e=s.variety.event;e={};e.id={type,s.runId,std::uint64_t(s.floorSteps)+1,s.gameplay.day,s.floorIndex};
     e.progress=EventProgress::Approach;e.variant=variant;e.startedMs=now;e.deadlineMs=now+120000;
     if(selectedActor)e.actors={selectedActor};
+    if(share)e.reservations={{shareOwner,ITEM_ORAN_BERRY,1}};
     auto& g=s.gameplay;g.walkStartedMs=g.companion.walkStartedMs=0;g.phaseStartedMs=now;g.deadlineMs=now+400;
     g.onceKeys.insert(floorKey(s));g.onceKeys.insert("event-start:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex));
     return true;
@@ -106,7 +109,9 @@ GameplayUpdate advanceVarietyEvent(ExplorationState& s,std::uint64_t now,const D
     }
     if(e.progress==EventProgress::Dialogue) {
         e.progress=EventProgress::Result;
-        (void)commitVarietyResult(s,e.id.type==VarietyEvent::TiredExplorer?"encouraged":e.id.type==VarietyEvent::Wonder?"observed":"visited");
+        if(e.id.type==VarietyEvent::TiredExplorer && e.variant!="E01.encourage") {
+            if(!commitOranShare(s)){cancelVariety(s);g.deadlineMs=now;return {};}
+        } else (void)commitVarietyResult(s,e.id.type==VarietyEvent::TiredExplorer?"encouraged":e.id.type==VarietyEvent::Wonder?"observed":"visited");
         if(!startDialogueBundle(s,c,e.variant+"."+resultStage(e.id.type),now)){cancelVariety(s);g.deadlineMs=now;}
         return {GameplayEvent::DialogueNpc,{}};
     }
@@ -119,5 +124,16 @@ GameplayUpdate advanceVarietyEvent(ExplorationState& s,std::uint64_t now,const D
         finish(s);g.deadlineMs=now;return {GameplayEvent::Explore,{}};
     }
     cancelVariety(s);g.deadlineMs=now;return {};
+}
+bool commitOranShare(ExplorationState& s) {
+    const auto& e=s.variety.event;
+    if(e.id.type!=VarietyEvent::TiredExplorer || e.progress!=EventProgress::Result ||
+       s.variety.committed.count(eventKey(e.id)+":shared") || e.reservations.size()!=1 || e.actors.empty())return false;
+    const auto reserved=e.reservations.front();const auto* npc=entity(s,e.actors.front());
+    if(reserved.item!=ITEM_ORAN_BERRY || reserved.quantity!=1 || stockQuantity(s,reserved.owner,reserved.item)<2 || !npc ||
+       !npc->visible || npc->done || !canAttack(s.world,s.position,npc->tile) || s.gameplay.hearts<=kLowHp || s.gameplay.companion.hearts<=kLowHp)return false;
+    auto candidate=s;candidate.variety.event.reservations.clear();
+    if(!changeStock(candidate,reserved.owner,reserved.item,-1) || !commitVarietyResult(candidate,"shared"))return false;
+    s=std::move(candidate);return true;
 }
 } // namespace pet

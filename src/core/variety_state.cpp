@@ -119,9 +119,12 @@ void validateVarietyState(const ExplorationState& s) {
     std::set<std::uint32_t> actors;
     for(auto id:e.actors)require(id && id!=kCompanionActorId && actor(s,id) && actors.insert(id).second,"invalid event actor");
     std::set<std::pair<std::uint32_t,std::uint32_t>> reserved;
-    for(const auto& r:e.reservations)require(actor(s,r.owner) && r.item==ITEM_ORAN_BERRY && r.quantity==1 &&
+    for(const auto& r:e.reservations)require(actor(s,r.owner) && r.item>0 && r.item<=65535 && r.quantity>0 && r.quantity<=kMaxStock &&
         (r.owner==0 || r.owner==kCompanionActorId) && reserved.insert({r.owner,r.item}).second &&
-        (r.owner==0?s.gameplay.oran:s.gameplay.companion.oran)>=r.quantity,"invalid event reservation");
+        stockQuantity(s,r.owner,r.item)>=r.quantity,"invalid event reservation");
+    require(v.stock.size()<=512,"stock ledger exceeds limit");std::set<std::pair<unsigned,unsigned>> stockIds;
+    for(const auto& item:v.stock)require((item.owner==0 || item.owner==kCompanionActorId) && item.item>0 && item.item<=65535 &&
+        item.item!=ITEM_ORAN_BERRY && item.quantity>0 && item.quantity<=kMaxStock && stockIds.insert({item.owner,item.item}).second,"invalid/duplicate stock quantity");
     if(d.active)require(d.deadlineMs>d.startedMs && d.deadlineMs-d.startedMs<=60000 && d.catalogueVersion>0 && textId(d.context) && textId(d.bundle) && textId(d.lineId) &&
         d.line<256 && d.revealed<=4096 && d.readRemainingMs<=60000 && (d.speaker==kSystemDialogueActorId || actor(s,d.speaker)) && actor(s,d.listener) &&
         d.speaker!=d.listener,"invalid dialogue session");
@@ -143,5 +146,24 @@ void validateVarietyState(const ExplorationState& s) {
         const EventIdentity id{static_cast<VarietyEvent>(numbers[0]),numbers[1],numbers[4],static_cast<std::uint32_t>(numbers[2]),static_cast<std::uint32_t>(numbers[3])};
         require(key==eventKey(id)+":"+key.substr(start),"noncanonical event commit key");
     }
+}
+std::uint32_t stockQuantity(const ExplorationState& s,std::uint32_t owner,std::uint32_t item) {
+    if(owner!=0 && owner!=kCompanionActorId)return 0;
+    if(item==ITEM_ORAN_BERRY)return owner==0?s.gameplay.oran:s.gameplay.companion.oran;
+    const auto i=std::find_if(s.variety.stock.begin(),s.variety.stock.end(),[&](const auto& x){return x.owner==owner && x.item==item;});
+    return i==s.variety.stock.end()?0:i->quantity;
+}
+std::uint32_t reservedQuantity(const ExplorationState& s,std::uint32_t owner,std::uint32_t item) {
+    unsigned total=0;for(const auto& r:s.variety.event.reservations)if(r.owner==owner && r.item==item)total+=r.quantity;return total;
+}
+bool changeStock(ExplorationState& s,std::uint32_t owner,std::uint32_t item,int delta) {
+    if((owner!=0 && owner!=kCompanionActorId) || !item || item>65535)return false;
+    const auto count=stockQuantity(s,owner,item);const auto next=std::int64_t(count)+delta;
+    if(next<reservedQuantity(s,owner,item) || next>kMaxStock)return false;
+    if(item==ITEM_ORAN_BERRY){(owner==0?s.gameplay.oran:s.gameplay.companion.oran)=unsigned(next);return true;}
+    auto& rows=s.variety.stock;const auto i=std::find_if(rows.begin(),rows.end(),[&](const auto& x){return x.owner==owner && x.item==item;});
+    if(i==rows.end()){if(next && rows.size()<512)rows.push_back({owner,item,unsigned(next)});else if(next)return false;}
+    else if(!next)rows.erase(i);else i->quantity=unsigned(next);
+    return true;
 }
 } // namespace pet

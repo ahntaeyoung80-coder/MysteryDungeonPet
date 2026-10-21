@@ -7,9 +7,19 @@
       "displayName": "구구"
     },
     {
+      "mdIndex": 25,
+      "kaoIndex": 24,
+      "displayName": "피카츄"
+    },
+    {
       "mdIndex": 83,
       "kaoIndex": 82,
       "displayName": "파오리"
+    },
+    {
+      "mdIndex": 85,
+      "kaoIndex": 84,
+      "displayName": "두트리오"
     },
     {
       "mdIndex": 102,
@@ -17,9 +27,34 @@
       "displayName": "아라리"
     },
     {
+      "mdIndex": 125,
+      "kaoIndex": 124,
+      "displayName": "에레브"
+    },
+    {
       "mdIndex": 126,
       "kaoIndex": 125,
       "displayName": "마그마"
+    },
+    {
+      "mdIndex": 128,
+      "kaoIndex": 127,
+      "displayName": "켄타로스"
+    },
+    {
+      "mdIndex": 172,
+      "kaoIndex": 171,
+      "displayName": "피츄"
+    },
+    {
+      "mdIndex": 180,
+      "kaoIndex": 179,
+      "displayName": "보송송"
+    },
+    {
+      "mdIndex": 181,
+      "kaoIndex": 180,
+      "displayName": "전룡"
     },
     {
       "mdIndex": 191,
@@ -30,6 +65,11 @@
       "mdIndex": 193,
       "kaoIndex": 192,
       "displayName": "왕자리"
+    },
+    {
+      "mdIndex": 230,
+      "kaoIndex": 229,
+      "displayName": "키링키"
     },
     {
       "mdIndex": 237,
@@ -45,6 +85,11 @@
       "mdIndex": 293,
       "kaoIndex": 292,
       "displayName": "개무소"
+    },
+    {
+      "mdIndex": 337,
+      "kaoIndex": 336,
+      "displayName": "썬더라이"
     },
     {
       "mdIndex": 341,
@@ -87,6 +132,26 @@
       "mdIndex": 437,
       "kaoIndex": 436,
       "displayName": "귀뚤톡크"
+    },
+    {
+      "mdIndex": 438,
+      "kaoIndex": 437,
+      "displayName": "꼬링크"
+    },
+    {
+      "mdIndex": 439,
+      "kaoIndex": 438,
+      "displayName": "럭시오"
+    },
+    {
+      "mdIndex": 440,
+      "kaoIndex": 439,
+      "displayName": "렌트라"
+    },
+    {
+      "mdIndex": 511,
+      "kaoIndex": 510,
+      "displayName": "메가자리"
     }
   ]
 }

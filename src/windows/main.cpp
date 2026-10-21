@@ -16,6 +16,7 @@
 #include "core/character_selection.hpp"
 #include "core/npc_characters.hpp"
 #include "core/dialogue_catalogue.hpp"
+#include "core/event_registry.hpp"
 #include "core/motion.hpp"
 #include <algorithm>
 #include <chrono>
@@ -186,6 +187,7 @@ class App {
     std::optional<CharacterSelection> pendingCharacterSelection_;
     DialogueCast dialogueCast_;
     DialogueCatalogue dialogueCatalogue_;
+    EventRegistry eventRegistry_;
     Assets assets_;
     std::optional<Assets> companionAssets_, homeAssets_, propsAssets_;
     NpcCatalogue npcCatalogue_;
@@ -1392,6 +1394,8 @@ public:
             explorationPackage_ = loadExplorationPackage(options_.exploration);
             npcCatalogue_=loadNpcCatalogue(options_.gameplayAssets/L"npcs/characters.mdnc");
             dialogueCatalogue_=loadDialogueCatalogue(options_.gameplayAssets/L"dialogue/catalogue.mdlc");
+            eventRegistry_=loadEventRegistry(options_.gameplayAssets/L"events/contexts.mder");
+            if(eventRegistry_.romHash!=npcCatalogue_.romHash)throw std::runtime_error("event map/NPC ROM mismatch");
             if(npcCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("NPC/exploration ROM mismatch");
             validateNpcCoverage(npcCatalogue_,explorationPackage_->floors);
             if(characterCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("starter/exploration ROM mismatch");

@@ -1,0 +1,54 @@
+{
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "dungeonId": 18,
+  "terminalDungeonId": 19,
+  "mappaGroup": 13,
+  "groupLastFloor": 19,
+  "fixedFloorId": 4,
+  "level": "D12P41A",
+  "script": {
+    "path": "SCRIPT/D12P41A/m12a0801.ssb",
+    "sha256": "71f2c3f49c2ccc9726463ad5c58b7f1538a808c1e04351272951bd3ac10e27a6"
+  },
+  "layout": {
+    "path": "SCRIPT/D12P41A/m12a0801.ssa",
+    "sha256": "a36d3ab85ef62aef9800e037f2513f3aca5c1b9199b9f054496b5b373c2a568a"
+  },
+  "entryPoints": [
+    [
+      292,
+      396
+    ],
+    [
+      260,
+      396
+    ]
+  ],
+  "endPoints": [
+    [
+      292,
+      268
+    ],
+    [
+      260,
+      268
+    ]
+  ],
+  "backgroundSources": [
+    {
+      "path": "MAP_BG/d12p41a.bma",
+      "sha256": "4a1611b671debf9815d07e9ff24f5e6b08bca835301d8287e5c1c180e17483a7"
+    },
+    {
+      "path": "MAP_BG/d12p41a.bpc",
+      "sha256": "9285a2b8b3cadb6ef040e7f1110ca93e1bd733e680959f01b4e215272c0a2384"
+    },
+    {
+      "path": "MAP_BG/d12p41a.bpl",
+      "sha256": "4c58406e8a4ef87374a47c9ae71d68b693873cb709c3fa0a827f8d9179e831f1"
+    }
+  ],
+  "rgbaSha256": "b225de8b6a9f42edde978a00bec5a9180715f642a20a64892ae31d30083585dd",
+  "scope": "original static background, actor placement and initial walking targets; generic completion replaces original story/boss event",
+  "testDungeon0": "original Test Dungeon; no official destination; use completion text in current map"
+}

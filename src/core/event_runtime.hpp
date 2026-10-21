@@ -6,4 +6,5 @@ bool eventActive(const ExplorationState&);
 bool startVarietyEvent(ExplorationState&,VarietyEvent,std::uint64_t,const DialogueCatalogue&,std::uint32_t actor=0);
 bool tryAutomaticEvent(ExplorationState&,std::uint64_t,const DialogueCatalogue&);
 GameplayUpdate advanceVarietyEvent(ExplorationState&,std::uint64_t,const DialogueCatalogue&);
+bool commitOranShare(ExplorationState&);
 } // namespace pet

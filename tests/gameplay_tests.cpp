@@ -264,7 +264,7 @@ int main(int argc, char** argv) {
                 clock=std::max(clock+350,run.state().gameplay.deadlineMs);
                 advance(run,clock,true);
             }
-            check(run.state().gameplay.hearts==kMaxHp && run.state().gameplay.oran<=1,"multi-day inventory/hearts violated");
+            check(run.state().gameplay.hearts==kMaxHp && run.state().gameplay.oran<=kMaxStock,"multi-day inventory/hearts violated");
         }
 
         // Probability audit exercises the same persisted RNG and relationship assignment as production.

@@ -864,7 +864,7 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         if(update.originalId==ITEM_ORAN_BERRY) {
             auto& p=g.companion;
             if(p.enabled && !p.oran && (g.oran || p.hearts<g.hearts)) ++p.oran;
-            else if(!g.oran) ++g.oran;
+            else if(g.oran<kMaxStock) ++g.oran;
         }
         return {GameplayEvent::Pickup,update.onceKey};
     case EventKind::Move:return {GameplayEvent::Move,{},0,false,0,reroute};

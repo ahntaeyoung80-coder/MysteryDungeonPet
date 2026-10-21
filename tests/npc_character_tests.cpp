@@ -66,8 +66,9 @@ int main(int argc,char** argv) {try {
         }
         return 0;
     }
-    check(catalogue.characters.size()==17,"NPC selection count changed without coverage review");
+    check(catalogue.characters.size()==30,"NPC selection count changed without coverage review");
     validateNpcCoverage(catalogue,package.floors);
+    validateNpcCoverage(catalogue,loadExplorationPackage(root.parent_path()/"exploration/dungeon-18/exploration.mdpe").floors);
     validateNpcCoverage(catalogue,loadExplorationPackage(root.parent_path()/"exploration/dungeon-0/exploration.mdpe").floors);
     auto unsupported=package.floors;unsupported[0].normalFriends.push_back({999,1});
     rejects([&]{validateNpcCoverage(catalogue,unsupported);},"unsupported species silently replaced");

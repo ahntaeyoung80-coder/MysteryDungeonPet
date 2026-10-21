@@ -8,6 +8,7 @@
       "displayName": "구구",
       "speciesId": 16,
       "spriteIndex": 16,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 0,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:16",
@@ -23,8 +24,22 @@
         "originalSourceFrames": 304,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
+    },
+    {
+      "mdIndex": 25,
+      "kaoIndex": 24,
+      "displayName": "피카츄",
+      "speciesId": 25,
+      "spriteIndex": 26,
+      "originalEmotionMask": 16383,
+      "emotionMask": 16383,
+      "talkGroup": 0,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:25",
+      "bodyAssetKey": "rom:EoS_NA:monster:25",
+      "bodyAtlasSha256": "44be457413cb73f2df6c262941a2696710cd0a8d657eeacaadd5cb4f570ad9a9",
+      "bodyManifest": "starters/bodies/26/asset.mdpa",
+      "verification": null
     },
     {
       "mdIndex": 83,
@@ -32,6 +47,7 @@
       "displayName": "파오리",
       "speciesId": 83,
       "spriteIndex": 90,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 12,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:83",
@@ -47,8 +63,31 @@
         "originalSourceFrames": 240,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
+    },
+    {
+      "mdIndex": 85,
+      "kaoIndex": 84,
+      "displayName": "두트리오",
+      "speciesId": 85,
+      "spriteIndex": 94,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 7,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:85",
+      "bodyAssetKey": "rom:EoS_NA:monster:85",
+      "bodyAtlasSha256": "cfaaec477e9a666c54bd17fc8a152b251854669d3917ee92fe2059560fe93200",
+      "bodyManifest": "npcs/bodies/94/asset.mdpa",
+      "verification": {
+        "mdIndex": 85,
+        "spriteIndex": 94,
+        "nationalDex": 85,
+        "status": "pass",
+        "comparedFrames": 208,
+        "originalSourceFrames": 304,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
     },
     {
       "mdIndex": 102,
@@ -56,6 +95,7 @@
       "displayName": "아라리",
       "speciesId": 102,
       "spriteIndex": 111,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 7,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:102",
@@ -71,8 +111,31 @@
         "originalSourceFrames": 272,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
+    },
+    {
+      "mdIndex": 125,
+      "kaoIndex": 124,
+      "displayName": "에레브",
+      "speciesId": 125,
+      "spriteIndex": 135,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 7,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:125",
+      "bodyAssetKey": "rom:EoS_NA:monster:125",
+      "bodyAtlasSha256": "713f48497845185651e23d904739446b726e50f784ee0d609ab8afd0b3f4e926",
+      "bodyManifest": "npcs/bodies/135/asset.mdpa",
+      "verification": {
+        "mdIndex": 125,
+        "spriteIndex": 135,
+        "nationalDex": 125,
+        "status": "pass",
+        "comparedFrames": 160,
+        "originalSourceFrames": 240,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
     },
     {
       "mdIndex": 126,
@@ -80,6 +143,7 @@
       "displayName": "마그마",
       "speciesId": 126,
       "spriteIndex": 136,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 11,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:126",
@@ -95,8 +159,103 @@
         "originalSourceFrames": 240,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
+    },
+    {
+      "mdIndex": 128,
+      "kaoIndex": 127,
+      "displayName": "켄타로스",
+      "speciesId": 128,
+      "spriteIndex": 138,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 10,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:128",
+      "bodyAssetKey": "rom:EoS_NA:monster:128",
+      "bodyAtlasSha256": "4139bdabc4545de2cb3e4c6f122035969e8ceb66e8f9bdcae5a89dd6236ebbe3",
+      "bodyManifest": "npcs/bodies/138/asset.mdpa",
+      "verification": {
+        "mdIndex": 128,
+        "spriteIndex": 138,
+        "nationalDex": 128,
+        "status": "pass",
+        "comparedFrames": 208,
+        "originalSourceFrames": 320,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
+    },
+    {
+      "mdIndex": 172,
+      "kaoIndex": 171,
+      "displayName": "피츄",
+      "speciesId": 172,
+      "spriteIndex": 187,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 0,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:172",
+      "bodyAssetKey": "rom:EoS_NA:monster:172",
+      "bodyAtlasSha256": "230d1c31bc55a1f181e9330c0438a8c96f49945229e7af8f9cb685fb2d6a83ff",
+      "bodyManifest": "npcs/bodies/187/asset.mdpa",
+      "verification": {
+        "mdIndex": 172,
+        "spriteIndex": 187,
+        "nationalDex": 172,
+        "status": "pass",
+        "comparedFrames": 192,
+        "originalSourceFrames": 304,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
+    },
+    {
+      "mdIndex": 180,
+      "kaoIndex": 179,
+      "displayName": "보송송",
+      "speciesId": 180,
+      "spriteIndex": 196,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 1,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:180",
+      "bodyAssetKey": "rom:EoS_NA:monster:180",
+      "bodyAtlasSha256": "e908ea94bba2ed5665546b52da6fcbd18ce4939103177f16176277d69901f917",
+      "bodyManifest": "npcs/bodies/196/asset.mdpa",
+      "verification": {
+        "mdIndex": 180,
+        "spriteIndex": 196,
+        "nationalDex": 180,
+        "status": "pass",
+        "comparedFrames": 176,
+        "originalSourceFrames": 272,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
+    },
+    {
+      "mdIndex": 181,
+      "kaoIndex": 180,
+      "displayName": "전룡",
+      "speciesId": 181,
+      "spriteIndex": 197,
+      "originalEmotionMask": 3,
+      "emotionMask": 3,
+      "talkGroup": 1,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:181",
+      "bodyAssetKey": "rom:EoS_NA:monster:181",
+      "bodyAtlasSha256": "dede953f0557699b9c7fb185c009b1a35ed7ffbdfcfbb7700a80ed6e3ec191ca",
+      "bodyManifest": "npcs/bodies/197/asset.mdpa",
+      "verification": {
+        "mdIndex": 181,
+        "spriteIndex": 197,
+        "nationalDex": 181,
+        "status": "pass",
+        "comparedFrames": 200,
+        "originalSourceFrames": 304,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
     },
     {
       "mdIndex": 191,
@@ -104,6 +263,7 @@
       "displayName": "해너츠",
       "speciesId": 191,
       "spriteIndex": 207,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 0,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:191",
@@ -119,8 +279,7 @@
         "originalSourceFrames": 280,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
     },
     {
       "mdIndex": 193,
@@ -128,6 +287,7 @@
       "displayName": "왕자리",
       "speciesId": 193,
       "spriteIndex": 210,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:193",
@@ -143,8 +303,31 @@
         "originalSourceFrames": 560,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
+    },
+    {
+      "mdIndex": 230,
+      "kaoIndex": 229,
+      "displayName": "키링키",
+      "speciesId": 203,
+      "spriteIndex": 249,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 1,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:230",
+      "bodyAssetKey": "rom:EoS_NA:monster:230",
+      "bodyAtlasSha256": "b30813e069226d224e896f8fe8763cb7bad7dc649d55bf9e7d637403d86d6cd4",
+      "bodyManifest": "npcs/bodies/249/asset.mdpa",
+      "verification": {
+        "mdIndex": 230,
+        "spriteIndex": 249,
+        "nationalDex": 203,
+        "status": "pass",
+        "comparedFrames": 232,
+        "originalSourceFrames": 344,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
     },
     {
       "mdIndex": 237,
@@ -152,6 +335,7 @@
       "displayName": "그랑블루",
       "speciesId": 210,
       "spriteIndex": 257,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 7,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:237",
@@ -167,8 +351,7 @@
         "originalSourceFrames": 208,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
     },
     {
       "mdIndex": 240,
@@ -176,6 +359,7 @@
       "displayName": "단단지",
       "speciesId": 213,
       "spriteIndex": 260,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:240",
@@ -191,8 +375,7 @@
         "originalSourceFrames": 240,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
     },
     {
       "mdIndex": 293,
@@ -200,6 +383,7 @@
       "displayName": "개무소",
       "speciesId": 265,
       "spriteIndex": 457,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 2,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:293",
@@ -215,8 +399,31 @@
         "originalSourceFrames": 344,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
+    },
+    {
+      "mdIndex": 337,
+      "kaoIndex": 336,
+      "displayName": "썬더라이",
+      "speciesId": 309,
+      "spriteIndex": 506,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 0,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:337",
+      "bodyAssetKey": "rom:EoS_NA:monster:337",
+      "bodyAtlasSha256": "98c0cd45ae99ae40b60342219d8e5cf21b350ceb1d0ff677451638abe7b593f7",
+      "bodyManifest": "npcs/bodies/506/asset.mdpa",
+      "verification": {
+        "mdIndex": 337,
+        "spriteIndex": 506,
+        "nationalDex": 309,
+        "status": "pass",
+        "comparedFrames": 264,
+        "originalSourceFrames": 424,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
     },
     {
       "mdIndex": 341,
@@ -224,6 +431,7 @@
       "displayName": "볼비트",
       "speciesId": 313,
       "spriteIndex": 510,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 2,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:341",
@@ -239,8 +447,7 @@
         "originalSourceFrames": 408,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
     },
     {
       "mdIndex": 342,
@@ -248,6 +455,7 @@
       "displayName": "네오비트",
       "speciesId": 314,
       "spriteIndex": 511,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 9,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:342",
@@ -263,8 +471,7 @@
         "originalSourceFrames": 312,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
     },
     {
       "mdIndex": 369,
@@ -273,6 +480,7 @@
       "visitorActorId": 115,
       "speciesId": 341,
       "spriteIndex": 538,
+      "originalEmotionMask": 49,
       "emotionMask": 49,
       "talkGroup": 8,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:369",
@@ -288,8 +496,7 @@
         "originalSourceFrames": 208,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 49
+      }
     },
     {
       "mdIndex": 383,
@@ -297,14 +504,14 @@
       "displayName": "켈리몬",
       "speciesId": 352,
       "spriteIndex": 556,
+      "originalEmotionMask": 41,
       "emotionMask": 16383,
       "talkGroup": 36,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:383",
       "bodyAssetKey": "rom:EoS_NA:monster:383",
       "bodyAtlasSha256": "1a46ef10bdcf4f0356d69c21ccfe9d480b25a7767f00b8e4e71c8a743f6115e4",
       "bodyManifest": "actors/asset-2/asset.mdpa",
-      "verification": null,
-      "originalEmotionMask": 41
+      "verification": null
     },
     {
       "mdIndex": 384,
@@ -312,14 +519,14 @@
       "displayName": "켈리몬",
       "speciesId": 352,
       "spriteIndex": 554,
+      "originalEmotionMask": 41,
       "emotionMask": 41,
       "talkGroup": 36,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:384",
       "bodyAssetKey": "rom:EoS_NA:monster:384",
       "bodyAtlasSha256": "4ce4447c972b85ca38780111231e6e2e531d7b195df0eedf158c29830e09bf95",
       "bodyManifest": "actors/asset-3/asset.mdpa",
-      "verification": null,
-      "originalEmotionMask": 41
+      "verification": null
     },
     {
       "mdIndex": 425,
@@ -327,14 +534,14 @@
       "displayName": "불꽃숭이",
       "speciesId": 390,
       "spriteIndex": 305,
+      "originalEmotionMask": 16383,
       "emotionMask": 16383,
       "talkGroup": 0,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:425",
       "bodyAssetKey": "rom:EoS_NA:monster:425",
       "bodyAtlasSha256": "b2e3979f5266c3fe0a0c5c3d4cc8bdbdbe18e0ce064b53215b04a040862bfc0d",
       "bodyManifest": "starters/bodies/305/asset.mdpa",
-      "verification": null,
-      "originalEmotionMask": 16383
+      "verification": null
     },
     {
       "mdIndex": 434,
@@ -343,6 +550,7 @@
       "visitorActorId": 124,
       "speciesId": 399,
       "spriteIndex": 316,
+      "originalEmotionMask": 13095,
       "emotionMask": 13095,
       "talkGroup": 11,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:434",
@@ -358,8 +566,7 @@
         "originalSourceFrames": 242,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 13095
+      }
     },
     {
       "mdIndex": 437,
@@ -367,6 +574,7 @@
       "displayName": "귀뚤톡크",
       "speciesId": 402,
       "spriteIndex": 320,
+      "originalEmotionMask": 1,
       "emotionMask": 1,
       "talkGroup": 1,
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:437",
@@ -382,10 +590,96 @@
         "originalSourceFrames": 320,
         "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
         "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
-      },
-      "originalEmotionMask": 1
+      }
+    },
+    {
+      "mdIndex": 438,
+      "kaoIndex": 437,
+      "displayName": "꼬링크",
+      "speciesId": 403,
+      "spriteIndex": 321,
+      "originalEmotionMask": 16383,
+      "emotionMask": 16383,
+      "talkGroup": 0,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:438",
+      "bodyAssetKey": "rom:EoS_NA:monster:438",
+      "bodyAtlasSha256": "f8f40e44f12970e46131aef62b40b7916de38f2ecb64a55ebd7a65c70d586638",
+      "bodyManifest": "starters/bodies/321/asset.mdpa",
+      "verification": null
+    },
+    {
+      "mdIndex": 439,
+      "kaoIndex": 438,
+      "displayName": "럭시오",
+      "speciesId": 404,
+      "spriteIndex": 322,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 8,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:439",
+      "bodyAssetKey": "rom:EoS_NA:monster:439",
+      "bodyAtlasSha256": "e7544e3f8301f9b3d2d8d222e84ed589a9433f83f22fa5c492683ceea08adb20",
+      "bodyManifest": "npcs/bodies/322/asset.mdpa",
+      "verification": {
+        "mdIndex": 439,
+        "spriteIndex": 322,
+        "nationalDex": 404,
+        "status": "pass",
+        "comparedFrames": 216,
+        "originalSourceFrames": 328,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
+    },
+    {
+      "mdIndex": 440,
+      "kaoIndex": 439,
+      "displayName": "렌트라",
+      "speciesId": 405,
+      "spriteIndex": 323,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 3,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:440",
+      "bodyAssetKey": "rom:EoS_NA:monster:440",
+      "bodyAtlasSha256": "74bead1492b780d59d46f74f9aaab729b2ec13929d304f886e1dbff95ae030c1",
+      "bodyManifest": "npcs/bodies/323/asset.mdpa",
+      "verification": {
+        "mdIndex": 440,
+        "spriteIndex": 323,
+        "nationalDex": 405,
+        "status": "pass",
+        "comparedFrames": 216,
+        "originalSourceFrames": 328,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
+    },
+    {
+      "mdIndex": 511,
+      "kaoIndex": 510,
+      "displayName": "메가자리",
+      "speciesId": 469,
+      "spriteIndex": 415,
+      "originalEmotionMask": 1,
+      "emotionMask": 1,
+      "talkGroup": 16,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:511",
+      "bodyAssetKey": "rom:EoS_NA:monster:511",
+      "bodyAtlasSha256": "cbdce263db954a5cc0c236d48b0c9ec44ff19fa82b24cc5aa39074d9466e041c",
+      "bodyManifest": "npcs/bodies/415/asset.mdpa",
+      "verification": {
+        "mdIndex": 511,
+        "spriteIndex": 415,
+        "nationalDex": 469,
+        "status": "pass",
+        "comparedFrames": 352,
+        "originalSourceFrames": 592,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
     }
   ],
-  "scope": "dungeon 15 normal union, dungeon 0 legacy union, guild visitors, explicit legacy Kecleon actors",
+  "scope": "dungeon 15 normal union, dungeon 18 normal/MH union, dungeon 0 legacy union, guild visitors, explicit legacy Kecleon actors",
   "portraitMapping": "explicit KAO rows; original Normal fallback; no role/relationship-based body substitute"
 }

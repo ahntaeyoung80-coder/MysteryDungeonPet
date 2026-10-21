@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 2,
+  "catalogueVersion": 3,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -783,6 +783,132 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "알겠어. 너도 조심해서 가!"
+        }
+      ]
+    },
+    {
+      "id": "E01.share_a.intro",
+      "context": "event.E01.intro",
+      "condition": "event.E01.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E01.share_a.01",
+          "legacyId": 2340,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "휴... 조금 지쳤어."
+        },
+        {
+          "id": "E01.share_a.02",
+          "legacyId": 2341,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "괜찮아? 이 열매를 나눠 줄게."
+        },
+        {
+          "id": "E01.share_a.03",
+          "legacyId": 2342,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "천천히 쉬면서 먹어."
+        }
+      ]
+    },
+    {
+      "id": "E01.share_a.success",
+      "context": "event.E01.success",
+      "condition": "event.E01.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E01.share_a.04",
+          "legacyId": 2350,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "고마워. 덕분에 마음이 놓여."
+        },
+        {
+          "id": "E01.share_a.05",
+          "legacyId": 2351,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "무리하지 말고 다녀와."
+        },
+        {
+          "id": "E01.share_a.06",
+          "legacyId": 2352,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "너희도 조심해서 가!"
+        }
+      ]
+    },
+    {
+      "id": "E01.share_b.intro",
+      "context": "event.E01.intro",
+      "condition": "event.E01.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E01.share_b.01",
+          "legacyId": 2360,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "많이 지쳐 보여. 잠깐 쉬는 게 어때?"
+        },
+        {
+          "id": "E01.share_b.02",
+          "legacyId": 2361,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "응... 조금만 쉬려고."
+        },
+        {
+          "id": "E01.share_b.03",
+          "legacyId": 2362,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "이 열매도 챙겨 둬."
+        }
+      ]
+    },
+    {
+      "id": "E01.share_b.success",
+      "context": "event.E01.success",
+      "condition": "event.E01.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E01.share_b.04",
+          "legacyId": 2370,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "정말 고마워. 소중히 쓸게."
         }
       ]
     }

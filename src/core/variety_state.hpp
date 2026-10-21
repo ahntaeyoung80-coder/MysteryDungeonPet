@@ -39,6 +39,8 @@ struct RecentDialogue {
     std::string context, bundle;
     std::uint64_t eligibleAfter=0;
 };
+constexpr std::uint32_t kMaxStock=99;
+struct StockEntry {std::uint32_t owner=0,item=0,quantity=0;};
 enum class DayDestination : std::uint32_t { Unassigned, Exploration, Town, HotSpring };
 struct DaySchedule {
     std::uint32_t day=1, dungeon=0;
@@ -52,6 +54,7 @@ struct VarietyState {
     DaySchedule schedule;
     std::vector<RecentDialogue> recent;
     std::set<std::string> committed; // Full event/result keys, retained across floor/run replacement.
+    std::vector<StockEntry> stock; // Non-Oran quantities only; berries remain in GameplayState/CompanionState.
 };
 VarietyState initialVarietyState(std::uint64_t run, std::uint64_t seed, std::uint32_t day);
 enum class VarietyRandomStream { Event, Dialogue, Schedule };
@@ -68,4 +71,7 @@ bool commitVarietyResult(ExplorationState&, const std::string& result);
 // Catalogue consumers supply the exact selected bundle's line IDs. No substitution on mismatch.
 bool reconcileDialogue(ExplorationState&, std::uint32_t catalogueVersion,
                        const std::string& bundle, const std::vector<std::string>& lineIds);
+std::uint32_t stockQuantity(const ExplorationState&,std::uint32_t owner,std::uint32_t item);
+std::uint32_t reservedQuantity(const ExplorationState&,std::uint32_t owner,std::uint32_t item);
+bool changeStock(ExplorationState&,std::uint32_t owner,std::uint32_t item,int delta);
 } // namespace pet

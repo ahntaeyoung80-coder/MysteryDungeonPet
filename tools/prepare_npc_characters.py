@@ -101,7 +101,7 @@ def prepare(root, output):
         (temporary/'npcs/characters.mdnc').write_bytes(data)
         (temporary/'npcs/selection.json').write_text(json.dumps(selection,ensure_ascii=False,indent=2)+'\n')
         audit={'schemaVersion':1,'romSha256':before,'characters':entries,
-               'scope':'dungeon 15 normal union, dungeon 0 legacy union, guild visitors, explicit legacy Kecleon actors',
+               'scope':'dungeon 15 normal union, dungeon 18 normal/MH union, dungeon 0 legacy union, guild visitors, explicit legacy Kecleon actors',
                'portraitMapping':'explicit KAO rows; original Normal fallback; no role/relationship-based body substitute'}
         (temporary/'npcs/catalogue.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n')
         (temporary/'npcs/CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; original ROM NPC bodies and portraits\n')

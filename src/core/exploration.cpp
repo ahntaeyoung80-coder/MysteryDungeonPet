@@ -788,7 +788,8 @@ Event Explorer::advance(bool poseFinished) {
             if (!item) (void)encounterPolicy(entity);
             const auto onceKey = key(item ? "pickup" : "greet", entity.instanceId);
             if (state_.onceKeys.insert(onceKey).second) {
-                if (item) state_.inventory.push_back({onceKey, entity.originalId});
+                if (item) {state_.inventory.push_back({onceKey, entity.originalId});
+                    if(entity.originalId!=ITEM_ORAN_BERRY)(void)changeStock(state_,0,entity.originalId,1);}
                 event = {item ? EventKind::Pickup : EventKind::Greeting, onceKey, entity.originalId};
             }
             entity.done = true;
@@ -832,7 +833,7 @@ void validateState(const ExplorationState& s) {
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
     require(g.walkStartedMs<=g.phaseStartedMs,"invalid saved walking clock");
     require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 17 &&
-            g.hearts <= kMaxHp && g.oran <= 1 && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
+            g.hearts <= kMaxHp && g.oran <= kMaxStock && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
     if(g.life==LifePhase::Dialogue) {
         if(companionDialogue(g)) require(g.companion.enabled && !g.companion.hidden && g.companion.hearts>0 &&
@@ -883,7 +884,7 @@ void validateState(const ExplorationState& s) {
     };
     validateMove(g.movement,s.position);for(const auto& e:s.population.entities) validateMove(e.movement,e.tile);
     const auto& partner=g.companion;
-    require(partner.hearts<=kMaxHp && partner.oran<=1 && partner.direction<8 && partner.actionRound<=g.actionRound &&
+    require(partner.hearts<=kMaxHp && partner.oran<=kMaxStock && partner.direction<8 && partner.actionRound<=g.actionRound &&
         partner.walkStartedMs<=g.phaseStartedMs,"invalid companion stats/clock");
     if(partner.enabled) {
         require(g.enabled && s.world.walkable(partner.tile) && !s.blocked[partner.tile] && partner.tile!=s.position,"invalid companion tile");
