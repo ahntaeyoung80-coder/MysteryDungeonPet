@@ -66,7 +66,9 @@
     "actual user Windows11 and OS lock/power/DPI interactions",
     "long-run/final performance gate; Wine private bytes unavailable",
     "activity-linked C features",
-    "remote CI state recorded after final push"
+    "automatic CI completion not confirmed: workflow/status connector queries returned empty lists"
   ],
-  "workflow": "simple check/local commit per P2-P8; no intermediate deploy or push; broad/final EXE verification once implementation completed"
+  "workflow": "simple check/local commit per P2-P8; no intermediate deploy or push; broad/final EXE verification once implementation completed",
+  "productCommit": "8690ca0dfc0e3415aadfab30aa0a141403321200",
+  "remoteVerification": "remote-verification.json"
 }

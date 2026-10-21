@@ -2,7 +2,7 @@
 
 작성: 2026-10-13. 이 문서는 A/B/C의 범위·의존성·완료 조건을 정의한다. 실제 현재 상태는 [PROJECT_STATE](../PROJECT_STATE.md), 경과는 [PROJECT_HISTORY](PROJECT_HISTORY.md), 날짜별 변경·검증은 [logs](logs/)를 따른다.
 
-**2026-10-21 현재 실행 위치: B-1/B-2 안정화·다양성 P0~P8 구현·최종 검증 완료, 원격 반영 마감 중.** [다양성 계획](plans/2026-10-21-event-variety-implementation.md)의 상태/실제 NPC/문답/9종 탐험 사건/마을·온천 휴일/검증 맵 풀을 연결했다. [현재 상태](../PROJECT_STATE.md)와 [마감 근거](validation/2026-10-21-event-variety-final/summary.json)에서 실행물·검증 결과를 확인한다. C 활동 연동·전체 지원 감사·실제 Windows11/장기 성능과 A의 잔여 검증은 별도다. 아래의 최초 착수·승인 대기 문구는 과거 설명이다.
+**2026-10-21 현재 실행 위치: B-1/B-2 안정화·다양성 P0~P8 구현·최종 검증·원격 반영 완료.** [다양성 계획](plans/2026-10-21-event-variety-implementation.md)의 상태/실제 NPC/문답/9종 탐험 사건/마을·온천 휴일/검증 맵 풀을 연결했다. [현재 상태](../PROJECT_STATE.md)와 [마감 근거](validation/2026-10-21-event-variety-final/summary.json)에서 실행물·검증 결과를 확인한다. C 활동 연동·전체 지원 감사·실제 Windows11/장기 성능과 A의 잔여 검증은 별도다. 아래의 최초 착수·승인 대기 문구는 과거 설명이다.
 
 ## 1. 시작 방법과 문서 역할
 

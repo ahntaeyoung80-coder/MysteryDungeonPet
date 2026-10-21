@@ -4,7 +4,7 @@
 
 ## 현재 단계
 
-B-1/B-2 자율 탐험 안정화에 이어 [다양성 계획](docs/plans/2026-10-21-event-variety-implementation.md)의 **P0~P8 구현·최종 통합 검증을 완료하고 원격 반영 중**이다. C의 마을/온천 생활까지 연결했으며 A 실제 OS·원작 wall time, C 활동 연동·전체 지원 감사·장기 성능은 별도다. [개발 단계](docs/DEVELOPMENT_PIPELINE.md), [이력](docs/PROJECT_HISTORY.md).
+B-1/B-2 자율 탐험 안정화에 이어 [다양성 계획](docs/plans/2026-10-21-event-variety-implementation.md)의 **P0~P8 구현·최종 통합 검증·소스/선택 자산/루트 EXE의 원격 반영을 완료**이다. C의 마을/온천 생활까지 연결했으며 A 실제 OS·원작 wall time, C 활동 연동·전체 지원 감사·장기 성능은 별도다. [개발 단계](docs/DEVELOPMENT_PIPELINE.md), [이력](docs/PROJECT_HISTORY.md).
 
 ## 실행 기준
 
@@ -16,6 +16,6 @@ B-1/B-2 자율 탐험 안정화에 이어 [다양성 계획](docs/plans/2026-10-
 
 ## 검증·바로 다음 작업
 
-P2~P8은 사용자 지시대로 간단 관련 검사·단계별 로컬 커밋 후 최종 통합했다. 전체 ASan/UBSan25개·Python44개와 새 맵 원작 재생성3개가 통과했다. 실제 EXE에서 찾은 사건 종료 저널·휴일 식사 전 재시작 오류를 수정하고 해당 저장/생활 회귀를 다시 확인했다. Wine10에서9종 사건/거래/마을·온천의 실제 완료·새 맵 종결·긴3페이지 문답과 입욕4조합의16만 제출 픽셀을 확인했다. 최종 EXE의 NPC62개·화자31얼굴·설치 실행과 선택412파일/루트 EXE/hash도 통과했다. 원격/CI 상태는 마감 근거를 따른다. [최종 근거](docs/validation/2026-10-21-event-variety-final/summary.json), [마감 로그](docs/logs/2026-10-21-event-variety-final.md).
+P2~P8은 사용자 지시대로 간단 관련 검사·단계별 로컬 커밋 후 최종 통합했다. 전체 ASan/UBSan25개·Python44개와 새 맵 원작 재생성3개가 통과했다. 실제 EXE에서 찾은 사건 종료 저널·휴일 식사 전 재시작 오류를 수정하고 해당 저장/생활 회귀를 다시 확인했다. Wine10에서9종 사건/거래/마을·온천의 실제 완료·새 맵 종결·긴3페이지 문답과 입욕4조합의16만 제출 픽셀을 확인했다. 최종 EXE의 NPC62개·화자31얼굴·설치 실행과 선택412파일/루트 EXE/hash도 통과했다. 제품 커밋8690ca0의 HEAD=origin/work를 명시 fetch로 확인했다. 자동 CI 조회가 비어 완료/통과는 미확인이다. [최종 근거](docs/validation/2026-10-21-event-variety-final/summary.json), [마감 로그](docs/logs/2026-10-21-event-variety-final.md).
 
 남은 범위는 실제 사용자 Windows11·OS lock/power·장기 성능과 활동 연동이다. Wine의 짧은 실행을 이 항목의 통과로 표시하지 않는다. 소스·선택 자산·루트 EXE를 함께 반영하며 자동 CI는 최종 push 후 별도 상태로 기록한다. [실행 안내](docs/WINDOWS_QUICKSTART.md).

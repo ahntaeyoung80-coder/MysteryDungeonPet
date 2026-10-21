@@ -1,0 +1,12 @@
+{
+  "checkedAtUtc": "2026-10-21T08:44:17Z",
+  "checkedAtKst": "2026-10-21T17:44:17+09:00",
+  "productCommit": "8690ca0dfc0e3415aadfab30aa0a141403321200",
+  "remoteBranch": "origin/work",
+  "explicitFetchRefspec": "refs/heads/work:refs/remotes/origin/work",
+  "headEqualsRemote": true,
+  "workingTreeAfterProductPush": "clean",
+  "githubWorkflowRuns": [],
+  "githubCommitStatuses": [],
+  "ciConclusion": "조회 결과가 비어 있어 자동 CI 완료/통과를 확인하지 못했다. 로컬 최종 검증과 구분한다."
+}
