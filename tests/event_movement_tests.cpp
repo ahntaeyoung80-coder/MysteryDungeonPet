@@ -41,5 +41,5 @@ int main(){try {
     s=eventFixture(p);s.population.entities.push_back({2,237,EntityKind::Friend,126,false});check(startVarietyEvent(s,VarietyEvent::LostProperty,1000,c,1,&maps),"identity fixture");
     s.population.entities[0].visible=false;(void)advanceVarietyEvent(s,1400,c,&maps);
     check(s.variety.event.progress==EventProgress::Abandoned && s.variety.committed.empty(),"same-species replacement accepted as original owner");
-    std::cout<<"E02/E06/E08: physical finite routes, snapshots at every boundary, exact owner, unspendable property, original warp eligibility/single target and actual reunion pass\n";
+    std::cout<<"E02/E06/E08: physical finite routes, snapshots at every boundary, exact owner, unspendable property, shared map-independent warp/single target and actual reunion pass\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

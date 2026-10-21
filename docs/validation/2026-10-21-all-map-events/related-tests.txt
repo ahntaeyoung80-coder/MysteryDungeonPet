@@ -1,0 +1,25 @@
+Test project /workspace/MysteryDungeonPet/build/p0-asan
+      Start  1: pet_all_map_event_tests
+ 1/10 Test  #1: pet_all_map_event_tests ..........   Passed    5.31 sec
+      Start  2: pet_gameplay_notice_tests
+ 2/10 Test  #2: pet_gameplay_notice_tests ........   Passed    0.86 sec
+      Start  3: pet_feedback_regression_tests
+ 3/10 Test  #3: pet_feedback_regression_tests ....   Passed    0.15 sec
+      Start  4: pet_holiday_scene_tests
+ 4/10 Test  #4: pet_holiday_scene_tests ..........   Passed    0.25 sec
+      Start  5: pet_event_combat_tests
+ 5/10 Test  #5: pet_event_combat_tests ...........   Passed    0.29 sec
+      Start  6: pet_event_movement_tests
+ 6/10 Test  #6: pet_event_movement_tests .........   Passed    0.18 sec
+      Start  7: pet_event_stock_tests
+ 7/10 Test  #7: pet_event_stock_tests ............   Passed    0.05 sec
+      Start  8: pet_event_runtime_tests
+ 8/10 Test  #8: pet_event_runtime_tests ..........   Passed    0.10 sec
+      Start  9: pet_dialogue_catalogue_tests
+ 9/10 Test  #9: pet_dialogue_catalogue_tests .....   Passed    0.08 sec
+      Start 11: pet_variety_state_tests
+10/10 Test #11: pet_variety_state_tests ..........   Passed    0.13 sec
+
+100% tests passed out of 10
+
+Total Test time (real) =   7.41 sec

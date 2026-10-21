@@ -1,0 +1,18 @@
+171 map/floor/event starts+restore; per-map identical 1024-seed regular outcomes: 0=354 1=108 2=83 3=105 4=0 5=96 6=91 7=89 8=4 9=94; room MH=48/1024; local stock/species, wonder/reunion finish once, safety/budget/frequency and map alternation pass
+E03 real original stock/3 apples -> 1 Oran/restore once; E04/E07 ordered attacks, actual defeat, independent helper and no friendly fire pass
+E02/E06/E08: physical finite routes, snapshots at every boundary, exact owner, unspendable property, original warp eligibility/single target and actual reunion pass
+fixture E03 saved
+PASS GUI E03-0
+fixture E04 saved
+PASS GUI E04-0
+fixture E08 saved
+PASS GUI E08-0
+fixture E03 saved
+PASS GUI E03-15
+fixture E04 saved
+PASS GUI E04-15
+fixture E08 saved
+PASS GUI E08-15
+fixture E05 saved
+PASS GUI E05-18
+X connection to :99 broken (explicit kill or server shutdown).

@@ -1,0 +1,33 @@
+{
+  "firstMeasuredUtc": "2026-10-21T11:38:42Z",
+  "verificationUtc": "2026-10-21T11:48:17.922649+00:00",
+  "implementationCommit": "31277ced49cc5839354147d99a973a31d2807b17",
+  "relatedAsanUbsan": {
+    "exitCode": 0,
+    "seconds": 7.483434672001749
+  },
+  "newCoverage": {
+    "seconds": 1.9829659610040835,
+    "exitCode": 0
+  },
+  "supportedMapFloorEventStarts": 171,
+  "supportedDungeons": [
+    0,
+    15,
+    18
+  ],
+  "windowsRelatedTests": 3,
+  "actualExeNewMapEventCases": 7,
+  "install": {
+    "files": 416,
+    "assetBytes": 13323769,
+    "exeBytes": 2307584,
+    "exeSha256": "9235fc2474131aee7c3266fb066f35807f8f25fe89e391bf3c0c60e462edd17d",
+    "romIncluded": false,
+    "installedDefaultSeconds": 6
+  },
+  "storageSchemaChanged": false,
+  "assetsChanged": false,
+  "defaultMapSelection": "15 and18 alternate, not weighted random",
+  "ci": "최종 push 후 별도 확인"
+}
