@@ -4,3 +4,5 @@ Parsing: SkyTemple / skytemple-files (GPL-3.0-or-later), pinned versions already
 Dungeon ID/group facts: UsernameFodder/pmdsky-debug, commit c72fe675919ec83cfe93f687973afae85e00d1a3.
 Dojo mapping reference: SkyTemple, commit f78d0ef387dbc121bad4c8f0186237f9a4ae035d.
 Web facts: Mystery Dungeon Franchise Wiki, Bulbapedia; URLs and observations recorded in web-plan.json/web-facts.json/web-reconciled.json.
+
+2026-10-21 보강: 원작 MAPPA/MD/item_p/fixed.bin·overlay10/29의 적·아이템·고정 배치·제약. pmdsky-debug pinned monster enum과 SkyTemple static item names는 한국어 원문 해독을 의미하지 않음.

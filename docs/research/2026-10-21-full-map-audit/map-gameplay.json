@@ -59,7 +59,8 @@
     "gameplayDoc": "maps/SEG-D000.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 178,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D001",
@@ -131,7 +132,8 @@
     "gameplayDoc": "maps/SEG-D001.md",
     "enemySummaryRows": 8,
     "itemSummaryRows": 170,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D002",
@@ -187,7 +189,8 @@
     "gameplayDoc": "maps/SEG-D002.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 168,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D003",
@@ -267,7 +270,8 @@
     "gameplayDoc": "maps/SEG-D003.md",
     "enemySummaryRows": 22,
     "itemSummaryRows": 190,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D004",
@@ -369,7 +373,8 @@
     "gameplayDoc": "maps/SEG-D004.md",
     "enemySummaryRows": 38,
     "itemSummaryRows": 209,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D005",
@@ -425,7 +430,8 @@
     "gameplayDoc": "maps/SEG-D005.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 203,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D006",
@@ -517,7 +523,8 @@
     "gameplayDoc": "maps/SEG-D006.md",
     "enemySummaryRows": 52,
     "itemSummaryRows": 215,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D007",
@@ -633,7 +640,8 @@
     "gameplayDoc": "maps/SEG-D007.md",
     "enemySummaryRows": 88,
     "itemSummaryRows": 264,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D008",
@@ -738,7 +746,10 @@
     "gameplayDoc": "maps/SEG-D008.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 204,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D009",
@@ -812,7 +823,10 @@
     "gameplayDoc": "maps/SEG-D009.md",
     "enemySummaryRows": 6,
     "itemSummaryRows": 193,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D010",
@@ -949,7 +963,10 @@
     "gameplayDoc": "maps/SEG-D010.md",
     "enemySummaryRows": 72,
     "itemSummaryRows": 265,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D011",
@@ -1023,7 +1040,10 @@
     "gameplayDoc": "maps/SEG-D011.md",
     "enemySummaryRows": 6,
     "itemSummaryRows": 193,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D012",
@@ -1142,7 +1162,10 @@
     "gameplayDoc": "maps/SEG-D012.md",
     "enemySummaryRows": 58,
     "itemSummaryRows": 278,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D013",
@@ -1216,7 +1239,10 @@
     "gameplayDoc": "maps/SEG-D013.md",
     "enemySummaryRows": 12,
     "itemSummaryRows": 205,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D014",
@@ -1319,7 +1345,10 @@
     "gameplayDoc": "maps/SEG-D014.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 285,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D015",
@@ -1415,7 +1444,10 @@
     "gameplayDoc": "maps/SEG-D015.md",
     "enemySummaryRows": 46,
     "itemSummaryRows": 285,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D016",
@@ -1473,7 +1505,10 @@
     "gameplayDoc": "maps/SEG-D016.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 285,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-EXPEDITION-SIDEPATHS"
+    ]
   },
   {
     "segmentId": "SEG-D017",
@@ -1583,7 +1618,8 @@
     "gameplayDoc": "maps/SEG-D017.md",
     "enemySummaryRows": 86,
     "itemSummaryRows": 289,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D018",
@@ -1689,7 +1725,8 @@
     "gameplayDoc": "maps/SEG-D018.md",
     "enemySummaryRows": 36,
     "itemSummaryRows": 289,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D019",
@@ -1745,7 +1782,8 @@
     "gameplayDoc": "maps/SEG-D019.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 289,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D020",
@@ -1881,7 +1919,10 @@
     "gameplayDoc": "maps/SEG-D020.md",
     "enemySummaryRows": 94,
     "itemSummaryRows": 203,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-DESERT-REVISIT"
+    ]
   },
   {
     "segmentId": "SEG-D021",
@@ -1993,7 +2034,10 @@
     "gameplayDoc": "maps/SEG-D021.md",
     "enemySummaryRows": 48,
     "itemSummaryRows": 251,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-DESERT-REVISIT"
+    ]
   },
   {
     "segmentId": "SEG-D022",
@@ -2105,7 +2149,10 @@
     "gameplayDoc": "maps/SEG-D022.md",
     "enemySummaryRows": 48,
     "itemSummaryRows": 251,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-DESERT-REVISIT"
+    ]
   },
   {
     "segmentId": "SEG-D023",
@@ -2161,7 +2208,10 @@
     "gameplayDoc": "maps/SEG-D023.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 251,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-DESERT-REVISIT"
+    ]
   },
   {
     "segmentId": "SEG-D024",
@@ -2277,7 +2327,10 @@
     "gameplayDoc": "maps/SEG-D024.md",
     "enemySummaryRows": 82,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-CRYSTAL-BLUE"
+    ]
   },
   {
     "segmentId": "SEG-D025",
@@ -2407,7 +2460,10 @@
     "gameplayDoc": "maps/SEG-D025.md",
     "enemySummaryRows": 44,
     "itemSummaryRows": 344,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-CRYSTAL-BLUE"
+    ]
   },
   {
     "segmentId": "SEG-D026",
@@ -2463,7 +2519,8 @@
     "gameplayDoc": "maps/SEG-D026.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 344,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D027",
@@ -2562,7 +2619,10 @@
     "gameplayDoc": "maps/SEG-D027.md",
     "enemySummaryRows": 34,
     "itemSummaryRows": 308,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-FUTURE-ESCAPE"
+    ]
   },
   {
     "segmentId": "SEG-D028",
@@ -2705,7 +2765,10 @@
     "gameplayDoc": "maps/SEG-D028.md",
     "enemySummaryRows": 72,
     "itemSummaryRows": 308,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-FUTURE-ESCAPE"
+    ]
   },
   {
     "segmentId": "SEG-D029",
@@ -2808,7 +2871,10 @@
     "gameplayDoc": "maps/SEG-D029.md",
     "enemySummaryRows": 24,
     "itemSummaryRows": 300,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-FUTURE-ESCAPE"
+    ]
   },
   {
     "segmentId": "SEG-D030",
@@ -2898,7 +2964,10 @@
     "gameplayDoc": "maps/SEG-D030.md",
     "enemySummaryRows": 24,
     "itemSummaryRows": 300,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-FUTURE-ESCAPE"
+    ]
   },
   {
     "segmentId": "SEG-D031",
@@ -2960,7 +3029,10 @@
     "gameplayDoc": "maps/SEG-D031.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 300,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-FUTURE-ESCAPE"
+    ]
   },
   {
     "segmentId": "SEG-D032",
@@ -3063,7 +3135,10 @@
     "gameplayDoc": "maps/SEG-D032.md",
     "enemySummaryRows": 16,
     "itemSummaryRows": 298,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-FUTURE-ESCAPE"
+    ]
   },
   {
     "segmentId": "SEG-D033",
@@ -3190,7 +3265,10 @@
     "gameplayDoc": "maps/SEG-D033.md",
     "enemySummaryRows": 38,
     "itemSummaryRows": 314,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-FUTURE-ESCAPE"
+    ]
   },
   {
     "segmentId": "SEG-D034",
@@ -3360,7 +3438,10 @@
     "gameplayDoc": "maps/SEG-D034.md",
     "enemySummaryRows": 50,
     "itemSummaryRows": 341,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-FUTURE-ESCAPE"
+    ]
   },
   {
     "segmentId": "SEG-D035",
@@ -3467,7 +3548,10 @@
     "gameplayDoc": "maps/SEG-D035.md",
     "enemySummaryRows": 46,
     "itemSummaryRows": 326,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D036",
@@ -3551,7 +3635,10 @@
     "gameplayDoc": "maps/SEG-D036.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 326,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D037",
@@ -3613,7 +3700,10 @@
     "gameplayDoc": "maps/SEG-D037.md",
     "enemySummaryRows": 6,
     "itemSummaryRows": 326,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D038",
@@ -3758,7 +3848,10 @@
     "gameplayDoc": "maps/SEG-D038.md",
     "enemySummaryRows": 72,
     "itemSummaryRows": 331,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D039",
@@ -3860,7 +3953,10 @@
     "gameplayDoc": "maps/SEG-D039.md",
     "enemySummaryRows": 36,
     "itemSummaryRows": 331,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D040",
@@ -3922,7 +4018,10 @@
     "gameplayDoc": "maps/SEG-D040.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 331,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D041",
@@ -4055,7 +4154,10 @@
     "gameplayDoc": "maps/SEG-D041.md",
     "enemySummaryRows": 24,
     "itemSummaryRows": 366,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D042",
@@ -4169,7 +4271,10 @@
     "gameplayDoc": "maps/SEG-D042.md",
     "enemySummaryRows": 62,
     "itemSummaryRows": 366,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D043",
@@ -4227,7 +4332,10 @@
     "gameplayDoc": "maps/SEG-D043.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 366,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-HIDDEN-TOWER"
+    ]
   },
   {
     "segmentId": "SEG-D044",
@@ -4355,7 +4463,8 @@
     "gameplayDoc": "maps/SEG-D044.md",
     "enemySummaryRows": 440,
     "itemSummaryRows": 471,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D045",
@@ -4411,7 +4520,8 @@
     "gameplayDoc": "maps/SEG-D045.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 462,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D046",
@@ -4581,7 +4691,8 @@
     "gameplayDoc": "maps/SEG-D046.md",
     "enemySummaryRows": 196,
     "itemSummaryRows": 411,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D047",
@@ -4695,7 +4806,8 @@
     "gameplayDoc": "maps/SEG-D047.md",
     "enemySummaryRows": 204,
     "itemSummaryRows": 348,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D048",
@@ -4772,7 +4884,8 @@
     "gameplayDoc": "maps/SEG-D048.md",
     "enemySummaryRows": 102,
     "itemSummaryRows": 348,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D049",
@@ -4829,7 +4942,8 @@
     "gameplayDoc": "maps/SEG-D049.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 348,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D050",
@@ -4995,7 +5109,8 @@
     "gameplayDoc": "maps/SEG-D050.md",
     "enemySummaryRows": 248,
     "itemSummaryRows": 1368,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D051",
@@ -5153,7 +5268,8 @@
     "gameplayDoc": "maps/SEG-D051.md",
     "enemySummaryRows": 408,
     "itemSummaryRows": 683,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D052",
@@ -5231,7 +5347,8 @@
     "gameplayDoc": "maps/SEG-D052.md",
     "enemySummaryRows": 166,
     "itemSummaryRows": 1366,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D053",
@@ -5287,7 +5404,8 @@
     "gameplayDoc": "maps/SEG-D053.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 683,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D054",
@@ -5356,7 +5474,10 @@
     "gameplayDoc": "maps/SEG-D054.md",
     "enemySummaryRows": 60,
     "itemSummaryRows": 604,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-AEGIS-ICE"
+    ]
   },
   {
     "segmentId": "SEG-D055",
@@ -5414,7 +5535,10 @@
     "gameplayDoc": "maps/SEG-D055.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 604,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-AEGIS-ICE"
+    ]
   },
   {
     "segmentId": "SEG-D056",
@@ -5484,7 +5608,10 @@
     "gameplayDoc": "maps/SEG-D056.md",
     "enemySummaryRows": 162,
     "itemSummaryRows": 604,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-AEGIS-ROCK"
+    ]
   },
   {
     "segmentId": "SEG-D057",
@@ -5542,7 +5669,10 @@
     "gameplayDoc": "maps/SEG-D057.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 604,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-AEGIS-ROCK"
+    ]
   },
   {
     "segmentId": "SEG-D058",
@@ -5618,7 +5748,10 @@
     "gameplayDoc": "maps/SEG-D058.md",
     "enemySummaryRows": 128,
     "itemSummaryRows": 604,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-AEGIS-STEEL"
+    ]
   },
   {
     "segmentId": "SEG-D059",
@@ -5676,7 +5809,10 @@
     "gameplayDoc": "maps/SEG-D059.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 604,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-AEGIS-STEEL"
+    ]
   },
   {
     "segmentId": "SEG-D060",
@@ -5756,7 +5892,10 @@
     "gameplayDoc": "maps/SEG-D060.md",
     "enemySummaryRows": 252,
     "itemSummaryRows": 604,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-AEGIS-STEEL"
+    ]
   },
   {
     "segmentId": "SEG-D061",
@@ -5812,7 +5951,10 @@
     "gameplayDoc": "maps/SEG-D061.md",
     "enemySummaryRows": 12,
     "itemSummaryRows": 604,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-AEGIS-STEEL"
+    ]
   },
   {
     "segmentId": "SEG-D062",
@@ -5970,7 +6112,10 @@
     "gameplayDoc": "maps/SEG-D062.md",
     "enemySummaryRows": 272,
     "itemSummaryRows": 304,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-DROWZEE-GUILD"
+    ]
   },
   {
     "segmentId": "SEG-D063",
@@ -6116,7 +6261,10 @@
     "gameplayDoc": "maps/SEG-D063.md",
     "enemySummaryRows": 316,
     "itemSummaryRows": 400,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-DROWZEE-GUILD"
+    ]
   },
   {
     "segmentId": "SEG-D064",
@@ -6257,7 +6405,8 @@
     "gameplayDoc": "maps/SEG-D064.md",
     "enemySummaryRows": 296,
     "itemSummaryRows": 686,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D065",
@@ -6365,7 +6514,8 @@
     "gameplayDoc": "maps/SEG-D065.md",
     "enemySummaryRows": 154,
     "itemSummaryRows": 1370,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D066",
@@ -6421,7 +6571,8 @@
     "gameplayDoc": "maps/SEG-D066.md",
     "enemySummaryRows": 16,
     "itemSummaryRows": 685,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D067",
@@ -6561,7 +6712,8 @@
     "gameplayDoc": "maps/SEG-D067.md",
     "enemySummaryRows": 246,
     "itemSummaryRows": 660,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D068",
@@ -6697,7 +6849,8 @@
     "gameplayDoc": "maps/SEG-D068.md",
     "enemySummaryRows": 162,
     "itemSummaryRows": 660,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D069",
@@ -6753,7 +6906,8 @@
     "gameplayDoc": "maps/SEG-D069.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 660,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D070",
@@ -6980,7 +7134,8 @@
     "gameplayDoc": "maps/SEG-D070.md",
     "enemySummaryRows": 224,
     "itemSummaryRows": 1273,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D071",
@@ -7028,7 +7183,8 @@
     "gameplayDoc": "maps/SEG-D071.md",
     "enemySummaryRows": 0,
     "itemSummaryRows": 0,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D072",
@@ -7188,7 +7344,8 @@
     "gameplayDoc": "maps/SEG-D072.md",
     "enemySummaryRows": 426,
     "itemSummaryRows": 762,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D073",
@@ -7530,7 +7687,8 @@
     "gameplayDoc": "maps/SEG-D073.md",
     "enemySummaryRows": 282,
     "itemSummaryRows": 770,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D074",
@@ -7586,7 +7744,8 @@
     "gameplayDoc": "maps/SEG-D074.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 722,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D075",
@@ -7688,7 +7847,8 @@
     "gameplayDoc": "maps/SEG-D075.md",
     "enemySummaryRows": 90,
     "itemSummaryRows": 144,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D076",
@@ -7744,7 +7904,8 @@
     "gameplayDoc": "maps/SEG-D076.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 135,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D077",
@@ -7906,7 +8067,8 @@
     "gameplayDoc": "maps/SEG-D077.md",
     "enemySummaryRows": 224,
     "itemSummaryRows": 698,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D078",
@@ -7962,7 +8124,8 @@
     "gameplayDoc": "maps/SEG-D078.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 698,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D079",
@@ -8124,7 +8287,8 @@
     "gameplayDoc": "maps/SEG-D079.md",
     "enemySummaryRows": 192,
     "itemSummaryRows": 711,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D080",
@@ -8180,7 +8344,8 @@
     "gameplayDoc": "maps/SEG-D080.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 711,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D081",
@@ -8402,7 +8567,8 @@
     "gameplayDoc": "maps/SEG-D081.md",
     "enemySummaryRows": 222,
     "itemSummaryRows": 707,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D082",
@@ -8458,7 +8624,8 @@
     "gameplayDoc": "maps/SEG-D082.md",
     "enemySummaryRows": 10,
     "itemSummaryRows": 707,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D083",
@@ -8800,7 +8967,8 @@
     "gameplayDoc": "maps/SEG-D083.md",
     "enemySummaryRows": 714,
     "itemSummaryRows": 716,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D084",
@@ -8856,7 +9024,8 @@
     "gameplayDoc": "maps/SEG-D084.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 716,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D085",
@@ -9078,7 +9247,8 @@
     "gameplayDoc": "maps/SEG-D085.md",
     "enemySummaryRows": 552,
     "itemSummaryRows": 778,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D086",
@@ -9134,7 +9304,8 @@
     "gameplayDoc": "maps/SEG-D086.md",
     "enemySummaryRows": 2,
     "itemSummaryRows": 778,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D087",
@@ -9228,7 +9399,8 @@
     "gameplayDoc": "maps/SEG-D087.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 382,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D088",
@@ -9352,7 +9524,8 @@
     "gameplayDoc": "maps/SEG-D088.md",
     "enemySummaryRows": 58,
     "itemSummaryRows": 380,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D089",
@@ -9434,7 +9607,8 @@
     "gameplayDoc": "maps/SEG-D089.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 380,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D090",
@@ -9510,7 +9684,8 @@
     "gameplayDoc": "maps/SEG-D090.md",
     "enemySummaryRows": 12,
     "itemSummaryRows": 382,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D091",
@@ -9616,7 +9791,8 @@
     "gameplayDoc": "maps/SEG-D091.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 410,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D092",
@@ -9692,7 +9868,8 @@
     "gameplayDoc": "maps/SEG-D092.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 338,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D093",
@@ -9889,7 +10066,8 @@
     "gameplayDoc": "maps/SEG-D093.md",
     "enemySummaryRows": 298,
     "itemSummaryRows": 1052,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D094",
@@ -10056,7 +10234,8 @@
     "gameplayDoc": "maps/SEG-D094.md",
     "enemySummaryRows": 324,
     "itemSummaryRows": 730,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D095",
@@ -10223,7 +10402,8 @@
     "gameplayDoc": "maps/SEG-D095.md",
     "enemySummaryRows": 194,
     "itemSummaryRows": 646,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D096",
@@ -10378,7 +10558,8 @@
     "gameplayDoc": "maps/SEG-D096.md",
     "enemySummaryRows": 290,
     "itemSummaryRows": 684,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D097",
@@ -10533,7 +10714,8 @@
     "gameplayDoc": "maps/SEG-D097.md",
     "enemySummaryRows": 256,
     "itemSummaryRows": 310,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D098",
@@ -10730,7 +10912,8 @@
     "gameplayDoc": "maps/SEG-D098.md",
     "enemySummaryRows": 210,
     "itemSummaryRows": 684,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D099",
@@ -11236,7 +11419,8 @@
     "gameplayDoc": "maps/SEG-D099.md",
     "enemySummaryRows": 1470,
     "itemSummaryRows": 412,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D100",
@@ -11526,7 +11710,8 @@
     "gameplayDoc": "maps/SEG-D100.md",
     "enemySummaryRows": 858,
     "itemSummaryRows": 1300,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D101",
@@ -11820,7 +12005,8 @@
     "gameplayDoc": "maps/SEG-D101.md",
     "enemySummaryRows": 1548,
     "itemSummaryRows": 1013,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D102",
@@ -12463,7 +12649,8 @@
     "gameplayDoc": "maps/SEG-D102.md",
     "enemySummaryRows": 2014,
     "itemSummaryRows": 1055,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D103",
@@ -12809,7 +12996,8 @@
     "gameplayDoc": "maps/SEG-D103.md",
     "enemySummaryRows": 738,
     "itemSummaryRows": 342,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D104",
@@ -13447,7 +13635,8 @@
     "gameplayDoc": "maps/SEG-D104.md",
     "enemySummaryRows": 2224,
     "itemSummaryRows": 441,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D105",
@@ -13551,7 +13740,8 @@
     "gameplayDoc": "maps/SEG-D105.md",
     "enemySummaryRows": 182,
     "itemSummaryRows": 508,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D106",
@@ -13625,7 +13815,8 @@
     "gameplayDoc": "maps/SEG-D106.md",
     "enemySummaryRows": 84,
     "itemSummaryRows": 508,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D107",
@@ -13761,7 +13952,8 @@
     "gameplayDoc": "maps/SEG-D107.md",
     "enemySummaryRows": 196,
     "itemSummaryRows": 766,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D108",
@@ -13927,7 +14119,8 @@
     "gameplayDoc": "maps/SEG-D108.md",
     "enemySummaryRows": 144,
     "itemSummaryRows": 1110,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D109",
@@ -14123,7 +14316,8 @@
     "gameplayDoc": "maps/SEG-D109.md",
     "enemySummaryRows": 320,
     "itemSummaryRows": 1130,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D110",
@@ -14349,7 +14543,8 @@
     "gameplayDoc": "maps/SEG-D110.md",
     "enemySummaryRows": 230,
     "itemSummaryRows": 1126,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D111",
@@ -14418,7 +14613,10 @@
     "gameplayDoc": "maps/SEG-D111.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D112",
@@ -14489,7 +14687,10 @@
     "gameplayDoc": "maps/SEG-D112.md",
     "enemySummaryRows": 36,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D113",
@@ -14560,7 +14761,10 @@
     "gameplayDoc": "maps/SEG-D113.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D114",
@@ -14631,7 +14835,10 @@
     "gameplayDoc": "maps/SEG-D114.md",
     "enemySummaryRows": 46,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D115",
@@ -14708,7 +14915,10 @@
     "gameplayDoc": "maps/SEG-D115.md",
     "enemySummaryRows": 54,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D116",
@@ -14785,7 +14995,10 @@
     "gameplayDoc": "maps/SEG-D116.md",
     "enemySummaryRows": 40,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D117",
@@ -14862,7 +15075,10 @@
     "gameplayDoc": "maps/SEG-D117.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D118",
@@ -14939,7 +15155,10 @@
     "gameplayDoc": "maps/SEG-D118.md",
     "enemySummaryRows": 34,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D119",
@@ -15022,7 +15241,10 @@
     "gameplayDoc": "maps/SEG-D119.md",
     "enemySummaryRows": 30,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D120",
@@ -15104,7 +15326,10 @@
     "gameplayDoc": "maps/SEG-D120.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D121",
@@ -15162,7 +15387,10 @@
     "gameplayDoc": "maps/SEG-D121.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D122",
@@ -15218,7 +15446,10 @@
     "gameplayDoc": "maps/SEG-D122.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 297,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SKY-PEAK"
+    ]
   },
   {
     "segmentId": "SEG-D123",
@@ -15310,7 +15541,10 @@
     "gameplayDoc": "maps/SEG-D123.md",
     "enemySummaryRows": 48,
     "itemSummaryRows": 278,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE1-STAR"
+    ]
   },
   {
     "segmentId": "SEG-D124",
@@ -15386,7 +15620,10 @@
     "gameplayDoc": "maps/SEG-D124.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 349,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE1-STAR"
+    ]
   },
   {
     "segmentId": "SEG-D125",
@@ -15444,7 +15681,10 @@
     "gameplayDoc": "maps/SEG-D125.md",
     "enemySummaryRows": 8,
     "itemSummaryRows": 344,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE1-STAR"
+    ]
   },
   {
     "segmentId": "SEG-D126",
@@ -15518,7 +15758,10 @@
     "gameplayDoc": "maps/SEG-D126.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 344,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE1-STAR"
+    ]
   },
   {
     "segmentId": "SEG-D127",
@@ -15574,7 +15817,10 @@
     "gameplayDoc": "maps/SEG-D127.md",
     "enemySummaryRows": 6,
     "itemSummaryRows": 344,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE1-STAR"
+    ]
   },
   {
     "segmentId": "SEG-D128",
@@ -15660,7 +15906,10 @@
     "gameplayDoc": "maps/SEG-D128.md",
     "enemySummaryRows": 62,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE2-DAYS"
+    ]
   },
   {
     "segmentId": "SEG-D129",
@@ -15766,7 +16015,10 @@
     "gameplayDoc": "maps/SEG-D129.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE2-DAYS"
+    ]
   },
   {
     "segmentId": "SEG-D130",
@@ -15864,7 +16116,10 @@
     "gameplayDoc": "maps/SEG-D130.md",
     "enemySummaryRows": 46,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE2-DAYS"
+    ]
   },
   {
     "segmentId": "SEG-D131",
@@ -15952,7 +16207,10 @@
     "gameplayDoc": "maps/SEG-D131.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE2-DAYS"
+    ]
   },
   {
     "segmentId": "SEG-D132",
@@ -16008,7 +16266,10 @@
     "gameplayDoc": "maps/SEG-D132.md",
     "enemySummaryRows": 8,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE2-DAYS"
+    ]
   },
   {
     "segmentId": "SEG-D133",
@@ -16091,7 +16352,10 @@
     "gameplayDoc": "maps/SEG-D133.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D134",
@@ -16175,7 +16439,10 @@
     "gameplayDoc": "maps/SEG-D134.md",
     "enemySummaryRows": 16,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D135",
@@ -16237,7 +16504,10 @@
     "gameplayDoc": "maps/SEG-D135.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D136",
@@ -16314,7 +16584,10 @@
     "gameplayDoc": "maps/SEG-D136.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D137",
@@ -16429,7 +16702,10 @@
     "gameplayDoc": "maps/SEG-D137.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 293,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D138",
@@ -16543,7 +16819,10 @@
     "gameplayDoc": "maps/SEG-D138.md",
     "enemySummaryRows": 74,
     "itemSummaryRows": 293,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D139",
@@ -16637,7 +16916,10 @@
     "gameplayDoc": "maps/SEG-D139.md",
     "enemySummaryRows": 34,
     "itemSummaryRows": 234,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D140",
@@ -16699,7 +16981,10 @@
     "gameplayDoc": "maps/SEG-D140.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 234,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D141",
@@ -16812,7 +17097,10 @@
     "gameplayDoc": "maps/SEG-D141.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D142",
@@ -16927,7 +17215,10 @@
     "gameplayDoc": "maps/SEG-D142.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D143",
@@ -17005,7 +17296,10 @@
     "gameplayDoc": "maps/SEG-D143.md",
     "enemySummaryRows": 12,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D144",
@@ -17067,7 +17361,10 @@
     "gameplayDoc": "maps/SEG-D144.md",
     "enemySummaryRows": 12,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D145",
@@ -17180,7 +17477,10 @@
     "gameplayDoc": "maps/SEG-D145.md",
     "enemySummaryRows": 46,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D146",
@@ -17289,7 +17589,10 @@
     "gameplayDoc": "maps/SEG-D146.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D147",
@@ -17391,7 +17694,10 @@
     "gameplayDoc": "maps/SEG-D147.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D148",
@@ -17449,7 +17755,10 @@
     "gameplayDoc": "maps/SEG-D148.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 262,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE5-FUTURE"
+    ]
   },
   {
     "segmentId": "SEG-D149",
@@ -17560,7 +17869,10 @@
     "gameplayDoc": "maps/SEG-D149.md",
     "enemySummaryRows": 110,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D150",
@@ -17645,7 +17957,10 @@
     "gameplayDoc": "maps/SEG-D150.md",
     "enemySummaryRows": 36,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D151",
@@ -17729,7 +18044,10 @@
     "gameplayDoc": "maps/SEG-D151.md",
     "enemySummaryRows": 44,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D152",
@@ -17791,7 +18109,10 @@
     "gameplayDoc": "maps/SEG-D152.md",
     "enemySummaryRows": 8,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D153",
@@ -17865,7 +18186,10 @@
     "gameplayDoc": "maps/SEG-D153.md",
     "enemySummaryRows": 24,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D154",
@@ -17939,7 +18263,10 @@
     "gameplayDoc": "maps/SEG-D154.md",
     "enemySummaryRows": 24,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D155",
@@ -18024,7 +18351,10 @@
     "gameplayDoc": "maps/SEG-D155.md",
     "enemySummaryRows": 26,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D156",
@@ -18108,7 +18438,10 @@
     "gameplayDoc": "maps/SEG-D156.md",
     "enemySummaryRows": 50,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D157",
@@ -18166,7 +18499,10 @@
     "gameplayDoc": "maps/SEG-D157.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 351,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE4-HIDDEN-WALL"
+    ]
   },
   {
     "segmentId": "SEG-D158",
@@ -18238,7 +18574,10 @@
     "gameplayDoc": "maps/SEG-D158.md",
     "enemySummaryRows": 10,
     "itemSummaryRows": 357,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE3-SPRING"
+    ]
   },
   {
     "segmentId": "SEG-D159",
@@ -18296,7 +18635,10 @@
     "gameplayDoc": "maps/SEG-D159.md",
     "enemySummaryRows": 8,
     "itemSummaryRows": 284,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE3-SPRING"
+    ]
   },
   {
     "segmentId": "SEG-D160",
@@ -18370,7 +18712,10 @@
     "gameplayDoc": "maps/SEG-D160.md",
     "enemySummaryRows": 28,
     "itemSummaryRows": 357,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE3-SPRING"
+    ]
   },
   {
     "segmentId": "SEG-D161",
@@ -18428,7 +18773,10 @@
     "gameplayDoc": "maps/SEG-D161.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 352,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE3-SPRING"
+    ]
   },
   {
     "segmentId": "SEG-D162",
@@ -18504,7 +18852,10 @@
     "gameplayDoc": "maps/SEG-D162.md",
     "enemySummaryRows": 38,
     "itemSummaryRows": 352,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE3-SPRING"
+    ]
   },
   {
     "segmentId": "SEG-D163",
@@ -18580,7 +18931,10 @@
     "gameplayDoc": "maps/SEG-D163.md",
     "enemySummaryRows": 34,
     "itemSummaryRows": 352,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE3-SPRING"
+    ]
   },
   {
     "segmentId": "SEG-D164",
@@ -18636,7 +18990,10 @@
     "gameplayDoc": "maps/SEG-D164.md",
     "enemySummaryRows": 8,
     "itemSummaryRows": 352,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": [
+      "PRG-SE3-SPRING"
+    ]
   },
   {
     "segmentId": "SEG-D165",
@@ -18710,7 +19067,8 @@
     "gameplayDoc": "maps/SEG-D165.md",
     "enemySummaryRows": 8,
     "itemSummaryRows": 359,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D166",
@@ -18790,7 +19148,8 @@
     "gameplayDoc": "maps/SEG-D166.md",
     "enemySummaryRows": 10,
     "itemSummaryRows": 356,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D167",
@@ -18876,7 +19235,8 @@
     "gameplayDoc": "maps/SEG-D167.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 356,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D168",
@@ -18956,7 +19316,8 @@
     "gameplayDoc": "maps/SEG-D168.md",
     "enemySummaryRows": 12,
     "itemSummaryRows": 356,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D169",
@@ -19030,7 +19391,8 @@
     "gameplayDoc": "maps/SEG-D169.md",
     "enemySummaryRows": 8,
     "itemSummaryRows": 356,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D170",
@@ -19104,7 +19466,8 @@
     "gameplayDoc": "maps/SEG-D170.md",
     "enemySummaryRows": 4,
     "itemSummaryRows": 225,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D171",
@@ -19178,7 +19541,8 @@
     "gameplayDoc": "maps/SEG-D171.md",
     "enemySummaryRows": 84,
     "itemSummaryRows": 386,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D172",
@@ -19252,7 +19616,8 @@
     "gameplayDoc": "maps/SEG-D172.md",
     "enemySummaryRows": 84,
     "itemSummaryRows": 386,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D173",
@@ -19316,7 +19681,8 @@
     "gameplayDoc": "maps/SEG-D173.md",
     "enemySummaryRows": 0,
     "itemSummaryRows": 0,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D174",
@@ -19456,7 +19822,8 @@
     "gameplayDoc": "maps/SEG-D174.md",
     "enemySummaryRows": 90,
     "itemSummaryRows": 349,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D175",
@@ -19518,7 +19885,8 @@
     "gameplayDoc": "maps/SEG-D175.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 293,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D176",
@@ -19580,7 +19948,8 @@
     "gameplayDoc": "maps/SEG-D176.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 293,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D177",
@@ -19642,7 +20011,8 @@
     "gameplayDoc": "maps/SEG-D177.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 293,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D178",
@@ -19722,7 +20092,8 @@
     "gameplayDoc": "maps/SEG-D178.md",
     "enemySummaryRows": 70,
     "itemSummaryRows": 293,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D179",
@@ -19772,7 +20143,8 @@
     "gameplayDoc": "maps/SEG-D179.md",
     "enemySummaryRows": 14,
     "itemSummaryRows": 280,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D180",
@@ -19846,7 +20218,8 @@
     "gameplayDoc": "maps/SEG-D180.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D181",
@@ -19920,7 +20293,8 @@
     "gameplayDoc": "maps/SEG-D181.md",
     "enemySummaryRows": 30,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D182",
@@ -19994,7 +20368,8 @@
     "gameplayDoc": "maps/SEG-D182.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D183",
@@ -20068,7 +20443,8 @@
     "gameplayDoc": "maps/SEG-D183.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D184",
@@ -20142,7 +20518,8 @@
     "gameplayDoc": "maps/SEG-D184.md",
     "enemySummaryRows": 30,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D185",
@@ -20216,7 +20593,8 @@
     "gameplayDoc": "maps/SEG-D185.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D186",
@@ -20290,7 +20668,8 @@
     "gameplayDoc": "maps/SEG-D186.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D187",
@@ -20364,7 +20743,8 @@
     "gameplayDoc": "maps/SEG-D187.md",
     "enemySummaryRows": 20,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D188",
@@ -20438,7 +20818,8 @@
     "gameplayDoc": "maps/SEG-D188.md",
     "enemySummaryRows": 10,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D189",
@@ -20512,7 +20893,8 @@
     "gameplayDoc": "maps/SEG-D189.md",
     "enemySummaryRows": 10,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D190",
@@ -20564,7 +20946,8 @@
     "gameplayDoc": "maps/SEG-D190.md",
     "enemySummaryRows": 18,
     "itemSummaryRows": 200,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   },
   {
     "segmentId": "SEG-D191",
@@ -20896,6 +21279,7 @@
     "gameplayDoc": "maps/SEG-D191.md",
     "enemySummaryRows": 120,
     "itemSummaryRows": 352,
-    "detailsSource": "map-gameplay-details.jsonl.gz"
+    "detailsSource": "map-gameplay-details.jsonl.gz",
+    "progressionRuleIds": []
   }
 ]

@@ -1,5 +1,8 @@
 # 길드 복귀 없는 연속 원정과 캥카 연결부
 
+<!-- gameplay-crossrefs -->
+각 진행표의 **구간 숫자를 누르면 적·아이템·보스·진행 조건 상세 문서**를 연다. [자료/비율 해석](../2026-10-21-full-map-audit/GAMEPLAY_DATA.md) · [특수 진행/필요 아이템](../2026-10-21-full-map-audit/PROGRESSION.md).
+
 기준: 보존한 『하늘의 탐험대』 ROM과 스토리/던전 웹 자료. 조사일2026-10-21. **분류 자료이며 현재 게임의 자동 귀환·맵 선택 동작은 바꾸지 않았다.**
 
 던전의 한 구간을 끝낸 것과 원정을 끝낸 것을 구분해야 한다. 본편 시한의 탑41을 끝내면 길드로 돌려보내지 않고 중간 쉼터를 거쳐42로, 그 뒤43의 정상 전투로 이어지는 구조다. 같은 원정에서 서로 다른 MAPPA 그룹의 던전을 통과하거나, 캠프에서 쉬고 다음 던전으로 가는 경우도 있다.
@@ -36,11 +39,11 @@ flowchart LR
 
 | 원정 ID | 진행 순서(원작 dungeon ID) | 중간 처리 |
 |---|---|---|
-| `ARC-M07` 길드 대원정 / Fogbound Lake | 8 → 10 → 12 → 14 → 15 → 16 | 야영·스토리 대기 포함. Side Path9/Rock Path11/Forest Path13은 진행 경로가 아닌 왕복 분기. |
-| `ARC-M14` 미래 탈출 → 과거 은신 → Treeshroud Forest | 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 | 33→34 사이 시간의 통로·해변·Sharpedo Bluff 은신/취침을 거친다. 길드 강제 귀환 없이 이어지지만 직접 맞닿은 던전은 아니다. |
-| `ARC-M18` Brine Cave → Hidden Land → 시한의 탑 | 35 → 36 → 37 → 38 → 39 → 40 → 41 → 42 → 43 | Lapras·Old Ruins·Rainbow Stoneship 포함. 길드 장면은 동료들의 시점 전환이며 주인공의 귀환이 아님. Hidden Land 입구 선택 귀환과 실패 복귀는 별도. |
-| `ARC-SE04` Here Comes Team Charm! | 149 → 150 → 151 → 152 → 155 → 156 → 157 | 153/154는 D56P11A로 돌아오는 분기. 숨은 통로 발견 후155로 전진. |
-| `ARC-SE05` In the Future of Darkness | 133 → 134 → 135 → 136 → 137 → 138 → 139 → 140 → 141 → 142 → 143 → 144 → 145 → 146 → 147 → 148 | Porygon 이동·막간/휴식 포함. 본편과 별개 시간대·배우·저장을 사용하며 본편41/42와 SE137/138을 섞지 않는다. |
+| `ARC-M07` 길드 대원정 / Fogbound Lake | [8](../2026-10-21-full-map-audit/maps/SEG-D008.md) → [10](../2026-10-21-full-map-audit/maps/SEG-D010.md) → [12](../2026-10-21-full-map-audit/maps/SEG-D012.md) → [14](../2026-10-21-full-map-audit/maps/SEG-D014.md) → [15](../2026-10-21-full-map-audit/maps/SEG-D015.md) → [16](../2026-10-21-full-map-audit/maps/SEG-D016.md) | 야영·스토리 대기 포함. Side Path9/Rock Path11/Forest Path13은 진행 경로가 아닌 왕복 분기. |
+| `ARC-M14` 미래 탈출 → 과거 은신 → Treeshroud Forest | [27](../2026-10-21-full-map-audit/maps/SEG-D027.md) → [28](../2026-10-21-full-map-audit/maps/SEG-D028.md) → [29](../2026-10-21-full-map-audit/maps/SEG-D029.md) → [30](../2026-10-21-full-map-audit/maps/SEG-D030.md) → [31](../2026-10-21-full-map-audit/maps/SEG-D031.md) → [32](../2026-10-21-full-map-audit/maps/SEG-D032.md) → [33](../2026-10-21-full-map-audit/maps/SEG-D033.md) → [34](../2026-10-21-full-map-audit/maps/SEG-D034.md) | 33→34 사이 시간의 통로·해변·Sharpedo Bluff 은신/취침을 거친다. 길드 강제 귀환 없이 이어지지만 직접 맞닿은 던전은 아니다. |
+| `ARC-M18` Brine Cave → Hidden Land → 시한의 탑 | [35](../2026-10-21-full-map-audit/maps/SEG-D035.md) → [36](../2026-10-21-full-map-audit/maps/SEG-D036.md) → [37](../2026-10-21-full-map-audit/maps/SEG-D037.md) → [38](../2026-10-21-full-map-audit/maps/SEG-D038.md) → [39](../2026-10-21-full-map-audit/maps/SEG-D039.md) → [40](../2026-10-21-full-map-audit/maps/SEG-D040.md) → [41](../2026-10-21-full-map-audit/maps/SEG-D041.md) → [42](../2026-10-21-full-map-audit/maps/SEG-D042.md) → [43](../2026-10-21-full-map-audit/maps/SEG-D043.md) | Lapras·Old Ruins·Rainbow Stoneship 포함. 길드 장면은 동료들의 시점 전환이며 주인공의 귀환이 아님. Hidden Land 입구 선택 귀환과 실패 복귀는 별도. |
+| `ARC-SE04` Here Comes Team Charm! | [149](../2026-10-21-full-map-audit/maps/SEG-D149.md) → [150](../2026-10-21-full-map-audit/maps/SEG-D150.md) → [151](../2026-10-21-full-map-audit/maps/SEG-D151.md) → [152](../2026-10-21-full-map-audit/maps/SEG-D152.md) → [155](../2026-10-21-full-map-audit/maps/SEG-D155.md) → [156](../2026-10-21-full-map-audit/maps/SEG-D156.md) → [157](../2026-10-21-full-map-audit/maps/SEG-D157.md) | 153/154는 D56P11A로 돌아오는 분기. 숨은 통로 발견 후155로 전진. |
+| `ARC-SE05` In the Future of Darkness | [133](../2026-10-21-full-map-audit/maps/SEG-D133.md) → [134](../2026-10-21-full-map-audit/maps/SEG-D134.md) → [135](../2026-10-21-full-map-audit/maps/SEG-D135.md) → [136](../2026-10-21-full-map-audit/maps/SEG-D136.md) → [137](../2026-10-21-full-map-audit/maps/SEG-D137.md) → [138](../2026-10-21-full-map-audit/maps/SEG-D138.md) → [139](../2026-10-21-full-map-audit/maps/SEG-D139.md) → [140](../2026-10-21-full-map-audit/maps/SEG-D140.md) → [141](../2026-10-21-full-map-audit/maps/SEG-D141.md) → [142](../2026-10-21-full-map-audit/maps/SEG-D142.md) → [143](../2026-10-21-full-map-audit/maps/SEG-D143.md) → [144](../2026-10-21-full-map-audit/maps/SEG-D144.md) → [145](../2026-10-21-full-map-audit/maps/SEG-D145.md) → [146](../2026-10-21-full-map-audit/maps/SEG-D146.md) → [147](../2026-10-21-full-map-audit/maps/SEG-D147.md) → [148](../2026-10-21-full-map-audit/maps/SEG-D148.md) | Porygon 이동·막간/휴식 포함. 본편과 별개 시간대·배우·저장을 사용하며 본편41/42와 SE137/138을 섞지 않는다. |
 
 M07의 실제 지역 순서는 Craggy Coast→Mt. Horn→Foggy Forest→Steam Cave다. M14는 Chasm Cave→Dark Hill→Sealed Ruin→Dusk Forest→Deep Dusk Forest→과거 은신→Treeshroud Forest다. M18은 Brine Cave→Hidden Land→Temporal Tower다. **야영/취침·화면 전환도 원정의 일부**로 남기고, 자동 길드 복귀와 구별한다. Hidden Land 입구에서 선택해 돌아가는 기능까지 막는다는 뜻은 아니다.
 
@@ -52,42 +55,42 @@ M07의 실제 지역 순서는 Craggy Coast→Mt. Horn→Foggy Forest→Steam Ca
 
 | 진행표 | 지역 / 구분 | 원작 구간 순서 | 확인된 캥카 연결부 |
 |---|---|---|
-| `RUN-D001` | Beach Cave / main-story | 1 → 2 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D004` | Mt. Bristle / main-story | 4 → 5 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D014` | Steam Cave / main-story | 14 → 15 → 16 | D10P21A |
-| `RUN-D017` | Amp Plains / main-story | 17 → 18 → 19 | D12P21A |
-| `RUN-D021` | Quicksand Cave / main-story | 21 → 22 → 23 | D15P21A |
-| `RUN-D024` | Crystal Cave → Crystal Crossing / main-story | 24 → 25 → 26 | D16P31A |
-| `RUN-D029` | Sealed Ruin / main-story | 29 → 30 → 31 | D21P21A |
-| `RUN-D032` | Dusk Forest → Deep Dusk Forest / main-story | 32 → 33 | D23P11A |
-| `RUN-D035` | Brine Cave / main-story | 35 → 36 → 37 | D26P21A |
-| `RUN-D038` | Hidden Land / main-story | 38 → 39 → 40 | D28P21A |
-| `RUN-D041` | Temporal Tower / main-story | 41 → 42 → 43 | D30P21A |
-| `RUN-D044` | Mystifying Forest / post-story | 44 → 45 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D046` | Blizzard Island → Crevice Cave / post-story | 46 → 47 → 48 → 49 | D79P11A, D79P21A |
-| `RUN-D047` | Crevice Cave / post-story | 47 → 48 → 49 | D79P21A |
-| `RUN-D051` | Miracle Sea / post-story | 51 → 52 → 53 | D35P21A |
-| `RUN-D054` | Aegis Cave / post-story | 54 → 55 → 56 → 57 → 58 → 59 → 60 → 61 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D064` | Spacial Rift / post-story | 64 → 65 → 66 | D39P21A |
-| `RUN-D067` | Dark Crater / post-story | 67 → 68 → 69 | D41P21A |
-| `RUN-D073` | Bottomless Sea / optional | 73 → 74 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D075` | Shimmer Desert / optional | 75 → 76 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D077` | Mt. Avalanche / optional | 77 → 78 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D079` | Giant Volcano / optional | 79 → 80 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D081` | World Abyss / optional | 81 → 82 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D083` | Sky Stairway / optional | 83 → 84 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D085` | Mystery Jungle / optional | 85 → 86 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D111` | Sky Peak Mountain Path / post-story | 111 → 112 → 113 → 114 → 115 → 121 → 116 → 117 → 118 → 119 → 120 → 122 | D73P21A, D73P22A, D73P23A, D73P24A, D73P26A, D73P27A, D73P28A, D73P29A |
-| `RUN-D123` | Star Cave / special | 123 → 124 → 125 → 126 → 127 | D42P21A |
-| `RUN-D130` | Fortune Ravine / special | 130 → 131 → 132 | D45P21A |
-| `RUN-D133` | Barren Valley / special | 133 → 134 → 135 | D46P21A |
-| `RUN-D137` | Temporal Tower / special | 137 → 138 | D48P21A |
-| `RUN-D139` | Dusk Forest / special | 139 → 140 | 별도 동상 확인 없음 / 보스·이벤트 전환 |
-| `RUN-D142` | Dark Ice Mountain / special | 142 → 143 → 144 | D51P21A |
-| `RUN-D146` | Vast Ice Mountain / special | 146 → 147 → 148 | D53P21A |
-| `RUN-D150` | Boulder Quarry / special | 150 → 151 → 152 | D55P21A |
-| `RUN-D155` | Limestone Cavern / special | 155 → 156 → 157 | D56P21A |
-| `RUN-D158` | Spring Cave / special | 158 → 159 → 160 → 161 → 162 → 163 → 164 | D57P21A |
+| `RUN-D001` | Beach Cave / main-story | [1](../2026-10-21-full-map-audit/maps/SEG-D001.md) → [2](../2026-10-21-full-map-audit/maps/SEG-D002.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D004` | Mt. Bristle / main-story | [4](../2026-10-21-full-map-audit/maps/SEG-D004.md) → [5](../2026-10-21-full-map-audit/maps/SEG-D005.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D014` | Steam Cave / main-story | [14](../2026-10-21-full-map-audit/maps/SEG-D014.md) → [15](../2026-10-21-full-map-audit/maps/SEG-D015.md) → [16](../2026-10-21-full-map-audit/maps/SEG-D016.md) | D10P21A |
+| `RUN-D017` | Amp Plains / main-story | [17](../2026-10-21-full-map-audit/maps/SEG-D017.md) → [18](../2026-10-21-full-map-audit/maps/SEG-D018.md) → [19](../2026-10-21-full-map-audit/maps/SEG-D019.md) | D12P21A |
+| `RUN-D021` | Quicksand Cave / main-story | [21](../2026-10-21-full-map-audit/maps/SEG-D021.md) → [22](../2026-10-21-full-map-audit/maps/SEG-D022.md) → [23](../2026-10-21-full-map-audit/maps/SEG-D023.md) | D15P21A |
+| `RUN-D024` | Crystal Cave → Crystal Crossing / main-story | [24](../2026-10-21-full-map-audit/maps/SEG-D024.md) → [25](../2026-10-21-full-map-audit/maps/SEG-D025.md) → [26](../2026-10-21-full-map-audit/maps/SEG-D026.md) | D16P31A |
+| `RUN-D029` | Sealed Ruin / main-story | [29](../2026-10-21-full-map-audit/maps/SEG-D029.md) → [30](../2026-10-21-full-map-audit/maps/SEG-D030.md) → [31](../2026-10-21-full-map-audit/maps/SEG-D031.md) | D21P21A |
+| `RUN-D032` | Dusk Forest → Deep Dusk Forest / main-story | [32](../2026-10-21-full-map-audit/maps/SEG-D032.md) → [33](../2026-10-21-full-map-audit/maps/SEG-D033.md) | D23P11A |
+| `RUN-D035` | Brine Cave / main-story | [35](../2026-10-21-full-map-audit/maps/SEG-D035.md) → [36](../2026-10-21-full-map-audit/maps/SEG-D036.md) → [37](../2026-10-21-full-map-audit/maps/SEG-D037.md) | D26P21A |
+| `RUN-D038` | Hidden Land / main-story | [38](../2026-10-21-full-map-audit/maps/SEG-D038.md) → [39](../2026-10-21-full-map-audit/maps/SEG-D039.md) → [40](../2026-10-21-full-map-audit/maps/SEG-D040.md) | D28P21A |
+| `RUN-D041` | Temporal Tower / main-story | [41](../2026-10-21-full-map-audit/maps/SEG-D041.md) → [42](../2026-10-21-full-map-audit/maps/SEG-D042.md) → [43](../2026-10-21-full-map-audit/maps/SEG-D043.md) | D30P21A |
+| `RUN-D044` | Mystifying Forest / post-story | [44](../2026-10-21-full-map-audit/maps/SEG-D044.md) → [45](../2026-10-21-full-map-audit/maps/SEG-D045.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D046` | Blizzard Island → Crevice Cave / post-story | [46](../2026-10-21-full-map-audit/maps/SEG-D046.md) → [47](../2026-10-21-full-map-audit/maps/SEG-D047.md) → [48](../2026-10-21-full-map-audit/maps/SEG-D048.md) → [49](../2026-10-21-full-map-audit/maps/SEG-D049.md) | D79P11A, D79P21A |
+| `RUN-D047` | Crevice Cave / post-story | [47](../2026-10-21-full-map-audit/maps/SEG-D047.md) → [48](../2026-10-21-full-map-audit/maps/SEG-D048.md) → [49](../2026-10-21-full-map-audit/maps/SEG-D049.md) | D79P21A |
+| `RUN-D051` | Miracle Sea / post-story | [51](../2026-10-21-full-map-audit/maps/SEG-D051.md) → [52](../2026-10-21-full-map-audit/maps/SEG-D052.md) → [53](../2026-10-21-full-map-audit/maps/SEG-D053.md) | D35P21A |
+| `RUN-D054` | Aegis Cave / post-story | [54](../2026-10-21-full-map-audit/maps/SEG-D054.md) → [55](../2026-10-21-full-map-audit/maps/SEG-D055.md) → [56](../2026-10-21-full-map-audit/maps/SEG-D056.md) → [57](../2026-10-21-full-map-audit/maps/SEG-D057.md) → [58](../2026-10-21-full-map-audit/maps/SEG-D058.md) → [59](../2026-10-21-full-map-audit/maps/SEG-D059.md) → [60](../2026-10-21-full-map-audit/maps/SEG-D060.md) → [61](../2026-10-21-full-map-audit/maps/SEG-D061.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D064` | Spacial Rift / post-story | [64](../2026-10-21-full-map-audit/maps/SEG-D064.md) → [65](../2026-10-21-full-map-audit/maps/SEG-D065.md) → [66](../2026-10-21-full-map-audit/maps/SEG-D066.md) | D39P21A |
+| `RUN-D067` | Dark Crater / post-story | [67](../2026-10-21-full-map-audit/maps/SEG-D067.md) → [68](../2026-10-21-full-map-audit/maps/SEG-D068.md) → [69](../2026-10-21-full-map-audit/maps/SEG-D069.md) | D41P21A |
+| `RUN-D073` | Bottomless Sea / optional | [73](../2026-10-21-full-map-audit/maps/SEG-D073.md) → [74](../2026-10-21-full-map-audit/maps/SEG-D074.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D075` | Shimmer Desert / optional | [75](../2026-10-21-full-map-audit/maps/SEG-D075.md) → [76](../2026-10-21-full-map-audit/maps/SEG-D076.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D077` | Mt. Avalanche / optional | [77](../2026-10-21-full-map-audit/maps/SEG-D077.md) → [78](../2026-10-21-full-map-audit/maps/SEG-D078.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D079` | Giant Volcano / optional | [79](../2026-10-21-full-map-audit/maps/SEG-D079.md) → [80](../2026-10-21-full-map-audit/maps/SEG-D080.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D081` | World Abyss / optional | [81](../2026-10-21-full-map-audit/maps/SEG-D081.md) → [82](../2026-10-21-full-map-audit/maps/SEG-D082.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D083` | Sky Stairway / optional | [83](../2026-10-21-full-map-audit/maps/SEG-D083.md) → [84](../2026-10-21-full-map-audit/maps/SEG-D084.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D085` | Mystery Jungle / optional | [85](../2026-10-21-full-map-audit/maps/SEG-D085.md) → [86](../2026-10-21-full-map-audit/maps/SEG-D086.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D111` | Sky Peak Mountain Path / post-story | [111](../2026-10-21-full-map-audit/maps/SEG-D111.md) → [112](../2026-10-21-full-map-audit/maps/SEG-D112.md) → [113](../2026-10-21-full-map-audit/maps/SEG-D113.md) → [114](../2026-10-21-full-map-audit/maps/SEG-D114.md) → [115](../2026-10-21-full-map-audit/maps/SEG-D115.md) → [121](../2026-10-21-full-map-audit/maps/SEG-D121.md) → [116](../2026-10-21-full-map-audit/maps/SEG-D116.md) → [117](../2026-10-21-full-map-audit/maps/SEG-D117.md) → [118](../2026-10-21-full-map-audit/maps/SEG-D118.md) → [119](../2026-10-21-full-map-audit/maps/SEG-D119.md) → [120](../2026-10-21-full-map-audit/maps/SEG-D120.md) → [122](../2026-10-21-full-map-audit/maps/SEG-D122.md) | D73P21A, D73P22A, D73P23A, D73P24A, D73P26A, D73P27A, D73P28A, D73P29A |
+| `RUN-D123` | Star Cave / special | [123](../2026-10-21-full-map-audit/maps/SEG-D123.md) → [124](../2026-10-21-full-map-audit/maps/SEG-D124.md) → [125](../2026-10-21-full-map-audit/maps/SEG-D125.md) → [126](../2026-10-21-full-map-audit/maps/SEG-D126.md) → [127](../2026-10-21-full-map-audit/maps/SEG-D127.md) | D42P21A |
+| `RUN-D130` | Fortune Ravine / special | [130](../2026-10-21-full-map-audit/maps/SEG-D130.md) → [131](../2026-10-21-full-map-audit/maps/SEG-D131.md) → [132](../2026-10-21-full-map-audit/maps/SEG-D132.md) | D45P21A |
+| `RUN-D133` | Barren Valley / special | [133](../2026-10-21-full-map-audit/maps/SEG-D133.md) → [134](../2026-10-21-full-map-audit/maps/SEG-D134.md) → [135](../2026-10-21-full-map-audit/maps/SEG-D135.md) | D46P21A |
+| `RUN-D137` | Temporal Tower / special | [137](../2026-10-21-full-map-audit/maps/SEG-D137.md) → [138](../2026-10-21-full-map-audit/maps/SEG-D138.md) | D48P21A |
+| `RUN-D139` | Dusk Forest / special | [139](../2026-10-21-full-map-audit/maps/SEG-D139.md) → [140](../2026-10-21-full-map-audit/maps/SEG-D140.md) | 별도 동상 확인 없음 / 보스·이벤트 전환 |
+| `RUN-D142` | Dark Ice Mountain / special | [142](../2026-10-21-full-map-audit/maps/SEG-D142.md) → [143](../2026-10-21-full-map-audit/maps/SEG-D143.md) → [144](../2026-10-21-full-map-audit/maps/SEG-D144.md) | D51P21A |
+| `RUN-D146` | Vast Ice Mountain / special | [146](../2026-10-21-full-map-audit/maps/SEG-D146.md) → [147](../2026-10-21-full-map-audit/maps/SEG-D147.md) → [148](../2026-10-21-full-map-audit/maps/SEG-D148.md) | D53P21A |
+| `RUN-D150` | Boulder Quarry / special | [150](../2026-10-21-full-map-audit/maps/SEG-D150.md) → [151](../2026-10-21-full-map-audit/maps/SEG-D151.md) → [152](../2026-10-21-full-map-audit/maps/SEG-D152.md) | D55P21A |
+| `RUN-D155` | Limestone Cavern / special | [155](../2026-10-21-full-map-audit/maps/SEG-D155.md) → [156](../2026-10-21-full-map-audit/maps/SEG-D156.md) → [157](../2026-10-21-full-map-audit/maps/SEG-D157.md) | D56P21A |
+| `RUN-D158` | Spring Cave / special | [158](../2026-10-21-full-map-audit/maps/SEG-D158.md) → [159](../2026-10-21-full-map-audit/maps/SEG-D159.md) → [160](../2026-10-21-full-map-audit/maps/SEG-D160.md) → [161](../2026-10-21-full-map-audit/maps/SEG-D161.md) → [162](../2026-10-21-full-map-audit/maps/SEG-D162.md) → [163](../2026-10-21-full-map-audit/maps/SEG-D163.md) → [164](../2026-10-21-full-map-audit/maps/SEG-D164.md) | D57P21A |
 
 ## 캥카 동상 ground57개 전체
 

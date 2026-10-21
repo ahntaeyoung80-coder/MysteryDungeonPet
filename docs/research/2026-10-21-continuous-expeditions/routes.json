@@ -12,7 +12,10 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "test"
+      "usage": "test",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D000.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D001",
@@ -24,7 +27,10 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D001.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D002",
@@ -36,7 +42,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D002.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D003",
@@ -48,7 +57,10 @@
       "floors": 6,
       "resolvedFloors": 6,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D003.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D004",
@@ -60,7 +72,10 @@
       "floors": 9,
       "resolvedFloors": 9,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D004.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D005",
@@ -72,7 +87,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D005.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D006",
@@ -84,7 +102,10 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D006.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D007",
@@ -96,7 +117,10 @@
       "floors": 12,
       "resolvedFloors": 12,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D007.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D008",
@@ -108,7 +132,12 @@
       "floors": 9,
       "resolvedFloors": 9,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D008.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D009",
@@ -120,7 +149,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D009.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D010",
@@ -132,7 +166,12 @@
       "floors": 14,
       "resolvedFloors": 14,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D010.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D011",
@@ -144,7 +183,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D011.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D012",
@@ -156,7 +200,12 @@
       "floors": 11,
       "resolvedFloors": 11,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D012.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D013",
@@ -168,7 +217,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D013.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D014",
@@ -180,7 +234,12 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D014.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D015",
@@ -192,7 +251,12 @@
       "floors": 7,
       "resolvedFloors": 7,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D015.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D016",
@@ -204,7 +268,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D016.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-EXPEDITION-SIDEPATHS"
+      ]
     },
     {
       "id": "SEG-D017",
@@ -216,7 +285,10 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D017.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D018",
@@ -228,7 +300,10 @@
       "floors": 9,
       "resolvedFloors": 9,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D018.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D019",
@@ -240,7 +315,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D019.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D020",
@@ -252,7 +330,12 @@
       "floors": 15,
       "resolvedFloors": 15,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D020.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-DESERT-REVISIT"
+      ]
     },
     {
       "id": "SEG-D021",
@@ -264,7 +347,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D021.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-DESERT-REVISIT"
+      ]
     },
     {
       "id": "SEG-D022",
@@ -276,7 +364,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D022.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-DESERT-REVISIT"
+      ]
     },
     {
       "id": "SEG-D023",
@@ -288,7 +381,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D023.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-DESERT-REVISIT"
+      ]
     },
     {
       "id": "SEG-D024",
@@ -300,7 +398,12 @@
       "floors": 11,
       "resolvedFloors": 11,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D024.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-CRYSTAL-BLUE"
+      ]
     },
     {
       "id": "SEG-D025",
@@ -312,7 +415,12 @@
       "floors": 13,
       "resolvedFloors": 13,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D025.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-CRYSTAL-BLUE"
+      ]
     },
     {
       "id": "SEG-D026",
@@ -324,7 +432,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D026.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D027",
@@ -336,7 +447,12 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D027.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-FUTURE-ESCAPE"
+      ]
     },
     {
       "id": "SEG-D028",
@@ -348,7 +464,12 @@
       "floors": 15,
       "resolvedFloors": 15,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D028.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-FUTURE-ESCAPE"
+      ]
     },
     {
       "id": "SEG-D029",
@@ -360,7 +481,12 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D029.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-FUTURE-ESCAPE"
+      ]
     },
     {
       "id": "SEG-D030",
@@ -372,7 +498,12 @@
       "floors": 6,
       "resolvedFloors": 6,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D030.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-FUTURE-ESCAPE"
+      ]
     },
     {
       "id": "SEG-D031",
@@ -384,7 +515,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D031.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-FUTURE-ESCAPE"
+      ]
     },
     {
       "id": "SEG-D032",
@@ -396,7 +532,12 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D032.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-FUTURE-ESCAPE"
+      ]
     },
     {
       "id": "SEG-D033",
@@ -408,7 +549,12 @@
       "floors": 12,
       "resolvedFloors": 12,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D033.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-FUTURE-ESCAPE"
+      ]
     },
     {
       "id": "SEG-D034",
@@ -420,7 +566,12 @@
       "floors": 20,
       "resolvedFloors": 20,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D034.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-FUTURE-ESCAPE"
+      ]
     },
     {
       "id": "SEG-D035",
@@ -432,7 +583,12 @@
       "floors": 9,
       "resolvedFloors": 9,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D035.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D036",
@@ -444,7 +600,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D036.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D037",
@@ -456,7 +617,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D037.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D038",
@@ -468,7 +634,12 @@
       "floors": 15,
       "resolvedFloors": 15,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D038.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D039",
@@ -480,7 +651,12 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D039.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D040",
@@ -492,7 +668,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D040.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D041",
@@ -504,7 +685,12 @@
       "floors": 13,
       "resolvedFloors": 13,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D041.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D042",
@@ -516,7 +702,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D042.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D043",
@@ -528,7 +719,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D043.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-HIDDEN-TOWER"
+      ]
     },
     {
       "id": "SEG-D044",
@@ -540,7 +736,10 @@
       "floors": 13,
       "resolvedFloors": 13,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D044.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D045",
@@ -552,7 +751,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D045.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D046",
@@ -564,7 +766,10 @@
       "floors": 20,
       "resolvedFloors": 20,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D046.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D047",
@@ -576,7 +781,10 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D047.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D048",
@@ -588,7 +796,10 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D048.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D049",
@@ -600,7 +811,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D049.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D050",
@@ -612,7 +826,10 @@
       "floors": 20,
       "resolvedFloors": 20,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D050.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D051",
@@ -624,7 +841,10 @@
       "floors": 18,
       "resolvedFloors": 18,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D051.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D052",
@@ -636,7 +856,10 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D052.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D053",
@@ -648,7 +871,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D053.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D054",
@@ -660,7 +886,12 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D054.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-AEGIS-ICE"
+      ]
     },
     {
       "id": "SEG-D055",
@@ -672,7 +903,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D055.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-AEGIS-ICE"
+      ]
     },
     {
       "id": "SEG-D056",
@@ -684,7 +920,12 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D056.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-AEGIS-ROCK"
+      ]
     },
     {
       "id": "SEG-D057",
@@ -696,7 +937,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D057.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-AEGIS-ROCK"
+      ]
     },
     {
       "id": "SEG-D058",
@@ -708,7 +954,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D058.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-AEGIS-STEEL"
+      ]
     },
     {
       "id": "SEG-D059",
@@ -720,7 +971,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D059.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-AEGIS-STEEL"
+      ]
     },
     {
       "id": "SEG-D060",
@@ -732,7 +988,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D060.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-AEGIS-STEEL"
+      ]
     },
     {
       "id": "SEG-D061",
@@ -744,7 +1005,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D061.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-AEGIS-STEEL"
+      ]
     },
     {
       "id": "SEG-D062",
@@ -756,7 +1022,12 @@
       "floors": 19,
       "resolvedFloors": 19,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D062.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-DROWZEE-GUILD"
+      ]
     },
     {
       "id": "SEG-D063",
@@ -768,7 +1039,12 @@
       "floors": 17,
       "resolvedFloors": 17,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D063.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-DROWZEE-GUILD"
+      ]
     },
     {
       "id": "SEG-D064",
@@ -780,7 +1056,10 @@
       "floors": 15,
       "resolvedFloors": 15,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D064.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D065",
@@ -792,7 +1071,10 @@
       "floors": 9,
       "resolvedFloors": 9,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D065.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D066",
@@ -804,7 +1086,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D066.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D067",
@@ -816,7 +1101,10 @@
       "floors": 15,
       "resolvedFloors": 15,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D067.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D068",
@@ -828,7 +1116,10 @@
       "floors": 14,
       "resolvedFloors": 14,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D068.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D069",
@@ -840,7 +1131,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D069.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D070",
@@ -852,7 +1146,10 @@
       "floors": 30,
       "resolvedFloors": 30,
       "fixedFloors": 2,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D070.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D071",
@@ -864,7 +1161,10 @@
       "floors": 1,
       "resolvedFloors": 0,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D071.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D072",
@@ -876,7 +1176,10 @@
       "floors": 19,
       "resolvedFloors": 19,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D072.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D073",
@@ -888,7 +1191,10 @@
       "floors": 49,
       "resolvedFloors": 49,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D073.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D074",
@@ -900,7 +1206,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D074.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D075",
@@ -912,7 +1221,10 @@
       "floors": 9,
       "resolvedFloors": 9,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D075.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D076",
@@ -924,7 +1236,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D076.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D077",
@@ -936,7 +1251,10 @@
       "floors": 19,
       "resolvedFloors": 19,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D077.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D078",
@@ -948,7 +1266,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D078.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D079",
@@ -960,7 +1281,10 @@
       "floors": 19,
       "resolvedFloors": 19,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D079.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D080",
@@ -972,7 +1296,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D080.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D081",
@@ -984,7 +1311,10 @@
       "floors": 29,
       "resolvedFloors": 29,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D081.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D082",
@@ -996,7 +1326,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D082.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D083",
@@ -1008,7 +1341,10 @@
       "floors": 49,
       "resolvedFloors": 49,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D083.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D084",
@@ -1020,7 +1356,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D084.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D085",
@@ -1032,7 +1371,10 @@
       "floors": 29,
       "resolvedFloors": 29,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D085.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D086",
@@ -1044,7 +1386,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D086.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D087",
@@ -1056,7 +1401,10 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D087.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D088",
@@ -1068,7 +1416,10 @@
       "floors": 13,
       "resolvedFloors": 13,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D088.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D089",
@@ -1080,7 +1431,10 @@
       "floors": 6,
       "resolvedFloors": 6,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D089.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D090",
@@ -1092,7 +1446,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D090.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D091",
@@ -1104,7 +1461,10 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D091.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D092",
@@ -1116,7 +1476,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D092.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D093",
@@ -1128,7 +1491,10 @@
       "floors": 25,
       "resolvedFloors": 25,
       "fixedFloors": 2,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D093.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D094",
@@ -1140,7 +1506,10 @@
       "floors": 20,
       "resolvedFloors": 20,
       "fixedFloors": 2,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D094.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D095",
@@ -1152,7 +1521,10 @@
       "floors": 20,
       "resolvedFloors": 20,
       "fixedFloors": 2,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D095.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D096",
@@ -1164,7 +1536,10 @@
       "floors": 18,
       "resolvedFloors": 18,
       "fixedFloors": 2,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D096.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D097",
@@ -1176,7 +1551,10 @@
       "floors": 18,
       "resolvedFloors": 18,
       "fixedFloors": 2,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D097.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D098",
@@ -1188,7 +1566,10 @@
       "floors": 25,
       "resolvedFloors": 25,
       "fixedFloors": 2,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D098.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D099",
@@ -1200,7 +1581,10 @@
       "floors": 75,
       "resolvedFloors": 75,
       "fixedFloors": 11,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D099.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D100",
@@ -1212,7 +1596,10 @@
       "floors": 40,
       "resolvedFloors": 40,
       "fixedFloors": 5,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D100.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D101",
@@ -1224,7 +1611,10 @@
       "floors": 40,
       "resolvedFloors": 40,
       "fixedFloors": 9,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D101.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D102",
@@ -1236,7 +1626,10 @@
       "floors": 99,
       "resolvedFloors": 99,
       "fixedFloors": 4,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D102.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D103",
@@ -1248,7 +1641,10 @@
       "floors": 50,
       "resolvedFloors": 50,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D103.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D104",
@@ -1260,7 +1656,10 @@
       "floors": 99,
       "resolvedFloors": 99,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D104.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D105",
@@ -1272,7 +1671,10 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dummy_unresolved"
+      "usage": "dummy_unresolved",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D105.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D106",
@@ -1284,7 +1686,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dummy_unresolved"
+      "usage": "dummy_unresolved",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D106.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D107",
@@ -1296,7 +1701,10 @@
       "floors": 15,
       "resolvedFloors": 15,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D107.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D108",
@@ -1308,7 +1716,10 @@
       "floors": 20,
       "resolvedFloors": 20,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D108.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D109",
@@ -1320,7 +1731,10 @@
       "floors": 25,
       "resolvedFloors": 25,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D109.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D110",
@@ -1332,7 +1746,10 @@
       "floors": 30,
       "resolvedFloors": 30,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D110.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D111",
@@ -1344,7 +1761,12 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D111.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D112",
@@ -1356,7 +1778,12 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D112.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D113",
@@ -1368,7 +1795,12 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D113.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D114",
@@ -1380,7 +1812,12 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D114.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D115",
@@ -1392,7 +1829,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D115.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D116",
@@ -1404,7 +1846,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D116.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D117",
@@ -1416,7 +1863,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D117.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D118",
@@ -1428,7 +1880,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D118.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D119",
@@ -1440,7 +1897,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D119.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D120",
@@ -1452,7 +1914,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D120.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D121",
@@ -1464,7 +1931,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D121.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D122",
@@ -1476,7 +1948,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D122.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SKY-PEAK"
+      ]
     },
     {
       "id": "SEG-D123",
@@ -1488,7 +1965,12 @@
       "floors": 7,
       "resolvedFloors": 7,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D123.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE1-STAR"
+      ]
     },
     {
       "id": "SEG-D124",
@@ -1500,7 +1982,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D124.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE1-STAR"
+      ]
     },
     {
       "id": "SEG-D125",
@@ -1512,7 +1999,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D125.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE1-STAR"
+      ]
     },
     {
       "id": "SEG-D126",
@@ -1524,7 +2016,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D126.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE1-STAR"
+      ]
     },
     {
       "id": "SEG-D127",
@@ -1536,7 +2033,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D127.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE1-STAR"
+      ]
     },
     {
       "id": "SEG-D128",
@@ -1548,7 +2050,12 @@
       "floors": 7,
       "resolvedFloors": 7,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D128.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE2-DAYS"
+      ]
     },
     {
       "id": "SEG-D129",
@@ -1560,7 +2067,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D129.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE2-DAYS"
+      ]
     },
     {
       "id": "SEG-D130",
@@ -1572,7 +2084,12 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D130.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE2-DAYS"
+      ]
     },
     {
       "id": "SEG-D131",
@@ -1584,7 +2101,12 @@
       "floors": 6,
       "resolvedFloors": 6,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D131.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE2-DAYS"
+      ]
     },
     {
       "id": "SEG-D132",
@@ -1596,7 +2118,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D132.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE2-DAYS"
+      ]
     },
     {
       "id": "SEG-D133",
@@ -1608,7 +2135,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D133.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D134",
@@ -1620,7 +2152,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D134.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D135",
@@ -1632,7 +2169,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D135.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D136",
@@ -1644,7 +2186,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D136.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D137",
@@ -1656,7 +2203,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D137.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D138",
@@ -1668,7 +2220,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D138.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D139",
@@ -1680,7 +2237,12 @@
       "floors": 7,
       "resolvedFloors": 7,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D139.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D140",
@@ -1692,7 +2254,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D140.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D141",
@@ -1704,7 +2271,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D141.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D142",
@@ -1716,7 +2288,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D142.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D143",
@@ -1728,7 +2305,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D143.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D144",
@@ -1740,7 +2322,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D144.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D145",
@@ -1752,7 +2339,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D145.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D146",
@@ -1764,7 +2356,12 @@
       "floors": 9,
       "resolvedFloors": 9,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D146.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D147",
@@ -1776,7 +2373,12 @@
       "floors": 8,
       "resolvedFloors": 8,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D147.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D148",
@@ -1788,7 +2390,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D148.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE5-FUTURE"
+      ]
     },
     {
       "id": "SEG-D149",
@@ -1800,7 +2407,12 @@
       "floors": 10,
       "resolvedFloors": 10,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D149.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D150",
@@ -1812,7 +2424,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D150.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D151",
@@ -1824,7 +2441,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D151.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D152",
@@ -1836,7 +2458,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D152.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D153",
@@ -1848,7 +2475,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D153.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D154",
@@ -1860,7 +2492,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D154.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D155",
@@ -1872,7 +2509,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D155.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D156",
@@ -1884,7 +2526,12 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D156.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D157",
@@ -1896,7 +2543,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D157.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE4-HIDDEN-WALL"
+      ]
     },
     {
       "id": "SEG-D158",
@@ -1908,7 +2560,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D158.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE3-SPRING"
+      ]
     },
     {
       "id": "SEG-D159",
@@ -1920,7 +2577,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D159.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE3-SPRING"
+      ]
     },
     {
       "id": "SEG-D160",
@@ -1932,7 +2594,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D160.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE3-SPRING"
+      ]
     },
     {
       "id": "SEG-D161",
@@ -1944,7 +2611,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D161.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE3-SPRING"
+      ]
     },
     {
       "id": "SEG-D162",
@@ -1956,7 +2628,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D162.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE3-SPRING"
+      ]
     },
     {
       "id": "SEG-D163",
@@ -1968,7 +2645,12 @@
       "floors": 4,
       "resolvedFloors": 4,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D163.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE3-SPRING"
+      ]
     },
     {
       "id": "SEG-D164",
@@ -1980,7 +2662,12 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D164.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": [
+        "PRG-SE3-SPRING"
+      ]
     },
     {
       "id": "SEG-D165",
@@ -1992,7 +2679,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "demo"
+      "usage": "demo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D165.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D166",
@@ -2004,7 +2694,10 @@
       "floors": 6,
       "resolvedFloors": 6,
       "fixedFloors": 0,
-      "usage": "demo"
+      "usage": "demo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D166.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D167",
@@ -2016,7 +2709,10 @@
       "floors": 7,
       "resolvedFloors": 7,
       "fixedFloors": 0,
-      "usage": "demo"
+      "usage": "demo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D167.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D168",
@@ -2028,7 +2724,10 @@
       "floors": 6,
       "resolvedFloors": 6,
       "fixedFloors": 0,
-      "usage": "demo"
+      "usage": "demo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D168.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D169",
@@ -2040,7 +2739,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "demo"
+      "usage": "demo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D169.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D170",
@@ -2052,7 +2754,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "demo"
+      "usage": "demo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D170.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D171",
@@ -2064,7 +2769,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dummy_unresolved"
+      "usage": "dummy_unresolved",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D171.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D172",
@@ -2076,7 +2784,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dummy_unresolved"
+      "usage": "dummy_unresolved",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D172.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D173",
@@ -2088,7 +2799,10 @@
       "floors": 5,
       "resolvedFloors": 0,
       "fixedFloors": 0,
-      "usage": "dummy_unresolved"
+      "usage": "dummy_unresolved",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D173.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D174",
@@ -2100,7 +2814,10 @@
       "floors": 16,
       "resolvedFloors": 16,
       "fixedFloors": 0,
-      "usage": "dungeon"
+      "usage": "dungeon",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D174.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D175",
@@ -2112,7 +2829,10 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "ground_alias_not_playable"
+      "usage": "ground_alias_not_playable",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D175.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D176",
@@ -2124,7 +2844,10 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "ground_alias_not_playable"
+      "usage": "ground_alias_not_playable",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D176.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D177",
@@ -2136,7 +2859,10 @@
       "floors": 3,
       "resolvedFloors": 3,
       "fixedFloors": 0,
-      "usage": "ground_alias_not_playable"
+      "usage": "ground_alias_not_playable",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D177.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D178",
@@ -2148,7 +2874,10 @@
       "floors": 6,
       "resolvedFloors": 6,
       "fixedFloors": 0,
-      "usage": "ground_alias_not_playable"
+      "usage": "ground_alias_not_playable",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D178.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D179",
@@ -2160,7 +2889,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 0,
-      "usage": "rescue_system"
+      "usage": "rescue_system",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D179.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D180",
@@ -2172,7 +2904,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D180.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D181",
@@ -2184,7 +2919,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D181.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D182",
@@ -2196,7 +2934,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D182.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D183",
@@ -2208,7 +2949,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D183.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D184",
@@ -2220,7 +2964,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D184.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D185",
@@ -2232,7 +2979,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D185.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D186",
@@ -2244,7 +2994,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D186.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D187",
@@ -2256,7 +3009,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D187.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D188",
@@ -2268,7 +3024,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D188.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D189",
@@ -2280,7 +3039,10 @@
       "floors": 5,
       "resolvedFloors": 5,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D189.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D190",
@@ -2292,7 +3054,10 @@
       "floors": 1,
       "resolvedFloors": 1,
       "fixedFloors": 1,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D190.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     },
     {
       "id": "SEG-D191",
@@ -2304,7 +3069,10 @@
       "floors": 48,
       "resolvedFloors": 48,
       "fixedFloors": 0,
-      "usage": "dojo"
+      "usage": "dojo",
+      "gameplayDoc": "../2026-10-21-full-map-audit/maps/SEG-D191.md",
+      "gameplayData": "../2026-10-21-full-map-audit/map-gameplay.json",
+      "progressionRuleIds": []
     }
   ],
   "families": [
@@ -2321,6 +3089,10 @@
       "definitionDungeonIds": [
         1,
         2
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D001.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D002.md"
       ]
     },
     {
@@ -2334,6 +3106,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Drenched_Bluff",
       "definitionDungeonIds": [
         3
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D003.md"
       ]
     },
     {
@@ -2349,6 +3124,10 @@
       "definitionDungeonIds": [
         4,
         5
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D004.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D005.md"
       ]
     },
     {
@@ -2362,6 +3141,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Waterfall_Cave",
       "definitionDungeonIds": [
         6
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D006.md"
       ]
     },
     {
@@ -2375,6 +3157,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Apple_Woods",
       "definitionDungeonIds": [
         7
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D007.md"
       ]
     },
     {
@@ -2388,6 +3173,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Craggy_Coast",
       "definitionDungeonIds": [
         8
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D008.md"
       ]
     },
     {
@@ -2401,6 +3189,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Side_Path",
       "definitionDungeonIds": [
         9
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D009.md"
       ]
     },
     {
@@ -2414,6 +3205,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Horn",
       "definitionDungeonIds": [
         10
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D010.md"
       ]
     },
     {
@@ -2427,6 +3221,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Rock_Path",
       "definitionDungeonIds": [
         11
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D011.md"
       ]
     },
     {
@@ -2440,6 +3237,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Foggy_Forest",
       "definitionDungeonIds": [
         12
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D012.md"
       ]
     },
     {
@@ -2453,6 +3253,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Forest_Path",
       "definitionDungeonIds": [
         13
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D013.md"
       ]
     },
     {
@@ -2470,6 +3273,11 @@
         14,
         15,
         16
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D014.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D015.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D016.md"
       ]
     },
     {
@@ -2487,6 +3295,11 @@
         17,
         18,
         19
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D017.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D018.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D019.md"
       ]
     },
     {
@@ -2500,6 +3313,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Northern_Desert",
       "definitionDungeonIds": [
         20
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D020.md"
       ]
     },
     {
@@ -2517,6 +3333,11 @@
         21,
         22,
         23
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D021.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D022.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D023.md"
       ]
     },
     {
@@ -2530,6 +3351,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Cave",
       "definitionDungeonIds": [
         24
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D024.md"
       ]
     },
     {
@@ -2545,6 +3369,10 @@
       "definitionDungeonIds": [
         25,
         26
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D025.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D026.md"
       ]
     },
     {
@@ -2558,6 +3386,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Chasm_Cave",
       "definitionDungeonIds": [
         27
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D027.md"
       ]
     },
     {
@@ -2571,6 +3402,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Hill",
       "definitionDungeonIds": [
         28
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D028.md"
       ]
     },
     {
@@ -2588,6 +3422,11 @@
         29,
         30,
         31
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D029.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D030.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D031.md"
       ]
     },
     {
@@ -2601,6 +3440,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest",
       "definitionDungeonIds": [
         32
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D032.md"
       ]
     },
     {
@@ -2614,6 +3456,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Deep_Dusk_Forest",
       "definitionDungeonIds": [
         33
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D033.md"
       ]
     },
     {
@@ -2627,6 +3472,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treeshroud_Forest",
       "definitionDungeonIds": [
         34
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D034.md"
       ]
     },
     {
@@ -2644,6 +3492,11 @@
         35,
         36,
         37
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D035.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D036.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D037.md"
       ]
     },
     {
@@ -2661,6 +3514,11 @@
         38,
         39,
         40
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D038.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D039.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D040.md"
       ]
     },
     {
@@ -2678,6 +3536,11 @@
         41,
         42,
         43
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D041.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D042.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D043.md"
       ]
     },
     {
@@ -2693,6 +3556,10 @@
       "definitionDungeonIds": [
         44,
         45
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D044.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D045.md"
       ]
     },
     {
@@ -2706,6 +3573,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Midnight_Forest",
       "definitionDungeonIds": [
         98
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D098.md"
       ]
     },
     {
@@ -2719,6 +3589,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lake_Afar",
       "definitionDungeonIds": [
         93
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D093.md"
       ]
     },
     {
@@ -2732,6 +3605,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Mistral",
       "definitionDungeonIds": [
         95
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D095.md"
       ]
     },
     {
@@ -2745,6 +3621,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Shimmer_Hill",
       "definitionDungeonIds": [
         96
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D096.md"
       ]
     },
     {
@@ -2760,6 +3639,10 @@
       "definitionDungeonIds": [
         73,
         74
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D073.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D074.md"
       ]
     },
     {
@@ -2773,6 +3656,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Surrounded_Sea",
       "definitionDungeonIds": [
         50
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D050.md"
       ]
     },
     {
@@ -2790,6 +3676,11 @@
         51,
         52,
         53
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D051.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D052.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D053.md"
       ]
     },
     {
@@ -2805,6 +3696,10 @@
       "definitionDungeonIds": [
         70,
         71
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D070.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D071.md"
       ]
     },
     {
@@ -2818,6 +3713,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lost_Wilderness",
       "definitionDungeonIds": [
         97
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D097.md"
       ]
     },
     {
@@ -2833,6 +3731,10 @@
       "definitionDungeonIds": [
         85,
         86
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D085.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D086.md"
       ]
     },
     {
@@ -2846,6 +3748,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Happy_Outlook",
       "definitionDungeonIds": [
         94
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D094.md"
       ]
     },
     {
@@ -2859,6 +3764,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Serenity_River",
       "definitionDungeonIds": [
         87
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D087.md"
       ]
     },
     {
@@ -2872,6 +3780,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Landslide_Cave",
       "definitionDungeonIds": [
         88
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D088.md"
       ]
     },
     {
@@ -2885,6 +3796,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Blizzard_Island",
       "definitionDungeonIds": [
         46
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D046.md"
       ]
     },
     {
@@ -2900,6 +3814,10 @@
       "definitionDungeonIds": [
         75,
         76
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D075.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D076.md"
       ]
     },
     {
@@ -2917,6 +3835,11 @@
         47,
         48,
         49
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D047.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D048.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D049.md"
       ]
     },
     {
@@ -2932,6 +3855,10 @@
       "definitionDungeonIds": [
         77,
         78
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D077.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D078.md"
       ]
     },
     {
@@ -2947,6 +3874,10 @@
       "definitionDungeonIds": [
         79,
         80
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D079.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D080.md"
       ]
     },
     {
@@ -2962,6 +3893,10 @@
       "definitionDungeonIds": [
         81,
         82
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D081.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D082.md"
       ]
     },
     {
@@ -2975,6 +3910,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Lush_Prairie",
       "definitionDungeonIds": [
         89
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D089.md"
       ]
     },
     {
@@ -2988,6 +3926,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Tiny_Meadow",
       "definitionDungeonIds": [
         90
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D090.md"
       ]
     },
     {
@@ -3001,6 +3942,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Labyrinth_Cave",
       "definitionDungeonIds": [
         91
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D091.md"
       ]
     },
     {
@@ -3014,6 +3958,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oran_Forest",
       "definitionDungeonIds": [
         92
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D092.md"
       ]
     },
     {
@@ -3029,6 +3976,10 @@
       "definitionDungeonIds": [
         83,
         84
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D083.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D084.md"
       ]
     },
     {
@@ -3056,6 +4007,16 @@
         59,
         60,
         61
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D054.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D055.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D056.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D057.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D058.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D059.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D060.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D061.md"
       ]
     },
     {
@@ -3073,6 +4034,11 @@
         67,
         68,
         69
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D067.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D068.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D069.md"
       ]
     },
     {
@@ -3086,6 +4052,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Marine_Resort",
       "definitionDungeonIds": [
         72
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D072.md"
       ]
     },
     {
@@ -3099,6 +4068,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Travail",
       "definitionDungeonIds": [
         62
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D062.md"
       ]
     },
     {
@@ -3112,6 +4084,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:The_Nightmare",
       "definitionDungeonIds": [
         63
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D063.md"
       ]
     },
     {
@@ -3129,6 +4104,11 @@
         64,
         65,
         66
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D064.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D065.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D066.md"
       ]
     },
     {
@@ -3142,6 +4122,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_North",
       "definitionDungeonIds": [
         99
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D099.md"
       ]
     },
     {
@@ -3155,6 +4138,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_West",
       "definitionDungeonIds": [
         101
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D101.md"
       ]
     },
     {
@@ -3168,6 +4154,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_East",
       "definitionDungeonIds": [
         100
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D100.md"
       ]
     },
     {
@@ -3181,6 +4170,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_South",
       "definitionDungeonIds": [
         102
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D102.md"
       ]
     },
     {
@@ -3194,6 +4186,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Zero_Isle_Center",
       "definitionDungeonIds": [
         103
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D103.md"
       ]
     },
     {
@@ -3207,6 +4202,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Destiny_Tower",
       "definitionDungeonIds": [
         104
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D104.md"
       ]
     },
     {
@@ -3220,6 +4218,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Oblivion_Forest",
       "definitionDungeonIds": [
         107
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D107.md"
       ]
     },
     {
@@ -3233,6 +4234,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Treacherous_Waters",
       "definitionDungeonIds": [
         108
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D108.md"
       ]
     },
     {
@@ -3246,6 +4250,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southeastern_Islands",
       "definitionDungeonIds": [
         109
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D109.md"
       ]
     },
     {
@@ -3259,6 +4266,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Inferno_Cave",
       "definitionDungeonIds": [
         110
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D110.md"
       ]
     },
     {
@@ -3294,6 +4304,20 @@
         120,
         121,
         122
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D111.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D112.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D113.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D114.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D115.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D116.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D117.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D118.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D119.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D120.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D121.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D122.md"
       ]
     },
     {
@@ -3307,6 +4331,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave",
       "definitionDungeonIds": [
         174
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D174.md"
       ]
     },
     {
@@ -3328,6 +4355,13 @@
         125,
         126,
         127
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D123.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D124.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D125.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D126.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D127.md"
       ]
     },
     {
@@ -3341,6 +4375,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Murky_Forest",
       "definitionDungeonIds": [
         128
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D128.md"
       ]
     },
     {
@@ -3354,6 +4391,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Eastern_Cave",
       "definitionDungeonIds": [
         129
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D129.md"
       ]
     },
     {
@@ -3371,6 +4411,11 @@
         130,
         131,
         132
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D130.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D131.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D132.md"
       ]
     },
     {
@@ -3388,6 +4433,11 @@
         133,
         134,
         135
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D133.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D134.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D135.md"
       ]
     },
     {
@@ -3401,6 +4451,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Wasteland",
       "definitionDungeonIds": [
         136
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D136.md"
       ]
     },
     {
@@ -3420,6 +4473,10 @@
         176,
         177,
         178
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D137.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D138.md"
       ]
     },
     {
@@ -3435,6 +4492,10 @@
       "definitionDungeonIds": [
         139,
         140
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D139.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D140.md"
       ]
     },
     {
@@ -3448,6 +4509,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Cliffs",
       "definitionDungeonIds": [
         141
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D141.md"
       ]
     },
     {
@@ -3465,6 +4529,11 @@
         142,
         143,
         144
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D142.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D143.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D144.md"
       ]
     },
     {
@@ -3478,6 +4547,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Icicle_Forest",
       "definitionDungeonIds": [
         145
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D145.md"
       ]
     },
     {
@@ -3495,6 +4567,11 @@
         146,
         147,
         148
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D146.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D147.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D148.md"
       ]
     },
     {
@@ -3508,6 +4585,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Southern_Jungle",
       "definitionDungeonIds": [
         149
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D149.md"
       ]
     },
     {
@@ -3525,6 +4605,11 @@
         150,
         151,
         152
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D150.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D151.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D152.md"
       ]
     },
     {
@@ -3538,6 +4623,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Right_Cave_Path",
       "definitionDungeonIds": [
         153
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D153.md"
       ]
     },
     {
@@ -3551,6 +4639,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Left_Cave_Path",
       "definitionDungeonIds": [
         154
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D154.md"
       ]
     },
     {
@@ -3568,6 +4659,11 @@
         155,
         156,
         157
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D155.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D156.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D157.md"
       ]
     },
     {
@@ -3593,6 +4689,15 @@
         162,
         163,
         164
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D158.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D159.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D160.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D161.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D162.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D163.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D164.md"
       ]
     },
     {
@@ -3606,6 +4711,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Little_Plains",
       "definitionDungeonIds": [
         165
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D165.md"
       ]
     },
     {
@@ -3619,6 +4727,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Mt._Clear",
       "definitionDungeonIds": [
         166
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D166.md"
       ]
     },
     {
@@ -3632,6 +4743,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Challenge_River",
       "definitionDungeonIds": [
         167
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D167.md"
       ]
     },
     {
@@ -3645,6 +4759,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Trial_Forest",
       "definitionDungeonIds": [
         168
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D168.md"
       ]
     },
     {
@@ -3658,6 +4775,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Guiding_Sea",
       "definitionDungeonIds": [
         169
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D169.md"
       ]
     },
     {
@@ -3671,6 +4791,9 @@
       "webUrl": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Hidden_Shopkeeper_Village",
       "definitionDungeonIds": [
         170
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D170.md"
       ]
     },
     {
@@ -3706,6 +4829,20 @@
         189,
         190,
         191
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D180.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D181.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D182.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D183.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D184.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D185.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D186.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D187.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D188.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D189.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D190.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D191.md"
       ]
     },
     {
@@ -3719,6 +4856,9 @@
       "webUrl": null,
       "definitionDungeonIds": [
         0
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D000.md"
       ]
     },
     {
@@ -3732,6 +4872,9 @@
       "webUrl": null,
       "definitionDungeonIds": [
         179
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D179.md"
       ]
     },
     {
@@ -3745,6 +4888,9 @@
       "webUrl": null,
       "definitionDungeonIds": [
         105
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D105.md"
       ]
     },
     {
@@ -3758,6 +4904,9 @@
       "webUrl": null,
       "definitionDungeonIds": [
         106
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D106.md"
       ]
     },
     {
@@ -3771,6 +4920,9 @@
       "webUrl": null,
       "definitionDungeonIds": [
         171
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D171.md"
       ]
     },
     {
@@ -3786,6 +4938,10 @@
       "definitionDungeonIds": [
         172,
         173
+      ],
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D172.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D173.md"
       ]
     }
   ],
@@ -4375,7 +5531,11 @@
         "LNK-D001-D002"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D001.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D002.md"
+      ]
     },
     {
       "id": "RUN-D004",
@@ -4390,7 +5550,11 @@
         "LNK-D004-D005"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D004.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D005.md"
+      ]
     },
     {
       "id": "RUN-D014",
@@ -4407,7 +5571,12 @@
         "LNK-D015-D016"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D014.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D015.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D016.md"
+      ]
     },
     {
       "id": "RUN-D017",
@@ -4424,7 +5593,12 @@
         "LNK-D018-D019"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D017.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D018.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D019.md"
+      ]
     },
     {
       "id": "RUN-D021",
@@ -4441,7 +5615,12 @@
         "LNK-D022-D023"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D021.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D022.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D023.md"
+      ]
     },
     {
       "id": "RUN-D024",
@@ -4458,7 +5637,12 @@
         "LNK-D025-D026"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D024.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D025.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D026.md"
+      ]
     },
     {
       "id": "RUN-D029",
@@ -4475,7 +5659,12 @@
         "LNK-D030-D031"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D029.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D030.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D031.md"
+      ]
     },
     {
       "id": "RUN-D035",
@@ -4492,7 +5681,12 @@
         "LNK-D036-D037"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": "GND-L055-D25P11A"
+      "entryGroundId": "GND-L055-D25P11A",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D035.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D036.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D037.md"
+      ]
     },
     {
       "id": "RUN-D038",
@@ -4509,7 +5703,12 @@
         "LNK-D039-D040"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D038.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D039.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D040.md"
+      ]
     },
     {
       "id": "RUN-D041",
@@ -4526,7 +5725,12 @@
         "LNK-D042-D043"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D041.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D042.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D043.md"
+      ]
     },
     {
       "id": "RUN-D044",
@@ -4541,7 +5745,11 @@
         "LNK-D044-D045"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": "GND-L074-D31P11A"
+      "entryGroundId": "GND-L074-D31P11A",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D044.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D045.md"
+      ]
     },
     {
       "id": "RUN-D073",
@@ -4556,7 +5764,11 @@
         "LNK-D073-D074"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D073.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D074.md"
+      ]
     },
     {
       "id": "RUN-D051",
@@ -4573,7 +5785,12 @@
         "LNK-D052-D053"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D051.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D052.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D053.md"
+      ]
     },
     {
       "id": "RUN-D085",
@@ -4588,7 +5805,11 @@
         "LNK-D085-D086"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D085.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D086.md"
+      ]
     },
     {
       "id": "RUN-D075",
@@ -4603,7 +5824,11 @@
         "LNK-D075-D076"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D075.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D076.md"
+      ]
     },
     {
       "id": "RUN-D047",
@@ -4620,7 +5845,12 @@
         "LNK-D048-D049"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D047.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D048.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D049.md"
+      ]
     },
     {
       "id": "RUN-D077",
@@ -4635,7 +5865,11 @@
         "LNK-D077-D078"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D077.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D078.md"
+      ]
     },
     {
       "id": "RUN-D079",
@@ -4650,7 +5884,11 @@
         "LNK-D079-D080"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D079.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D080.md"
+      ]
     },
     {
       "id": "RUN-D081",
@@ -4665,7 +5903,11 @@
         "LNK-D081-D082"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D081.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D082.md"
+      ]
     },
     {
       "id": "RUN-D083",
@@ -4680,7 +5922,11 @@
         "LNK-D083-D084"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D083.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D084.md"
+      ]
     },
     {
       "id": "RUN-D054",
@@ -4707,7 +5953,17 @@
         "LNK-D060-D061"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D054.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D055.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D056.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D057.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D058.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D059.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D060.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D061.md"
+      ]
     },
     {
       "id": "RUN-D067",
@@ -4724,7 +5980,12 @@
         "LNK-D068-D069"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D067.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D068.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D069.md"
+      ]
     },
     {
       "id": "RUN-D064",
@@ -4741,7 +6002,12 @@
         "LNK-D065-D066"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": "GND-L097-D38P12A"
+      "entryGroundId": "GND-L097-D38P12A",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D064.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D065.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D066.md"
+      ]
     },
     {
       "id": "RUN-D111",
@@ -4776,7 +6042,21 @@
         "LNK-D120-D122"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": "GND-L156-D73P11A"
+      "entryGroundId": "GND-L156-D73P11A",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D111.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D112.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D113.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D114.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D115.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D121.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D116.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D117.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D118.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D119.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D120.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D122.md"
+      ]
     },
     {
       "id": "RUN-D123",
@@ -4797,7 +6077,14 @@
         "LNK-D126-D127"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D123.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D124.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D125.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D126.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D127.md"
+      ]
     },
     {
       "id": "RUN-D130",
@@ -4814,7 +6101,12 @@
         "LNK-D131-D132"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D130.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D131.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D132.md"
+      ]
     },
     {
       "id": "RUN-D133",
@@ -4831,7 +6123,12 @@
         "LNK-D134-D135"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": "GND-L113-D46P11A"
+      "entryGroundId": "GND-L113-D46P11A",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D133.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D134.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D135.md"
+      ]
     },
     {
       "id": "RUN-D137",
@@ -4846,7 +6143,11 @@
         "LNK-D137-D138"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D137.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D138.md"
+      ]
     },
     {
       "id": "RUN-D139",
@@ -4861,7 +6162,11 @@
         "LNK-D139-D140"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D139.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D140.md"
+      ]
     },
     {
       "id": "RUN-D142",
@@ -4878,7 +6183,12 @@
         "LNK-D143-D144"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D142.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D143.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D144.md"
+      ]
     },
     {
       "id": "RUN-D146",
@@ -4895,7 +6205,12 @@
         "LNK-D147-D148"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D146.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D147.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D148.md"
+      ]
     },
     {
       "id": "RUN-D150",
@@ -4912,7 +6227,12 @@
         "LNK-D151-D152"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D150.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D151.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D152.md"
+      ]
     },
     {
       "id": "RUN-D155",
@@ -4929,7 +6249,12 @@
         "LNK-D156-D157"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D155.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D156.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D157.md"
+      ]
     },
     {
       "id": "RUN-D158",
@@ -4954,7 +6279,16 @@
         "LNK-D163-D164"
       ],
       "note": "구간 완료는 원정 완료와 다름. 보스 고정층도 별도 SEG ID를 유지한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D158.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D159.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D160.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D161.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D162.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D163.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D164.md"
+      ]
     },
     {
       "id": "RUN-D032",
@@ -4969,7 +6303,11 @@
         "LNK-D032-D033"
       ],
       "note": "서로 다른 MAPPA 그룹이지만 원정은 연속한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D032.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D033.md"
+      ]
     },
     {
       "id": "RUN-D046",
@@ -4988,7 +6326,13 @@
         "LNK-D048-D049"
       ],
       "note": "서로 다른 MAPPA 그룹이지만 원정은 연속한다.",
-      "entryGroundId": null
+      "entryGroundId": null,
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D046.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D047.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D048.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D049.md"
+      ]
     }
   ],
   "storyArcs": [
@@ -5011,7 +6355,15 @@
         "LNK-D015-D016"
       ],
       "continuity": "story_forward_without_forced_guild_return",
-      "note": "야영·스토리 대기 포함. Side Path9/Rock Path11/Forest Path13은 진행 경로가 아닌 왕복 분기."
+      "note": "야영·스토리 대기 포함. Side Path9/Rock Path11/Forest Path13은 진행 경로가 아닌 왕복 분기.",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D008.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D010.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D012.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D014.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D015.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D016.md"
+      ]
     },
     {
       "id": "ARC-M14",
@@ -5036,7 +6388,17 @@
         "LNK-D033-D034"
       ],
       "continuity": "story_forward_without_forced_guild_return",
-      "note": "33→34 사이 시간의 통로·해변·Sharpedo Bluff 은신/취침을 거친다. 길드 강제 귀환 없이 이어지지만 직접 맞닿은 던전은 아니다."
+      "note": "33→34 사이 시간의 통로·해변·Sharpedo Bluff 은신/취침을 거친다. 길드 강제 귀환 없이 이어지지만 직접 맞닿은 던전은 아니다.",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D027.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D028.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D029.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D030.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D031.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D032.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D033.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D034.md"
+      ]
     },
     {
       "id": "ARC-M18",
@@ -5063,7 +6425,18 @@
         "LNK-D042-D043"
       ],
       "continuity": "story_forward_without_forced_guild_return",
-      "note": "Lapras·Old Ruins·Rainbow Stoneship 포함. 길드 장면은 동료들의 시점 전환이며 주인공의 귀환이 아님. Hidden Land 입구 선택 귀환과 실패 복귀는 별도."
+      "note": "Lapras·Old Ruins·Rainbow Stoneship 포함. 길드 장면은 동료들의 시점 전환이며 주인공의 귀환이 아님. Hidden Land 입구 선택 귀환과 실패 복귀는 별도.",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D035.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D036.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D037.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D038.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D039.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D040.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D041.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D042.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D043.md"
+      ]
     },
     {
       "id": "ARC-SE04",
@@ -5086,7 +6459,16 @@
         "LNK-D156-D157"
       ],
       "continuity": "story_forward_without_forced_guild_return",
-      "note": "153/154는 D56P11A로 돌아오는 분기. 숨은 통로 발견 후155로 전진."
+      "note": "153/154는 D56P11A로 돌아오는 분기. 숨은 통로 발견 후155로 전진.",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D149.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D150.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D151.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D152.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D155.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D156.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D157.md"
+      ]
     },
     {
       "id": "ARC-SE05",
@@ -5127,7 +6509,25 @@
         "LNK-D147-D148"
       ],
       "continuity": "story_forward_without_forced_guild_return",
-      "note": "Porygon 이동·막간/휴식 포함. 본편과 별개 시간대·배우·저장을 사용하며 본편41/42와 SE137/138을 섞지 않는다."
+      "note": "Porygon 이동·막간/휴식 포함. 본편과 별개 시간대·배우·저장을 사용하며 본편41/42와 SE137/138을 섞지 않는다.",
+      "gameplayDocs": [
+        "../2026-10-21-full-map-audit/maps/SEG-D133.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D134.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D135.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D136.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D137.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D138.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D139.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D140.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D141.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D142.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D143.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D144.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D145.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D146.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D147.md",
+        "../2026-10-21-full-map-audit/maps/SEG-D148.md"
+      ]
     }
   ],
   "links": [

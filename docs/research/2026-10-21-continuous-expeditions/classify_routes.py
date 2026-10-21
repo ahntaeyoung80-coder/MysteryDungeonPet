@@ -164,6 +164,15 @@ def run():
     if line['opcode'].startswith('main_EnterDungeon('+str(row['toDungeonId'])+','):
      refs.append({'path':evidence['path'],'sha256':evidence['sha256'],**line})
   row['destinationOpcodeRefs']=refs[:3]
+ gameplay_index=OUT.parent/'2026-10-21-full-map-audit/map-gameplay.json'
+ if gameplay_index.exists():
+  gameplay={m['dungeonId']:m for m in json.loads(gameplay_index.read_text())}
+  for segment in data['segments']:
+   did=segment['dungeonId'];segment['gameplayDoc']=f'../2026-10-21-full-map-audit/maps/SEG-D{did:03d}.md'
+   segment['gameplayData']='../2026-10-21-full-map-audit/map-gameplay.json'
+   segment['progressionRuleIds']=gameplay[did].get('progressionRuleIds',[])
+  for collection in ['sectionRoutes','storyArcs','families']:
+   for row in data[collection]:row['gameplayDocs']=[f'../2026-10-21-full-map-audit/maps/SEG-D{did:03d}.md' for did in row['dungeonIds']]
  write('routes.json',data)
  with (OUT/'connectors.csv').open('w',newline='') as f:
   w=csv.DictWriter(f,fieldnames=list(connectors[0]));w.writeheader();w.writerows(connectors)

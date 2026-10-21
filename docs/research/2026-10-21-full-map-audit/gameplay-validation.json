@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "checkedAtUtc": "2026-10-21T23:27:47.481196+00:00",
+  "maps": 192,
+  "mapDocuments": 192,
+  "physicalProfiles": 1892,
+  "logicalFloorRefs": 1894,
+  "enemyFloorRows": 45108,
+  "itemFloorRows": 774916,
+  "fixedRoomsWithOverrides": 112,
+  "progressionRules": 15,
+  "localLinksChecked": 2235,
+  "checks": [
+    "all prior physical profile hashes",
+    "SEG/FLR/RUN/ARC/LNK joins",
+    "every enemy/item rate vs raw CDF weights",
+    "fixed boss and override separation",
+    "ICE/ROCK/STEEL item quantities and blue-crystal condition",
+    "all maps linked from existing index and route graph",
+    "invalid refs and ground aliases retained",
+    "original data/binary hashes",
+    "document links and doc-only scope",
+    "ROM and EXE unchanged"
+  ],
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "exeSha256": "9235fc2474131aee7c3266fb066f35807f8f25fe89e391bf3c0c60e462edd17d",
+  "productCodeAssetsExeChanged": false,
+  "notExecuted": "제품 전체/GUI/ASan 재검사 및 원작 모든 스토리 조건 실행: 조사/문서 전용 변경"
+}
