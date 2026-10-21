@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(15); // MDES15 adds actual shop stock and committed battle contribution.
+    w.u32(0x5345444d); w.u32(16); // MDES16 adds a fixed daily holiday schedule and precise visit progress.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -181,6 +181,10 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     const auto battleStart=w.bytes.size();
     w.u32(static_cast<unsigned>(e.goods.size()));for(const auto& good:e.goods){w.u32(good.item);w.u32(good.quantity);}
     w.u32(e.allyContributed);w.u32(e.partyContributed);w.u32(static_cast<unsigned>(w.bytes.size()-battleStart));
+    const auto holidayStart=w.bytes.size();const auto& h=v.holiday;
+    w.u32(v.holidayPolicy);w.u32(v.completedExplorations);w.u32(v.lastHolidayAt);w.u32(static_cast<unsigned>(v.lastHoliday));w.u32(v.schedule.holidayCommitted);
+    w.u32(h.active);w.u32(static_cast<unsigned>(h.beat));w.u32(h.npcMd);w.u64(h.startedMs);w.u64(h.deadlineMs);w.u32(h.elapsedMs);
+    w.u32(static_cast<unsigned>(w.bytes.size()-holidayStart));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -189,7 +193,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 15) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 16) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -382,6 +386,12 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         for(unsigned i=0;i<n;++i)e.goods.push_back({r.count(65535),r.count(kMaxStock)});
         e.allyContributed=r.boolean();e.partyContributed=r.boolean();const auto length=r.u32();
         if(length!=r.offset-start-4)throw std::runtime_error("event goods/battle block length mismatch");
+    }
+    if(schema>=16) {
+        const auto start=r.offset;auto& v=s.variety;auto& h=v.holiday;
+        v.holidayPolicy=r.boolean();v.completedExplorations=r.u32();v.lastHolidayAt=r.u32();v.lastHoliday=DayDestination(r.count(3));v.schedule.holidayCommitted=r.boolean();
+        h.active=r.boolean();h.beat=HolidayBeat(r.count(17));h.npcMd=r.count(65535);h.startedMs=r.u64();h.deadlineMs=r.u64();h.elapsedMs=r.count(120000);
+        const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("holiday snapshot block length mismatch");
     }
     r.u32(); r.end();
     discardStaleEntityGoal(s);

@@ -9,7 +9,7 @@ ROLES = {'companion.checkin': [(1, 2, 11), (2, 1, 12)], 'npc.greet': [(1, 3, 21)
          'sleep.greet': [(1, 2, 31)], 'wake.alarm': [(4, 1, 41)], 'morning.depart': [(1, 2, 51)],
          'defeat.player': [(2, 1, 101)], 'defeat.partner': [(2, 1, 102)]}
 EVENT_CONTEXTS = {'event.E01.intro', 'event.E01.success', 'event.E05.view', 'event.E05.depart',
-                  'event.E09.intro', 'event.E09.depart', 'event.E02.intro', 'event.E02.success', 'event.E06.pickup', 'event.E06.owner', 'event.E06.success', 'event.E08.separated', 'event.E08.reunion', 'event.E03.intro', 'event.E03.success', 'event.E04.intro', 'event.E04.victory', 'event.E07.intro', 'event.E07.victory'}
+                  'event.E09.intro', 'event.E09.depart', 'event.E02.intro', 'event.E02.success', 'event.E06.pickup', 'event.E06.owner', 'event.E06.success', 'event.E08.separated', 'event.E08.reunion', 'event.E03.intro', 'event.E03.success', 'event.E04.intro', 'event.E04.victory', 'event.E07.intro', 'event.E07.victory', 'event.E10.morning', 'event.E10.visit', 'event.E10.bath', 'event.E10.depart'}
 
 
 def pages(text):

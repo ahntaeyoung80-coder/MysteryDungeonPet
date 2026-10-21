@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 5,
+  "catalogueVersion": 6,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -1773,6 +1773,348 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "너희의 탐험도 잘 풀리길 바라!"
+        }
+      ]
+    },
+    {
+      "id": "E10.town_a.morning",
+      "context": "event.E10.morning",
+      "condition": "event.E10.morning",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.town_a.01",
+          "legacyId": 8660,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "오늘은 탐험을 쉬고 마을에 가 볼까?"
+        },
+        {
+          "id": "E10.town_a.02",
+          "legacyId": 8661,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "좋아! 천천히 둘러보자."
+        }
+      ]
+    },
+    {
+      "id": "E10.town_a.visit",
+      "context": "event.E10.visit",
+      "condition": "event.E10.visit",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.town_a.03",
+          "legacyId": 8670,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "반가워. 오늘은 쉬는 날이구나."
+        },
+        {
+          "id": "E10.town_a.04",
+          "legacyId": 8671,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "응. 잠깐 산책하러 왔어."
+        }
+      ]
+    },
+    {
+      "id": "E10.town_a.depart",
+      "context": "event.E10.depart",
+      "condition": "event.E10.depart",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.town_a.05",
+          "legacyId": 8680,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "서두르지 않으니 한결 편안해."
+        },
+        {
+          "id": "E10.town_a.06",
+          "legacyId": 8681,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "이제 돌아가서 푹 쉬자."
+        }
+      ]
+    },
+    {
+      "id": "E10.town_b.morning",
+      "context": "event.E10.morning",
+      "condition": "event.E10.morning",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.town_b.01",
+          "legacyId": 8690,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "오늘은 마을에서 쉬어 가는 거지?"
+        },
+        {
+          "id": "E10.town_b.02",
+          "legacyId": 8691,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "응. 가끔은 이런 날도 좋겠지."
+        }
+      ]
+    },
+    {
+      "id": "E10.town_b.visit",
+      "context": "event.E10.visit",
+      "condition": "event.E10.visit",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.town_b.03",
+          "legacyId": 8700,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "느긋하게 보고 가. 언제든 환영이야."
+        }
+      ]
+    },
+    {
+      "id": "E10.town_b.depart",
+      "context": "event.E10.depart",
+      "condition": "event.E10.depart",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.town_b.04",
+          "legacyId": 8710,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "좋은 휴일이었어. 이제 돌아가자."
+        }
+      ]
+    },
+    {
+      "id": "E10.spring_a.morning",
+      "context": "event.E10.morning",
+      "condition": "event.E10.morning",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.spring_a.01",
+          "legacyId": 8720,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "오늘은 온천에서 쉬어 가자."
+        },
+        {
+          "id": "E10.spring_a.02",
+          "legacyId": 8721,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "좋아. 느긋하게 보내고 싶어."
+        }
+      ]
+    },
+    {
+      "id": "E10.spring_a.visit",
+      "context": "event.E10.visit",
+      "condition": "event.E10.visit",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.spring_a.03",
+          "legacyId": 8730,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "어서 오게. 서두를 것 없네."
+        }
+      ]
+    },
+    {
+      "id": "E10.spring_a.bath",
+      "context": "event.E10.bath",
+      "condition": "event.E10.bath",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.spring_a.04",
+          "legacyId": 8740,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "따뜻해서 몸이 풀리는 것 같아."
+        },
+        {
+          "id": "E10.spring_a.05",
+          "legacyId": 8741,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "응. 오늘은 천천히 쉬자."
+        }
+      ]
+    },
+    {
+      "id": "E10.spring_a.depart",
+      "context": "event.E10.depart",
+      "condition": "event.E10.depart",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.spring_a.06",
+          "legacyId": 8750,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "잘 쉬었나? 돌아가는 길도 조심하게."
+        }
+      ]
+    },
+    {
+      "id": "E10.spring_b.visit",
+      "context": "event.E10.visit",
+      "condition": "event.E10.visit",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.spring_b.01",
+          "legacyId": 8760,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "편히 쉬다 가게. 좋은 날이구먼."
+        },
+        {
+          "id": "E10.spring_b.02",
+          "legacyId": 8761,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "오늘은 푹 쉬려고 왔어."
+        }
+      ]
+    },
+    {
+      "id": "E10.spring_b.bath",
+      "context": "event.E10.bath",
+      "condition": "event.E10.bath",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.spring_b.03",
+          "legacyId": 8770,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "가만히 있으니 마음도 차분해지네."
+        },
+        {
+          "id": "E10.spring_b.04",
+          "legacyId": 8771,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "함께 와서 더 좋은 것 같아."
+        }
+      ]
+    },
+    {
+      "id": "E10.spring_b.depart",
+      "context": "event.E10.depart",
+      "condition": "event.E10.depart",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.spring_b.05",
+          "legacyId": 8780,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "이제 돌아갈까? 잘 쉬었어."
+        },
+        {
+          "id": "E10.spring_b.06",
+          "legacyId": 8781,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "응. 내일은 또 내일의 하루를 보내자."
+        }
+      ]
+    },
+    {
+      "id": "E10.spring_b.morning",
+      "context": "event.E10.morning",
+      "condition": "event.E10.morning",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E10.spring_b.morning.01",
+          "legacyId": 8991,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "오늘은 온천에서 천천히 쉬자."
+        },
+        {
+          "id": "E10.spring_b.morning.02",
+          "legacyId": 8992,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "좋아. 서두르지 말고 다녀오자."
         }
       ]
     }

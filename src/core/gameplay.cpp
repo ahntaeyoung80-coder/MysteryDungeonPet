@@ -142,7 +142,8 @@ void Explorer::startGuildMorning(std::uint64_t now) {
     auto& g=state_.gameplay;
     invalidate();state_.phase=Phase::Home;
     g.onceKeys.insert("return:"+std::to_string(state_.runId));
-    g.onceKeys.insert("guild-start:"+std::to_string(state_.runId));
+    if(!state_.variety.schedule.holidayCommitted)g.onceKeys.insert("guild-start:"+std::to_string(state_.runId));
+    else g.onceKeys.erase("guild-start:"+std::to_string(state_.runId));
     g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::BedFadeIn;g.homeScene=true;g.deathStage=DeathStage::FadeOut;
     g.phaseStartedMs=now;g.deadlineMs=now+kFadeMs;
     g.defeated=false;g.playerHidden=false;g.fadeInOnly=false;
@@ -166,6 +167,7 @@ GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     g.phaseStartedMs = now; g.deadlineMs = now + kFadeMs;
     const auto once = "return:" + std::to_string(state_.runId);
     if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate return transaction");
+    if(!defeated && state_.completed){if(state_.variety.completedExplorations==UINT32_MAX)throw std::runtime_error("completed exploration counter exhausted");++state_.variety.completedExplorations;}
     return {GameplayEvent::ReturnHome, once};
 }
 bool Explorer::canResetExploration() const {
@@ -420,7 +422,10 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         // P0 enables only the existing exploration destination. Holiday selection is P7.
         auto& schedule=next.state_.variety.schedule;
         if(schedule.destination==DayDestination::Unassigned) {
-            schedule.destination=DayDestination::Exploration;schedule.dungeon=next.state_.floors.front().dungeonId;
+            const auto& variety=next.state_.variety;
+            if(variety.holidayPolicy && previous.companion.enabled && variety.completedExplorations-variety.lastHolidayAt>=3) {
+                schedule.destination=variety.lastHoliday==DayDestination::Town?DayDestination::HotSpring:DayDestination::Town;schedule.dungeon=0;
+            } else {schedule.destination=DayDestination::Exploration;schedule.dungeon=next.state_.floors.front().dungeonId;}
         }
         next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
         next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+kFadeMs;
@@ -564,6 +569,7 @@ void Explorer::shiftPausedClocks(std::uint64_t delta,std::uint64_t pausedAt) {
         start+=delta;deadline+=delta;
     };
     if(variety.dialogue.active)shiftVariety(variety.dialogue.startedMs,variety.dialogue.deadlineMs);
+    if(variety.holiday.active)shiftVariety(variety.holiday.startedMs,variety.holiday.deadlineMs);
     if(variety.event.progress>=EventProgress::Approach && variety.event.progress<=EventProgress::Dismiss)
         shiftVariety(variety.event.startedMs,variety.event.deadlineMs);
     auto& g=state_.gameplay;

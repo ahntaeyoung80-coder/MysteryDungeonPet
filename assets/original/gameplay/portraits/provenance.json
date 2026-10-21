@@ -4084,6 +4084,132 @@
       "portraitSource": "original ROM"
     },
     {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 0,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 1,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 2,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 3,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 4,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 5,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 6,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 7,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 8,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 9,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 10,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 11,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 12,
+      "actualExpression": 12,
+      "rgbaSha256": "9b528f2a73e34413ece5031cb26f8256d76c97fceefc22ba40dd86473627305d",
+      "portraitSource": "original ROM"
+    },
+    {
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyMdIndex": 352,
+      "kaoIndex": 351,
+      "expression": 13,
+      "actualExpression": 0,
+      "rgbaSha256": "e05b5b74b642d7c87874f8ee3ae101f1e5a3488026c6caea500158cd78185d87",
+      "portraitSource": "original ROM"
+    },
+    {
       "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:369",
       "bodyMdIndex": 369,
       "kaoIndex": 368,

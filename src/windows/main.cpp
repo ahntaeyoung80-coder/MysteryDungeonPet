@@ -17,6 +17,7 @@
 #include "core/npc_characters.hpp"
 #include "core/dialogue_catalogue.hpp"
 #include "core/event_registry.hpp"
+#include "core/holiday_scene.hpp"
 #include "core/motion.hpp"
 #include <algorithm>
 #include <chrono>
@@ -188,6 +189,9 @@ class App {
     DialogueCast dialogueCast_;
     DialogueCatalogue dialogueCatalogue_;
     EventRegistry eventRegistry_;
+    HolidayRegistry holidayRegistry_;
+    struct HolidayAssets {std::map<std::string,Assets> grounds;std::map<unsigned,Assets> floats;std::optional<Assets> water;unsigned decodes=0;};
+    HolidayAssets holidayAssets_;
     Assets assets_;
     std::optional<Assets> companionAssets_, homeAssets_, propsAssets_;
     NpcCatalogue npcCatalogue_;
@@ -308,6 +312,7 @@ class App {
     }
     std::wstring mapHud() const {
         if(!explorer_)return {};
+        if(explorer_->state().variety.holiday.active)return {};
         const auto& state=explorer_->state();const auto& g=state.gameplay;
         if(!dungeonScene(g) || (g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout))return {};
         return std::to_wstring(state.floorIndex+1)+L"F";
@@ -511,6 +516,7 @@ class App {
     void saveRunSnapshot(const std::filesystem::path& path,const ExplorationState& state) const {
         auto persistent=state;
         checkpointDialogue(persistent,dialogueCatalogue_,utcMs());
+        checkpointHoliday(persistent,utcMs());
         if(options_.defaultExploration){persistent.target=-1;persistent.targetInstance=0;persistent.goalKind=GoalKind::None;}
         saveSnapshot(path,persistent);
     }
@@ -616,7 +622,7 @@ class App {
             auto candidate=Assets::load(options_.gameplayAssets/actor.bodyManifest);
             validateDialogueActor(actor,candidate.package,portraitAssets_->package);
             for(unsigned clip:{0U,1U,5U,6U,7U,13U,14U,15U,17U,22U,27U,33U,34U})for(unsigned dir=0;dir<8;++dir)candidate.package.frames(clip,dir);
-            saveCharacterSelection(characterProfile_,characterCatalogue_,selection);pendingCharacterSelection_=selection;
+            pendingCharacterSelection_=selection;
             log("character selection queued role="+std::to_string(unsigned(role))+" md="+std::to_string(id));dirty_=true;
         } catch(const std::exception& error) {log(std::string("character selection rejected: ")+error.what());}
     }
@@ -632,6 +638,7 @@ class App {
             auto playerAssets=Assets::load(options_.gameplayAssets/player.bodyManifest,&assets_);
             auto partnerAssets=Assets::load(options_.gameplayAssets/partner.bodyManifest,companionAssets_?&*companionAssets_:nullptr);
             validateDialogueActor(player,playerAssets.package,portraitAssets_->package);validateDialogueActor(partner,partnerAssets.package,portraitAssets_->package);
+            saveCharacterSelection(characterProfile_,characterCatalogue_,next);
             animator_.stop();companionAnimator_.stop();guildLive_.clear();guildRoom_=-1;
             decodes_+=playerAssets.decoded?1:0;decodes_+=partnerAssets.decoded?1:0;
             assets_=std::move(playerAssets);companionAssets_=std::move(partnerAssets);
@@ -827,9 +834,54 @@ class App {
         if(found==npcAssets_.end())throw std::runtime_error("NPC body is not loaded: "+std::to_string(character.id));
         return *found->second;
     }
+    std::optional<HolidayAssets> stageHolidayAssets(const ExplorationState& state) const {
+        if(!state.variety.holiday.active){if(holidayAssets_.grounds.empty())return {};return HolidayAssets{};}
+        if(!holidayAssets_.grounds.empty())return {};
+        HolidayAssets next;const bool spring=state.variety.schedule.destination==DayDestination::HotSpring;
+        const std::vector<std::string> grounds=spring?std::vector<std::string>{"P01P01A","P02P01A"}:std::vector<std::string>{"P01P01A","T01P01A","T01P02A"};
+        for(const auto& name:grounds){auto asset=Assets::load(options_.gameplayAssets/"holiday"/(name+".mdpa"));next.decodes+=asset.decoded?1:0;next.grounds.emplace(name,std::move(asset));}
+        if(spring) {
+            next.water=Assets::load(options_.gameplayAssets/"holiday/water.mdpa");next.decodes+=next.water->decoded?1:0;
+            for(auto role:{PortraitRole::Player,PortraitRole::Partner}) {
+                const auto md=dialogueCast_.actor(role).portraitClip;const auto binding=holidayRegistry_.floats.find(md);
+                if(binding==holidayRegistry_.floats.end())throw std::runtime_error("selected character lacks original Float");
+                auto body=Assets::load(options_.gameplayAssets/"holiday"/binding->second.manifest);
+                if(body.package.assetKey!=binding->second.key || body.package.pngSha256!=binding->second.hash)throw std::runtime_error("holiday Float identity mismatch");
+                for(unsigned dir=0;dir<8;++dir)body.package.frames(20,dir);
+                next.decodes+=body.decoded?1:0;next.floats.emplace(md,std::move(body));
+            }
+        }
+        return next;
+    }
+    void addHolidayLayers(std::vector<Layer>& layers,Point& camera,std::uint64_t utc) const {
+        const auto& state=explorer_->state();const auto sample=holidaySample(state,holidayRegistry_,utc);
+        const auto& ground=holidayAssets_.grounds.at(sample.scene);const auto& background=ground.package.frames(0,0).front();
+        const WorldPoint center{double(sample.player.x+sample.partner.x)/2,double(sample.player.y+sample.partner.y)/2};
+        camera=sample.scene=="P02P01A"?Point{184,100}:cameraFor(center,ground.package.width,ground.package.height,int((size_+scale_-1)/scale_));
+        layers.push_back({ground.atlas.get(),background.rect,background.anchor,{0,0}});
+        const auto elapsed=utc>state.variety.holiday.startedMs?utc-state.variety.holiday.startedMs:0;
+        if(sample.npcVisible) {
+            const auto& npc=npcAssets(kHolidayActorId);const auto index=holidayFrame(npc.package,7,sample.npcDirection,elapsed);
+            const auto& f=npc.package.frames(7,sample.npcDirection)[index];layers.push_back({npc.atlas.get(),f.rect,f.anchor,sample.npc});
+        }
+        auto water=[&](bool front,Point point) {
+            const auto& source=*holidayAssets_.water;const unsigned clip=1250+unsigned(front);
+            const auto& f=source.package.frames(clip,0)[holidayFrame(source.package,clip,0,elapsed)];layers.push_back({source.atlas.get(),f.rect,f.anchor,point});
+        };
+        if(sample.bathing){water(false,sample.player);water(false,sample.partner);}
+        auto body=[&](PortraitRole role,Point point,unsigned direction) {
+            const auto md=dialogueCast_.actor(role).portraitClip;
+            const auto& source=sample.bathing?holidayAssets_.floats.at(md):role==PortraitRole::Player?assets_:*companionAssets_;
+            const auto clip=sample.bathing?20U:sample.moving?0U:7U;
+            const auto& f=source.package.frames(clip,direction)[holidayFrame(source.package,clip,direction,elapsed)];layers.push_back({source.atlas.get(),f.rect,f.anchor,point});
+        };
+        body(PortraitRole::Player,sample.player,sample.playerDirection);body(PortraitRole::Partner,sample.partner,sample.partnerDirection);
+        if(sample.bathing){water(true,sample.player);water(true,sample.partner);}
+    }
     std::optional<NpcAssetsChange> stageNpcAssets(const ExplorationState& state) {
         std::set<std::string> needed;
-        for(const auto& e:state.population.entities)if(e.kind==EntityKind::Friend)
+        if(state.variety.holiday.active)needed.insert(npcCatalogue_.select(state.variety.holiday.npcMd).actor.bodyManifest);
+        else for(const auto& e:state.population.entities)if(e.kind==EntityKind::Friend && e.visible)
             needed.insert(npcCatalogue_.select(e.originalId).actor.bodyManifest);
         if(needed.size()==npcAssets_.size() && std::all_of(needed.begin(),needed.end(),[&](const auto& key){return npcAssets_.count(key);}))return {};
         NpcAssetsChange change;
@@ -837,6 +889,7 @@ class App {
             const auto old=npcAssets_.find(key);
             auto asset=old!=npcAssets_.end()?old->second:std::make_shared<Assets>(Assets::load(options_.gameplayAssets/key));
             if(old==npcAssets_.end())change.decodes+=asset->decoded?1:0;
+            if(state.variety.holiday.active)validateNpcCharacter(npcCatalogue_.select(state.variety.holiday.npcMd),asset->package,portraitAssets_->package);
             for(const auto& e:state.population.entities)if(e.kind==EntityKind::Friend) {
                 const auto& character=npcCatalogue_.select(e.originalId);
                 if(character.actor.bodyManifest==key)validateNpcCharacter(character,asset->package,portraitAssets_->package);
@@ -869,6 +922,7 @@ class App {
     }
     bool partyRendering() const {
         if(!explorer_)return false;
+        if(explorer_->state().variety.holiday.active)return false;
         const auto& g=explorer_->state().gameplay;
         return g.independentParty && !g.homeScene && g.sceneBeat==SceneBeat::None &&
             (g.life==LifePhase::Explore || g.life==LifePhase::Combat);
@@ -967,7 +1021,7 @@ class App {
         const auto oldDialogue=explorer_->state().gameplay.dialogueStage;
         auto candidate = *explorer_;
         if(!options_.solo && candidate.state().gameplay.life==LifePhase::Explore) candidate.enableCompanion();
-        const auto event = candidate.advanceGameplay(utcMs(), completion_,dialogueCatalogue_,&eventRegistry_);
+        const auto event = candidate.advanceGameplay(utcMs(), completion_,dialogueCatalogue_,&eventRegistry_,&holidayRegistry_);
         poseFinished_ = false; completion_={};
         if (encodeSnapshot(candidate.state()) == encodeSnapshot(explorer_->state())) {
             exploreDeadline_=deadlineFromUtc(now,utcMs(),nextGameplayDeadline(candidate.state()));
@@ -979,8 +1033,10 @@ class App {
         std::map<uint32_t,Assets> nextTiles;
         if(changePackage)nextTiles=loadExplorationTiles(*pendingDefaultPackage_,options_.exploration.parent_path());
         auto nextNpcs=stageNpcAssets(candidate.state());
+        auto nextHoliday=stageHolidayAssets(candidate.state());
         saveRunSnapshot(options_.snapshot, candidate.state());
         commitNpcAssets(std::move(nextNpcs));
+        if(nextHoliday){decodes_+=nextHoliday->decodes;holidayAssets_=std::move(*nextHoliday);}
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
         if(changePackage) {
             for(const auto& entry:nextTiles)decodes_+=entry.second.decoded?1:0;
@@ -1235,7 +1291,9 @@ class App {
         std::vector<Layer> layers;
         std::optional<Layer> playerLayer;
         Point camera{0, 0};
-        if(completionDestination()) {
+        if(explorer_ && explorer_->state().variety.holiday.active) {
+            addHolidayLayers(layers,camera,utcMs());
+        } else if(completionDestination()) {
             const auto& background=completionAssets_.at(completionDestination()->dungeonId);
             const auto& frame=background.package.frames(0,0).front();camera=endingCamera();
             layers.push_back({background.atlas.get(),frame.rect,frame.anchor,{0,0}});
@@ -1314,7 +1372,7 @@ class App {
         }
         if (backgroundOn_ && options_.scenario != L"empty") layers.push_back({&background_, {0, 0, 32, 24}, {0, 0}, {0, 0}});
         const auto playback = currentPlayback();
-        if (playback.frame && (!explorer_ || (!explorer_->state().gameplay.playerHidden && dungeonScene(explorer_->state().gameplay)))) {
+        if (playback.frame && (!explorer_ || (!explorer_->state().variety.holiday.active && !explorer_->state().gameplay.playerHidden && dungeonScene(explorer_->state().gameplay)))) {
             const auto& f = *playback.frame;
             playerLayer=Layer{assets_.atlas.get(), f.rect, f.anchor, playback.scenePosition};
         }
@@ -1328,12 +1386,12 @@ class App {
         if(playerLayer)layers.push_back(*playerLayer); // player wins any sprite overlap
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
-        if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr,false);
+        if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr,false,!explorer_->state().variety.holiday.active,selectedDialogue(explorer_->state(),dialogueCatalogue_)!=nullptr);
         const auto speaker=explorer_?currentPortrait():DialoguePortraits{};
         if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_,npcSpeaker(speaker));
         std::wstring overlayText=explorer_?revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs()):std::wstring{};
         const auto hud=mapHud();
-        const auto fade=explorer_?gameplayFadeOpacity(explorer_->state().gameplay,utcMs()):0;
+        const auto fade=explorer_?(explorer_->state().variety.holiday.active?holidayFade(explorer_->state(),utcMs()):gameplayFadeOpacity(explorer_->state().gameplay,utcMs())):0;
         const bool textChanged=overlayText!=submittedText_ || hud!=submittedHud_ || fade!=submittedFade_;
         bool changed = previous != surface_.pixels;
         dirty_ = false;
@@ -1342,7 +1400,9 @@ class App {
         textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,
             explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout);
         textOverlay_.drawMapHud(dib_->dc,dib_->bits,size_,hud);
-        if(explorer_)applyGameplayFade(static_cast<std::uint8_t*>(dib_->bits),surface_.pixels.size(),explorer_->state().gameplay,utcMs());
+        if(explorer_ && explorer_->state().variety.holiday.active) {
+            auto* pixels=static_cast<std::uint8_t*>(dib_->bits);for(std::size_t i=0;i<surface_.pixels.size();i+=4)for(unsigned ch=0;ch<3;++ch)pixels[i+ch]=std::uint8_t((unsigned(pixels[i+ch])*(255-fade)+127)/255);
+        } else if(explorer_)applyGameplayFade(static_cast<std::uint8_t*>(dib_->bits),surface_.pixels.size(),explorer_->state().gameplay,utcMs());
         if(explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout)
             textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,true);
         RECT rect{}; winCheck(GetWindowRect(window_, &rect) != 0, "submit rect");
@@ -1401,6 +1461,7 @@ public:
             npcCatalogue_=loadNpcCatalogue(options_.gameplayAssets/L"npcs/characters.mdnc");
             dialogueCatalogue_=loadDialogueCatalogue(options_.gameplayAssets/L"dialogue/catalogue.mdlc");
             eventRegistry_=loadEventRegistry(options_.gameplayAssets/L"events/contexts.mder");
+            holidayRegistry_=loadHolidayRegistry(options_.gameplayAssets/L"holiday");
             if(eventRegistry_.romHash!=npcCatalogue_.romHash)throw std::runtime_error("event map/NPC ROM mismatch");
             if(npcCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("NPC/exploration ROM mismatch");
             validateNpcCoverage(npcCatalogue_,explorationPackage_->floors);
@@ -1444,12 +1505,15 @@ public:
             playerMotion_.reset(tilePoint(explorer_->state().position));
             explorer_->enableGameplay(utcMs());
             if(!options_.solo) explorer_->enableCompanion();
+            explorer_->enableHolidaySchedule();
             if(options_.defaultExploration) {
                 explorer_->enableScreenExploration((size_+scale_-1)/scale_);
                 explorer_->startGuildMorning(utcMs());
                 log("startup=guild-morning exploration-goal=discarded");
             }
+            explorer_->restoreHolidayClock(utcMs());
             explorer_->restoreDialogue(dialogueCatalogue_,utcMs());
+            if(auto holiday=stageHolidayAssets(explorer_->state())){decodes_+=holiday->decodes;holidayAssets_=std::move(*holiday);}
             if(explorer_->state().gameplay.companion.enabled)companionMotion_.reset(tilePoint(explorer_->state().gameplay.companion.tile));
             restoreMovement(nowUs());
             if(explorer_->state().gameplay.sceneBeat==SceneBeat::DiningPan) guildCamera_.begin(UINT32_MAX,explorer_->state().gameplay.day,{368,212},{168,212},restoredClipStart(nowUs()),6,4000000);
@@ -1558,6 +1622,7 @@ public:
             if (sessionRetry_) deadline = std::min(deadline, sessionRetry_);
             if (scenarioDeadline_) deadline = std::min(deadline, scenarioDeadline_);
             if (explorer_ && !blocked()) {
+                if(explorer_->state().variety.holiday.active)deadline=std::min(deadline,now+16667);
                 const auto& g=explorer_->state().gameplay;
                 // A finite NPC idle can outlast the text's minimum duration.
                 // Wait for its animation event instead of spinning on a past text deadline.

@@ -14,6 +14,7 @@ bool textId(const std::string& value) {
 bool actor(const ExplorationState& s,std::uint32_t id) {
     if(id==0)return true;
     if(id==kCompanionActorId)return s.gameplay.companion.enabled;
+    if(id==kHolidayActorId)return s.variety.holiday.active && s.variety.event.id.type==VarietyEvent::Holiday;
     return id>0 && id<=kTiles && std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e) {
         return e.instanceId==id && e.kind==EntityKind::Friend && e.visible;
     });
@@ -83,6 +84,7 @@ void cancelVariety(ExplorationState& s) {
     v.event.task=EventTask::None;v.event.targetTile=v.event.objectTile=v.event.sourceTile=-1;v.event.item=v.event.quantity=v.event.warpedActor=v.event.stalls=0;
     v.event.carrying=false;v.event.temporaryActors.clear();v.event.opponents.clear();
     v.event.goods.clear();v.event.allyContributed=v.event.partyContributed=false;
+    v.holiday={};
     if(busy) {s.target=-1;s.targetInstance=0;s.goalKind=GoalKind::None;}
 }
 bool commitVarietyResult(ExplorationState& s,const std::string& result) {
@@ -109,6 +111,11 @@ void validateVarietyState(const ExplorationState& s) {
     require(v.schedule.day==s.gameplay.day && static_cast<unsigned>(v.schedule.destination)<=3,"invalid day schedule");
     require(!v.schedule.mealCommitted || s.gameplay.meals>0,"daily meal without committed count");
     require(v.schedule.destination==DayDestination::Exploration || v.schedule.dungeon==0,"dungeon on non-exploration day");
+    require(v.lastHolidayAt<=v.completedExplorations && (v.lastHoliday==DayDestination::Unassigned || v.lastHoliday==DayDestination::Town || v.lastHoliday==DayDestination::HotSpring),"invalid holiday history");
+    const auto& h=v.holiday;
+    if(h.active)require(e.id.type==VarietyEvent::Holiday && live(e.progress) && (v.schedule.destination==DayDestination::Town || v.schedule.destination==DayDestination::HotSpring) &&
+        h.beat>HolidayBeat::None && h.beat<=HolidayBeat::ReturnFade && h.npcMd==(v.schedule.destination==DayDestination::Town?383U:352U) && h.deadlineMs>=h.startedMs && h.deadlineMs-h.startedMs<=120000 && h.elapsedMs<=120000,"invalid holiday visit state");
+    else require(h.beat==HolidayBeat::None && !h.npcMd && !h.startedMs && !h.deadlineMs && !h.elapsedMs,"inactive holiday retains scene");
     require(static_cast<unsigned>(e.progress)<=7 && static_cast<unsigned>(e.id.type)<=10,"invalid variety enum");
     if(e.progress==EventProgress::None) {
         require(e.id.type==VarietyEvent::None && !e.id.run && !e.id.day && !e.id.floor && !e.id.trigger && e.variant.empty() && !e.startedMs && !e.deadlineMs && e.actors.empty() && e.reservations.empty(),"nonempty inactive event");

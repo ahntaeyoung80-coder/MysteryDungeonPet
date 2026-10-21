@@ -18,6 +18,7 @@ const NpcCharacter& NpcCatalogue::select(std::uint32_t id) const {
 }
 const NpcCharacter& NpcCatalogue::forActor(const ExplorationState& s,std::uint32_t id) const {
     require(id && id!=kCompanionActorId,"player/companion is not an NPC instance");
+    if(id==kHolidayActorId && s.variety.holiday.active)return select(s.variety.holiday.npcMd);
     const auto it=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e) {
         return e.instanceId==id && e.kind==EntityKind::Friend;
     });

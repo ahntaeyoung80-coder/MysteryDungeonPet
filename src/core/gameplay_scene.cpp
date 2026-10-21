@@ -175,14 +175,14 @@ BedroomExitSample loudredAlarm(Point original,const GameplayState& g,std::uint64
     if(g.sceneBeat==SceneBeat::AlarmLeave)return {{original.x-int32_t(48*elapsed/800),original.y},6,elapsed==800};
     return {original,2,false};
 }
-void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const Surface* panel,bool includeFade) {
+void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const Surface* panel,bool includeFade,bool includeHud,bool hasDialogue) {
     auto pixel = [&](unsigned x, unsigned y, unsigned blue, unsigned green, unsigned red) {
         if (x >= s.width || y >= s.height) return;
         const auto i = (y * s.width + x) * 4;
         s.pixels[i] = static_cast<std::uint8_t>(blue); s.pixels[i+1] = static_cast<std::uint8_t>(green);
         s.pixels[i+2] = static_cast<std::uint8_t>(red); s.pixels[i+3] = 255;
     };
-    if (dungeonScene(g) && !completionScene(g)) {
+    if (includeHud && dungeonScene(g) && !completionScene(g)) {
         static const char* heart[]{"0110110", "1111111", "1111111", "0111110", "0011100", "0001000"};
         for (unsigned h = 0; h < kMaxHp; ++h) for (unsigned y = 0; y < 6; ++y) for (unsigned x = 0; x < 7; ++x)
             if (heart[y][x] == '1') for(unsigned yy=0;yy<2;++yy) for(unsigned xx=0;xx<2;++xx)
@@ -193,7 +193,7 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const
             for (unsigned x = 8; x < std::min(192U, s.width); ++x) pixel(x, y, 40, 30, 20);
     if(!panel && (g.life==LifePhase::Dialogue || (g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay) || (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) || (g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)))
         for(unsigned y=150;y<190;++y) for(unsigned x=8;x<192;++x) pixel(x,y,40,30,20);
-    if(panel && (g.life!=LifePhase::Death || g.deathStage==DeathStage::PartnerTalk) && !gameplayText(g).empty()) {
+    if(panel && (g.life!=LifePhase::Death || g.deathStage==DeathStage::PartnerTalk) && (hasDialogue || !gameplayText(g).empty())) {
         for(unsigned y=0;y<panel->height && y+144<s.height;++y)
             for(unsigned x=0;x<panel->width && x+8<s.width;++x) {
                 const auto src=(y*panel->width+x)*4,dst=((y+144)*s.width+x+8)*4;

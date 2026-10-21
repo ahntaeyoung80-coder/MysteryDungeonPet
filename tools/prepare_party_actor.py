@@ -15,7 +15,7 @@ from tools.mdpet.wan_verify import verify_wan_asset
 from tools.compile_runtime_package import compile_package
 
 
-def prepare(root, output, index, scene_actor=False):
+def prepare(root, output, index, scene_actor=False, clip_ids=None):
     from ndspy.rom import NintendoDSRom
     from skytemple_files.common.util import get_ppmdu_config_for_rom
     from skytemple_files.common.types.file_types import FileType
@@ -43,8 +43,8 @@ def prepare(root, output, index, scene_actor=False):
         temp = Path(workspace); sheets = temp / 'sheets'; sheets.mkdir()
         CharaWanHandler.export_sheets(str(sheets), merged, config.animation_names.get(record.sprite_index, config.animation_names[0]))
         names = {int(n.findtext('Index')): n.findtext('Name') for n in ET.parse(sheets/'AnimData.xml').findall('Anims/Anim') if n.find('Index') is not None}
-        required = {names[i]: i for i in ((0,1,5,6,7,13,14,15,17,22,27,33,34) if scene_actor else (0,1,6,7))}
-        optional = {names[i]:i for i in (22,33) if i in names}
+        required = {names[i]: i for i in (clip_ids if clip_ids is not None else (0,1,5,6,7,13,14,15,17,22,27,33,34) if scene_actor else (0,1,6,7))}
+        optional = {} if clip_ids is not None else {names[i]:i for i in (22,33) if i in names}
         source = {'sourceKind':'rom', 'romHash': before, 'edition':config.game_edition,
                   'mdIndex':index, 'spriteIndex':record.sprite_index, 'nationalDex':dex, 
                   'toolCommit':'5ed359a2560a1f04666b9ea02b71649b89cb16d7', 'sourceRefs':refs,

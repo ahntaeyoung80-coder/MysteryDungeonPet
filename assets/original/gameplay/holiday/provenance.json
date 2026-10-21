@@ -1,0 +1,801 @@
+{
+  "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "grounds": [
+    {
+      "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+      "ground": "P01P01A",
+      "sources": [
+        {
+          "path": "MAP_BG/p01p01a.bma",
+          "bytes": 921,
+          "sha256": "9ef0998da833bea9d96882c4275ce85daea6acc6997bd11b40dd68c33824c110"
+        },
+        {
+          "path": "MAP_BG/p01p01a.bpc",
+          "bytes": 28000,
+          "sha256": "a8ceb94eeac72790be74f1dd2ec14216e3ce5b4ca11beb981b1273db6a839d79"
+        },
+        {
+          "path": "MAP_BG/p01p01a.bpl",
+          "bytes": 964,
+          "sha256": "cd7e429fe31181339a241b7f0f2cfb14af7e276ebc8f4c4dd56f7601dfbce405"
+        },
+        {
+          "path": "MAP_BG/p01p01a1.bpa",
+          "bytes": 8212,
+          "sha256": "28f4902458a01a6398355ce1adc66b3f53fc71a79537acf8d4ac7fa130217abb"
+        }
+      ],
+      "rgbaSha256": "439eebb12f113441d9ab651b131e5e5a08b47ae6e31e6e503390088cfca59722",
+      "scope": "original static BMA/BPC/BPL/BPA image; product visit paths are separate"
+    },
+    {
+      "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+      "ground": "P02P01A",
+      "sources": [
+        {
+          "path": "MAP_BG/p02p01a.bma",
+          "bytes": 1121,
+          "sha256": "8937cbac15a2f6b00ab44c87cb3e90d91282d09aea640a225370507641427669"
+        },
+        {
+          "path": "MAP_BG/p02p01a.bpc",
+          "bytes": 34064,
+          "sha256": "8e633300a734885e5da9a92051bb1a9481c2278e50db6514cd801f7bbf90e06f"
+        },
+        {
+          "path": "MAP_BG/p02p01a.bpl",
+          "bytes": 2168,
+          "sha256": "e864b0ec1e090c5716121c314a612e37cba574d364900091e0d13b122a189205"
+        }
+      ],
+      "rgbaSha256": "fe1832624c64aba311bacffd8f5cf3209a6519f86e09730be9e6a551ae5f4492",
+      "scope": "original static BMA/BPC/BPL/BPA image; product visit paths are separate"
+    },
+    {
+      "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+      "ground": "T01P01A",
+      "sources": [
+        {
+          "path": "MAP_BG/t01p01a.bma",
+          "bytes": 1536,
+          "sha256": "28c23af6dd6d9892af93b458c63ec474b948a42120c13ea0bdfe70ab15844cfd"
+        },
+        {
+          "path": "MAP_BG/t01p01a.bpc",
+          "bytes": 39528,
+          "sha256": "b0d7c4bb0f641900a7ea5abac79dbe733f0f2f06a76f144abac5316fa0d45ea5"
+        },
+        {
+          "path": "MAP_BG/t01p01a.bpl",
+          "bytes": 964,
+          "sha256": "8a34d246726d73da9f632f18acd5570bda7f4bdb07e6edf4dafce77f46950f44"
+        },
+        {
+          "path": "MAP_BG/t01p01a5.bpa",
+          "bytes": 19860,
+          "sha256": "9567fd6a88ce046b5bc231a0543770c6061ee0e384dbe359e8862d742200f138"
+        }
+      ],
+      "rgbaSha256": "350d9aa3ce60c97123e97bde5ab32536a81c58ed760e1f37a98333c535c20f52",
+      "scope": "original static BMA/BPC/BPL/BPA image; product visit paths are separate"
+    },
+    {
+      "romHash": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+      "ground": "T01P02A",
+      "sources": [
+        {
+          "path": "MAP_BG/t01p02a.bma",
+          "bytes": 1305,
+          "sha256": "7269e19db41e73399709febd62cdd277983a6a560448104ba1f61d66b66f9ef4"
+        },
+        {
+          "path": "MAP_BG/t01p02a.bpc",
+          "bytes": 34098,
+          "sha256": "ac90d1097294e143b8a0d3702609e5d8cfd54337df22bf42e81a2769300c35ac"
+        },
+        {
+          "path": "MAP_BG/t01p02a.bpl",
+          "bytes": 964,
+          "sha256": "7c5bfb9a62540e84e046b14559bf2dcfc53ef1ef8636b66c99e9cc437090288c"
+        },
+        {
+          "path": "MAP_BG/t01p02a5.bpa",
+          "bytes": 9620,
+          "sha256": "5221a40a67729e7adb96b9312aa81d830e71ce1d70f10d1a21cdb37f63f9423d"
+        }
+      ],
+      "rgbaSha256": "f78651275bd341a7b08df6973d79fc018383085fad38d31a883ba6621a52bb34",
+      "scope": "original static BMA/BPC/BPL/BPA image; product visit paths are separate"
+    }
+  ],
+  "water": [
+    {
+      "effectId": 625,
+      "animation": 16,
+      "frontBack": true,
+      "palette": 1,
+      "box": [
+        224,
+        491,
+        288,
+        526
+      ],
+      "anchor": [
+        32,
+        21
+      ],
+      "ticks": [
+        12,
+        12,
+        12
+      ]
+    },
+    {
+      "effectId": 626,
+      "animation": 17,
+      "frontBack": true,
+      "palette": 1,
+      "box": [
+        224,
+        483,
+        288,
+        518
+      ],
+      "anchor": [
+        32,
+        29
+      ],
+      "ticks": [
+        12,
+        12,
+        12
+      ]
+    },
+    {
+      "effectId": 627,
+      "animation": 18,
+      "frontBack": true,
+      "palette": 1,
+      "box": [
+        224,
+        488,
+        288,
+        523
+      ],
+      "anchor": [
+        32,
+        24
+      ],
+      "ticks": [
+        12,
+        12,
+        12
+      ]
+    },
+    {
+      "effectId": 628,
+      "animation": 19,
+      "frontBack": true,
+      "palette": 1,
+      "box": [
+        224,
+        491,
+        288,
+        526
+      ],
+      "anchor": [
+        32,
+        21
+      ],
+      "ticks": [
+        12,
+        12,
+        12
+      ]
+    },
+    {
+      "effectId": 629,
+      "animation": 20,
+      "frontBack": true,
+      "palette": 1,
+      "box": [
+        224,
+        488,
+        288,
+        523
+      ],
+      "anchor": [
+        32,
+        24
+      ],
+      "ticks": [
+        12,
+        12,
+        12
+      ]
+    }
+  ],
+  "floatBindings": [
+    {
+      "mdIndex": 1,
+      "spriteIndex": 0,
+      "manifest": "float/0/asset.mdpa",
+      "verification": {
+        "mdIndex": 1,
+        "spriteIndex": 0,
+        "nationalDex": 1,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:1",
+      "bodyHash": "10236798b7ead68df25ff6f58c020a34495761e35ef7c55d15a7a0f6696e1174"
+    },
+    {
+      "mdIndex": 4,
+      "spriteIndex": 4,
+      "manifest": "float/4/asset.mdpa",
+      "verification": {
+        "mdIndex": 4,
+        "spriteIndex": 4,
+        "nationalDex": 4,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:4",
+      "bodyHash": "b8d2c1f73cb2356b910294f83dc71335e4648dd8d04385389e48e61ea92ab7da"
+    },
+    {
+      "mdIndex": 7,
+      "spriteIndex": 7,
+      "manifest": "float/7/asset.mdpa",
+      "verification": {
+        "mdIndex": 7,
+        "spriteIndex": 7,
+        "nationalDex": 7,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:7",
+      "bodyHash": "1287fa2045a1027b2a5598a61bc8591b2594af3efca7d63745f1dc5b8cdbb2f6"
+    },
+    {
+      "mdIndex": 25,
+      "spriteIndex": 26,
+      "manifest": "float/26/asset.mdpa",
+      "verification": {
+        "mdIndex": 25,
+        "spriteIndex": 26,
+        "nationalDex": 25,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:25",
+      "bodyHash": "446113446bba3608a43116e42dd8f6762d0a6838a2ed1757bb9b18b80144fca8"
+    },
+    {
+      "mdIndex": 52,
+      "spriteIndex": 59,
+      "manifest": "float/59/asset.mdpa",
+      "verification": {
+        "mdIndex": 52,
+        "spriteIndex": 59,
+        "nationalDex": 52,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:52",
+      "bodyHash": "ccd13928787401502cab01434e40aa52100be6d38b8baf2311a928498aecda63"
+    },
+    {
+      "mdIndex": 152,
+      "spriteIndex": 164,
+      "manifest": "float/164/asset.mdpa",
+      "verification": {
+        "mdIndex": 152,
+        "spriteIndex": 164,
+        "nationalDex": 152,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:152",
+      "bodyHash": "1b05934841146403300e421f4b04411d1ccfa5ace48610766c5012f7cf018300"
+    },
+    {
+      "mdIndex": 155,
+      "spriteIndex": 168,
+      "manifest": "float/168/asset.mdpa",
+      "verification": {
+        "mdIndex": 155,
+        "spriteIndex": 168,
+        "nationalDex": 155,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:155",
+      "bodyHash": "defc4a43ac014254fa4932ef366c3ac76bc09ef123bf1f8a678dd697b23f54c6"
+    },
+    {
+      "mdIndex": 158,
+      "spriteIndex": 171,
+      "manifest": "float/171/asset.mdpa",
+      "verification": {
+        "mdIndex": 158,
+        "spriteIndex": 171,
+        "nationalDex": 158,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:158",
+      "bodyHash": "f54ef37fecbb9612c380cdcb443d23245b2013d57adee1e789ffc927c3859849"
+    },
+    {
+      "mdIndex": 258,
+      "spriteIndex": 279,
+      "manifest": "float/279/asset.mdpa",
+      "verification": {
+        "mdIndex": 258,
+        "spriteIndex": 279,
+        "nationalDex": 231,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:258",
+      "bodyHash": "0395e002c6aac10800a1c74c7fb35857ef335fff12355d71c487aba6fc0899f1"
+    },
+    {
+      "mdIndex": 280,
+      "spriteIndex": 440,
+      "manifest": "float/440/asset.mdpa",
+      "verification": {
+        "mdIndex": 280,
+        "spriteIndex": 440,
+        "nationalDex": 252,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:280",
+      "bodyHash": "f021ce002e2b31d324f03894677db76fecc06dac9caf7618b2b9fb00aa11f92e"
+    },
+    {
+      "mdIndex": 283,
+      "spriteIndex": 445,
+      "manifest": "float/445/asset.mdpa",
+      "verification": {
+        "mdIndex": 283,
+        "spriteIndex": 445,
+        "nationalDex": 255,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:283",
+      "bodyHash": "d414f5663b523b4deac13153bec38aa0c79a3f90f875dafbf47a1f90aabf24c9"
+    },
+    {
+      "mdIndex": 286,
+      "spriteIndex": 450,
+      "manifest": "float/450/asset.mdpa",
+      "verification": {
+        "mdIndex": 286,
+        "spriteIndex": 450,
+        "nationalDex": 258,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:286",
+      "bodyHash": "b6c22f3a5391dbe8e22fea96fb240178a8652ad26172c6c518ac7e26115137b2"
+    },
+    {
+      "mdIndex": 422,
+      "spriteIndex": 302,
+      "manifest": "float/302/asset.mdpa",
+      "verification": {
+        "mdIndex": 422,
+        "spriteIndex": 302,
+        "nationalDex": 387,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:422",
+      "bodyHash": "cd6f9d6c37f6d2800173dd3c8a9ee216df1270a63040c1eeeb58e2ff4cde0c26"
+    },
+    {
+      "mdIndex": 425,
+      "spriteIndex": 305,
+      "manifest": "float/305/asset.mdpa",
+      "verification": {
+        "mdIndex": 425,
+        "spriteIndex": 305,
+        "nationalDex": 390,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:425",
+      "bodyHash": "faf93edac8852d8c03b17cd672b8b4f1efbc8adc61512fc0a54d617fb2c0ce12"
+    },
+    {
+      "mdIndex": 428,
+      "spriteIndex": 308,
+      "manifest": "float/308/asset.mdpa",
+      "verification": {
+        "mdIndex": 428,
+        "spriteIndex": 308,
+        "nationalDex": 393,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:428",
+      "bodyHash": "c5d6fc841947bd65a3ec2bd4d905ad21d1752692bad962e080618c419a06c434"
+    },
+    {
+      "mdIndex": 438,
+      "spriteIndex": 321,
+      "manifest": "float/321/asset.mdpa",
+      "verification": {
+        "mdIndex": 438,
+        "spriteIndex": 321,
+        "nationalDex": 403,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:438",
+      "bodyHash": "9a9455cbf38074b5776fbc76013c1b9153d9e614988477278c08c428812768b2"
+    },
+    {
+      "mdIndex": 488,
+      "spriteIndex": 372,
+      "manifest": "float/372/asset.mdpa",
+      "verification": {
+        "mdIndex": 488,
+        "spriteIndex": 372,
+        "nationalDex": 446,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:488",
+      "bodyHash": "10def9f62ee954ea14936816a50087bfbddeca283efb8ddf59226049c8ffc91e"
+    },
+    {
+      "mdIndex": 489,
+      "spriteIndex": 390,
+      "manifest": "float/390/asset.mdpa",
+      "verification": {
+        "mdIndex": 489,
+        "spriteIndex": 390,
+        "nationalDex": 447,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:489",
+      "bodyHash": "9d64fe303491ba38196d23fdb04c55fe31ec8834adfe01e4c0e951ab26f87f3f"
+    },
+    {
+      "mdIndex": 601,
+      "spriteIndex": 0,
+      "manifest": "float/0/asset.mdpa",
+      "verification": {
+        "mdIndex": 1,
+        "spriteIndex": 0,
+        "nationalDex": 1,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:1",
+      "bodyHash": "10236798b7ead68df25ff6f58c020a34495761e35ef7c55d15a7a0f6696e1174"
+    },
+    {
+      "mdIndex": 604,
+      "spriteIndex": 4,
+      "manifest": "float/4/asset.mdpa",
+      "verification": {
+        "mdIndex": 4,
+        "spriteIndex": 4,
+        "nationalDex": 4,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:4",
+      "bodyHash": "b8d2c1f73cb2356b910294f83dc71335e4648dd8d04385389e48e61ea92ab7da"
+    },
+    {
+      "mdIndex": 607,
+      "spriteIndex": 7,
+      "manifest": "float/7/asset.mdpa",
+      "verification": {
+        "mdIndex": 7,
+        "spriteIndex": 7,
+        "nationalDex": 7,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:7",
+      "bodyHash": "1287fa2045a1027b2a5598a61bc8591b2594af3efca7d63745f1dc5b8cdbb2f6"
+    },
+    {
+      "mdIndex": 625,
+      "spriteIndex": 25,
+      "manifest": "float/25/asset.mdpa",
+      "verification": {
+        "mdIndex": 625,
+        "spriteIndex": 25,
+        "nationalDex": 25,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:625",
+      "bodyHash": "f992dd075c4136387dcc8d60e6ed4ab3fe8c75f0d1b08d845cd8eeff0d7fe985"
+    },
+    {
+      "mdIndex": 637,
+      "spriteIndex": 39,
+      "manifest": "float/39/asset.mdpa",
+      "verification": {
+        "mdIndex": 637,
+        "spriteIndex": 39,
+        "nationalDex": 37,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:637",
+      "bodyHash": "7560ba85b68f03580f903b8a220cb94e846bfa99edb5231c3e088c125483233d"
+    },
+    {
+      "mdIndex": 733,
+      "spriteIndex": 145,
+      "manifest": "float/145/asset.mdpa",
+      "verification": {
+        "mdIndex": 733,
+        "spriteIndex": 145,
+        "nationalDex": 133,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:733",
+      "bodyHash": "a8cd98f5e572f3c6a1070f2ff284d9f34968cb19af5e98a871f1e087f1d39234"
+    },
+    {
+      "mdIndex": 752,
+      "spriteIndex": 164,
+      "manifest": "float/164/asset.mdpa",
+      "verification": {
+        "mdIndex": 152,
+        "spriteIndex": 164,
+        "nationalDex": 152,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:152",
+      "bodyHash": "1b05934841146403300e421f4b04411d1ccfa5ace48610766c5012f7cf018300"
+    },
+    {
+      "mdIndex": 755,
+      "spriteIndex": 168,
+      "manifest": "float/168/asset.mdpa",
+      "verification": {
+        "mdIndex": 155,
+        "spriteIndex": 168,
+        "nationalDex": 155,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:155",
+      "bodyHash": "defc4a43ac014254fa4932ef366c3ac76bc09ef123bf1f8a678dd697b23f54c6"
+    },
+    {
+      "mdIndex": 758,
+      "spriteIndex": 171,
+      "manifest": "float/171/asset.mdpa",
+      "verification": {
+        "mdIndex": 158,
+        "spriteIndex": 171,
+        "nationalDex": 158,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:158",
+      "bodyHash": "f54ef37fecbb9612c380cdcb443d23245b2013d57adee1e789ffc927c3859849"
+    },
+    {
+      "mdIndex": 880,
+      "spriteIndex": 440,
+      "manifest": "float/440/asset.mdpa",
+      "verification": {
+        "mdIndex": 280,
+        "spriteIndex": 440,
+        "nationalDex": 252,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:280",
+      "bodyHash": "f021ce002e2b31d324f03894677db76fecc06dac9caf7618b2b9fb00aa11f92e"
+    },
+    {
+      "mdIndex": 883,
+      "spriteIndex": 445,
+      "manifest": "float/445/asset.mdpa",
+      "verification": {
+        "mdIndex": 283,
+        "spriteIndex": 445,
+        "nationalDex": 255,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:283",
+      "bodyHash": "d414f5663b523b4deac13153bec38aa0c79a3f90f875dafbf47a1f90aabf24c9"
+    },
+    {
+      "mdIndex": 886,
+      "spriteIndex": 450,
+      "manifest": "float/450/asset.mdpa",
+      "verification": {
+        "mdIndex": 286,
+        "spriteIndex": 450,
+        "nationalDex": 258,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:286",
+      "bodyHash": "b6c22f3a5391dbe8e22fea96fb240178a8652ad26172c6c518ac7e26115137b2"
+    },
+    {
+      "mdIndex": 928,
+      "spriteIndex": 495,
+      "manifest": "float/495/asset.mdpa",
+      "verification": {
+        "mdIndex": 928,
+        "spriteIndex": 495,
+        "nationalDex": 300,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:928",
+      "bodyHash": "8c4ca0584ae68b094ed1a03af0a098718a3c4d2d955142ed2071958cdc1ba898"
+    },
+    {
+      "mdIndex": 1022,
+      "spriteIndex": 302,
+      "manifest": "float/302/asset.mdpa",
+      "verification": {
+        "mdIndex": 422,
+        "spriteIndex": 302,
+        "nationalDex": 387,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:422",
+      "bodyHash": "cd6f9d6c37f6d2800173dd3c8a9ee216df1270a63040c1eeeb58e2ff4cde0c26"
+    },
+    {
+      "mdIndex": 1025,
+      "spriteIndex": 305,
+      "manifest": "float/305/asset.mdpa",
+      "verification": {
+        "mdIndex": 425,
+        "spriteIndex": 305,
+        "nationalDex": 390,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:425",
+      "bodyHash": "faf93edac8852d8c03b17cd672b8b4f1efbc8adc61512fc0a54d617fb2c0ce12"
+    },
+    {
+      "mdIndex": 1028,
+      "spriteIndex": 308,
+      "manifest": "float/308/asset.mdpa",
+      "verification": {
+        "mdIndex": 428,
+        "spriteIndex": 308,
+        "nationalDex": 393,
+        "status": "pass",
+        "comparedFrames": 32,
+        "originalSourceFrames": 32,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      },
+      "bodyKey": "rom:EoS_NA:monster:428",
+      "bodyHash": "c5d6fc841947bd65a3ec2bd4d905ad21d1752692bad962e080618c419a06c434"
+    }
+  ],
+  "floatComparedFrames": 704,
+  "policy": "static grounds; original Float/ticks/anchors/front-back priority; no SteamClouds43"
+}

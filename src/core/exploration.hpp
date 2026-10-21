@@ -246,6 +246,7 @@ std::uint64_t navigationFingerprint(const ExplorationState&);
 void validatePartyState(const ExplorationState&);
 struct DialogueCatalogue;
 struct EventRegistry;
+struct HolidayRegistry;
 class Explorer {
 public:
     static constexpr std::uint32_t kFloorStepLimit = kTiles * 8;
@@ -271,8 +272,11 @@ public:
     bool canResetExploration() const;
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
-    GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion,const DialogueCatalogue&,const EventRegistry* maps=nullptr);
+    GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion,const DialogueCatalogue&,const EventRegistry* maps=nullptr,const HolidayRegistry* visits=nullptr);
     void restoreDialogue(const DialogueCatalogue&,std::uint64_t utcMs);
+    void enableHolidaySchedule(){state_.variety.holidayPolicy=true;}
+    void restoreHolidayClock(std::uint64_t utcMs);
+    GameplayUpdate returnFromHoliday(std::uint64_t utcMs);
 private:
     ExplorationState state_;
     std::string nextRunAssetVersion_;

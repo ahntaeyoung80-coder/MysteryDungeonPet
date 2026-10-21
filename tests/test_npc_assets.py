@@ -25,7 +25,7 @@ class NpcAssetTests(unittest.TestCase):
         cls.columns = sorted({a['bodyMdIndex'] for a in cls.audit})
 
     def test_selected_md_body_sources_and_original_talk_groups(self):
-        expected={16,83,102,126,191,193,237,240,293,341,342,369,383,384,425,434,437,25,85,125,128,172,180,181,230,337,438,439,440,511}
+        expected={16,83,102,126,191,193,237,240,293,341,342,369,383,384,425,434,437,25,85,125,128,172,180,181,230,337,438,439,440,511,352}
         self.assertEqual({c['mdIndex'] for c in self.catalogue['characters']},expected)
         for c in self.catalogue['characters']:
             record=self.md.entries[c['mdIndex']]
@@ -65,8 +65,8 @@ class NpcAssetTests(unittest.TestCase):
 
     def test_new_wan_audits_and_existing_body_reuse(self):
         new=[c for c in self.catalogue['characters'] if c['verification']]
-        self.assertEqual(len(new),25)
-        self.assertEqual(sum(c['verification']['comparedFrames'] for c in new),5154)
+        self.assertEqual(len(new),26)
+        self.assertEqual(sum(c['verification']['comparedFrames'] for c in new),5378)
         for c in new:
             proof=json.loads((GAMEPLAY/Path(c['bodyManifest']).parent/'provenance.json').read_text())
             self.assertEqual(proof['verification']['status'],'pass')
@@ -80,7 +80,7 @@ class NpcAssetTests(unittest.TestCase):
         self.assertEqual(set(reused),{25,383,384,425,438})
         self.assertEqual({md:reused[md] for md in (383,384,425)},{383:'actors/asset-2/asset.mdpa',384:'actors/asset-3/asset.mdpa',425:'starters/bodies/305/asset.mdpa'})
         visitors={c['visitorActorId']:c['mdIndex'] for c in self.catalogue['characters'] if c.get('visitorActorId')}
-        self.assertEqual(visitors,{115:369,124:434})
+        self.assertEqual(visitors,{113:352,115:369,124:434})
 
 
 if __name__=='__main__':

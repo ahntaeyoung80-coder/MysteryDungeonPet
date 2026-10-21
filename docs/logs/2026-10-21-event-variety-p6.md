@@ -12,6 +12,6 @@
 
 ## 간단 검증
 
-새 event_combat·기존 event_runtime·party_ai_followup **3/3** 통과(1.12초 안팎; 정확한 출력은 build/event-variety-p6). 원작0조건 거부·실제 표본 재고·비용/수령 once·저장복원·적 전원 처리 전 승리문구 금지·동시 공격 금지·협력자 자체 공격·아군 오사격 금지·영구 일행/탐험 유지·기존 party AI 회귀를 확인했다. 대사 Python3/3 통과.
+새 event_combat·기존 event_runtime·party_ai_followup **3/3** 통과(1.07초; 출력은 build/event-variety-p6). 원작0조건 거부·실제 표본 재고·비용/수령 once·저장복원·적 전원 처리 전 승리문구 금지·동시 공격 금지·협력자 자체 공격·아군 오사격 금지·영구 일행/탐험 유지·기존 party AI 회귀를 확인했다. 대사 Python3/3 통과.
 
 공통 전투/저장 확장이므로 최종 P8 뒤 전체 메모리/통합을 한 번 수행한다. 중간 실제 EXE 확인은 하지 않았다. 다음은 P7 같은 날 일정에 고정하는 마을/온천 휴일이다.

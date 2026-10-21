@@ -474,6 +474,31 @@
       }
     },
     {
+      "mdIndex": 352,
+      "kaoIndex": 351,
+      "displayName": "코터스",
+      "visitorActorId": 113,
+      "speciesId": 324,
+      "spriteIndex": 521,
+      "originalEmotionMask": 4097,
+      "emotionMask": 4097,
+      "talkGroup": 4,
+      "characterId": "rom:6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf:EoS_NA:md:352",
+      "bodyAssetKey": "rom:EoS_NA:monster:352",
+      "bodyAtlasSha256": "ed1c7779326772a197947c0d54a9e9855ef216a1dc2d6250e3bd3c801f451d98",
+      "bodyManifest": "npcs/bodies/521/asset.mdpa",
+      "verification": {
+        "mdIndex": 352,
+        "spriteIndex": 521,
+        "nationalDex": 324,
+        "status": "pass",
+        "comparedFrames": 224,
+        "originalSourceFrames": 304,
+        "method": "direct WAN GeneratePiece/DrawOn vs atlas cell, raw marker/shadow/tick positions",
+        "scope": "original pack WANs → merged WAN → selected atlas clips; game wall time pending"
+      }
+    },
+    {
       "mdIndex": 369,
       "kaoIndex": 368,
       "displayName": "가재군",

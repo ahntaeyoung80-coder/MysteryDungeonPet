@@ -7,6 +7,7 @@
 namespace pet {
 struct ExplorationState;
 constexpr std::uint32_t kSystemDialogueActorId=UINT32_MAX;
+constexpr std::uint32_t kHolidayActorId=UINT32_MAX-2;
 // Event numbers deliberately match E01..E10, independently of GameplayEvent.
 enum class VarietyEvent : std::uint32_t { None, TiredExplorer, LostPokemon, Shop, MonsterHouse,
     Wonder, LostProperty, JointBattle, Reunion, GuildVisit, Holiday };
@@ -51,10 +52,19 @@ struct RecentDialogue {
 constexpr std::uint32_t kMaxStock=99;
 struct StockEntry {std::uint32_t owner=0,item=0,quantity=0;};
 enum class DayDestination : std::uint32_t { Unassigned, Exploration, Town, HotSpring };
+enum class HolidayBeat : std::uint32_t { None, Morning, PathWalk, PathFade, WestWalk, WestVisit, WestExit, WestFade,
+    EastWalk, EastDepart, SpringWalk, SpringVisit, BathEnter, BathTalk, BathRest, BathExit, SpringDepart, ReturnFade };
+struct HolidayState {
+    bool active=false;
+    HolidayBeat beat=HolidayBeat::None;
+    std::uint32_t npcMd=0,elapsedMs=0;
+    std::uint64_t startedMs=0,deadlineMs=0;
+};
 struct DaySchedule {
     std::uint32_t day=1, dungeon=0;
     DayDestination destination=DayDestination::Unassigned;
     bool mealCommitted=false;
+    bool holidayCommitted=false;
 };
 struct VarietyState {
     std::uint64_t eventRng=0, dialogueRng=0, scheduleRng=0;
@@ -64,6 +74,10 @@ struct VarietyState {
     std::vector<RecentDialogue> recent;
     std::set<std::string> committed; // Full event/result keys, retained across floor/run replacement.
     std::vector<StockEntry> stock; // Non-Oran quantities only; berries remain in GameplayState/CompanionState.
+    bool holidayPolicy=false;
+    std::uint32_t completedExplorations=0,lastHolidayAt=0;
+    DayDestination lastHoliday=DayDestination::Unassigned;
+    HolidayState holiday;
 };
 VarietyState initialVarietyState(std::uint64_t run, std::uint64_t seed, std::uint32_t day);
 enum class VarietyRandomStream { Event, Dialogue, Schedule };

@@ -1,6 +1,7 @@
 #include "core/dialogue_catalogue.hpp"
 #include "core/exploration_io.hpp"
 #include "core/event_runtime.hpp"
+#include "core/holiday_scene.hpp"
 #include <algorithm>
 #include <set>
 #include <stdexcept>
@@ -39,6 +40,7 @@ bool actorExists(const ExplorationState& s,PortraitRole role) {
     if(role==PortraitRole::Alarm)return s.gameplay.homeScene;
     if(role==PortraitRole::None)return true;
     if(role!=PortraitRole::Friendly)return false;
+    if(s.variety.holiday.active)return true;
     return std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return
         e.instanceId==actor(s,role) && e.kind==EntityKind::Friend && e.visible && !e.done &&
         std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),e.instanceId)==s.gameplay.hostile.end();});
@@ -61,6 +63,7 @@ void assignLine(ExplorationState& s,const DialogueBundle& b,unsigned index,std::
     if(g.life==LifePhase::Dialogue)g.dialogueStage=line.display.speaker==PortraitRole::Player?DialogueStage::Player:DialogueStage::Npc;
     if(eventActive(s)) {
         g.walkStartedMs=g.companion.walkStartedMs=0;
+        if(s.variety.holiday.active)return;
         auto tile=[&](unsigned id){if(!id)return s.position;if(id==kCompanionActorId)return g.companion.tile;
             const auto it=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==id;});return it==s.population.entities.end()?-1:it->tile;};
         const int speaker=tile(d.speaker),listener=tile(d.listener);
@@ -105,7 +108,7 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
     const auto count=r.count(128);require(count>0,"empty dialogue catalogue");std::set<std::string> ids,lines;
     for(unsigned i=0;i<count;++i) {
         DialogueBundle b;b.id=r.str();b.context=r.str();b.weight=r.count(100);
-        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart","event.E02.intro","event.E02.success","event.E06.pickup","event.E06.owner","event.E06.success","event.E08.separated","event.E08.reunion","event.E03.intro","event.E03.success","event.E04.intro","event.E04.victory","event.E07.intro","event.E07.victory"};
+        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart","event.E02.intro","event.E02.success","event.E06.pickup","event.E06.owner","event.E06.success","event.E08.separated","event.E08.reunion","event.E03.intro","event.E03.success","event.E04.intro","event.E04.victory","event.E07.intro","event.E07.victory","event.E10.morning","event.E10.visit","event.E10.bath","event.E10.depart"};
         const bool event=eventContexts.count(b.context)!=0;
         require(identity(b.id) && ids.insert(b.id).second && (event || std::find(contexts.begin(),contexts.end(),b.context)!=contexts.end()) && b.weight,"invalid dialogue bundle");
         const auto n=r.count(32);require(n>0,"empty dialogue bundle");
@@ -140,6 +143,7 @@ std::string dialogueContext(const ExplorationState& s) {
 }
 bool dialogueEligible(const ExplorationState& s,const std::string& context) {
     if(context!=dialogueContext(s))return false;
+    if(s.variety.holiday.active)return s.gameplay.companion.enabled;
     if(eventActive(s))return safePair(s) && s.gameplay.companion.enabled;
     const auto& g=s.gameplay;
     if(context=="companion.checkin")return safePair(s) && g.companion.enabled && canAttack(s.world,s.position,g.companion.tile);
@@ -182,7 +186,7 @@ void Explorer::restoreDialogue(const DialogueCatalogue& c,std::uint64_t now) {
     auto& s=state_;auto& d=s.variety.dialogue;if(!d.active)return;
     const auto* line=selectedDialogue(s,c);
     if(!line || !dialogueEligible(s,d.context)) {
-        if(eventActive(s)){cancelVariety(s);s.gameplay.deadlineMs=now;invalidate();return;}
+        if(eventActive(s)){const bool holiday=s.variety.holiday.active;cancelVariety(s);s.gameplay.deadlineMs=now;invalidate();if(holiday)(void)returnFromHoliday(now);return;}
         d={};if(dialogueContext(s).empty())return;
         if(s.gameplay.life==LifePhase::Dialogue && !companionDialogue(s.gameplay) && !actorExists(s,PortraitRole::Friendly)) {
             s.gameplay.life=LifePhase::Explore;s.gameplay.enemyInstance=0;s.gameplay.deadlineMs=now;invalidate();return;
@@ -197,8 +201,18 @@ void Explorer::restoreDialogue(const DialogueCatalogue& c,std::uint64_t now) {
     if(d.deadlineMs<=d.startedMs)d.deadlineMs=d.startedMs+1;
     s.gameplay.phaseStartedMs=d.startedMs;s.gameplay.deadlineMs=d.deadlineMs;
 }
-GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,ActorCompletion done,const DialogueCatalogue& c,const EventRegistry* maps) {
+GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,ActorCompletion done,const DialogueCatalogue& c,const EventRegistry* maps,const HolidayRegistry* visits) {
     auto& s=state_;auto& g=s.gameplay;auto& d=s.variety.dialogue;
+    if(s.variety.holiday.active) {
+        if(!visits || now>=s.variety.event.deadlineMs){cancelVariety(s);return returnFromHoliday(now);}
+        const bool complete=advanceHoliday(s,c,*visits,now);
+        if(complete || !s.variety.holiday.active)return returnFromHoliday(now);
+        return {};
+    }
+    if(visits && g.life==LifePhase::Explore && g.sceneBeat==SceneBeat::ExploreFadeIn &&
+       (s.variety.schedule.destination==DayDestination::Town || s.variety.schedule.destination==DayDestination::HotSpring)) {
+        if(startHoliday(s,c,*visits,now))return {};
+    }
     if(eventBattle(s)) {
         const auto update=advanceParty(now,done);auto& event=s.variety.event;
         const auto helper=event.id.type==VarietyEvent::JointBattle && !event.actors.empty()?event.actors.front():0;
