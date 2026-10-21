@@ -32,3 +32,9 @@
 P0 검증을 마쳤다. 다음은 P1에서 기본 던전15의 실제 출현 MD별 필수 몸체/Normal 얼굴을 패키지화하고 표시 종을 일치시키는 작업이다. 빈도·교환·보상·휴일 주기는 미정이다. 실제 사용자 Windows11·OS lock/power·장기/최종 성능·A/C의 잔여 gate는 pending이다. 자동 전체 CI는 push 후 백그라운드로 확인하며 아직 성공으로 포함하지 않는다.
 
 마감 `git diff --cached --check`가 Windows 로그의 CRLF를 공백 오류로 검출해 근거 텍스트의 줄바꿈만 LF로 정규화했다. 제품 소스/EXE는 바뀌지 않았다.
+
+## 원격 반영·마감
+
+기능/소스/EXE/근거 커밋 `30641d1`을 `work`에 push했다. 10:09:02 KST에 명시 fetch 후 HEAD/origin/work 일치와 clean 상태를 확인했다. 최초 실측부터 이 확인까지 **14분14초**다. 작업 전 미계측 구간과 이 기록 전용 커밋/원격 확인은 별도이며 CI 대기는 하지 않았다.
+
+연결된 GitHub 상태 조회가 `statuses: []`를 반환해 자동 CI의 run ID/완료 상태는 확인하지 못했다. 성공으로 포함하지 않으며 [Actions](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions)에서 후속 확인한다. 이 마감 기록만 `[skip ci]`로 반영해 같은 제품 코드의 전체 CI가 중복 실행되지 않게 한다. 다음 실행은 P1 실제 배우 연결이다.
