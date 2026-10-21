@@ -21,3 +21,5 @@
 ## 실측 구간·커밋
 
 착수18:46:43→첫 구현/관련 검사 로컬 커밋18:58:02 KST는11분19초다. 첫 커밋0e8c07d4639313a9bd01aecfa070d3b6d8fc1941이며 미완료 원격/실행물 반영을 완료라고 보고하지 않았다. 이후 전체 검사·Windows 빌드/GUI·문서/설치 검증을 병행했다. 세부 순수 구현/대기 시간을 임의로 분리하지 않는다. 최종 push 시각은 원격 기록에 이어 적는다.
+
+19:05:22 KST에 제품 커밋c15d267c196b324946f658e6083f7e59cba8bcff의push→명시refspec fetch로HEAD=origin/work와 clean을 확인했다. 최초 구현 커밋부터7분20초, 착수부터18분39초이며 구현/검사/기록이 겹친 전체 경과다. workflow 도구는PR-triggered run만 조회하고 workflow/status 모두 빈 목록이므로 push CI 완료/통과는 미확인이다. 이 원격 확인은 문서 전용skip ci 커밋으로 기록하며 이미 검증한 코드/EXE를 다시 빌드·전체 검사하지 않는다. [원격 근거](../validation/2026-10-21-gameplay-notices/remote-verification.json).

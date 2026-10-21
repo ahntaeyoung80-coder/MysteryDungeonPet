@@ -18,6 +18,6 @@ B-1/B-2 자율 탐험 안정화에 이어 [다양성 계획](docs/plans/2026-10-
 
 ## 검증·바로 다음 작업
 
-[기존 피드백 수정](docs/logs/2026-10-21-gameplay-feedback.md)에 이어 [획득·처치 안내](docs/logs/2026-10-21-gameplay-notices.md)를 구현·검증했다. ASan/UBSan core27개·Windows 관련3개, 실제 EXE6시나리오와 설치본6초·획득 안내 중 실제 재시작을 확인했다. 재시작 후 아이템/열매1개만 남고 결과가 중복되지 않는다. [최종 근거](docs/validation/2026-10-21-gameplay-notices/summary.json). Python 자산은 변경하지 않아 이전49개 결과를 재사용하고 전체 맵 아이템 이름은 새 C++ 검사로 대조했다. 소스·루트 EXE/hash를 함께 반영하며 자동 CI는 최종 push 후 별도 기록한다.
+[기존 피드백 수정](docs/logs/2026-10-21-gameplay-feedback.md)에 이어 [획득·처치 안내](docs/logs/2026-10-21-gameplay-notices.md)를 구현·검증했다. ASan/UBSan core27개·Windows 관련3개, 실제 EXE6시나리오와 설치본6초·획득 안내 중 실제 재시작을 확인했다. 재시작 후 아이템/열매1개만 남고 결과가 중복되지 않는다. [최종 근거](docs/validation/2026-10-21-gameplay-notices/summary.json). Python 자산은 변경하지 않아 이전49개 결과를 재사용하고 전체 맵 아이템 이름은 새 C++ 검사로 대조했다. 제품 커밋c15d267의 소스·루트 EXE/hash를 함께 push하고 명시 fetch로HEAD=origin/work를 확인했다. 자동 CI 조회 목록이 비어 완료/통과는 미확인이다. [원격 근거](docs/validation/2026-10-21-gameplay-notices/remote-verification.json).
 
 남은 범위는 실제 사용자 Windows11·OS lock/power·장기 성능과 활동 연동이다. Wine의 짧은 실행을 이 항목의 통과로 표시하지 않는다. 소스·선택 자산·루트 EXE를 함께 반영하며 자동 CI는 최종 push 후 별도 상태로 기록한다. [실행 안내](docs/WINDOWS_QUICKSTART.md).

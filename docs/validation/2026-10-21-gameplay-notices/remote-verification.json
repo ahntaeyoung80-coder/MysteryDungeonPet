@@ -1,0 +1,10 @@
+{
+  "verifiedUtc": "2026-10-21T10:05:22.059214+00:00",
+  "head": "c15d267c196b324946f658e6083f7e59cba8bcff",
+  "originWork": "c15d267c196b324946f658e6083f7e59cba8bcff",
+  "cleanBeforeDocumentation": true,
+  "implementationCommit": "0e8c07d4639313a9bd01aecfa070d3b6d8fc1941",
+  "workflowRuns": [],
+  "statuses": [],
+  "ci": "미확인: workflow 도구는 PR-triggered run만 조회하며 반환 목록이 비어 push CI 결과로 단정할 수 없음"
+}

@@ -28,6 +28,7 @@
   },
   "probabilityPolicyChanged": false,
   "pythonAssetTests": "inputs/assets unchanged; reused prior coverage, added C++ whole-map name coverage",
-  "ci": "최종 push 후 별도 확인; 아직 조회 전",
-  "runtimeManifestIncCrlf": "passed"
+  "ci": "조회 목록이 비어 완료/통과 미확인",
+  "runtimeManifestIncCrlf": "passed",
+  "productCommit": "c15d267c196b324946f658e6083f7e59cba8bcff"
 }
