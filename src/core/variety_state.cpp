@@ -82,6 +82,7 @@ void cancelVariety(ExplorationState& s) {
     v.event.reservations.clear();v.event.actors.clear();v.dialogue={};
     v.event.task=EventTask::None;v.event.targetTile=v.event.objectTile=v.event.sourceTile=-1;v.event.item=v.event.quantity=v.event.warpedActor=v.event.stalls=0;
     v.event.carrying=false;v.event.temporaryActors.clear();v.event.opponents.clear();
+    v.event.goods.clear();v.event.allyContributed=v.event.partyContributed=false;
     if(busy) {s.target=-1;s.targetInstance=0;s.goalKind=GoalKind::None;}
 }
 bool commitVarietyResult(ExplorationState& s,const std::string& result) {
@@ -128,7 +129,9 @@ void validateVarietyState(const ExplorationState& s) {
     std::set<unsigned> owned,opponents;
     for(auto id:e.temporaryActors)require(actor(s,id) && id && id!=kCompanionActorId && owned.insert(id).second && std::find(e.actors.begin(),e.actors.end(),id)!=e.actors.end(),"invalid temporary event actor");
     for(auto id:e.opponents)require(actor(s,id) && id && id!=kCompanionActorId && opponents.insert(id).second && std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),id)!=s.gameplay.hostile.end(),"invalid event opponent");
-    if(!live(e.progress))require(e.task==EventTask::None && e.targetTile==-1 && e.objectTile==-1 && e.sourceTile==-1 && !e.item && !e.quantity && !e.carrying && e.temporaryActors.empty() && e.opponents.empty(),"inactive event retains owned task");
+    require(e.goods.size()<=16,"event shop goods exceed limit");
+    for(const auto& good:e.goods)require(e.id.type==VarietyEvent::Shop && good.item>0 && good.item<=65535 && good.quantity>0 && good.quantity<=kMaxStock,"invalid event shop goods");
+    if(!live(e.progress))require(e.task==EventTask::None && e.targetTile==-1 && e.objectTile==-1 && e.sourceTile==-1 && !e.item && !e.quantity && !e.warpedActor && !e.stalls && !e.carrying && e.temporaryActors.empty() && e.opponents.empty() && e.goods.empty() && !e.allyContributed && !e.partyContributed,"inactive event retains owned task");
     std::set<std::uint32_t> actors;
     for(auto id:e.actors)require(id && id!=kCompanionActorId && actor(s,id) && actors.insert(id).second,"invalid event actor");
     std::set<std::pair<std::uint32_t,std::uint32_t>> reserved;
@@ -178,5 +181,10 @@ bool changeStock(ExplorationState& s,std::uint32_t owner,std::uint32_t item,int 
     if(i==rows.end()){if(next && rows.size()<512)rows.push_back({owner,item,unsigned(next)});else if(next)return false;}
     else if(!next)rows.erase(i);else i->quantity=unsigned(next);
     return true;
+}
+bool eventBattle(const ExplorationState& s){return s.variety.event.task==EventTask::Battle && s.variety.event.progress==EventProgress::Action;}
+bool partyAlly(const ExplorationState& s,std::uint32_t id) {
+    return id==0 || id==kCompanionActorId || (eventBattle(s) && s.variety.event.id.type==VarietyEvent::JointBattle &&
+        !s.variety.event.actors.empty() && s.variety.event.actors.front()==id);
 }
 } // namespace pet

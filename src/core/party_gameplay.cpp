@@ -33,8 +33,8 @@ void validatePartyState(const ExplorationState& s) {
         if(!actor)return true;
         if(actor==kCompanionActorId)return g.companion.enabled;
         const auto* e=find(actor);
-        return e && e->kind==EntityKind::Friend &&
-            std::find(g.hostile.begin(),g.hostile.end(),actor)!=g.hostile.end();
+        return e && e->kind==EntityKind::Friend && (partyAlly(s,actor) ||
+            std::find(g.hostile.begin(),g.hostile.end(),actor)!=g.hostile.end());
     };
     if(g.companionTarget)check(find(g.companionTarget)!=nullptr,"party companion target missing");
     if(!g.independentParty) {
@@ -54,10 +54,9 @@ void validatePartyState(const ExplorationState& s) {
             a.actorId==kCompanionActorId?g.companion.actionRound:find(a.actorId)->actionRound;
         check(round==a.round,"party action did not consume its actor turn");
         if(a.kind==PartyActionKind::Attack) {
-            const bool ally=a.actorId==0 || a.actorId==kCompanionActorId;
+            const bool ally=partyAlly(s,a.actorId);
             check(validActor(a.targetId) && a.targetId!=a.actorId &&
-                (ally?(a.targetId!=0 && a.targetId!=kCompanionActorId):
-                       (a.targetId==0 || a.targetId==kCompanionActorId)) &&
+                (ally?!partyAlly(s,a.targetId):partyAlly(s,a.targetId)) &&
                 a.damage<=2 && (a.hit?(a.damage==1 || a.damage==2):(!a.damage && !a.critical)),
                 "invalid frozen party attack");
             const auto attack="party-attack:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
@@ -81,7 +80,7 @@ void validatePartyState(const ExplorationState& s) {
 }
 GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& completed) {
     auto& s=state_;auto& g=s.gameplay;
-    GameplayUpdate result;bool changed=false,defeated=false;
+    GameplayUpdate result;bool changed=false,defeated=false,supportLost=false;
     auto entity=[&](uint32_t id)->Entity* {
         auto it=std::find_if(s.population.entities.begin(),s.population.entities.end(),
             [&](const auto& e){return e.instanceId==id;});
@@ -89,7 +88,8 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     };
     auto hostile=[&](const Entity& e) {
         return e.kind==EntityKind::Friend && e.visible && !e.done && e.remainingHits &&
-            std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end();
+            std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end() &&
+            (!eventBattle(s) || std::find(s.variety.event.opponents.begin(),s.variety.event.opponents.end(),e.instanceId)!=s.variety.event.opponents.end());
     };
     auto position=[&](uint32_t actor) {
         if(!actor)return s.position;
@@ -159,6 +159,10 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             a->finished=true;
             if(!g.onceKeys.insert(impactKey(*a)).second)throw std::logic_error("duplicate party impact");
             if(!a->hit)continue;
+            if(eventBattle(s) && partyAlly(s,a->actorId)) {
+                if(a->actorId==0 || a->actorId==kCompanionActorId)s.variety.event.partyContributed=true;
+                else s.variety.event.allyContributed=true;
+            }
             const auto target=a->targetId;
             uint32_t left=0;
             if(!target){g.hearts-=std::min(g.hearts,a->damage);left=g.hearts;}
@@ -184,20 +188,28 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             }
             if(auto* e=entity(v.actorId);e && !e->done) {
                 e->done=true;s.stalledActions=0;s.onceKeys.insert(key("greet",e->instanceId));
-                g.onceKeys.insert("victory:"+key("combat",e->instanceId));
+                if(partyAlly(s,e->instanceId))supportLost=true;
+                else g.onceKeys.insert("victory:"+key("combat",e->instanceId));
                 invalidate(s.targetInstance==e->instanceId);
                 event(GameplayEvent::CombatVictory,e->instanceId,0,v.id);
             }
         }
     }
     if(defeated)return result;
+    if(supportLost){g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;g.life=LifePhase::Explore;g.phaseStartedMs=g.deadlineMs=now;return result;}
     for(auto& a:g.partyActions) if(!a.finished && a.kind!=PartyActionKind::Attack && now>=a.deadlineMs) {
         a.finished=true;changed=true;
+    }
+    if(eventBattle(s) && g.partyPlaybacks.empty() && std::none_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;})) {
+        const auto& owned=s.variety.event;
+        const bool ended=std::all_of(owned.opponents.begin(),owned.opponents.end(),[&](auto id){const auto* a=entity(id);return a && a->done;});
+        const bool withdraw=now>=owned.deadlineMs || (g.hearts<=kLowHp && !g.oran) || (g.companion.hearts<=kLowHp && !g.companion.oran);
+        if(ended || withdraw){g.life=LifePhase::Explore;g.phaseStartedMs=g.deadlineMs=now;return result;}
     }
     auto available=[&](uint32_t actor) {
         if(!actor)return g.hearts>0;
         if(actor==kCompanionActorId)return g.companion.enabled && g.companion.hearts>0;
-        auto* e=entity(actor);return e && hostile(*e);
+        auto* e=entity(actor);return e && e->visible && !e->done && e->remainingHits && (partyAlly(s,actor) || hostile(*e));
     };
     auto pending=[&](uint32_t actor) {
         return std::any_of(g.partyActions.begin(),g.partyActions.end(),
@@ -210,14 +222,14 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         a.deadlineMs=now+duration;a.finished=!duration && kind!=PartyActionKind::Attack;
         consumed(actor)=g.actionRound;
         if(kind==PartyActionKind::Attack) {
-            const auto roll=rollBasicAttack(s.rng,actor==0 || actor==kCompanionActorId);
+            const auto roll=rollBasicAttack(s.rng,partyAlly(s,actor));
             a.hit=roll.hit;a.critical=roll.critical;a.damage=roll.damage;
             const auto once="party-attack:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
                 std::to_string(a.round)+":"+std::to_string(actor);
             if(!g.onceKeys.insert(once).second)throw std::logic_error("duplicate party action");
             direction(actor)=directionBetween(position(actor),position(target));
             playback(actor,1,direction(actor),a.id);
-            const auto foe=actor==0 || actor==kCompanionActorId?target:actor;
+            const auto foe=partyAlly(s,actor)?target:actor;
             g.enemyInstance=foe;if(auto* e=entity(foe))g.enemyHits=e->remainingHits;
             g.enemyTargetsCompanion=target==kCompanionActorId;
             g.hit=a.hit;g.critical=a.critical;g.damage=a.damage;
@@ -284,7 +296,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         const int from=position(actor);const auto reach=bfs(s.world,from);
         for(const auto& e:s.population.entities) {
             if(actor==kCompanionActorId && !supportThreat(e))continue;
-            if(!hostile(e) || (adjacent?!canAttack(s.world,from,e.tile):(actor!=kCompanionActorId && !seen(from,e.tile))))continue;
+            if(!hostile(e) || (adjacent?!canAttack(s.world,from,e.tile):(!eventBattle(s) && actor!=kCompanionActorId && !seen(from,e.tile))))continue;
             const int d=reach.distance[e.tile];
             if(d>=0 && (d<distance || (d==distance && (!best || e.instanceId<best)))) {
                 best=e.instanceId;distance=d;
@@ -306,7 +318,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     auto approach=[&](uint32_t actor,int target)->int {
         const int from=position(actor);
         auto blocked=occupancy();
-        for(const auto& npc:s.population.entities)if(friendly(npc) && !s.blocked[npc.tile])blocked[npc.tile]=0;
+        if(!eventBattle(s))for(const auto& npc:s.population.entities)if(friendly(npc) && !s.blocked[npc.tile])blocked[npc.tile]=0;
         blocked[s.position]=1;blocked[g.companion.tile]=1;blocked[from]=0;
         const auto reach=bfs(s.world,from,blocked);
         int goal=-1;
@@ -364,6 +376,15 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     };
     auto planPlayer=[&] {
         if(!available(0) || consumed(0)==g.actionRound || partyPlayback(g,0))return;
+        if(eventBattle(s)) {
+            if(heal(0))return;
+            if(const auto foe=nearestEnemy(0,true)){start(0,PartyActionKind::Attack,foe,5000);return;}
+            if(const auto foe=nearestEnemy(0,false)) {
+                const int next=approach(0,position(foe));
+                if(next>=0){const int from=s.position;s.position=next;s.visited[next]=1;s.discovered[next]=1;++s.floorSteps;move(0,from,next);return;}
+            }
+            start(0,PartyActionKind::Wait,0,400);return;
+        }
         if(beginCompanionDialogue(now)) {event(GameplayEvent::DialoguePlayer,0,kCompanionActorId,0);return;}
         retreatProgress_=false;
         discover();
@@ -479,12 +500,21 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     };
     auto planEnemy=[&](Entity& e,bool early) {
         if(!hostile(e) || e.actionRound==g.actionRound || partyPlayback(g,e.instanceId))return;
-        const int target=nearestPartyTile(e);
+        unsigned targetActor=nearestPartyTile(e)==s.position?0:kCompanionActorId;
+        if(eventBattle(s) && s.variety.event.id.type==VarietyEvent::JointBattle && !s.variety.event.actors.empty()) {
+            const auto helper=s.variety.event.actors.front();
+            if(available(helper)) {
+                const auto reach=bfs(s.world,e.tile);
+                const int hd=reach.distance[position(helper)],pd=reach.distance[position(targetActor)];
+                if(hd>=0 && (pd<0 || hd<pd))targetActor=helper;
+            }
+        }
+        const int target=position(targetActor);
         const bool inSight=seen(e.tile,target);
         if(inSight){e.tracking=Tracking::Chase;e.lastSeen=target;e.chaseTarget=target;}
         if(canAttack(s.world,e.tile,target)) {
             if(!early)start(e.instanceId,PartyActionKind::Attack,
-                target==s.position?0:kCompanionActorId,5000);
+                targetActor,5000);
             return;
         }
         if(e.tracking==Tracking::Chase && e.lastSeen>=0) {
@@ -511,7 +541,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     for(unsigned transition=0;transition<4;++transition) {
         if(!g.hearts || !g.companion.hearts)break;
         if(g.partyPhase==PartyPhase::Idle) {
-            if(s.position==s.world.stairs && (lowHealth() || roomFullyShown(s.world.room[s.position])) && g.companionIntent!=CompanionIntent::Engage &&
+            if(!eventBattle(s) && s.position==s.world.stairs && (lowHealth() || roomFullyShown(s.world.room[s.position])) && g.companionIntent!=CompanionIntent::Engage &&
                canAttack(s.world,s.position,g.companion.tile)) {
                 invalidate();g.movement={};g.companion.movement={};
                 g.walkStartedMs=g.companion.walkStartedMs=0;
@@ -545,6 +575,15 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         }
         if(g.partyPhase==PartyPhase::OrderedEnemies) {
             if(!turnSettled())break;
+            if(eventBattle(s) && s.variety.event.id.type==VarietyEvent::JointBattle && !s.variety.event.actors.empty()) {
+                const auto helper=s.variety.event.actors.front();
+                if(available(helper) && consumed(helper)!=g.actionRound) {
+                    if(const auto foe=nearestEnemy(helper,true))start(helper,PartyActionKind::Attack,foe,5000);
+                    else if(const auto foe=nearestEnemy(helper,false)){const int next=approach(helper,position(foe));if(next>=0)move(helper,position(helper),next);else start(helper,PartyActionKind::Wait,0,0);}
+                    else start(helper,PartyActionKind::Wait,0,0);
+                    if(!turnSettled())break;
+                }
+            }
             Entity* next=nullptr;
             for(auto& e:s.population.entities)if(hostile(e) && e.actionRound!=g.actionRound &&
                 (!next || e.instanceId<next->instanceId))next=&e;

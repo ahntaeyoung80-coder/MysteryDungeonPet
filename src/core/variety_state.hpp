@@ -21,6 +21,7 @@ struct EventReservation {
     std::uint32_t owner=0, item=0, quantity=0;
 };
 enum class EventTask : std::uint32_t { None, Escort, Collect, FindOwner, Reunite, Battle, Trade };
+struct EventGoods {std::uint32_t item=0,quantity=0;};
 struct VarietyEventState {
     EventIdentity id;
     EventProgress progress=EventProgress::None;
@@ -33,6 +34,8 @@ struct VarietyEventState {
     std::uint32_t item=0,quantity=0,warpedActor=0,stalls=0;
     bool carrying=false;
     std::vector<std::uint32_t> temporaryActors,opponents;
+    std::vector<EventGoods> goods;
+    bool allyContributed=false,partyContributed=false;
 };
 struct DialogueSession {
     bool active=false;
@@ -80,4 +83,6 @@ bool reconcileDialogue(ExplorationState&, std::uint32_t catalogueVersion,
 std::uint32_t stockQuantity(const ExplorationState&,std::uint32_t owner,std::uint32_t item);
 std::uint32_t reservedQuantity(const ExplorationState&,std::uint32_t owner,std::uint32_t item);
 bool changeStock(ExplorationState&,std::uint32_t owner,std::uint32_t item,int delta);
+bool eventBattle(const ExplorationState&);
+bool partyAlly(const ExplorationState&,std::uint32_t actor);
 } // namespace pet

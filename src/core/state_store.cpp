@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(14); // MDES14 appends explicit event-owned actors, route and property.
+    w.u32(0x5345444d); w.u32(15); // MDES15 adds actual shop stock and committed battle contribution.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -178,6 +178,9 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u32(static_cast<unsigned>(e.temporaryActors.size()));for(auto id:e.temporaryActors)w.u32(id);
     w.u32(static_cast<unsigned>(e.opponents.size()));for(auto id:e.opponents)w.u32(id);
     w.u32(static_cast<unsigned>(w.bytes.size()-taskStart));
+    const auto battleStart=w.bytes.size();
+    w.u32(static_cast<unsigned>(e.goods.size()));for(const auto& good:e.goods){w.u32(good.item);w.u32(good.quantity);}
+    w.u32(e.allyContributed);w.u32(e.partyContributed);w.u32(static_cast<unsigned>(w.bytes.size()-battleStart));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -186,7 +189,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 14) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 15) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -373,6 +376,12 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         auto n=r.count(kTiles);for(unsigned i=0;i<n;++i)e.temporaryActors.push_back(r.u32());
         n=r.count(kTiles);for(unsigned i=0;i<n;++i)e.opponents.push_back(r.u32());
         const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("event task block length mismatch");
+    }
+    if(schema>=15) {
+        const auto start=r.offset;auto& e=s.variety.event;const auto n=r.count(16);
+        for(unsigned i=0;i<n;++i)e.goods.push_back({r.count(65535),r.count(kMaxStock)});
+        e.allyContributed=r.boolean();e.partyContributed=r.boolean();const auto length=r.u32();
+        if(length!=r.offset-start-4)throw std::runtime_error("event goods/battle block length mismatch");
     }
     r.u32(); r.end();
     discardStaleEntityGoal(s);

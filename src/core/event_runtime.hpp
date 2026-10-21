@@ -12,4 +12,8 @@ void finishVarietyEvent(ExplorationState&);
 bool movementEvent(VarietyEvent);
 bool startMovementEvent(ExplorationState&,VarietyEvent,std::uint64_t,const DialogueCatalogue&,std::uint32_t,const EventRegistry*);
 GameplayUpdate advanceMovementEvent(ExplorationState&,std::uint64_t,const DialogueCatalogue&);
+bool combatEvent(VarietyEvent);
+bool startCombatEvent(ExplorationState&,VarietyEvent,std::uint64_t,const DialogueCatalogue&,std::uint32_t,const EventRegistry*);
+GameplayUpdate advanceCombatEvent(ExplorationState&,std::uint64_t,const DialogueCatalogue&);
+bool commitShopExchange(ExplorationState&);
 } // namespace pet

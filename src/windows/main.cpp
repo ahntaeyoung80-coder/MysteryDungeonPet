@@ -1264,6 +1264,7 @@ class App {
             const auto& event=state.variety.event;
             if(event.objectTile>=0 && !event.carrying && event.id.type==VarietyEvent::LostProperty)addProp(layers,4,raster(tilePoint(event.objectTile)));
             if(event.sourceTile>=0 && event.id.type==VarietyEvent::Reunion)addProp(layers,5,raster(tilePoint(event.sourceTile)));
+            if(event.sourceTile>=0 && event.id.type==VarietyEvent::Shop)addProp(layers,6,raster(tilePoint(event.sourceTile)));
             for (const auto& e : state.population.entities) if (e.visible && (!e.done || (e.kind==EntityKind::Friend && std::find(state.gameplay.hostile.begin(),state.gameplay.hostile.end(),e.instanceId)==state.gameplay.hostile.end()))) {
                 if (e.kind == EntityKind::Friend) {
                     const auto& g = state.gameplay;

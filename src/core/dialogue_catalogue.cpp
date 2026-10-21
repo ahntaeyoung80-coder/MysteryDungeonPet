@@ -105,7 +105,7 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
     const auto count=r.count(128);require(count>0,"empty dialogue catalogue");std::set<std::string> ids,lines;
     for(unsigned i=0;i<count;++i) {
         DialogueBundle b;b.id=r.str();b.context=r.str();b.weight=r.count(100);
-        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart","event.E02.intro","event.E02.success","event.E06.pickup","event.E06.owner","event.E06.success","event.E08.separated","event.E08.reunion"};
+        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart","event.E02.intro","event.E02.success","event.E06.pickup","event.E06.owner","event.E06.success","event.E08.separated","event.E08.reunion","event.E03.intro","event.E03.success","event.E04.intro","event.E04.victory","event.E07.intro","event.E07.victory"};
         const bool event=eventContexts.count(b.context)!=0;
         require(identity(b.id) && ids.insert(b.id).second && (event || std::find(contexts.begin(),contexts.end(),b.context)!=contexts.end()) && b.weight,"invalid dialogue bundle");
         const auto n=r.count(32);require(n>0,"empty dialogue bundle");
@@ -199,6 +199,28 @@ void Explorer::restoreDialogue(const DialogueCatalogue& c,std::uint64_t now) {
 }
 GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,ActorCompletion done,const DialogueCatalogue& c,const EventRegistry* maps) {
     auto& s=state_;auto& g=s.gameplay;auto& d=s.variety.dialogue;
+    if(eventBattle(s)) {
+        const auto update=advanceParty(now,done);auto& event=s.variety.event;
+        const auto helper=event.id.type==VarietyEvent::JointBattle && !event.actors.empty()?event.actors.front():0;
+        const auto actor=helper?std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& a){return a.instanceId==helper;}):s.population.entities.end();
+        const bool lost=helper && (actor==s.population.entities.end() || actor->done || !actor->remainingHits);
+        if(g.life==LifePhase::Death || s.phase!=Phase::Explore || lost) {
+            cancelVariety(s);if(lost && actor!=s.population.entities.end())actor->visible=false;invalidate();return update;
+        }
+        const bool settled=g.partyPlaybacks.empty() && std::none_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;});
+        const bool victory=!event.opponents.empty() && std::all_of(event.opponents.begin(),event.opponents.end(),[&](auto id){const auto i=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& a){return a.instanceId==id;});return i!=s.population.entities.end() && i->done;});
+        if(settled && victory) {
+            g.partyActions.clear();g.partyPhase=PartyPhase::Idle;g.life=LifePhase::Explore;g.companionIntent=CompanionIntent::Follow;g.companionTarget=0;
+            if(event.id.type==VarietyEvent::JointBattle && !event.partyContributed){cancelVariety(s);g.deadlineMs=now;invalidate();return update;}
+            event.progress=EventProgress::Result;(void)commitVarietyResult(s,"victory");
+            if(!startDialogueBundle(s,c,event.variant+".victory",now)){cancelVariety(s);g.deadlineMs=now;}
+            return update;
+        }
+        if(settled && (now>=event.deadlineMs || (g.hearts<=kLowHp && !g.oran) || (g.companion.hearts<=kLowHp && !g.companion.oran))) {
+            g.partyActions.clear();g.partyPhase=PartyPhase::Idle;cancelVariety(s);g.life=LifePhase::Explore;g.deadlineMs=now;invalidate();
+        }
+        return update;
+    }
     if(eventActive(s)){const auto update=advanceVarietyEvent(s,now,c,maps);if(!eventActive(s))invalidate();return update;}
     if(!d.active && tryAutomaticEvent(s,now,c,maps))return s.variety.event.id.type==VarietyEvent::Reunion?GameplayUpdate{GameplayEvent::Warp,{}}:GameplayUpdate{GameplayEvent::DialoguePlayer,{}};
     if(d.active) {

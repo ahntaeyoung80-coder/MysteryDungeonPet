@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 4,
+  "catalogueVersion": 5,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -1323,6 +1323,456 @@
           "emotion": 9,
           "holdMs": 1000,
           "text": "응. 천천히 함께 가자."
+        }
+      ]
+    },
+    {
+      "id": "E03.trade_a.intro",
+      "context": "event.E03.intro",
+      "condition": "event.E03.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E03.trade_a.01",
+          "legacyId": 6520,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "오랭열매 1개를 사과 3개와 교환해."
+        },
+        {
+          "id": "E03.trade_a.02",
+          "legacyId": 6521,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "사과 3개를 오랭열매 1개로 바꿀게."
+        },
+        {
+          "id": "E03.trade_a.03",
+          "legacyId": 6522,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "오랭열매 1개를 사과 3개와 교환해."
+        }
+      ]
+    },
+    {
+      "id": "E03.trade_a.success",
+      "context": "event.E03.success",
+      "condition": "event.E03.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E03.trade_a.04",
+          "legacyId": 6530,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "교환은 끝났어. 잘 챙겨 둬!"
+        },
+        {
+          "id": "E03.trade_a.05",
+          "legacyId": 6531,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "고마워. 잘 쓸게."
+        },
+        {
+          "id": "E03.trade_a.06",
+          "legacyId": 6532,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "조심해서 다녀와!"
+        }
+      ]
+    },
+    {
+      "id": "E03.browse.intro",
+      "context": "event.E03.intro",
+      "condition": "event.E03.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E03.browse.01",
+          "legacyId": 6540,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "구경만 하고 가도 좋아."
+        },
+        {
+          "id": "E03.browse.02",
+          "legacyId": 6541,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "오늘은 어떤 물건이 있나 볼게."
+        }
+      ]
+    },
+    {
+      "id": "E03.browse.success",
+      "context": "event.E03.success",
+      "condition": "event.E03.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E03.browse.03",
+          "legacyId": 6550,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "다음에 또 들르자."
+        },
+        {
+          "id": "E03.browse.04",
+          "legacyId": 6551,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "언제든 환영이야!"
+        }
+      ]
+    },
+    {
+      "id": "E03.trade_b.intro",
+      "context": "event.E03.intro",
+      "condition": "event.E03.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E03.trade_b.01",
+          "legacyId": 6560,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "오랭열매 1개를 사과 3개와 교환해."
+        },
+        {
+          "id": "E03.trade_b.02",
+          "legacyId": 6561,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "사과 3개를 오랭열매 1개로 바꿀게."
+        }
+      ]
+    },
+    {
+      "id": "E03.trade_b.success",
+      "context": "event.E03.success",
+      "condition": "event.E03.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E03.trade_b.03",
+          "legacyId": 6570,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "여기 있어. 물건은 확인했지?"
+        },
+        {
+          "id": "E03.trade_b.04",
+          "legacyId": 6571,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "응, 잘 챙겼어!"
+        }
+      ]
+    },
+    {
+      "id": "E04.house_a.intro",
+      "context": "event.E04.intro",
+      "condition": "event.E04.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E04.house_a.01",
+          "legacyId": 6580,
+          "speaker": 0,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "몬스터 하우스다!"
+        },
+        {
+          "id": "E04.house_a.02",
+          "legacyId": 6581,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 12,
+          "holdMs": 1000,
+          "text": "조심해! 둘러싸이지 말자."
+        },
+        {
+          "id": "E04.house_a.03",
+          "legacyId": 6582,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "알겠어. 함께 버티자!"
+        }
+      ]
+    },
+    {
+      "id": "E04.house_a.victory",
+      "context": "event.E04.victory",
+      "condition": "event.E04.victory",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E04.house_a.04",
+          "legacyId": 6590,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "휴... 이제 잠잠해졌네."
+        },
+        {
+          "id": "E04.house_a.05",
+          "legacyId": 6591,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "주변을 살피고 움직이자."
+        },
+        {
+          "id": "E04.house_a.06",
+          "legacyId": 6592,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "좋아. 천천히 가자."
+        }
+      ]
+    },
+    {
+      "id": "E04.house_b.intro",
+      "context": "event.E04.intro",
+      "condition": "event.E04.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E04.house_b.01",
+          "legacyId": 6600,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 12,
+          "holdMs": 1000,
+          "text": "갑자기 나타났어!"
+        },
+        {
+          "id": "E04.house_b.02",
+          "legacyId": 6601,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "침착하게 대응하자!"
+        }
+      ]
+    },
+    {
+      "id": "E04.house_b.victory",
+      "context": "event.E04.victory",
+      "condition": "event.E04.victory",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E04.house_b.03",
+          "legacyId": 6610,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "잘 버텼어!"
+        },
+        {
+          "id": "E04.house_b.04",
+          "legacyId": 6611,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "아직 방심하지 말자."
+        }
+      ]
+    },
+    {
+      "id": "E07.assist_a.intro",
+      "context": "event.E07.intro",
+      "condition": "event.E07.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E07.assist_a.01",
+          "legacyId": 6620,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "혼자서는 버거워... 도와줘!"
+        },
+        {
+          "id": "E07.assist_a.02",
+          "legacyId": 6621,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "함께 상대하자!"
+        },
+        {
+          "id": "E07.assist_a.03",
+          "legacyId": 6622,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "옆에서 도울게!"
+        }
+      ]
+    },
+    {
+      "id": "E07.assist_a.victory",
+      "context": "event.E07.victory",
+      "condition": "event.E07.victory",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E07.assist_a.04",
+          "legacyId": 6630,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "덕분에 버텼어. 정말 고마워."
+        },
+        {
+          "id": "E07.assist_a.05",
+          "legacyId": 6631,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "무사해서 다행이야."
+        },
+        {
+          "id": "E07.assist_a.06",
+          "legacyId": 6632,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "이제 각자 조심해서 가자."
+        }
+      ]
+    },
+    {
+      "id": "E07.assist_b.intro",
+      "context": "event.E07.intro",
+      "condition": "event.E07.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E07.assist_b.01",
+          "legacyId": 6640,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "잠깐만 힘을 빌려줄래?"
+        },
+        {
+          "id": "E07.assist_b.02",
+          "legacyId": 6641,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "좋아. 힘을 합치자."
+        },
+        {
+          "id": "E07.assist_b.03",
+          "legacyId": 6642,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "서로 떨어지지 말자!"
+        }
+      ]
+    },
+    {
+      "id": "E07.assist_b.victory",
+      "context": "event.E07.victory",
+      "condition": "event.E07.victory",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E07.assist_b.04",
+          "legacyId": 6650,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "혼자가 아니라서 든든했어."
+        },
+        {
+          "id": "E07.assist_b.05",
+          "legacyId": 6651,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "우리도 도움이 돼서 기뻐."
+        },
+        {
+          "id": "E07.assist_b.06",
+          "legacyId": 6652,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "너희의 탐험도 잘 풀리길 바라!"
         }
       ]
     }
