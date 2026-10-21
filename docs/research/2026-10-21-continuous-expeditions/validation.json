@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "checkedAtUtc": "2026-10-21T22:10:19.213354+00:00",
+  "counts": {
+    "segments": 192,
+    "families": 100,
+    "sectionRoutes": 36,
+    "storyArcs": 5,
+    "links": 101,
+    "grounds": 77,
+    "statueGrounds": 57,
+    "storageGrounds": 33,
+    "scriptHashes": 3760,
+    "additionalRomRefs": 803
+  },
+  "checks": [
+    "ID uniqueness and foreign keys",
+    "ordered route edge endpoints",
+    "shared grounds and loop branches",
+    "main/SE Temporal Tower separation",
+    "Sky Peak first-visit battle order",
+    "conditional desert revisit and guild-return exclusions",
+    "Aegis unresolved status preserved",
+    "ROM path and SHA256 references",
+    "local document links",
+    "documentation-only scope",
+    "ROM and product EXE unchanged"
+  ],
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "exeSha256": "9235fc2474131aee7c3266fb066f35807f8f25fe89e391bf3c0c60e462edd17d",
+  "productCodeAssetsExeChanged": false,
+  "notExecuted": [
+    "product tests/GUI/EXE/ASan rebuild: research and documentation only",
+    "original-game execution of every story flag combination"
+  ]
+}

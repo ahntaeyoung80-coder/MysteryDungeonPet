@@ -1,0 +1,102 @@
+{
+  "CREDITS.txt": {
+    "bytes": 440,
+    "sha256": "a6c7bd324e413ca24cbe1ab1b1c4c180acf3ee208a1d07b8c880a537c78ce8d9"
+  },
+  "EVIDENCE.md": {
+    "bytes": 4578,
+    "sha256": "233f1a69c3a9f529a6ebff946182ac15e0981509e112f68446b1068ac5019888"
+  },
+  "README.md": {
+    "bytes": 21746,
+    "sha256": "ee0b0fc62bd632eefc2e2bfa17472277f810cc0dec94bdefc15e158aeba95891"
+  },
+  "audit_connectors.py": {
+    "bytes": 8071,
+    "sha256": "e7f6051f5ef98162171fc0974978354e4055331712993ce728dfcbe471b90632"
+  },
+  "classify_routes.py": {
+    "bytes": 14521,
+    "sha256": "f078e0f3a8f705b2ce116cdc2416b31523c68d51e8aebaca734d640fa0ed8421"
+  },
+  "connectors-1.png": {
+    "bytes": 779092,
+    "sha256": "fe9aafe17437a3b590f726dc05791eec0a5f51fbdfaea3b5edbca5ad600f87bc"
+  },
+  "connectors-2.png": {
+    "bytes": 596414,
+    "sha256": "5a78f59f5f3922667fe7299f97d41b6a1ede45c954c9cbb042ee458103a493fb"
+  },
+  "connectors-3.png": {
+    "bytes": 532105,
+    "sha256": "96d5fd018868eedbc0b2c114c29ff2ad804b4b8cc7ec2b0ba2ec92af2b19aba5"
+  },
+  "connectors-4.png": {
+    "bytes": 173090,
+    "sha256": "ae147a078ef20fa2bfef871547009a89e68b343999ad9772adb7a1cb79450999"
+  },
+  "connectors.csv": {
+    "bytes": 5344,
+    "sha256": "59627e644498894cee87dc720a5ddeb56b5a04b77ba4754725ab98bd86761296"
+  },
+  "extraction.json": {
+    "bytes": 622,
+    "sha256": "da3eecd668e1b848da6054ad511f82b9a86186be42881542fe3b7663059184b6"
+  },
+  "ground-tileset-mappings.json": {
+    "bytes": 7068,
+    "sha256": "d4c080c903f5595e2d48a7cad6eda25ad767f44cf8dc26242da829e14000df9c"
+  },
+  "grounds.json": {
+    "bytes": 112335,
+    "sha256": "8b2b83dd686d72e862706bece64b64be64c22ec00da597a670c0e5880be8f412"
+  },
+  "kangaskhan-statue.png": {
+    "bytes": 984,
+    "sha256": "98a6c24d88ffc52fcddb1bc14a0e6d7651922a019faaadd08a0fe03e6dcb951d"
+  },
+  "links.csv": {
+    "bytes": 8305,
+    "sha256": "f892f7ab4fac55667fb766bee15d606811bcaf8d705005847c7223642134b401"
+  },
+  "preview-evidence.json": {
+    "bytes": 17449,
+    "sha256": "54957870e00a4ee2f50958ead969d284509696344120a4febd28f4a9fa76a0b8"
+  },
+  "preview_connectors.py": {
+    "bytes": 4827,
+    "sha256": "57ab4fdbb0e479578a1eeb007813b4a3333d784eb6d1fcf77c3e423b54c829d1"
+  },
+  "routes.json": {
+    "bytes": 201439,
+    "sha256": "4c3bdd598970216a7f3a2611468e322ffb9816b9eec579185940d55a5c75ae77"
+  },
+  "routing-evidence.json": {
+    "bytes": 374527,
+    "sha256": "999f7116f0095d041ec0729fd226534356360f1fe3288f42a64e18499a1ebd13"
+  },
+  "script-manifest.csv": {
+    "bytes": 365426,
+    "sha256": "66a0a125f85a981660f0d08f3cc510f779493e00f2992730ae4467f215f71992"
+  },
+  "statue-layouts.json": {
+    "bytes": 27020,
+    "sha256": "d2adf401a54541d0a39d68d1d808095c0a94efd954436f93c950e39a686f62bc"
+  },
+  "temporal-tower-midpoint.png": {
+    "bytes": 46228,
+    "sha256": "8d7c33bfdb88f3ce82949b21357a7cc242af5a507b640a2a3b20f5dc1232a550"
+  },
+  "validate_routes.py": {
+    "bytes": 6107,
+    "sha256": "4dec20913e4728527b08772607729da9487102c405dbe66d1955cc3a6662433c"
+  },
+  "validation.json": {
+    "bytes": 1145,
+    "sha256": "a755246cf4f3af209198d22590e5756fb81b717a9a0d2240eae0b49a64c67dfb"
+  },
+  "web-rest-stops.json": {
+    "bytes": 11500,
+    "sha256": "38e59d613417d6307c3e09b8a0cee268aff00cc5447e20dfa5cd8e7e8b14cac6"
+  }
+}

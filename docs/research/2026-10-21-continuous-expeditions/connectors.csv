@@ -1,0 +1,58 @@
+id,groundId,fromDungeonId,toDungeonId,kind,note,save,storage
+JNC-D06P11A,GND-L023-D06P11A,,8,entry,길드 원정 출발 / Side Path9 왕복,True,True
+JNC-D07P11A,GND-L024-D07P11A,8,10,between_dungeons,Craggy Coast 통과 / Rock Path11 왕복,True,True
+JNC-D08P11A,GND-L025-D08P11A,10,12,camp,원정 베이스캠프 / Forest Path13 왕복,True,True
+JNC-D09P11A,GND-L026-D09P11A,12,14,between_dungeons,Foggy Forest 뒤 Steam Cave 입구,True,True
+JNC-D10P21A,GND-L027-D10P21A,14,15,midpoint,Steam Cave 8층 뒤,True,False
+JNC-D12P21A,GND-L030-D12P21A,17,18,midpoint,Amp Plains 10층 뒤,True,False
+JNC-D15P21A,GND-L035-D15P21A,21,22,midpoint,Quicksand Cave 10층 뒤,True,False
+JNC-D16P31A,GND-L038-D16P31A,24,25,puzzle,수정 기둥 퍼즐 / Crystal Crossing 입구,True,True
+JNC-D18P11A,GND-L045-D18P11A,,27,entry,미래 탈출 뒤 Chasm Cave 입구,True,True
+JNC-D19P11A,GND-L046-D19P11A,27,28,between_dungeons,Chasm Cave 뒤 Dark Hill 입구,True,True
+JNC-D20P11A,GND-L047-D20P11A,28,29,between_dungeons,Dark Hill 뒤 Sealed Ruin 입구,True,True
+JNC-D21P21A,GND-L048-D21P21A,29,30,midpoint,Sealed Ruin 8층 뒤,True,False
+JNC-D22P11A,GND-L050-D22P11A,31,32,between_dungeons,Sealed Ruin Pit 뒤 Dusk Forest 입구; SE5도 재사용,True,True
+JNC-D23P11A,GND-L051-D23P11A,32,33,between_dungeons,Dusk Forest 뒤 Celebi 합류 / Deep Dusk Forest 입구,True,True
+JNC-D24P11A,GND-L052-D24P11A,33,34,entry_after_story_camp,과거 귀환·Sharpedo Bluff 은신 뒤 Treeshroud Forest 입구,True,True
+JNC-D25P11A,GND-L055-D25P11A,,35,entry,Brine Cave 입구,True,True
+JNC-D26P21A,GND-L056-D26P21A,35,36,midpoint,Brine Cave 9층 뒤,True,False
+JNC-D27P11A,GND-L059-D27P11A,37,38,between_dungeons,Lapras 이동 뒤 Hidden Land 입구; 선택 귀환 가능,True,True
+JNC-D28P21A,GND-L060-D28P21A,38,39,midpoint,Hidden Land 15층 뒤,True,False
+JNC-D29P11A,GND-L067-D29P11A,40,41,between_dungeons,Old Ruins·Rainbow Stoneship 뒤 시한의 탑 입구,True,True
+JNC-D30P21A,GND-L068-D30P21A,41,42,midpoint,시한의 탑 13층 뒤 Temporal Spire,True,False
+JNC-D31P11A,GND-L074-D31P11A,,44,entry,Mystifying Forest 입구,True,True
+JNC-D35P21A,GND-L090-D35P21A,51,52,midpoint,Miracle Sea 18층 뒤,True,False
+JNC-D38P12A,GND-L097-D38P12A,,64,entry,Spacial Rift 재시도 입구; 첫 진입 연출은 별도,True,True
+JNC-D39P21A,GND-L098-D39P21A,64,65,midpoint,Spacial Rift 15층 뒤,True,False
+JNC-D41P21A,GND-L102-D41P21A,67,68,midpoint,Dark Crater 15층 뒤,True,False
+JNC-D42P21A,GND-L104-D42P21A,123,124,midpoint,SE1 Star Cave 7층 뒤; 실패 복귀에도 재사용,True,False
+JNC-D45P21A,GND-L110-D45P21A,130,131,midpoint,SE2 Fortune Ravine 8층 뒤,True,False
+JNC-D46P11A,GND-L113-D46P11A,,133,entry,SE5 Barren Valley 입구,True,True
+JNC-D46P21A,GND-L114-D46P21A,133,134,midpoint,SE5 Barren Valley 5층 뒤,True,False
+JNC-D47P11A,GND-L117-D47P11A,135,136,between_dungeons,SE5 Dark Wasteland 입구,True,True
+JNC-D48P11A,GND-L118-D48P11A,136,137,between_dungeons,SE5 시한의 탑 입구,True,True
+JNC-D48P21A,GND-L119-D48P21A,137,138,midpoint,SE5 시한의 탑 10층 뒤; 본편 L068과 별도,True,False
+JNC-D50P11A,GND-L121-D50P11A,140,141,between_dungeons,SE5 Black Swamp 뒤 Spacial Cliffs 입구,True,True
+JNC-D51P11A,GND-L122-D51P11A,141,142,between_dungeons,SE5 Porygon 이동 뒤 Dark Ice Mountain 입구,True,True
+JNC-D51P21A,GND-L123-D51P21A,142,143,midpoint,SE5 Dark Ice Mountain 10층 뒤,True,False
+JNC-D52P11A,GND-L125-D52P11A,144,145,between_dungeons,SE5 Icicle Forest 입구,True,True
+JNC-D53P11A,GND-L129-D53P11A,145,146,between_dungeons,SE5 Vast Ice Mountain 입구,True,True
+JNC-D53P21A,GND-L131-D53P21A,146,147,midpoint,SE5 Vast Ice Mountain 9층 뒤,True,False
+JNC-D54P11A,GND-L135-D54P11A,,149,entry,SE4 Southern Jungle 입구,True,True
+JNC-D55P11A,GND-L138-D55P11A,149,150,between_dungeons,SE4 Boulder Quarry 입구,True,True
+JNC-D55P21A,GND-L139-D55P21A,150,151,midpoint,SE4 Boulder Quarry 5층 뒤,True,False
+JNC-D56P11A,GND-L141-D56P11A,152,155,branch_hub,SE4 Left154 / Right153 반복 뒤 숨은 통로로 Limestone Cavern,True,True
+JNC-D56P21A,GND-L143-D56P21A,155,156,midpoint,SE4 Limestone Cavern 5층 뒤,True,False
+JNC-D57P21A,GND-L145-D57P21A,162,163,midpoint,SE3 Lower Spring Cave 4층 뒤; 유일하게 배우 동상을 확인한 막간,True,False
+JNC-D73P11A,GND-L156-D73P11A,,111,entry,Shaymin Village / Sky Peak 출발,True,True
+JNC-D73P21A,GND-L157-D73P21A,111,112,station,Sky Peak 1st Station,True,False
+JNC-D73P22A,GND-L158-D73P22A,112,113,station,Sky Peak 2nd Station,True,True
+JNC-D73P23A,GND-L159-D73P23A,113,114,station,Sky Peak 3rd Station,True,False
+JNC-D73P24A,GND-L160-D73P24A,114,115,station,Sky Peak 4th Station,True,True
+JNC-D73P26A,GND-L162-D73P26A,116,117,station,Sky Peak 6th Station,True,True
+JNC-D73P27A,GND-L163-D73P27A,117,118,station,Sky Peak 7th Station,True,False
+JNC-D73P28A,GND-L164-D73P28A,118,119,station,Sky Peak 8th Station / Ampharos,True,True
+JNC-D73P29A,GND-L165-D73P29A,119,120,station,Sky Peak 9th Station,True,False
+JNC-D79P11A,GND-L176-D79P11A,46,47,between_dungeons,Blizzard Island 뒤 Crevice Cave 입구,True,True
+JNC-D79P21A,GND-L177-D79P21A,47,48,midpoint,Crevice Cave 10층 뒤,True,False
+JNC-P19P01A,GND-L254-P19P01A,,129,entry,SE2 Eastern Cave 입구; 전날 던전과 강제 연결하지 않음,True,True

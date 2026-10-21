@@ -32,6 +32,7 @@
 local/p1-venv/bin/python docs/research/2026-10-21-continuous-expeditions/audit_connectors.py
 local/p1-venv/bin/python docs/research/2026-10-21-continuous-expeditions/preview_connectors.py
 local/p1-venv/bin/python docs/research/2026-10-21-continuous-expeditions/classify_routes.py
+local/p1-venv/bin/python docs/research/2026-10-21-continuous-expeditions/validate_routes.py
 ```
 
 라이브러리의 [ground 타일 해석](https://github.com/SkyTemple/skytemple-files/blob/5ed359a2560a1f04666b9ea02b71649b89cb16d7/skytemple_files/hardcoded/ground_dungeon_tilesets.py)과 SkyTemple의 [ground 표시 구현](https://github.com/SkyTemple/skytemple/blob/f78d0ef387dbc121bad4c8f0186237f9a4ae035d/skytemple/core/mapbg_util/map_tileset_overlay.py)을 대조했다. 기존 [전체 맵 조사](../2026-10-21-full-map-audit/README.md)의 원작 숫자 ID와 MAPPA 정의를 재사용했다.
