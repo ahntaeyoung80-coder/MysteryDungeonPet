@@ -14,6 +14,8 @@ add_library(pet_core src/core/holiday_scene.cpp src/core/event_combat.cpp src/co
 target_include_directories(pet_core PUBLIC src)
 include(CTest)
 if(BUILD_TESTING)
+  add_executable(pet_variety_scenario tools/variety_scenario.cpp)
+  target_link_libraries(pet_variety_scenario PRIVATE pet_core)
   add_executable(pet_holiday_scene_tests tests/holiday_scene_tests.cpp)
   target_link_libraries(pet_holiday_scene_tests PRIVATE pet_core)
   add_test(NAME pet_holiday_scene_tests COMMAND pet_holiday_scene_tests)

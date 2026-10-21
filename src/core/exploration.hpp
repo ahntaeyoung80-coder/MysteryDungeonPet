@@ -277,6 +277,7 @@ public:
     void enableHolidaySchedule(){state_.variety.holidayPolicy=true;}
     void restoreHolidayClock(std::uint64_t utcMs);
     GameplayUpdate returnFromHoliday(std::uint64_t utcMs);
+    std::uint32_t chooseNextDungeon(const std::vector<std::uint32_t>&);
 private:
     ExplorationState state_;
     std::string nextRunAssetVersion_;

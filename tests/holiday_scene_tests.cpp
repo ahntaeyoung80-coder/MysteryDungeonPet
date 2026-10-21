@@ -11,6 +11,9 @@ int main(){try {
     const auto p=loadExplorationPackage(root/"exploration/dungeon-15/exploration.mdpe");
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");const auto visits=loadHolidayRegistry(root/"gameplay/holiday");
     const auto npcs=loadNpcCatalogue(root/"gameplay/npcs/characters.mdnc");
+    { Explorer next(eventFixture(p));const auto rng=next.state().rng.state,dialogue=next.state().variety.dialogueRng;
+      check(next.chooseNextDungeon({15,18})==18 && next.state().rng.state==rng && next.state().variety.dialogueRng==dialogue,"daily map changed world/dialogue RNG or repeated current map");
+      check(next.chooseNextDungeon({15})==15,"single verified map did not terminate"); }
     check(visits.floats.size()==34 && visits.routes.size()==7,"holiday selection count");
     for(const auto& [id,binding]:visits.floats){const auto body=loadPackage(root/"gameplay/holiday"/binding.manifest);check(body.assetKey==binding.key && body.pngSha256==binding.hash,"Float identity/hash mismatch");for(unsigned d=0;d<8;++d)check(!body.frames(20,d).empty(),"Float original direction missing");}
     const auto water=loadPackage(root/"gameplay/holiday/water.mdpa");

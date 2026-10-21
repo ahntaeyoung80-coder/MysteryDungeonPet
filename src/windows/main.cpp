@@ -17,6 +17,7 @@
 #include "core/npc_characters.hpp"
 #include "core/dialogue_catalogue.hpp"
 #include "core/event_registry.hpp"
+#include "core/event_runtime.hpp"
 #include "core/holiday_scene.hpp"
 #include "core/motion.hpp"
 #include <algorithm>
@@ -231,6 +232,8 @@ class App {
     size_t enemyFrame_ = 0;
     unsigned enemyDirection_ = 0;
     std::optional<ExplorationPackage> explorationPackage_, pendingDefaultPackage_;
+    std::map<unsigned,ExplorationPackage> explorationPool_;
+    std::filesystem::path explorationRoot_;
     std::unique_ptr<Explorer> explorer_;
     std::map<uint32_t, Assets> tiles_;
     std::array<uint32_t, kTiles> chunks_{};
@@ -278,6 +281,7 @@ class App {
     unsigned traceImages_ = 0;
     bool traceAlarmImage_=false;
     std::array<bool,6> traceDialogueImages_{};
+    std::set<std::string> traceVarietyImages_;
     void traceImage(const char* suffix) {
         if(!movementTrace_ || !dib_ || !submitted_) return;
         auto path=options_.movementTrace;path.replace_extension();path+=suffix;
@@ -385,8 +389,21 @@ class App {
             const auto& c=npcCatalogue_.select(e.originalId);
             movementTrace_<<e.instanceId<<':'<<c.id<<':'<<c.spriteIndex;
         }
-        movementTrace_<<','<<npcAssets_.size()<<','<<state.variety.dialogue.bundle<<','<<state.variety.dialogue.lineId<<','<<state.variety.dialogue.deadlineMs<<'\n';
+        movementTrace_<<','<<npcAssets_.size()<<','<<state.variety.dialogue.bundle<<','<<state.variety.dialogue.lineId<<','<<state.variety.dialogue.deadlineMs;
+        const auto& h=state.variety.holiday;const auto& e=state.variety.event;
+        movementTrace_<<','<<unsigned(e.id.type)<<','<<unsigned(e.progress)<<','<<e.variant<<','<<unsigned(h.beat);
+        if(h.active) {
+            const auto sample=holidaySample(state,holidayRegistry_,utcMs());
+            movementTrace_<<','<<sample.scene<<','<<sample.player.x<<','<<sample.player.y<<','<<sample.partner.x<<','<<sample.partner.y
+                <<','<<sample.playerDirection<<','<<sample.partnerDirection<<','<<(sample.bathing?20:sample.moving?0:7)<<','<<sample.bathing<<','<<holidayFade(state,utcMs());
+        } else movementTrace_<<",,0,0,0,0,0,0,0,0,0";
+        movementTrace_<<'\n';
         const bool textReady=!catalogueText(state,dialogueCatalogue_).empty() && revealedCatalogueText(state,dialogueCatalogue_,utcMs())==catalogueText(state,dialogueCatalogue_);
+        if(submitted && (h.active || (eventActive(state) && textReady))) {
+            const auto key=h.active?"holiday-"+std::to_string(unsigned(h.beat))+(textReady?"-"+state.variety.dialogue.lineId:""):
+                "event-"+std::to_string(unsigned(e.id.type))+"-"+state.variety.dialogue.lineId;
+            if(traceVarietyImages_.insert(key).second)traceImage(("-"+key+".bmp").c_str());
+        }
         if(submitted && traceCharacterImagePending_){traceImage("-characters.bmp");traceCharacterImagePending_=false;}
         if(submitted && !traceDeathImage_ && g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk && textReady){traceImage("-defeat-dialogue.bmp");traceDeathImage_=true;}
         if(submitted && !traceCompletionImage_ && g.sceneBeat==SceneBeat::CompletionText && utcMs()>=g.phaseStartedMs+1500){traceImage("-completion.bmp");traceCompletionImage_=true;}
@@ -1021,6 +1038,12 @@ class App {
         const auto oldDialogue=explorer_->state().gameplay.dialogueStage;
         auto candidate = *explorer_;
         if(!options_.solo && candidate.state().gameplay.life==LifePhase::Explore) candidate.enableCompanion();
+        const auto& before=candidate.state().gameplay;
+        if(options_.defaultExploration && before.life==LifePhase::Ready && before.sceneBeat==SceneBeat::MorningFadeOut && utcMs()>=before.deadlineMs &&
+           !before.onceKeys.count("guild-start:"+std::to_string(candidate.state().runId)) && !pendingDefaultPackage_) {
+            std::vector<unsigned> ids;for(const auto& entry:explorationPool_)ids.push_back(entry.first);
+            const auto selected=candidate.chooseNextDungeon(ids);const auto& next=explorationPool_.at(selected);candidate.setNextRunPackage(next.assetVersion,next.floors);
+        }
         const auto event = candidate.advanceGameplay(utcMs(), completion_,dialogueCatalogue_,&eventRegistry_,&holidayRegistry_);
         poseFinished_ = false; completion_={};
         if (encodeSnapshot(candidate.state()) == encodeSnapshot(explorer_->state())) {
@@ -1028,10 +1051,15 @@ class App {
             if (candidate.state().gameplay.life == LifePhase::ReturnHome) dirty_ = true;
             return;
         }
-        const bool changePackage=pendingDefaultPackage_ &&
-            candidate.state().assetVersion==pendingDefaultPackage_->assetVersion;
+        const ExplorationPackage* nextPackage=nullptr;
+        if(candidate.state().assetVersion!=explorationPackage_->assetVersion) {
+            if(pendingDefaultPackage_ && candidate.state().assetVersion==pendingDefaultPackage_->assetVersion)nextPackage=&*pendingDefaultPackage_;
+            else for(const auto& entry:explorationPool_)if(entry.second.assetVersion==candidate.state().assetVersion){nextPackage=&entry.second;break;}
+            if(!nextPackage)throw std::runtime_error("unregistered daily exploration package");
+        }
+        const bool changePackage=nextPackage!=nullptr;
         std::map<uint32_t,Assets> nextTiles;
-        if(changePackage)nextTiles=loadExplorationTiles(*pendingDefaultPackage_,options_.exploration.parent_path());
+        if(changePackage)nextTiles=loadExplorationTiles(*nextPackage,explorationRoot_/std::filesystem::path("dungeon-"+std::to_string(nextPackage->floors.front().dungeonId)));
         auto nextNpcs=stageNpcAssets(candidate.state());
         auto nextHoliday=stageHolidayAssets(candidate.state());
         saveRunSnapshot(options_.snapshot, candidate.state());
@@ -1040,7 +1068,7 @@ class App {
         *explorer_ = std::move(candidate); // commit state before exposing inventory/clear event
         if(changePackage) {
             for(const auto& entry:nextTiles)decodes_+=entry.second.decoded?1:0;
-            tiles_=std::move(nextTiles);explorationPackage_=std::move(pendingDefaultPackage_);
+            tiles_=std::move(nextTiles);explorationPackage_=*nextPackage;
             pendingDefaultPackage_.reset();chunkVersion_=0;chunks_.fill(0);
             log("default exploration upgraded at new run floors="+std::to_string(explorer_->state().floors.size()));
         }
@@ -1434,7 +1462,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies,dialogue_bundle,dialogue_line,dialogue_deadline_ms\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies,dialogue_bundle,dialogue_line,dialogue_deadline_ms,event_type,event_progress,event_variant,holiday_beat,holiday_scene,holiday_player_x,holiday_player_y,holiday_partner_x,holiday_partner_y,holiday_player_direction,holiday_partner_direction,holiday_clip,bathing,holiday_fade\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
@@ -1458,6 +1486,7 @@ public:
             guildRooms_ = loadGuildScene(options_.gameplayAssets / L"guild/guild.mdgs");
             decodes_ += homeAssets_->decoded ? 1 : 0;
             explorationPackage_ = loadExplorationPackage(options_.exploration);
+            explorationRoot_=options_.exploration.parent_path().parent_path();
             npcCatalogue_=loadNpcCatalogue(options_.gameplayAssets/L"npcs/characters.mdnc");
             dialogueCatalogue_=loadDialogueCatalogue(options_.gameplayAssets/L"dialogue/catalogue.mdlc");
             eventRegistry_=loadEventRegistry(options_.gameplayAssets/L"events/contexts.mder");
@@ -1468,6 +1497,13 @@ public:
             if(characterCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("starter/exploration ROM mismatch");
             completionRegistry_=loadCompletionRegistry(options_.gameplayAssets / L"completion/destinations.mdec");
             if(completionRegistry_.romHash!=explorationPackage_->romHash)throw std::runtime_error("completion/exploration ROM mismatch");
+            if(options_.defaultExploration)for(const auto& choice:eventRegistry_.maps) {
+                auto package=loadExplorationPackage(explorationRoot_/choice.packageFile);
+                if(package.assetVersion!=choice.assetVersion || package.romHash!=eventRegistry_.romHash || !completionRegistry_.destination(choice.dungeon))throw std::runtime_error("unverified daily map route");
+                validateNpcCoverage(npcCatalogue_,package.floors);
+                for(const auto& floor:eventRegistry_.floors)if(floor.dungeon==choice.dungeon)for(const auto& weight:floor.monsterHouse)if(weight.value)(void)npcCatalogue_.select(weight.originalId);
+                explorationPool_.emplace(choice.dungeon,std::move(package));
+            }
             for(const auto& destination:completionRegistry_.destinations) {
                 auto asset=Assets::load(options_.gameplayAssets / L"completion" / destination.assetFile);
                 const auto& rect=asset.package.frames(0,0).front().rect;
@@ -1483,6 +1519,13 @@ public:
                     explorer_=std::make_unique<Explorer>(loadSnapshot(options_.snapshot,explorationPackage_->assetVersion));
                 } catch(const std::runtime_error& error) {
                     if(!options_.defaultExploration || std::string(error.what())!="snapshot asset version mismatch")throw;
+                    bool known=false;
+                    for(const auto& entry:explorationPool_)if(entry.second.assetVersion!=explorationPackage_->assetVersion) {
+                        try {explorer_=std::make_unique<Explorer>(loadSnapshot(options_.snapshot,entry.second.assetVersion));explorationPackage_=entry.second;
+                            explorationDirectory=explorationRoot_/std::filesystem::path("dungeon-"+std::to_string(entry.first));known=true;break;
+                        } catch(const std::runtime_error& candidateError){if(std::string(candidateError.what())!="snapshot asset version mismatch")throw;}
+                    }
+                    if(!known) {
                     const auto legacyPath=runtimePath(L"assets/exploration/dungeon-0/exploration.mdpe",L"assets/original/exploration/dungeon-0/exploration.mdpe");
                     auto legacyPackage=loadExplorationPackage(legacyPath);
                     auto legacyState=loadSnapshot(options_.snapshot,legacyPackage.assetVersion);
@@ -1492,6 +1535,7 @@ public:
                     explorationPackage_=std::move(legacyPackage);explorationDirectory=legacyPath.parent_path();
                     explorer_->setNextRunPackage(pendingDefaultPackage_->assetVersion,pendingDefaultPackage_->floors);
                     log("legacy default three-floor run preserved; next new run uses seven floors");
+                    }
                 }
             } else {
                 explorer_ = std::make_unique<Explorer>(static_cast<uint64_t>(nowUs()), options_.seed,
