@@ -1,0 +1,33 @@
+{
+  "startedUtc": "2026-10-21T09:46:43Z",
+  "verificationUtc": "2026-10-21T10:03:53.861568+00:00",
+  "implementationCommit": "0e8c07d",
+  "core": {
+    "exitCode": 0,
+    "seconds": 92.25301554999896
+  },
+  "related": {
+    "exitCode": 0,
+    "seconds": 0.4128885600002832
+  },
+  "windowsRelatedTests": 3,
+  "guiCases": 6,
+  "realRestart": {
+    "inventory": 1,
+    "totalOran": 1,
+    "pendingNotices": 0
+  },
+  "install": {
+    "files": 416,
+    "assetBytes": 13323769,
+    "exeSha256": "45fb5b54ce823ad3d9ff3a5cfae52d9d76540409c07e4f11639fb98fbae2bead",
+    "exeBytes": 2306560,
+    "romIncluded": false,
+    "installedDefaultSeconds": 6,
+    "sameNoticeBeforeAndAfterRealRestart": true
+  },
+  "probabilityPolicyChanged": false,
+  "pythonAssetTests": "inputs/assets unchanged; reused prior coverage, added C++ whole-map name coverage",
+  "ci": "최종 push 후 별도 확인; 아직 조회 전",
+  "runtimeManifestIncCrlf": "passed"
+}

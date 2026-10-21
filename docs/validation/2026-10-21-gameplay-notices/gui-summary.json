@@ -1,0 +1,42 @@
+{
+  "pickup": {
+    "kind": 1,
+    "item": 70,
+    "submittedRows": 111,
+    "whiteInkPixels": 324,
+    "playerMovedDuringNotice": true
+  },
+  "pickup-comment": {
+    "kind": 3,
+    "item": 70,
+    "submittedRows": 141,
+    "whiteInkPixels": 516,
+    "playerMovedDuringNotice": true
+  },
+  "pickup-apple": {
+    "kind": 1,
+    "item": 109,
+    "submittedRows": 110,
+    "whiteInkPixels": 219,
+    "playerMovedDuringNotice": true
+  },
+  "pickup-tm": {
+    "kind": 1,
+    "item": 188,
+    "submittedRows": 126,
+    "whiteInkPixels": 443,
+    "playerMovedDuringNotice": true
+  },
+  "ko": {
+    "kind": 2,
+    "item": 0,
+    "submittedRows": 132,
+    "whiteInkPixels": 251,
+    "playerMovedDuringNotice": true
+  },
+  "heal": {
+    "playerHp": 5,
+    "companionHp": 5,
+    "allObservedFramesFullyHealed": true
+  }
+}

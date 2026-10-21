@@ -38,7 +38,7 @@ pet_dialogue_catalogue/event_runtime/event_stock/event_movement/event_combat/hol
 
 취침/기상 인사는 귀가 후 HP0도 허용하고 안전한 NPC 문답은 낮은 HP만으로 제외하지 않는다. 위험한 동료 잡담의 기존 생존 조건은 유지한다. dialogue catalogue의 노출 상태를 기준으로 화면을 갱신하고 유한 동작에서 방향 위상을 유지할 수 없으면 올바른 방향으로 다시 시작한다. 문답 시작 기회는 완료 이동48~72 이후, 추가 기회는144이동 간격이며 층당1회로 고정하지 않는다. 대사 길이/읽기 시간은 유지한다.
 
-탐험 시작의 ExploreFadeIn은3초, 맵 이름은 별도 alpha와 함께 표시하며 매 층마다 반복하지 않는다. 층수 HUD는 제거했다. 지원 맵의한국어 이름은 제품용 표시 대응이며 원작 문자열을 새로 해독했다고 하지 않는다. floor_items112개와 기존 저장/GUI의10·11을 합한114 record를31개 원작 sprite/palette에 연결했다. 과거처럼 오랭 이외를 점으로 대체하지 않는다. 아이템 효과·분포를 늘린 것은 아니다. 오랭은 기존 HP3 이하 자동 사용 시점을 유지하고 양쪽 모두 HP5로 회복한다. MDES16/MDPE1 형식은 유지한다. [이번 근거](validation/2026-10-21-gameplay-feedback/summary.json).
+탐험 시작의 ExploreFadeIn은3초, 맵 이름은 별도 alpha와 함께 표시하며 매 층마다 반복하지 않는다. 층수 HUD는 제거했다. 지원 맵의한국어 이름은 제품용 표시 대응이며 원작 문자열을 새로 해독했다고 하지 않는다. floor_items112개와 기존 저장/GUI의10·11을 합한114 record를31개 원작 sprite/palette에 연결했다. 과거처럼 오랭 이외를 점으로 대체하지 않는다. 아이템 효과·분포를 늘린 것은 아니다. 오랭은 기존 HP3 이하 자동 사용 시점을 유지하고 양쪽 모두 HP5로 회복한다. 이 수정 당시에는 MDES16/MDPE1 형식을 유지했다. 후속 안내 저장은 아래 MDES17을 따른다. [이번 근거](validation/2026-10-21-gameplay-feedback/summary.json).
 
 ## 획득·처치 안내 (2026-10-21 후속)
 

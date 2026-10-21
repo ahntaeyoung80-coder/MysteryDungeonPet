@@ -406,6 +406,7 @@ class App {
         if(submitted && !traceDeathImage_ && g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk && textReady){traceImage("-defeat-dialogue.bmp");traceDeathImage_=true;}
         if(submitted && !traceCompletionImage_ && g.sceneBeat==SceneBeat::CompletionText && utcMs()>=g.phaseStartedMs+1500){traceImage("-completion.bmp");traceCompletionImage_=true;}
         if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay && textReady){traceImage("-alarm.bmp");traceAlarmImage_=true;}
+        if(submitted && textReady && (gameplayText(g).find(L"오랭열매")==0) && traceVarietyImages_.insert("full-heal").second)traceImage("-full-heal.bmp");
         if(submitted && textReady && activeGameplayNotice(state)) {
             const auto* notice=activeGameplayNotice(state);
             const auto key="notice-"+std::to_string(unsigned(notice->kind))+"-"+std::to_string(notice->item);

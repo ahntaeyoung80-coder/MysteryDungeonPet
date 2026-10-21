@@ -1,0 +1,59 @@
+Test project /workspace/MysteryDungeonPet/build/p0-asan
+      Start 25: pet_exploration_tests
+      Start 15: pet_companion_tests
+ 1/27 Test #15: pet_companion_tests ..............   Passed   49.20 sec
+      Start 24: pet_gameplay_tests
+ 2/27 Test #25: pet_exploration_tests ............   Passed   60.77 sec
+      Start 17: pet_entry_social_scene_tests
+ 3/27 Test #17: pet_entry_social_scene_tests .....   Passed    5.60 sec
+      Start 19: pet_camera_tests
+ 4/27 Test #19: pet_camera_tests .................   Passed    4.55 sec
+      Start 18: pet_navigation_recovery_tests
+ 5/27 Test #18: pet_navigation_recovery_tests ....   Passed    4.30 sec
+      Start 26: pet_core_tests
+ 6/27 Test #26: pet_core_tests ...................   Passed    3.68 sec
+      Start 16: pet_party_ai_followup
+ 7/27 Test #16: pet_party_ai_followup ............   Passed    2.78 sec
+      Start 14: pet_package_transition_tests
+ 8/27 Test #14: pet_package_transition_tests .....   Passed    2.94 sec
+      Start 20: pet_movement_tests
+ 9/27 Test #20: pet_movement_tests ...............   Passed    1.15 sec
+      Start 12: pet_completion_scene_tests
+10/27 Test #12: pet_completion_scene_tests .......   Passed    0.60 sec
+      Start  4: pet_event_combat_tests
+11/27 Test  #4: pet_event_combat_tests ...........   Passed    0.30 sec
+      Start  2: pet_feedback_regression_tests
+12/27 Test  #2: pet_feedback_regression_tests ....   Passed    0.14 sec
+      Start  3: pet_holiday_scene_tests
+13/27 Test  #3: pet_holiday_scene_tests ..........   Passed    0.25 sec
+      Start  5: pet_event_movement_tests
+14/27 Test  #5: pet_event_movement_tests .........   Passed    0.18 sec
+      Start  9: pet_npc_character_tests
+15/27 Test  #9: pet_npc_character_tests ..........   Passed    0.22 sec
+      Start 11: pet_character_scene_tests
+16/27 Test #11: pet_character_scene_tests ........   Passed    0.31 sec
+      Start  7: pet_event_runtime_tests
+17/27 Test  #7: pet_event_runtime_tests ..........   Passed    0.11 sec
+      Start  8: pet_dialogue_catalogue_tests
+18/27 Test  #8: pet_dialogue_catalogue_tests .....   Passed    0.08 sec
+      Start 10: pet_variety_state_tests
+19/27 Test #10: pet_variety_state_tests ..........   Passed    0.13 sec
+      Start 13: pet_dialogue_portrait_tests
+20/27 Test #13: pet_dialogue_portrait_tests ......   Passed    0.10 sec
+      Start 21: pet_survival_tests
+21/27 Test #21: pet_survival_tests ...............   Passed    0.09 sec
+      Start  6: pet_event_stock_tests
+22/27 Test  #6: pet_event_stock_tests ............   Passed    0.06 sec
+      Start 22: pet_revision_tests
+23/27 Test #22: pet_revision_tests ...............   Passed    0.04 sec
+      Start 23: pet_improvement_tests
+24/27 Test #23: pet_improvement_tests ............   Passed    0.04 sec
+      Start 27: pet_package_playback
+25/27 Test #27: pet_package_playback .............   Passed    0.01 sec
+      Start  1: pet_gameplay_notice_tests
+26/27 Test  #1: pet_gameplay_notice_tests ........   Passed    0.98 sec
+27/27 Test #24: pet_gameplay_tests ...............   Passed   42.98 sec
+
+100% tests passed out of 27
+
+Total Test time (real) =  92.19 sec
