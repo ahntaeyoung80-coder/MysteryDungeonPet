@@ -1,0 +1,488 @@
+[
+  {
+    "groundLevel": 6,
+    "dungeonId": 2,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 7,
+    "dungeonId": 1,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 7,
+    "dungeonId": 1,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 27,
+    "dungeonId": 14,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 30,
+    "dungeonId": 17,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 35,
+    "dungeonId": 21,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 48,
+    "dungeonId": 29,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 56,
+    "dungeonId": 35,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 60,
+    "dungeonId": 38,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 68,
+    "dungeonId": 41,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 77,
+    "dungeonId": 54,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 78,
+    "dungeonId": 56,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 79,
+    "dungeonId": 58,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 81,
+    "dungeonId": 54,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 82,
+    "dungeonId": 56,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 83,
+    "dungeonId": 58,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 84,
+    "dungeonId": 55,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 85,
+    "dungeonId": 57,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 86,
+    "dungeonId": 59,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 88,
+    "dungeonId": 71,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 89,
+    "dungeonId": 50,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 90,
+    "dungeonId": 51,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 91,
+    "dungeonId": 53,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 94,
+    "dungeonId": 63,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 95,
+    "dungeonId": 63,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 96,
+    "dungeonId": 64,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 97,
+    "dungeonId": 64,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 98,
+    "dungeonId": 64,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 99,
+    "dungeonId": 66,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 100,
+    "dungeonId": 66,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 102,
+    "dungeonId": 67,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 104,
+    "dungeonId": 124,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 110,
+    "dungeonId": 131,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 114,
+    "dungeonId": 134,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 119,
+    "dungeonId": 138,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 123,
+    "dungeonId": 143,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 131,
+    "dungeonId": 147,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 139,
+    "dungeonId": 151,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 143,
+    "dungeonId": 156,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 145,
+    "dungeonId": 163,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 157,
+    "dungeonId": 111,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 158,
+    "dungeonId": 113,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 159,
+    "dungeonId": 114,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 160,
+    "dungeonId": 114,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 161,
+    "dungeonId": 115,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 162,
+    "dungeonId": 116,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 163,
+    "dungeonId": 117,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 165,
+    "dungeonId": 120,
+    "floorId": 1,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 150,
+    "dungeonId": 103,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 151,
+    "dungeonId": 107,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 152,
+    "dungeonId": 108,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 153,
+    "dungeonId": 109,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 154,
+    "dungeonId": 111,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 155,
+    "dungeonId": 104,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 168,
+    "dungeonId": 80,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 169,
+    "dungeonId": 76,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 170,
+    "dungeonId": 78,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 171,
+    "dungeonId": 74,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 172,
+    "dungeonId": 82,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 173,
+    "dungeonId": 86,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 174,
+    "dungeonId": 84,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 175,
+    "dungeonId": 72,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 177,
+    "dungeonId": 47,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 178,
+    "dungeonId": 49,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 179,
+    "dungeonId": 91,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 180,
+    "dungeonId": 93,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 181,
+    "dungeonId": 94,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 182,
+    "dungeonId": 95,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 183,
+    "dungeonId": 96,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 184,
+    "dungeonId": 97,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 185,
+    "dungeonId": 98,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 186,
+    "dungeonId": 99,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 187,
+    "dungeonId": 100,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 188,
+    "dungeonId": 101,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 189,
+    "dungeonId": 102,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 190,
+    "dungeonId": 87,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 191,
+    "dungeonId": 88,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 192,
+    "dungeonId": 89,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 193,
+    "dungeonId": 90,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": 194,
+    "dungeonId": 91,
+    "floorId": 100,
+    "unk3": 0
+  },
+  {
+    "groundLevel": -1,
+    "dungeonId": 0,
+    "floorId": 100,
+    "unk3": 0
+  }
+]

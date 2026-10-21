@@ -1,0 +1,205 @@
+[
+  {
+    "name": "Steam_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Steam_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 8\nWeather  | Clear\nVisibility  | Light Darkness",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Amp_Plains",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Amp_Plains",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | Yes: 10\nWeather  | Clear\nVisibility  | Normal",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Crystal_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crystal_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Light Darkness",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Hidden_Land",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Hidden_Land",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 15\nWeather  | Hidden Land\nClear: 1 - 4, 7 - 9, 11 - 15",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Crevice_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Crevice_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 10\nWeather  | Crevice Cave\nClear: 1 - 2, 4 - 5, 7 - 9",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Miracle_Sea",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Miracle_Sea",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 18\nWeather  | Clear\nVisibility  | Miracle Sea",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Aegis_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Aegis_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | Ice Aegis Cave\nRock Aegis Cave\nSteel Aegis Cave",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Star_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear: 1 - 13, 15 - 16\nRandom: 14",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Fortune_Ravine",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Fortune_Ravine",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 8\nWeather  | Clear\nVisibility  | Normal",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Spring_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spring_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | Spring Cave 4\nUpper Spring Cave 5\nLower Spring Cave 4",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Boulder_Quarry",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Boulder_Quarry",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Boulder Quarry",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Limestone_Cavern",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Limestone_Cavern",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Light Darkness",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Barren_Valley",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Barren_Valley",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Normal",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Vast_Ice_Mountain",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Vast_Ice_Mountain",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | Before entering the dungeon\n9\nWeather  | Clear",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Quicksand_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Quicksand_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | Yes: 10\nWeather  | Clear\nVisibility  | Light Darkness",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Sealed_Ruin",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sealed_Ruin",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 8\nWeather  | Clear\nVisibility  | Normal",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Brine_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Brine_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 9\nWeather  | Clear\nVisibility  | Light Darkness",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Temporal_Tower",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | Before entering the dungeon\n13\nWeather  | Temporal Tower",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Spacial_Rift",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Spacial_Rift",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 15\nWeather  | Spacial Rift\nClear: 1 - 2, 6 - 7, 9, 11, 13",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Dark_Crater",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Crater",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 15\nWeather  | Clear\nVisibility  | Light Darkness",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Sky_Peak_Mountain_Path",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Sky_Peak_Mountain_Path",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 2nd Station\n3rd Station\n4th Station",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Star_Cave_(Special_Episode)",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Star_Cave_(Special_Episode)",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | 7\nDeep Star Cave 5\nWeather  | Clear: Star Cave - Star Cave Depths 2, 4",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Temporal_Tower_(Special_Episode)",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Temporal_Tower_(Special_Episode)",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | Before entering the dungeon\n10\nWeather  | Clear",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Dusk_Forest_(Special_Episode)",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dusk_Forest_(Special_Episode)",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Clear: 1 - 6",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Dark_Ice_Mountain",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Ice_Mountain",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Light Darkness",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Chasm_Cave",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Chasm_Cave",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Light Darkness",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Dark_Hill",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Dark_Hill",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Normal",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Deep_Dusk_Forest",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Deep_Dusk_Forest",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear\nVisibility  | Normal",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  },
+  {
+    "name": "Blizzard_Island",
+    "url": "https://mysterydungeonwiki.com/wiki/Explorers_of_Sky:Blizzard_Island",
+    "checkedDate": "2026-10-21",
+    "restStopHeader": "Kangaskhan Rest Stops  | None\nWeather  | Clear: 1 - 3, 5 - 7, 9 - 20\nSnow: 4, 8",
+    "interpretation": "헤더의 None은 내부 쉼터만 가리킬 수 있으므로 입구 동상 부재의 근거로 사용하지 않음"
+  }
+]

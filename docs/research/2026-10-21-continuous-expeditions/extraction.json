@@ -1,0 +1,15 @@
+{
+  "checkedAtUtc": "2026-10-21T22:01:00.286989+00:00",
+  "seconds": 7.348115116999907,
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "romUnchanged": true,
+  "scripts": 3760,
+  "layouts": 1884,
+  "parseErrors": 0,
+  "statueLayouts": 60,
+  "statueEnterGrounds": 57,
+  "grounds": 77,
+  "overlay11Sha256": "64e853ad7dfadadfb39f6c571de7f5a049508fadf4d2bae2d67c10f4b14c2248",
+  "stringPolicy": "latin-1 only to preserve opcode structure; no dialogue decoding or translation claim",
+  "groundIdPolicy": "SkyTemple EoS_NA config ID + exact ROM script directory; not a new ROM dungeon ID"
+}

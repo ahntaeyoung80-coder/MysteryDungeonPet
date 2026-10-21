@@ -1,0 +1,1202 @@
+[
+  {
+    "path": "SCRIPT/D06P11A/enter.sse",
+    "sha256": "be607b7d8e39f580cbe124cb341dc72dbc69d9c1308752cf619b48ec04a29986",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 5,
+        "position": {
+          "xRelative": 39,
+          "yRelative": 28,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D07P11A/enter.sse",
+    "sha256": "de61e73ba6afb9424d2888990b0d2416ca9e3ece6b3b3e9c238bc4ed00c084ef",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 5,
+        "position": {
+          "xRelative": 35,
+          "yRelative": 21,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D08P11A/enter.sse",
+    "sha256": "536c64d1db740bbcb30ae8968c34ec65f7a0910e74e362cfd632e0deeb4ab97e",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 5,
+        "position": {
+          "xRelative": 48,
+          "yRelative": 45,
+          "xOffset": 2,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D09P11A/enter.sse",
+    "sha256": "420802f4a0808bcd3e86e1c9bc3ec4717d8f8ced886d0e70b6f39e9b63a5bd76",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 24,
+          "yRelative": 29,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D10P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D12P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D15P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D16P31A/enter.sse",
+    "sha256": "c844b45e5da1ebe674fe77a7f09dd0a7b93f1711dc6ded6de1b903f802a870ab",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 8,
+        "position": {
+          "xRelative": 27,
+          "yRelative": 38,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D18P11A/enter.sse",
+    "sha256": "a786506509806aac53cb1d7414e1f2e5fc8374a5baa84327c9c2dfd99ad76484",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 54,
+          "yRelative": 19,
+          "xOffset": 2,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D19P11A/enter.sse",
+    "sha256": "f31cb6aa2768ed331656bbe2ef35a4648342c522e65f94effe3d4ca56629227a",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 67,
+          "yRelative": 20,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D20P11A/enter.sse",
+    "sha256": "561654cebe6e7cbfd09ce09190ac481eaf364f095ee5afd5d4cc2cd1740938ca",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 53,
+          "yRelative": 21,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D21P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D22P11A/enter.sse",
+    "sha256": "d5400b77db04966756ee1086c2d0fd4a2cc4e90c2e786e9a1d5dbad75f60c959",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 29,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D23P11A/enter.sse",
+    "sha256": "667df0f2ce83bd25a00add17d23805da91e528cefae8b1fa8611f90c0a774e48",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 26,
+          "yRelative": 38,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D24P11A/enter.sse",
+    "sha256": "c489b3540493cb3a872b18685ac9f6f379045cc4a77d421fe3ca77c6f48bafc1",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 43,
+          "yRelative": 28,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D25P11A/enter.sse",
+    "sha256": "5b76bbbe793a50482372a520704d5405edafc6e542f7010de597fadc5a3dc82c",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 47,
+          "yRelative": 32,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D26P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D27P11A/enter.sse",
+    "sha256": "cecb6f02171e8745ddb463db69e067b4fca1fc33eef7ef08d96c5d4d0d7f168d",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 25,
+          "yRelative": 32,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D28P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D29P11A/enter.sse",
+    "sha256": "569b4229248a8c820586766a5b7824bd5d5506b92950911d39043e9b20592c6a",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 32,
+          "yRelative": 33,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D30P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D31P11A/enter.sse",
+    "sha256": "6743c17a0a0f8205045f42d70432f199fe03fcf090f90c2aa9b43c5d485b0997",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 27,
+          "yRelative": 28,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D35P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D38P12A/enter.sse",
+    "sha256": "0bcca4ab6e41287e92c07273549ae87c0d911b1447d4c6aeee08d48b4a7af4ac",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 19,
+          "yRelative": 18,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D39P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D41P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D42P21A/enter.sse",
+    "sha256": "8772fce0a7eb443b614b25262a234a2db39c501c8b9ffb2cdc8c39a53c645788",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D45P21A/enter.sse",
+    "sha256": "f9df2956055deb75a8d83ce98140cf10ed72ba00a56aee4e68f410630ae68503",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 7,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D46P11A/enter.sse",
+    "sha256": "796aa0e406c4b9b698542e6cc4922b740f39147eb5f14c2d7ca95e4e98a30c61",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 22,
+          "yRelative": 24,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D46P21A/enter.sse",
+    "sha256": "93b1d9ed8e18665a99b8f65d579cf138a5bd2e1662399229b42dc9a8f12f6c6c",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D47P11A/enter.sse",
+    "sha256": "04bed059798d2f79a53927325da95485ec3733ea442510f995fe43361fc79bbe",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 15,
+          "yRelative": 16,
+          "xOffset": 2,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D48P11A/enter.sse",
+    "sha256": "4ed147b95174425cad4d7ff3dcfab3da4a0391176ff42e3818dc0df1048cdf3e",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 31,
+          "yRelative": 33,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D48P21A/enter.sse",
+    "sha256": "9083c185c4828afaa97dc89b19444a14aba41f36c27662f0bea8c1faf18747f7",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D50P11A/enter.sse",
+    "sha256": "6f7f6bcbac0a2ae003fa40c6419886a41819ef57b19ac711654ae079a0d1e7ce",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 30,
+          "yRelative": 25,
+          "xOffset": 2,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D51P11A/enter.sse",
+    "sha256": "8e28eb2a340b5306f51d78e34d1d52db875056870ebc548da4f314f71e891013",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 45,
+          "yRelative": 16,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D51P21A/enter.sse",
+    "sha256": "82591d4649840e48f098ceeb32fae47db6809d172f7cbe7fce81290dc5565fcf",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D52P11A/enter.sse",
+    "sha256": "06cff1962d95e89adc18eb39bb8e4b975e99806e31781a7267ce79f55118a2c5",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 42,
+          "yRelative": 27,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D52P11C/n09a2207.ssa",
+    "sha256": "ac2e8eac239c02a5f0c2a0f2e05be98ae6c9acec31c6f1dfb0346385df867f54",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 5,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": -1,
+        "position": {
+          "xRelative": 42,
+          "yRelative": 27,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D53P11A/enter.sse",
+    "sha256": "3f2868d588d6638d31bbb15885ebc8230e46297a13a7ea38c22a4ad48360a81f",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 40,
+          "yRelative": 16,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D53P11A/n09a2202.ssa",
+    "sha256": "0cadfb956071ce4b302e7f75a4d91517cdf8b98f2f399b7a8abe3e50112e2850",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 4,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": -1,
+        "position": {
+          "xRelative": 40,
+          "yRelative": 16,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D53P11B/n09a2206.ssa",
+    "sha256": "92630101a80e34e005187bc61e1049b914d8e55d73682fac8bbe00f37795ec70",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 4,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": -1,
+        "position": {
+          "xRelative": 40,
+          "yRelative": 16,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D53P21A/enter.sse",
+    "sha256": "7b47d271767afaf6b54aec6e9126ce1b50e06dea6aada62d32e95aae66cc90e6",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D54P11A/enter.sse",
+    "sha256": "d591f1059a206da544c01b4eb39231a4bdf2b9e93196306861f125c79aa3cc36",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 2,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 5,
+        "position": {
+          "xRelative": 38,
+          "yRelative": 21,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D55P11A/enter.sse",
+    "sha256": "b17bfdffe1dd6f9bc465614ddb6641bff64a1211189114e1e90c4f4d742ec0f7",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 2,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 6,
+        "position": {
+          "xRelative": 45,
+          "yRelative": 26,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D55P21A/enter.sse",
+    "sha256": "9fa68007df1a214a549078e058ed45ac87b00da89b78f7653f48149f7b1f7228",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 2,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 7,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D56P11A/enter.sse",
+    "sha256": "3628d75081f92b9c4bae86b7e4919d81e57a95b71b8ce97d7e3c74a14dcc433d",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 2,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 5,
+        "position": {
+          "xRelative": 23,
+          "yRelative": 31,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D56P21A/enter.sse",
+    "sha256": "9fa68007df1a214a549078e058ed45ac87b00da89b78f7653f48149f7b1f7228",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 2,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 7,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D57P21A/enter.sse",
+    "sha256": "6357cc6e4d93f3c7d92a77fa23d1efff0bf5eb36c510cb36cef5fbcdce2a85a5",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 5,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P11A/enter.sse",
+    "sha256": "e5a764f54a017c28ba551717b5e980ed9beed124f4633163ebcad97c2ac1b3e6",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 52,
+          "yRelative": 21,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P21A/enter.sse",
+    "sha256": "9c80eef5ff769d18129a550b283782b5e0dcef2fc33b7515046c3f9b0733d713",
+    "actors": [
+      {
+        "layer": 10,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P22A/enter.sse",
+    "sha256": "3d70770f5b9f95eea7032383c6a14e5e662a02c63de07e4757bd2189cdf0142c",
+    "actors": [
+      {
+        "layer": 10,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 36,
+          "yRelative": 24,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P23A/enter.sse",
+    "sha256": "4481b4996fe26d49d169ce5c3b1d619b67fac7592e6d1e364bb2ca8eda1c0db0",
+    "actors": [
+      {
+        "layer": 10,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P24A/enter.sse",
+    "sha256": "10b2cfbca305c0b6493055769d4868665ce1b0d05033e5a94711eb11ba5b617f",
+    "actors": [
+      {
+        "layer": 10,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 36,
+          "yRelative": 24,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P26A/enter.sse",
+    "sha256": "294ae2a9b3277837ac9ee4a9c5ae993137d8beff7fe3df94012034a3f63066c6",
+    "actors": [
+      {
+        "layer": 10,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 36,
+          "yRelative": 24,
+          "xOffset": 0,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P27A/enter.sse",
+    "sha256": "96086494726c99a1b93906108a467c4144bffc301df7f9b1a42217bf221ec551",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 34,
+          "yRelative": 23,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P28A/enter.sse",
+    "sha256": "25c468b628173f7daa0cb071802db5b9a3157ac0fe14a3cfd1a43a9fada0bd4b",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 22,
+          "yRelative": 26,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D73P29A/enter.sse",
+    "sha256": "112f773520330bc33d7e51796606b257ee7b5a0666677368b49bd01cbbb23626",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 33,
+          "yRelative": 25,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D79P11A/enter.sse",
+    "sha256": "ee58169afa919ce10eab1c481132d1da6384ae5a3c2ee1a77b52eca4f732fbde",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 3,
+        "position": {
+          "xRelative": 27,
+          "yRelative": 45,
+          "xOffset": 0,
+          "yOffset": 2
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/D79P21A/enter.sse",
+    "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 0,
+        "actorId": 156,
+        "actorName": "OBJECT002",
+        "entid": 554,
+        "scriptId": 2,
+        "position": {
+          "xRelative": 28,
+          "yRelative": 30,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  },
+  {
+    "path": "SCRIPT/P19P01A/enter.sse",
+    "sha256": "22000ab4ab94af3e5ebe92229013a283c3943e58b5e300e7100093e41081cb43",
+    "actors": [
+      {
+        "layer": 0,
+        "actorIndex": 1,
+        "actorId": 155,
+        "actorName": "OBJECT001",
+        "entid": 554,
+        "scriptId": 7,
+        "position": {
+          "xRelative": 24,
+          "yRelative": 22,
+          "xOffset": 2,
+          "yOffset": 0
+        }
+      }
+    ]
+  }
+]

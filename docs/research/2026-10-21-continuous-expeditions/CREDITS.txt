@@ -1,0 +1,4 @@
+Nintendo / Pokémon / CHUNSOFT: 원작 배경·던전 타일·캥카 동상 프레임. 보존 ROM에서 조사용으로 추출.
+SkyTemple contributors: SkyTemple Files 1.8.5 파서와 DmaDrawer, ground-dungeon 해석; SkyTemple 표시 구현 대조.
+Mystery Dungeon Franchise Wiki / Bulbapedia: 각 페이지를 링크한 스토리·쉼터 교차 확인.
+제품 코드·선택 자산·배포 EXE에는 반영하지 않은 조사 산출물.

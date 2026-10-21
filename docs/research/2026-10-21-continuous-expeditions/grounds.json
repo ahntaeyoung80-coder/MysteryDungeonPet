@@ -1,0 +1,4068 @@
+[
+  {
+    "id": "GND-L022-D05P31A",
+    "level": "D05P31A",
+    "configLevelId": 22,
+    "mapBgIndex": 22,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d05p31a.bma",
+        "sha256": "3af035cee8c06fe1b89f26f6563b884d43afccb8b7d3e9a18066ddce65697437"
+      },
+      {
+        "path": "MAP_BG/d05p31a.bpc",
+        "sha256": "b7e81fa98ccfec935b62f4f045200420e167161e8aa150250dbf7aad58175fd2"
+      },
+      {
+        "path": "MAP_BG/d05p31a.bpl",
+        "sha256": "892bdd5e1cf53a7d0d18dc0aefb0e405ec8024a20ae7ac2b6697f8829bf6cbba"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L023-D06P11A",
+    "level": "D06P11A",
+    "configLevelId": 23,
+    "mapBgIndex": 23,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d06p11a.bma",
+        "sha256": "8618323e9c75315a7793ff25c9fe9f405175971fd4040ac7e3caaaec47f2f284"
+      },
+      {
+        "path": "MAP_BG/d06p11a.bpc",
+        "sha256": "8329e24730e2f2fbbd4fcef55d62b455ff71a6f2891a6fb59a00956746f1d7f5"
+      },
+      {
+        "path": "MAP_BG/d06p11a.bpl",
+        "sha256": "998783ae91ba592a1bb106fb0a34a940805ca4198c3ee124579d781224dd5492"
+      },
+      {
+        "path": "MAP_BG/d06p11a5.bpa",
+        "sha256": "f5bb922d4854db7febe3292af53eb80408a2ee3638bb1d04ac3f4f4ee2afa514"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D06P11A/enter.sse",
+      "sha256": "be607b7d8e39f580cbe124cb341dc72dbc69d9c1308752cf619b48ec04a29986",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 5,
+          "position": {
+            "xRelative": 39,
+            "yRelative": 28,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 5,
+        "path": "SCRIPT/D06P11A/enter05.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L024-D07P11A",
+    "level": "D07P11A",
+    "configLevelId": 24,
+    "mapBgIndex": 24,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d07p11a.bma",
+        "sha256": "f2e8dea6b429dbcd337571922a74258e46812f7e3e871ad2084f535dacba18aa"
+      },
+      {
+        "path": "MAP_BG/d07p11a.bpc",
+        "sha256": "ac20e44eed40d9bd214fbed26298616d36699c146b2c2f4dd067c2d4dea0e509"
+      },
+      {
+        "path": "MAP_BG/d07p11a.bpl",
+        "sha256": "9d19b9c0cf5024f792811fb96181ba58fa75fd85d031d59b2e23495b00c774ff"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D07P11A/enter.sse",
+      "sha256": "de61e73ba6afb9424d2888990b0d2416ca9e3ece6b3b3e9c238bc4ed00c084ef",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 5,
+          "position": {
+            "xRelative": 35,
+            "yRelative": 21,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 5,
+        "path": "SCRIPT/D07P11A/enter05.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L025-D08P11A",
+    "level": "D08P11A",
+    "configLevelId": 25,
+    "mapBgIndex": 25,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d08p11a.bma",
+        "sha256": "811f80883b969c6e1c43192b8125246740b0964dde5653a76f7ea981955766ad"
+      },
+      {
+        "path": "MAP_BG/d08p11a.bpc",
+        "sha256": "cb71d7ff1e7786e4cbc389726405c8be6d194943f5c683b7035a14b13fb9c325"
+      },
+      {
+        "path": "MAP_BG/d08p11a.bpl",
+        "sha256": "958cad76d536e5aaa2d0305fcce9bc37bf489656387507cfc6648b98b9690b4f"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D08P11A/enter.sse",
+      "sha256": "536c64d1db740bbcb30ae8968c34ec65f7a0910e74e362cfd632e0deeb4ab97e",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 5,
+          "position": {
+            "xRelative": 48,
+            "yRelative": 45,
+            "xOffset": 2,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 5,
+        "path": "SCRIPT/D08P11A/enter05.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L026-D09P11A",
+    "level": "D09P11A",
+    "configLevelId": 26,
+    "mapBgIndex": 26,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d09p11a.bma",
+        "sha256": "83b3fe49d9e74b3de3e703756e8e18f5ee99f4364b47b5de025b1bee84ec0eb5"
+      },
+      {
+        "path": "MAP_BG/d09p11a.bpc",
+        "sha256": "c0abbfcc1e48623900ed94bccdcc3f4d3e4c50643f7fd71f6b5446564a4bca39"
+      },
+      {
+        "path": "MAP_BG/d09p11a.bpl",
+        "sha256": "e3152fd86eecbe68b70208ccc3d3f6e465941ad268d64322167d970de3a6953a"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D09P11A/enter.sse",
+      "sha256": "420802f4a0808bcd3e86e1c9bc3ec4717d8f8ced886d0e70b6f39e9b63a5bd76",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 24,
+            "yRelative": 29,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D09P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L027-D10P21A",
+    "level": "D10P21A",
+    "configLevelId": 27,
+    "mapBgIndex": 27,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d10p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d10p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d10p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 14,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 7,
+      "mappaGroup": 12,
+      "groupFloor0": 7,
+      "tilesetId": 12,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D10P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D10P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L030-D12P21A",
+    "level": "D12P21A",
+    "configLevelId": 30,
+    "mapBgIndex": 30,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d12p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d12p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d12p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 17,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 9,
+      "mappaGroup": 13,
+      "groupFloor0": 9,
+      "tilesetId": 14,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D12P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D12P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L033-D14P11A",
+    "level": "D14P11A",
+    "configLevelId": 33,
+    "mapBgIndex": 33,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d14p11a.bma",
+        "sha256": "9abdbe8c960d41617d01dae4a520ef8679575fdb3bda1cf22da92de41fe5a8b5"
+      },
+      {
+        "path": "MAP_BG/d14p11a.bpc",
+        "sha256": "5bfced0dcd29e3d56d449fd82bd38aac69fc086885fc129dd99fe54172fa7042"
+      },
+      {
+        "path": "MAP_BG/d14p11a.bpl",
+        "sha256": "96b4f2216246ba92cc510dcc44b8d38db984417116cf67cb93b5781b40f36805"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L035-D15P21A",
+    "level": "D15P21A",
+    "configLevelId": 35,
+    "mapBgIndex": 35,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d15p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d15p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d15p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 21,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 9,
+      "mappaGroup": 15,
+      "groupFloor0": 9,
+      "tilesetId": 19,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D15P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D15P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L038-D16P31A",
+    "level": "D16P31A",
+    "configLevelId": 38,
+    "mapBgIndex": 38,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d16p31a.bma",
+        "sha256": "d79958bc05afe6073d7290e24724155d9e32e0f5bd1c9b898b70ec90ecd3e456"
+      },
+      {
+        "path": "MAP_BG/d16p31a.bpc",
+        "sha256": "ba9c2c6719743539f79e02a30d5bba3312a4bcc2e1f2e2b569507792ee002920"
+      },
+      {
+        "path": "MAP_BG/d16p31a.bpl",
+        "sha256": "beb962b8dfebe577c9ecdd8b0c7dce3bc64a4b583d42d529de92dbe46866f8d0"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D16P31A/enter.sse",
+      "sha256": "c844b45e5da1ebe674fe77a7f09dd0a7b93f1711dc6ded6de1b903f802a870ab",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 8,
+          "position": {
+            "xRelative": 27,
+            "yRelative": 38,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 8,
+        "path": "SCRIPT/D16P31A/enter08.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L044-D17P45A",
+    "level": "D17P45A",
+    "configLevelId": 44,
+    "mapBgIndex": 44,
+    "mapType": 1,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d17p45a.bma",
+        "sha256": "cc2c0afb5ccd0f7af2bf065c6c4602c3a1a77b29004ee7f7f8e30e07b78505a3"
+      },
+      {
+        "path": "MAP_BG/d17p45a.bpc",
+        "sha256": "0520f80ea206ad7298fd767ceaa5b8e73dbaa76306e85243ced1aec268bace98"
+      },
+      {
+        "path": "MAP_BG/d17p45a.bpl",
+        "sha256": "72a0109f8e350ed429f199fad3e9df9a84c41b3cd8d64e6d8419e800a167ef6f"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L045-D18P11A",
+    "level": "D18P11A",
+    "configLevelId": 45,
+    "mapBgIndex": 45,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d18p11a.bma",
+        "sha256": "94e2742ba948c0029d7e8ce2f9b90b3e7eb01d0f6047f632dae9bdc8c4d1fab2"
+      },
+      {
+        "path": "MAP_BG/d18p11a.bpc",
+        "sha256": "e6ae69a2fbe5977dd94601447dff2633fd217eac6b2c3d4765a497ce220e021e"
+      },
+      {
+        "path": "MAP_BG/d18p11a.bpl",
+        "sha256": "98fafe6fa6407b237376ce4b9d6ed6a31778e86d13035a1cb37f240a0c69c928"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D18P11A/enter.sse",
+      "sha256": "a786506509806aac53cb1d7414e1f2e5fc8374a5baa84327c9c2dfd99ad76484",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 54,
+            "yRelative": 19,
+            "xOffset": 2,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D18P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L046-D19P11A",
+    "level": "D19P11A",
+    "configLevelId": 46,
+    "mapBgIndex": 46,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d19p11a.bma",
+        "sha256": "796ef48a89e510014879155aad03a710272a470d5f989dfa19998d8738c97e34"
+      },
+      {
+        "path": "MAP_BG/d19p11a.bpc",
+        "sha256": "57dc113da5da554c123bda492d6c6531c66e3ec97d469754bdc3beeda1bbb7ff"
+      },
+      {
+        "path": "MAP_BG/d19p11a.bpl",
+        "sha256": "0054f27dfdc4cc69116492731aace02ce2a9d307a57faabaf2a9ba7efd725452"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D19P11A/enter.sse",
+      "sha256": "f31cb6aa2768ed331656bbe2ef35a4648342c522e65f94effe3d4ca56629227a",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 67,
+            "yRelative": 20,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D19P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L047-D20P11A",
+    "level": "D20P11A",
+    "configLevelId": 47,
+    "mapBgIndex": 47,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d20p11a.bma",
+        "sha256": "31a01d9d261a387426fc31e672cde06242aeda5dd3166d983e909166910b0278"
+      },
+      {
+        "path": "MAP_BG/d20p11a.bpc",
+        "sha256": "e235ad0870caaec0f8f7e2e87e9bdc1d640beb1651082c5c238fea7e3d15e63b"
+      },
+      {
+        "path": "MAP_BG/d20p11a.bpl",
+        "sha256": "4bbcb177ed24a7a56a38708108357119ceb064ddf2eed73d65d61221b2c0cb26"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D20P11A/enter.sse",
+      "sha256": "561654cebe6e7cbfd09ce09190ac481eaf364f095ee5afd5d4cc2cd1740938ca",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 53,
+            "yRelative": 21,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D20P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L048-D21P21A",
+    "level": "D21P21A",
+    "configLevelId": 48,
+    "mapBgIndex": 48,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d21p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d21p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d21p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 29,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 7,
+      "mappaGroup": 20,
+      "groupFloor0": 7,
+      "tilesetId": 30,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D21P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D21P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L049-D21P41A",
+    "level": "D21P41A",
+    "configLevelId": 49,
+    "mapBgIndex": 49,
+    "mapType": 1,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d21p41a.bma",
+        "sha256": "509ef2028bbff777dd79769a3d0d53dbb64d0f2969ea395e3599a190e198a8e2"
+      },
+      {
+        "path": "MAP_BG/d21p41a.bpc",
+        "sha256": "4d20f13bdf272e87801c89464dd000b3bc9d284eb54de091ab8967d88f1c1916"
+      },
+      {
+        "path": "MAP_BG/d21p41a.bpl",
+        "sha256": "65ed9fe2a737df3e2a06f7a45b6e19192a6fef2723dfe1c667731f6f6f71a91e"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L050-D22P11A",
+    "level": "D22P11A",
+    "configLevelId": 50,
+    "mapBgIndex": 50,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d22p11a.bma",
+        "sha256": "9b395817eca1e76008282b70441a4e93c10846b30adc739c9049aa91fd3d1c66"
+      },
+      {
+        "path": "MAP_BG/d22p11a.bpc",
+        "sha256": "90677010034d7c89c9082724092937c3f095600725f0cb076256588e31cf9ad2"
+      },
+      {
+        "path": "MAP_BG/d22p11a.bpl",
+        "sha256": "1a136494a3615ac7e172de773603985c32ce7127511418fdd2779bb8ba5f72bd"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D22P11A/enter.sse",
+      "sha256": "d5400b77db04966756ee1086c2d0fd4a2cc4e90c2e786e9a1d5dbad75f60c959",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 29,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D22P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L051-D23P11A",
+    "level": "D23P11A",
+    "configLevelId": 51,
+    "mapBgIndex": 51,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d23p11a.bma",
+        "sha256": "000fabc3aef7e2905aa9ad2e96429f9d32f9744feff6ffa43d615a4da31b9922"
+      },
+      {
+        "path": "MAP_BG/d23p11a.bpc",
+        "sha256": "417f5b36fc5b112b9e2f578a2120d18153017c62dc30520bb979bb4e7aee268f"
+      },
+      {
+        "path": "MAP_BG/d23p11a.bpl",
+        "sha256": "7d3c69f7347924ce3355aacd036f980947ad5c0e738231869a876febfee5032d"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D23P11A/enter.sse",
+      "sha256": "667df0f2ce83bd25a00add17d23805da91e528cefae8b1fa8611f90c0a774e48",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 26,
+            "yRelative": 38,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D23P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L052-D24P11A",
+    "level": "D24P11A",
+    "configLevelId": 52,
+    "mapBgIndex": 52,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d24p11a.bma",
+        "sha256": "45e892da7ae9eaa45891e3914784353697b16b8da04bdbc072755daa8bce90db"
+      },
+      {
+        "path": "MAP_BG/d24p11a.bpc",
+        "sha256": "ad5b7b62ae11e07b2ec77d2ce392a87a73659ea92643ef31dcaea8d8338d160c"
+      },
+      {
+        "path": "MAP_BG/d24p11a.bpl",
+        "sha256": "1fa4d5d396358239f567fa11fcc06151d35f20ffee511726f1dbfb4f68bec14c"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D24P11A/enter.sse",
+      "sha256": "c489b3540493cb3a872b18685ac9f6f379045cc4a77d421fe3ca77c6f48bafc1",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 43,
+            "yRelative": 28,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D24P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L055-D25P11A",
+    "level": "D25P11A",
+    "configLevelId": 55,
+    "mapBgIndex": 55,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d25p11a.bma",
+        "sha256": "7d3de6b837054eb6c84f06e1731915e1b83b9bc17b403da700f079122630d7f7"
+      },
+      {
+        "path": "MAP_BG/d25p11a.bpc",
+        "sha256": "0d34469689ba0a21f7657c6ad37420f8b0649fe871d2525367ac32ade0e9982c"
+      },
+      {
+        "path": "MAP_BG/d25p11a.bpl",
+        "sha256": "55e43fca38dd9d477d3397a4c951938938815d581fff2dd372f48fd0e0a6ee25"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D25P11A/enter.sse",
+      "sha256": "5b76bbbe793a50482372a520704d5405edafc6e542f7010de597fadc5a3dc82c",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 47,
+            "yRelative": 32,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D25P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L056-D26P21A",
+    "level": "D26P21A",
+    "configLevelId": 56,
+    "mapBgIndex": 56,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d26p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d26p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d26p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 35,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 8,
+      "mappaGroup": 24,
+      "groupFloor0": 8,
+      "tilesetId": 39,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D26P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D26P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L058-D26P43A",
+    "level": "D26P43A",
+    "configLevelId": 58,
+    "mapBgIndex": 58,
+    "mapType": 1,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d26p43a.bma",
+        "sha256": "038fb433482a72bf21061493d5843bc6bb31a8d9907920bf205c349e246a5b11"
+      },
+      {
+        "path": "MAP_BG/d26p43a.bpc",
+        "sha256": "7be72b7e9ee16896ab5bec418e85d08fef6cdb3508ee503b9b15b47379e8f273"
+      },
+      {
+        "path": "MAP_BG/d26p43a.bpl",
+        "sha256": "643ec44ea39246f095000a583f2a8794981be1a2f444957c219b221799899bd0"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L059-D27P11A",
+    "level": "D27P11A",
+    "configLevelId": 59,
+    "mapBgIndex": 59,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d27p11a.bma",
+        "sha256": "d1247c645b4464ad64d6ebcc228a7d183008bf79c6f511f9d946255459cdac28"
+      },
+      {
+        "path": "MAP_BG/d27p11a.bpc",
+        "sha256": "da95e945255efd52774704bc5f740ff6d930a0450f750e2e91f3171edd302b02"
+      },
+      {
+        "path": "MAP_BG/d27p11a.bpl",
+        "sha256": "f9a00bd4b075ed9ec83f381b915885c6035e062576535ddc52538725e1451244"
+      },
+      {
+        "path": "MAP_BG/d27p11a1.bpa",
+        "sha256": "0a1f96785a9b1a70d8c8d9c2cc569a0dc1ecc1c7f3c055275362407ba39d9f5c"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D27P11A/enter.sse",
+      "sha256": "cecb6f02171e8745ddb463db69e067b4fca1fc33eef7ef08d96c5d4d0d7f168d",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 25,
+            "yRelative": 32,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 2,
+        "path": "SCRIPT/D27P11A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L060-D28P21A",
+    "level": "D28P21A",
+    "configLevelId": 60,
+    "mapBgIndex": 60,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d28p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d28p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d28p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 38,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 14,
+      "mappaGroup": 25,
+      "groupFloor0": 14,
+      "tilesetId": 42,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D28P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D28P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L061-D28P31A",
+    "level": "D28P31A",
+    "configLevelId": 61,
+    "mapBgIndex": 61,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d28p31a.bma",
+        "sha256": "29ab4e388bfdabad8d0563b1879a792a0c4e033c8ba5165dde157668faf37895"
+      },
+      {
+        "path": "MAP_BG/d28p31a.bpc",
+        "sha256": "21a43d0d4c49edf8b2a690b00eb88e24196352abaee6ee706150e664ecc9ab4d"
+      },
+      {
+        "path": "MAP_BG/d28p31a.bpl",
+        "sha256": "b0cc13519f9ad2a3800c124801c2d5606610a412ceb25d25c1ebe94453f30e67"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L067-D29P11A",
+    "level": "D29P11A",
+    "configLevelId": 67,
+    "mapBgIndex": 67,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d29p11a.bma",
+        "sha256": "2ab44fc5c8f117b6210d14d1037e9e67be3cab1391d081307f6bfd1ea4992a99"
+      },
+      {
+        "path": "MAP_BG/d29p11a.bpc",
+        "sha256": "cd369eba2f7968efb7fed902502f5e106b127c853eb7149796107c06195544c3"
+      },
+      {
+        "path": "MAP_BG/d29p11a.bpl",
+        "sha256": "7aa56166ce7f653a0105177fa9b958fc38ed00b903d189146b263ce21a1a7bb5"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D29P11A/enter.sse",
+      "sha256": "569b4229248a8c820586766a5b7824bd5d5506b92950911d39043e9b20592c6a",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 32,
+            "yRelative": 33,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 3,
+        "path": "SCRIPT/D29P11A/enter03.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L068-D30P21A",
+    "level": "D30P21A",
+    "configLevelId": 68,
+    "mapBgIndex": 68,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d30p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d30p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d30p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 41,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 12,
+      "mappaGroup": 26,
+      "groupFloor0": 12,
+      "tilesetId": 45,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D30P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D30P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L069-D30P32A",
+    "level": "D30P32A",
+    "configLevelId": 69,
+    "mapBgIndex": 69,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d30p32a.bma",
+        "sha256": "b734f53534e560aa332064c9d6c219865b5521ad94d2fc68aded25672e16a232"
+      },
+      {
+        "path": "MAP_BG/d30p32a.bpc",
+        "sha256": "485dfee29d097a1948a69979a505f26d7b73687470ea8e688b87cf9068cb2966"
+      },
+      {
+        "path": "MAP_BG/d30p32a.bpl",
+        "sha256": "f9a7a68adb33f5aeb950cb72974953d4f1c8db8566809b79a03a410d58768ff2"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L074-D31P11A",
+    "level": "D31P11A",
+    "configLevelId": 74,
+    "mapBgIndex": 74,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d31p11a.bma",
+        "sha256": "f8466a480677d0ba1d9dab44e3ffd4ca512ecc8b1956ffc12f877508b98d41ff"
+      },
+      {
+        "path": "MAP_BG/d31p11a.bpc",
+        "sha256": "5ecc9ea4514549e52658f29b5121938b9262aa8bf6b833b9925d997a0d450bb0"
+      },
+      {
+        "path": "MAP_BG/d31p11a.bpl",
+        "sha256": "ea587ce6f5b9b928b6f05ce26c965586455bd5fb29a7547aca4b813ea9178524"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D31P11A/enter.sse",
+      "sha256": "6743c17a0a0f8205045f42d70432f199fe03fcf090f90c2aa9b43c5d485b0997",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 27,
+            "yRelative": 28,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 3,
+        "path": "SCRIPT/D31P11A/enter03.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L077-D32P11A",
+    "level": "D32P11A",
+    "configLevelId": 77,
+    "mapBgIndex": 77,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d32p11a.bma",
+        "sha256": "ed1be888e39e40dae9a0fdab6ac0842451e56d21fe96db113fbbd7f909d36cb9"
+      },
+      {
+        "path": "MAP_BG/d32p11a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d32p11a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 54,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 52,
+      "groupFloor0": 0,
+      "tilesetId": 126,
+      "fixedFloorId": 0
+    },
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L078-D32P12A",
+    "level": "D32P12A",
+    "configLevelId": 78,
+    "mapBgIndex": 78,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d32p12a.bma",
+        "sha256": "ed1be888e39e40dae9a0fdab6ac0842451e56d21fe96db113fbbd7f909d36cb9"
+      },
+      {
+        "path": "MAP_BG/d32p12a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d32p12a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 56,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 52,
+      "groupFloor0": 4,
+      "tilesetId": 49,
+      "fixedFloorId": 0
+    },
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L079-D32P13A",
+    "level": "D32P13A",
+    "configLevelId": 79,
+    "mapBgIndex": 79,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d32p13a.bma",
+        "sha256": "a7b0a7ca6f1c6124facf447f36c5abdcff8d15cb73c208493facd2a4cf3654cd"
+      },
+      {
+        "path": "MAP_BG/d32p13a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d32p13a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 58,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 52,
+      "groupFloor0": 8,
+      "tilesetId": 127,
+      "fixedFloorId": 0
+    },
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L080-D32P14A",
+    "level": "D32P14A",
+    "configLevelId": 80,
+    "mapBgIndex": 80,
+    "mapType": 7,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d32p14a.bma",
+        "sha256": "270b6126d5ec946f157fa76f3044a7f08bab808b3095e0a0f94018a1336fbc3c"
+      },
+      {
+        "path": "MAP_BG/d32p14a.bpc",
+        "sha256": "9627893c5526b482111b9672198348aee43aeccbcce5c2a4299fe0315f1424df"
+      },
+      {
+        "path": "MAP_BG/d32p14a.bpl",
+        "sha256": "2dd9425208913944d99adfcefa260abb7cafb82d98e266d78a9e5186954a8030"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L090-D35P21A",
+    "level": "D35P21A",
+    "configLevelId": 90,
+    "mapBgIndex": 90,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d35p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d35p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d35p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 51,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 17,
+      "mappaGroup": 34,
+      "groupFloor0": 17,
+      "tilesetId": 52,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D35P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D35P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L097-D38P12A",
+    "level": "D38P12A",
+    "configLevelId": 97,
+    "mapBgIndex": 97,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d38p12a.bma",
+        "sha256": "148693613fd78fbaaaa03ca5271aa12ebe06033f8dd5e69baf941f5c4fd81569"
+      },
+      {
+        "path": "MAP_BG/d38p12a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d38p12a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 64,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 58,
+      "groupFloor0": 0,
+      "tilesetId": 55,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D38P12A/enter.sse",
+      "sha256": "0bcca4ab6e41287e92c07273549ae87c0d911b1447d4c6aeee08d48b4a7af4ac",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 19,
+            "yRelative": 18,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 6,
+        "path": "SCRIPT/D38P12A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L098-D39P21A",
+    "level": "D39P21A",
+    "configLevelId": 98,
+    "mapBgIndex": 98,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d39p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d39p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d39p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 64,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 14,
+      "mappaGroup": 58,
+      "groupFloor0": 14,
+      "tilesetId": 56,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D39P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D39P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L102-D41P21A",
+    "level": "D41P21A",
+    "configLevelId": 102,
+    "mapBgIndex": 102,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d41p21a.bma",
+        "sha256": "ea739dda631587ce9d933aff23c1b5e31576ca85a41f5e0e1396fba7e95b3d1a"
+      },
+      {
+        "path": "MAP_BG/d41p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d41p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 67,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 14,
+      "mappaGroup": 54,
+      "groupFloor0": 14,
+      "tilesetId": 57,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D41P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D41P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L104-D42P21A",
+    "level": "D42P21A",
+    "configLevelId": 104,
+    "mapBgIndex": 104,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d42p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d42p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d42p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 124,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 73,
+      "groupFloor0": 7,
+      "tilesetId": 80,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D42P21A/enter.sse",
+      "sha256": "8772fce0a7eb443b614b25262a234a2db39c501c8b9ffb2cdc8c39a53c645788",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D42P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L105-D42P31A",
+    "level": "D42P31A",
+    "configLevelId": 105,
+    "mapBgIndex": 105,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d42p31a.bma",
+        "sha256": "25f613e0d991768745918775f56e1a6de8376ec918c469d18a0e43f170b05bd7"
+      },
+      {
+        "path": "MAP_BG/d42p31a.bpc",
+        "sha256": "9cf81573d27341a9a3901dac77fe530e91559712128f29b2aded551beaad5ea4"
+      },
+      {
+        "path": "MAP_BG/d42p31a.bpl",
+        "sha256": "5ee58d1e3322e50e0c0a6c78cd417615832975101377c374e07619ca802b568e"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L106-D42P41A",
+    "level": "D42P41A",
+    "configLevelId": 106,
+    "mapBgIndex": 106,
+    "mapType": 1,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d42p41a.bma",
+        "sha256": "b869bd99b3f4a14e7b17ca57ed2234e8163b6ed4b70470262672beb6eda1ac8c"
+      },
+      {
+        "path": "MAP_BG/d42p41a.bpc",
+        "sha256": "d9e3374bc32c50b35a46fbca7dee82a7d7ba77b4b6bfbd779aa20317914de806"
+      },
+      {
+        "path": "MAP_BG/d42p41a.bpl",
+        "sha256": "5ee58d1e3322e50e0c0a6c78cd417615832975101377c374e07619ca802b568e"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L107-D42P42A",
+    "level": "D42P42A",
+    "configLevelId": 107,
+    "mapBgIndex": 107,
+    "mapType": 1,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d42p42a.bma",
+        "sha256": "45b9fad3eef5518585ba957460412dc0c9798aa61e97a8f707b536c22a904c5d"
+      },
+      {
+        "path": "MAP_BG/d42p42a.bpc",
+        "sha256": "2341d12fcdfdacfc4b7b1c72945e3ae6e9050641cd58e6f1795d98b90ef5ecb0"
+      },
+      {
+        "path": "MAP_BG/d42p42a.bpl",
+        "sha256": "505bb1d46903901ad86433a036b2d59170d9035caf8ccff812be1696792c3999"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L110-D45P21A",
+    "level": "D45P21A",
+    "configLevelId": 110,
+    "mapBgIndex": 110,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d45p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d45p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d45p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 131,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 76,
+      "groupFloor0": 8,
+      "tilesetId": 126,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D45P21A/enter.sse",
+      "sha256": "f9df2956055deb75a8d83ce98140cf10ed72ba00a56aee4e68f410630ae68503",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 7,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 7,
+        "path": "SCRIPT/D45P21A/enter07.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L113-D46P11A",
+    "level": "D46P11A",
+    "configLevelId": 113,
+    "mapBgIndex": 113,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d46p11a.bma",
+        "sha256": "6a4732a337309bd610d21d169a1f7601e2111630ebdea9840a9080b1af1e36d9"
+      },
+      {
+        "path": "MAP_BG/d46p11a.bpc",
+        "sha256": "e08732cc3a34aa26f0beff27e20530e893d0ad2b6fbb2b544283dfa8b3775a7e"
+      },
+      {
+        "path": "MAP_BG/d46p11a.bpl",
+        "sha256": "da9416de7b1577dd7bb9eb7ef3c5ec9c2d5667dd0e9dc236523729f2a3070415"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D46P11A/enter.sse",
+      "sha256": "796aa0e406c4b9b698542e6cc4922b740f39147eb5f14c2d7ca95e4e98a30c61",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 22,
+            "yRelative": 24,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D46P11A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L114-D46P21A",
+    "level": "D46P21A",
+    "configLevelId": 114,
+    "mapBgIndex": 114,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d46p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d46p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d46p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 134,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 77,
+      "groupFloor0": 5,
+      "tilesetId": 32,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D46P21A/enter.sse",
+      "sha256": "93b1d9ed8e18665a99b8f65d579cf138a5bd2e1662399229b42dc9a8f12f6c6c",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 3,
+        "path": "SCRIPT/D46P21A/enter03.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L117-D47P11A",
+    "level": "D47P11A",
+    "configLevelId": 117,
+    "mapBgIndex": 117,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d47p11a.bma",
+        "sha256": "45e11873605067ce45778f62bbcde32f9ce6ab53cccf0c30fc0ef62afd6581b7"
+      },
+      {
+        "path": "MAP_BG/d47p11a.bpc",
+        "sha256": "b9de0c311c7fc14ba2ef1370c82c751d3ca6e2568fcb4b4d6e64e2f72796a2b0"
+      },
+      {
+        "path": "MAP_BG/d47p11a.bpl",
+        "sha256": "39e97e4bd94a22cef3f45e477d293646bfd6cb9acebaf099ce7d33af954925df"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D47P11A/enter.sse",
+      "sha256": "04bed059798d2f79a53927325da95485ec3733ea442510f995fe43361fc79bbe",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 15,
+            "yRelative": 16,
+            "xOffset": 2,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D47P11A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L118-D48P11A",
+    "level": "D48P11A",
+    "configLevelId": 118,
+    "mapBgIndex": 118,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d48p11a.bma",
+        "sha256": "7650a02c6a6a100eeb3ad604496768c9cb9d3fe1b61fdc3bb519bfc65751e8d2"
+      },
+      {
+        "path": "MAP_BG/d48p11a.bpc",
+        "sha256": "33bb5d997ad36c8fa8f5b8f5c0f37c1484726f427ee6a31347d8e6b61e9e0f98"
+      },
+      {
+        "path": "MAP_BG/d48p11a.bpl",
+        "sha256": "6a55c9a8126c4d8520e1276790cbdcee8107444b74dfafd523c0b5c873e559e4"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D48P11A/enter.sse",
+      "sha256": "4ed147b95174425cad4d7ff3dcfab3da4a0391176ff42e3818dc0df1048cdf3e",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 31,
+            "yRelative": 33,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D48P11A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L119-D48P21A",
+    "level": "D48P21A",
+    "configLevelId": 119,
+    "mapBgIndex": 119,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d48p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d48p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d48p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 138,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 79,
+      "groupFloor0": 10,
+      "tilesetId": 135,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D48P21A/enter.sse",
+      "sha256": "9083c185c4828afaa97dc89b19444a14aba41f36c27662f0bea8c1faf18747f7",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 3,
+        "path": "SCRIPT/D48P21A/enter03.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L121-D50P11A",
+    "level": "D50P11A",
+    "configLevelId": 121,
+    "mapBgIndex": 121,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d50p11a.bma",
+        "sha256": "5d0cc308d997b441cd0da957bf726bc4e836fcbfe2b8d74d5e1b4b5a12fba10c"
+      },
+      {
+        "path": "MAP_BG/d50p11a.bpc",
+        "sha256": "444ce74c9e60c20beb964153e9420bf01905533d2899420eeb5551b628d1d5ec"
+      },
+      {
+        "path": "MAP_BG/d50p11a.bpl",
+        "sha256": "4a5dddc850eeec2bc2a5bf525e579395b2727a48dd348503d47e54c4846d2512"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D50P11A/enter.sse",
+      "sha256": "6f7f6bcbac0a2ae003fa40c6419886a41819ef57b19ac711654ae079a0d1e7ce",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 30,
+            "yRelative": 25,
+            "xOffset": 2,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D50P11A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L122-D51P11A",
+    "level": "D51P11A",
+    "configLevelId": 122,
+    "mapBgIndex": 122,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d51p11a.bma",
+        "sha256": "73232cfc134d79086a29e58abf6e3d93778156e91e366e8efc87edee59f87bd7"
+      },
+      {
+        "path": "MAP_BG/d51p11a.bpc",
+        "sha256": "f6e1ff401720c6d0478f3a5e4d827d86f7550c299227d56c8e65dad6f31412ab"
+      },
+      {
+        "path": "MAP_BG/d51p11a.bpl",
+        "sha256": "54b4a51fc7efc53576430de5eba0077d76ccfa0c8522850a75c183490ff0a2aa"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D51P11A/enter.sse",
+      "sha256": "8e28eb2a340b5306f51d78e34d1d52db875056870ebc548da4f314f71e891013",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 45,
+            "yRelative": 16,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 3,
+        "path": "SCRIPT/D51P11A/enter03.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L123-D51P21A",
+    "level": "D51P21A",
+    "configLevelId": 123,
+    "mapBgIndex": 123,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d51p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d51p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d51p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 143,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 82,
+      "groupFloor0": 10,
+      "tilesetId": 138,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D51P21A/enter.sse",
+      "sha256": "82591d4649840e48f098ceeb32fae47db6809d172f7cbe7fce81290dc5565fcf",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 3,
+        "path": "SCRIPT/D51P21A/enter03.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L125-D52P11A",
+    "level": "D52P11A",
+    "configLevelId": 125,
+    "mapBgIndex": 125,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d52p11a.bma",
+        "sha256": "6a256a2b04ce6c24322cc590c361211bfcaa03d1064bfd6136aa895851b2a5d3"
+      },
+      {
+        "path": "MAP_BG/d52p11a.bpc",
+        "sha256": "df6068bbd8355cdafc91962f7ff5d630a17a5f452b691d6a04fcbf0e762cf620"
+      },
+      {
+        "path": "MAP_BG/d52p11a.bpl",
+        "sha256": "a8e1c590d477cbeb7c7460562d7c337ba7069f5796736581a4288f65da6f4898"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D52P11A/enter.sse",
+      "sha256": "06cff1962d95e89adc18eb39bb8e4b975e99806e31781a7267ce79f55118a2c5",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 42,
+            "yRelative": 27,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D52P11A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L129-D53P11A",
+    "level": "D53P11A",
+    "configLevelId": 129,
+    "mapBgIndex": 129,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d53p11a.bma",
+        "sha256": "98627ea515b189b308d971b40645ff2aafb4efd7ad4d3d814e6934a0acb53ad7"
+      },
+      {
+        "path": "MAP_BG/d53p11a.bpc",
+        "sha256": "d5d510cc01b72f5a28f5e00597b9b45ac7899699c199db30602830cff3b25603"
+      },
+      {
+        "path": "MAP_BG/d53p11a.bpl",
+        "sha256": "78fe331a15ef5ef833ef88fbbac4883023441d51cbafb43d3edefe70fb75353c"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D53P11A/enter.sse",
+      "sha256": "3f2868d588d6638d31bbb15885ebc8230e46297a13a7ea38c22a4ad48360a81f",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 40,
+            "yRelative": 16,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D53P11A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L131-D53P21A",
+    "level": "D53P21A",
+    "configLevelId": 131,
+    "mapBgIndex": 131,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d53p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d53p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d53p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 147,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 84,
+      "groupFloor0": 9,
+      "tilesetId": 141,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D53P21A/enter.sse",
+      "sha256": "7b47d271767afaf6b54aec6e9126ce1b50e06dea6aada62d32e95aae66cc90e6",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 3,
+        "path": "SCRIPT/D53P21A/enter03.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L135-D54P11A",
+    "level": "D54P11A",
+    "configLevelId": 135,
+    "mapBgIndex": 135,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d54p11a.bma",
+        "sha256": "88172d6c23d7392939a2f0083e7226c2697496c07d13a41a566b4e9f38294896"
+      },
+      {
+        "path": "MAP_BG/d54p11a.bpc",
+        "sha256": "b179def6f81ee54cc346e13c86f21ab33166e50987e8303cc930204b553eba61"
+      },
+      {
+        "path": "MAP_BG/d54p11a.bpl",
+        "sha256": "92cc73b09f042bd1cfaffa607cd49a927876c191593c1929786398c8ea7f55bc"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D54P11A/enter.sse",
+      "sha256": "d591f1059a206da544c01b4eb39231a4bdf2b9e93196306861f125c79aa3cc36",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 2,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 5,
+          "position": {
+            "xRelative": 38,
+            "yRelative": 21,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 5,
+        "path": "SCRIPT/D54P11A/enter05.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L138-D55P11A",
+    "level": "D55P11A",
+    "configLevelId": 138,
+    "mapBgIndex": 138,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d55p11a.bma",
+        "sha256": "7fba917aeb2a18208aa22ec5e19db6adf948ddece0e22cbc88dc6f525d3f8fb0"
+      },
+      {
+        "path": "MAP_BG/d55p11a.bpc",
+        "sha256": "23d4125bc1b4650f91a8773f9f45af15f8e8caf20e441f4b26d1e07217f27eaa"
+      },
+      {
+        "path": "MAP_BG/d55p11a.bpl",
+        "sha256": "d5a2b9f34eb5664c363e10913126941e94011d7a132c2d04160ea68fb3db2fea"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D55P11A/enter.sse",
+      "sha256": "b17bfdffe1dd6f9bc465614ddb6641bff64a1211189114e1e90c4f4d742ec0f7",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 2,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 6,
+          "position": {
+            "xRelative": 45,
+            "yRelative": 26,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 6,
+        "path": "SCRIPT/D55P11A/enter06.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L139-D55P21A",
+    "level": "D55P21A",
+    "configLevelId": 139,
+    "mapBgIndex": 139,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d55p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d55p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d55p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 151,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 86,
+      "groupFloor0": 5,
+      "tilesetId": 129,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D55P21A/enter.sse",
+      "sha256": "9fa68007df1a214a549078e058ed45ac87b00da89b78f7653f48149f7b1f7228",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 2,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 7,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 7,
+        "path": "SCRIPT/D55P21A/enter07.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L141-D56P11A",
+    "level": "D56P11A",
+    "configLevelId": 141,
+    "mapBgIndex": 141,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d56p11a.bma",
+        "sha256": "50622815a32597912955467b3c71fd6622eb20e118acae1ab813002f6286d7ac"
+      },
+      {
+        "path": "MAP_BG/d56p11a.bpc",
+        "sha256": "da8f28d32c6c6312ae64c9674f0e5665d80da5d9f6d955bfd250ba428fdbab1c"
+      },
+      {
+        "path": "MAP_BG/d56p11a.bpl",
+        "sha256": "60468ac0cde316485b1ef6ebac0bbe264a48c3c68cb4dd258826d8e78b60df58"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D56P11A/enter.sse",
+      "sha256": "3628d75081f92b9c4bae86b7e4919d81e57a95b71b8ce97d7e3c74a14dcc433d",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 2,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 5,
+          "position": {
+            "xRelative": 23,
+            "yRelative": 31,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 5,
+        "path": "SCRIPT/D56P11A/enter05.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L143-D56P21A",
+    "level": "D56P21A",
+    "configLevelId": 143,
+    "mapBgIndex": 143,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d56p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d56p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d56p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 156,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 89,
+      "groupFloor0": 5,
+      "tilesetId": 131,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D56P21A/enter.sse",
+      "sha256": "9fa68007df1a214a549078e058ed45ac87b00da89b78f7653f48149f7b1f7228",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 2,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 7,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 7,
+        "path": "SCRIPT/D56P21A/enter07.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L145-D57P21A",
+    "level": "D57P21A",
+    "configLevelId": 145,
+    "mapBgIndex": 145,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d57p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d57p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d57p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 163,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 90,
+      "groupFloor0": 14,
+      "tilesetId": 12,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D57P21A/enter.sse",
+      "sha256": "6357cc6e4d93f3c7d92a77fa23d1efff0bf5eb36c510cb36cef5fbcdce2a85a5",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 5,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 5,
+        "path": "SCRIPT/D57P21A/enter05.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L146-D57P41A",
+    "level": "D57P41A",
+    "configLevelId": 146,
+    "mapBgIndex": 146,
+    "mapType": 1,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d57p41a.bma",
+        "sha256": "f7d7a4e8d55b49d9ce3f30e8e9de49dccc44c79bd38b90003d9b3a136a19b27e"
+      },
+      {
+        "path": "MAP_BG/d57p41a.bpc",
+        "sha256": "1d40c7d545bd9b4d13a091519fc6a32498344e22ed6943065d67907340beaf0a"
+      },
+      {
+        "path": "MAP_BG/d57p41a.bpl",
+        "sha256": "491eaae00b720aa54e5caebe4745280922c4e4b6fd0db7dca7cfcdd03f9f3368"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L147-D57P42A",
+    "level": "D57P42A",
+    "configLevelId": 147,
+    "mapBgIndex": 147,
+    "mapType": 1,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d57p42a.bma",
+        "sha256": "848e3a31cc2ce096b365e1051c3d4a41ee81210eedcc61ffeb1576b1d9d85931"
+      },
+      {
+        "path": "MAP_BG/d57p42a.bpc",
+        "sha256": "0673e896df41b356a8f9df943b296a1b51f2491fb8c7152bd026e6a349b0827b"
+      },
+      {
+        "path": "MAP_BG/d57p42a.bpl",
+        "sha256": "05f2ad429303c216d6e0880449314d20a3894618c60b721b38bc6b244fb03fb4"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L156-D73P11A",
+    "level": "D73P11A",
+    "configLevelId": 156,
+    "mapBgIndex": 156,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p11a.bma",
+        "sha256": "47d661c8306757708c083c416b2eef44e9e51aae1a583ec697e882fd4cef9d59"
+      },
+      {
+        "path": "MAP_BG/d73p11a.bpc",
+        "sha256": "80a37038e506e68b230c8ed921d7348e029da79a9d1fe0a4dc868f0d29773431"
+      },
+      {
+        "path": "MAP_BG/d73p11a.bpl",
+        "sha256": "e5f2ef314186e4c737da10b11e51d73d568d48327c03e02ee6986aa792b8bc93"
+      },
+      {
+        "path": "MAP_BG/d73p11a1.bpa",
+        "sha256": "f71a03dea2738dc2168d82adb506b58cc625728dfb157e6be13b4ded16f36e10"
+      },
+      {
+        "path": "MAP_BG/d73p11a5.bpa",
+        "sha256": "0d28ae72db5d8f13fbf5146c808d59de67a25f953642f87b713aaf80c19d32a6"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D73P11A/enter.sse",
+      "sha256": "e5a764f54a017c28ba551717b5e980ed9beed124f4633163ebcad97c2ac1b3e6",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 52,
+            "yRelative": 21,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D73P11A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L157-D73P21A",
+    "level": "D73P21A",
+    "configLevelId": 157,
+    "mapBgIndex": 157,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p21a.bma",
+        "sha256": "b3b0fbaff8eb112653e94b320a9812ba7e606ec2a9aac2bfe14f80e4b934c69b"
+      },
+      {
+        "path": "MAP_BG/d73p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d73p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 111,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 72,
+      "groupFloor0": 0,
+      "tilesetId": 11,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D73P21A/enter.sse",
+      "sha256": "9c80eef5ff769d18129a550b283782b5e0dcef2fc33b7515046c3f9b0733d713",
+      "actors": [
+        {
+          "layer": 10,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D73P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L158-D73P22A",
+    "level": "D73P22A",
+    "configLevelId": 158,
+    "mapBgIndex": 158,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p22a.bma",
+        "sha256": "d0bb299914843e1c67ecf8323a29a88043b90aa21e9ade37fbe8dcce214c6fe6"
+      },
+      {
+        "path": "MAP_BG/d73p22a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d73p22a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 113,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 72,
+      "groupFloor0": 6,
+      "tilesetId": 66,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D73P22A/enter.sse",
+      "sha256": "3d70770f5b9f95eea7032383c6a14e5e662a02c63de07e4757bd2189cdf0142c",
+      "actors": [
+        {
+          "layer": 10,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 36,
+            "yRelative": 24,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D73P22A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L159-D73P23A",
+    "level": "D73P23A",
+    "configLevelId": 159,
+    "mapBgIndex": 159,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p23a.bma",
+        "sha256": "b3b0fbaff8eb112653e94b320a9812ba7e606ec2a9aac2bfe14f80e4b934c69b"
+      },
+      {
+        "path": "MAP_BG/d73p23a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d73p23a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 114,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 72,
+      "groupFloor0": 9,
+      "tilesetId": 142,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D73P23A/enter.sse",
+      "sha256": "4481b4996fe26d49d169ce5c3b1d619b67fac7592e6d1e364bb2ca8eda1c0db0",
+      "actors": [
+        {
+          "layer": 10,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D73P23A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L160-D73P24A",
+    "level": "D73P24A",
+    "configLevelId": 160,
+    "mapBgIndex": 160,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p24a.bma",
+        "sha256": "d0bb299914843e1c67ecf8323a29a88043b90aa21e9ade37fbe8dcce214c6fe6"
+      },
+      {
+        "path": "MAP_BG/d73p24a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d73p24a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 114,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 72,
+      "groupFloor0": 9,
+      "tilesetId": 142,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D73P24A/enter.sse",
+      "sha256": "10b2cfbca305c0b6493055769d4868665ce1b0d05033e5a94711eb11ba5b617f",
+      "actors": [
+        {
+          "layer": 10,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 36,
+            "yRelative": 24,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 3,
+        "path": "SCRIPT/D73P24A/enter03.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L161-D73P25A",
+    "level": "D73P25A",
+    "configLevelId": 161,
+    "mapBgIndex": 161,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p25a.bma",
+        "sha256": "1e9c0f685efda4bf7a6cff2b3f3ba4a2bcf312dbb29644be66f17dcb6e31c10b"
+      },
+      {
+        "path": "MAP_BG/d73p25a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d73p25a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 115,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 72,
+      "groupFloor0": 12,
+      "tilesetId": 142,
+      "fixedFloorId": 0
+    },
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L162-D73P26A",
+    "level": "D73P26A",
+    "configLevelId": 162,
+    "mapBgIndex": 162,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p26a.bma",
+        "sha256": "d0bb299914843e1c67ecf8323a29a88043b90aa21e9ade37fbe8dcce214c6fe6"
+      },
+      {
+        "path": "MAP_BG/d73p26a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d73p26a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 116,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 72,
+      "groupFloor0": 16,
+      "tilesetId": 106,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D73P26A/enter.sse",
+      "sha256": "294ae2a9b3277837ac9ee4a9c5ae993137d8beff7fe3df94012034a3f63066c6",
+      "actors": [
+        {
+          "layer": 10,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 36,
+            "yRelative": 24,
+            "xOffset": 0,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 3,
+        "path": "SCRIPT/D73P26A/enter03.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L163-D73P27A",
+    "level": "D73P27A",
+    "configLevelId": 163,
+    "mapBgIndex": 163,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p27a.bma",
+        "sha256": "edeb0a485a12f039ecbcea35164933c99d0c71ee58b32d0f74287d29d0389ae4"
+      },
+      {
+        "path": "MAP_BG/d73p27a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d73p27a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 117,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 72,
+      "groupFloor0": 20,
+      "tilesetId": 143,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D73P27A/enter.sse",
+      "sha256": "96086494726c99a1b93906108a467c4144bffc301df7f9b1a42217bf221ec551",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 34,
+            "yRelative": 23,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D73P27A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L164-D73P28A",
+    "level": "D73P28A",
+    "configLevelId": 164,
+    "mapBgIndex": 164,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p28a.bma",
+        "sha256": "25dbd6c7ce5e24b5cf76bf21709a47379e02d190257df4ec316c15453ff17bbc"
+      },
+      {
+        "path": "MAP_BG/d73p28a.bpc",
+        "sha256": "150eb026075368816683cf17d711913553ab4221155744ce75f1155d9a5f2a34"
+      },
+      {
+        "path": "MAP_BG/d73p28a.bpl",
+        "sha256": "09d45206d83cbad0c5699bc8eb7b220e93fb16c267c5b47c433472f51ac29abe"
+      },
+      {
+        "path": "MAP_BG/d73p28a1.bpa",
+        "sha256": "3181668ab1a84c00cf08ce34a75ba608194dcfe665b71fcbe706c003ec608fb8"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D73P28A/enter.sse",
+      "sha256": "25c468b628173f7daa0cb071802db5b9a3157ac0fe14a3cfd1a43a9fada0bd4b",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 22,
+            "yRelative": 26,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D73P28A/enter02.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L165-D73P29A",
+    "level": "D73P29A",
+    "configLevelId": 165,
+    "mapBgIndex": 165,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p29a.bma",
+        "sha256": "8ec52ae17ce10bcbef53d7340b06b3bc88856687969e47c2ad4524f21ca47deb"
+      },
+      {
+        "path": "MAP_BG/d73p29a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d73p29a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 120,
+      "sourceFloorIdRaw": 1,
+      "resolvedLocalFloor0": 0,
+      "mappaGroup": 72,
+      "groupFloor0": 33,
+      "tilesetId": 32,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D73P29A/enter.sse",
+      "sha256": "112f773520330bc33d7e51796606b257ee7b5a0666677368b49bd01cbbb23626",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 33,
+            "yRelative": 25,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D73P29A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L167-D73P41A",
+    "level": "D73P41A",
+    "configLevelId": 167,
+    "mapBgIndex": 167,
+    "mapType": 1,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d73p41a.bma",
+        "sha256": "e88004cb2fb555ffcd089305bb94c3477c9473dc6de925cc650ec7d6779411ef"
+      },
+      {
+        "path": "MAP_BG/d73p41a.bpc",
+        "sha256": "8fa5a340ee8eb82ebffacf86896adf5e44048ede50792e9eeaf07a1edda5cdc7"
+      },
+      {
+        "path": "MAP_BG/d73p41a.bpl",
+        "sha256": "209c25551912fbbb5a23c47667c84084535282b1eff3637ae1d096cbbb5a7216"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L176-D79P11A",
+    "level": "D79P11A",
+    "configLevelId": 176,
+    "mapBgIndex": 176,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d79p11a.bma",
+        "sha256": "123f4904a15d6989d85f10b1321ada4d9ad5eae2889ce1e76d007262a5538221"
+      },
+      {
+        "path": "MAP_BG/d79p11a.bpc",
+        "sha256": "de288d77c16390a9a8ab37c1ab45c2523604ef31c19e29704b0b18167edd5d16"
+      },
+      {
+        "path": "MAP_BG/d79p11a.bpl",
+        "sha256": "4df06d3d5857e1cd8d9a50a331b0adebc14d733d1b4f075e4124e57553b37f57"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/D79P11A/enter.sse",
+      "sha256": "ee58169afa919ce10eab1c481132d1da6384ae5a3c2ee1a77b52eca4f732fbde",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 3,
+          "position": {
+            "xRelative": 27,
+            "yRelative": 45,
+            "xOffset": 0,
+            "yOffset": 2
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 3,
+        "path": "SCRIPT/D79P11A/enter03.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L177-D79P21A",
+    "level": "D79P21A",
+    "configLevelId": 177,
+    "mapBgIndex": 177,
+    "mapType": 10,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/d79p21a.bma",
+        "sha256": "44230d6ab0bb298481d71e1cbc0f77be7c2e2a79636daa5f3d56801b3614fd2c"
+      },
+      {
+        "path": "MAP_BG/d79p21a.bpc",
+        "sha256": "0fbfe7592d62984dffa614fa782a3d1ff9dbc6f5e7be0aad650663fab4d97527"
+      },
+      {
+        "path": "MAP_BG/d79p21a.bpl",
+        "sha256": "b9e4b3543b321007e8597d31d37dc1239f2ec8d029d67db6f5a6d95b5f092e83"
+      }
+    ],
+    "tilesetMapping": {
+      "sourceDungeonId": 47,
+      "sourceFloorIdRaw": 100,
+      "resolvedLocalFloor0": 9,
+      "mappaGroup": 43,
+      "groupFloor0": 9,
+      "tilesetId": 82,
+      "fixedFloorId": 0
+    },
+    "statueLayout": {
+      "path": "SCRIPT/D79P21A/enter.sse",
+      "sha256": "9133469d96130ad6538b715b649ed85c362fbaa148e939c32059d604d1fec3e9",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 0,
+          "actorId": 156,
+          "actorName": "OBJECT002",
+          "entid": 554,
+          "scriptId": 2,
+          "position": {
+            "xRelative": 28,
+            "yRelative": 30,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 156,
+        "scriptId": 2,
+        "path": "SCRIPT/D79P21A/enter02.ssb",
+        "sha256": "c8c59526c34dd0d441fe76a8cc2eaa1d092af869f9dac00fe0d0b5bc09fb0797",
+        "saveConfirmed": true,
+        "storageConfirmed": false,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  },
+  {
+    "id": "GND-L222-H02P99A",
+    "level": "H02P99A",
+    "configLevelId": 222,
+    "mapBgIndex": 222,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/h02p99a.bma",
+        "sha256": "9da0a8b202bd056fa04158b1213c584c386689adca002504162cf34fa2151c04"
+      },
+      {
+        "path": "MAP_BG/h02p99a.bpc",
+        "sha256": "4754a5be13a651984dad1c5dd6de32180746ed8aee0c360ce2893a332834f0df"
+      },
+      {
+        "path": "MAP_BG/h02p99a.bpl",
+        "sha256": "a63176784721e68deeeca53b99bd843a650f9939e25a405a2fbdca78adcee9c5"
+      },
+      {
+        "path": "MAP_BG/h02p99a1.bpa",
+        "sha256": "e9a2f64c32c4304e8a03345536a0059e1229bda2b2a61a4a4e81f21ea5d10104"
+      },
+      {
+        "path": "MAP_BG/h02p99a5.bpa",
+        "sha256": "f5bb922d4854db7febe3292af53eb80408a2ee3638bb1d04ac3f4f4ee2afa514"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L228-P02P01A",
+    "level": "P02P01A",
+    "configLevelId": 228,
+    "mapBgIndex": 228,
+    "mapType": 6,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/p02p01a.bma",
+        "sha256": "8937cbac15a2f6b00ab44c87cb3e90d91282d09aea640a225370507641427669"
+      },
+      {
+        "path": "MAP_BG/p02p01a.bpc",
+        "sha256": "8e633300a734885e5da9a92051bb1a9481c2278e50db6514cd801f7bbf90e06f"
+      },
+      {
+        "path": "MAP_BG/p02p01a.bpl",
+        "sha256": "e864b0ec1e090c5716121c314a612e37cba574d364900091e0d13b122a189205"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": null,
+    "interactions": [],
+    "statueStatus": "not_detected_by_actor_scan"
+  },
+  {
+    "id": "GND-L254-P19P01A",
+    "level": "P19P01A",
+    "configLevelId": 254,
+    "mapBgIndex": 254,
+    "mapType": 7,
+    "backgroundSources": [
+      {
+        "path": "MAP_BG/p19p01a.bma",
+        "sha256": "901ebbc015453e786f9db43c1e09097f896bb4240a11f6b7ca2e041e688ea5b2"
+      },
+      {
+        "path": "MAP_BG/p19p01a.bpc",
+        "sha256": "00963abd689d5b4ab2555616132b490d19d0675dffe4f0cdd56252cd8691c136"
+      },
+      {
+        "path": "MAP_BG/p19p01a.bpl",
+        "sha256": "cb617ad7c9f366de5b2143e847b1bf0e9dcff2bc5ebf00895039ab10d0eff876"
+      }
+    ],
+    "tilesetMapping": null,
+    "statueLayout": {
+      "path": "SCRIPT/P19P01A/enter.sse",
+      "sha256": "22000ab4ab94af3e5ebe92229013a283c3943e58b5e300e7100093e41081cb43",
+      "actors": [
+        {
+          "layer": 0,
+          "actorIndex": 1,
+          "actorId": 155,
+          "actorName": "OBJECT001",
+          "entid": 554,
+          "scriptId": 7,
+          "position": {
+            "xRelative": 24,
+            "yRelative": 22,
+            "xOffset": 2,
+            "yOffset": 0
+          }
+        }
+      ]
+    },
+    "interactions": [
+      {
+        "actorId": 155,
+        "scriptId": 7,
+        "path": "SCRIPT/P19P01A/enter07.ssb",
+        "sha256": "cd69610a0f7f2573a91d82614460d0556a808f3f737b44ae88dc3aef208c99ad",
+        "saveConfirmed": true,
+        "storageConfirmed": true,
+        "opcodes": [
+          "flag_CalcBit($SCENARIO_MAIN_BIT_FLAG, 7, 1);",
+          "CallCommon(CORO_HANYOU_SAVE_FUNC);",
+          "message_Menu(MENU_STORAGE);"
+        ]
+      }
+    ],
+    "statueStatus": "confirmed"
+  }
+]

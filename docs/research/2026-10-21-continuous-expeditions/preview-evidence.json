@@ -1,0 +1,706 @@
+{
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "romUnchanged": true,
+  "dungeonBinSha256": "c6866569313f971bf01f89dfe7d0796fb9a61a044ad81455f26a1571863c8a34",
+  "statue": {
+    "mdIndex": 554,
+    "spriteIndex": 597,
+    "pack": "MONSTER/m_ground.bin",
+    "wanSha256": "2ed65d00e075a752499c129889d5e4e17e6a43fc67d685b4fb886f59a3aec734"
+  },
+  "grounds": [
+    {
+      "groundId": "GND-L022-D05P31A",
+      "size": [
+        552,
+        552
+      ],
+      "rgbaSha256": "fd0e0beaba5185b2a64e9ac86ba49a7f3658540f824a8b510a7af468b1b0975c",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L023-D06P11A",
+      "size": [
+        552,
+        432
+      ],
+      "rgbaSha256": "8d16918a23860897bb475b3a6572f5543f08d3c206fde32e56b54ec2cf4195f5",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L024-D07P11A",
+      "size": [
+        552,
+        360
+      ],
+      "rgbaSha256": "bdd4c97324d8367eeeff81414d194b0acd02c2327d0be03a82f1185cdb05b18a",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L025-D08P11A",
+      "size": [
+        600,
+        792
+      ],
+      "rgbaSha256": "af864e534d1452c3d51d03bf194abe0dba069d2328379d2609898b32c8a3c050",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L026-D09P11A",
+      "size": [
+        504,
+        504
+      ],
+      "rgbaSha256": "32b08b1d9120e7b2ad5a46060388227d048dc7166d6a116d250d02ad781ff509",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L027-D10P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "25d997944d94d1bccb2cfab1770c74331894a8e673c498b8828ad48db8c5842d",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L030-D12P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "c6291eafe8eb910b298f800ef433f5525ca3189d5921974d1865440418cceef8",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L033-D14P11A",
+      "size": [
+        456,
+        384
+      ],
+      "rgbaSha256": "a62b1823420797b369bf95a0cf1b3643a9312d257506953aaec2eede92af5906",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L035-D15P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "b6a26399a45e0e7a9cf86378360293616a0dd03d2e5314801d14604bc6d90bc5",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L038-D16P31A",
+      "size": [
+        600,
+        480
+      ],
+      "rgbaSha256": "ee3562464216903cb8ba788718b54b9aa9b130c582c857ab9d7c1aa42c328ed1",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L044-D17P45A",
+      "size": [
+        696,
+        504
+      ],
+      "rgbaSha256": "2aaed94c15846a24ed67aeb35b9422ddc9ffc29b12c96b8883453996d7e7b598",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L045-D18P11A",
+      "size": [
+        600,
+        384
+      ],
+      "rgbaSha256": "c159b5523742ba0545faae21aa81974f3f001fea80b499b12b8dbc301c17d2e7",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L046-D19P11A",
+      "size": [
+        768,
+        384
+      ],
+      "rgbaSha256": "18128517e83f40bf708505c8398b102fa76a9ef252a0710aa5994a3818636817",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L047-D20P11A",
+      "size": [
+        600,
+        384
+      ],
+      "rgbaSha256": "05c6e0d1c62a990e56522940ecd483ebc05c308ffdb06bbfca74ef09bc1eb0c7",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L048-D21P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "c8576e97bd1abd0b1be563477ef35f0324c530fd1c7e982a713e4d56dd787cca",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L049-D21P41A",
+      "size": [
+        648,
+        528
+      ],
+      "rgbaSha256": "5c8b1d66fe04e6880cec42f3ab116848c8b3cf30248e235fbfc3cf7a51f8222f",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L050-D22P11A",
+      "size": [
+        552,
+        552
+      ],
+      "rgbaSha256": "fad86a20812b1bb3730a740537096a833ab8c98188dd8b754dbcfeb20e9ca9cb",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L051-D23P11A",
+      "size": [
+        552,
+        552
+      ],
+      "rgbaSha256": "b0c497ba51bb1728d5d9f55de92a05b50210d5ccd5dc07375e4e2ec7ce0e8190",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L052-D24P11A",
+      "size": [
+        504,
+        432
+      ],
+      "rgbaSha256": "3517558a61920bb252b25277ce3b1ad301fe46bb8f9ab89abbb43bdad3ab2561",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L055-D25P11A",
+      "size": [
+        648,
+        504
+      ],
+      "rgbaSha256": "13c6206590c1a04207f6c3bf6ed292665215e013a716d90fc25838713da6b96f",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L056-D26P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "4c85de2a9ee1c95907262d972379d0a104468aaad04dbf945ae89fb9dfe9b49d",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L058-D26P43A",
+      "size": [
+        552,
+        744
+      ],
+      "rgbaSha256": "03c92a78c7da919e0f1a8e3d1c892f752e3ee98c0ca19cff180893284c3403be",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L059-D27P11A",
+      "size": [
+        456,
+        552
+      ],
+      "rgbaSha256": "83e5a795d772bc47aaa2cccc15a807fc6ed19fe4f00abd955b91fa8391ca4af9",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L060-D28P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "d9ed7c76c65a09df375b63edafe3856b66741480225aedadd08f4db6299bae05",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L061-D28P31A",
+      "size": [
+        816,
+        360
+      ],
+      "rgbaSha256": "480cb77521683c7f77327ad0889e42bec698a360b593b62bc8e78c27bf0989c0",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L067-D29P11A",
+      "size": [
+        600,
+        552
+      ],
+      "rgbaSha256": "bbedc74468c19ccbca62d7b2db40fb5c1cca15d2455a32912132bc7b8cd197de",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L068-D30P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "91cef904a5c7b54e483bb186bb4fbd09962a9c07472a0ad8581d5243c4a62239",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L069-D30P32A",
+      "size": [
+        552,
+        576
+      ],
+      "rgbaSha256": "6aba8455eac74ccc7cb86eb498cfb6da42742e77bf78ade5c871562b17f4883e",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L074-D31P11A",
+      "size": [
+        600,
+        504
+      ],
+      "rgbaSha256": "600b08cbce7c70fa73b92ec0105b7d79e9dbd04d67234624e9ee7a6081d230aa",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L077-D32P11A",
+      "size": [
+        1008,
+        456
+      ],
+      "rgbaSha256": "b8bf9b086b3a2a884438ac3979220aef37b6c71a9ed5ff13463c9371b5bff73a",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L078-D32P12A",
+      "size": [
+        1008,
+        456
+      ],
+      "rgbaSha256": "447dbb1d53cc9b240d00cbdfd39593effffd629a7cb4a9eab302be56fd5a13a2",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L079-D32P13A",
+      "size": [
+        1008,
+        456
+      ],
+      "rgbaSha256": "948a4fee1c5c3584add65af5057b4b158d766583ce45515d1104918f44ae4233",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L080-D32P14A",
+      "size": [
+        576,
+        408
+      ],
+      "rgbaSha256": "425c83a6b7aaae7054a8a76298148a7e5258f2d357d1eb130dd2501c546ad804",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L090-D35P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "cb773b7a78b405e1776e92ce0a1ff9185e2bd43111c176b2e78f1b9a8adfe780",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L097-D38P12A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "e9325de87c2dc1daadec2d7a10174b06569a31ca7be6f30100311d8db9ef2a5d",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L098-D39P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "22ecffe9d0dfa6550e2d4122fee8f4ccdf41f4ffc5fa3e3c9388066546c702f6",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L102-D41P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "0144752962623d13f23df054b0217612096af7908c4cad64c9f5ce921e4a5d3a",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L104-D42P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "8a8b748ce01124b5a04d340eb6b7c972e5fe18312e747131e4e5b1461ce2889f",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L105-D42P31A",
+      "size": [
+        1008,
+        504
+      ],
+      "rgbaSha256": "3060fa3c16b7f6479337794847ff1b62fd107aaa2b296b9585c6732703bf4d48",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L106-D42P41A",
+      "size": [
+        504,
+        504
+      ],
+      "rgbaSha256": "9e211df452c8fdd82ae2e43c0aa61cb700e11faf05109644c51d6d2fd4e0b65d",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L107-D42P42A",
+      "size": [
+        504,
+        456
+      ],
+      "rgbaSha256": "3c87bb8118dbecb3adf03e1c3c0381526eca6f4ff402128eb91658e8b5f120af",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L110-D45P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "3018ed5f2ad202fcf95c4ae4b2935c2580bed7d572c96a642de32fa715e06319",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L113-D46P11A",
+      "size": [
+        456,
+        408
+      ],
+      "rgbaSha256": "e242347f3d77a988d5d847035d5249d6b8381acbcb4c90c25c31a6950164fcf6",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L114-D46P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "b5a2826af1c6e5903bc00e1694d29082a521249592120ec24e7457f71406d278",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L117-D47P11A",
+      "size": [
+        456,
+        288
+      ],
+      "rgbaSha256": "e5b28047132830dc99a58964b1b2d60aa914a300d6a9ab14662647948f98fb42",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L118-D48P11A",
+      "size": [
+        600,
+        552
+      ],
+      "rgbaSha256": "0fe479be0060d48b7361c1ce87099fc2088c106846c7d153475b4dfd91651bc2",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L119-D48P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "4eda6446d13c82812d9f13ee9ff2bacd05344488056328cf4aba111e6d54a265",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L121-D50P11A",
+      "size": [
+        504,
+        360
+      ],
+      "rgbaSha256": "859fe15054d7176e0e34058b83a03fe345e66a76bec47b5580bf24b2cbfc2b46",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L122-D51P11A",
+      "size": [
+        504,
+        312
+      ],
+      "rgbaSha256": "67be3a0e4ccac5e47b26178ec9bf4621574e4043effa86c704a852cb71362833",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L123-D51P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "22b090ea80ca632941baa2d4bd26bd1711bd67e03f8cacf025f80d6ae22fc68d",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L125-D52P11A",
+      "size": [
+        504,
+        408
+      ],
+      "rgbaSha256": "3ff61c073a0d4b0a4864fcc7c79ab99a885a510f0db198d42de19aa2aa877e04",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L129-D53P11A",
+      "size": [
+        504,
+        360
+      ],
+      "rgbaSha256": "9a1f64b3860e5c33ba7d5a75459df12d748779e79b0998a03ca92a84889f1e78",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L131-D53P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "40d3b6dd7ff2cacb1229c59737d8778c81ea8b329002eba6f6267b6170fb784f",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L135-D54P11A",
+      "size": [
+        504,
+        432
+      ],
+      "rgbaSha256": "98d91d7de614b5634a29e33f4ea7b2efc27388f4cb71e02e1872f1d3f8d91326",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L138-D55P11A",
+      "size": [
+        552,
+        504
+      ],
+      "rgbaSha256": "6a61f7664617d9b4d0ed2461d0ce6da5839f3f71ab6e74daafe44c90e5760fb5",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L139-D55P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "1b23f59990f1734fe7eceb3e8bd1c38a791f9739f5f1d02af4c6bada59d05973",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L141-D56P11A",
+      "size": [
+        504,
+        408
+      ],
+      "rgbaSha256": "28ea1f8cec64a1d354c71bf7c6b509a322fe8c06407253369800608864300044",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L143-D56P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "41a81b6c26a84fcae2abfe46e49cd22506d4742acbad187d72cc70b1dba2305a",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L145-D57P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "25d997944d94d1bccb2cfab1770c74331894a8e673c498b8828ad48db8c5842d",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L146-D57P41A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "3e172ff569ce2f47a2164e1f70d1860d82484a7a3add53eaa36abb394aeb6f41",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L147-D57P42A",
+      "size": [
+        456,
+        528
+      ],
+      "rgbaSha256": "752eb8db766ce7e5164ab9ba41d90d8d9424a8a463b6e139949304de49b47d85",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L156-D73P11A",
+      "size": [
+        648,
+        552
+      ],
+      "rgbaSha256": "62a8199d30311ba67f82694666f1ea7a926a3587ea7f4dce1ac59167688f355b",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L157-D73P21A",
+      "size": [
+        456,
+        504
+      ],
+      "rgbaSha256": "ecb6dd9ce64c356d73d5aed1d9af511bd72ade6b3eae0a6810d072af76c50293",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L158-D73P22A",
+      "size": [
+        456,
+        504
+      ],
+      "rgbaSha256": "952eb37d116c20a886411c296b9984e7caf1ad6381bd43fc40cf90428180507d",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L159-D73P23A",
+      "size": [
+        456,
+        504
+      ],
+      "rgbaSha256": "37c4688f2651ea8087d0eb972f3a634a5bc5f9de4f37db05b2931a1d3bc49639",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L160-D73P24A",
+      "size": [
+        456,
+        504
+      ],
+      "rgbaSha256": "e404125f4b3939c548088d2c13f63202632996ee51f2626669d020fd89005487",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L161-D73P25A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "22cb4aa7f71449358fdd6dafafcc1be5881067d31b9cf99f48fc6b45ea55f918",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L162-D73P26A",
+      "size": [
+        456,
+        504
+      ],
+      "rgbaSha256": "5d64d2d95dd6ba391aa037cf465746788fa236992ed2cda8f4a00912392d97f6",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L163-D73P27A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "dda5267d8ead288a559582abebc5578a77cefdb34f8366ab53d859269ae96461",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L164-D73P28A",
+      "size": [
+        456,
+        504
+      ],
+      "rgbaSha256": "f670a131b7ddbeb2f4a83c82d4ec113b446901e7e9ba0b31c6e500bcedbfd0f2",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L165-D73P29A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "c35db88c3858b1222602ad43d01df67d96d5de04a26123398809857aee745154",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L167-D73P41A",
+      "size": [
+        504,
+        504
+      ],
+      "rgbaSha256": "965decc91b7ec70645e1221a9d5f280732e0c7e029c92cd5d14f617a96854c08",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L176-D79P11A",
+      "size": [
+        600,
+        504
+      ],
+      "rgbaSha256": "88ec7b2435ff3022f66c956b569cf9f23c34f7221b002bbe8efcfd0d51e0d298",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L177-D79P21A",
+      "size": [
+        456,
+        456
+      ],
+      "rgbaSha256": "6eb7b1d9e1601d8ea7eff888650d43463631effe222c546be7a3da37b1bb246d",
+      "mode": "dungeon_tiles"
+    },
+    {
+      "groundId": "GND-L222-H02P99A",
+      "size": [
+        528,
+        384
+      ],
+      "rgbaSha256": "ccf46d3fb58d7defa50190360b07450aefbd32c53b2a5354e9b2438e41edfd2e",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L228-P02P01A",
+      "size": [
+        504,
+        408
+      ],
+      "rgbaSha256": "fe1832624c64aba311bacffd8f5cf3209a6519f86e09730be9e6a551ae5f4492",
+      "mode": "static_background"
+    },
+    {
+      "groundId": "GND-L254-P19P01A",
+      "size": [
+        456,
+        384
+      ],
+      "rgbaSha256": "c29afbc5ddc0675dca4bea8e45415fd1339de602812a61e687a2c583ddd8c7f4",
+      "mode": "static_background"
+    }
+  ]
+}
