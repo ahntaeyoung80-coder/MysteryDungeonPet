@@ -272,7 +272,7 @@
     "15": "539da061971262286524b13acb3e8361062b78dccc97a73a973a22429471868b"
   },
   "actualWindows11": "pending",
-  "automaticCI": "push 후 확인; 완료를 대기 조건으로 삼지 않음",
+  "automaticCI": "combined status API statuses=[]; Actions 완료/성공 미확인",
   "limitations": [
     "실제 Windows/OS lock/power·장기 성능 미검증",
     "Wine 수치는 최종 Windows 성능 판정이 아님",
@@ -366,5 +366,7 @@
       }
     ]
   },
-  "resumedNativeRelated": "4/4;21.28s;NPC/companion/entry/navigation; GUI exporter compatibility changes only"
+  "resumedNativeRelated": "4/4;21.28s;NPC/companion/entry/navigation; GUI exporter compatibility changes only",
+  "productCommit": "9ee7d47cb3ee89208bf4a2d35a3bc10455dc485d",
+  "remoteVerification": "2026-10-21T03:30:20Z: explicit refs/heads/work → refs/remotes/origin/work fetch; HEAD == origin/work"
 }

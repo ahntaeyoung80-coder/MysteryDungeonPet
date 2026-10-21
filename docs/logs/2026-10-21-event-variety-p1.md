@@ -50,4 +50,6 @@ P1의 기본/구형 출현 몸체·얼굴과 방문용 자산 준비를 마쳤�
 
 ## 커밋·원격 마감
 
-재개 측정12:25:06 KST→코드/fixture/EXE/문서 검증12:30:00 KST까지4분54초이며, 원격 마감은 후속 기록한다. 사전 추정 범위 안에서 P1만 마감한다. 코드/자산/EXE는 일반 push로 CI를 트리거하며 문서 원격 결과만 별도 `[skip ci]`로 남겨 중복 전체 CI를 피한다.
+재개 측정12:25:06 KST→코드/fixture/EXE/문서 검증의 측정 시각12:29:34 KST까지4분28초, 코드 커밋 push/원격 SHA 확인12:30:20 KST까지 합계5분14초다. 앞선 실측26분18초와 합친 측정 구간은31분32초이며 중단/미계측 시간은 제외한다. 이 후속 기록 정리는 별도 미계측이다. 사전 추정 범위 안에서 P1만 마감한다. 코드/자산/EXE는 일반 push로 CI를 트리거하며 문서 원격 결과만 별도 `[skip ci]`로 남겨 중복 전체 CI를 피한다.
+
+제품 커밋 `9ee7d47cb3ee89208bf4a2d35a3bc10455dc485d`를 `work`에 push했다. 일반 `git fetch origin work`는 이 checkout의 remote-tracking ref를 갱신하지 않아 `git fetch origin refs/heads/work:refs/remotes/origin/work`로 명시 갱신했고, HEAD/origin/work의 전체 SHA 일치를12:30:20 KST에 확인했다. combined status API 응답은 `statuses: []`여서 Actions 성공으로 판정하지 않고 **자동 CI 결과 미확인**으로 남긴다. 후속 문서 커밋은 검사를 반복하지 않고 원격 SHA만 확인한다.
