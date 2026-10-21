@@ -60,6 +60,7 @@ void assignLine(ExplorationState& s,const DialogueBundle& b,unsigned index,std::
     g.phaseStartedMs=now;g.deadlineMs=d.deadlineMs;
     if(g.life==LifePhase::Dialogue)g.dialogueStage=line.display.speaker==PortraitRole::Player?DialogueStage::Player:DialogueStage::Npc;
     if(eventActive(s)) {
+        g.walkStartedMs=g.companion.walkStartedMs=0;
         auto tile=[&](unsigned id){if(!id)return s.position;if(id==kCompanionActorId)return g.companion.tile;
             const auto it=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==id;});return it==s.population.entities.end()?-1:it->tile;};
         const int speaker=tile(d.speaker),listener=tile(d.listener);
@@ -104,7 +105,7 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
     const auto count=r.count(128);require(count>0,"empty dialogue catalogue");std::set<std::string> ids,lines;
     for(unsigned i=0;i<count;++i) {
         DialogueBundle b;b.id=r.str();b.context=r.str();b.weight=r.count(100);
-        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart"};
+        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart","event.E02.intro","event.E02.success","event.E06.pickup","event.E06.owner","event.E06.success","event.E08.separated","event.E08.reunion"};
         const bool event=eventContexts.count(b.context)!=0;
         require(identity(b.id) && ids.insert(b.id).second && (event || std::find(contexts.begin(),contexts.end(),b.context)!=contexts.end()) && b.weight,"invalid dialogue bundle");
         const auto n=r.count(32);require(n>0,"empty dialogue bundle");
@@ -196,10 +197,10 @@ void Explorer::restoreDialogue(const DialogueCatalogue& c,std::uint64_t now) {
     if(d.deadlineMs<=d.startedMs)d.deadlineMs=d.startedMs+1;
     s.gameplay.phaseStartedMs=d.startedMs;s.gameplay.deadlineMs=d.deadlineMs;
 }
-GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,ActorCompletion done,const DialogueCatalogue& c) {
+GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,ActorCompletion done,const DialogueCatalogue& c,const EventRegistry* maps) {
     auto& s=state_;auto& g=s.gameplay;auto& d=s.variety.dialogue;
-    if(eventActive(s)){const auto update=advanceVarietyEvent(s,now,c);if(!eventActive(s))invalidate();return update;}
-    if(!d.active && tryAutomaticEvent(s,now,c))return {GameplayEvent::DialoguePlayer,{}};
+    if(eventActive(s)){const auto update=advanceVarietyEvent(s,now,c,maps);if(!eventActive(s))invalidate();return update;}
+    if(!d.active && tryAutomaticEvent(s,now,c,maps))return s.variety.event.id.type==VarietyEvent::Reunion?GameplayUpdate{GameplayEvent::Warp,{}}:GameplayUpdate{GameplayEvent::DialoguePlayer,{}};
     if(d.active) {
         const auto* b=c.find(d.bundle);const auto* l=selectedDialogue(s,c);
         if(!b || !l || !dialogueEligible(s,d.context)) {

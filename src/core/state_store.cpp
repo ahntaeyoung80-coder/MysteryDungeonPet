@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(13); // MDES13 appends current non-Oran stock; old berry quantities remain authoritative.
+    w.u32(0x5345444d); w.u32(14); // MDES14 appends explicit event-owned actors, route and property.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -172,6 +172,12 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     const auto stockStart=w.bytes.size();
     w.u32(static_cast<uint32_t>(v.stock.size()));for(const auto& item:v.stock){w.u32(item.owner);w.u32(item.item);w.u32(item.quantity);}
     w.u32(static_cast<uint32_t>(w.bytes.size()-stockStart));
+    const auto taskStart=w.bytes.size();
+    w.u32(static_cast<unsigned>(e.task));w.u32(e.targetTile+1);w.u32(e.objectTile+1);w.u32(e.sourceTile+1);
+    w.u32(e.item);w.u32(e.quantity);w.u32(e.warpedActor);w.u32(e.stalls);w.u32(e.carrying);
+    w.u32(static_cast<unsigned>(e.temporaryActors.size()));for(auto id:e.temporaryActors)w.u32(id);
+    w.u32(static_cast<unsigned>(e.opponents.size()));for(auto id:e.opponents)w.u32(id);
+    w.u32(static_cast<unsigned>(w.bytes.size()-taskStart));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -180,7 +186,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 13) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 14) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -359,6 +365,14 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         const auto start=r.offset;const auto count=r.count(512);
         for(unsigned i=0;i<count;++i)s.variety.stock.push_back({r.u32(),r.u32(),r.count(kMaxStock)});
         const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("stock snapshot block length mismatch");
+    }
+    if(schema>=14) {
+        const auto start=r.offset;auto& e=s.variety.event;
+        e.task=EventTask(r.count(6));e.targetTile=int(r.count(kTiles))-1;e.objectTile=int(r.count(kTiles))-1;e.sourceTile=int(r.count(kTiles))-1;
+        e.item=r.count(65535);e.quantity=r.count(kMaxStock);e.warpedActor=r.u32();e.stalls=r.count(32);e.carrying=r.boolean();
+        auto n=r.count(kTiles);for(unsigned i=0;i<n;++i)e.temporaryActors.push_back(r.u32());
+        n=r.count(kTiles);for(unsigned i=0;i<n;++i)e.opponents.push_back(r.u32());
+        const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("event task block length mismatch");
     }
     r.u32(); r.end();
     discardStaleEntityGoal(s);

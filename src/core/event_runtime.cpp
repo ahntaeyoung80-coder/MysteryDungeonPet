@@ -17,12 +17,16 @@ unsigned freeId(const ExplorationState& s) {
 }
 std::string floorKey(const ExplorationState& s){return "event-floor:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex);}
 std::string resultStage(VarietyEvent type){return type==VarietyEvent::TiredExplorer?"success":"depart";}
-void finish(ExplorationState& s) {
+} // namespace
+void finishVarietyEvent(ExplorationState& s) {
     auto& e=s.variety.event;
-    if(e.id.type==VarietyEvent::GuildVisit)for(auto id:e.actors)if(auto* a=entity(s,id)){a->done=true;a->visible=false;}
+    for(auto id:e.temporaryActors)if(auto* a=entity(s,id)){a->done=true;a->visible=false;}
+    if(e.id.type==VarietyEvent::GuildVisit || e.id.type==VarietyEvent::LostPokemon)for(auto id:e.actors)if(auto* a=entity(s,id)){a->done=true;a->visible=false;}
     e.progress=EventProgress::Finished;e.actors.clear();e.reservations.clear();s.variety.dialogue={};
+    e.task=EventTask::None;e.targetTile=e.objectTile=e.sourceTile=-1;e.item=e.quantity=e.warpedActor=e.stalls=0;e.carrying=false;e.temporaryActors.clear();e.opponents.clear();
     s.target=-1;s.targetInstance=0;s.goalKind=GoalKind::None;s.gameplay.deadlineMs=0;++s.occupancyVersion;
 }
+namespace {
 bool moveVisitor(ExplorationState& s,bool departing,std::uint64_t now) {
     auto* a=entity(s,s.variety.event.actors.front());if(!a)return false;
     const auto distance=bfs(s.world,s.position,s.blocked).distance;
@@ -39,8 +43,9 @@ bool moveVisitor(ExplorationState& s,bool departing,std::uint64_t now) {
 }
 }
 bool eventActive(const ExplorationState& s){return s.variety.event.progress>=EventProgress::Approach && s.variety.event.progress<=EventProgress::Dismiss;}
-bool startVarietyEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,const DialogueCatalogue& c,std::uint32_t actorId) {
+bool startVarietyEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,const DialogueCatalogue& c,std::uint32_t actorId,const EventRegistry* maps) {
     if(!canStartVariety(s,now) || !s.gameplay.companion.enabled || s.position==s.world.stairs)return false;
+    if(movementEvent(type))return startMovementEvent(s,type,now,c,actorId,maps);
     if(type!=VarietyEvent::Wonder && type!=VarietyEvent::GuildVisit && type!=VarietyEvent::TiredExplorer)return false;
     const auto distance=bfs(s.world,s.position,s.blocked).distance;std::string variant;unsigned selectedActor=0,shareOwner=0;bool share=false;
     if(type==VarietyEvent::Wonder) {
@@ -66,12 +71,13 @@ bool startVarietyEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,c
     auto& e=s.variety.event;e={};e.id={type,s.runId,std::uint64_t(s.floorSteps)+1,s.gameplay.day,s.floorIndex};
     e.progress=EventProgress::Approach;e.variant=variant;e.startedMs=now;e.deadlineMs=now+120000;
     if(selectedActor)e.actors={selectedActor};
+    if(type==VarietyEvent::GuildVisit)e.temporaryActors=e.actors;
     if(share)e.reservations={{shareOwner,ITEM_ORAN_BERRY,1}};
     auto& g=s.gameplay;g.walkStartedMs=g.companion.walkStartedMs=0;g.phaseStartedMs=now;g.deadlineMs=now+400;
     g.onceKeys.insert(floorKey(s));g.onceKeys.insert("event-start:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex));
     return true;
 }
-bool tryAutomaticEvent(ExplorationState& s,std::uint64_t now,const DialogueCatalogue& c) {
+bool tryAutomaticEvent(ExplorationState& s,std::uint64_t now,const DialogueCatalogue& c,const EventRegistry* maps) {
     if(s.floorSteps<16 || s.floorSteps%32!=16 || !canStartVariety(s,now) || !s.gameplay.companion.enabled || s.gameplay.onceKeys.count(floorKey(s)))return false;
     const auto trigger="event-evaluated:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(s.floorSteps);
     if(!s.gameplay.onceKeys.insert(trigger).second)return false;
@@ -79,18 +85,24 @@ bool tryAutomaticEvent(ExplorationState& s,std::uint64_t now,const DialogueCatal
     if(std::count_if(s.gameplay.onceKeys.begin(),s.gameplay.onceKeys.end(),[&](const auto& k){return k.rfind(prefix,0)==0;})>=2)return false;
     // Conservative first policy: one opportunity per 32 completed moves, at most one per floor/two per run.
     // The original spawn/item weights and encounter/combat RNG are not modified.
-    const auto draw=drawVariety(s.variety,VarietyRandomStream::Event,4);
-    if(draw==3)return false;
-    const auto type=draw==0?VarietyEvent::Wonder:draw==1?VarietyEvent::GuildVisit:VarietyEvent::TiredExplorer;
-    return startVarietyEvent(s,type,now,c);
+    const auto draw=drawVariety(s.variety,VarietyRandomStream::Event,8);
+    if(draw>=6)return false;
+    const VarietyEvent types[]{VarietyEvent::Wonder,VarietyEvent::GuildVisit,VarietyEvent::TiredExplorer,VarietyEvent::LostPokemon,VarietyEvent::LostProperty,VarietyEvent::Reunion};
+    if(types[draw]==VarietyEvent::Reunion) {
+        const auto* f=maps?maps->floor(s):nullptr;unsigned trap=0;
+        if(!f || !f->trapDensity)return false;Rng rng{s.variety.eventRng};const bool selected=sample(f->traps,rng,trap);s.variety.eventRng=rng.state;
+        if(!selected || trap!=6)return false;
+    }
+    return startVarietyEvent(s,types[draw],now,c,0,maps);
 }
-GameplayUpdate advanceVarietyEvent(ExplorationState& s,std::uint64_t now,const DialogueCatalogue& c) {
+GameplayUpdate advanceVarietyEvent(ExplorationState& s,std::uint64_t now,const DialogueCatalogue& c,const EventRegistry*) {
     auto& e=s.variety.event;auto& g=s.gameplay;
     const bool stale=e.id.run!=s.runId || e.id.day!=g.day || e.id.floor!=s.floorIndex || s.phase!=Phase::Explore || g.life!=LifePhase::Explore || g.sceneBeat!=SceneBeat::None;
     const bool actorsMissing=std::any_of(e.actors.begin(),e.actors.end(),[&](auto id){const auto* a=entity(s,id);return !a || !a->visible || a->done;});
     if(stale || now>=e.deadlineMs || g.hearts<=kLowHp || !g.companion.enabled || g.companion.hearts<=kLowHp || actorsMissing) {
         cancelVariety(s);g.deadlineMs=now;return {GameplayEvent::Explore,{}};
     }
+    if(movementEvent(e.id.type))return advanceMovementEvent(s,now,c);
     if(s.variety.dialogue.active) {
         if(!selectedDialogue(s,c)){cancelVariety(s);g.deadlineMs=now;return {};}
         if(!advanceDialoguePage(s,c,now))return {};
@@ -121,7 +133,7 @@ GameplayUpdate advanceVarietyEvent(ExplorationState& s,std::uint64_t now,const D
             auto* a=entity(s,e.actors.front());const auto distance=bfs(s.world,s.position,s.blocked).distance;
             if(distance[a->tile]<3 && moveVisitor(s,true,now))return {GameplayEvent::ActorMove,{}};
         }
-        finish(s);g.deadlineMs=now;return {GameplayEvent::Explore,{}};
+        finishVarietyEvent(s);g.deadlineMs=now;return {GameplayEvent::Explore,{}};
     }
     cancelVariety(s);g.deadlineMs=now;return {};
 }

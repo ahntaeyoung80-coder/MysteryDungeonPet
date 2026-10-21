@@ -75,10 +75,13 @@ bool canStartVariety(const ExplorationState& s,std::uint64_t now) {
 void cancelVariety(ExplorationState& s) {
     auto& v=s.variety;
     const bool busy=varietyBusy(v);
-    if(live(v.event.progress) && v.event.id.type==VarietyEvent::GuildVisit)
-        for(auto& a:s.population.entities)if(std::find(v.event.actors.begin(),v.event.actors.end(),a.instanceId)!=v.event.actors.end()){a.done=true;a.visible=false;}
+    if(live(v.event.progress))for(auto& a:s.population.entities)
+        if(std::find(v.event.temporaryActors.begin(),v.event.temporaryActors.end(),a.instanceId)!=v.event.temporaryActors.end() ||
+           (v.event.id.type==VarietyEvent::GuildVisit && std::find(v.event.actors.begin(),v.event.actors.end(),a.instanceId)!=v.event.actors.end())){a.done=true;a.visible=false;}
     if(live(v.event.progress))v.event.progress=EventProgress::Abandoned;
     v.event.reservations.clear();v.event.actors.clear();v.dialogue={};
+    v.event.task=EventTask::None;v.event.targetTile=v.event.objectTile=v.event.sourceTile=-1;v.event.item=v.event.quantity=v.event.warpedActor=v.event.stalls=0;
+    v.event.carrying=false;v.event.temporaryActors.clear();v.event.opponents.clear();
     if(busy) {s.target=-1;s.targetInstance=0;s.goalKind=GoalKind::None;}
 }
 bool commitVarietyResult(ExplorationState& s,const std::string& result) {
@@ -116,6 +119,16 @@ void validateVarietyState(const ExplorationState& s) {
         else require(e.actors.empty() && e.reservations.empty(),"finished event owns pending resources");
     }
     require(e.actors.size()<=kTiles && e.reservations.size()<=16,"event resources exceed limit");
+    require(static_cast<unsigned>(e.task)<=6 && e.stalls<=32 && e.targetTile>=-1 && e.targetTile<kTiles && e.objectTile>=-1 && e.objectTile<kTiles &&
+        e.quantity<=kMaxStock && (e.warpedActor==0 || e.warpedActor==kCompanionActorId),"invalid event task");
+    if(e.targetTile>=0)require(s.world.walkable(e.targetTile),"event route target is not walkable");
+    require(e.sourceTile>=-1 && e.sourceTile<kTiles && (e.sourceTile<0 || s.world.walkable(e.sourceTile)),"invalid event contact tile");
+    if(e.objectTile>=0)require(s.world.walkable(e.objectTile) && e.item>0 && e.quantity>0,"invalid owned event object");
+    require(!e.carrying || (e.item>0 && e.quantity>0 && e.id.type==VarietyEvent::LostProperty),"invalid event property ownership");
+    std::set<unsigned> owned,opponents;
+    for(auto id:e.temporaryActors)require(actor(s,id) && id && id!=kCompanionActorId && owned.insert(id).second && std::find(e.actors.begin(),e.actors.end(),id)!=e.actors.end(),"invalid temporary event actor");
+    for(auto id:e.opponents)require(actor(s,id) && id && id!=kCompanionActorId && opponents.insert(id).second && std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),id)!=s.gameplay.hostile.end(),"invalid event opponent");
+    if(!live(e.progress))require(e.task==EventTask::None && e.targetTile==-1 && e.objectTile==-1 && e.sourceTile==-1 && !e.item && !e.quantity && !e.carrying && e.temporaryActors.empty() && e.opponents.empty(),"inactive event retains owned task");
     std::set<std::uint32_t> actors;
     for(auto id:e.actors)require(id && id!=kCompanionActorId && actor(s,id) && actors.insert(id).second,"invalid event actor");
     std::set<std::pair<std::uint32_t,std::uint32_t>> reserved;

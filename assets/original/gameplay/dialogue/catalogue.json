@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 3,
+  "catalogueVersion": 4,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -909,6 +909,420 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "정말 고마워. 소중히 쓸게."
+        }
+      ]
+    },
+    {
+      "id": "E02.escort_a.intro",
+      "context": "event.E02.intro",
+      "condition": "event.E02.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E02.escort_a.01",
+          "legacyId": 4380,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "저기... 계단으로 가는 길을 모르겠어."
+        },
+        {
+          "id": "E02.escort_a.02",
+          "legacyId": 4381,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "우리와 같이 가자."
+        },
+        {
+          "id": "E02.escort_a.03",
+          "legacyId": 4382,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "천천히 따라오면 돼."
+        }
+      ]
+    },
+    {
+      "id": "E02.escort_a.success",
+      "context": "event.E02.success",
+      "condition": "event.E02.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E02.escort_a.04",
+          "legacyId": 4390,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "여기까지 데려다줘서 고마워!"
+        },
+        {
+          "id": "E02.escort_a.05",
+          "legacyId": 4391,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "이제 조심해서 가."
+        },
+        {
+          "id": "E02.escort_a.06",
+          "legacyId": 4392,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "무사히 다녀와!"
+        }
+      ]
+    },
+    {
+      "id": "E02.escort_b.intro",
+      "context": "event.E02.intro",
+      "condition": "event.E02.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E02.escort_b.01",
+          "legacyId": 4400,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "길을 잘못 든 것 같아."
+        },
+        {
+          "id": "E02.escort_b.02",
+          "legacyId": 4401,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "계단까지는 함께 가 줄게."
+        }
+      ]
+    },
+    {
+      "id": "E02.escort_b.success",
+      "context": "event.E02.success",
+      "condition": "event.E02.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E02.escort_b.03",
+          "legacyId": 4410,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "이제 길을 알겠어. 고마워!"
+        },
+        {
+          "id": "E02.escort_b.04",
+          "legacyId": 4411,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "도움이 돼서 다행이야."
+        }
+      ]
+    },
+    {
+      "id": "E06.return_a.pickup",
+      "context": "event.E06.pickup",
+      "condition": "event.E06.pickup",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E06.return_a.01",
+          "legacyId": 4420,
+          "speaker": 0,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "누군가 잃어버린 물건을 발견했다."
+        },
+        {
+          "id": "E06.return_a.02",
+          "legacyId": 4421,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "주인이 근처에 있을까?"
+        }
+      ]
+    },
+    {
+      "id": "E06.return_a.owner",
+      "context": "event.E06.owner",
+      "condition": "event.E06.owner",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E06.return_a.03",
+          "legacyId": 4430,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 12,
+          "holdMs": 1000,
+          "text": "그거, 내가 잃어버린 물건이야!"
+        },
+        {
+          "id": "E06.return_a.04",
+          "legacyId": 4431,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "찾고 있었구나. 돌려줄게."
+        }
+      ]
+    },
+    {
+      "id": "E06.return_a.success",
+      "context": "event.E06.success",
+      "condition": "event.E06.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E06.return_a.05",
+          "legacyId": 4440,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "정말 고마워. 한참 찾고 있었어."
+        },
+        {
+          "id": "E06.return_a.06",
+          "legacyId": 4441,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "주인을 찾아서 다행이야."
+        }
+      ]
+    },
+    {
+      "id": "E06.return_b.pickup",
+      "context": "event.E06.pickup",
+      "condition": "event.E06.pickup",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E06.return_b.01",
+          "legacyId": 4450,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "누가 떨어뜨린 모양이야."
+        },
+        {
+          "id": "E06.return_b.02",
+          "legacyId": 4451,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "주인을 찾으면 돌려주자."
+        }
+      ]
+    },
+    {
+      "id": "E06.return_b.owner",
+      "context": "event.E06.owner",
+      "condition": "event.E06.owner",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E06.return_b.03",
+          "legacyId": 4460,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "혹시 내 물건을 못 봤어?"
+        },
+        {
+          "id": "E06.return_b.04",
+          "legacyId": 4461,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "이 물건이 맞지? 여기 있어."
+        }
+      ]
+    },
+    {
+      "id": "E06.return_b.success",
+      "context": "event.E06.success",
+      "condition": "event.E06.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E06.return_b.05",
+          "legacyId": 4470,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "맞아! 찾아줘서 고마워."
+        },
+        {
+          "id": "E06.return_b.06",
+          "legacyId": 4471,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "다음에는 잘 챙겨 둬."
+        }
+      ]
+    },
+    {
+      "id": "E08.reunion_a.separated",
+      "context": "event.E08.separated",
+      "condition": "event.E08.separated",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E08.reunion_a.01",
+          "legacyId": 4480,
+          "speaker": 0,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "워프 함정을 밟았다!"
+        }
+      ]
+    },
+    {
+      "id": "E08.reunion_a.reunion",
+      "context": "event.E08.reunion",
+      "condition": "event.E08.reunion",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E08.reunion_a.02",
+          "legacyId": 4490,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "찾았다! 괜찮아?"
+        },
+        {
+          "id": "E08.reunion_a.03",
+          "legacyId": 4491,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "응. 다시 만나서 다행이야."
+        },
+        {
+          "id": "E08.reunion_a.04",
+          "legacyId": 4492,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "다음엔 발밑도 더 살피자."
+        },
+        {
+          "id": "E08.reunion_a.05",
+          "legacyId": 4493,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "좋아. 함께 가자."
+        }
+      ]
+    },
+    {
+      "id": "E08.reunion_b.separated",
+      "context": "event.E08.separated",
+      "condition": "event.E08.separated",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E08.reunion_b.01",
+          "legacyId": 4500,
+          "speaker": 0,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "워프 함정을 밟았다!"
+        }
+      ]
+    },
+    {
+      "id": "E08.reunion_b.reunion",
+      "context": "event.E08.reunion",
+      "condition": "event.E08.reunion",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E08.reunion_b.02",
+          "legacyId": 4510,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "휴, 어디로 갔나 했어."
+        },
+        {
+          "id": "E08.reunion_b.03",
+          "legacyId": 4511,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "나도 찾고 있었어. 무사해서 다행이야."
+        },
+        {
+          "id": "E08.reunion_b.04",
+          "legacyId": 4512,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "이제 다시 길을 찾아보자."
+        },
+        {
+          "id": "E08.reunion_b.05",
+          "legacyId": 4513,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "응. 천천히 함께 가자."
         }
       ]
     }

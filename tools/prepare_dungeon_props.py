@@ -36,6 +36,10 @@ def prepare(root,output):
     indexed=pack[1022].to_pil(item.sprite,item.palette);apple=indexed.convert('RGBA')
     apple.putalpha(Image.frombytes('L',apple.size,bytes(0 if i%16==0 else 255 for i in indexed.tobytes())))
     images.append(('Apple',apple,[8,8]));provenance.append({'itemId':109,'slot':1022,'sprite':item.sprite,'palette':item.palette,'size':apple.size,'rgbaSha256':hashlib.sha256(apple.tobytes()).hexdigest(),'policy':'Wigglytuff head prop during communal meal; reuses original item graphic'})
+    for sprite,name in ((6,'WarpTrap'),(30,'ShopStand')):
+        indexed=pack[1033].to_pil(sprite,1);image=indexed.convert('RGBA')
+        image.putalpha(Image.frombytes('L',image.size,bytes(0 if i%16==0 else 255 for i in indexed.tobytes())))
+        images.append((name,image,[12,12]));provenance.append({'slot':1033,'sprite':sprite,'palette':1,'size':image.size,'rgbaSha256':hashlib.sha256(image.tobytes()).hexdigest(),'policy':'explicit retained trap palette map; no guessed warp effect ID'})
     with tempfile.TemporaryDirectory() as temp:
         out=Path(temp);atlas=Image.new('RGBA',(24,sum(image.height for _,image,_ in images)));clips=[];y=0
         for i,(name,image,anchor) in enumerate(images):

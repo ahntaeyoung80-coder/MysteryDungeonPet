@@ -57,6 +57,28 @@
       ],
       "slot": 1022,
       "sprite": 3
+    },
+    {
+      "palette": 1,
+      "policy": "explicit retained trap palette map; no guessed warp effect ID",
+      "rgbaSha256": "49b9ccaf19511884fb6b16cf86630fa48ad027f32b675c988a4624a3a1a7cd88",
+      "size": [
+        24,
+        24
+      ],
+      "slot": 1033,
+      "sprite": 6
+    },
+    {
+      "palette": 1,
+      "policy": "explicit retained trap palette map; no guessed warp effect ID",
+      "rgbaSha256": "acc2b7f0bcf88ffc175667307dc0fca8cb63ad0aadf80303912c0996cf06ea87",
+      "size": [
+        24,
+        24
+      ],
+      "slot": 1033,
+      "sprite": 30
     }
   ],
   "romHashUnchanged": true,

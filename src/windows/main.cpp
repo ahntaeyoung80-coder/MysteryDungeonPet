@@ -890,6 +890,7 @@ class App {
                       auto& clip,auto& facing,auto& frame,auto& token) {
             const auto* v=partyPlayback(g,actor);
             auto wanted=partyClip(g,actor);
+            if(!v && ((actor==0 && playerMotion_.active(now)) || (actor==kCompanionActorId && companionMotion_.active(now))))wanted=0;
             if(!v && actor!=0 && actor!=kCompanionActorId &&
                actorMotions_.count(actor) && actorMotions_.at(actor).active(now))wanted=0;
             const auto actual=actor!=0 && actor!=kCompanionActorId?npcClip(wanted,source):wanted;
@@ -966,7 +967,7 @@ class App {
         const auto oldDialogue=explorer_->state().gameplay.dialogueStage;
         auto candidate = *explorer_;
         if(!options_.solo && candidate.state().gameplay.life==LifePhase::Explore) candidate.enableCompanion();
-        const auto event = candidate.advanceGameplay(utcMs(), completion_,dialogueCatalogue_);
+        const auto event = candidate.advanceGameplay(utcMs(), completion_,dialogueCatalogue_,&eventRegistry_);
         poseFinished_ = false; completion_={};
         if (encodeSnapshot(candidate.state()) == encodeSnapshot(explorer_->state())) {
             exploreDeadline_=deadlineFromUtc(now,utcMs(),nextGameplayDeadline(candidate.state()));
@@ -990,7 +991,7 @@ class App {
         const auto& g = explorer_->state().gameplay;
         const bool newFloor=event.event==GameplayEvent::FloorChanged || (event.event==GameplayEvent::Explore && oldLife==LifePhase::Ready);
         if(g.companion.enabled) {
-            if(newFloor || !oldCompanion.enabled) companionMotion_.reset(tilePoint(g.companion.tile));
+            if(newFloor || !oldCompanion.enabled || event.event==GameplayEvent::Warp) companionMotion_.reset(tilePoint(g.companion.tile));
             else if(oldCompanion.tile!=g.companion.tile) companionMotion_.begin(kCompanionActorId,g.companion.movement.actionId,tilePoint(oldCompanion.tile),tilePoint(g.companion.tile),now,g.companion.direction);
         }
         syncCompanion(now);
@@ -1009,7 +1010,8 @@ class App {
             }
         }
         if(partyRendering()) {
-            if(oldPosition!=explorer_->state().position)
+            if(event.event==GameplayEvent::Warp)playerMotion_.reset(tilePoint(explorer_->state().position));
+            else if(oldPosition!=explorer_->state().position)
                 playerMotion_.begin(0,g.movement.actionId,tilePoint(oldPosition),
                     tilePoint(explorer_->state().position),now,g.playerDirection);
             syncPartyActors(now);
@@ -1259,6 +1261,9 @@ class App {
             }
             const Point stairPos=raster(tilePoint(state.world.stairs));
             if(visible({stairPos.x-12,stairPos.y-12},24)) addProp(layers,1,stairPos);
+            const auto& event=state.variety.event;
+            if(event.objectTile>=0 && !event.carrying && event.id.type==VarietyEvent::LostProperty)addProp(layers,4,raster(tilePoint(event.objectTile)));
+            if(event.sourceTile>=0 && event.id.type==VarietyEvent::Reunion)addProp(layers,5,raster(tilePoint(event.sourceTile)));
             for (const auto& e : state.population.entities) if (e.visible && (!e.done || (e.kind==EntityKind::Friend && std::find(state.gameplay.hostile.begin(),state.gameplay.hostile.end(),e.instanceId)==state.gameplay.hostile.end()))) {
                 if (e.kind == EntityKind::Friend) {
                     const auto& g = state.gameplay;

@@ -20,6 +20,7 @@ std::string eventKey(const EventIdentity&);
 struct EventReservation {
     std::uint32_t owner=0, item=0, quantity=0;
 };
+enum class EventTask : std::uint32_t { None, Escort, Collect, FindOwner, Reunite, Battle, Trade };
 struct VarietyEventState {
     EventIdentity id;
     EventProgress progress=EventProgress::None;
@@ -27,6 +28,11 @@ struct VarietyEventState {
     std::uint64_t startedMs=0, deadlineMs=0;
     std::vector<std::uint32_t> actors; // Existing population IDs; third actor creation belongs to P5.
     std::vector<EventReservation> reservations; // Intent only; never an additional inventory ledger.
+    EventTask task=EventTask::None;
+    int targetTile=-1,objectTile=-1,sourceTile=-1;
+    std::uint32_t item=0,quantity=0,warpedActor=0,stalls=0;
+    bool carrying=false;
+    std::vector<std::uint32_t> temporaryActors,opponents;
 };
 struct DialogueSession {
     bool active=false;

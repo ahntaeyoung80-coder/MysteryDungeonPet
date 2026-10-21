@@ -179,7 +179,7 @@ std::uint32_t partyClip(const GameplayState&,std::uint32_t actorId);
 
 enum class GameplayEvent { None, Explore, Pose, ReturnHome, HomeScene, Emotion, Eat, Sleep, Wake, Ready,
     HostileEncounter, PlayerAttack, EnemyAttack, Hurt, Miss, UseOranBerry, EnemyFaint, CombatVictory, CombatDefeat, Greeting, Pickup, Move, FloorChanged, ActorMove, Wait, PlayerFaint, Blackout, DialoguePlayer, DialogueNpc,
-    CompanionMove, CompanionAttack, CompanionFaint };
+    CompanionMove, CompanionAttack, CompanionFaint, Warp };
 struct ActorEvent {
     GameplayEvent event=GameplayEvent::None;
     std::uint32_t actorId=0,targetId=0,damage=0;
@@ -245,6 +245,7 @@ struct ExplorationState {
 std::uint64_t navigationFingerprint(const ExplorationState&);
 void validatePartyState(const ExplorationState&);
 struct DialogueCatalogue;
+struct EventRegistry;
 class Explorer {
 public:
     static constexpr std::uint32_t kFloorStepLimit = kTiles * 8;
@@ -270,7 +271,7 @@ public:
     bool canResetExploration() const;
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
-    GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion,const DialogueCatalogue&);
+    GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion,const DialogueCatalogue&,const EventRegistry* maps=nullptr);
     void restoreDialogue(const DialogueCatalogue&,std::uint64_t utcMs);
 private:
     ExplorationState state_;
