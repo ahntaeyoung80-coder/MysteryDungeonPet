@@ -16,6 +16,7 @@
 #include "core/character_selection.hpp"
 #include "core/npc_characters.hpp"
 #include "core/dialogue_catalogue.hpp"
+#include "core/gameplay_notice.hpp"
 #include "core/event_registry.hpp"
 #include "core/event_runtime.hpp"
 #include "core/holiday_scene.hpp"
@@ -393,7 +394,8 @@ class App {
             movementTrace_<<','<<sample.scene<<','<<sample.player.x<<','<<sample.player.y<<','<<sample.partner.x<<','<<sample.partner.y
                 <<','<<sample.playerDirection<<','<<sample.partnerDirection<<','<<(sample.bathing?20:sample.moving?0:7)<<','<<sample.bathing<<','<<holidayFade(state,utcMs());
         } else movementTrace_<<",,0,0,0,0,0,0,0,0,0";
-        movementTrace_<<'\n';
+        const auto* notice=activeGameplayNotice(state);
+        movementTrace_<<','<<(notice?unsigned(notice->kind):0)<<','<<(notice?notice->item:0)<<','<<(notice?notice->deadlineMs:0)<<'\n';
         const bool textReady=!catalogueText(state,dialogueCatalogue_).empty() && revealedCatalogueText(state,dialogueCatalogue_,utcMs())==catalogueText(state,dialogueCatalogue_);
         if(submitted && (h.active || (eventActive(state) && textReady))) {
             const auto key=h.active?"holiday-"+std::to_string(unsigned(h.beat))+(textReady?"-"+state.variety.dialogue.lineId:""):
@@ -404,6 +406,11 @@ class App {
         if(submitted && !traceDeathImage_ && g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk && textReady){traceImage("-defeat-dialogue.bmp");traceDeathImage_=true;}
         if(submitted && !traceCompletionImage_ && g.sceneBeat==SceneBeat::CompletionText && utcMs()>=g.phaseStartedMs+1500){traceImage("-completion.bmp");traceCompletionImage_=true;}
         if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay && textReady){traceImage("-alarm.bmp");traceAlarmImage_=true;}
+        if(submitted && textReady && activeGameplayNotice(state)) {
+            const auto* notice=activeGameplayNotice(state);
+            const auto key="notice-"+std::to_string(unsigned(notice->kind))+"-"+std::to_string(notice->item);
+            if(traceVarietyImages_.insert(key).second)traceImage(("-"+key+".bmp").c_str());
+        }
         if(submitted && textReady) {
             int capture=-1;const char* suffix="";
             if(g.life==LifePhase::Dialogue) {
@@ -1415,7 +1422,7 @@ class App {
         if(playerLayer)layers.push_back(*playerLayer); // player wins any sprite overlap
         const auto previous = surface_.pixels;
         (void)compose(surface_, layers, camera, scale_);
-        if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr,false,!explorer_->state().variety.holiday.active,selectedDialogue(explorer_->state(),dialogueCatalogue_)!=nullptr);
+        if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr,false,!explorer_->state().variety.holiday.active,selectedDialogue(explorer_->state(),dialogueCatalogue_)!=nullptr || activeGameplayNotice(explorer_->state())!=nullptr);
         const auto speaker=explorer_?currentPortrait():DialoguePortraits{};
         if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_,npcSpeaker(speaker));
         std::wstring overlayText=explorer_?revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs()):std::wstring{};
@@ -1465,7 +1472,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies,dialogue_bundle,dialogue_line,dialogue_deadline_ms,event_type,event_progress,event_variant,holiday_beat,holiday_scene,holiday_player_x,holiday_player_y,holiday_partner_x,holiday_partner_y,holiday_player_direction,holiday_partner_direction,holiday_clip,bathing,holiday_fade\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies,dialogue_bundle,dialogue_line,dialogue_deadline_ms,event_type,event_progress,event_variant,holiday_beat,holiday_scene,holiday_player_x,holiday_player_y,holiday_partner_x,holiday_partner_y,holiday_player_direction,holiday_partner_direction,holiday_clip,bathing,holiday_fade,notice_kind,notice_item,notice_deadline_ms\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");

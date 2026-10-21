@@ -66,8 +66,15 @@ struct DaySchedule {
     bool mealCommitted=false;
     bool holidayCommitted=false;
 };
+enum class NoticeKind : std::uint32_t { Pickup=1, Victory, ItemComment };
+struct GameplayNotice {
+    NoticeKind kind=NoticeKind::Pickup;
+    std::uint32_t item=0;
+    std::uint64_t startedMs=0,deadlineMs=0;
+};
 struct VarietyState {
     std::uint64_t eventRng=0, dialogueRng=0, scheduleRng=0;
+    std::vector<GameplayNotice> notices; // Committed facts only; no inventory or combat effects.
     DialogueSession dialogue;
     VarietyEventState event;
     DaySchedule schedule;

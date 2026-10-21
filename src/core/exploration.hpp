@@ -279,6 +279,7 @@ public:
     GameplayUpdate returnFromHoliday(std::uint64_t utcMs);
     std::uint32_t chooseNextDungeon(const std::vector<std::uint32_t>&);
 private:
+    GameplayUpdate advanceCatalogueGameplay(std::uint64_t,ActorCompletion,const DialogueCatalogue&,const EventRegistry*,const HolidayRegistry*);
     ExplorationState state_;
     std::string nextRunAssetVersion_;
     std::vector<FloorProfile> nextRunFloors_; // launch policy; reapplied when an old save is restored

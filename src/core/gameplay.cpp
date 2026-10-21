@@ -1,4 +1,5 @@
 #include "core/exploration.hpp"
+#include "core/gameplay_notice.hpp"
 #include <algorithm>
 #include <cstdlib>
 #include <limits>
@@ -137,6 +138,7 @@ void Explorer::enableGameplay(std::uint64_t now) {
     else { g.phaseStartedMs = now; g.deadlineMs = now; }
 }
 void Explorer::startGuildMorning(std::uint64_t now) {
+    state_.variety.notices.clear();
     enableGameplay(now);
     cancelVariety(state_);
     if(state_.variety.schedule.holidayCommitted && !state_.variety.schedule.mealCommitted) {
@@ -460,7 +462,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate combat turn");
             if (g.oran && g.hearts>0 && g.hearts+2<=kMaxHp) {
                 --g.oran; g.hearts = kMaxHp;
-                auto update = combat(CombatPhase::BerryText, GameplayEvent::UseOranBerry, 1000); update.onceKey = once;
+                auto update = combat(CombatPhase::BerryText, GameplayEvent::UseOranBerry, 2000); update.onceKey = once;
                 return update;
             }
             const auto roll = rollBasicAttack(state_.rng, true);
@@ -487,7 +489,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate companion turn");
             if(partner.oran && partner.hearts>0 && partner.hearts+2<=kMaxHp) {
                 --partner.oran;partner.hearts=kMaxHp;
-                auto update=combat(CombatPhase::CompanionBerryText,GameplayEvent::UseOranBerry,1000);update.onceKey=once;update.actorId=kCompanionActorId;return update;
+                auto update=combat(CombatPhase::CompanionBerryText,GameplayEvent::UseOranBerry,2000);update.onceKey=once;update.actorId=kCompanionActorId;return update;
             }
             if(mustRetreat()) return afterCombatAction(now);
             const auto& enemy=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance;});
@@ -545,6 +547,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         case CombatPhase::Faint:
             if (!finiteDone) return {};
             completeEncounter();
+            queueGameplayNotice(state_,NoticeKind::Victory,0);
             g.onceKeys.insert("victory:" + key("combat", g.enemyInstance));
             return combat(CombatPhase::Victory, GameplayEvent::CombatVictory, 350);
         case CombatPhase::Victory:
@@ -572,6 +575,7 @@ void Explorer::shiftPausedClocks(std::uint64_t delta,std::uint64_t pausedAt) {
         if(deadline>UINT64_MAX-delta || start>UINT64_MAX-delta)throw std::runtime_error("variety pause clock overflow");
         start+=delta;deadline+=delta;
     };
+    for(auto& notice:variety.notices)if(notice.startedMs)shiftVariety(notice.startedMs,notice.deadlineMs);
     if(variety.dialogue.active)shiftVariety(variety.dialogue.startedMs,variety.dialogue.deadlineMs);
     if(variety.holiday.active)shiftVariety(variety.holiday.startedMs,variety.holiday.deadlineMs);
     if(variety.event.progress>=EventProgress::Approach && variety.event.progress<=EventProgress::Dismiss)
@@ -731,7 +735,7 @@ GameplayUpdate Explorer::healCompanion(std::uint64_t now) {
     --p.oran;p.hearts=kMaxHp;p.actionRound=g.actionRound;p.walkStartedMs=0;
     const auto once="companion-heal:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.actionRound);
     if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate companion berry use");
-    invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+1000;
+    invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+2000;
     return {GameplayEvent::UseOranBerry,once,0,false,kCompanionActorId};
 }
 bool Explorer::beginCompanionDialogue(std::uint64_t now) {
@@ -840,7 +844,7 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         --g.oran;g.hearts=kMaxHp;g.playerActionRound=g.actionRound;g.walkStartedMs=0;
         const auto once="heal:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.actionRound);
         if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate exploration berry use");
-        invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+1000;
+        invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+2000;
         return {GameplayEvent::UseOranBerry,once};
     }
     auto companionHeal=healCompanion(now);if(companionHeal.event!=GameplayEvent::None) return companionHeal;
@@ -915,6 +919,7 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
             if(p.enabled && !p.oran && (g.oran || p.hearts<g.hearts)) ++p.oran;
             else if(g.oran<kMaxStock) ++g.oran;
         }
+        queueGameplayNotice(state_,NoticeKind::Pickup,update.originalId);
         return {GameplayEvent::Pickup,update.onceKey};
     case EventKind::Move:return {GameplayEvent::Move,{},0,false,0,reroute};
     case EventKind::Greeting:return {GameplayEvent::Greeting,update.onceKey};

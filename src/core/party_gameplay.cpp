@@ -1,4 +1,5 @@
 #include "core/exploration.hpp"
+#include "core/gameplay_notice.hpp"
 #include <algorithm>
 #include <limits>
 #include <stdexcept>
@@ -189,7 +190,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             if(auto* e=entity(v.actorId);e && !e->done) {
                 e->done=true;s.stalledActions=0;s.onceKeys.insert(key("greet",e->instanceId));
                 if(partyAlly(s,e->instanceId))supportLost=true;
-                else g.onceKeys.insert("victory:"+key("combat",e->instanceId));
+                else {g.onceKeys.insert("victory:"+key("combat",e->instanceId));queueGameplayNotice(s,NoticeKind::Victory,0);}
                 invalidate(s.targetInstance==e->instanceId);
                 event(GameplayEvent::CombatVictory,e->instanceId,0,v.id);
             }
@@ -272,7 +273,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         auto& hp=actor==0?g.hearts:g.companion.hearts;
         auto& berry=actor==0?g.oran:g.companion.oran;
         if(!berry || !hp || hp+2>kMaxHp)return false;
-        --berry;hp=kMaxHp;const auto action=start(actor,PartyActionKind::Berry,0,1000);
+        --berry;hp=kMaxHp;const auto action=start(actor,PartyActionKind::Berry,0,2000);
         const auto once="party-heal:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
             std::to_string(g.actionRound)+":"+std::to_string(actor);
         if(!g.onceKeys.insert(once).second)throw std::logic_error("duplicate party heal");
@@ -486,6 +487,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
                 if(!p.oran && (g.oran || p.hearts<g.hearts))++p.oran;
                 else if(g.oran<kMaxStock)++g.oran;
             }
+            queueGameplayNotice(s,NoticeKind::Pickup,step.originalId);
             event(GameplayEvent::Pickup,0,step.originalId,action);result.onceKey=step.onceKey;return;
         }
         if(step.kind==EventKind::Pose) {

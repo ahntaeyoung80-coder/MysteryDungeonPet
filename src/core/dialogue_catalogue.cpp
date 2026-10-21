@@ -2,6 +2,7 @@
 #include "core/exploration_io.hpp"
 #include "core/event_runtime.hpp"
 #include "core/holiday_scene.hpp"
+#include "core/gameplay_notice.hpp"
 #include <algorithm>
 #include <set>
 #include <stdexcept>
@@ -163,16 +164,21 @@ const CatalogueLine* selectedDialogue(const ExplorationState& s,const DialogueCa
 std::wstring catalogueText(const ExplorationState& s,const DialogueCatalogue& c) {
     if(const auto* l=selectedDialogue(s,c))return l->display.text;
     if(!dialogueContext(s).empty())return {}; // No candidate means no actor's line, including solo defeat.
-    return gameplayText(s.gameplay);
+    const auto text=gameplayText(s.gameplay);
+    return text.empty()?gameplayNoticeText(s):text;
 }
 std::wstring revealedCatalogueText(const ExplorationState& s,const DialogueCatalogue& c,std::uint64_t now) {
     const auto text=catalogueText(s,c);const auto& d=s.variety.dialogue;
-    if(!d.active)return dialogueContext(s).empty()?revealedGameplayText(s.gameplay,now):std::wstring{};
+    if(!d.active) {
+        if(!dialogueContext(s).empty())return {};
+        if(gameplayText(s.gameplay).empty() && activeGameplayNotice(s))return revealedGameplayNotice(s,now);
+        return revealedGameplayText(s.gameplay,now);
+    }
     const auto elapsed=now>d.startedMs?now-d.startedMs:0;
     return text.substr(0,std::min<std::uint64_t>(text.size(),1+elapsed/25));
 }
 DialoguePortraits cataloguePortraits(const ExplorationState& s,const DialogueCatalogue& c) {
-    const auto* l=selectedDialogue(s,c);if(!l)return {};
+    const auto* l=selectedDialogue(s,c);if(!l)return gameplayNoticePortraits(s);
     return {l->display.speaker,l->display.speaker==PortraitRole::Alarm?109U:s.variety.dialogue.speaker,l->display.emotion};
 }
 void checkpointDialogue(ExplorationState& s,const DialogueCatalogue& c,std::uint64_t now) {
@@ -183,7 +189,7 @@ void checkpointDialogue(ExplorationState& s,const DialogueCatalogue& c,std::uint
     d.readRemainingMs=static_cast<unsigned>(elapsed<reveal?d.deadlineMs-d.startedMs-reveal:now<d.deadlineMs?d.deadlineMs-now:0);
 }
 void Explorer::restoreDialogue(const DialogueCatalogue& c,std::uint64_t now) {
-    auto& s=state_;auto& d=s.variety.dialogue;if(!d.active)return;
+    auto& s=state_;restoreGameplayNoticeClock(s,now);auto& d=s.variety.dialogue;if(!d.active)return;
     const auto* line=selectedDialogue(s,c);
     if(!line || !dialogueEligible(s,d.context)) {
         if(eventActive(s)){const bool holiday=s.variety.holiday.active;cancelVariety(s);s.gameplay.deadlineMs=now;invalidate();if(holiday)(void)returnFromHoliday(now);return;}
@@ -202,6 +208,12 @@ void Explorer::restoreDialogue(const DialogueCatalogue& c,std::uint64_t now) {
     s.gameplay.phaseStartedMs=d.startedMs;s.gameplay.deadlineMs=d.deadlineMs;
 }
 GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,ActorCompletion done,const DialogueCatalogue& c,const EventRegistry* maps,const HolidayRegistry* visits) {
+    updateGameplayNotices(state_,now);
+    const auto update=advanceCatalogueGameplay(now,done,c,maps,visits);
+    updateGameplayNotices(state_,now);
+    return update;
+}
+GameplayUpdate Explorer::advanceCatalogueGameplay(std::uint64_t now,ActorCompletion done,const DialogueCatalogue& c,const EventRegistry* maps,const HolidayRegistry* visits) {
     auto& s=state_;auto& g=s.gameplay;auto& d=s.variety.dialogue;
     if(s.variety.holiday.active) {
         if(!visits || now>=s.variety.event.deadlineMs){cancelVariety(s);return returnFromHoliday(now);}

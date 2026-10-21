@@ -56,7 +56,7 @@ int main(int argc,char** argv) { try {
     auto blocked=e.state();blocked.position=near;blocked.visited[near]=1;blocked.target=-1;blocked.goalKind=GoalKind::None;blocked.targetInstance=0;
     Explorer temporary(blocked);temporary.setBlocked(state.world.stairs,true);temporary.advance();check(temporary.state().knownStairs==state.world.stairs,"occupancy erased stairs");
     check(e.advance().kind==EventKind::Pose && e.state().completed,"arrival does not clear");
-    auto bytes=encodeSnapshot(e.state());check(bytes[4]==16,"writer not MDES16");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
+    auto bytes=encodeSnapshot(e.state());check(bytes[4]==17,"writer not MDES17");auto restored=decodeSnapshot(bytes,"improve");check(restored.discovered==e.state().discovered && restored.knownStairs==state.world.stairs,"discovery restore");
     auto turnFixture=[](int player,int enemy,bool playerMoved,bool enemyMoved) {
         Explorer initial(400,42,"turns",fixtureProfiles(1),{0,0,0,0});auto s=initial.state();
         s.world.terrain.fill(0);s.world.room.fill(-1);

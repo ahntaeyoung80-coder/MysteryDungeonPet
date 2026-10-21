@@ -1,4 +1,5 @@
 #include "core/exploration.hpp"
+#include "core/gameplay_notice.hpp"
 #include <algorithm>
 #include <charconv>
 #include <stdexcept>
@@ -48,7 +49,9 @@ std::uint64_t nextGameplayDeadline(const ExplorationState& s) {
     auto deadline=UINT64_MAX;
     if(v.dialogue.active)deadline=v.dialogue.deadlineMs;
     if(live(v.event.progress))deadline=std::min(deadline,std::min(v.event.deadlineMs,v.dialogue.active?UINT64_MAX:s.gameplay.deadlineMs));
-    return varietyBusy(v)?deadline:s.gameplay.deadlineMs;
+    deadline=varietyBusy(v)?deadline:s.gameplay.deadlineMs;
+    if(const auto* notice=activeGameplayNotice(s))deadline=std::min(deadline,notice->deadlineMs);
+    return deadline;
 }
 std::uint64_t drawVariety(VarietyState& v,VarietyRandomStream stream,std::uint64_t bound) {
     require(bound>0,"empty variety random range");
@@ -115,6 +118,12 @@ bool reconcileDialogue(ExplorationState& s,std::uint32_t version,const std::stri
 }
 void validateVarietyState(const ExplorationState& s) {
     const auto& v=s.variety;const auto& e=v.event;const auto& d=v.dialogue;
+    require(v.notices.size()<=64,"notice queue exceeds limit");
+    for(std::size_t i=0;i<v.notices.size();++i) {
+        const auto& n=v.notices[i];
+        require(n.kind>=NoticeKind::Pickup && n.kind<=NoticeKind::ItemComment && (n.kind==NoticeKind::Victory?n.item==0:n.item>0 && n.item<=65535),"invalid notice identity");
+        require((!n.startedMs && !n.deadlineMs) || (i==0 && n.startedMs>0 && n.deadlineMs>n.startedMs && n.deadlineMs-n.startedMs<=10000),"invalid notice clock");
+    }
     require(v.schedule.day==s.gameplay.day && static_cast<unsigned>(v.schedule.destination)<=3,"invalid day schedule");
     require(!v.schedule.mealCommitted || s.gameplay.meals>0,"daily meal without committed count");
     require(v.schedule.destination==DayDestination::Exploration || v.schedule.dungeon==0,"dungeon on non-exploration day");

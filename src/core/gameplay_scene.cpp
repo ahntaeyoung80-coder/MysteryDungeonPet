@@ -38,7 +38,7 @@ DialogueLine gameplayDialogue(const GameplayState& g) {
 }
 std::wstring gameplayText(const GameplayState& g) {
     if(g.sceneBeat==SceneBeat::CompletionText && completionScene(g))return L"탐험을 성공적으로 마쳤다";
-    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매! 2하트 회복";
+    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매를 먹었다!\n하트가 모두 회복됐다!";
     const auto line=gameplayDialogue(g);if(line.id)return line.text;
     if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return L"눈앞이 깜깜해졌다";
     return {};

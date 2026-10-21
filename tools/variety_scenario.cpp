@@ -1,4 +1,5 @@
 #include "core/event_runtime.hpp"
+#include "core/gameplay_notice.hpp"
 #include "core/holiday_scene.hpp"
 #include "core/exploration_package.hpp"
 #include "../tests/event_test_fixture.hpp"
@@ -14,7 +15,14 @@ int main(int argc,char** argv){try {
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");const auto maps=loadEventRegistry(root/"gameplay/events/contexts.mder");
     const auto now=std::uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
     auto s=eventFixture(p);s.gameplay.phaseStartedMs=s.gameplay.deadlineMs=now;
-    if(name=="heal") {
+    if(name=="pickup" || name=="pickup-comment") {
+        s.position=125;s.visited[s.position]=1;s.gameplay.companion.tile=124;
+        s.population.entities={{1,70,EntityKind::Item,s.position,false}};s.target=s.position;s.targetInstance=1;s.goalKind=GoalKind::Item;s.gameplay.independentParty=true;
+        for(unsigned seed=0;seed<100;++seed){auto probe=s.variety;probe.dialogueRng=seed;const bool comment=drawVariety(probe,VarietyRandomStream::Dialogue,5)==0;if(comment==(name=="pickup-comment")){s.variety.dialogueRng=seed;break;}}
+    } else if(name=="ko") {
+        auto& g=s.gameplay;g.independentParty=true;g.hostile={1};s.population.entities[0].remainingHits=0;
+        g.partyPlaybacks={{1,g.actionRound,now,now+500,1,33,6}};g.nextPartyId=2;
+    } else if(name=="heal") {
         s.population.entities.clear();s.gameplay.hearts=s.gameplay.companion.hearts=1;s.gameplay.oran=s.gameplay.companion.oran=1;
     } else if(name=="patrol") {
         s.position=105;s.visited[s.position]=1;s.gameplay.companion.tile=104;s.gameplay.independentParty=true;
