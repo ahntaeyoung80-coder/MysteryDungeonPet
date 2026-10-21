@@ -1,0 +1,1 @@
+PASS: unseen/friendly patrol, front companion attack/damage, five low-HP dialogue captures, six original item sprites, full heals, two map names and default arrival

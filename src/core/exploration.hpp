@@ -302,11 +302,13 @@ private:
     bool selectRoomView(const Search&);
     bool mustRetreat() const;
     int nearestPartyTile(const Entity&) const;
+    std::uint32_t enemyTargetActor(const Entity&) const;
+    int patrolTile(const Entity&,std::uint64_t now) const;
     int combatApproach(const Entity&,bool companion) const;
     GameplayUpdate healCompanion(std::uint64_t now);
     bool selectSurvival(const Search&);
     Mask playerOccupancy() const;
-    void invalidate(bool clearTarget = true);
+    void invalidate(bool clearTarget = true,bool movingFriend = false);
     bool selectPriority(const Search&, bool items, bool frontiers);
     bool selectFriendly(const Search&);
     bool frontier(int tile) const;
@@ -324,7 +326,7 @@ private:
 
 void validateState(const ExplorationState&);
 // Entity positions can change after planning; the route is only a cache.
-bool discardStaleEntityGoal(ExplorationState&);
+bool discardStaleEntityGoal(ExplorationState&,bool movingFriend = false);
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState&);
 ExplorationState decodeSnapshot(const std::vector<std::uint8_t>&,
                                 const std::string& expectedAssetVersion);

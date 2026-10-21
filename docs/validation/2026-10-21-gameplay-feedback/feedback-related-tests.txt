@@ -1,0 +1,41 @@
+Test project /workspace/MysteryDungeonPet/build/p0
+    Start  1: pet_feedback_regression_tests
+1/7 Test  #1: pet_feedback_regression_tests ....***Failed    0.03 sec
+invalid explorer position
+
+    Start  3: pet_event_combat_tests
+2/7 Test  #3: pet_event_combat_tests ...........***Failed    0.09 sec
+battle=4 steps=56 progress=7 hp=1,5 helperAttacks=0
+battle did not commit actual victory
+
+    Start  7: pet_dialogue_catalogue_tests
+3/7 Test  #7: pet_dialogue_catalogue_tests .....   Passed    0.02 sec
+    Start 14: pet_companion_tests
+4/7 Test #14: pet_companion_tests ..............***Failed    0.02 sec
+equal distance did not select leader
+
+    Start 15: pet_party_ai_followup
+5/7 Test #15: pet_party_ai_followup ............   Passed    0.90 sec
+    Start 16: pet_entry_social_scene_tests
+6/7 Test #16: pet_entry_social_scene_tests .....***Failed    1.85 sec
+floor entry/layout regression pass
+npc: new target replaced an unfinished friendly goal on restore
+sleep pose/exit fade/restore regression pass
+bedtime facing/slow original poses/reading interval/owner/pause/restore pass
+
+    Start 20: pet_survival_tests
+7/7 Test #20: pet_survival_tests ...............***Failed    0.00 sec
+one missing heart wastes berry
+
+
+29% tests passed, 5 tests failed out of 7
+
+Total Test time (real) =   2.91 sec
+
+The following tests FAILED:
+	  1 - pet_feedback_regression_tests (Failed)
+	  3 - pet_event_combat_tests (Failed)
+	 14 - pet_companion_tests (Failed)
+	 16 - pet_entry_social_scene_tests (Failed)
+	 20 - pet_survival_tests (Failed)
+Errors while running CTest

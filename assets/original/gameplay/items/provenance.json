@@ -1,0 +1,810 @@
+{
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "itemSourceSha256": "232448b25f92af571388980a02a1c7a6522c637629e9a4095371865f4e584012",
+  "dungeonSourceSha256": "c6866569313f971bf01f89dfe7d0796fb9a61a044ad81455f26a1571863c8a34",
+  "compatibilityItemIds": [
+    10,
+    11
+  ],
+  "items": [
+    {
+      "itemId": 2,
+      "sprite": 0,
+      "palette": 2,
+      "cell": 0,
+      "rgbaSha256": "4e4cfb8a7b229711df263a9bde7e317c7547f63ca9f3db29be4acbea25a5d825"
+    },
+    {
+      "itemId": 10,
+      "sprite": 55,
+      "palette": 12,
+      "cell": 1,
+      "rgbaSha256": "bcf3d94721b7758b4051f7642a5e0cb2caa5f28fe91b47fe4c8ab8bcb013ef1f"
+    },
+    {
+      "itemId": 11,
+      "sprite": 0,
+      "palette": 1,
+      "cell": 2,
+      "rgbaSha256": "f8c8deaed1db2c628989f43bd9c7db183789705a4e9b7b16e4d0a9b2b76c776f"
+    },
+    {
+      "itemId": 18,
+      "sprite": 4,
+      "palette": 4,
+      "cell": 3,
+      "rgbaSha256": "9471f379b21003d784315396b6cfb580242fe570704f8b00d83fb77df1190fd0"
+    },
+    {
+      "itemId": 26,
+      "sprite": 4,
+      "palette": 4,
+      "cell": 3,
+      "rgbaSha256": "9471f379b21003d784315396b6cfb580242fe570704f8b00d83fb77df1190fd0"
+    },
+    {
+      "itemId": 27,
+      "sprite": 4,
+      "palette": 4,
+      "cell": 3,
+      "rgbaSha256": "9471f379b21003d784315396b6cfb580242fe570704f8b00d83fb77df1190fd0"
+    },
+    {
+      "itemId": 28,
+      "sprite": 13,
+      "palette": 12,
+      "cell": 4,
+      "rgbaSha256": "4413da99edb45690207bb32546a94e8b3e8d19df519abe3497f131e12eba7b69"
+    },
+    {
+      "itemId": 38,
+      "sprite": 4,
+      "palette": 4,
+      "cell": 3,
+      "rgbaSha256": "9471f379b21003d784315396b6cfb580242fe570704f8b00d83fb77df1190fd0"
+    },
+    {
+      "itemId": 40,
+      "sprite": 4,
+      "palette": 4,
+      "cell": 3,
+      "rgbaSha256": "9471f379b21003d784315396b6cfb580242fe570704f8b00d83fb77df1190fd0"
+    },
+    {
+      "itemId": 69,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 70,
+      "sprite": 2,
+      "palette": 0,
+      "cell": 6,
+      "rgbaSha256": "9ee578ef8c5b80a617f7d046bfcca01d219c3d4fca7d50f1a30bb1edb8a28985"
+    },
+    {
+      "itemId": 73,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 76,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 81,
+      "sprite": 2,
+      "palette": 4,
+      "cell": 7,
+      "rgbaSha256": "cde9962f58f773b85b4e8e12ad360d51f6a4285a5519370675d107064b0ccbbc"
+    },
+    {
+      "itemId": 82,
+      "sprite": 2,
+      "palette": 6,
+      "cell": 8,
+      "rgbaSha256": "1dd5df752e2f3d270018410bf9b00cc7f9352692e41b8329a403c3228e7443e6"
+    },
+    {
+      "itemId": 84,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 86,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 87,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 91,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 95,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 99,
+      "sprite": 12,
+      "palette": 1,
+      "cell": 9,
+      "rgbaSha256": "dfec1b0fd708bea266379901ef01917d9b0eadca2d5fd7671588ca697de79fbd"
+    },
+    {
+      "itemId": 104,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 105,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 106,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 107,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 109,
+      "sprite": 3,
+      "palette": 6,
+      "cell": 10,
+      "rgbaSha256": "efa24dad6c255922351b291d2083e1727fe2e79bd3008771bded1890f3594bf6"
+    },
+    {
+      "itemId": 116,
+      "sprite": 12,
+      "palette": 1,
+      "cell": 9,
+      "rgbaSha256": "dfec1b0fd708bea266379901ef01917d9b0eadca2d5fd7671588ca697de79fbd"
+    },
+    {
+      "itemId": 117,
+      "sprite": 2,
+      "palette": 0,
+      "cell": 6,
+      "rgbaSha256": "9ee578ef8c5b80a617f7d046bfcca01d219c3d4fca7d50f1a30bb1edb8a28985"
+    },
+    {
+      "itemId": 118,
+      "sprite": 14,
+      "palette": 13,
+      "cell": 5,
+      "rgbaSha256": "a7ab4e8da476eb6cf14170e819e527ab34f9ab7ef9ba4cac6fcc6b56c89be8ba"
+    },
+    {
+      "itemId": 119,
+      "sprite": 30,
+      "palette": 0,
+      "cell": 11,
+      "rgbaSha256": "701b008095380367708a512d8b6d442eb450283e9ded5f010d410899ad21e7ee"
+    },
+    {
+      "itemId": 120,
+      "sprite": 17,
+      "palette": 0,
+      "cell": 12,
+      "rgbaSha256": "42b20d320451ed4dda3d6c52ea6da4ccb113977e6bc26b507aabe9cc03e3159f"
+    },
+    {
+      "itemId": 121,
+      "sprite": 17,
+      "palette": 4,
+      "cell": 13,
+      "rgbaSha256": "d538a9b6100c00bd048bfe10d45fc541c89cf8edc4d9083c86b493b94dd86bdb"
+    },
+    {
+      "itemId": 122,
+      "sprite": 17,
+      "palette": 6,
+      "cell": 14,
+      "rgbaSha256": "1d66bc26c790f9563bab25afa55b793871d4883cbef51ee7817a355c170f8305"
+    },
+    {
+      "itemId": 123,
+      "sprite": 17,
+      "palette": 2,
+      "cell": 15,
+      "rgbaSha256": "a933fb45220c701179613992a00ec8afacdb1f7a5b90edd8c0b81a0f7640c1da"
+    },
+    {
+      "itemId": 124,
+      "sprite": 30,
+      "palette": 0,
+      "cell": 11,
+      "rgbaSha256": "701b008095380367708a512d8b6d442eb450283e9ded5f010d410899ad21e7ee"
+    },
+    {
+      "itemId": 125,
+      "sprite": 17,
+      "palette": 7,
+      "cell": 16,
+      "rgbaSha256": "30aa5d70a5539f2a1d6d56d489cd580ca30c04976904bf0b89851b8122aa96ab"
+    },
+    {
+      "itemId": 126,
+      "sprite": 17,
+      "palette": 1,
+      "cell": 17,
+      "rgbaSha256": "789087765110c539f3da2f7ff6c1b59a5f70792a9a820bdc107a11f45b63e6ac"
+    },
+    {
+      "itemId": 127,
+      "sprite": 17,
+      "palette": 11,
+      "cell": 18,
+      "rgbaSha256": "0b1098cc432eb496c817ca9801a23e09830cc7cb3c1b492a43b8eac1eba6437b"
+    },
+    {
+      "itemId": 128,
+      "sprite": 17,
+      "palette": 3,
+      "cell": 19,
+      "rgbaSha256": "b36616e7418664fa1c0c526038aaf7e72981360b6b4aa554f853689396ddb49d"
+    },
+    {
+      "itemId": 129,
+      "sprite": 17,
+      "palette": 2,
+      "cell": 15,
+      "rgbaSha256": "a933fb45220c701179613992a00ec8afacdb1f7a5b90edd8c0b81a0f7640c1da"
+    },
+    {
+      "itemId": 130,
+      "sprite": 17,
+      "palette": 9,
+      "cell": 20,
+      "rgbaSha256": "c732c98e6128940f92e9d28afa9735896fd65ab70acb811314522cc787d26e42"
+    },
+    {
+      "itemId": 131,
+      "sprite": 17,
+      "palette": 10,
+      "cell": 21,
+      "rgbaSha256": "c78638cd3018d455c59ad55043286721fde959103f303c9d4e84aadd9666580a"
+    },
+    {
+      "itemId": 132,
+      "sprite": 17,
+      "palette": 13,
+      "cell": 22,
+      "rgbaSha256": "3cff83198c7be6897a055623230139065398060bd56cc13838c9c3e2419ff2de"
+    },
+    {
+      "itemId": 133,
+      "sprite": 17,
+      "palette": 12,
+      "cell": 23,
+      "rgbaSha256": "36c635c949d2599fefe64352e780f5bf57b57c11985c929e7ba1c0fb89287732"
+    },
+    {
+      "itemId": 134,
+      "sprite": 30,
+      "palette": 11,
+      "cell": 24,
+      "rgbaSha256": "2de713b0e88967fc5c29b744ce898e46a68de27b4aad6fc85662290b2b3ceaab"
+    },
+    {
+      "itemId": 135,
+      "sprite": 30,
+      "palette": 10,
+      "cell": 25,
+      "rgbaSha256": "bc22d9606698a3e628dd6b5d27ae0a563a53018e978afd6110ba0820d6216068"
+    },
+    {
+      "itemId": 167,
+      "sprite": 1,
+      "palette": 11,
+      "cell": 26,
+      "rgbaSha256": "f49cad1f02f0308764d52c64832f3307b069f092f51c08eafc192064e3e73ba8"
+    },
+    {
+      "itemId": 168,
+      "sprite": 17,
+      "palette": 15,
+      "cell": 27,
+      "rgbaSha256": "aaf7ceea1847e68b893e262dbe1cde755405b12f37e05e5e9d9b02c0832e4761"
+    },
+    {
+      "itemId": 183,
+      "sprite": 6,
+      "palette": 3,
+      "cell": 28,
+      "rgbaSha256": "945e3d4789f40c546a078fac46daa1be23e49f259866b29535dc40d4d49b71e8"
+    },
+    {
+      "itemId": 188,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 189,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 190,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 191,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 192,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 196,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 197,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 199,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 202,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 203,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 204,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 206,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 207,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 209,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 210,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 211,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 215,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 218,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 220,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 221,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 227,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 228,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 231,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 232,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 234,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 238,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 239,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 240,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 241,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 242,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 250,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 251,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 252,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 253,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 254,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 255,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 257,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 260,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 261,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 262,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 265,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 267,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 268,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 272,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 275,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 276,
+      "sprite": 8,
+      "palette": 0,
+      "cell": 29,
+      "rgbaSha256": "a9c9a66031709dea6e792b5d867abdada8358b669ba51de3a30abcf419225cd6"
+    },
+    {
+      "itemId": 312,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 313,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 314,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 315,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 318,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 319,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 325,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 326,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 327,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 330,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 333,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 335,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 347,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 354,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 355,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 356,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 357,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 358,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    },
+    {
+      "itemId": 359,
+      "sprite": 15,
+      "palette": 0,
+      "cell": 30,
+      "rgbaSha256": "142b4abb0c436d62bbcd4b94ab0c636c49aa0e459524d9c56ab3450b05ef610e"
+    }
+  ],
+  "uniqueSprites": 31
+}

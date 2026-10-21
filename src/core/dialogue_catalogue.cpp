@@ -45,9 +45,9 @@ bool actorExists(const ExplorationState& s,PortraitRole role) {
         e.instanceId==actor(s,role) && e.kind==EntityKind::Friend && e.visible && !e.done &&
         std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),e.instanceId)==s.gameplay.hostile.end();});
 }
-bool safePair(const ExplorationState& s) {
+bool safePair(const ExplorationState& s,bool healthy=true) {
     const auto& g=s.gameplay;
-    if(g.hearts<=kLowHp || (g.companion.enabled && g.companion.hearts<=kLowHp) ||
+    if(!g.hearts || (healthy && g.hearts<=kLowHp) || (g.companion.enabled && (!g.companion.hearts || (healthy && g.companion.hearts<=kLowHp))) ||
        std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished && a.kind!=PartyActionKind::Wait;}) || !g.partyPlaybacks.empty())return false;
     return std::none_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return
         e.visible && !e.done && std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end() &&
@@ -147,9 +147,9 @@ bool dialogueEligible(const ExplorationState& s,const std::string& context) {
     if(eventActive(s))return safePair(s) && s.gameplay.companion.enabled;
     const auto& g=s.gameplay;
     if(context=="companion.checkin")return safePair(s) && g.companion.enabled && canAttack(s.world,s.position,g.companion.tile);
-    if(context=="npc.greet")return safePair(s) && actorExists(s,PortraitRole::Friendly) && std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && canAttack(s.world,s.position,e.tile);});
+    if(context=="npc.greet")return safePair(s,false) && actorExists(s,PortraitRole::Friendly) && std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && canAttack(s.world,s.position,e.tile);});
     if(context=="wake.alarm")return g.homeScene;
-    if(context=="sleep.greet" || context=="morning.depart")return g.homeScene && g.companion.enabled && g.hearts && g.companion.hearts;
+    if(context=="sleep.greet" || context=="morning.depart")return g.homeScene && g.companion.enabled;
     if(context=="defeat.player")return g.companion.enabled && g.companion.hearts && !g.hearts;
     if(context=="defeat.partner")return g.companion.enabled && !g.companion.hearts && g.hearts;
     return false;

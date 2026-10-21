@@ -33,8 +33,7 @@ void validatePartyState(const ExplorationState& s) {
         if(!actor)return true;
         if(actor==kCompanionActorId)return g.companion.enabled;
         const auto* e=find(actor);
-        return e && e->kind==EntityKind::Friend && (partyAlly(s,actor) ||
-            std::find(g.hostile.begin(),g.hostile.end(),actor)!=g.hostile.end());
+        return e && e->kind==EntityKind::Friend;
     };
     if(g.companionTarget)check(find(g.companionTarget)!=nullptr,"party companion target missing");
     if(!g.independentParty) {
@@ -56,7 +55,8 @@ void validatePartyState(const ExplorationState& s) {
         if(a.kind==PartyActionKind::Attack) {
             const bool ally=partyAlly(s,a.actorId);
             check(validActor(a.targetId) && a.targetId!=a.actorId &&
-                (ally?!partyAlly(s,a.targetId):partyAlly(s,a.targetId)) &&
+                (ally?std::find(g.hostile.begin(),g.hostile.end(),a.targetId)!=g.hostile.end():
+                    (std::find(g.hostile.begin(),g.hostile.end(),a.actorId)!=g.hostile.end() && partyAlly(s,a.targetId))) &&
                 a.damage<=2 && (a.hit?(a.damage==1 || a.damage==2):(!a.damage && !a.critical)),
                 "invalid frozen party attack");
             const auto attack="party-attack:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
@@ -264,15 +264,15 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         } else {
             auto* e=entity(actor);e->tile=to;e->movement=record;++s.occupancyVersion;
         }
-        invalidate(false);
+        invalidate(false,actor!=0 && actor!=kCompanionActorId);
         event(!actor?GameplayEvent::Move:actor==kCompanionActorId?
             GameplayEvent::CompanionMove:GameplayEvent::ActorMove,actor,0,action);
     };
     auto heal=[&](uint32_t actor) {
         auto& hp=actor==0?g.hearts:g.companion.hearts;
         auto& berry=actor==0?g.oran:g.companion.oran;
-        if(!berry || hp+2>kMaxHp)return false;
-        --berry;hp+=2;const auto action=start(actor,PartyActionKind::Berry,0,1000);
+        if(!berry || !hp || hp+2>kMaxHp)return false;
+        --berry;hp=kMaxHp;const auto action=start(actor,PartyActionKind::Berry,0,1000);
         const auto once="party-heal:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
             std::to_string(g.actionRound)+":"+std::to_string(actor);
         if(!g.onceKeys.insert(once).second)throw std::logic_error("duplicate party heal");
@@ -499,16 +499,13 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         event(GameplayEvent::Wait,0,0,action);
     };
     auto planEnemy=[&](Entity& e,bool early) {
-        if(!hostile(e) || e.actionRound==g.actionRound || partyPlayback(g,e.instanceId))return;
-        unsigned targetActor=nearestPartyTile(e)==s.position?0:kCompanionActorId;
-        if(eventBattle(s) && s.variety.event.id.type==VarietyEvent::JointBattle && !s.variety.event.actors.empty()) {
-            const auto helper=s.variety.event.actors.front();
-            if(available(helper)) {
-                const auto reach=bfs(s.world,e.tile);
-                const int hd=reach.distance[position(helper)],pd=reach.distance[position(targetActor)];
-                if(hd>=0 && (pd<0 || hd<pd))targetActor=helper;
-            }
+        if((!hostile(e) && (eventBattle(s) || !friendly(e))) || !e.remainingHits || e.actionRound==g.actionRound || partyPlayback(g,e.instanceId))return;
+        if(!hostile(e)) {
+            const int next=patrolTile(e,now);
+            if(next>=0)move(e.instanceId,e.tile,next);else start(e.instanceId,PartyActionKind::Wait,0,0);
+            return;
         }
+        const unsigned targetActor=enemyTargetActor(e);
         const int target=position(targetActor);
         const bool inSight=seen(e.tile,target);
         if(inSight){e.tracking=Tracking::Chase;e.lastSeen=target;e.chaseTarget=target;}
@@ -533,6 +530,10 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
             if(e.tile==e.lastSeen || (e.blockedTurns=std::min(3U,e.blockedTurns+1))>=3) {
                 e.tracking=Tracking::Idle;e.chaseTarget=-1;
             }
+        }
+        if(!eventBattle(s)) {
+            const int next=patrolTile(e,now);
+            if(next>=0){move(e.instanceId,e.tile,next);return;}
         }
         start(e.instanceId,PartyActionKind::Wait,0,0);
     };
@@ -585,7 +586,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
                 }
             }
             Entity* next=nullptr;
-            for(auto& e:s.population.entities)if(hostile(e) && e.actionRound!=g.actionRound &&
+            for(auto& e:s.population.entities)if((hostile(e) || (!eventBattle(s) && friendly(e) && e.remainingHits)) && e.actionRound!=g.actionRound &&
                 (!next || e.instanceId<next->instanceId))next=&e;
             if(next) {planEnemy(*next,false);if(!turnSettled())break;continue;}
             if(g.actionRound==UINT64_MAX)throw std::runtime_error("action round exhausted");

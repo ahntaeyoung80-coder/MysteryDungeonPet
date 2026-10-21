@@ -1,0 +1,72 @@
+{
+  "cases": {
+    "sleep-15-metrics": {
+      "seconds": 4.00094,
+      "peakWorkingSet": 44302336,
+      "decodeCount": 12,
+      "pausedSubmissions": 0
+    },
+    "wounded-npc-15-metrics": {
+      "seconds": 6.00024,
+      "peakWorkingSet": 44314624,
+      "decodeCount": 12,
+      "pausedSubmissions": 0
+    },
+    "alarm-15-metrics": {
+      "seconds": 4.00037,
+      "peakWorkingSet": 44806144,
+      "decodeCount": 13,
+      "pausedSubmissions": 0
+    },
+    "morning-15-metrics": {
+      "seconds": 4.00081,
+      "peakWorkingSet": 44322816,
+      "decodeCount": 12,
+      "pausedSubmissions": 0
+    },
+    "intro-15-metrics": {
+      "seconds": 4.00049,
+      "peakWorkingSet": 44396544,
+      "decodeCount": 12,
+      "pausedSubmissions": 0
+    },
+    "heal-15-metrics": {
+      "seconds": 4.00092,
+      "peakWorkingSet": 44322816,
+      "decodeCount": 11,
+      "pausedSubmissions": 0
+    },
+    "front-15-metrics": {
+      "seconds": 6.0008,
+      "peakWorkingSet": 44146688,
+      "decodeCount": 12,
+      "pausedSubmissions": 0
+    },
+    "items-15-metrics": {
+      "seconds": 2.00063,
+      "peakWorkingSet": 44261376,
+      "decodeCount": 11,
+      "pausedSubmissions": 0
+    },
+    "intro-18-metrics": {
+      "seconds": 4.00083,
+      "peakWorkingSet": 44134400,
+      "decodeCount": 12,
+      "pausedSubmissions": 0
+    },
+    "patrol-15-metrics": {
+      "seconds": 8.00038,
+      "peakWorkingSet": 44150784,
+      "decodeCount": 13,
+      "pausedSubmissions": 0
+    },
+    "default-metrics": {
+      "seconds": 30.0008,
+      "peakWorkingSet": 47947776,
+      "decodeCount": 18,
+      "pausedSubmissions": 0
+    }
+  },
+  "privateBytes": "Wine reports0/unavailable",
+  "longRunGate": "not assessed"
+}

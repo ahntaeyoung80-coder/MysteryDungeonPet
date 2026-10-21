@@ -1,0 +1,7 @@
+Test project /workspace/MysteryDungeonPet/build/p0-asan
+    Start 16: pet_entry_social_scene_tests
+1/1 Test #16: pet_entry_social_scene_tests .....   Passed    5.37 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =   5.37 sec

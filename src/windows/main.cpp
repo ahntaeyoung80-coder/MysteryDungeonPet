@@ -194,7 +194,7 @@ class App {
     struct HolidayAssets {std::map<std::string,Assets> grounds;std::map<unsigned,Assets> floats;std::optional<Assets> water;unsigned decodes=0;};
     HolidayAssets holidayAssets_;
     Assets assets_;
-    std::optional<Assets> companionAssets_, homeAssets_, propsAssets_;
+    std::optional<Assets> companionAssets_, homeAssets_, propsAssets_, itemAssets_;
     NpcCatalogue npcCatalogue_;
     using NpcAssetCache=std::map<std::string,std::shared_ptr<Assets>>;
     NpcAssetCache npcAssets_;
@@ -251,7 +251,7 @@ class App {
     uint64_t partyPlayerToken_=0,partyCompanionToken_=0;
     std::map<uint32_t,uint64_t> partyActorTokens_;
     std::map<uint32_t,uint32_t> partyActorClips_,partyActorDirections_;
-    Surface itemMarker_{5, 5}, friendMarker_{5, 5}, stairsMarker_{7, 7};
+    Surface friendMarker_{5, 5}, stairsMarker_{7, 7};
     Animator animator_;
     Surface surface_, background_{32, 24};
     Surface dungeonBackdrop_{200, 200};
@@ -270,7 +270,7 @@ class App {
     std::optional<int64_t> nextFrameDeadline_;
     bool finalSampled_ = false,traceCompletionImage_=false,traceDeathImage_=false,traceCharacterImagePending_=false;
     std::wstring submittedText_,submittedHud_;
-    unsigned submittedFade_=UINT_MAX;
+    unsigned submittedFade_=UINT_MAX,submittedTitleOpacity_=UINT_MAX;
     uint64_t submissions_ = 0, decodes_ = 0, markers_ = 0, finishes_ = 0, skippedCycles_ = 0, switches_ = 0;
     uint64_t hiddenSubmissions_ = 0;
     int64_t start_ = 0, metricDeadline_ = 0, stopDeadline_ = 0, scenarioDeadline_ = 0, sessionRetry_ = 0;
@@ -315,11 +315,7 @@ class App {
         return cameraFor(center,d->width,d->height,int((size_+scale_-1)/scale_));
     }
     std::wstring mapHud() const {
-        if(!explorer_)return {};
-        if(explorer_->state().variety.holiday.active)return {};
-        const auto& state=explorer_->state();const auto& g=state.gameplay;
-        if(!dungeonScene(g) || (g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout))return {};
-        return std::to_wstring(state.floorIndex+1)+L"F";
+        return {};
     }
     void traceMovement(int64_t now,bool submitted) {
         if(!movementTrace_ || !explorer_) return;
@@ -418,6 +414,7 @@ class App {
             if(capture>=0 && !traceDialogueImages_[capture]){traceImage(suffix);traceDialogueImages_[capture]=true;}
         }
         if(submitted && !traceImages_) {traceImage("-first.bmp");++traceImages_;}
+        if(submitted && explorer_ && !explorationTitle(explorer_->state()).empty() && utcMs()>=explorer_->state().gameplay.phaseStartedMs+1000 && explorationTitleOpacity(explorer_->state(),utcMs())==255 && traceVarietyImages_.insert("map-title").second)traceImage("-map-title.bmp");
         if(submitted && traceImages_==1 && now-start_>=1000000) {traceImage("-middle.bmp");++traceImages_;}
     }
     static LRESULT CALLBACK procedure(HWND hwnd, UINT msg, WPARAM w, LPARAM l) {
@@ -1132,7 +1129,7 @@ class App {
         direction_=bedroomDirection(g,direction_);
         if(g.sceneBeat==SceneBeat::DiningPan && oldBeat!=g.sceneBeat) guildCamera_.begin(UINT32_MAX,g.day,{368,212},{168,212},now,6,4000000);
         if (clip_ == 0 && nextClip == 0 && loop_ && oldLife == g.life && oldCombat == g.combat) {
-            if(oldDirection != direction_) animator_.changeDirection(assets_.package,0,direction_);
+            if(oldDirection != direction_ && !animator_.tryChangeDirection(assets_.package,0,direction_))startClip(now);
         } else if (clip_ != nextClip || loop_ != nextLoop || oldDirection != direction_ || oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage || oldBeat!=g.sceneBeat) { clip_ = nextClip; loop_ = nextLoop; startClip(now); }
         if(event.event == GameplayEvent::FloorChanged || (event.event == GameplayEvent::Explore && oldLife==LifePhase::Ready)) {playerMotion_.reset(tilePoint(explorer_->state().position));actorMotions_.clear();actorAnimators_.clear();}
         if (!companionDialogue(g) && (g.life == LifePhase::Combat || g.life==LifePhase::Dialogue) && (oldLife != g.life || oldCombat != g.combat || oldDialogue!=g.dialogueStage)) {
@@ -1142,7 +1139,7 @@ class App {
         }
         if (!event.onceKey.empty()) log("gameplay onceKey=" + event.onceKey);
         if (oldLife != g.life || oldCombat != g.combat || oldBeat!=g.sceneBeat || oldDialogue!=g.dialogueStage) log(std::string("life=") + lifeName(g.life) + " combat=" + combatName(g.combat) + " day=" + std::to_string(g.day) + " hearts=" + std::to_string(g.hearts) + " sceneBeat=" + std::to_string(static_cast<unsigned>(g.sceneBeat)) + " dialogueStage=" + std::to_string(static_cast<unsigned>(g.dialogueStage)));
-        if (event.event == GameplayEvent::UseOranBerry) log("OranBerry70 text: healed 2 hearts (capped at 5); consumes one player action");
+        if (event.event == GameplayEvent::UseOranBerry) log("OranBerry70 text: restored all hearts; consumes one player action");
         if (event.event == GameplayEvent::PlayerAttack || event.event == GameplayEvent::EnemyAttack)
             log("move355 damage=" + std::to_string(event.damage) + " critical=" + std::to_string(event.critical));
         if (event.event == GameplayEvent::HomeScene || (event.event==GameplayEvent::ReturnHome && g.homeScene)) log(std::string("life=HomeScene opaque original ")+(bedroomScene(g)?(nightScene(g)?"night bedroom":"day bedroom"):"dining map"));
@@ -1237,10 +1234,14 @@ class App {
         applyCharacterSelection(now);
         if(explorer_ && explorer_->state().gameplay.life==LifePhase::Dialogue) {
             const auto& state=explorer_->state();const auto facing=dialogueDirection(state,0);
-            if(direction_!=facing){direction_=facing;animator_.changeDirection(assets_.package,clip_,facing);dirty_=true;}
+            if(direction_!=facing){direction_=facing;if(!animator_.tryChangeDirection(assets_.package,clip_,facing))startClip(now,true);dirty_=true;}
             if(!companionDialogue(state.gameplay)) {
                 const auto npcFacing=dialogueDirection(state,state.gameplay.enemyInstance);
-                if(enemyDirection_!=npcFacing){enemyDirection_=npcFacing;enemyAnimator_.changeDirection(npcAssets(state.gameplay.enemyInstance).package,enemyClip_,npcFacing);dirty_=true;}
+                if(enemyDirection_!=npcFacing){enemyDirection_=npcFacing;
+                    if(!enemyAnimator_.tryChangeDirection(npcAssets(state.gameplay.enemyInstance).package,enemyClip_,npcFacing)) {
+                        enemyFrame_=0;enemyAnimator_.start(npcAssets(state.gameplay.enemyInstance).package,enemyClip_,npcFacing,enemyClip_==7 && state.gameplay.dialogueStage!=DialogueStage::Npc,sceneClipStart(now));
+                    }
+                    dirty_=true;}
             }
             syncCompanion(now);
         }
@@ -1314,7 +1315,7 @@ class App {
         if(explorer_ && (explorer_->state().gameplay.sceneBeat==SceneBeat::BedFace || explorer_->state().gameplay.sceneBeat==SceneBeat::MorningFace) && utcMs()<explorer_->state().gameplay.deadlineMs)poseFinished_=false;
         if(partyRendering())poseFinished_=!completion_.actions.empty();
         (void)playerFinished;
-        if(explorer_ && revealedGameplayText(explorer_->state().gameplay,utcMs())!=submittedText_)dirty_=true;
+        if(explorer_ && revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs())!=submittedText_)dirty_=true;
         if (!dirty_) {traceMovement(now,false);return;}
         std::vector<Layer> layers;
         std::optional<Layer> playerLayer;
@@ -1365,8 +1366,8 @@ class App {
                 }
                 const Point p=raster(tilePoint(e.tile));
                 if(visible({p.x-8,p.y-8},16)) {
-                    if(e.originalId==ITEM_ORAN_BERRY) addProp(layers,0,p);
-                    else layers.push_back({&itemMarker_,{0,0,5,5},{2,2},p}); // unsupported item graphics remain explicit
+                    const auto& frame=itemAssets_->package.frames(e.originalId,0).front();
+                    layers.push_back({itemAssets_->atlas.get(),frame.rect,frame.anchor,p});
                 }
             }
         } else if (explorer_) {
@@ -1420,7 +1421,8 @@ class App {
         std::wstring overlayText=explorer_?revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs()):std::wstring{};
         const auto hud=mapHud();
         const auto fade=explorer_?(explorer_->state().variety.holiday.active?holidayFade(explorer_->state(),utcMs()):gameplayFadeOpacity(explorer_->state().gameplay,utcMs())):0;
-        const bool textChanged=overlayText!=submittedText_ || hud!=submittedHud_ || fade!=submittedFade_;
+        const auto titleOpacity=explorer_?explorationTitleOpacity(explorer_->state(),utcMs()):0;
+        const bool textChanged=overlayText!=submittedText_ || hud!=submittedHud_ || fade!=submittedFade_ || titleOpacity!=submittedTitleOpacity_;
         bool changed = previous != surface_.pixels;
         dirty_ = false;
         if (!changed && !textChanged && submitted_) {traceMovement(now,false);return;}
@@ -1428,6 +1430,7 @@ class App {
         textOverlay_.draw(dib_->dc,dib_->bits,size_,overlayText,
             explorer_ && explorer_->state().gameplay.life==LifePhase::Death && explorer_->state().gameplay.deathStage==DeathStage::Blackout);
         textOverlay_.drawMapHud(dib_->dc,dib_->bits,size_,hud);
+        if(explorer_)textOverlay_.drawMapTitle(dib_->dc,dib_->bits,size_,explorationTitle(explorer_->state()),explorationTitleOpacity(explorer_->state(),utcMs()));
         if(explorer_ && explorer_->state().variety.holiday.active) {
             auto* pixels=static_cast<std::uint8_t*>(dib_->bits);for(std::size_t i=0;i<surface_.pixels.size();i+=4)for(unsigned ch=0;ch<3;++ch)pixels[i+ch]=std::uint8_t((unsigned(pixels[i+ch])*(255-fade)+127)/255);
         } else if(explorer_)applyGameplayFade(static_cast<std::uint8_t*>(dib_->bits),surface_.pixels.size(),explorer_->state().gameplay,utcMs());
@@ -1441,7 +1444,7 @@ class App {
         if(explorer_ && explorer_->state().screenExploration && !completionScene(explorer_->state().gameplay)) {
             explorer_->enableScreenExploration((size_+scale_-1)/scale_);
             explorer_->observeViewport(camera.x,camera.y);
-        } submittedText_=std::move(overlayText);submittedHud_=hud;submittedFade_=fade;
+        } submittedText_=std::move(overlayText);submittedHud_=hud;submittedFade_=fade;submittedTitleOpacity_=titleOpacity;
         traceMovement(now,true);
         if (blocked()) ++hiddenSubmissions_;
     }
@@ -1473,6 +1476,8 @@ public:
             decodes_+=companionAssets_->decoded?1:0;
             homeAssets_ = Assets::load(options_.gameplayAssets / L"home/home.mdpa");
             propsAssets_=Assets::load(options_.gameplayAssets / L"props/props.mdpa");
+            itemAssets_=Assets::load(options_.gameplayAssets / L"items/items.mdpa");
+            decodes_+=itemAssets_->decoded?1:0;
             appleAssets_=Assets::load(options_.gameplayAssets / L"effects/apple.mdpa");
             uiAssets_=Assets::load(options_.gameplayAssets / L"ui/ui.mdpa");
             portraitAssets_=Assets::load(options_.gameplayAssets / L"portraits/portraits.mdpa");
@@ -1543,11 +1548,23 @@ public:
                 saveRunSnapshot(options_.snapshot, explorer_->state());
             }
             validateNpcCoverage(npcCatalogue_,explorer_->state().floors);
+            auto validateItems=[&](const ExplorationPackage& package) {
+                for(const auto& floor:package.floors) {
+                    for(const auto& category:floor.floorItems)if(category.weight)for(const auto& item:category.items)if(item.value)itemAssets_->package.frames(item.originalId,0);
+                    for(auto item:floor.guaranteed)itemAssets_->package.frames(item,0);
+                }
+            };
+            validateItems(*explorationPackage_);for(const auto& entry:explorationPool_)validateItems(entry.second);
             commitNpcAssets(stageNpcAssets(explorer_->state()));
             tiles_=loadExplorationTiles(*explorationPackage_,explorationDirectory);
             for(const auto& entry:tiles_)decodes_+=entry.second.decoded?1:0;
             playerMotion_.reset(tilePoint(explorer_->state().position));
             explorer_->enableGameplay(utcMs());
+            if(!restoring && !options_.defaultExploration && explorer_->state().gameplay.life==LifePhase::Explore) {
+                auto initial=explorer_->state();initial.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;
+                initial.gameplay.phaseStartedMs=utcMs();initial.gameplay.deadlineMs=initial.gameplay.phaseStartedMs+3000;
+                explorer_=std::make_unique<Explorer>(std::move(initial));
+            }
             if(!options_.solo) explorer_->enableCompanion();
             explorer_->enableHolidaySchedule();
             if(options_.defaultExploration) {
@@ -1588,7 +1605,7 @@ public:
                     s.pixels[offset] = blue; s.pixels[offset+1] = green; s.pixels[offset+2] = red; s.pixels[offset+3] = 255;
                 }
             };
-            marker(itemMarker_, 30, 210, 240); marker(friendMarker_, 230, 150, 70); marker(stairsMarker_, 220, 220, 220);
+            marker(friendMarker_, 230, 150, 70); marker(stairsMarker_, 220, 220, 220);
             marker(dungeonBackdrop_, 35, 30, 25);
         }
         for (unsigned y = 0; y < background_.height; ++y) for (unsigned x = 0; x < background_.width; ++x) {

@@ -1,0 +1,3 @@
+fixture patrol saved
+cannot open: /workspace/MysteryDungeonPet/assets/original/gameplay/actors/asset-0/asset.mdpa
+X connection to :99 broken (explicit kill or server shutdown).

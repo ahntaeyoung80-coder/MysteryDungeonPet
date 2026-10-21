@@ -432,7 +432,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             } else {schedule.destination=DayDestination::Exploration;schedule.dungeon=next.state_.floors.front().dungeonId;}
         }
         next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
-        next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+kFadeMs;
+        next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+3000;
         next.state_.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;
         if(previous.companion.enabled) {next.state_.gameplay.enabled=true;next.enableCompanion();next.state_.gameplay.companion.oran=previous.companion.oran;}
         next.assignRelationships();*this=std::move(next);return {GameplayEvent::Explore,{}};
@@ -458,8 +458,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             }
             const auto once = "turn:" + std::to_string(state_.runId) + ":" + std::to_string(state_.floorIndex) + ":" + std::to_string(g.enemyInstance) + ":" + std::to_string(++g.turn);
             if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate combat turn");
-            if (g.oran && g.hearts+2 <= kMaxHp) {
-                --g.oran; g.hearts = std::min(kMaxHp, g.hearts + 2);
+            if (g.oran && g.hearts>0 && g.hearts+2<=kMaxHp) {
+                --g.oran; g.hearts = kMaxHp;
                 auto update = combat(CombatPhase::BerryText, GameplayEvent::UseOranBerry, 1000); update.onceKey = once;
                 return update;
             }
@@ -485,8 +485,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             partner.actionRound=g.actionRound;partner.walkStartedMs=0;
             const auto once="companion-turn:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.enemyInstance)+":"+std::to_string(g.actionRound);
             if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate companion turn");
-            if(partner.oran && partner.hearts+2<=kMaxHp) {
-                --partner.oran;partner.hearts+=2;
+            if(partner.oran && partner.hearts>0 && partner.hearts+2<=kMaxHp) {
+                --partner.oran;partner.hearts=kMaxHp;
                 auto update=combat(CombatPhase::CompanionBerryText,GameplayEvent::UseOranBerry,1000);update.onceKey=once;update.actorId=kCompanionActorId;return update;
             }
             if(mustRetreat()) return afterCombatAction(now);
@@ -669,14 +669,45 @@ int Explorer::detourTile(unsigned repetitions,uint64_t signature) {
     return next;
 }
 int Explorer::nearestPartyTile(const Entity& enemy) const {
-    const auto& g=state_.gameplay;
-    if(!g.companion.enabled || !g.companion.hearts) return state_.position;
-    if(!g.hearts) return g.companion.tile;
+    return enemyTargetActor(enemy)==kCompanionActorId?state_.gameplay.companion.tile:state_.position;
+}
+std::uint32_t Explorer::enemyTargetActor(const Entity& enemy) const {
+    const auto& s=state_;const auto& g=s.gameplay;
+    std::vector<std::pair<unsigned,int>> candidates;
+    if(g.hearts)candidates.push_back({0,s.position});
+    if(g.companion.enabled && g.companion.hearts)candidates.push_back({kCompanionActorId,g.companion.tile});
+    if(eventBattle(s))for(auto id:s.variety.event.actors)if(partyAlly(s,id))
+        for(const auto& a:s.population.entities)if(a.instanceId==id && a.visible && !a.done && a.remainingHits)candidates.push_back({id,a.tile});
     auto occupied=occupancy();occupied[enemy.tile]=0;
-    occupied[state_.position]=0;occupied[g.companion.tile]=0;
-    const auto reach=bfs(state_.world,enemy.tile,occupied);
-    const int a=reach.distance[state_.position],b=reach.distance[g.companion.tile];
-    return b>=0 && (a<0 || b<a)?g.companion.tile:state_.position;
+    occupied[s.position]=1;if(g.companion.enabled)occupied[g.companion.tile]=1;
+    std::tuple<int,int,int,unsigned> best{2,2,kTiles+1,UINT32_MAX};unsigned selected=0;
+    for(const auto& [id,tile]:candidates) {
+        auto mask=occupied;mask[tile]=0;const auto reach=bfs(s.world,enemy.tile,mask);
+        const bool adjacent=canAttack(s.world,enemy.tile,tile);
+        const auto rank=std::make_tuple(adjacent?0:1,adjacent && directionBetween(enemy.tile,tile)==enemy.direction?0:1,
+            reach.distance[tile]<0?kTiles+1:reach.distance[tile],id);
+        if(rank<best){best=rank;selected=id;}
+    }
+    return selected;
+}
+int Explorer::patrolTile(const Entity& actor,std::uint64_t now) const {
+    const auto& s=state_;const auto& g=s.gameplay;auto blocked=occupancy();blocked[actor.tile]=0;
+    blocked[s.position]=1;if(g.companion.enabled)blocked[g.companion.tile]=1;blocked[s.world.stairs]=1;
+    for(const auto& a:g.partyActions)if(a.kind==PartyActionKind::Move && !a.finished && now<a.deadlineMs && a.actorId!=actor.instanceId) {
+        const auto* movement=a.actorId==0?&g.movement:a.actorId==kCompanionActorId?&g.companion.movement:nullptr;
+        if(!movement)for(const auto& e:s.population.entities)if(e.instanceId==a.actorId)movement=&e.movement;
+        if(movement && movement->actionId)blocked[movement->from]=1;
+    }
+    std::vector<int> choices;
+    for(const auto [dx,dy]:kDirections) {
+        const int x=actor.tile%kWidth+dx,y=actor.tile/kWidth+dy;
+        if(x>=0 && x<kWidth && y>=0 && y<kHeight && canMove(s.world,actor.tile,y*kWidth+x,blocked))choices.push_back(y*kWidth+x);
+    }
+    if(choices.size()>1 && actor.movement.actionId)choices.erase(std::remove(choices.begin(),choices.end(),actor.movement.from),choices.end());
+    if(choices.empty())return -1;
+    Rng random{s.mapSeed^(g.actionRound*0x9e3779b97f4a7c15ULL)^(std::uint64_t(actor.instanceId)*0xbf58476d1ce4e5b9ULL)};
+    if(random.bounded(4))for(auto tile:choices)if(directionBetween(actor.tile,tile)==actor.direction)return tile;
+    return choices[random.bounded(static_cast<unsigned>(choices.size()))];
 }
 int Explorer::combatApproach(const Entity& enemy,bool partner) const {
     const auto& g=state_.gameplay;
@@ -697,7 +728,7 @@ int Explorer::combatApproach(const Entity& enemy,bool partner) const {
 GameplayUpdate Explorer::healCompanion(std::uint64_t now) {
     auto& g=state_.gameplay;auto& p=g.companion;
     if(!p.enabled || !p.hearts || !p.oran || p.hearts+2>kMaxHp || p.actionRound==g.actionRound) return {};
-    --p.oran;p.hearts+=2;p.actionRound=g.actionRound;p.walkStartedMs=0;
+    --p.oran;p.hearts=kMaxHp;p.actionRound=g.actionRound;p.walkStartedMs=0;
     const auto once="companion-heal:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.actionRound);
     if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate companion berry use");
     invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+1000;
@@ -710,9 +741,9 @@ bool Explorer::beginCompanionDialogue(std::uint64_t now) {
        !p.enabled || p.hidden || p.hearts<=kLowHp || g.hearts<=kLowHp ||
        s.position==s.world.stairs || !canAttack(s.world,s.position,p.tile) ||
        !g.partyPlaybacks.empty() || std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;})) return false;
-    const auto first=20U+unsigned(s.mapSeed%9);
+    const auto first=48U+unsigned(s.mapSeed%25);
     if(s.floorSteps<first) return false;
-    const auto slot=(s.floorSteps-first)/32;
+    const auto slot=(s.floorSteps-first)/144;
     const auto once="companion-chat:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(slot);
     if(g.onceKeys.count(once))return false;
     auto moving=[&](const MoveRecord& m){return m.actionId && now>=m.startedMs && now-m.startedMs<m.durationMs;};
@@ -768,7 +799,13 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
             g.companion.actionRound=g.actionRound;g.companion.walkStartedMs=0;
         }
         for(auto& e:state_.population.entities) {
-            if(e.kind!=EntityKind::Friend || !e.visible || e.done || !hostile(e) || e.actionRound==g.actionRound) continue;
+            if(e.kind!=EntityKind::Friend || !e.visible || (e.done && hostile(e)) || !e.remainingHits || e.actionRound==g.actionRound) continue;
+            if(!hostile(e)) {
+                e.actionRound=g.actionRound;
+                const int next=patrolTile(e,now);
+                if(next>=0){const int old=e.tile;e.tile=next;e.direction=directionBetween(old,next);e.movement={g.actionRound,now,400,e.direction,old,next};++state_.occupancyVersion;invalidate(false,true);}
+                continue;
+            }
             const int target=nearestPartyTile(e);
             const bool inSight=visible(e.tile,target);
             if(inSight) {e.tracking=Tracking::Chase;e.lastSeen=target;e.chaseTarget=e.lastSeen;}
@@ -793,12 +830,14 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
                 }
                 if(e.tile==e.lastSeen || (e.blockedTurns=std::min(3U,e.blockedTurns+1))>=3) {e.tracking=Tracking::Idle;e.chaseTarget=-1;}
             }
+            const int next=patrolTile(e,now);
+            if(next>=0){const int old=e.tile;e.tile=next;e.direction=directionBetween(old,next);e.movement={g.actionRound,now,400,e.direction,old,next};++state_.occupancyVersion;invalidate(false,true);}
         }
         if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
         ++g.actionRound;
     }
-    if(g.oran && g.hearts+2<=kMaxHp && g.playerActionRound!=g.actionRound) {
-        --g.oran;g.hearts+=2;g.playerActionRound=g.actionRound;g.walkStartedMs=0;
+    if(g.oran && g.hearts>0 && g.hearts+2<=kMaxHp && g.playerActionRound!=g.actionRound) {
+        --g.oran;g.hearts=kMaxHp;g.playerActionRound=g.actionRound;g.walkStartedMs=0;
         const auto once="heal:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.actionRound);
         if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate exploration berry use");
         invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+1000;

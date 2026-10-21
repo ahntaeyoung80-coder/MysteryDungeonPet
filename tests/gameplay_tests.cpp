@@ -226,14 +226,14 @@ int main(int argc, char** argv) {
         check(berries.goal()==GoalKind::Stairs,"low HP did not escape to stairs discovered before berry");
         pass(8,"low HP retreats to previously discovered stairs before searching for an unseen berry");
         auto heal = encounter(); advance(heal,1000); s = heal.state(); s.gameplay.hearts = 1; s.gameplay.oran = 1; heal = Explorer(s);
-        check(next(heal).event == GameplayEvent::UseOranBerry && heal.state().gameplay.hearts == 3 && heal.state().gameplay.oran == 0, "Oran did not heal two/cap/consume");
+        check(next(heal).event == GameplayEvent::UseOranBerry && heal.state().gameplay.hearts == 5 && heal.state().gameplay.oran == 0, "Oran did not fully heal/consume");
         check(gameplayClip(heal.state().gameplay) == 7 && heal.state().gameplay.combat == CombatPhase::BerryText, "berry plays use animation");
         const auto rng = heal.state().rng.state;
         advance(heal,heal.state().gameplay.phaseStartedMs+1,true);
         check(heal.state().rng.state == rng && heal.state().gameplay.combat == CombatPhase::BerryText, "berry text consumed second turn");
         next(heal); forceRoll(heal,false,true,false); next(heal);
-        check(heal.state().gameplay.combat == CombatPhase::EnemyAttack && heal.state().gameplay.hearts == 3, "Oran skipped enemy turn or damage preceded attack completion");
-        pass(9,"text only; one berry consumed; 1->3 hearts; enemy turn follows");
+        check(heal.state().gameplay.combat == CombatPhase::EnemyAttack && heal.state().gameplay.hearts == 5, "Oran skipped enemy turn or damage preceded attack completion");
+        pass(9,"text only; one berry consumed; 1->5 hearts; enemy turn follows");
         auto friendly = encounter(false);auto onlyContact=friendly.state();onlyContact.discovered=onlyContact.world.terrain;onlyContact.knownStairs=onlyContact.world.stairs;onlyContact.blocked[onlyContact.world.stairs]=1;friendly=Explorer(onlyContact); const auto friendlyPosition = friendly.state().position;
         check(advance(friendly,1000).event==GameplayEvent::DialoguePlayer && friendly.state().gameplay.life==LifePhase::Dialogue && !friendly.state().population.entities[0].done,"friendly dialogue starts done/overlapped");
         auto dialogSave=encodeSnapshot(friendly.state());advance(friendly,1100,true);check(encodeSnapshot(friendly.state())==dialogSave,"dialogue pacing skipped");

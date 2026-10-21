@@ -1,0 +1,9 @@
+Test project /workspace/MysteryDungeonPet/build/p0
+    Start  1: pet_feedback_regression_tests
+1/2 Test  #1: pet_feedback_regression_tests ....   Passed    0.04 sec
+    Start 14: pet_companion_tests
+2/2 Test #14: pet_companion_tests ..............   Passed   16.27 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =  16.31 sec

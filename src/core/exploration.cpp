@@ -334,7 +334,7 @@ void Explorer::setNextRunPackage(std::string assetVersion,std::vector<FloorProfi
     }
     nextRunAssetVersion_=std::move(assetVersion);nextRunFloors_=std::move(floors);
 }
-bool discardStaleEntityGoal(ExplorationState& s) {
+bool discardStaleEntityGoal(ExplorationState& s,bool movingFriend) {
     if(s.goalKind!=GoalKind::Friend && s.goalKind!=GoalKind::Item)return false;
     // Check only the disposable entity route. World, journals and combat still
     // undergo the full validator, including when importing an older save.
@@ -345,6 +345,14 @@ bool discardStaleEntityGoal(ExplorationState& s) {
             (e.kind==EntityKind::Item?e.tile==s.target:canAttack(s.world,s.target,e.tile));
     });
     if(valid)return false;
+    if(movingFriend && s.goalKind==GoalKind::Friend)for(const auto& e:s.population.entities)
+        if(e.instanceId==s.targetInstance && e.kind==EntityKind::Friend && e.visible && !e.done &&
+           std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),e.instanceId)==s.gameplay.hostile.end()) {
+            const auto reach=bfs(s.world,s.position,s.blocked);int next=-1;
+            for(int tile=0;tile<kTiles;++tile)if(!s.blocked[tile] && canAttack(s.world,tile,e.tile) && reach.distance[tile]>=0 &&
+               (next<0 || reach.distance[tile]<reach.distance[next]))next=tile;
+            if(next>=0){s.target=next;return false;}
+        }
     s.target=-1;s.goalKind=GoalKind::None;s.targetInstance=0;return true;
 }
 Explorer::Explorer(ExplorationState state) : state_(std::move(state)) {
@@ -357,10 +365,10 @@ Explorer::Explorer(ExplorationState state) : state_(std::move(state)) {
         cachedOccupancy_ = state_.occupancyVersion;
     }
 }
-void Explorer::invalidate(bool clearTarget) {
+void Explorer::invalidate(bool clearTarget,bool movingFriend) {
     path_.clear(); pathIndex_=0; cachedWorld_=cachedOccupancy_=UINT64_MAX;
     if(clearTarget) {state_.target=-1;state_.goalKind=GoalKind::None;state_.targetInstance=0;}
-    else discardStaleEntityGoal(state_);
+    else discardStaleEntityGoal(state_,movingFriend);
 }
 std::string Explorer::key(const std::string& action, std::uint32_t instance) const {
     return action + ":" + std::to_string(state_.runId) + ":" +

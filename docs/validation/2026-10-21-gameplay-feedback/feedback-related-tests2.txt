@@ -1,0 +1,24 @@
+Test project /workspace/MysteryDungeonPet/build/p0
+    Start  1: pet_feedback_regression_tests
+1/5 Test  #1: pet_feedback_regression_tests ....***Failed    0.04 sec
+invalid explorer position
+
+    Start  3: pet_event_combat_tests
+2/5 Test  #3: pet_event_combat_tests ...........   Passed    0.10 sec
+    Start 14: pet_companion_tests
+3/5 Test #14: pet_companion_tests ..............***Failed    0.07 sec
+legacy stale entity goal blocked restore or changed durable progress
+
+    Start 16: pet_entry_social_scene_tests
+4/5 Test #16: pet_entry_social_scene_tests .....   Passed    1.88 sec
+    Start 20: pet_survival_tests
+5/5 Test #20: pet_survival_tests ...............   Passed    0.03 sec
+
+60% tests passed, 2 tests failed out of 5
+
+Total Test time (real) =   2.12 sec
+
+The following tests FAILED:
+	  1 - pet_feedback_regression_tests (Failed)
+	 14 - pet_companion_tests (Failed)
+Errors while running CTest

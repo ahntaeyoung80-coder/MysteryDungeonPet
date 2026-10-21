@@ -1,0 +1,108 @@
+{
+  "dateKst": "2026-10-21",
+  "startingCommit": "fe026374f580960b79f7e6f32a43e5eef028f2e7",
+  "branch": "work",
+  "changes": [
+    "unseen hostile/friendly patrol; moving friend goal kept without repairing arbitrary stale saves",
+    "current attackable/front target before path distance; HP amount not used; approach/patrol if none adjacent",
+    "home greetings despite defeated HP; wounded safe NPC text; catalogue reveal drives render invalidation",
+    "safe finite-animation restart on facing changes, instead of incompatible phase mutation",
+    "sparse companion chats after48-72 completed steps and144-step subsequent opportunities; no one-per-floor cap",
+    "three-second map-name introduction on new exploration; floor HUD removed",
+    "112 spawnable item IDs plus historic records10/11 ->114 ID clips/31 original sprite-palette images",
+    "Oran heals to HP5 for both actors; existing HP<=3 automatic use threshold retained"
+  ],
+  "asanUbsan": {
+    "uniqueChecksPassed": 26,
+    "broadRun": "25/26;166.55seconds",
+    "followup": "entry/social expected intro deadline updated from750ms to3000ms; related ASan1/1 pass5.37s; final item coverage1/1 pass0.16s",
+    "reasonForBroadRun": "shared NPC movement/targeting/turn ownership and healing changed; full suite once after implementation"
+  },
+  "python": {
+    "uniquePassed": 49,
+    "suite": "49/49;47.899s before compatibility atlas extension",
+    "finalItemAssetChecks": "2/2;0.474s after adding original legacy records10/11; other checks reused"
+  },
+  "windows": {
+    "build": "MinGW14.2-posix static x64 Release",
+    "execution": "Wine10/Xvfb with Korean font substitution",
+    "nativeRelatedChecks": 4,
+    "scenarios": {
+      "patrol-15": {
+        "rows": 1024,
+        "submitted": 478
+      },
+      "front-15": {
+        "rows": 618,
+        "submitted": 301
+      },
+      "wounded-npc-15": {
+        "rows": 526,
+        "submitted": 261
+      },
+      "sleep-15": {
+        "rows": 192,
+        "submitted": 95
+      },
+      "morning-15": {
+        "rows": 481,
+        "submitted": 182
+      },
+      "alarm-15": {
+        "rows": 247,
+        "submitted": 121
+      },
+      "items-15": {
+        "rows": 95,
+        "submitted": 47
+      },
+      "heal-15": {
+        "rows": 412,
+        "submitted": 198
+      },
+      "intro-15": {
+        "rows": 335,
+        "submitted": 136
+      },
+      "intro-18": {
+        "rows": 338,
+        "submitted": 138
+      },
+      "default": {
+        "rows": 3162,
+        "submitted": 1486
+      },
+      "legacy-npc": {
+        "rows": 404,
+        "submitted": 203
+      }
+    },
+    "pixelVerification": "six actual item records match every opaque original pixel; five low-HP dialogue captures have visible text; names15/18 + ordinary start captured",
+    "legacyNpc": "existing exported solo NPC fixture greets once and returns to Explore within5seconds",
+    "installedRun": "6seconds, exit0, submitted frames"
+  },
+  "installation": {
+    "selectedFiles": 416,
+    "selectedBytes": 13323769,
+    "exeBytes": 2269184,
+    "exeSha256": "a248a838c143fce11cb2ce5df1c20914269ed4f1940b4e5b392d9579cd786358",
+    "sourceAssetsByteEqual": true,
+    "romExcluded": true
+  },
+  "runtimeSha256": "a248a838c143fce11cb2ce5df1c20914269ed4f1940b4e5b392d9579cd786358",
+  "hashCheck": "root EXE/source/selected assets match",
+  "knownFailuresHandled": [
+    "new native fixture positions needed visited bits",
+    "old equal-distance target test updated for front-companion policy",
+    "moving friendly goal follow limited to actual NPC moves; legacy stale-goal invalidation retained",
+    "initial full-heal trigger changed too broadly; existing one-missing-heart reserve retained",
+    "legacy scene test had750ms intro assumption; updated three-second reading interval",
+    "actual wounded-dialogue restore hit direction phase incompatible; finite direction fallback fixed and GUI retested",
+    "GUI item fixture initially used records5/110 outside selected spawn pool; replaced with selected IDs and explicitly supported original legacy records10/11",
+    "host-built fixture executable used host __FILE__ inside Docker; exporter changed to Windows build"
+  ],
+  "pending": [
+    "actual user Windows11/OS interaction and long-run performance",
+    "remote CI completion recorded after push"
+  ]
+}

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <stdexcept>
+#include <vector>
 namespace pet {
 TextOverlay::TextOverlay():font_(CreateFontW(-12,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
     OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,NONANTIALIASED_QUALITY,DEFAULT_PITCH,L"Malgun Gothic")) {
@@ -10,6 +11,22 @@ TextOverlay::TextOverlay():font_(CreateFontW(-12,0,0,0,FW_NORMAL,FALSE,FALSE,FAL
     if(!font_ || !hudFont_) throw std::runtime_error("text font creation failed");
 }
 TextOverlay::~TextOverlay() {DeleteObject(font_);DeleteObject(hudFont_);}
+void TextOverlay::drawMapTitle(HDC dc,void* bits,unsigned size,const std::wstring& text,unsigned opacity) const {
+    if(text.empty() || !opacity)return;
+    auto* pixels=static_cast<std::uint8_t*>(bits);std::vector<std::uint8_t> original(pixels,pixels+size*size*4);
+    for(unsigned y=78;y<std::min(size,112U);++y)for(unsigned x=4;x+4<size;++x)
+        for(unsigned ch=0;ch<3;++ch)pixels[(y*size+x)*4+ch]/=2;
+    const auto old=SelectObject(dc,font_);SetBkMode(dc,TRANSPARENT);SetTextColor(dc,RGB(255,255,255));
+    RECT rect{8,78,LONG(size)-8,112};
+    const auto height=DrawTextW(dc,text.c_str(),-1,&rect,DT_CENTER|DT_VCENTER|DT_SINGLELINE|DT_NOPREFIX);
+    const auto flushed=GdiFlush();SelectObject(dc,old);
+    if(!height || !flushed)throw std::runtime_error("map title rasterization failed");
+    for(unsigned y=78;y<std::min(size,112U);++y)for(unsigned x=0;x<size;++x) {
+        const auto at=(y*size+x)*4;
+        for(unsigned ch=0;ch<3;++ch)pixels[at+ch]=std::uint8_t((unsigned(pixels[at+ch])*opacity+unsigned(original[at+ch])*(255-opacity)+127)/255);
+        pixels[at+3]=255;
+    }
+}
 void TextOverlay::drawMapHud(HDC dc,void* bits,unsigned size,const std::wstring& label) const {
     if(label.empty())return;
     const auto oldFont=SelectObject(dc,hudFont_);SetBkMode(dc,TRANSPARENT);

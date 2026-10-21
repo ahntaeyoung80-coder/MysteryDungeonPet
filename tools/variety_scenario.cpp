@@ -14,7 +14,31 @@ int main(int argc,char** argv){try {
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");const auto maps=loadEventRegistry(root/"gameplay/events/contexts.mder");
     const auto now=std::uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
     auto s=eventFixture(p);s.gameplay.phaseStartedMs=s.gameplay.deadlineMs=now;
-    if(name=="pool") {
+    if(name=="heal") {
+        s.population.entities.clear();s.gameplay.hearts=s.gameplay.companion.hearts=1;s.gameplay.oran=s.gameplay.companion.oran=1;
+    } else if(name=="patrol") {
+        s.position=105;s.visited[s.position]=1;s.gameplay.companion.tile=104;s.gameplay.independentParty=true;
+        s.population.entities={{1,237,EntityKind::Friend,132,false},{2,83,EntityKind::Friend,156,false},{3,109,EntityKind::Item,195,false}};s.gameplay.hostile={1};
+        s.target=195;s.targetInstance=3;s.goalKind=GoalKind::Item;
+    } else if(name=="front") {
+        s.position=102;s.visited[s.position]=1;s.gameplay.companion.tile=101;s.gameplay.independentParty=true;s.gameplay.hearts=1;
+        s.population.entities={{1,237,EntityKind::Friend,100,false}};s.population.entities[0].direction=2;s.gameplay.hostile={1};
+        s.gameplay.partyPhase=PartyPhase::OrderedEnemies;s.gameplay.playerActionRound=s.gameplay.companion.actionRound=s.gameplay.actionRound;
+    } else if(name=="sleep" || name=="morning" || name=="alarm") {
+        s.phase=Phase::Home;auto& g=s.gameplay;g.homeScene=true;g.hearts=0;g.meals=1;g.onceKeys={"return:1300","meal:1300"};s.variety.schedule.mealCommitted=true;
+        g.life=name=="sleep"?LifePhase::Sleep:name=="morning"?LifePhase::Ready:LifePhase::Wake;
+        g.sceneBeat=name=="sleep"?SceneBeat::BedFace:name=="morning"?SceneBeat::MorningFace:SceneBeat::WakeDelay;
+        Explorer e(s);e.advanceGameplay(now,ActorCompletion{},c);s=e.state();
+    } else if(name=="wounded-npc") {
+        auto& g=s.gameplay;g.hearts=g.companion.hearts=1;g.life=LifePhase::Dialogue;g.enemyInstance=1;
+        Explorer e(s);e.advanceGameplay(now,ActorCompletion{},c);s=e.state();
+    } else if(name=="items") {
+        s.population.entities.clear();unsigned id=0;const std::vector<int> tiles{101,102,125,126,77,78};
+        for(unsigned item:{2U,18U,70U,109U,183U,10U})s.population.entities.push_back({++id,item,EntityKind::Item,tiles[id-1],false});
+        s.gameplay.deadlineMs=now+1200;
+    } else if(name=="intro") {
+        s.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;s.gameplay.deadlineMs=now+3000;
+    } else if(name=="pool") {
         s.variety.holidayPolicy=true;s.variety.completedExplorations=3;
         s.variety.schedule.destination=DayDestination::Town;s.variety.schedule.dungeon=0;
         const auto visits=loadHolidayRegistry(root/"gameplay/holiday");

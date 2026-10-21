@@ -1,0 +1,10 @@
+unseen/friendly patrol+restore; front adjacent targeting/HP independence; move to contact; full Oran; defeated home/wounded NPC text; sparse but repeatable long-floor chat pass
+24 bundles / seven contexts: atomic pairs, dedicated RNG, repeat avoidance, reveal/read, restore, eligibility and finite cleanup pass
+eight Korean text scenes and three map/floor HUD labels have visible opaque GDI ink
+E03 real original stock/3 apples -> 1 Oran/restore once; E04/E07 ordered attacks, actual defeat, independent helper and no friendly fire pass
+fixture patrol saved
+PASS GUI patrol-15
+fixture front saved
+PASS GUI front-15
+fixture wounded-npc saved
+X connection to :99 broken (explicit kill or server shutdown).

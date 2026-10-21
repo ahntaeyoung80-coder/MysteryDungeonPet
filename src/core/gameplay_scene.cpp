@@ -6,6 +6,17 @@
 #include <stdexcept>
 #include <set>
 namespace pet {
+std::wstring explorationTitle(const ExplorationState& s) {
+    if(s.gameplay.life!=LifePhase::Explore || s.gameplay.sceneBeat!=SceneBeat::ExploreFadeIn ||
+       s.variety.schedule.destination==DayDestination::Town || s.variety.schedule.destination==DayDestination::HotSpring)return {};
+    const auto dungeon=s.floors[s.floorIndex].dungeonId;
+    return dungeon==0?L"해안 동굴":dungeon==15?L"열수의 동굴 상층":dungeon==18?L"일렉트릭 평원 깊은 곳":L"미지의 던전";
+}
+unsigned explorationTitleOpacity(const ExplorationState& s,std::uint64_t now) {
+    if(explorationTitle(s).empty())return 0;
+    const auto elapsed=now>s.gameplay.phaseStartedMs?now-s.gameplay.phaseStartedMs:0;
+    return elapsed<500?unsigned(elapsed*255/500):elapsed<2500?255:elapsed<3000?unsigned((3000-elapsed)*255/500):0;
+}
 bool partyHealing(const GameplayState& g) {
     return g.independentParty && std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return a.kind==PartyActionKind::Berry && !a.finished;});
 }

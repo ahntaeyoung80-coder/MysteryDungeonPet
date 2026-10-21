@@ -142,7 +142,8 @@ void scenes(){
  const auto start=e.state().gameplay.phaseStartedMs;e=restore(e);e.advanceGameplay(start+749,true);check(e.state().gameplay.day==1,"next day committed before blackout");
  e.advanceGameplay(start+750,true);check(e.state().gameplay.sceneBeat==SceneBeat::ExploreFadeIn && e.state().gameplay.day==2 && e.state().gameplay.hearts==kMaxHp,"black frame did not commit next day/fade-in");
  auto bytes=encodeSnapshot(e.state());e=restore(e);e.advanceGameplay(start+1499,true);check(bytes==encodeSnapshot(e.state()),"exploration moved during fade-in");
- e.advanceGameplay(start+1500,true);check(e.state().gameplay.sceneBeat==SceneBeat::None && e.state().gameplay.day==2,"fade-in duplicated next day");
+ e.advanceGameplay(start+1500,true);check(e.state().gameplay.sceneBeat==SceneBeat::ExploreFadeIn && e.state().gameplay.day==2,"map title reading interval was skipped");
+ e.advanceGameplay(start+3750,true);check(e.state().gameplay.sceneBeat==SceneBeat::None && e.state().gameplay.day==2,"fade-in duplicated next day");
  std::cout<<"sleep pose/exit fade/restore regression pass\n";
 }
 int main(int argc,char** argv){unsigned failed=0;

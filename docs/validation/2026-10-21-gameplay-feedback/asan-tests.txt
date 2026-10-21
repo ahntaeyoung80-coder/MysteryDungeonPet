@@ -1,0 +1,66 @@
+Test project /workspace/MysteryDungeonPet/build/p0-asan
+      Start  1: pet_feedback_regression_tests
+ 1/26 Test  #1: pet_feedback_regression_tests ....   Passed    0.15 sec
+      Start  2: pet_holiday_scene_tests
+ 2/26 Test  #2: pet_holiday_scene_tests ..........   Passed    0.25 sec
+      Start  3: pet_event_combat_tests
+ 3/26 Test  #3: pet_event_combat_tests ...........   Passed    0.30 sec
+      Start  4: pet_event_movement_tests
+ 4/26 Test  #4: pet_event_movement_tests .........   Passed    0.18 sec
+      Start  5: pet_event_stock_tests
+ 5/26 Test  #5: pet_event_stock_tests ............   Passed    0.06 sec
+      Start  6: pet_event_runtime_tests
+ 6/26 Test  #6: pet_event_runtime_tests ..........   Passed    0.10 sec
+      Start  7: pet_dialogue_catalogue_tests
+ 7/26 Test  #7: pet_dialogue_catalogue_tests .....   Passed    0.08 sec
+      Start  8: pet_npc_character_tests
+ 8/26 Test  #8: pet_npc_character_tests ..........   Passed    0.22 sec
+      Start  9: pet_variety_state_tests
+ 9/26 Test  #9: pet_variety_state_tests ..........   Passed    0.14 sec
+      Start 10: pet_character_scene_tests
+10/26 Test #10: pet_character_scene_tests ........   Passed    0.31 sec
+      Start 11: pet_completion_scene_tests
+11/26 Test #11: pet_completion_scene_tests .......   Passed    0.61 sec
+      Start 12: pet_dialogue_portrait_tests
+12/26 Test #12: pet_dialogue_portrait_tests ......   Passed    0.10 sec
+      Start 13: pet_package_transition_tests
+13/26 Test #13: pet_package_transition_tests .....   Passed    2.92 sec
+      Start 14: pet_companion_tests
+14/26 Test #14: pet_companion_tests ..............   Passed   45.45 sec
+      Start 15: pet_party_ai_followup
+15/26 Test #15: pet_party_ai_followup ............   Passed    2.63 sec
+      Start 16: pet_entry_social_scene_tests
+16/26 Test #16: pet_entry_social_scene_tests .....***Failed    5.43 sec
+floor entry/layout regression pass
+friendly priority/dialogue regression pass
+scene: fade-in duplicated next day
+bedtime facing/slow original poses/reading interval/owner/pause/restore pass
+
+      Start 17: pet_navigation_recovery_tests
+17/26 Test #17: pet_navigation_recovery_tests ....   Passed    4.16 sec
+      Start 18: pet_camera_tests
+18/26 Test #18: pet_camera_tests .................   Passed    4.27 sec
+      Start 19: pet_movement_tests
+19/26 Test #19: pet_movement_tests ...............   Passed    1.22 sec
+      Start 20: pet_survival_tests
+20/26 Test #20: pet_survival_tests ...............   Passed    0.08 sec
+      Start 21: pet_revision_tests
+21/26 Test #21: pet_revision_tests ...............   Passed    0.04 sec
+      Start 22: pet_improvement_tests
+22/26 Test #22: pet_improvement_tests ............   Passed    0.04 sec
+      Start 23: pet_gameplay_tests
+23/26 Test #23: pet_gameplay_tests ...............   Passed   39.21 sec
+      Start 24: pet_exploration_tests
+24/26 Test #24: pet_exploration_tests ............   Passed   54.98 sec
+      Start 25: pet_core_tests
+25/26 Test #25: pet_core_tests ...................   Passed    3.59 sec
+      Start 26: pet_package_playback
+26/26 Test #26: pet_package_playback .............   Passed    0.01 sec
+
+96% tests passed, 1 tests failed out of 26
+
+Total Test time (real) = 166.55 sec
+
+The following tests FAILED:
+	 16 - pet_entry_social_scene_tests (Failed)
+Errors while running CTest

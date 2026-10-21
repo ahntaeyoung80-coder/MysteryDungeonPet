@@ -16,7 +16,7 @@ ExplorationState social(const ExplorationPackage& p,std::uint64_t now) {
     for(int x=9;x<=12;++x)s.world.terrain[4*24+x]=1;
     s.world.centers={4*24+4,4*24+15};s.world.start=s.world.centers[0];s.world.stairs=s.world.centers[1];
     s.position=4*24+4;s.visited.fill(0);s.visited[s.position]=1;s.discovered=s.world.terrain;s.knownStairs=s.world.stairs;
-    s.floorSteps=28;s.target=6*24+6;s.goalKind=GoalKind::Frontier;s.population.entities.clear();
+    s.floorSteps=96;s.target=6*24+6;s.goalKind=GoalKind::Frontier;s.population.entities.clear();
     auto& g=s.gameplay;g.enabled=true;g.companion.enabled=true;g.companion.tile=s.position-1;g.independentParty=true;g.phaseStartedMs=g.deadlineMs=now;
     return s;
 }

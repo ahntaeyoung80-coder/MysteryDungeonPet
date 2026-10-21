@@ -1,0 +1,67 @@
+{
+  "patrol": {
+    "enemyAndFriendlyMoveBeforePlayerEntersTheirRoom": true,
+    "durationMs": 400,
+    "submittedRows": 478
+  },
+  "frontTarget": {
+    "enemyTile": 100,
+    "companionTile": 101,
+    "lowHpPlayerTile": 102,
+    "firstAttackTargetsCompanion": true,
+    "actualDamageObserved": true
+  },
+  "sleep-15-bed-greeting": {
+    "dialogueBundlePrefix": "sleep.greet",
+    "visibleTextPixels": 278,
+    "lowHpScenario": true
+  },
+  "morning-15-morning-greeting": {
+    "dialogueBundlePrefix": "morning.depart",
+    "visibleTextPixels": 373,
+    "lowHpScenario": true
+  },
+  "alarm-15-alarm": {
+    "dialogueBundlePrefix": "wake.alarm",
+    "visibleTextPixels": 383,
+    "lowHpScenario": true
+  },
+  "wounded-npc-15-npc-player": {
+    "dialogueBundlePrefix": "npc.greet",
+    "visibleTextPixels": 256,
+    "lowHpScenario": true
+  },
+  "wounded-npc-15-npc-reply": {
+    "dialogueBundlePrefix": "npc.greet",
+    "visibleTextPixels": 330,
+    "lowHpScenario": true
+  },
+  "itemSprites": {
+    "recordIds": {
+      "2": 65,
+      "18": 150,
+      "70": 131,
+      "109": 135,
+      "183": 126,
+      "10": 114
+    },
+    "allOpaquePixelsExact": true,
+    "floorNumberHudRemoved": true
+  },
+  "oran": {
+    "playerAndPartnerFullyHealFrom1": true,
+    "playerBerryConsumedOnce": true
+  },
+  "intro-15": {
+    "mapNameVisibleTextPixels": 268,
+    "actualFadeInCapture": true
+  },
+  "intro-18": {
+    "mapNameVisibleTextPixels": 349,
+    "actualFadeInCapture": true
+  },
+  "default": {
+    "mapNameVisibleTextPixels": 268,
+    "actualFadeInCapture": true
+  }
+}

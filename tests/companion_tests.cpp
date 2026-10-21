@@ -44,7 +44,7 @@ void combatCases(){
   restoredStep(e,1352);check(e.state().gameplay.companion.hearts==4 && e.state().gameplay.hearts==5 && e.state().gameplay.combat==CombatPhase::CompanionHurt,"enemy impact applied to wrong target");
   restoredStep(e,1353,{true,true,false});check(e.state().gameplay.combat==CombatPhase::CompanionHurt && e.state().gameplay.companion.hearts==4,"partner hurt ownership/duplicate damage failed");
  }
- {auto e=partyEncounter(126);auto s=e.state();s.gameplay.companion.tile=150;e=Explorer(s);restoredStep(e,1000);check(!e.state().gameplay.enemyTargetsCompanion,"equal distance did not select leader");}
+ {auto e=partyEncounter(126);auto s=e.state();s.gameplay.companion.tile=150;e=Explorer(s);restoredStep(e,1000);check(e.state().gameplay.enemyTargetsCompanion,"equal distance ignored the companion in front");}
  for(bool corridor:{false,true}) {
   auto e=partyEncounter(126);auto s=e.state();auto& g=s.gameplay;g.life=LifePhase::Combat;g.combat=CombatPhase::CompanionTurn;g.enemyInstance=1;g.enemyHits=2;g.companion.actionRound=0;
   // Keep valid room metadata; only the occupied corridor tiles need corridor IDs.
