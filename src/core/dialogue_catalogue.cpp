@@ -1,5 +1,6 @@
 #include "core/dialogue_catalogue.hpp"
 #include "core/exploration_io.hpp"
+#include "core/event_runtime.hpp"
 #include <algorithm>
 #include <set>
 #include <stdexcept>
@@ -30,15 +31,16 @@ std::wstring decodeText(const std::string& text) {
 }
 std::uint32_t actor(const ExplorationState& s,PortraitRole role) {
     return role==PortraitRole::Player?0:role==PortraitRole::Partner?kCompanionActorId:
-        role==PortraitRole::Friendly?s.gameplay.enemyInstance:kSystemDialogueActorId;
+        role==PortraitRole::Friendly?(eventActive(s) && !s.variety.event.actors.empty()?s.variety.event.actors.front():s.gameplay.enemyInstance):kSystemDialogueActorId;
 }
 bool actorExists(const ExplorationState& s,PortraitRole role) {
     if(role==PortraitRole::Player)return true;
     if(role==PortraitRole::Partner)return s.gameplay.companion.enabled;
     if(role==PortraitRole::Alarm)return s.gameplay.homeScene;
+    if(role==PortraitRole::None)return true;
     if(role!=PortraitRole::Friendly)return false;
     return std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return
-        e.instanceId==s.gameplay.enemyInstance && e.kind==EntityKind::Friend && e.visible && !e.done &&
+        e.instanceId==actor(s,role) && e.kind==EntityKind::Friend && e.visible && !e.done &&
         std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),e.instanceId)==s.gameplay.hostile.end();});
 }
 bool safePair(const ExplorationState& s) {
@@ -57,6 +59,16 @@ void assignLine(ExplorationState& s,const DialogueBundle& b,unsigned index,std::
     d.revealed=1;d.readRemainingMs=line.holdMs;
     g.phaseStartedMs=now;g.deadlineMs=d.deadlineMs;
     if(g.life==LifePhase::Dialogue)g.dialogueStage=line.display.speaker==PortraitRole::Player?DialogueStage::Player:DialogueStage::Npc;
+    if(eventActive(s)) {
+        auto tile=[&](unsigned id){if(!id)return s.position;if(id==kCompanionActorId)return g.companion.tile;
+            const auto it=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==id;});return it==s.population.entities.end()?-1:it->tile;};
+        const int speaker=tile(d.speaker),listener=tile(d.listener);
+        if(speaker>=0 && listener>=0) {
+            g.playerDirection=directionBetween(s.position,d.speaker==0?listener:speaker);
+            if(g.companion.enabled)g.companion.direction=directionBetween(g.companion.tile,d.speaker==kCompanionActorId?listener:speaker);
+            for(auto& e:s.population.entities)if(std::find(s.variety.event.actors.begin(),s.variety.event.actors.end(),e.instanceId)!=s.variety.event.actors.end())e.direction=directionBetween(e.tile,e.instanceId==d.speaker?listener:speaker);
+        }
+    }
 }
 bool begin(ExplorationState& s,const DialogueCatalogue& c,std::uint64_t now) {
     const auto context=dialogueContext(s);
@@ -92,7 +104,9 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
     const auto count=r.count(128);require(count>0,"empty dialogue catalogue");std::set<std::string> ids,lines;
     for(unsigned i=0;i<count;++i) {
         DialogueBundle b;b.id=r.str();b.context=r.str();b.weight=r.count(100);
-        require(identity(b.id) && ids.insert(b.id).second && std::find(contexts.begin(),contexts.end(),b.context)!=contexts.end() && b.weight,"invalid dialogue bundle");
+        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart"};
+        const bool event=eventContexts.count(b.context)!=0;
+        require(identity(b.id) && ids.insert(b.id).second && (event || std::find(contexts.begin(),contexts.end(),b.context)!=contexts.end()) && b.weight,"invalid dialogue bundle");
         const auto n=r.count(32);require(n>0,"empty dialogue bundle");
         for(unsigned j=0;j<n;++j){CatalogueLine l;l.id=r.str();l.display.id=r.u32();l.display.speaker=PortraitRole(r.count(4));l.listener=PortraitRole(r.count(4));l.display.emotion=PortraitEmotion(r.count(13));l.holdMs=r.count(5000);l.display.text=decodeText(r.str());
             require(identity(l.id) && lines.insert(l.id).second && l.holdMs>=700,"invalid catalogue line");
@@ -103,8 +117,8 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
                 b.context=="sleep.greet"?(id==31 && p==PortraitRole::Player && q==PortraitRole::Partner):
                 b.context=="morning.depart"?(id==51 && p==PortraitRole::Player && q==PortraitRole::Partner):
                 (id==(b.context=="defeat.player"?101U:102U) && p==PortraitRole::Partner && q==PortraitRole::Player);
-            require(valid,"context speaker identity mismatch");b.lines.push_back(std::move(l));}
-        require(b.lines.front().display.speaker==((b.context=="wake.alarm")?PortraitRole::Alarm:(b.context=="defeat.player" || b.context=="defeat.partner")?PortraitRole::Partner:PortraitRole::Player),"invalid initial speaker");
+            require(event?(p<PortraitRole::Alarm && q>PortraitRole::None && q<PortraitRole::Alarm && p!=q && l.display.id>=1000):valid,"context speaker identity mismatch");b.lines.push_back(std::move(l));}
+        require(event || b.lines.front().display.speaker==((b.context=="wake.alarm")?PortraitRole::Alarm:(b.context=="defeat.player" || b.context=="defeat.partner")?PortraitRole::Partner:PortraitRole::Player),"invalid initial speaker");
         if(b.context=="companion.checkin" || b.context=="npc.greet") {
             require(b.lines.back().display.speaker!=PortraitRole::Player,"dialogue response missing");bool replied=false;
             for(const auto& l:b.lines){if(l.display.speaker!=PortraitRole::Player)replied=true;else require(!replied,"question after response");}
@@ -114,6 +128,7 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
     r.end();return c;
 }
 std::string dialogueContext(const ExplorationState& s) {
+    if(eventActive(s) && s.variety.dialogue.active)return s.variety.dialogue.context;
     const auto& g=s.gameplay;
     if(g.life==LifePhase::Dialogue)return companionDialogue(g)?"companion.checkin":"npc.greet";
     if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return "sleep.greet";
@@ -124,6 +139,7 @@ std::string dialogueContext(const ExplorationState& s) {
 }
 bool dialogueEligible(const ExplorationState& s,const std::string& context) {
     if(context!=dialogueContext(s))return false;
+    if(eventActive(s))return safePair(s) && s.gameplay.companion.enabled;
     const auto& g=s.gameplay;
     if(context=="companion.checkin")return safePair(s) && g.companion.enabled && canAttack(s.world,s.position,g.companion.tile);
     if(context=="npc.greet")return safePair(s) && actorExists(s,PortraitRole::Friendly) && std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && canAttack(s.world,s.position,e.tile);});
@@ -165,6 +181,7 @@ void Explorer::restoreDialogue(const DialogueCatalogue& c,std::uint64_t now) {
     auto& s=state_;auto& d=s.variety.dialogue;if(!d.active)return;
     const auto* line=selectedDialogue(s,c);
     if(!line || !dialogueEligible(s,d.context)) {
+        if(eventActive(s)){cancelVariety(s);s.gameplay.deadlineMs=now;invalidate();return;}
         d={};if(dialogueContext(s).empty())return;
         if(s.gameplay.life==LifePhase::Dialogue && !companionDialogue(s.gameplay) && !actorExists(s,PortraitRole::Friendly)) {
             s.gameplay.life=LifePhase::Explore;s.gameplay.enemyInstance=0;s.gameplay.deadlineMs=now;invalidate();return;
@@ -181,6 +198,8 @@ void Explorer::restoreDialogue(const DialogueCatalogue& c,std::uint64_t now) {
 }
 GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,ActorCompletion done,const DialogueCatalogue& c) {
     auto& s=state_;auto& g=s.gameplay;auto& d=s.variety.dialogue;
+    if(eventActive(s)){const auto update=advanceVarietyEvent(s,now,c);if(!eventActive(s))invalidate();return update;}
+    if(!d.active && tryAutomaticEvent(s,now,c))return {GameplayEvent::DialoguePlayer,{}};
     if(d.active) {
         const auto* b=c.find(d.bundle);const auto* l=selectedDialogue(s,c);
         if(!b || !l || !dialogueEligible(s,d.context)) {
@@ -211,5 +230,16 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now,ActorCompletion done,
     const auto update=advanceGameplay(now,done);
     if(!dialogueContext(s).empty())(void)begin(s,c,now);
     return update;
+}
+bool startDialogueBundle(ExplorationState& s,const DialogueCatalogue& c,const std::string& id,std::uint64_t now) {
+    const auto* b=c.find(id);if(!b || !std::all_of(b->lines.begin(),b->lines.end(),[&](const auto& l){return actorExists(s,l.display.speaker) && actorExists(s,l.listener);}))return false;
+    assignLine(s,*b,0,now);s.variety.dialogue.catalogueVersion=c.version;return true;
+}
+bool advanceDialoguePage(ExplorationState& s,const DialogueCatalogue& c,std::uint64_t now) {
+    auto& d=s.variety.dialogue;if(!d.active)return true;
+    const auto* b=c.find(d.bundle);if(!b || !selectedDialogue(s,c)){d={};return true;}
+    checkpointDialogue(s,c,now);if(now<d.deadlineMs)return false;
+    if(d.line+1<b->lines.size()){assignLine(s,*b,d.line+1,now);return false;}
+    d={};return true;
 }
 } // namespace pet

@@ -13,7 +13,7 @@ class DialogueCatalogueTests(unittest.TestCase):
 
     def test_compilation_is_reproducible(self):
         self.assertEqual(compile_catalogue(self.source), (ROOT / 'assets/original/gameplay/dialogue/catalogue.mdlc').read_bytes())
-        self.assertEqual(len(self.source['bundles']), 24)
+        self.assertEqual(sum(not b['context'].startswith('event.') for b in self.source['bundles']), 24)
 
     def test_long_korean_pages_fit_two_lines_and_keep_text(self):
         text = '가나다라마바사아자차카타파하' * 10

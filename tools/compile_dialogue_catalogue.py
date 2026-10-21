@@ -8,6 +8,8 @@ import struct
 ROLES = {'companion.checkin': [(1, 2, 11), (2, 1, 12)], 'npc.greet': [(1, 3, 21), (3, 1, 22)],
          'sleep.greet': [(1, 2, 31)], 'wake.alarm': [(4, 1, 41)], 'morning.depart': [(1, 2, 51)],
          'defeat.player': [(2, 1, 101)], 'defeat.partner': [(2, 1, 102)]}
+EVENT_CONTEXTS = {'event.E01.intro', 'event.E01.success', 'event.E05.view', 'event.E05.depart',
+                  'event.E09.intro', 'event.E09.depart'}
 
 
 def pages(text):
@@ -49,14 +51,16 @@ def compile_catalogue(source):
     seen, ids = set(), set()
     for bundle in bundles:
         context = bundle['context']
-        if context not in ROLES or bundle['condition'] != context or bundle['style'] != 'neutral':
+        if context not in ROLES.keys() | EVENT_CONTEXTS or bundle['condition'] != context or bundle['style'] != 'neutral':
             raise ValueError('unverified context/condition/style')
         if bundle['id'] in seen or not 0 < bundle['weight'] <= 100:
             raise ValueError('duplicate bundle/invalid weight')
         seen.add(bundle['id'])
         lines = bundle['lines']
-        if [(l['speaker'], l['listener'], l['legacyId']) for l in lines] != ROLES[context]:
+        if context in ROLES and [(l['speaker'], l['listener'], l['legacyId']) for l in lines] != ROLES[context]:
             raise ValueError('context speaker/line sequence mismatch')
+        if context in EVENT_CONTEXTS and (not lines or any(l['speaker'] not in range(4) or l['listener'] not in range(1, 4) or l['speaker'] == l['listener'] for l in lines)):
+            raise ValueError('event focus pair mismatch')
         expanded = []
         for line in lines:
             if not 0 <= line['emotion'] < 14 or not 700 <= line['holdMs'] <= 5000:

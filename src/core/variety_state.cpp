@@ -46,7 +46,7 @@ std::uint64_t nextGameplayDeadline(const ExplorationState& s) {
     const auto& v=s.variety;
     auto deadline=UINT64_MAX;
     if(v.dialogue.active)deadline=v.dialogue.deadlineMs;
-    if(live(v.event.progress))deadline=std::min(deadline,v.event.deadlineMs);
+    if(live(v.event.progress))deadline=std::min(deadline,std::min(v.event.deadlineMs,v.dialogue.active?UINT64_MAX:s.gameplay.deadlineMs));
     return varietyBusy(v)?deadline:s.gameplay.deadlineMs;
 }
 std::uint64_t drawVariety(VarietyState& v,VarietyRandomStream stream,std::uint64_t bound) {
@@ -64,7 +64,7 @@ bool canStartVariety(const ExplorationState& s,std::uint64_t now) {
     const auto& g=s.gameplay;
     return !varietyBusy(s.variety) && s.phase==Phase::Explore && g.enabled && g.life==LifePhase::Explore &&
         g.sceneBeat==SceneBeat::None && g.hearts>kLowHp && (!g.companion.enabled || g.companion.hearts>kLowHp) &&
-        g.partyActions.empty() && g.partyPlaybacks.empty() && now>=g.deadlineMs &&
+        std::none_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;}) && g.partyPlaybacks.empty() && now>=g.deadlineMs &&
         (!g.movement.actionId || (now>=g.movement.startedMs && now-g.movement.startedMs>=g.movement.durationMs)) &&
         (!g.companion.movement.actionId || (now>=g.companion.movement.startedMs && now-g.companion.movement.startedMs>=g.companion.movement.durationMs)) &&
         std::none_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e) {
@@ -75,6 +75,8 @@ bool canStartVariety(const ExplorationState& s,std::uint64_t now) {
 void cancelVariety(ExplorationState& s) {
     auto& v=s.variety;
     const bool busy=varietyBusy(v);
+    if(live(v.event.progress) && v.event.id.type==VarietyEvent::GuildVisit)
+        for(auto& a:s.population.entities)if(std::find(v.event.actors.begin(),v.event.actors.end(),a.instanceId)!=v.event.actors.end()){a.done=true;a.visible=false;}
     if(live(v.event.progress))v.event.progress=EventProgress::Abandoned;
     v.event.reservations.clear();v.event.actors.clear();v.dialogue={};
     if(busy) {s.target=-1;s.targetInstance=0;s.goalKind=GoalKind::None;}

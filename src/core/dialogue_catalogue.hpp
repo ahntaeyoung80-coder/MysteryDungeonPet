@@ -26,4 +26,6 @@ std::wstring revealedCatalogueText(const ExplorationState&,const DialogueCatalog
 DialoguePortraits cataloguePortraits(const ExplorationState&,const DialogueCatalogue&);
 // Snapshot-only projection; no draw, line change, or mutation of the running Explorer.
 void checkpointDialogue(ExplorationState&,const DialogueCatalogue&,std::uint64_t now);
+bool startDialogueBundle(ExplorationState&,const DialogueCatalogue&,const std::string& bundle,std::uint64_t now);
+bool advanceDialoguePage(ExplorationState&,const DialogueCatalogue&,std::uint64_t now);
 } // namespace pet

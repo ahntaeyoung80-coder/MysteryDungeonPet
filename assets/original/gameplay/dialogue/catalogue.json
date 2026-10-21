@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 1,
+  "catalogueVersion": 2,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -513,6 +513,276 @@
           "emotion": 5,
           "holdMs": 1000,
           "text": "미안해. 여기까지가 한계야..."
+        }
+      ]
+    },
+    {
+      "id": "E01.encourage.intro",
+      "context": "event.E01.intro",
+      "condition": "event.E01.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E01.encourage.01",
+          "legacyId": 1240,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "잠깐 숨을 돌려야겠어."
+        },
+        {
+          "id": "E01.encourage.02",
+          "legacyId": 1241,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "지금은 물건을 나누기 어렵겠어."
+        },
+        {
+          "id": "E01.encourage.03",
+          "legacyId": 1242,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "서두르지 말고 쉬어 가."
+        }
+      ]
+    },
+    {
+      "id": "E01.encourage.success",
+      "context": "event.E01.success",
+      "condition": "event.E01.success",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E01.encourage.04",
+          "legacyId": 1250,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "말만으로도 고마워. 조심해서 가."
+        }
+      ]
+    },
+    {
+      "id": "E05.view_a.view",
+      "context": "event.E05.view",
+      "condition": "event.E05.view",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E05.view_a.01",
+          "legacyId": 1260,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "여긴 잠깐 멈춰도 좋겠다."
+        },
+        {
+          "id": "E05.view_a.02",
+          "legacyId": 1261,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "응. 주변도 천천히 보자."
+        }
+      ]
+    },
+    {
+      "id": "E05.view_a.depart",
+      "context": "event.E05.depart",
+      "condition": "event.E05.depart",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E05.view_a.03",
+          "legacyId": 1270,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 11,
+          "holdMs": 1000,
+          "text": "함께 와서 더 기억에 남을 것 같아."
+        },
+        {
+          "id": "E05.view_a.04",
+          "legacyId": 1271,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "나도 그래. 이제 가 볼까?"
+        }
+      ]
+    },
+    {
+      "id": "E05.view_b.view",
+      "context": "event.E05.view",
+      "condition": "event.E05.view",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E05.view_b.01",
+          "legacyId": 1280,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 11,
+          "holdMs": 1000,
+          "text": "이런 곳도 있었구나."
+        },
+        {
+          "id": "E05.view_b.02",
+          "legacyId": 1281,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "서두르기만 하면 놓쳤겠지."
+        }
+      ]
+    },
+    {
+      "id": "E05.view_b.depart",
+      "context": "event.E05.depart",
+      "condition": "event.E05.depart",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E05.view_b.03",
+          "legacyId": 1290,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "오늘 본 건 기억해 둘게."
+        },
+        {
+          "id": "E05.view_b.04",
+          "legacyId": 1291,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "좋아. 다시 함께 가자."
+        }
+      ]
+    },
+    {
+      "id": "E09.bidoof.intro",
+      "context": "event.E09.intro",
+      "condition": "event.E09.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E09.bidoof.01",
+          "legacyId": 1300,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "어라? 여기서 다 만나네!"
+        },
+        {
+          "id": "E09.bidoof.02",
+          "legacyId": 1301,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "탐험하러 나온 거야?"
+        },
+        {
+          "id": "E09.bidoof.03",
+          "legacyId": 1302,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "응! 서로 무리하지 말고 다녀오자."
+        }
+      ]
+    },
+    {
+      "id": "E09.bidoof.depart",
+      "context": "event.E09.depart",
+      "condition": "event.E09.depart",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E09.bidoof.04",
+          "legacyId": 1310,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "좋아. 길드에서 또 보자!"
+        }
+      ]
+    },
+    {
+      "id": "E09.corphish.intro",
+      "context": "event.E09.intro",
+      "condition": "event.E09.intro",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E09.corphish.01",
+          "legacyId": 1320,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "여기까지 왔구나! 잘 지내고 있지?"
+        },
+        {
+          "id": "E09.corphish.02",
+          "legacyId": 1321,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "응. 함께 돌아다니는 중이야."
+        },
+        {
+          "id": "E09.corphish.03",
+          "legacyId": 1322,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "너무 무리하진 마. 길드에서 보자."
+        }
+      ]
+    },
+    {
+      "id": "E09.corphish.depart",
+      "context": "event.E09.depart",
+      "condition": "event.E09.depart",
+      "style": "neutral",
+      "weight": 1,
+      "lines": [
+        {
+          "id": "E09.corphish.04",
+          "legacyId": 1330,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "알겠어. 너도 조심해서 가!"
         }
       ]
     }
