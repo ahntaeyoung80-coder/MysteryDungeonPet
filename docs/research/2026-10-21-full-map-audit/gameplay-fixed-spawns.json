@@ -1,0 +1,7426 @@
+[
+  {
+    "fixedFloorId": 1,
+    "width": 14,
+    "height": 15,
+    "overrideFixedFloorId": 65,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 1,
+        "entityRuleId": 2,
+        "monsterSpawnTableIndex": 22,
+        "mdIndex": 109,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 2,
+        "stats": {
+          "level": 6,
+          "hp": 27,
+          "exp_yield": 0,
+          "attack": 20,
+          "special_attack": 20,
+          "defense": 8,
+          "special_defense": 8,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "entityRuleId": 1,
+        "monsterSpawnTableIndex": 21,
+        "mdIndex": 41,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 1,
+        "stats": {
+          "level": 3,
+          "hp": 15,
+          "exp_yield": 0,
+          "attack": 15,
+          "special_attack": 15,
+          "defense": 11,
+          "special_defense": 11,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 2,
+    "width": 24,
+    "height": 22,
+    "overrideFixedFloorId": 66,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 5,
+        "entityRuleId": 73,
+        "monsterSpawnTableIndex": 68,
+        "mdIndex": 96,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 3,
+        "stats": {
+          "level": 12,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 30,
+          "special_attack": 30,
+          "defense": 20,
+          "special_defense": 20,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 3,
+    "width": 22,
+    "height": 21,
+    "overrideFixedFloorId": 67,
+    "spawns": [
+      {
+        "x": 8,
+        "y": 2,
+        "entityRuleId": 3,
+        "monsterSpawnTableIndex": 23,
+        "mdIndex": 415,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 4,
+        "stats": {
+          "level": 30,
+          "hp": 470,
+          "exp_yield": 0,
+          "attack": 43,
+          "special_attack": 36,
+          "defense": 35,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 4,
+    "width": 18,
+    "height": 32,
+    "overrideFixedFloorId": 68,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 5,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "entityRuleId": 12,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "entityRuleId": 4,
+        "monsterSpawnTableIndex": 24,
+        "mdIndex": 338,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 5,
+        "stats": {
+          "level": 33,
+          "hp": 160,
+          "exp_yield": 0,
+          "attack": 30,
+          "special_attack": 35,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "entityRuleId": 6,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 10,
+        "y": 5,
+        "entityRuleId": 11,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 7,
+        "entityRuleId": 7,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 7,
+        "entityRuleId": 10,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 9,
+        "entityRuleId": 8,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 9,
+        "entityRuleId": 9,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 5,
+    "width": 20,
+    "height": 20,
+    "overrideFixedFloorId": 69,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 2,
+        "entityRuleId": 60,
+        "monsterSpawnTableIndex": 58,
+        "mdIndex": 523,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 39,
+        "stats": {
+          "level": 42,
+          "hp": 350,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 45,
+          "special_defense": 45,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 6,
+    "width": 24,
+    "height": 16,
+    "overrideFixedFloorId": 70,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 0,
+        "entityRuleId": 61,
+        "monsterSpawnTableIndex": 59,
+        "mdIndex": 281,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 40,
+        "stats": {
+          "level": 44,
+          "hp": 500,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 45,
+          "special_defense": 45,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 7,
+    "width": 22,
+    "height": 17,
+    "overrideFixedFloorId": 71,
+    "spawns": [
+      {
+        "x": 8,
+        "y": 2,
+        "entityRuleId": 17,
+        "monsterSpawnTableIndex": 26,
+        "mdIndex": 484,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 7,
+        "stats": {
+          "level": 37,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 50,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 8,
+    "width": 18,
+    "height": 26,
+    "overrideFixedFloorId": 72,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 6,
+        "entityRuleId": 19,
+        "monsterSpawnTableIndex": 28,
+        "mdIndex": 139,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 9,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 32,
+          "special_defense": 32,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "entityRuleId": 18,
+        "monsterSpawnTableIndex": 27,
+        "mdIndex": 141,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 8,
+        "stats": {
+          "level": 42,
+          "hp": 450,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 50,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 6,
+        "entityRuleId": 20,
+        "monsterSpawnTableIndex": 28,
+        "mdIndex": 139,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 9,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 32,
+          "special_defense": 32,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 9,
+    "width": 16,
+    "height": 17,
+    "overrideFixedFloorId": 73,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 22,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "entityRuleId": 21,
+        "monsterSpawnTableIndex": 29,
+        "mdIndex": 519,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 10,
+        "stats": {
+          "level": 45,
+          "hp": 550,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 3,
+        "entityRuleId": 27,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "entityRuleId": 23,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "entityRuleId": 26,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "entityRuleId": 24,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "entityRuleId": 25,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 10,
+    "width": 18,
+    "height": 19,
+    "overrideFixedFloorId": 74,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 4,
+        "entityRuleId": 33,
+        "monsterSpawnTableIndex": 31,
+        "mdIndex": 552,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 12,
+        "stats": {
+          "level": 48,
+          "hp": 700,
+          "exp_yield": 0,
+          "attack": 75,
+          "special_attack": 75,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 11,
+    "width": 18,
+    "height": 16,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 2,
+        "entityRuleId": 35,
+        "monsterSpawnTableIndex": 33,
+        "mdIndex": 40,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 13,
+        "stats": {
+          "level": 50,
+          "hp": 700,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 41,
+        "monsterSpawnTableIndex": 39,
+        "mdIndex": 322,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 19,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "entityRuleId": 36,
+        "monsterSpawnTableIndex": 34,
+        "mdIndex": 483,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 14,
+        "stats": {
+          "level": 45,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "entityRuleId": 38,
+        "monsterSpawnTableIndex": 36,
+        "mdIndex": 369,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 16,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 4,
+        "entityRuleId": 37,
+        "monsterSpawnTableIndex": 35,
+        "mdIndex": 792,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 15,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "entityRuleId": 42,
+        "monsterSpawnTableIndex": 40,
+        "mdIndex": 51,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 20,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 6,
+        "entityRuleId": 43,
+        "monsterSpawnTableIndex": 41,
+        "mdIndex": 50,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 21,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 7,
+        "entityRuleId": 40,
+        "monsterSpawnTableIndex": 38,
+        "mdIndex": 495,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 18,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 7,
+        "entityRuleId": 39,
+        "monsterSpawnTableIndex": 37,
+        "mdIndex": 990,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 17,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 12,
+    "width": 16,
+    "height": 12,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 2,
+        "entityRuleId": 44,
+        "monsterSpawnTableIndex": 42,
+        "mdIndex": 520,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 22,
+        "stats": {
+          "level": 41,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 71,
+          "special_attack": 71,
+          "defense": 56,
+          "special_defense": 53,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 13,
+    "width": 26,
+    "height": 18,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 8,
+        "entityRuleId": 45,
+        "monsterSpawnTableIndex": 43,
+        "mdIndex": 130,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 23,
+        "stats": {
+          "level": 46,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 80,
+          "special_attack": 80,
+          "defense": 60,
+          "special_defense": 60,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 14,
+    "width": 19,
+    "height": 18,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 8,
+        "entityRuleId": 46,
+        "monsterSpawnTableIndex": 44,
+        "mdIndex": 410,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 24,
+        "stats": {
+          "level": 46,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 70,
+          "special_attack": 80,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 15,
+    "width": 18,
+    "height": 18,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 8,
+        "entityRuleId": 47,
+        "monsterSpawnTableIndex": 45,
+        "mdIndex": 409,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 25,
+        "stats": {
+          "level": 46,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 70,
+          "special_attack": 70,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 16,
+    "width": 18,
+    "height": 18,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 8,
+        "entityRuleId": 48,
+        "monsterSpawnTableIndex": 46,
+        "mdIndex": 411,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 26,
+        "stats": {
+          "level": 46,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 80,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 17,
+    "width": 20,
+    "height": 22,
+    "overrideFixedFloorId": 75,
+    "spawns": [
+      {
+        "x": 5,
+        "y": 4,
+        "entityRuleId": 58,
+        "monsterSpawnTableIndex": 56,
+        "mdIndex": 106,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 37,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "entityRuleId": 49,
+        "monsterSpawnTableIndex": 47,
+        "mdIndex": 528,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 27,
+        "stats": {
+          "level": 49,
+          "hp": 900,
+          "exp_yield": 0,
+          "attack": 100,
+          "special_attack": 80,
+          "defense": 55,
+          "special_defense": 55,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 4,
+        "entityRuleId": 58,
+        "monsterSpawnTableIndex": 56,
+        "mdIndex": 106,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 37,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "entityRuleId": 59,
+        "monsterSpawnTableIndex": 57,
+        "mdIndex": 479,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 38,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "entityRuleId": 59,
+        "monsterSpawnTableIndex": 57,
+        "mdIndex": 479,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 38,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "entityRuleId": 58,
+        "monsterSpawnTableIndex": 56,
+        "mdIndex": 106,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 37,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "entityRuleId": 58,
+        "monsterSpawnTableIndex": 56,
+        "mdIndex": 106,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 37,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 10,
+        "y": 5,
+        "entityRuleId": 59,
+        "monsterSpawnTableIndex": 57,
+        "mdIndex": 479,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 38,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 11,
+        "y": 5,
+        "entityRuleId": 59,
+        "monsterSpawnTableIndex": 57,
+        "mdIndex": 479,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 38,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "entityRuleId": 72,
+        "monsterSpawnTableIndex": 67,
+        "mdIndex": 1070,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 53,
+        "stats": {
+          "level": 53,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 65,
+          "special_attack": 60,
+          "defense": 55,
+          "special_defense": 55,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 8,
+        "entityRuleId": 70,
+        "monsterSpawnTableIndex": 65,
+        "mdIndex": 936,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 51,
+        "stats": {
+          "level": 50,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 65,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 8,
+        "entityRuleId": 71,
+        "monsterSpawnTableIndex": 66,
+        "mdIndex": 910,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 52,
+        "stats": {
+          "level": 52,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 65,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 18,
+    "width": 22,
+    "height": 21,
+    "overrideFixedFloorId": 76,
+    "spawns": [
+      {
+        "x": 10,
+        "y": 6,
+        "entityRuleId": 50,
+        "monsterSpawnTableIndex": 48,
+        "mdIndex": 526,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 28,
+        "stats": {
+          "level": 48,
+          "hp": 700,
+          "exp_yield": 0,
+          "attack": 90,
+          "special_attack": 120,
+          "defense": 65,
+          "special_defense": 65,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 19,
+    "width": 18,
+    "height": 19,
+    "overrideFixedFloorId": 77,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 2,
+        "entityRuleId": 51,
+        "monsterSpawnTableIndex": 49,
+        "mdIndex": 533,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 29,
+        "stats": {
+          "level": 53,
+          "hp": 800,
+          "exp_yield": 0,
+          "attack": 90,
+          "special_attack": 100,
+          "defense": 60,
+          "special_defense": 60,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 52,
+        "monsterSpawnTableIndex": 50,
+        "mdIndex": 24,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 31,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 36,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "entityRuleId": 54,
+        "monsterSpawnTableIndex": 52,
+        "mdIndex": 509,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 33,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 43,
+          "defense": 35,
+          "special_defense": 32,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "entityRuleId": 53,
+        "monsterSpawnTableIndex": 51,
+        "mdIndex": 506,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 32,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 37,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 5,
+        "entityRuleId": 55,
+        "monsterSpawnTableIndex": 53,
+        "mdIndex": 334,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 34,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 43,
+          "defense": 36,
+          "special_defense": 35,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "entityRuleId": 56,
+        "monsterSpawnTableIndex": 54,
+        "mdIndex": 246,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 35,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 42,
+          "defense": 38,
+          "special_defense": 35,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 7,
+        "entityRuleId": 57,
+        "monsterSpawnTableIndex": 55,
+        "mdIndex": 471,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 36,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 40,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 20,
+    "width": 19,
+    "height": 13,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 3,
+        "entityRuleId": 76,
+        "monsterSpawnTableIndex": 71,
+        "mdIndex": 527,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 46,
+        "stats": {
+          "level": 49,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 125,
+          "special_attack": 125,
+          "defense": 60,
+          "special_defense": 60,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 21,
+    "width": 19,
+    "height": 13,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 3,
+        "entityRuleId": 74,
+        "monsterSpawnTableIndex": 69,
+        "mdIndex": 415,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 43,
+        "stats": {
+          "level": 49,
+          "hp": 800,
+          "exp_yield": 0,
+          "attack": 125,
+          "special_attack": 125,
+          "defense": 65,
+          "special_defense": 65,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 22,
+    "width": 19,
+    "height": 13,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 3,
+        "entityRuleId": 75,
+        "monsterSpawnTableIndex": 70,
+        "mdIndex": 144,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 44,
+        "stats": {
+          "level": 43,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 125,
+          "special_attack": 125,
+          "defense": 65,
+          "special_defense": 60,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 23,
+    "width": 19,
+    "height": 13,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 3,
+        "entityRuleId": 62,
+        "monsterSpawnTableIndex": 60,
+        "mdIndex": 414,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 41,
+        "stats": {
+          "level": 49,
+          "hp": 700,
+          "exp_yield": 0,
+          "attack": 85,
+          "special_attack": 95,
+          "defense": 55,
+          "special_defense": 55,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 24,
+    "width": 19,
+    "height": 13,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 3,
+        "entityRuleId": 77,
+        "monsterSpawnTableIndex": 72,
+        "mdIndex": 529,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 47,
+        "stats": {
+          "level": 48,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 125,
+          "special_attack": 125,
+          "defense": 66,
+          "special_defense": 66,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 25,
+    "width": 56,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 11,
+        "y": 7,
+        "entityRuleId": 79,
+        "monsterSpawnTableIndex": 74,
+        "mdIndex": 151,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 48,
+        "stats": {
+          "level": 46,
+          "hp": 500,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 60,
+          "special_defense": 60,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 26,
+    "width": 23,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 11,
+        "y": 7,
+        "entityRuleId": 78,
+        "monsterSpawnTableIndex": 73,
+        "mdIndex": 416,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 45,
+        "stats": {
+          "level": 49,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 125,
+          "special_attack": 125,
+          "defense": 60,
+          "special_defense": 60,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 28,
+    "width": 15,
+    "height": 16,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 218,
+        "monsterSpawnTableIndex": 75,
+        "mdIndex": 497,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 54,
+        "stats": {
+          "level": 40,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 53,
+          "special_attack": 52,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "entityRuleId": 218,
+        "monsterSpawnTableIndex": 75,
+        "mdIndex": 497,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 54,
+        "stats": {
+          "level": 40,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 53,
+          "special_attack": 52,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "entityRuleId": 218,
+        "monsterSpawnTableIndex": 75,
+        "mdIndex": 497,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 54,
+        "stats": {
+          "level": 40,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 53,
+          "special_attack": 52,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "entityRuleId": 218,
+        "monsterSpawnTableIndex": 75,
+        "mdIndex": 497,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 54,
+        "stats": {
+          "level": 40,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 53,
+          "special_attack": 52,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "entityRuleId": 218,
+        "monsterSpawnTableIndex": 75,
+        "mdIndex": 497,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 54,
+        "stats": {
+          "level": 40,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 53,
+          "special_attack": 52,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "entityRuleId": 267,
+        "monsterSpawnTableIndex": 118,
+        "mdIndex": 931,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 97,
+        "stats": {
+          "level": 30,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 120,
+          "special_attack": 120,
+          "defense": 120,
+          "special_defense": 120,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "entityRuleId": 266,
+        "monsterSpawnTableIndex": 117,
+        "mdIndex": 67,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 96,
+        "stats": {
+          "level": 55,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 65,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "entityRuleId": 268,
+        "monsterSpawnTableIndex": 119,
+        "mdIndex": 314,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 98,
+        "stats": {
+          "level": 55,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 65,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 29,
+    "width": 16,
+    "height": 16,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "entityRuleId": 233,
+        "monsterSpawnTableIndex": 90,
+        "mdIndex": 89,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 69,
+        "stats": {
+          "level": 44,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 49,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 219,
+        "monsterSpawnTableIndex": 76,
+        "mdIndex": 88,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 55,
+        "stats": {
+          "level": 43,
+          "hp": 300,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 49,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "entityRuleId": 219,
+        "monsterSpawnTableIndex": 76,
+        "mdIndex": 88,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 55,
+        "stats": {
+          "level": 43,
+          "hp": 300,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 49,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "entityRuleId": 233,
+        "monsterSpawnTableIndex": 90,
+        "mdIndex": 89,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 69,
+        "stats": {
+          "level": 44,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 49,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "entityRuleId": 233,
+        "monsterSpawnTableIndex": 90,
+        "mdIndex": 89,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 69,
+        "stats": {
+          "level": 44,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 49,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "entityRuleId": 267,
+        "monsterSpawnTableIndex": 118,
+        "mdIndex": 931,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 97,
+        "stats": {
+          "level": 30,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 120,
+          "special_attack": 120,
+          "defense": 120,
+          "special_defense": 120,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "entityRuleId": 266,
+        "monsterSpawnTableIndex": 117,
+        "mdIndex": 67,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 96,
+        "stats": {
+          "level": 55,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 65,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "entityRuleId": 268,
+        "monsterSpawnTableIndex": 119,
+        "mdIndex": 314,
+        "spawnType": 10,
+        "spawnTypeName": "ALLY_HELP",
+        "statsEntry": 98,
+        "stats": {
+          "level": 55,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 65,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 7,
+        "entityRuleId": 219,
+        "monsterSpawnTableIndex": 76,
+        "mdIndex": 88,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 55,
+        "stats": {
+          "level": 43,
+          "hp": 300,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 49,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 7,
+        "entityRuleId": 219,
+        "monsterSpawnTableIndex": 76,
+        "mdIndex": 88,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 55,
+        "stats": {
+          "level": 43,
+          "hp": 300,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 49,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 8,
+        "entityRuleId": 219,
+        "monsterSpawnTableIndex": 76,
+        "mdIndex": 88,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 55,
+        "stats": {
+          "level": 43,
+          "hp": 300,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 49,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 30,
+    "width": 16,
+    "height": 16,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 2,
+        "entityRuleId": 232,
+        "monsterSpawnTableIndex": 79,
+        "mdIndex": 403,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 58,
+        "stats": {
+          "level": 8,
+          "hp": 47,
+          "exp_yield": 0,
+          "attack": 18,
+          "special_attack": 17,
+          "defense": 13,
+          "special_defense": 7,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "entityRuleId": 231,
+        "monsterSpawnTableIndex": 78,
+        "mdIndex": 234,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 57,
+        "stats": {
+          "level": 8,
+          "hp": 58,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 27,
+          "defense": 15,
+          "special_defense": 19,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "entityRuleId": 220,
+        "monsterSpawnTableIndex": 77,
+        "mdIndex": 501,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 56,
+        "stats": {
+          "level": 22,
+          "hp": 64,
+          "exp_yield": 0,
+          "attack": 30,
+          "special_attack": 30,
+          "defense": 21,
+          "special_defense": 23,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 31,
+    "width": 16,
+    "height": 14,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 5,
+        "y": 3,
+        "entityRuleId": 221,
+        "monsterSpawnTableIndex": 80,
+        "mdIndex": 417,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 59,
+        "stats": {
+          "level": 16,
+          "hp": 165,
+          "exp_yield": 0,
+          "attack": 25,
+          "special_attack": 30,
+          "defense": 25,
+          "special_defense": 25,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 32,
+    "width": 16,
+    "height": 16,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 244,
+        "monsterSpawnTableIndex": 95,
+        "mdIndex": 518,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 74,
+        "stats": {
+          "level": 10,
+          "hp": 66,
+          "exp_yield": 0,
+          "attack": 28,
+          "special_attack": 23,
+          "defense": 25,
+          "special_defense": 24,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 3,
+        "entityRuleId": 243,
+        "monsterSpawnTableIndex": 94,
+        "mdIndex": 455,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 73,
+        "stats": {
+          "level": 17,
+          "hp": 42,
+          "exp_yield": 0,
+          "attack": 26,
+          "special_attack": 25,
+          "defense": 11,
+          "special_defense": 10,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "entityRuleId": 247,
+        "monsterSpawnTableIndex": 98,
+        "mdIndex": 511,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 77,
+        "stats": {
+          "level": 12,
+          "hp": 51,
+          "exp_yield": 0,
+          "attack": 28,
+          "special_attack": 27,
+          "defense": 17,
+          "special_defense": 15,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "entityRuleId": 245,
+        "monsterSpawnTableIndex": 96,
+        "mdIndex": 323,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 75,
+        "stats": {
+          "level": 9,
+          "hp": 39,
+          "exp_yield": 0,
+          "attack": 28,
+          "special_attack": 17,
+          "defense": 24,
+          "special_defense": 20,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "entityRuleId": 246,
+        "monsterSpawnTableIndex": 97,
+        "mdIndex": 372,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 76,
+        "stats": {
+          "level": 15,
+          "hp": 55,
+          "exp_yield": 0,
+          "attack": 27,
+          "special_attack": 27,
+          "defense": 14,
+          "special_defense": 15,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 7,
+        "entityRuleId": 248,
+        "monsterSpawnTableIndex": 99,
+        "mdIndex": 351,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 78,
+        "stats": {
+          "level": 30,
+          "hp": 85,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 29,
+          "special_defense": 29,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 33,
+    "width": 14,
+    "height": 16,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 4,
+        "entityRuleId": 22,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "entityRuleId": 23,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 7,
+        "entityRuleId": 24,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "entityRuleId": 25,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 34,
+    "width": 14,
+    "height": 13,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 1,
+        "entityRuleId": 22,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 27,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "entityRuleId": 23,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "entityRuleId": 26,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "entityRuleId": 24,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "entityRuleId": 25,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 35,
+    "width": 16,
+    "height": 12,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 5,
+        "y": 1,
+        "entityRuleId": 223,
+        "monsterSpawnTableIndex": 82,
+        "mdIndex": 515,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 61,
+        "stats": {
+          "level": 32,
+          "hp": 215,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 39,
+          "defense": 41,
+          "special_defense": 43,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 224,
+        "monsterSpawnTableIndex": 83,
+        "mdIndex": 394,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 62,
+        "stats": {
+          "level": 32,
+          "hp": 195,
+          "exp_yield": 0,
+          "attack": 42,
+          "special_attack": 43,
+          "defense": 29,
+          "special_defense": 27,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 2,
+        "entityRuleId": 224,
+        "monsterSpawnTableIndex": 83,
+        "mdIndex": 394,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 62,
+        "stats": {
+          "level": 32,
+          "hp": 195,
+          "exp_yield": 0,
+          "attack": 42,
+          "special_attack": 43,
+          "defense": 29,
+          "special_defense": 27,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "entityRuleId": 224,
+        "monsterSpawnTableIndex": 83,
+        "mdIndex": 394,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 62,
+        "stats": {
+          "level": 32,
+          "hp": 195,
+          "exp_yield": 0,
+          "attack": 42,
+          "special_attack": 43,
+          "defense": 29,
+          "special_defense": 27,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 4,
+        "entityRuleId": 224,
+        "monsterSpawnTableIndex": 83,
+        "mdIndex": 394,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 62,
+        "stats": {
+          "level": 32,
+          "hp": 195,
+          "exp_yield": 0,
+          "attack": 42,
+          "special_attack": 43,
+          "defense": 29,
+          "special_defense": 27,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 36,
+    "width": 16,
+    "height": 15,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "entityRuleId": 225,
+        "monsterSpawnTableIndex": 84,
+        "mdIndex": 552,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 63,
+        "stats": {
+          "level": 48,
+          "hp": 700,
+          "exp_yield": 0,
+          "attack": 75,
+          "special_attack": 75,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 37,
+    "width": 16,
+    "height": 14,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "entityRuleId": 55,
+        "monsterSpawnTableIndex": 53,
+        "mdIndex": 334,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 34,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 43,
+          "defense": 36,
+          "special_defense": 35,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "entityRuleId": 227,
+        "monsterSpawnTableIndex": 86,
+        "mdIndex": 333,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 65,
+        "stats": {
+          "level": 28,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 41,
+          "special_attack": 40,
+          "defense": 29,
+          "special_defense": 28,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "entityRuleId": 227,
+        "monsterSpawnTableIndex": 86,
+        "mdIndex": 333,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 65,
+        "stats": {
+          "level": 28,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 41,
+          "special_attack": 40,
+          "defense": 29,
+          "special_defense": 28,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "entityRuleId": 227,
+        "monsterSpawnTableIndex": 86,
+        "mdIndex": 333,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 65,
+        "stats": {
+          "level": 28,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 41,
+          "special_attack": 40,
+          "defense": 29,
+          "special_defense": 28,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 6,
+        "entityRuleId": 227,
+        "monsterSpawnTableIndex": 86,
+        "mdIndex": 333,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 65,
+        "stats": {
+          "level": 28,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 41,
+          "special_attack": 40,
+          "defense": 29,
+          "special_defense": 28,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "entityRuleId": 227,
+        "monsterSpawnTableIndex": 86,
+        "mdIndex": 333,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 65,
+        "stats": {
+          "level": 28,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 41,
+          "special_attack": 40,
+          "defense": 29,
+          "special_defense": 28,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "entityRuleId": 227,
+        "monsterSpawnTableIndex": 86,
+        "mdIndex": 333,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 65,
+        "stats": {
+          "level": 28,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 41,
+          "special_attack": 40,
+          "defense": 29,
+          "special_defense": 28,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 38,
+    "width": 14,
+    "height": 15,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 7,
+        "entityRuleId": 228,
+        "monsterSpawnTableIndex": 87,
+        "mdIndex": 1103,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 66,
+        "stats": {
+          "level": 33,
+          "hp": 470,
+          "exp_yield": 0,
+          "attack": 56,
+          "special_attack": 48,
+          "defense": 43,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 8,
+        "entityRuleId": 229,
+        "monsterSpawnTableIndex": 88,
+        "mdIndex": 24,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 67,
+        "stats": {
+          "level": 26,
+          "hp": 220,
+          "exp_yield": 0,
+          "attack": 51,
+          "special_attack": 47,
+          "defense": 33,
+          "special_defense": 32,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 8,
+        "entityRuleId": 230,
+        "monsterSpawnTableIndex": 89,
+        "mdIndex": 494,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 68,
+        "stats": {
+          "level": 29,
+          "hp": 220,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 45,
+          "defense": 41,
+          "special_defense": 43,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 39,
+    "width": 14,
+    "height": 14,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 240,
+        "monsterSpawnTableIndex": 91,
+        "mdIndex": 93,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 70,
+        "stats": {
+          "level": 25,
+          "hp": 180,
+          "exp_yield": 0,
+          "attack": 35,
+          "special_attack": 34,
+          "defense": 25,
+          "special_defense": 25,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 40,
+    "width": 14,
+    "height": 17,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 4,
+        "entityRuleId": 241,
+        "monsterSpawnTableIndex": 92,
+        "mdIndex": 93,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 71,
+        "stats": {
+          "level": 27,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 38,
+          "defense": 25,
+          "special_defense": 25,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 41,
+    "width": 14,
+    "height": 14,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 242,
+        "monsterSpawnTableIndex": 93,
+        "mdIndex": 93,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 72,
+        "stats": {
+          "level": 29,
+          "hp": 220,
+          "exp_yield": 0,
+          "attack": 42,
+          "special_attack": 40,
+          "defense": 25,
+          "special_defense": 25,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 242,
+        "monsterSpawnTableIndex": 93,
+        "mdIndex": 93,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 72,
+        "stats": {
+          "level": 29,
+          "hp": 220,
+          "exp_yield": 0,
+          "attack": 42,
+          "special_attack": 40,
+          "defense": 25,
+          "special_defense": 25,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "entityRuleId": 242,
+        "monsterSpawnTableIndex": 93,
+        "mdIndex": 93,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 72,
+        "stats": {
+          "level": 29,
+          "hp": 220,
+          "exp_yield": 0,
+          "attack": 42,
+          "special_attack": 40,
+          "defense": 25,
+          "special_defense": 25,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 65,
+    "width": 14,
+    "height": 15,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 1,
+        "entityRuleId": 2,
+        "monsterSpawnTableIndex": 22,
+        "mdIndex": 109,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 2,
+        "stats": {
+          "level": 6,
+          "hp": 27,
+          "exp_yield": 0,
+          "attack": 20,
+          "special_attack": 20,
+          "defense": 8,
+          "special_defense": 8,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "entityRuleId": 1,
+        "monsterSpawnTableIndex": 21,
+        "mdIndex": 41,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 1,
+        "stats": {
+          "level": 3,
+          "hp": 15,
+          "exp_yield": 0,
+          "attack": 15,
+          "special_attack": 15,
+          "defense": 11,
+          "special_defense": 11,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 66,
+    "width": 24,
+    "height": 22,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 5,
+        "entityRuleId": 73,
+        "monsterSpawnTableIndex": 68,
+        "mdIndex": 96,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 3,
+        "stats": {
+          "level": 12,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 30,
+          "special_attack": 30,
+          "defense": 20,
+          "special_defense": 20,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 67,
+    "width": 22,
+    "height": 21,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 8,
+        "y": 2,
+        "entityRuleId": 68,
+        "monsterSpawnTableIndex": 63,
+        "mdIndex": 522,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 49,
+        "stats": {
+          "level": 42,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 45,
+          "special_defense": 45,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 68,
+    "width": 18,
+    "height": 32,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 5,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "entityRuleId": 12,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "entityRuleId": 4,
+        "monsterSpawnTableIndex": 24,
+        "mdIndex": 338,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 5,
+        "stats": {
+          "level": 33,
+          "hp": 160,
+          "exp_yield": 0,
+          "attack": 30,
+          "special_attack": 35,
+          "defense": 30,
+          "special_defense": 30,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "entityRuleId": 6,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 10,
+        "y": 5,
+        "entityRuleId": 11,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 7,
+        "entityRuleId": 7,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 7,
+        "entityRuleId": 10,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 9,
+        "entityRuleId": 8,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 9,
+        "entityRuleId": 9,
+        "monsterSpawnTableIndex": 25,
+        "mdIndex": 337,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 6,
+        "stats": {
+          "level": 18,
+          "hp": 45,
+          "exp_yield": 0,
+          "attack": 31,
+          "special_attack": 30,
+          "defense": 23,
+          "special_defense": 23,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 69,
+    "width": 20,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 2,
+        "entityRuleId": 60,
+        "monsterSpawnTableIndex": 58,
+        "mdIndex": 523,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 39,
+        "stats": {
+          "level": 42,
+          "hp": 350,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 45,
+          "special_defense": 45,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 70,
+    "width": 24,
+    "height": 16,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 3,
+        "entityRuleId": 69,
+        "monsterSpawnTableIndex": 64,
+        "mdIndex": 524,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 50,
+        "stats": {
+          "level": 42,
+          "hp": 600,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 45,
+          "special_defense": 45,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 71,
+    "width": 22,
+    "height": 17,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 8,
+        "y": 2,
+        "entityRuleId": 17,
+        "monsterSpawnTableIndex": 26,
+        "mdIndex": 484,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 7,
+        "stats": {
+          "level": 37,
+          "hp": 400,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 50,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 72,
+    "width": 18,
+    "height": 26,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 4,
+        "y": 6,
+        "entityRuleId": 19,
+        "monsterSpawnTableIndex": 28,
+        "mdIndex": 139,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 9,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 32,
+          "special_defense": 32,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "entityRuleId": 18,
+        "monsterSpawnTableIndex": 27,
+        "mdIndex": 141,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 8,
+        "stats": {
+          "level": 42,
+          "hp": 450,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 50,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 6,
+        "entityRuleId": 20,
+        "monsterSpawnTableIndex": 28,
+        "mdIndex": 139,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 9,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 32,
+          "special_defense": 32,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 73,
+    "width": 16,
+    "height": 17,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 22,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "entityRuleId": 21,
+        "monsterSpawnTableIndex": 29,
+        "mdIndex": 519,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 10,
+        "stats": {
+          "level": 45,
+          "hp": 550,
+          "exp_yield": 0,
+          "attack": 60,
+          "special_attack": 60,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 3,
+        "entityRuleId": 27,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "entityRuleId": 23,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "entityRuleId": 26,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "entityRuleId": 24,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "entityRuleId": 25,
+        "monsterSpawnTableIndex": 30,
+        "mdIndex": 330,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 11,
+        "stats": {
+          "level": 38,
+          "hp": 88,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 38,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 74,
+    "width": 18,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 4,
+        "entityRuleId": 34,
+        "monsterSpawnTableIndex": 32,
+        "mdIndex": 525,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 12,
+        "stats": {
+          "level": 48,
+          "hp": 700,
+          "exp_yield": 0,
+          "attack": 75,
+          "special_attack": 75,
+          "defense": 50,
+          "special_defense": 50,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 75,
+    "width": 20,
+    "height": 22,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 5,
+        "y": 4,
+        "entityRuleId": 58,
+        "monsterSpawnTableIndex": 56,
+        "mdIndex": 106,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 37,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "entityRuleId": 49,
+        "monsterSpawnTableIndex": 47,
+        "mdIndex": 528,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 27,
+        "stats": {
+          "level": 49,
+          "hp": 900,
+          "exp_yield": 0,
+          "attack": 100,
+          "special_attack": 80,
+          "defense": 55,
+          "special_defense": 55,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 4,
+        "entityRuleId": 58,
+        "monsterSpawnTableIndex": 56,
+        "mdIndex": 106,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 37,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "entityRuleId": 59,
+        "monsterSpawnTableIndex": 57,
+        "mdIndex": 479,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 38,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "entityRuleId": 59,
+        "monsterSpawnTableIndex": 57,
+        "mdIndex": 479,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 38,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "entityRuleId": 58,
+        "monsterSpawnTableIndex": 56,
+        "mdIndex": 106,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 37,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "entityRuleId": 58,
+        "monsterSpawnTableIndex": 56,
+        "mdIndex": 106,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 37,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 10,
+        "y": 5,
+        "entityRuleId": 59,
+        "monsterSpawnTableIndex": 57,
+        "mdIndex": 479,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 38,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 11,
+        "y": 5,
+        "entityRuleId": 59,
+        "monsterSpawnTableIndex": 57,
+        "mdIndex": 479,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 38,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 40,
+          "special_defense": 40,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 76,
+    "width": 22,
+    "height": 21,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 10,
+        "y": 6,
+        "entityRuleId": 50,
+        "monsterSpawnTableIndex": 48,
+        "mdIndex": 526,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 28,
+        "stats": {
+          "level": 48,
+          "hp": 700,
+          "exp_yield": 0,
+          "attack": 90,
+          "special_attack": 120,
+          "defense": 65,
+          "special_defense": 65,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 77,
+    "width": 21,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 2,
+        "entityRuleId": 51,
+        "monsterSpawnTableIndex": 49,
+        "mdIndex": 533,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 29,
+        "stats": {
+          "level": 53,
+          "hp": 800,
+          "exp_yield": 0,
+          "attack": 90,
+          "special_attack": 100,
+          "defense": 60,
+          "special_defense": 60,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 52,
+        "monsterSpawnTableIndex": 50,
+        "mdIndex": 24,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 31,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 40,
+          "defense": 35,
+          "special_defense": 36,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "entityRuleId": 54,
+        "monsterSpawnTableIndex": 52,
+        "mdIndex": 509,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 33,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 43,
+          "defense": 35,
+          "special_defense": 32,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "entityRuleId": 53,
+        "monsterSpawnTableIndex": 51,
+        "mdIndex": 506,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 32,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 37,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 5,
+        "entityRuleId": 55,
+        "monsterSpawnTableIndex": 53,
+        "mdIndex": 334,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 34,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 43,
+          "defense": 36,
+          "special_defense": 35,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "entityRuleId": 56,
+        "monsterSpawnTableIndex": 54,
+        "mdIndex": 246,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 35,
+        "stats": {
+          "level": 36,
+          "hp": 120,
+          "exp_yield": 0,
+          "attack": 40,
+          "special_attack": 42,
+          "defense": 38,
+          "special_defense": 35,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 7,
+        "entityRuleId": 57,
+        "monsterSpawnTableIndex": 55,
+        "mdIndex": 471,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 36,
+        "stats": {
+          "level": 35,
+          "hp": 100,
+          "exp_yield": 0,
+          "attack": 45,
+          "special_attack": 45,
+          "defense": 38,
+          "special_defense": 40,
+          "unkA": 255
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 80,
+    "width": 16,
+    "height": 13,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 8,
+        "y": 3,
+        "entityRuleId": 63,
+        "monsterSpawnTableIndex": 61,
+        "mdIndex": 486,
+        "spawnType": 6,
+        "spawnTypeName": "ENEMY_STRONG",
+        "statsEntry": 42,
+        "stats": {
+          "level": 33,
+          "hp": 200,
+          "exp_yield": 0,
+          "attack": 50,
+          "special_attack": 50,
+          "defense": 35,
+          "special_defense": 35,
+          "unkA": 0
+        },
+        "statsAppliedByType": true,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 81,
+    "width": 19,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 9,
+        "entityRuleId": 216,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 61,
+        "itemId": 136,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 9,
+        "entityRuleId": 144,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 25,
+        "itemId": 57,
+        "quantity": 0
+      },
+      {
+        "x": 10,
+        "y": 9,
+        "entityRuleId": 145,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 26,
+        "itemId": 67,
+        "quantity": 0
+      },
+      {
+        "x": 12,
+        "y": 9,
+        "entityRuleId": 216,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 61,
+        "itemId": 136,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 82,
+    "width": 19,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 8,
+        "entityRuleId": 115,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 10,
+        "entityRuleId": 150,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 31,
+        "itemId": 506,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 83,
+    "width": 19,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 8,
+        "entityRuleId": 116,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 10,
+        "entityRuleId": 151,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 32,
+        "itemId": 58,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 84,
+    "width": 19,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 117,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 85,
+    "width": 17,
+    "height": 15,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 5,
+        "entityRuleId": 106,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "entityRuleId": 107,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 86,
+    "width": 17,
+    "height": 13,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 6,
+        "entityRuleId": 106,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 13,
+        "y": 6,
+        "entityRuleId": 109,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 7,
+        "entityRuleId": 107,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 13,
+        "y": 7,
+        "entityRuleId": 110,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 87,
+    "width": 17,
+    "height": 19,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 7,
+        "y": 6,
+        "entityRuleId": 106,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 8,
+        "entityRuleId": 108,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 8,
+        "entityRuleId": 109,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 88,
+    "width": 15,
+    "height": 16,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 8,
+        "entityRuleId": 106,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 11,
+        "y": 8,
+        "entityRuleId": 109,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 11,
+        "entityRuleId": 107,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 11,
+        "y": 11,
+        "entityRuleId": 110,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 89,
+    "width": 15,
+    "height": 15,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 8,
+        "entityRuleId": 106,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 8,
+        "entityRuleId": 107,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 90,
+    "width": 15,
+    "height": 15,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 7,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 8,
+        "y": 7,
+        "entityRuleId": 108,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 91,
+    "width": 12,
+    "height": 23,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 5,
+        "y": 6,
+        "entityRuleId": 104,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 8,
+        "itemId": 178,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 15,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 15,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 15,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 92,
+    "width": 16,
+    "height": 18,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 11,
+        "y": 9,
+        "entityRuleId": 106,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 11,
+        "entityRuleId": 107,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 11,
+        "y": 11,
+        "entityRuleId": 108,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 13,
+        "entityRuleId": 109,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 11,
+        "y": 13,
+        "entityRuleId": 110,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 93,
+    "width": 19,
+    "height": 18,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 94,
+    "width": 17,
+    "height": 18,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 95,
+    "width": 18,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 96,
+    "width": 17,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 97,
+    "width": 17,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 98,
+    "width": 17,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 99,
+    "width": 18,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 7,
+        "y": 11,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 11,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 11,
+        "y": 11,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 100,
+    "width": 17,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 11,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 101,
+    "width": 17,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 102,
+    "width": 17,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 6,
+        "y": 5,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 12,
+        "y": 5,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      },
+      {
+        "x": 9,
+        "y": 8,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 103,
+    "width": 17,
+    "height": 20,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 9,
+        "y": 9,
+        "entityRuleId": 105,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 9,
+        "itemId": 385,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 110,
+    "width": 9,
+    "height": 10,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 2,
+        "entityRuleId": 126,
+        "monsterSpawnTableIndex": 7,
+        "mdIndex": 553,
+        "spawnType": 13,
+        "spawnTypeName": "OTHER_GAME_MEMBER_3",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "entityRuleId": 124,
+        "monsterSpawnTableIndex": 5,
+        "mdIndex": 553,
+        "spawnType": 11,
+        "spawnTypeName": "OTHER_GAME_LEADER",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "entityRuleId": 127,
+        "monsterSpawnTableIndex": 8,
+        "mdIndex": 553,
+        "spawnType": 14,
+        "spawnTypeName": "OTHER_GAME_MEMBER_4",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 125,
+        "monsterSpawnTableIndex": 6,
+        "mdIndex": 553,
+        "spawnType": 12,
+        "spawnTypeName": "OTHER_GAME_MEMBER_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 0,
+        "itemId": 0,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 170,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 128,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 10,
+        "itemId": 526,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 171,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 129,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 11,
+        "itemId": 530,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 172,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 130,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 12,
+        "itemId": 550,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 173,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 131,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 13,
+        "itemId": 570,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 174,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 175,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 133,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 4,
+        "itemId": 53,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 176,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 134,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 15,
+        "itemId": 534,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 177,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 135,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 16,
+        "itemId": 554,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 178,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 136,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 17,
+        "itemId": 558,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 179,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 180,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 137,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 18,
+        "itemId": 562,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 181,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 138,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 19,
+        "itemId": 66,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 182,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 139,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 20,
+        "itemId": 538,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 183,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 140,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 21,
+        "itemId": 542,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 184,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 141,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 22,
+        "itemId": 546,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 185,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 142,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 23,
+        "itemId": 566,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 186,
+    "width": 6,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 188,
+    "width": 7,
+    "height": 6,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 2,
+        "entityRuleId": 216,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 61,
+        "itemId": 136,
+        "quantity": 0
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "entityRuleId": 132,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 14,
+        "itemId": 89,
+        "quantity": 0
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 216,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 61,
+        "itemId": 136,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 191,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 146,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 27,
+        "itemId": 510,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 192,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 147,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 28,
+        "itemId": 514,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 193,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 148,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 29,
+        "itemId": 518,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 194,
+    "width": 5,
+    "height": 5,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 2,
+        "y": 2,
+        "entityRuleId": 149,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 30,
+        "itemId": 522,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 195,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 2,
+        "entityRuleId": 217,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 62,
+        "itemId": 73,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 196,
+    "width": 8,
+    "height": 8,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 4,
+        "entityRuleId": 217,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 62,
+        "itemId": 73,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 220,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 189,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 34,
+        "itemId": 1410,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 221,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 190,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 35,
+        "itemId": 1411,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 222,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 191,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 36,
+        "itemId": 1412,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 223,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 192,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 37,
+        "itemId": 1413,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 224,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 193,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 38,
+        "itemId": 1414,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 225,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 194,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 39,
+        "itemId": 1415,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 226,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 195,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 40,
+        "itemId": 1416,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 227,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 196,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 41,
+        "itemId": 1417,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 228,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 197,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 42,
+        "itemId": 1418,
+        "quantity": 0
+      }
+    ]
+  },
+  {
+    "fixedFloorId": 229,
+    "width": 7,
+    "height": 7,
+    "overrideFixedFloorId": 0,
+    "spawns": [
+      {
+        "x": 3,
+        "y": 3,
+        "entityRuleId": 198,
+        "monsterSpawnTableIndex": 0,
+        "mdIndex": 0,
+        "spawnType": 9,
+        "spawnTypeName": "ENEMY_NORMAL_2",
+        "statsEntry": 0,
+        "stats": {
+          "level": 10,
+          "hp": 100,
+          "exp_yield": 100,
+          "attack": 0,
+          "special_attack": 0,
+          "defense": 0,
+          "special_defense": 0,
+          "unkA": 255
+        },
+        "statsAppliedByType": false,
+        "itemSpawnTableIndex": 43,
+        "itemId": 1419,
+        "quantity": 0
+      }
+    ]
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "checkedAtUtc": "2026-10-21T23:18:21.490786+00:00",
+  "seconds": 15.856512433001626,
+  "romSha256": "6dc1ba5320168b1ce6fdb0f4fc658c67e4c579623b306d64edbedff1ec5b3faf",
+  "romUnchanged": true,
+  "physicalFloors": 1892,
+  "priorProfileHashMatches": 1892,
+  "maps": 192,
+  "monsters": 1155,
+  "items": 1400,
+  "fixedRoomsWithOverrides": 112,
+  "enemyFloorRows": 45108,
+  "itemFloorRows": 774916,
+  "missingReferences": [
+    {
+      "segmentId": "SEG-D071",
+      "missing": [
+        [
+          35,
+          30
+        ]
+      ]
+    },
+    {
+      "segmentId": "SEG-D173",
+      "missing": [
+        [
+          99,
+          5
+        ],
+        [
+          99,
+          6
+        ],
+        [
+          99,
+          7
+        ],
+        [
+          99,
+          8
+        ],
+        [
+          99,
+          9
+        ]
+      ]
+    }
+  ],
+  "sourceHashes": {
+    "BALANCE/mappa_s.bin": "dd75465e2a6a49965b54d498fc3cc476170ab722bf5f7c5b6fc166924c3f0ffb",
+    "BALANCE/monster.md": "0da60447bff18f968779a7afc5d34368fd1bfd301b792758a56e792147526411",
+    "BALANCE/item_p.bin": "232448b25f92af571388980a02a1c7a6522c637629e9a4095371865f4e584012",
+    "BALANCE/fixed.bin": "b4853265ff8ddda251147838fa481878ed602f39876269072b550ddbccccf3fb"
+  },
+  "binaryHashes": {
+    "arm9": "b17bb10bb635705434219f118ed7447c342e59a9392fa7f55245e36d46a65ae2",
+    "overlay10": "69ff46b38660a53708f1f44f66480b80d4c5b251ce2528933e53f5468819257a",
+    "overlay29": "519edfd3000e363fdaf2169b4b47b0979ef1469c18a2407bff30750453ffcbc3"
+  },
+  "scope": "원작 수치/후보/정적 진행 연결; 실제 생성 확률·모든 스토리 분기 실행 결과 아님"
+}
