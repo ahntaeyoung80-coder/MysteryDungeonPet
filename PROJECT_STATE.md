@@ -18,6 +18,6 @@ B-1/B-2 자율 탐험 안정화에 이어 [다양성 계획](docs/plans/2026-10-
 
 ## 검증·바로 다음 작업
 
-[획득·처치 안내](docs/logs/2026-10-21-gameplay-notices.md)에 이어 [전체 지원 맵 이벤트](docs/logs/2026-10-21-all-map-events.md)를 구현·검증했다. 맵0/15/18의19개 층×9종171개 시작·복원, 동일1024seed의 맵 공통 자동 선택·원작 상품/적 비중·안전/상한·교대 유지를 확인했다. 관련 ASan/UBSan10개·Windows3개와 실제 EXE 새 조합7개·설치6초가 통과했다. 저장 MDES17/자산 입력은 유지해 전체 검사는 반복하지 않았다. [최종 근거](docs/validation/2026-10-21-all-map-events/summary.json), [현재 확률/맵 선택](docs/EVENT_PROBABILITIES.md). 소스·루트 EXE/hash를 함께 반영하고 자동 CI는 최종 push 후 별도 확인한다.
+[획득·처치 안내](docs/logs/2026-10-21-gameplay-notices.md)에 이어 [전체 지원 맵 이벤트](docs/logs/2026-10-21-all-map-events.md)를 구현·검증했다. 맵0/15/18의19개 층×9종171개 시작·복원, 동일1024seed의 맵 공통 자동 선택·원작 상품/적 비중·안전/상한·교대 유지를 확인했다. 관련 ASan/UBSan10개·Windows3개와 실제 EXE 새 조합7개·설치6초가 통과했다. 저장 MDES17/자산 입력은 유지해 전체 검사는 반복하지 않았다. [최종 근거](docs/validation/2026-10-21-all-map-events/summary.json), [현재 확률/맵 선택](docs/EVENT_PROBABILITIES.md). 제품 커밋7ec948c의 소스·루트 EXE/hash를 함께push하고 명시 fetch로HEAD=origin/work를 확인했다. 자동 CI 조회가 비어 완료/통과는 미확인이다. [원격 근거](docs/validation/2026-10-21-all-map-events/remote-verification.json).
 
 남은 범위는 실제 사용자 Windows11·OS lock/power·장기 성능과 활동 연동이다. Wine의 짧은 실행을 이 항목의 통과로 표시하지 않는다. 소스·선택 자산·루트 EXE를 함께 반영하며 자동 CI는 최종 push 후 별도 상태로 기록한다. [실행 안내](docs/WINDOWS_QUICKSTART.md).

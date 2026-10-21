@@ -29,5 +29,6 @@
   "storageSchemaChanged": false,
   "assetsChanged": false,
   "defaultMapSelection": "15 and18 alternate, not weighted random",
-  "ci": "최종 push 후 별도 확인"
+  "ci": "조회 목록이 비어 완료/통과 미확인",
+  "productCommit": "7ec948c05b41dfe161a169426bdf2981760e015e"
 }

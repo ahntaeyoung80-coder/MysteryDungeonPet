@@ -1,0 +1,10 @@
+{
+  "verifiedUtc": "2026-10-21T11:48:54.688165+00:00",
+  "head": "7ec948c05b41dfe161a169426bdf2981760e015e",
+  "originWork": "7ec948c05b41dfe161a169426bdf2981760e015e",
+  "cleanBeforeDocumentation": true,
+  "implementationCommit": "31277ced49cc5839354147d99a973a31d2807b17",
+  "workflowRuns": [],
+  "statuses": [],
+  "ci": "미확인: workflow 조회는PR-triggered run만 지원하고 workflow/status 반환 목록이 비어 push CI 결과로 단정하지 않음"
+}

@@ -22,3 +22,5 @@ Windows Release/static 빌드와 Wine10/Xvfb의관련3개가 통과했다. 실�
 설치본 기본 실행6초·source→install416자산/13,323,769바이트 및 build/root/install EXE hash 일치·ROM 미포함을 확인했다. 선택 자산은 변경하지 않았다. 루트 EXE는2,307,584바이트이며 hash는 install-summary에 보존했다. Wine의짧은 실행을 사용자 Windows11/OS lock·power/장기 성능 통과로 표시하지 않는다.
 
 첫 측정20:38:42→구현·신규 검사 단계 커밋20:42:33 KST는3분51초다. 로컬 커밋은31277ced49cc5839354147d99a973a31d2807b17. 이후 관련 검사·Windows 빌드·GUI·기록·설치 검증을 병행했고 순수 작업/대기 시간을 임의 분리하지 않는다. 최종 원격 시각은 아래 기록에 남긴다.
+
+20:48:54 KST에 제품 커밋7ec948c05b41dfe161a169426bdf2981760e015e를push하고 명시refspec fetch로HEAD=origin/work·clean을 확인했다. 첫 측정부터10분12초, 구현 단계 커밋부터6분21초이며 병행 작업을 포함한다. workflow/status 조회는 빈 목록이고 workflow 도구가PR-triggered run만 지원하므로 push CI 완료/통과는 미확인이다. 이 원격 확인은 문서 전용skip ci 커밋으로 기록하고 같은 코드/EXE의 전체 검사는 다시 실행하지 않는다. [원격 근거](../validation/2026-10-21-all-map-events/remote-verification.json).
