@@ -1,0 +1,13 @@
+{
+  "checkedAtUtc": "2026-10-21T22:11:24.280882+00:00",
+  "researchCommit": "ac40040c2eca807a7dca754adb37a80be46294f1",
+  "originWorkAfterExplicitFetch": "ac40040c2eca807a7dca754adb37a80be46294f1",
+  "match": true,
+  "cleanAtCheck": true,
+  "commits": [
+    "a3e36df",
+    "ac40040c2eca807a7dca754adb37a80be46294f1"
+  ],
+  "ciPolicy": "documentation-only [skip ci]; no product build or deployment",
+  "scope": "research/classification commits pushed and explicitly fetched; this receipt is recorded in a later documentation-only commit"
+}
