@@ -15,6 +15,7 @@
 #include "core/completion_scene.hpp"
 #include "core/character_selection.hpp"
 #include "core/npc_characters.hpp"
+#include "core/dialogue_catalogue.hpp"
 #include "core/motion.hpp"
 #include <algorithm>
 #include <chrono>
@@ -184,6 +185,7 @@ class App {
     std::filesystem::path characterProfile_;
     std::optional<CharacterSelection> pendingCharacterSelection_;
     DialogueCast dialogueCast_;
+    DialogueCatalogue dialogueCatalogue_;
     Assets assets_;
     std::optional<Assets> companionAssets_, homeAssets_, propsAssets_;
     NpcCatalogue npcCatalogue_;
@@ -362,7 +364,8 @@ class App {
             bedroomExit(partner->cue->position,g,utcMs(),true).position:partner->cue->position;
         movementTrace_ << ',' << partnerPoint.x << ',' << partnerPoint.y << ',' << (partner==guildLive_.end()?-1:int(partner->direction))
             << ',' << guildAppleVisible(g) << ',' << appleFrame_;
-        const auto portrait=dialoguePortraits(g);const auto line=gameplayDialogue(g);
+        const auto portrait=cataloguePortraits(state,dialogueCatalogue_);
+        const auto* selected=selectedDialogue(state,dialogueCatalogue_);const auto line=selected?selected->display:DialogueLine{};
         movementTrace_<<','<<dialogueCast_.actor(PortraitRole::Player).portraitClip<<','<<dialogueCast_.actor(PortraitRole::Partner).portraitClip
             <<','<<unsigned(portrait.speaker)<<','<<unsigned(portrait.emotion)<<','<<line.id<<','<<gameplayFadeOpacity(g,utcMs());
         const auto actual=currentPortrait();const auto* npc=npcSpeaker(actual);
@@ -375,8 +378,8 @@ class App {
             const auto& c=npcCatalogue_.select(e.originalId);
             movementTrace_<<e.instanceId<<':'<<c.id<<':'<<c.spriteIndex;
         }
-        movementTrace_<<','<<npcAssets_.size()<<'\n';
-        const bool textReady=!gameplayText(g).empty() && revealedGameplayText(g,utcMs())==gameplayText(g);
+        movementTrace_<<','<<npcAssets_.size()<<','<<state.variety.dialogue.bundle<<','<<state.variety.dialogue.lineId<<','<<state.variety.dialogue.deadlineMs<<'\n';
+        const bool textReady=!catalogueText(state,dialogueCatalogue_).empty() && revealedCatalogueText(state,dialogueCatalogue_,utcMs())==catalogueText(state,dialogueCatalogue_);
         if(submitted && traceCharacterImagePending_){traceImage("-characters.bmp");traceCharacterImagePending_=false;}
         if(submitted && !traceDeathImage_ && g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk && textReady){traceImage("-defeat-dialogue.bmp");traceDeathImage_=true;}
         if(submitted && !traceCompletionImage_ && g.sceneBeat==SceneBeat::CompletionText && utcMs()>=g.phaseStartedMs+1500){traceImage("-completion.bmp");traceCompletionImage_=true;}
@@ -504,9 +507,9 @@ class App {
         winCheck(SetWindowPos(window_, nullptr, x, y, int(size_), int(size_), SWP_NOACTIVATE | SWP_NOZORDER) != 0, "window position");
     }
     void saveRunSnapshot(const std::filesystem::path& path,const ExplorationState& state) const {
-        if(!options_.defaultExploration){saveSnapshot(path,state);return;}
         auto persistent=state;
-        persistent.target=-1;persistent.targetInstance=0;persistent.goalKind=GoalKind::None;
+        checkpointDialogue(persistent,dialogueCatalogue_,utcMs());
+        if(options_.defaultExploration){persistent.target=-1;persistent.targetInstance=0;persistent.goalKind=GoalKind::None;}
         saveSnapshot(path,persistent);
     }
     void save() {
@@ -853,7 +856,7 @@ class App {
             &npcCatalogue_.forActor(explorer_->state(),portrait.actorId).actor:nullptr;
     }
     DialoguePortraits currentPortrait() const {
-        auto portrait=dialoguePortraits(explorer_->state().gameplay);
+        auto portrait=cataloguePortraits(explorer_->state(),dialogueCatalogue_);
         if(portrait.speaker==PortraitRole::Friendly)
             portrait.emotion=npcEmotion(npcCatalogue_.forActor(explorer_->state(),portrait.actorId),portrait.emotion);
         return portrait;
@@ -961,7 +964,7 @@ class App {
         const auto oldDialogue=explorer_->state().gameplay.dialogueStage;
         auto candidate = *explorer_;
         if(!options_.solo && candidate.state().gameplay.life==LifePhase::Explore) candidate.enableCompanion();
-        const auto event = candidate.advanceGameplay(utcMs(), completion_);
+        const auto event = candidate.advanceGameplay(utcMs(), completion_,dialogueCatalogue_);
         poseFinished_ = false; completion_={};
         if (encodeSnapshot(candidate.state()) == encodeSnapshot(explorer_->state())) {
             exploreDeadline_=deadlineFromUtc(now,utcMs(),nextGameplayDeadline(candidate.state()));
@@ -1320,7 +1323,7 @@ class App {
         if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr,false);
         const auto speaker=explorer_?currentPortrait():DialoguePortraits{};
         if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_,npcSpeaker(speaker));
-        std::wstring overlayText=explorer_?revealedGameplayText(explorer_->state().gameplay,utcMs()):std::wstring{};
+        std::wstring overlayText=explorer_?revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs()):std::wstring{};
         const auto hud=mapHud();
         const auto fade=explorer_?gameplayFadeOpacity(explorer_->state().gameplay,utcMs()):0;
         const bool textChanged=overlayText!=submittedText_ || hud!=submittedHud_ || fade!=submittedFade_;
@@ -1363,7 +1366,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies,dialogue_bundle,dialogue_line,dialogue_deadline_ms\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
@@ -1388,6 +1391,7 @@ public:
             decodes_ += homeAssets_->decoded ? 1 : 0;
             explorationPackage_ = loadExplorationPackage(options_.exploration);
             npcCatalogue_=loadNpcCatalogue(options_.gameplayAssets/L"npcs/characters.mdnc");
+            dialogueCatalogue_=loadDialogueCatalogue(options_.gameplayAssets/L"dialogue/catalogue.mdlc");
             if(npcCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("NPC/exploration ROM mismatch");
             validateNpcCoverage(npcCatalogue_,explorationPackage_->floors);
             if(characterCatalogue_.romHash!=explorationPackage_->romHash)throw std::runtime_error("starter/exploration ROM mismatch");
@@ -1435,6 +1439,7 @@ public:
                 explorer_->startGuildMorning(utcMs());
                 log("startup=guild-morning exploration-goal=discarded");
             }
+            explorer_->restoreDialogue(dialogueCatalogue_,utcMs());
             if(explorer_->state().gameplay.companion.enabled)companionMotion_.reset(tilePoint(explorer_->state().gameplay.companion.tile));
             restoreMovement(nowUs());
             if(explorer_->state().gameplay.sceneBeat==SceneBeat::DiningPan) guildCamera_.begin(UINT32_MAX,explorer_->state().gameplay.day,{368,212},{168,212},restoredClipStart(nowUs()),6,4000000);
@@ -1558,7 +1563,7 @@ public:
                 if(auto motionDeadline=playerMotion_.nextDeadline(now)) deadline=std::min(deadline,*motionDeadline);
                 for(const auto& entry:actorMotions_) if(auto d=entry.second.nextDeadline(now)) deadline=std::min(deadline,*d);
             }
-            if(!blocked() && explorer_ && revealedGameplayText(explorer_->state().gameplay,utcMs())!=gameplayText(explorer_->state().gameplay)) deadline=std::min(deadline,now+25000);
+            if(!blocked() && explorer_ && revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs())!=catalogueText(explorer_->state(),dialogueCatalogue_)) deadline=std::min(deadline,now+25000);
             if (!blocked() && animator_.active() && nextFrameDeadline_) deadline = std::min(deadline, *nextFrameDeadline_);
             // Relative timer, one shot; no high-resolution request or 1ms polling.
             LARGE_INTEGER due{}; due.QuadPart = -std::max<int64_t>(1, deadline - nowUs()) * 10;

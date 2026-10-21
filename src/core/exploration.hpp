@@ -244,6 +244,7 @@ struct ExplorationState {
 };
 std::uint64_t navigationFingerprint(const ExplorationState&);
 void validatePartyState(const ExplorationState&);
+struct DialogueCatalogue;
 class Explorer {
 public:
     static constexpr std::uint32_t kFloorStepLimit = kTiles * 8;
@@ -269,6 +270,8 @@ public:
     bool canResetExploration() const;
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, bool clipFinished = false);
     GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion);
+    GameplayUpdate advanceGameplay(std::uint64_t utcMs, ActorCompletion,const DialogueCatalogue&);
+    void restoreDialogue(const DialogueCatalogue&,std::uint64_t utcMs);
 private:
     ExplorationState state_;
     std::string nextRunAssetVersion_;

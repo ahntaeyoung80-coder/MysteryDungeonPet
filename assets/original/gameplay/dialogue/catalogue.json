@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 1,
+  "catalogueVersion": 1,
+  "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
+  "bundles": [
+    {
+      "id": "companion.checkin.01",
+      "context": "companion.checkin",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "companion.checkin",
+      "lines": [
+        {
+          "id": "companion.checkin.01.1",
+          "legacyId": 11,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "잘 따라오고 있지?"
+        },
+        {
+          "id": "companion.checkin.01.2",
+          "legacyId": 12,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "응! 바로 뒤에 있어."
+        }
+      ]
+    },
+    {
+      "id": "companion.checkin.02",
+      "context": "companion.checkin",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "companion.checkin",
+      "lines": [
+        {
+          "id": "companion.checkin.02.1",
+          "legacyId": 11,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "잠깐 숨을 고르고 갈까?"
+        },
+        {
+          "id": "companion.checkin.02.2",
+          "legacyId": 12,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "좋아. 서두를 필요는 없지."
+        }
+      ]
+    },
+    {
+      "id": "companion.checkin.03",
+      "context": "companion.checkin",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "companion.checkin",
+      "lines": [
+        {
+          "id": "companion.checkin.03.1",
+          "legacyId": 11,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "앞으로도 함께 가자."
+        },
+        {
+          "id": "companion.checkin.03.2",
+          "legacyId": 12,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "물론이지. 나도 힘낼게!"
+        }
+      ]
+    },
+    {
+      "id": "companion.checkin.04",
+      "context": "companion.checkin",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "companion.checkin",
+      "lines": [
+        {
+          "id": "companion.checkin.04.1",
+          "legacyId": 11,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "여기까지 오느라 수고했어."
+        },
+        {
+          "id": "companion.checkin.04.2",
+          "legacyId": 12,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "너도! 같이 와서 든든해."
+        }
+      ]
+    },
+    {
+      "id": "companion.checkin.05",
+      "context": "companion.checkin",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "companion.checkin",
+      "lines": [
+        {
+          "id": "companion.checkin.05.1",
+          "legacyId": 11,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "주변도 살피면서 가자."
+        },
+        {
+          "id": "companion.checkin.05.2",
+          "legacyId": 12,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "알겠어. 뒤쪽은 내가 볼게."
+        }
+      ]
+    },
+    {
+      "id": "npc.greet.01",
+      "context": "npc.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "npc.greet",
+      "lines": [
+        {
+          "id": "npc.greet.01.1",
+          "legacyId": 21,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "안녕! 탐험 중이야?"
+        },
+        {
+          "id": "npc.greet.01.2",
+          "legacyId": 22,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "응. 너희도 조심해서 다녀와."
+        }
+      ]
+    },
+    {
+      "id": "npc.greet.02",
+      "context": "npc.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "npc.greet",
+      "lines": [
+        {
+          "id": "npc.greet.02.1",
+          "legacyId": 21,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "잠깐 인사해도 될까?"
+        },
+        {
+          "id": "npc.greet.02.2",
+          "legacyId": 22,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "물론이지. 만나서 반가워!"
+        }
+      ]
+    },
+    {
+      "id": "npc.greet.03",
+      "context": "npc.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "npc.greet",
+      "lines": [
+        {
+          "id": "npc.greet.03.1",
+          "legacyId": 21,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "여기서 만나니 반갑다!"
+        },
+        {
+          "id": "npc.greet.03.2",
+          "legacyId": 22,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "나도 반가워. 무사히 다녀와!"
+        }
+      ]
+    },
+    {
+      "id": "npc.greet.04",
+      "context": "npc.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "npc.greet",
+      "lines": [
+        {
+          "id": "npc.greet.04.1",
+          "legacyId": 21,
+          "speaker": 1,
+          "listener": 3,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "탐험은 순조로워?"
+        },
+        {
+          "id": "npc.greet.04.2",
+          "legacyId": 22,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "천천히 둘러보고 있어. 너희도 조심해."
+        }
+      ]
+    },
+    {
+      "id": "sleep.greet.01",
+      "context": "sleep.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "sleep.greet",
+      "lines": [
+        {
+          "id": "sleep.greet.01.1",
+          "legacyId": 31,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "오늘도 수고했어. 잘 자!"
+        }
+      ]
+    },
+    {
+      "id": "sleep.greet.02",
+      "context": "sleep.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "sleep.greet",
+      "lines": [
+        {
+          "id": "sleep.greet.02.1",
+          "legacyId": 31,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "푹 쉬고 내일 또 힘내자."
+        }
+      ]
+    },
+    {
+      "id": "sleep.greet.03",
+      "context": "sleep.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "sleep.greet",
+      "lines": [
+        {
+          "id": "sleep.greet.03.1",
+          "legacyId": 31,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 0,
+          "holdMs": 1000,
+          "text": "이제 눈 좀 붙이자."
+        }
+      ]
+    },
+    {
+      "id": "wake.alarm.01",
+      "context": "wake.alarm",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "wake.alarm",
+      "lines": [
+        {
+          "id": "wake.alarm.01.1",
+          "legacyId": 41,
+          "speaker": 4,
+          "listener": 1,
+          "emotion": 7,
+          "holdMs": 1000,
+          "text": "아침이다아아! 일어나라아아!"
+        }
+      ]
+    },
+    {
+      "id": "wake.alarm.02",
+      "context": "wake.alarm",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "wake.alarm",
+      "lines": [
+        {
+          "id": "wake.alarm.02.1",
+          "legacyId": 41,
+          "speaker": 4,
+          "listener": 1,
+          "emotion": 7,
+          "holdMs": 1000,
+          "text": "기상이다아아! 모두 일어나아아!"
+        }
+      ]
+    },
+    {
+      "id": "wake.alarm.03",
+      "context": "wake.alarm",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "wake.alarm",
+      "lines": [
+        {
+          "id": "wake.alarm.03.1",
+          "legacyId": 41,
+          "speaker": 4,
+          "listener": 1,
+          "emotion": 7,
+          "holdMs": 1000,
+          "text": "일어나아아! 하루가 시작됐다아아!"
+        }
+      ]
+    },
+    {
+      "id": "morning.depart.01",
+      "context": "morning.depart",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "morning.depart",
+      "lines": [
+        {
+          "id": "morning.depart.01.1",
+          "legacyId": 51,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "좋은 아침! 오늘도 잘 부탁해."
+        }
+      ]
+    },
+    {
+      "id": "morning.depart.02",
+      "context": "morning.depart",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "morning.depart",
+      "lines": [
+        {
+          "id": "morning.depart.02.1",
+          "legacyId": 51,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 9,
+          "holdMs": 1000,
+          "text": "준비됐어? 함께 출발하자."
+        }
+      ]
+    },
+    {
+      "id": "morning.depart.03",
+      "context": "morning.depart",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "morning.depart",
+      "lines": [
+        {
+          "id": "morning.depart.03.1",
+          "legacyId": 51,
+          "speaker": 1,
+          "listener": 2,
+          "emotion": 1,
+          "holdMs": 1000,
+          "text": "오늘도 천천히 힘내 보자."
+        }
+      ]
+    },
+    {
+      "id": "defeat.player.01",
+      "context": "defeat.player",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.player",
+      "lines": [
+        {
+          "id": "defeat.player.01.1",
+          "legacyId": 101,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "괜찮아? 내가 옆에 있어!"
+        }
+      ]
+    },
+    {
+      "id": "defeat.player.02",
+      "context": "defeat.player",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.player",
+      "lines": [
+        {
+          "id": "defeat.player.02.1",
+          "legacyId": 101,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1000,
+          "text": "더는 무리하지 마. 돌아가자."
+        }
+      ]
+    },
+    {
+      "id": "defeat.player.03",
+      "context": "defeat.player",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.player",
+      "lines": [
+        {
+          "id": "defeat.player.03.1",
+          "legacyId": 101,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 7,
+          "holdMs": 1000,
+          "text": "정신 차려! 함께 돌아가야지!"
+        }
+      ]
+    },
+    {
+      "id": "defeat.partner.01",
+      "context": "defeat.partner",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.partner",
+      "lines": [
+        {
+          "id": "defeat.partner.01.1",
+          "legacyId": 102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 2,
+          "holdMs": 1000,
+          "text": "미안... 조금 쉬어야겠어."
+        }
+      ]
+    },
+    {
+      "id": "defeat.partner.02",
+      "context": "defeat.partner",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.partner",
+      "lines": [
+        {
+          "id": "defeat.partner.02.1",
+          "legacyId": 102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 13,
+          "holdMs": 1000,
+          "text": "더는 발이 안 움직여... 돌아가자."
+        }
+      ]
+    },
+    {
+      "id": "defeat.partner.03",
+      "context": "defeat.partner",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.partner",
+      "lines": [
+        {
+          "id": "defeat.partner.03.1",
+          "legacyId": 102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 5,
+          "holdMs": 1000,
+          "text": "미안해. 여기까지가 한계야..."
+        }
+      ]
+    }
+  ]
+}
