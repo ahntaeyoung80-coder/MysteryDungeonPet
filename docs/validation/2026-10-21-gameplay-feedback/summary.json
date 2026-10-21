@@ -103,6 +103,8 @@
   ],
   "pending": [
     "actual user Windows11/OS interaction and long-run performance",
-    "remote CI completion recorded after push"
-  ]
+    "automatic CI completion not confirmed: workflow/status queries returned empty lists"
+  ],
+  "productCommit": "a0e834c0502f28820c4d2ebf0d0f1c9b9ce9ad6b",
+  "remoteVerification": "remote-verification.json"
 }

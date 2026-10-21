@@ -17,6 +17,6 @@ B-1/B-2 자율 탐험 안정화에 이어 [다양성 계획](docs/plans/2026-10-
 
 ## 검증·바로 다음 작업
 
-다양성 P0~P8 뒤 [사용자 피드백 수정](docs/logs/2026-10-21-gameplay-feedback.md)을 구현·검증했다. 시야 밖/우호 배회·정면 타깃·대사/방향 복원·긴 층의 추가 문답·전체 회복을 회귀로 확인했다. ASan/UBSan26개 고유 항목과Python49개가 최종 통과했으며, 실제 EXE의 낮은 체력 대사5캡처·시야 밖 배회·동료 피해·아이템6종 원본 픽셀·두 맵 이름/기본 실행·기존 NPC/설치도 확인했다. [이번 검증 근거](docs/validation/2026-10-21-gameplay-feedback/summary.json), [이전 다양성 마감](docs/logs/2026-10-21-event-variety-final.md). 소스·선택 자산·루트 EXE/hash를 함께 갱신한 뒤 원격/CI 상태를 기록한다.
+다양성 P0~P8 뒤 [사용자 피드백 수정](docs/logs/2026-10-21-gameplay-feedback.md)을 구현·검증했다. 시야 밖/우호 배회·정면 타깃·대사/방향 복원·긴 층의 추가 문답·전체 회복을 회귀로 확인했다. ASan/UBSan26개 고유 항목과Python49개가 최종 통과했으며, 실제 EXE의 낮은 체력 대사5캡처·시야 밖 배회·동료 피해·아이템6종 원본 픽셀·두 맵 이름/기본 실행·기존 NPC/설치도 확인했다. [이번 검증 근거](docs/validation/2026-10-21-gameplay-feedback/summary.json), [이전 다양성 마감](docs/logs/2026-10-21-event-variety-final.md). 소스·선택 자산·루트 EXE/hash를 함께 반영한 제품 커밋a0e834c의 HEAD=origin/work를 명시 fetch로 확인했다. 자동 CI 조회가 비어 완료/통과는 미확인이다.
 
 남은 범위는 실제 사용자 Windows11·OS lock/power·장기 성능과 활동 연동이다. Wine의 짧은 실행을 이 항목의 통과로 표시하지 않는다. 소스·선택 자산·루트 EXE를 함께 반영하며 자동 CI는 최종 push 후 별도 상태로 기록한다. [실행 안내](docs/WINDOWS_QUICKSTART.md).

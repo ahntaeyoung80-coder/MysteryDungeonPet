@@ -36,3 +36,5 @@ Windows x64 Release/static 빌드와 Wine10/Xvfb의 실제 EXE를 확인했다. 
 ## 시간과 반영
 
 사전 예상은 구현45~70분·관련 검사/실제 EXE/반영15~25분으로 보고했다. 착수의 정확한 시각은 기록하지 못했으며 최초 명시 시각18:03:13 KST부터 구현·검사·기록이 병행됐다. 세부 순수 작업/검사 시간을 임의로 분리하지 않는다. 검사 자체 실측은 위와 같으며 최종 원격 시각은 remote-verification에 남긴다. CI push/PR가 전체 검사를 실행하므로 변경 중간에는 push하지 않았고 최종 소스·선택 자산·루트 EXE를 함께 커밋한다. 원격 확인만 문서 전용skip ci로 후속 기록한다.
+
+18:40:11 KST에 제품 커밋a0e834c0502f28820c4d2ebf0d0f1c9b9ce9ad6b를work로 push하고 명시 refspec fetch 후 HEAD=origin/work·작업 트리 clean을 확인했다. 최초 명시 측정18:03:13부터 원격 확인까지36분58초이며 이전 착수 구간은 미계측이다. 구현/빌드/검사가 병행되어 이를 순수 구현 시간으로 표시하지 않는다. GitHub workflow/status 조회는 모두 빈 목록이라 CI 완료/통과는 미확인이다. 이 확인은 문서 전용skip ci 커밋으로 기록한다. [원격 근거](../validation/2026-10-21-gameplay-feedback/remote-verification.json).

@@ -1,0 +1,11 @@
+{
+  "productCommit": "a0e834c0502f28820c4d2ebf0d0f1c9b9ce9ad6b",
+  "checkedAtUtc": "2026-10-21T09:40:11Z",
+  "checkedAtKst": "2026-10-21T18:40:11+09:00",
+  "explicitFetchRefspec": "refs/heads/work:refs/remotes/origin/work",
+  "headEqualsOriginWork": true,
+  "workingTreeAfterProductPush": "clean",
+  "workflowRuns": [],
+  "commitStatuses": [],
+  "ciConclusion": "조회가 비어 자동 CI 완료/통과는 미확인; 로컬 검증과 구분"
+}
