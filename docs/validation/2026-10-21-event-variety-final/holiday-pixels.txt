@@ -1,0 +1,1 @@
+PASS: four actual bath combinations, 160,000 exact submitted pixels, original occlusion/order and no HUD

@@ -1,0 +1,18 @@
+test_original_special_context_weights_reproduce (tests.test_event_assets.EventAssetsTests.test_original_special_context_weights_reproduce) ... ok
+test_selected_map18_preserves_original_profiles_and_tiles (tests.test_event_assets.EventAssetsTests.test_selected_map18_preserves_original_profiles_and_tiles) ... ok
+test_verified18_to19_completion_reproduces_and_keeps15 (tests.test_event_assets.EventAssetsTests.test_verified18_to19_completion_reproduces_and_keeps15) ... ERROR
+
+======================================================================
+ERROR: test_verified18_to19_completion_reproduces_and_keeps15 (tests.test_event_assets.EventAssetsTests.test_verified18_to19_completion_reproduces_and_keeps15)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MysteryDungeonPet/tests/test_event_assets.py", line 37, in test_verified18_to19_completion_reproduces_and_keeps15
+    prepare_completion(ROOT, out, 18, GAME / 'completion/destinations.mdec')
+  File "/workspace/MysteryDungeonPet/tools/prepare_completion_scenes.py", line 19, in prepare
+    raise ValueError('choose a new output directory')
+ValueError: choose a new output directory
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.713s
+
+FAILED (errors=1)

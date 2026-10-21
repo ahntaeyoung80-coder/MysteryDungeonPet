@@ -1,0 +1,7 @@
+Test project /workspace/MysteryDungeonPet/build/p0-asan
+    Start 2: pet_event_combat_tests
+1/1 Test #2: pet_event_combat_tests ...........   Passed    0.29 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.29 sec

@@ -23,6 +23,8 @@ int main(){try {
         s=saved;check(!commitShopExchange(s) && stockQuantity(s,0,109)==0 && s.gameplay.oran==1,"restored trade charged/credited twice");traded=true;
     }
     check(traded,"no original shop sample contained supported offer");
+    finishVarietyEvent(s);s.gameplay.deadlineMs=s.gameplay.phaseStartedMs;
+    s=decodeSnapshot(encodeSnapshot(s),s.assetVersion);
     for(auto type:{VarietyEvent::MonsterHouse,VarietyEvent::JointBattle}) {
         s=eventFixture(p);s.rng.state=42;s.gameplay.oran=s.gameplay.companion.oran=5;
         check(startVarietyEvent(s,type,1000,c,1,&maps),"battle event could not start");

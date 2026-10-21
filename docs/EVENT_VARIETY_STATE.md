@@ -1,49 +1,33 @@
-# 다양성 P0 — 상태·저장 계약
+# 다양성 — 실행·저장 계약
 
-2026-10-21. [구현 계획](plans/2026-10-21-event-variety-implementation.md)의 P0다. 자동 이벤트·새 대사·실제 배우·휴일 방문은 아직 등록하지 않았다. 이 문서는 구현된 공통 계약과 후속 연결 지점을 설명한다.
+2026-10-21. [P0~P8 계획](plans/2026-10-21-event-variety-implementation.md)의 현재 구현 계약이다. 단계별 근거는 [logs](logs/), 최종 통합 결과는 [마감 근거](validation/2026-10-21-event-variety-final/summary.json)를 따른다.
 
-## ID·상태
+## 상태와 저장
 
-`ExplorationState.variety`는 대화1개, 주요 사건1개, 하루 일정, 독립 RNG3개, 최근 대화, 확정 결과를 보관한다. 기존 `GameplayEvent`/`DialogueStage`/`LifePhase` enum의 범위를 늘리지 않았다.
+MDES16은1~15의 읽기를 유지한다. 기존11 payload 뒤12 variety,13 현재 재고,14 이동 임무,15 상품/전투 기여,16 휴일 block을 순서대로 추가하고 block 길이·전체 CRC를 검사한다. MDPE1은 유지한다. MDLC1 문답, MDER1 맵 문맥, MDHR1 통행 경로, MDHS2 Float 바인딩은 별도 선택 자산이다.
 
-- `VarietyEvent`의1~10은 E01~E10이며 `EventIdentity`의 종류/run/day/floor/trigger가 한 사건을 식별한다. 결과 키는 `event:type:run:day:floor:trigger:result`다. 숫자는 정규 십진 표기, 문자열 ID는 영문·숫자·`.`·`_`·`-`만 허용한다.
-- 화자 instance는 플레이어0, 동료 `kCompanionActorId`, 현재 population의 실제 Friend ID다. 시스템 발화만 `kSystemDialogueActorId`를 쓴다. 원본 MD/species와 혼용하지 않는다. 사건 배우는 기존 population 참조이며 player/동료/system sentinel을 NPC로 등록할 수 없다. 새 임시 배우 생성·진영은 P5/P6에서 구현한다.
-- `DialogueSession`은 catalogueVersion/context/bundle/lineId/현재 문장 위치/실제 화자·상대/노출 글자 수/남은 읽기 시간/시작·기한을 저장한다. 문장·감정 catalogue 변환과 순차 출력은 P2에서 연결한다. `reconcileDialogue`는 소비자가 제공한 정확한 버전·묶음·문장 ID와 대조하며 불일치하면 종료한다. 임의의 다른 묶음으로 바꾸지 않는다.
-- 사건 진행은 None→Approach/Dialogue/Action/Result/Dismiss→Finished 또는 Abandoned 범위다. P0는 이 상태의 저장·검증·중단 경계만 제공한다. 실제 사건 진행기는 P3다. 종료된 사건은 배우·예약을 소유할 수 없다.
-- 예약은 현재 플레이어/동료의 실제 `oran`1개를 참조하는 의도다. 예약 기록 자체로 소비/증정하지 않는다. 이행 시 획득 이력으로 소모품을 재생성하지 않는다. 다른 물품·수량·거래 결과 적용은 P4다.
+VarietyState는 문답1개·주요 사건1개·일정·독립 event/dialogue/schedule RNG·최근 문답·확정 결과·현재 재고·휴일을 보관한다. 사건 identity는 type/run/day/floor/trigger, 결과 키는 event:type:run:day:floor:trigger:result다. instance는 플레이어0/동료 sentinel/실제 population ID이며 휴일 고정 배우만 kHolidayActorId를 쓴다. 원본 MD/species/KAO/actor ID와 혼용하지 않는다.
 
-## 안전 경계와 기한
+세 RNG는 고정 정수 혼합으로 파생하고 지도/전투 RNG와 분리한다. 렌더는 추첨하지 않는다. 대화의 버전/묶음/문장/페이지/실제 화자·상대/노출 글자·남은 읽기 시간을 저장한다. 명시 복원은 같은 줄과 남은 시간을 이어 읽고 버전·참조·조건 불일치면 종료하며 다른 문장을 대신 뽑지 않는다. 한글은13자×2줄 이내의 페이지, 글자당25ms 노출 뒤 최소1초 읽기를 준다. 새 한국어는 작성 대사이며 원작 인용이 아니다.
 
-`canStartVariety(state, now)`는 탐험 평상시·양쪽 건강·동작 완료·공격 큐 없음·인접 적 없음 경계만 허용한다. 렌더에서 후보를 추첨하지 않는다. 사건/대화를 보류하는 동안 `advance`/`advanceGameplay`는 이동·전투·RNG·행동권을 진행하지 않는다. 이미 시작한 전투/피해·낮은 HP·필수 scene 전환은 사건을 취소하고 기존 진행을 계속한다.
+## 결과·소유권
 
-취소는 예약·사건의 배우 참조·대화·임시 목표를 해제하고 Abandoned를 보관한다. 실제 결과 journal·재고·RNG·최근 대화·일정은 유지한다. `Explorer::invalidate`와 함께 호출하는 귀가/일반 시작/기한 만료 경로는 기존 경로 캐시도 폐기한다. 다음 탐험은 원래 탐험 목표 정책으로 재탐색한다.
+진행은 Approach→Dialogue→Action→Result→Dismiss→Finished 또는 Abandoned이며 필요한 단계만 쓴다. 실제 결과를 적용할 때 candidate 복사→조건 재확인·재고 변화·commitKey→atomic snapshot 저장→실행 상태 교체→결과 문구 순서다. 저장 실패하면 이전 상태를 유지한다. 취소는 예약/임시 배우/목표/반환 물품만 정리하고 확정 재고·결과·RNG·일정을 되돌리지 않는다. 결과 journal4,096개/전체8MiB 한도를 넘으면 거부한다.
 
-대화의 안전 기한은 최대60초, 주요 사건은 최대300초다. 이는 막힘 방지 한도이며 발생 확률·연출 길이 정책이 아니다. Win32의 `nextGameplayDeadline`은 보류 중 기한을 사용해 지난 gameplay deadline을 반복 예약하지 않는다. pause/resume은 기존 시계와 함께 새 시작/기한을 이동하고 남은 읽기 시간을 유지한다. 대화/사건 중 캐릭터 교체는 보류한다.
+획득 이력과 현재 소비 재고는 분리한다. 오랭열매는 기존 플레이어/동료 oran이 유일한 원장이고 나머지는 owner/item/quantity로 저장한다. 수량 상한99, 구형 이력에서 이미 소비한 물건을 복구하지 않는다. 나눔은 예비1개를 남길 때만1개 예약/전달한다. 상점은 원작 shop_items 가중치로7개 재고를 선택하고 오랭열매가 실제 재고에 있을 때 사과3개와1개를 교환한다. 부족/취소는 구경이며 원작 화폐경제를 구현했다고 하지 않는다. 분실물은 같은 층의 정확한 원주인 instance에 반환하며 일반 재고/보상으로 바꾸지 않는다.
 
-## RNG·저장
+E02는 실제 세 번째 배우의 계단 인접 도착, E08은 원작 warp6 양수·접촉1회·한 대상의 도달 가능한 이동/실제 인접 재회를 요구한다. 경로는 벽·모서리·중첩/맞교환을 피하고 유한 실패 시 정리한다. E04/E07은 기존 행동·피해 scheduler에 연결해 주인공→동료→임시 아군→적 순서를 유지하고 실제 전원 기절·큐 정리 뒤 승리한다. 아군 오사격·영구 동료 교체·가짜 승리/보상은 허용하지 않는다.
 
-새 실행은 `mix(seed ^ mix(runId))`에 고정 숫자 salt를 혼합해 event/dialogue/schedule 상태를 분리한다. `mix`는 기존 SplitMix64와 같은64비트 정수 혼합식이다. 구형 저장은 보관된 mapSeed/runId로 같은 규칙을 적용한다. `std::hash`와 기존 지도·출현·전투 RNG는 사용하지 않는다. `drawVariety`는 지정 stream만 진행하고 빈 후보 범위는 추첨 전에 거부한다.
+## 자동 후보와 하루
 
-MDES12는 기존 MDES11 payload 뒤에 variety block과 길이를 붙이고 전체 CRC를 유지한다. MDES1~11은 계속 읽으며 새 사건·대화·결과·최근 대화는 빈 상태다. 기존 현재 run의 meal 키는 같은 날의 식사 완료 표식으로 이행한다. MDPE1·MDCP1·원작 자산 형식은 바꾸지 않았다.
+검증한 던전15(7층)→16 Steam Cave Peak,18(9층)→19 Amp Clearing만 기본 다음 탐험일 후보이며 현재 맵을 피한다. 원작 출현/아이템 비중은 변경하지 않는다.15는 상점/MH/warp6 조건0이므로 해당 사건을 만들지 않는다. 완료 이동16회부터32회 간격으로 한 번만 후보를 평가하고 층당1/run당2를 넘지 않는다. MH는 원작 확률이 양수인 방 첫 진입만 평가한다.
 
-크기 한도는 대화256문장 위치/4,096글자 노출, 최근 상황64개, 확정 결과4,096개, 사건 배우kTiles개, 예약16개, 기존 전체 파일8MiB다. journal이 가득 차면 새 결과를 거부하며 이전 키를 지워 중복 지급을 허용하지 않는다. 알 수 없는 사건 enum·배우·잘못된 결과 ID·중복·길이·CRC·잘린 저장은 기존 파일 로더와 함께 거부한다. 손상된 파일을 다른 사건으로 복원했다고 보고하지 않는다.
+기본 실행은 길드 아침에서 중단 사건·대화·예약을 취소하되 같은 날 목적지/맵·확정 결과·누적 재고를 유지한다. 휴일 방문 완료 후 식사가 아직 미완료면 기존 ReturnHome/저녁을 먼저 이어 중복 귀가/식사 생략을 막는다. 명시 --explore는 임무/문답/휴일의 실제 단계를 복원한다. Ready에서 새 Explorer로 일정/RNG/재고를 넘기고 같은 날의 pending package 교체는 보류한다. 식사/날짜/방문 결과는 같은 날 한 번만 확정한다.
 
-`commitVarietyResult`는 Result 경계에서 처음인 키만 등록하고 중복이면 false다. 물건 변화나 디스크 저장을 대신하지 않는다. P4 이후 호출자는 기존 Win32 방식처럼 **candidate 복사→조건 확인·결과 변화와 키 등록→saveSnapshot 성공→실행 상태 교체→결과 문구** 순서로 연결해야 한다. 저장 전 종료는 이전 상태에서 재시도하며 저장 후 종료는 같은 키를 다시 적용하지 않는다. 취소·catalogue 변경으로 확정 결과를 되돌리지 않는다.
+휴일은 완료된 탐험3일마다 마을부터 온천과 교대한다. 길목→마을 서/동쪽 또는 코터스 인사→입수/Float/휴식/퇴장→귀가 후 기존6초 식사/취침/기상 흐름을 쓴다. 탐험 클리어·수치 보너스·OS 활동 연동은 붙이지 않았다. 같은 날 목적지를 재추첨하지 않으며 일반 재시작은 미완료 방문을 같은 목적지에서 다시 시작한다. 완료 방문은 다시 지급/방문하지 않는다.
 
-## 일반 실행·상세 복원·하루 인계
+## 실제 표시와 검사
 
-명시 `--explore`는 MDES12의 사건/대화/예약/배우 참조/현재 줄을 그대로 읽는다. 실제 catalogue 재생 연결은 P2, 임시 배우의 상세 복원은 P5에서 검증한다. 일반 실행은 기존 길드 아침에서 시작하며 진행 중 사건은 Abandoned로 저장하고 미소비 예약·대화를 해제한다. 같은 날의 일정/목적지·결과·RNG는 유지한다.
+원작 ground·BMA 통행 가능8px 칸의7경로·스타팅34 MD/22sprite Float20/704프레임·원작 효과625~629의 palette1/12tick/앞뒤 우선순위를 검증한다. 입수는 실제 Float와 원작 앞물결로 가리고 임의 색/몸체 절단을 만들지 않는다. SteamClouds43은 팔레트 미해결로 제외한다. 휴일 HUD를 숨기고 실제 화자 얼굴 하나·명찰 없음·전체 UI fade를 유지한다. 바쁜 장면의 캐릭터 교체는 실제 안전한 적용까지 profile 저장도 보류한다.
 
-`Ready`에서 새 Explorer를 만드는 경로가 variety 상태를 명시 인계한다. 같은 날에는 고정한 목적지와 식사 완료를 유지하고 pending package 변경도 다음 날까지 보류한다. 다음 날이 확정되면 일정/식사 완료만 새 날짜로 초기화하고 결과·RNG·최근 대화는 유지한다. 같은 날의 서로 다른 run에서 식사 장면을 다시 보더라도 누적 식사 횟수는 한 번만 증가한다.
-
-P0가 자동으로 지정하는 목적지는 기존 탐험뿐이다. Town/HotSpring은 저장 값만 준비했으며 휴일 선택/방문/보너스 기능을 실행하지 않는다. 빈도·교환 비율·보상·휴일 주기는 여전히 미정이다.
-
-## 재현
-
-```sh
-cmake -S . -B build/p0 -DCMAKE_BUILD_TYPE=Debug
-cmake --build build/p0 --target pet_variety_state_tests pet_package_transition_tests
-ctest --test-dir build/p0 --output-on-failure -R '^pet_(variety_state|package_transition)_tests$'
-```
-
-`pet_variety_state_tests`는 독립 RNG 고정 벡터·실제 탐험 비간섭, 동일 frame 반복 호출·pause·기한, catalogue 불일치, 저장 전후 결과 재시도·실패 저장의 이전 파일 보존, 같은 날/다음 날 인계·식사 once·pending package 보류, 손상·MDES9~11 이행을 검사한다. MDES1~8·원작 패키지·전투 회귀는 기존 검사에 유지하며 legacy fixture 생성기는 새 block을 실제 제거한 뒤 구형 payload를 만든다.
+pet_dialogue_catalogue/event_runtime/event_stock/event_movement/event_combat/holiday_scene/variety_state 테스트가 실제 단계·매 경계 저장·실패/취소·한 번 처리·독립 RNG를 검사한다. pet_variety_scenario ROOT CASE DUNGEON SNAPSHOT은 개발용 재현 도구이며 제품 메뉴에는 내부 단계/ID가 없다. 최종 실제 EXE·원작 픽셀 대조·메모리 검사 결과는 마감 근거에 기록한다.

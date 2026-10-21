@@ -126,5 +126,5 @@ int main(int argc,char** argv) {try {
     broken=bytes;put(broken,76,129);rejectBytes(broken);
     broken=bytes;broken.resize(broken.size()-1);rejectBytes(broken);
     broken=bytes;broken.push_back(0);rejectBytes(broken);std::filesystem::remove(file);
-    std::cout<<"17 NPC bindings; complete dungeon 0/15 coverage; exact MD/species/sprite/KAO; roles, Normal fallback, eight directions, missing body/ID/schema rejected; single-speaker overlay pass\n";
+    std::cout<<"31 NPC bindings; complete dungeon 0/15/18 coverage; exact MD/species/sprite/KAO; roles, Normal fallback, eight directions, missing body/ID/schema rejected; single-speaker overlay pass\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

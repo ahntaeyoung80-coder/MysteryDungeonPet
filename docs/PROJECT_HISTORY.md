@@ -2,6 +2,10 @@
 
 2026-10-16 정리. 현재 진행 상태는 [PROJECT_STATE](../PROJECT_STATE.md), 단계 정의·완료 조건은 [개발 파이프라인](DEVELOPMENT_PIPELINE.md), 이번 실행 순서는 [후속 작업 계획](PARTY_AI_WORK_PLAN.md)을 따른다.
 
+## 2026-10-21 — 다양성 P0~P8
+
+저장/독립 RNG·실제 NPC·상황 문답·탐험 사건9종·원작 맵18→19·마을/온천 휴일을 연결했다. 단계별 간단 검사·로컬 커밋 후 최종 메모리/원작/실제 EXE 통합을 수행한다는 사용자 지시를 적용했다. 현재 계약은 [EVENT_VARIETY_STATE](EVENT_VARIETY_STATE.md), 실행물과 검증 범위는 [마감 로그](logs/2026-10-21-event-variety-final.md), 이전 P0/P1 근거는 해당 날짜별 로그를 따른다.
+
 ## A/B/C에서 현재 위치
 
 | 단계 | 확정 목적 | 확보한 결과 | 남은 완료 조건 |

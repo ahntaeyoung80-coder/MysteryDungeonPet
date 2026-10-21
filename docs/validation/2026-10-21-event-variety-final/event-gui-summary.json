@@ -1,0 +1,126 @@
+{
+  "E01": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 3013
+  },
+  "E02": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 3035
+  },
+  "E03": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 3065
+  },
+  "E04": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 2575
+  },
+  "E05": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 3032
+  },
+  "E06": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 2814
+  },
+  "E07": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 2917,
+    "independentHelperAttackTokens": 1
+  },
+  "E08": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 2986
+  },
+  "E09": {
+    "finished": true,
+    "resultCommits": 1,
+    "returnedToExploration": true,
+    "rows": 3096
+  },
+  "share": {
+    "resultCommits": 1,
+    "playerOran": 1,
+    "playerApples": 0
+  },
+  "trade": {
+    "resultCommits": 1,
+    "playerOran": 1,
+    "playerApples": 0
+  },
+  "town": {
+    "groundScenes": [
+      "P01P01A",
+      "T01P01A",
+      "T01P02A"
+    ],
+    "beats": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      17
+    ],
+    "nextDay": 2,
+    "meals": 1,
+    "visitCommits": 1
+  },
+  "spring": {
+    "groundScenes": [
+      "P01P01A",
+      "P02P01A"
+    ],
+    "beats": [
+      1,
+      2,
+      3,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "nextDay": 2,
+    "meals": 1,
+    "visitCommits": 1
+  },
+  "longDialogue": {
+    "pages": [
+      "E01.encourage.01.p1",
+      "E01.encourage.01.p2",
+      "E01.encourage.01.p3"
+    ],
+    "catalogueVersion": 999,
+    "testAssetsOnly": true
+  },
+  "map18Completion": {
+    "finalFloor": 9,
+    "originalDestination": 19,
+    "mandatorySuccessTextCapture": true,
+    "returnedThroughMealToNextDay": true
+  }
+}

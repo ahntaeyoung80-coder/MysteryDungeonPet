@@ -1,0 +1,41 @@
+eight Korean text scenes and three map/floor HUD labels have visible opaque GDI ink
+31 NPC bindings; complete dungeon 0/15/18 coverage; exact MD/species/sprite/KAO; roles, Normal fallback, eight directions, missing body/ID/schema rejected; single-speaker overlay pass
+24 bundles / seven contexts: atomic pairs, dedicated RNG, repeat avoidance, reveal/read, restore, eligibility and finite cleanup pass
+E03 real original stock/3 apples -> 1 Oran/restore once; E04/E07 ordered attacks, actual defeat, independent helper and no friendly fire pass
+town/spring full visits, Float34/water625-629, exact actor, per-stage restore, same-day schedule, no explore reward, evening/meal/day once pass
+fixture E02 saved
+GUI E02 complete
+fixture E03 saved
+GUI E03 complete
+fixture E04 saved
+GUI E04 complete
+fixture E05 saved
+GUI E05 complete
+fixture E06 saved
+GUI E06 complete
+fixture E07 saved
+GUI E07 complete
+fixture E08 saved
+GUI E08 complete
+fixture E09 saved
+GUI E09 complete
+fixture share saved
+GUI share complete
+fixture trade saved
+GUI trade complete
+fixture town saved
+GUI town complete
+fixture spring saved
+GUI spring complete
+fixture bath saved
+GUI bath complete
+fixture completion saved
+GUI completion complete
+fixture bath saved
+fixture bath saved
+fixture bath saved
+fixture bath saved
+fixture E01 saved
+fixture pool saved
+X connection to :99 broken (explicit kill or server shutdown).
+X connection to :99 broken (explicit kill or server shutdown).

@@ -139,6 +139,10 @@ void Explorer::enableGameplay(std::uint64_t now) {
 void Explorer::startGuildMorning(std::uint64_t now) {
     enableGameplay(now);
     cancelVariety(state_);
+    if(state_.variety.schedule.holidayCommitted && !state_.variety.schedule.mealCommitted) {
+        if(state_.gameplay.life!=LifePhase::ReturnHome)(void)beginReturn(now,false);
+        return;
+    }
     auto& g=state_.gameplay;
     invalidate();state_.phase=Phase::Home;
     g.onceKeys.insert("return:"+std::to_string(state_.runId));

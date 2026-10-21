@@ -35,6 +35,9 @@ int main(){try {
         }
         check(steps<100 && s.gameplay.life==LifePhase::ReturnHome && s.variety.schedule.holidayCommitted && s.variety.lastHoliday==destination,"holiday did not finitely return once");
         check(s.gameplay.day==oldDay && s.rng.state==rng && s.inventory.size()==inventory && !s.completed,"holiday advanced exploration/rewards/date");
+        {Explorer restart(s);restart.startGuildMorning(now);
+         const auto saved=decodeSnapshot(encodeSnapshot(restart.state()),p.assetVersion);
+         check(saved.gameplay.life==LifePhase::ReturnHome && saved.gameplay.day==oldDay && saved.gameplay.meals==meals,"completed holiday restart skipped uncommitted evening");}
         check(seen.count(HolidayBeat::PathWalk) && (destination==DayDestination::Town?seen.count(HolidayBeat::WestVisit)&&seen.count(HolidayBeat::EastDepart):seen.count(HolidayBeat::SpringVisit)&&seen.count(HolidayBeat::BathExit)&&bath),"visit skipped town/spring phases");
         while(s.gameplay.day==oldDay && steps++<180){Explorer e(s);now=s.gameplay.deadlineMs;e.advanceGameplay(now,ActorCompletion{true,true,true},c,nullptr,&visits);s=decodeSnapshot(encodeSnapshot(e.state()),p.assetVersion);}
         check(s.gameplay.day==oldDay+1 && s.gameplay.meals==meals+1 && s.variety.schedule.destination==DayDestination::Exploration,"holiday evening/day/meal repeated or did not finish");

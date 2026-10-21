@@ -14,7 +14,17 @@ int main(int argc,char** argv){try {
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");const auto maps=loadEventRegistry(root/"gameplay/events/contexts.mder");
     const auto now=std::uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
     auto s=eventFixture(p);s.gameplay.phaseStartedMs=s.gameplay.deadlineMs=now;
-    if(name=="town" || name=="spring" || name=="bath") {
+    if(name=="pool") {
+        s.variety.holidayPolicy=true;s.variety.completedExplorations=3;
+        s.variety.schedule.destination=DayDestination::Town;s.variety.schedule.dungeon=0;
+        const auto visits=loadHolidayRegistry(root/"gameplay/holiday");
+        if(!startHoliday(s,c,visits,now))throw std::runtime_error("pool holiday ineligible");
+        for(unsigned step=0;s.variety.holiday.active && step<100;++step) {
+            Explorer e(s);e.advanceGameplay(nextGameplayDeadline(s),ActorCompletion{true,true,true},c,&maps,&visits);s=e.state();
+        }
+        if(s.gameplay.life!=LifePhase::ReturnHome)throw std::runtime_error("pool visit did not return");
+        s.gameplay.phaseStartedMs=now;s.gameplay.deadlineMs=now+500;
+    } else if(name=="town" || name=="spring" || name=="bath") {
         s.variety.holidayPolicy=true;s.variety.completedExplorations=3;s.variety.schedule.destination=name=="town"?DayDestination::Town:DayDestination::HotSpring;s.variety.schedule.dungeon=0;
         const auto visits=loadHolidayRegistry(root/"gameplay/holiday");if(!startHoliday(s,c,visits,now))throw std::runtime_error("holiday fixture ineligible");
         if(name=="bath"){s.variety.dialogue={};s.variety.holiday.beat=HolidayBeat::BathRest;s.variety.holiday.startedMs=now;s.variety.holiday.deadlineMs=now+8000;s.variety.event.progress=EventProgress::Action;s.gameplay.deadlineMs=now+8000;}

@@ -1,0 +1,58 @@
+test_bin_pack_rejects_truncation_and_offsets (test_a1.Distributions.test_bin_pack_rejects_truncation_and_offsets) ... ok
+test_cdf_cases (test_a1.Distributions.test_cdf_cases) ... ok
+test_group_floor_first_and_last (test_a1.Distributions.test_group_floor_first_and_last) ... ok
+test_item_category_cdf_and_guaranteed (test_a1.Distributions.test_item_category_cdf_and_guaranteed) ... ok
+test_monster_contexts_and_special_rows (test_a1.Distributions.test_monster_contexts_and_special_rows) ... ok
+test_raw_strings_preserve_unknown_encoding_and_check_bounds (test_a1.Distributions.test_raw_strings_preserve_unknown_encoding_and_check_bounds) ... ok
+test_alias_cycle_and_missing_sheet_rejected_before_pack (test_a1.Packages.test_alias_cycle_and_missing_sheet_rejected_before_pack) ... ok
+test_cli_unsupported_rom_retains_hash_and_failure_stage (test_a1.Packages.test_cli_unsupported_rom_retains_hash_and_failure_stage) ... ok
+test_failure_preserves_published_output (test_a1.Packages.test_failure_preserves_published_output) ... /workspace/MysteryDungeonPet/local/p1-venv/lib/python3.12/site-packages/skytemple_files/graphics/chara_wan/utils.py:107: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  datas = img.getdata()
+ok
+test_mutated_package_rejected (test_a1.Packages.test_mutated_package_rejected) ... ok
+test_pixels_markers_alias_rows_ticks_and_reproducibility (test_a1.Packages.test_pixels_markers_alias_rows_ticks_and_reproducibility) ... ok
+test_a1_to_native_preserves_every_frame_and_alias_timing (test_a2_bridge.A2Bridge.test_a1_to_native_preserves_every_frame_and_alias_timing) ... ok
+test_unsupported_budget_and_alias_geometry_are_explicit (test_a2_bridge.A2Bridge.test_unsupported_budget_and_alias_geometry_are_explicit) ... ok
+test_durable_home_does_not_replay_pickup_or_clear (test_b1.B1BridgeTests.test_durable_home_does_not_replay_pickup_or_clear) ... ok
+test_gameplay_greeting_terminal_restore (test_b1.B1BridgeTests.test_gameplay_greeting_terminal_restore) ... ok
+test_native_autotile_matches_skytemple_drawer (test_b1.B1BridgeTests.test_native_autotile_matches_skytemple_drawer) ... ok
+test_normal_and_floor_items_only (test_b1.B1BridgeTests.test_normal_and_floor_items_only) ... ok
+test_original_conversion_reproducible_and_closed (test_b1.B1BridgeTests.test_original_conversion_reproducible_and_closed) ... ok
+test_process_kill_preserves_committed_run (test_b1.B1BridgeTests.test_process_kill_preserves_committed_run) ... ok
+test_every_starter_body_gender_id_and_fourteen_original_faces (test_character_assets.CharacterAssetTests.test_every_starter_body_gender_id_and_fourteen_original_faces) ... ok
+test_exact_npc_species_pixels_not_only_self_consistent_metadata (test_character_assets.CharacterAssetTests.test_exact_npc_species_pixels_not_only_self_consistent_metadata) ... ok
+test_npc_supplements_preserve_existing_original_expressions (test_character_assets.CharacterAssetTests.test_npc_supplements_preserve_existing_original_expressions) ... ok
+test_product_starters_include_meowth_and_munchlax_in_both_roles (test_character_assets.CharacterAssetTests.test_product_starters_include_meowth_and_munchlax_in_both_roles) ... ok
+test_compilation_is_reproducible (test_dialogue_catalogue.DialogueCatalogueTests.test_compilation_is_reproducible) ... ok
+test_invalid_conditions_actors_ids_and_emotions_are_rejected (test_dialogue_catalogue.DialogueCatalogueTests.test_invalid_conditions_actors_ids_and_emotions_are_rejected) ... ok
+test_long_korean_pages_fit_two_lines_and_keep_text (test_dialogue_catalogue.DialogueCatalogueTests.test_long_korean_pages_fit_two_lines_and_keep_text) ... ok
+test_body_selection_alone_swaps_character_portrait_and_name (test_dialogue_portraits.DialogueIdentityTests.test_body_selection_alone_swaps_character_portrait_and_name) ... ok
+test_same_character_keeps_two_distinct_roles (test_dialogue_portraits.DialogueIdentityTests.test_same_character_keeps_two_distinct_roles) ... ok
+test_unknown_character_has_no_previous_portrait_fallback (test_dialogue_portraits.DialogueIdentityTests.test_unknown_character_has_no_previous_portrait_fallback) ... ok
+test_wrong_rom_catalogue_and_duplicate_roles_rejected (test_dialogue_portraits.DialogueIdentityTests.test_wrong_rom_catalogue_and_duplicate_roles_rejected) ... ok
+test_ground_sources_pixels_and_routes_use_original_collision (test_holiday_assets.HolidayAssetsTests.test_ground_sources_pixels_and_routes_use_original_collision) ... ok
+test_original_float_slot_sprite_and_verified_frames (test_holiday_assets.HolidayAssetsTests.test_original_float_slot_sprite_and_verified_frames) ... ok
+test_water_pixels_retain_original_front_back_palette_offset_and_tick (test_holiday_assets.HolidayAssetsTests.test_water_pixels_retain_original_front_back_palette_offset_and_tick) ... ok
+test_confirmed_props_reproduce_committed_files (test_improvement_assets.ImprovementAssets.test_confirmed_props_reproduce_committed_files) ... No file handler for DBIN_RAW_IMAGE_4BPP found, falling back to bytes.
+ok
+test_full_backgrounds_preserve_original_pixels_and_window_frame (test_improvement_assets.ImprovementAssets.test_full_backgrounds_preserve_original_pixels_and_window_frame) ... ok
+test_each_original_face_or_same_character_normal_pixels (test_npc_assets.NpcAssetTests.test_each_original_face_or_same_character_normal_pixels) ... ok
+test_new_wan_audits_and_existing_body_reuse (test_npc_assets.NpcAssetTests.test_new_wan_audits_and_existing_body_reuse) ... ok
+test_selected_md_body_sources_and_original_talk_groups (test_npc_assets.NpcAssetTests.test_selected_md_body_sources_and_original_talk_groups) ... ok
+test_empty_baseline_and_contaminated_animation (test_playback_metrics.PlaybackMetricsTests.test_empty_baseline_and_contaminated_animation) ... ok
+test_final_sample_and_destroyed_window_regressions_are_rejected (test_playback_metrics.PlaybackMetricsTests.test_final_sample_and_destroyed_window_regressions_are_rejected) ... ok
+test_historical_columns_nan_and_nonincreasing_clock_rejected (test_playback_metrics.PlaybackMetricsTests.test_historical_columns_nan_and_nonincreasing_clock_rejected) ... ok
+test_mismatched_direction_frame_anchor_and_timing_are_rejected (test_playback_metrics.PlaybackMetricsTests.test_mismatched_direction_frame_anchor_and_timing_are_rejected) ... ok
+test_native_metadata_alias_and_one_row_and_final_live_window (test_playback_metrics.PlaybackMetricsTests.test_native_metadata_alias_and_one_row_and_final_live_window) ... ok
+test_original_effect_and_dialogue_tiles_reproduce (test_scene_details.SceneDetailsTests.test_original_effect_and_dialogue_tiles_reproduce) ... /workspace/MysteryDungeonPet/local/p1-venv/lib/python3.12/site-packages/skytemple_files/graphics/effect_wan/sheets.py:682: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  srcData = inImg.getdata()
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py:589: ResourceWarning: unclosed file <_io.BufferedReader name='/workspace/MysteryDungeonPet/assets/original/gameplay/ui/atlas.png'>
+  if method() is not None:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 25.099s
+
+OK
+A1->MDPA->native: 144 frames (including aliases), points, flags, markers, ticks, hashes pass

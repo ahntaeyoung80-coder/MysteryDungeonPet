@@ -22,6 +22,7 @@ int main(){try {
             for(const auto& a:s.population.entities)for(const auto& old:before)if(a.instanceId==old.instanceId && a.tile!=old.tile)moved=true;
         }
         check(steps<80 && s.variety.event.progress==EventProgress::Finished && s.variety.event.actors.empty(),"event did not finitely dismiss");
+        s=decodeSnapshot(encodeSnapshot(s),s.assetVersion);
         check(s.rng.state==rng && s.inventory.size()==inventory && s.gameplay.oran==0 && s.gameplay.hearts==kMaxHp,"cosmetic event changed gameplay rewards/RNG");
         check(s.variety.committed.size()==1 && s.variety.committed.begin()->rfind(identity+":",0)==0,"result not committed exactly once");
         check(!seen.empty(),"event did not show authored dialogue");
@@ -29,6 +30,7 @@ int main(){try {
     }
     auto s=eventFixture(p);check(startVarietyEvent(s,VarietyEvent::GuildVisit,1000,c),"cancel visitor setup");cancelVariety(s);
     check(s.variety.event.progress==EventProgress::Abandoned && std::none_of(s.population.entities.begin(),s.population.entities.end(),[](const auto& a){return (a.originalId==434 || a.originalId==369) && a.visible;}),"cancel left temporary visitor in population");
+    s=decodeSnapshot(encodeSnapshot(s),s.assetVersion);
     s=eventFixture(p);s.spawnPolicy.friendBudget=1;check(!startVarietyEvent(s,VarietyEvent::GuildVisit,1000,c),"visitor exceeded population budget");
     s=eventFixture(p);s.floorSteps=16;const auto original=s.rng.state;(void)tryAutomaticEvent(s,1000,c);const auto eventRng=s.variety.eventRng;
     for(unsigned i=0;i<10;++i)(void)tryAutomaticEvent(s,1000,c);

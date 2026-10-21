@@ -1,0 +1,374 @@
+{
+  "npc-16-friendly": {
+    "opaqueBodyPixels": 183,
+    "rows": 170,
+    "cacheBodies": 1,
+    "portraitMd": 16,
+    "actualEmotion": 0
+  },
+  "npc-16-hostile": {
+    "opaqueBodyPixels": 168,
+    "rows": 316,
+    "cacheBodies": 1
+  },
+  "npc-25-friendly": {
+    "opaqueBodyPixels": 305,
+    "rows": 167,
+    "cacheBodies": 1,
+    "portraitMd": 25,
+    "actualEmotion": 1
+  },
+  "npc-25-hostile": {
+    "opaqueBodyPixels": 303,
+    "rows": 294,
+    "cacheBodies": 1
+  },
+  "npc-83-friendly": {
+    "opaqueBodyPixels": 218,
+    "rows": 160,
+    "cacheBodies": 1,
+    "portraitMd": 83,
+    "actualEmotion": 0
+  },
+  "npc-83-hostile": {
+    "opaqueBodyPixels": 239,
+    "rows": 286,
+    "cacheBodies": 1
+  },
+  "npc-85-friendly": {
+    "opaqueBodyPixels": 290,
+    "rows": 163,
+    "cacheBodies": 1,
+    "portraitMd": 85,
+    "actualEmotion": 0
+  },
+  "npc-85-hostile": {
+    "opaqueBodyPixels": 298,
+    "rows": 301,
+    "cacheBodies": 1
+  },
+  "npc-102-friendly": {
+    "opaqueBodyPixels": 367,
+    "rows": 174,
+    "cacheBodies": 1,
+    "portraitMd": 102,
+    "actualEmotion": 0
+  },
+  "npc-102-hostile": {
+    "opaqueBodyPixels": 403,
+    "rows": 311,
+    "cacheBodies": 1
+  },
+  "npc-125-friendly": {
+    "opaqueBodyPixels": 419,
+    "rows": 143,
+    "cacheBodies": 1,
+    "portraitMd": 125,
+    "actualEmotion": 0
+  },
+  "npc-125-hostile": {
+    "opaqueBodyPixels": 460,
+    "rows": 292,
+    "cacheBodies": 1
+  },
+  "npc-126-friendly": {
+    "opaqueBodyPixels": 349,
+    "rows": 161,
+    "cacheBodies": 1,
+    "portraitMd": 126,
+    "actualEmotion": 0
+  },
+  "npc-126-hostile": {
+    "opaqueBodyPixels": 350,
+    "rows": 292,
+    "cacheBodies": 1
+  },
+  "npc-128-friendly": {
+    "opaqueBodyPixels": 448,
+    "rows": 169,
+    "cacheBodies": 1,
+    "portraitMd": 128,
+    "actualEmotion": 0
+  },
+  "npc-128-hostile": {
+    "opaqueBodyPixels": 305,
+    "rows": 308,
+    "cacheBodies": 1
+  },
+  "npc-172-friendly": {
+    "opaqueBodyPixels": 201,
+    "rows": 164,
+    "cacheBodies": 1,
+    "portraitMd": 172,
+    "actualEmotion": 0
+  },
+  "npc-172-hostile": {
+    "opaqueBodyPixels": 245,
+    "rows": 308,
+    "cacheBodies": 1
+  },
+  "npc-180-friendly": {
+    "opaqueBodyPixels": 301,
+    "rows": 176,
+    "cacheBodies": 1,
+    "portraitMd": 180,
+    "actualEmotion": 0
+  },
+  "npc-180-hostile": {
+    "opaqueBodyPixels": 271,
+    "rows": 315,
+    "cacheBodies": 1
+  },
+  "npc-181-friendly": {
+    "opaqueBodyPixels": 248,
+    "rows": 192,
+    "cacheBodies": 1,
+    "portraitMd": 181,
+    "actualEmotion": 1
+  },
+  "npc-181-hostile": {
+    "opaqueBodyPixels": 235,
+    "rows": 333,
+    "cacheBodies": 1
+  },
+  "npc-191-friendly": {
+    "opaqueBodyPixels": 135,
+    "rows": 155,
+    "cacheBodies": 1,
+    "portraitMd": 191,
+    "actualEmotion": 0
+  },
+  "npc-191-hostile": {
+    "opaqueBodyPixels": 229,
+    "rows": 283,
+    "cacheBodies": 1
+  },
+  "npc-193-friendly": {
+    "opaqueBodyPixels": 232,
+    "rows": 229,
+    "cacheBodies": 1,
+    "portraitMd": 193,
+    "actualEmotion": 0
+  },
+  "npc-193-hostile": {
+    "opaqueBodyPixels": 261,
+    "rows": 395,
+    "cacheBodies": 1
+  },
+  "npc-230-friendly": {
+    "opaqueBodyPixels": 294,
+    "rows": 189,
+    "cacheBodies": 1,
+    "portraitMd": 230,
+    "actualEmotion": 0
+  },
+  "npc-230-hostile": {
+    "opaqueBodyPixels": 234,
+    "rows": 326,
+    "cacheBodies": 1
+  },
+  "npc-237-friendly": {
+    "opaqueBodyPixels": 326,
+    "rows": 152,
+    "cacheBodies": 1,
+    "portraitMd": 237,
+    "actualEmotion": 0
+  },
+  "npc-237-hostile": {
+    "opaqueBodyPixels": 371,
+    "rows": 287,
+    "cacheBodies": 1
+  },
+  "npc-240-friendly": {
+    "opaqueBodyPixels": 311,
+    "rows": 156,
+    "cacheBodies": 1,
+    "portraitMd": 240,
+    "actualEmotion": 0
+  },
+  "npc-240-hostile": {
+    "opaqueBodyPixels": 297,
+    "rows": 290,
+    "cacheBodies": 1
+  },
+  "npc-293-friendly": {
+    "opaqueBodyPixels": 241,
+    "rows": 190,
+    "cacheBodies": 1,
+    "portraitMd": 293,
+    "actualEmotion": 0
+  },
+  "npc-293-hostile": {
+    "opaqueBodyPixels": 186,
+    "rows": 319,
+    "cacheBodies": 1
+  },
+  "npc-337-friendly": {
+    "opaqueBodyPixels": 295,
+    "rows": 175,
+    "cacheBodies": 1,
+    "portraitMd": 337,
+    "actualEmotion": 0
+  },
+  "npc-337-hostile": {
+    "opaqueBodyPixels": 253,
+    "rows": 303,
+    "cacheBodies": 1
+  },
+  "npc-341-friendly": {
+    "opaqueBodyPixels": 331,
+    "rows": 180,
+    "cacheBodies": 1,
+    "portraitMd": 341,
+    "actualEmotion": 0
+  },
+  "npc-341-hostile": {
+    "opaqueBodyPixels": 383,
+    "rows": 322,
+    "cacheBodies": 1
+  },
+  "npc-342-friendly": {
+    "opaqueBodyPixels": 236,
+    "rows": 153,
+    "cacheBodies": 1,
+    "portraitMd": 342,
+    "actualEmotion": 0
+  },
+  "npc-342-hostile": {
+    "opaqueBodyPixels": 310,
+    "rows": 300,
+    "cacheBodies": 1
+  },
+  "npc-352-friendly": {
+    "opaqueBodyPixels": 326,
+    "rows": 153,
+    "cacheBodies": 1,
+    "portraitMd": 352,
+    "actualEmotion": 0
+  },
+  "npc-352-hostile": {
+    "opaqueBodyPixels": 289,
+    "rows": 317,
+    "cacheBodies": 1
+  },
+  "npc-369-friendly": {
+    "opaqueBodyPixels": 265,
+    "rows": 162,
+    "cacheBodies": 1,
+    "portraitMd": 369,
+    "actualEmotion": 0
+  },
+  "npc-369-hostile": {
+    "opaqueBodyPixels": 295,
+    "rows": 299,
+    "cacheBodies": 1
+  },
+  "npc-383-friendly": {
+    "opaqueBodyPixels": 333,
+    "rows": 167,
+    "cacheBodies": 1,
+    "portraitMd": 383,
+    "actualEmotion": 4
+  },
+  "npc-383-hostile": {
+    "opaqueBodyPixels": 286,
+    "rows": 298,
+    "cacheBodies": 1
+  },
+  "npc-384-friendly": {
+    "opaqueBodyPixels": 333,
+    "rows": 162,
+    "cacheBodies": 1,
+    "portraitMd": 384,
+    "actualEmotion": 0
+  },
+  "npc-384-hostile": {
+    "opaqueBodyPixels": 286,
+    "rows": 299,
+    "cacheBodies": 1
+  },
+  "npc-425-friendly": {
+    "opaqueBodyPixels": 178,
+    "rows": 166,
+    "cacheBodies": 1,
+    "portraitMd": 425,
+    "actualEmotion": 1
+  },
+  "npc-425-hostile": {
+    "opaqueBodyPixels": 198,
+    "rows": 304,
+    "cacheBodies": 1
+  },
+  "npc-434-friendly": {
+    "opaqueBodyPixels": 303,
+    "rows": 159,
+    "cacheBodies": 1,
+    "portraitMd": 434,
+    "actualEmotion": 1
+  },
+  "npc-434-hostile": {
+    "opaqueBodyPixels": 296,
+    "rows": 295,
+    "cacheBodies": 1
+  },
+  "npc-437-friendly": {
+    "opaqueBodyPixels": 252,
+    "rows": 181,
+    "cacheBodies": 1,
+    "portraitMd": 437,
+    "actualEmotion": 0
+  },
+  "npc-437-hostile": {
+    "opaqueBodyPixels": 375,
+    "rows": 319,
+    "cacheBodies": 1
+  },
+  "npc-438-friendly": {
+    "opaqueBodyPixels": 290,
+    "rows": 175,
+    "cacheBodies": 1,
+    "portraitMd": 438,
+    "actualEmotion": 1
+  },
+  "npc-438-hostile": {
+    "opaqueBodyPixels": 288,
+    "rows": 327,
+    "cacheBodies": 1
+  },
+  "npc-439-friendly": {
+    "opaqueBodyPixels": 348,
+    "rows": 185,
+    "cacheBodies": 1,
+    "portraitMd": 439,
+    "actualEmotion": 0
+  },
+  "npc-439-hostile": {
+    "opaqueBodyPixels": 361,
+    "rows": 319,
+    "cacheBodies": 1
+  },
+  "npc-440-friendly": {
+    "opaqueBodyPixels": 445,
+    "rows": 186,
+    "cacheBodies": 1,
+    "portraitMd": 440,
+    "actualEmotion": 0
+  },
+  "npc-440-hostile": {
+    "opaqueBodyPixels": 380,
+    "rows": 319,
+    "cacheBodies": 1
+  },
+  "npc-511-friendly": {
+    "opaqueBodyPixels": 385,
+    "rows": 228,
+    "cacheBodies": 1,
+    "portraitMd": 511,
+    "actualEmotion": 0
+  },
+  "npc-511-hostile": {
+    "opaqueBodyPixels": 416,
+    "rows": 383,
+    "cacheBodies": 1
+  }
+}

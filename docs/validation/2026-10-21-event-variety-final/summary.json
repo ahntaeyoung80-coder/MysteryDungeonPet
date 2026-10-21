@@ -1,0 +1,72 @@
+{
+  "dateKst": "2026-10-21",
+  "branch": "work",
+  "stages": {
+    "P2": "3cbada4",
+    "P3": "b319e1a",
+    "P4": "81e1be5",
+    "P5": "2919b69",
+    "P6": "30686d6",
+    "P7": "53b0eaa",
+    "P8": "5e8d17a"
+  },
+  "nativeBroad": {
+    "asanUbsan": "25/25",
+    "seconds": 171.16,
+    "scope": "P2-P8 integration before terminal-exit/startup fixes; unchanged checks reused"
+  },
+  "relatedAfterFixes": {
+    "eventDialogueHolidayState": "7 unique checks pass (six initial passes + corrected terminal-shop fixture pass)",
+    "holidayStartupAndLegacy": "5 unique checks pass (four passes + corrected duplicate-return guard pass)",
+    "testFixtureCorrections": "terminal shop helper must restore caller deadline; completion exporter requires a new output directory"
+  },
+  "python": {
+    "originalSuite": "44/44;25.099s",
+    "newSelectedMapAndContexts": "2/2",
+    "newOriginalCompletion": "1/1;0.898s",
+    "totalUniquePassed": 47
+  },
+  "windows": {
+    "compiler": "MinGW GCC 14.2-posix x64 Release (Debian trixie), static libgcc/libstdc++",
+    "execution": "Wine10/Xvfb, Korean Nanum Gothic substitution; actual Windows11 pending",
+    "selectedNativeChecks": 5,
+    "events": "E01-E09 finished, one result each; E10 town/spring each returned through meal to day2",
+    "npcBodies": 62,
+    "npcSpeakerFaces": 31,
+    "bathCombinations": 4,
+    "bathExactPixels": 160000,
+    "longKoreanPages": 3,
+    "map18Completion": "9F -> original Amp Clearing19 -> mandatory success text -> meal/day2",
+    "dailyPool": "actual finished town/no meal snapshot -> normal launch -> one meal/day2/map18; restart preserves18",
+    "installedRun": "pass;6seconds",
+    "reuse": "Explicit --explore event/holiday/long-page captures precede a change limited to normal startGuildMorning. That branch was checked again with related ASan and final EXE pool/default/restart; final EXE NPC62 and installed run also pass."
+  },
+  "fixedActualFailures": [
+    "event actor retirement must write legacy completion journal alongside done/visibility",
+    "normal launch after completed holiday must continue an uncommitted evening and avoid duplicate return"
+  ],
+  "installedPackage": {
+    "selectedFiles": 412,
+    "selectedBytes": 13282253,
+    "exeBytes": 2258944,
+    "noRomIncluded": true,
+    "byteEquality": true,
+    "exeSha256": "f660f99d628567ce30d40e276fa40d8d338c3649e93f491ccb5a8b37afc6620a"
+  },
+  "performance": {
+    "scenarios": 79,
+    "peakWorkingSetBytes": 47992832,
+    "sumScenarioSeconds": 894.05,
+    "privateBytes": "unavailable under Wine (reported0)",
+    "longRunPerformanceGate": "pending"
+  },
+  "runtimeSha256": "f660f99d628567ce30d40e276fa40d8d338c3649e93f491ccb5a8b37afc6620a",
+  "runtimeHashCheck": "pass; root EXE/source/selected asset manifest matches",
+  "pending": [
+    "actual user Windows11 and OS lock/power/DPI interactions",
+    "long-run/final performance gate; Wine private bytes unavailable",
+    "activity-linked C features",
+    "remote CI state recorded after final push"
+  ],
+  "workflow": "simple check/local commit per P2-P8; no intermediate deploy or push; broad/final EXE verification once implementation completed"
+}

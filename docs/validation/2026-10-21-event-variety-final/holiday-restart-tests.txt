@@ -1,0 +1,21 @@
+Test project /workspace/MysteryDungeonPet/build/p0-asan
+    Start  1: pet_holiday_scene_tests
+1/5 Test  #1: pet_holiday_scene_tests ..........***Failed    0.07 sec
+duplicate return transaction
+
+    Start  8: pet_variety_state_tests
+2/5 Test  #8: pet_variety_state_tests ..........   Passed    0.13 sec
+    Start  9: pet_character_scene_tests
+3/5 Test  #9: pet_character_scene_tests ........   Passed    0.32 sec
+    Start 12: pet_package_transition_tests
+4/5 Test #12: pet_package_transition_tests .....   Passed    2.98 sec
+    Start 22: pet_gameplay_tests
+5/5 Test #22: pet_gameplay_tests ...............   Passed   38.74 sec
+
+80% tests passed, 1 tests failed out of 5
+
+Total Test time (real) =  42.24 sec
+
+The following tests FAILED:
+	  1 - pet_holiday_scene_tests (Failed)
+Errors while running CTest

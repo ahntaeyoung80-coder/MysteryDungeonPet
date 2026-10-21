@@ -1,0 +1,483 @@
+{
+  "scenarios": 79,
+  "peakWorkingSetBytes": 47992832,
+  "sumScenarioSeconds": 894.05,
+  "privateBytes": "unavailable under Wine (reported0)",
+  "longRunPerformanceGate": "pending",
+  "cases": {
+    "E01-metrics": {
+      "peakWorkingSet": 44539904,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0001
+    },
+    "npc-511-friendly-metrics": {
+      "peakWorkingSet": 45379584,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00074
+    },
+    "town-metrics": {
+      "peakWorkingSet": 47992832,
+      "maxDecodeCount": 26,
+      "pausedSubmissions": 0,
+      "durationSeconds": 105.001
+    },
+    "restart-metrics": {
+      "peakWorkingSet": 45682688,
+      "maxDecodeCount": 13,
+      "pausedSubmissions": 0,
+      "durationSeconds": 18.0003
+    },
+    "npc-439-friendly-metrics": {
+      "peakWorkingSet": 44904448,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.0004
+    },
+    "E03-metrics": {
+      "peakWorkingSet": 44920832,
+      "maxDecodeCount": 12,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0002
+    },
+    "npc-126-hostile-metrics": {
+      "peakWorkingSet": 43872256,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00121
+    },
+    "npc-425-friendly-metrics": {
+      "peakWorkingSet": 44720128,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00082
+    },
+    "npc-172-hostile-metrics": {
+      "peakWorkingSet": 43937792,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00331
+    },
+    "share-metrics": {
+      "peakWorkingSet": 44572672,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0005
+    },
+    "npc-16-hostile-metrics": {
+      "peakWorkingSet": 43982848,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00054
+    },
+    "npc-191-hostile-metrics": {
+      "peakWorkingSet": 44122112,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00086
+    },
+    "npc-237-friendly-metrics": {
+      "peakWorkingSet": 44462080,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00051
+    },
+    "npc-172-friendly-metrics": {
+      "peakWorkingSet": 44466176,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00086
+    },
+    "npc-128-hostile-metrics": {
+      "peakWorkingSet": 44130304,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00098
+    },
+    "E08-metrics": {
+      "peakWorkingSet": 44634112,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0001
+    },
+    "npc-125-hostile-metrics": {
+      "peakWorkingSet": 44044288,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00088
+    },
+    "npc-180-hostile-metrics": {
+      "peakWorkingSet": 44056576,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00104
+    },
+    "npc-102-hostile-metrics": {
+      "peakWorkingSet": 44072960,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00027
+    },
+    "npc-293-hostile-metrics": {
+      "peakWorkingSet": 44011520,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00057
+    },
+    "npc-293-friendly-metrics": {
+      "peakWorkingSet": 44752896,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00061
+    },
+    "npc-237-hostile-metrics": {
+      "peakWorkingSet": 44036096,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00044
+    },
+    "npc-181-friendly-metrics": {
+      "peakWorkingSet": 45146112,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00037
+    },
+    "E04-metrics": {
+      "peakWorkingSet": 46329856,
+      "maxDecodeCount": 13,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0004
+    },
+    "npc-128-friendly-metrics": {
+      "peakWorkingSet": 45154304,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00023
+    },
+    "E07-metrics": {
+      "peakWorkingSet": 46342144,
+      "maxDecodeCount": 13,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0006
+    },
+    "npc-337-friendly-metrics": {
+      "peakWorkingSet": 44457984,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00051
+    },
+    "npc-341-friendly-metrics": {
+      "peakWorkingSet": 45076480,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00095
+    },
+    "npc-440-friendly-metrics": {
+      "peakWorkingSet": 44511232,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00073
+    },
+    "npc-193-friendly-metrics": {
+      "peakWorkingSet": 44744704,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00096
+    },
+    "npc-83-hostile-metrics": {
+      "peakWorkingSet": 44072960,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00036
+    },
+    "npc-438-friendly-metrics": {
+      "peakWorkingSet": 44900352,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00077
+    },
+    "bath-metrics": {
+      "peakWorkingSet": 45244416,
+      "maxDecodeCount": 16,
+      "pausedSubmissions": 0,
+      "durationSeconds": 6.00033
+    },
+    "npc-25-friendly-metrics": {
+      "peakWorkingSet": 44888064,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00093
+    },
+    "npc-383-hostile-metrics": {
+      "peakWorkingSet": 44122112,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00048
+    },
+    "npc-342-hostile-metrics": {
+      "peakWorkingSet": 44093440,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00022
+    },
+    "npc-438-hostile-metrics": {
+      "peakWorkingSet": 44085248,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00125
+    },
+    "npc-240-friendly-metrics": {
+      "peakWorkingSet": 44527616,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00031
+    },
+    "E05-metrics": {
+      "peakWorkingSet": 44597248,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0007
+    },
+    "npc-352-friendly-metrics": {
+      "peakWorkingSet": 44609536,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00028
+    },
+    "npc-434-hostile-metrics": {
+      "peakWorkingSet": 44060672,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00028
+    },
+    "npc-352-hostile-metrics": {
+      "peakWorkingSet": 44101632,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00115
+    },
+    "npc-384-friendly-metrics": {
+      "peakWorkingSet": 44441600,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00053
+    },
+    "npc-342-friendly-metrics": {
+      "peakWorkingSet": 44576768,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00015
+    },
+    "npc-193-hostile-metrics": {
+      "peakWorkingSet": 44085248,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00014
+    },
+    "npc-369-friendly-metrics": {
+      "peakWorkingSet": 44253184,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00092
+    },
+    "npc-439-hostile-metrics": {
+      "peakWorkingSet": 44068864,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00074
+    },
+    "npc-369-hostile-metrics": {
+      "peakWorkingSet": 44212224,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00117
+    },
+    "npc-384-hostile-metrics": {
+      "peakWorkingSet": 44064768,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00014
+    },
+    "npc-341-hostile-metrics": {
+      "peakWorkingSet": 43917312,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00058
+    },
+    "npc-230-friendly-metrics": {
+      "peakWorkingSet": 44748800,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00096
+    },
+    "npc-181-hostile-metrics": {
+      "peakWorkingSet": 43913216,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00077
+    },
+    "npc-180-friendly-metrics": {
+      "peakWorkingSet": 44675072,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00012
+    },
+    "npc-83-friendly-metrics": {
+      "peakWorkingSet": 44818432,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00096
+    },
+    "npc-434-friendly-metrics": {
+      "peakWorkingSet": 44437504,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00016
+    },
+    "npc-511-hostile-metrics": {
+      "peakWorkingSet": 44060672,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00115
+    },
+    "E06-metrics": {
+      "peakWorkingSet": 44847104,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0006
+    },
+    "npc-240-hostile-metrics": {
+      "peakWorkingSet": 44154880,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00073
+    },
+    "npc-126-friendly-metrics": {
+      "peakWorkingSet": 44376064,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00091
+    },
+    "npc-440-hostile-metrics": {
+      "peakWorkingSet": 44019712,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00048
+    },
+    "npc-85-hostile-metrics": {
+      "peakWorkingSet": 43999232,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00064
+    },
+    "npc-437-hostile-metrics": {
+      "peakWorkingSet": 43978752,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00085
+    },
+    "npc-230-hostile-metrics": {
+      "peakWorkingSet": 43974656,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00084
+    },
+    "npc-16-friendly-metrics": {
+      "peakWorkingSet": 44658688,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00068
+    },
+    "npc-191-friendly-metrics": {
+      "peakWorkingSet": 44699648,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00057
+    },
+    "npc-437-friendly-metrics": {
+      "peakWorkingSet": 44670976,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00057
+    },
+    "npc-102-friendly-metrics": {
+      "peakWorkingSet": 44605440,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00045
+    },
+    "E09-metrics": {
+      "peakWorkingSet": 44847104,
+      "maxDecodeCount": 12,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0002
+    },
+    "completion-metrics": {
+      "peakWorkingSet": 46637056,
+      "maxDecodeCount": 21,
+      "pausedSubmissions": 0,
+      "durationSeconds": 42.0009
+    },
+    "npc-125-friendly-metrics": {
+      "peakWorkingSet": 44593152,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00033
+    },
+    "npc-337-hostile-metrics": {
+      "peakWorkingSet": 44032000,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00057
+    },
+    "trade-metrics": {
+      "peakWorkingSet": 45137920,
+      "maxDecodeCount": 12,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0011
+    },
+    "npc-25-hostile-metrics": {
+      "peakWorkingSet": 44068864,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00052
+    },
+    "E02-metrics": {
+      "peakWorkingSet": 44707840,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 32.0011
+    },
+    "npc-85-friendly-metrics": {
+      "peakWorkingSet": 44879872,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00077
+    },
+    "npc-425-hostile-metrics": {
+      "peakWorkingSet": 44044288,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00028
+    },
+    "default-metrics": {
+      "peakWorkingSet": 45826048,
+      "maxDecodeCount": 13,
+      "pausedSubmissions": 0,
+      "durationSeconds": 18.0005
+    },
+    "npc-383-friendly-metrics": {
+      "peakWorkingSet": 44699648,
+      "maxDecodeCount": 11,
+      "pausedSubmissions": 0,
+      "durationSeconds": 4.00119
+    },
+    "spring-metrics": {
+      "peakWorkingSet": 47943680,
+      "maxDecodeCount": 28,
+      "pausedSubmissions": 0,
+      "durationSeconds": 105.0
+    }
+  }
+}

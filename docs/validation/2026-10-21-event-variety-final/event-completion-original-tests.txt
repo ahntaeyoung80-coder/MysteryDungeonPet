@@ -1,0 +1,6 @@
+test_verified18_to19_completion_reproduces_and_keeps15 (tests.test_event_assets.EventAssetsTests.test_verified18_to19_completion_reproduces_and_keeps15) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.898s
+
+OK

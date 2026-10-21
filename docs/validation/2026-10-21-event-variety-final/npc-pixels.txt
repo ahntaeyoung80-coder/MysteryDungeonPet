@@ -1,0 +1,1 @@
+PASS: 62 actual NPC bodies, 31 speaker faces, requested/actual emotions and one shared body for two instances

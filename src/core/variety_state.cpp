@@ -73,12 +73,19 @@ bool canStartVariety(const ExplorationState& s,std::uint64_t now) {
                 (canAttack(s.world,s.position,e.tile) || (g.companion.enabled && canAttack(s.world,g.companion.tile,e.tile)));
         });
 }
+void retireEventActor(ExplorationState& s,std::uint32_t id) {
+    for(auto& a:s.population.entities)if(a.instanceId==id && a.kind==EntityKind::Friend) {
+        a.done=true;a.visible=false;
+        s.onceKeys.insert("greet:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(id));
+        return;
+    }
+}
 void cancelVariety(ExplorationState& s) {
     auto& v=s.variety;
     const bool busy=varietyBusy(v);
     if(live(v.event.progress))for(auto& a:s.population.entities)
         if(std::find(v.event.temporaryActors.begin(),v.event.temporaryActors.end(),a.instanceId)!=v.event.temporaryActors.end() ||
-           (v.event.id.type==VarietyEvent::GuildVisit && std::find(v.event.actors.begin(),v.event.actors.end(),a.instanceId)!=v.event.actors.end())){a.done=true;a.visible=false;}
+           (v.event.id.type==VarietyEvent::GuildVisit && std::find(v.event.actors.begin(),v.event.actors.end(),a.instanceId)!=v.event.actors.end()))retireEventActor(s,a.instanceId);
     if(live(v.event.progress))v.event.progress=EventProgress::Abandoned;
     v.event.reservations.clear();v.event.actors.clear();v.dialogue={};
     v.event.task=EventTask::None;v.event.targetTile=v.event.objectTile=v.event.sourceTile=-1;v.event.item=v.event.quantity=v.event.warpedActor=v.event.stalls=0;

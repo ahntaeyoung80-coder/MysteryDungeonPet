@@ -1,0 +1,34 @@
+{
+  "bath-default": {
+    "matchedPixels": 40000,
+    "playerMd": 1,
+    "partnerMd": 4,
+    "floatClip": 20,
+    "layerOrder": "original ground/NPC/back water/Float bodies/front water",
+    "hudAbsent": true
+  },
+  "bath-meowth-munchlax": {
+    "matchedPixels": 40000,
+    "playerMd": 52,
+    "partnerMd": 488,
+    "floatClip": 20,
+    "layerOrder": "original ground/NPC/back water/Float bodies/front water",
+    "hudAbsent": true
+  },
+  "bath-munchlax-meowth": {
+    "matchedPixels": 40000,
+    "playerMd": 488,
+    "partnerMd": 52,
+    "floatClip": 20,
+    "layerOrder": "original ground/NPC/back water/Float bodies/front water",
+    "hudAbsent": true
+  },
+  "bath-female": {
+    "matchedPixels": 40000,
+    "playerMd": 1,
+    "partnerMd": 4,
+    "floatClip": 20,
+    "layerOrder": "original ground/NPC/back water/Float bodies/front water",
+    "hudAbsent": true
+  }
+}

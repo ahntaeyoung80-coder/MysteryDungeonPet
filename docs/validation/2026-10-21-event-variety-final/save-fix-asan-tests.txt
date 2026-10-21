@@ -1,0 +1,25 @@
+Test project /workspace/MysteryDungeonPet/build/p0-asan
+    Start 1: pet_holiday_scene_tests
+1/7 Test #1: pet_holiday_scene_tests ..........   Passed    0.25 sec
+    Start 2: pet_event_combat_tests
+2/7 Test #2: pet_event_combat_tests ...........***Failed    0.03 sec
+invalid gameplay deadline
+
+    Start 3: pet_event_movement_tests
+3/7 Test #3: pet_event_movement_tests .........   Passed    0.19 sec
+    Start 4: pet_event_stock_tests
+4/7 Test #4: pet_event_stock_tests ............   Passed    0.06 sec
+    Start 5: pet_event_runtime_tests
+5/7 Test #5: pet_event_runtime_tests ..........   Passed    0.10 sec
+    Start 6: pet_dialogue_catalogue_tests
+6/7 Test #6: pet_dialogue_catalogue_tests .....   Passed    0.08 sec
+    Start 8: pet_variety_state_tests
+7/7 Test #8: pet_variety_state_tests ..........   Passed    0.14 sec
+
+86% tests passed, 1 tests failed out of 7
+
+Total Test time (real) =   0.84 sec
+
+The following tests FAILED:
+	  2 - pet_event_combat_tests (Failed)
+Errors while running CTest

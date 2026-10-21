@@ -20,8 +20,8 @@ std::string resultStage(VarietyEvent type){return type==VarietyEvent::TiredExplo
 } // namespace
 void finishVarietyEvent(ExplorationState& s) {
     auto& e=s.variety.event;
-    for(auto id:e.temporaryActors)if(auto* a=entity(s,id)){a->done=true;a->visible=false;}
-    if(e.id.type==VarietyEvent::GuildVisit || e.id.type==VarietyEvent::LostPokemon)for(auto id:e.actors)if(auto* a=entity(s,id)){a->done=true;a->visible=false;}
+    for(auto id:e.temporaryActors)retireEventActor(s,id);
+    if(e.id.type==VarietyEvent::GuildVisit || e.id.type==VarietyEvent::LostPokemon)for(auto id:e.actors)retireEventActor(s,id);
     e.progress=EventProgress::Finished;e.actors.clear();e.reservations.clear();s.variety.dialogue={};
     e.task=EventTask::None;e.targetTile=e.objectTile=e.sourceTile=-1;e.item=e.quantity=e.warpedActor=e.stalls=0;e.carrying=false;e.temporaryActors.clear();e.opponents.clear();
     e.goods.clear();e.allyContributed=e.partyContributed=false;

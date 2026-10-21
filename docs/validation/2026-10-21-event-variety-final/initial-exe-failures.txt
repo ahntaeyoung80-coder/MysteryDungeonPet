@@ -1,0 +1,2 @@
+15051079642 fatal entity/journal mismatch
+15951737966 fatal meal transaction missing

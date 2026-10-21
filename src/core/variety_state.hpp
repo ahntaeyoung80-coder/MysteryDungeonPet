@@ -88,6 +88,7 @@ std::uint64_t nextGameplayDeadline(const ExplorationState&);
 bool canStartVariety(const ExplorationState&, std::uint64_t now);
 // Cancels only pending work; committed results, schedule and RNG states survive.
 void cancelVariety(ExplorationState&);
+void retireEventActor(ExplorationState&,std::uint32_t);
 // Marks one result; caller applies the associated mutation to the same snapshot before saving.
 // A duplicate returns false. This function does not grant an item or claim a durable save.
 bool commitVarietyResult(ExplorationState&, const std::string& result);
