@@ -1,0 +1,13 @@
+{
+  "productCommit": "8e74f658edbb220e81c2ffa04fcf0e1753cca10f",
+  "remoteBranch": "work",
+  "explicitFetchLocalRemoteMatch": true,
+  "cleanAfterProductPush": true,
+  "ci": {
+    "id": 39714163951,
+    "url": "https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39714163951",
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "note": "Final product pushed once after stage commits. CI is background/in progress, not reported as passed."
+}

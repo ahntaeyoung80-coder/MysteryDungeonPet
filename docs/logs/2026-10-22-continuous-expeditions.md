@@ -41,3 +41,9 @@ Windows Release/static 빌드와 Wine의 코어/GDI2개를 통과했다. 초기 
 실제 EXE의 기본 실행, 쉼터14/17/41/8, 보스14/17/41, 완료14/41의10개와 설치본1개, 합계11개에서 exit0·실제 렌더 제출을 확인했다. 보스는 실제 공격/HP 변화가 출력되며 열수의 동굴은9초 안에 완료 장면으로 전진했다. 완료14/41은 완료안내→귀가→식사→취침을 실제 렌더링했다. 초기 창이 겹쳐 제출0이던 기본/쉼터14 두 항목만 재실행했다. 최종 크로스 빌드/루트/설치 EXE 해시 일치,899개 선택자산/32,556,941bytes의 source→install 일치를 확인했다. 설치 총35,195,357bytes, ROM 미포함이다. 이는 잠정20MB 목표를 초과하며 용량 최적화/실제 Windows11/장기 성능은 남긴다.
 
 최종 관련 검사 이후 문서·로그만 바뀌면 같은 전체 검사는 반복하지 않는다. 최종 제품 커밋과 push/fetch/CI 결과는 아래에 기록한다. [요약](../validation/2026-10-22-continuous-expeditions/summary.json), [GUI](../validation/2026-10-22-continuous-expeditions/gui-verified.json), [설치](../validation/2026-10-22-continuous-expeditions/install-summary.json).
+
+## 원격 반영
+
+2026-10-22T11:58:33.977478+09:00에 제품 커밋8e74f658edbb220e81c2ffa04fcf0e1753cca10f의push 및명시work fetch후HEAD=origin/work·clean을확인했다. 단계별08f5e74/eefc304/a60d975와최종제품커밋을중간배포없이한번에반영했다. 자동CI run39714163951은in_progress이며완료/통과로표시하지않는다. [CI](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/actions/runs/39714163951), [원격근거](../validation/2026-10-22-continuous-expeditions/remote-verification.json).
+
+이원격기록과설치본의지원문서링크를GitHub work절대URL로고친변경은문서전용skip ci커밋으로남긴다. 소스/자산/EXE는그대로이며기존전체검사를반복하지않는다.

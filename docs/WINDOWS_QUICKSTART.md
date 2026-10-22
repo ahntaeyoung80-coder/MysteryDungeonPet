@@ -41,4 +41,4 @@
 
 동료 검증은 `tests/companion_windows_tests.ps1`과 `pet_companion_tests`로 실행한다. `--solo`는 과거 단독 배우 snapshot 회귀용 옵션이다. 제품 기본 동작은 동료 활성화이며, 이 옵션은 이미 저장된 동료를 삭제하지 않는다.
 
-연속 원정의 중간 쉼터에서는 길드로 돌아가지 않는다. 길드 대원정의 갈림길에서 우클릭하면 우회로를 다녀오는 항목이 나타나며, 같은 갈림길로 돌아온다. 첫 고정 전투 전에는 우클릭 **재방문 경로**로 원작 재방문 보스 배치를 선택할 수 있다. [지원 범위](CONTINUOUS_EXPEDITIONS.md).
+연속 원정의 중간 쉼터에서는 길드로 돌아가지 않는다. 길드 대원정의 갈림길에서 우클릭하면 우회로를 다녀오는 항목이 나타나며, 같은 갈림길로 돌아온다. 첫 고정 전투 전에는 우클릭 **재방문 경로**로 원작 재방문 보스 배치를 선택할 수 있다. [지원 범위](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/docs/CONTINUOUS_EXPEDITIONS.md).
