@@ -1,0 +1,2 @@
+status=fail
+error=WIC factory assetKey=rom:EoS_NA:md:1 HRESULT=0x80040154

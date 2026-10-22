@@ -1,0 +1,63 @@
+3110071349 NPC cache bodies=1 decoded=1
+3110092783 exploration snapshot=restored day=1 runId=9300
+3110100356 initial session unknown; render paused OS=0
+3110104311 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+3110104353 mode=automatic-exploration
+3110104382 select clip=7 direction=4 loop=1
+3110104403 render_pause
+3110105078 show
+3110180118 render_resume (not user activity)
+3110180160 session=8
+3110748850 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3110748925 select clip=0 direction=4 loop=1
+3110748998 life=Pose combat=PlayerTurn day=1 hearts=5 sceneBeat=21 dialogueStage=0
+3112748044 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3112748113 select clip=17 direction=0 loop=0
+3112748134 life=Pose combat=PlayerTurn day=1 hearts=5 sceneBeat=22 dialogueStage=0
+3113110578 finite finished assetKey=rom:EoS_NA:md:1
+3113116403 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3113116447 select clip=7 direction=0 loop=1
+3113116467 life=Pose combat=PlayerTurn day=1 hearts=5 sceneBeat=23 dialogueStage=0
+3115516297 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3115516366 select clip=7 direction=0 loop=1
+3115516387 life=Pose combat=PlayerTurn day=1 hearts=5 sceneBeat=24 dialogueStage=0
+3116266228 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3116266294 select clip=7 direction=0 loop=1
+3116266314 gameplay onceKey=return:9300
+3116266332 life=ReturnHome combat=PlayerTurn day=1 hearts=5 sceneBeat=0 dialogueStage=0
+3116266350 life=HomeScene opaque original dining map
+3116282034 guild room=GuildDining characters=12 objectCount=1
+3117019078 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3117019145 select clip=15 direction=0 loop=1
+3117019165 gameplay onceKey=meal:9300
+3117019183 life=Eat combat=PlayerTurn day=1 hearts=5 sceneBeat=1 dialogueStage=0
+3117019219 guild room=GuildDining characters=12 objectCount=1
+3123021639 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3123021713 select clip=15 direction=0 loop=1
+3123021734 life=Sleep combat=PlayerTurn day=1 hearts=5 sceneBeat=2 dialogueStage=0
+3123021779 guild room=GuildDining characters=12 objectCount=1
+3123773100 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3123773180 select clip=7 direction=6 loop=1
+3123773203 life=Sleep combat=PlayerTurn day=1 hearts=5 sceneBeat=6 dialogueStage=0
+3123773224 life=HomeScene opaque original night bedroom
+3123773254 guild room=PlayerRoom characters=2 objectCount=0
+3124534901 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3124535001 select clip=22 direction=6 loop=0
+3124535027 life=Sleep combat=PlayerTurn day=1 hearts=5 sceneBeat=3 dialogueStage=0
+3124535059 guild room=PlayerRoom characters=2 objectCount=0
+3125854233 finite finished assetKey=rom:EoS_NA:md:1
+3126124819 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3126124900 select clip=27 direction=2 loop=0
+3126124921 life=Sleep combat=PlayerTurn day=1 hearts=5 sceneBeat=4 dialogueStage=0
+3126124945 guild room=PlayerRoom characters=2 objectCount=0
+3126321204 finite finished assetKey=rom:EoS_NA:md:1
+3126525604 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3126525656 select clip=13 direction=2 loop=0
+3126525666 life=Sleep combat=PlayerTurn day=1 hearts=5 sceneBeat=7 dialogueStage=0
+3126525681 guild room=PlayerRoom characters=2 objectCount=0
+3127604930 finite finished assetKey=rom:EoS_NA:md:1
+3127611087 expedition=RUN-D014 segment=16 localFloor=0 ground=none outcome=1
+3127611115 select clip=13 direction=2 loop=0
+3127611125 life=Sleep combat=PlayerTurn day=1 hearts=5 sceneBeat=5 dialogueStage=0
+3127611140 guild room=PlayerRoom characters=2 objectCount=0
+3128106258 exit submissions=973 decodes=24 switches=0

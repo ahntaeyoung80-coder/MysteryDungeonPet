@@ -1,0 +1,17 @@
+3225146584 exploration snapshot=restored day=1 runId=9300
+3225153980 initial session unknown; render paused OS=0
+3225167595 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+3225167629 mode=automatic-exploration
+3225167653 select clip=7 direction=0 loop=1
+3225167676 render_pause
+3225168236 show
+3225235663 render_resume (not user activity)
+3225235704 session=8
+3228853253 expedition=RUN-D014 segment=14 localFloor=7 ground=GND-L027-D10P21A outcome=0
+3228853322 select clip=7 direction=0 loop=1
+3228853344 life=Explore combat=PlayerTurn day=1 hearts=5 sceneBeat=27 dialogueStage=0
+3229602869 expedition=RUN-D014 segment=15 localFloor=0 ground=none outcome=0
+3229602950 select clip=7 direction=0 loop=1
+3229602976 gameplay onceKey=stairs:9300:7:0
+3229603000 life=Explore combat=PlayerTurn day=1 hearts=5 sceneBeat=11 dialogueStage=0
+3232162496 exit submissions=415 decodes=13 switches=0

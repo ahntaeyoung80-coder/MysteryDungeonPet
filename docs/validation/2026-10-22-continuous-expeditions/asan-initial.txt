@@ -1,0 +1,155 @@
+Test project /workspace/MysteryDungeonPet/build/expedition-asan
+      Start  1: pet_expedition_tests
+ 1/29 Test  #1: pet_expedition_tests .............   Passed    0.12 sec
+      Start  2: pet_all_map_event_tests
+ 2/29 Test  #2: pet_all_map_event_tests ..........   Passed    5.51 sec
+      Start  3: pet_gameplay_notice_tests
+ 3/29 Test  #3: pet_gameplay_notice_tests ........***Failed    0.88 sec
+trailing exploration bytes
+
+      Start  4: pet_feedback_regression_tests
+ 4/29 Test  #4: pet_feedback_regression_tests ....   Passed    0.15 sec
+      Start  5: pet_holiday_scene_tests
+ 5/29 Test  #5: pet_holiday_scene_tests ..........   Passed    0.26 sec
+      Start  6: pet_event_combat_tests
+ 6/29 Test  #6: pet_event_combat_tests ...........   Passed    0.32 sec
+      Start  7: pet_event_movement_tests
+ 7/29 Test  #7: pet_event_movement_tests .........   Passed    0.21 sec
+      Start  8: pet_event_stock_tests
+ 8/29 Test  #8: pet_event_stock_tests ............***Failed    0.04 sec
+selected event map/floor count
+
+      Start  9: pet_event_runtime_tests
+ 9/29 Test  #9: pet_event_runtime_tests ..........   Passed    0.11 sec
+      Start 10: pet_dialogue_catalogue_tests
+10/29 Test #10: pet_dialogue_catalogue_tests .....   Passed    0.08 sec
+      Start 11: pet_npc_character_tests
+11/29 Test #11: pet_npc_character_tests ..........***Failed    0.02 sec
+NPC selection count changed without coverage review
+
+      Start 12: pet_variety_state_tests
+12/29 Test #12: pet_variety_state_tests ..........***Failed    0.12 sec
+new schema missing
+
+      Start 13: pet_character_scene_tests
+13/29 Test #13: pet_character_scene_tests ........***Failed    0.13 sec
+expression resolver always drew normal face
+
+      Start 14: pet_completion_scene_tests
+14/29 Test #14: pet_completion_scene_tests .......   Passed    0.65 sec
+      Start 15: pet_dialogue_portrait_tests
+15/29 Test #15: pet_dialogue_portrait_tests ......***Failed    0.10 sec
+player replacement retained former portrait/name
+
+      Start 16: pet_package_transition_tests
+16/29 Test #16: pet_package_transition_tests .....***Failed    0.02 sec
+trailing exploration bytes
+
+      Start 17: pet_companion_tests
+17/29 Test #17: pet_companion_tests ..............***Failed   46.51 sec
+guild startup / stale entity goal migration / alarm / day progression pass
+trailing exploration bytes
+
+      Start 18: pet_party_ai_followup
+18/29 Test #18: pet_party_ai_followup ............***Failed    2.69 sec
+PARTY_AI R01 observed=125->126->127->128->129
+PARTY_AI PASS R01_unobstructed_straight_path
+PARTY_AI R02 HP5 1000 1400 1800 2200 HP1 1000 1400 1800 2200
+PARTY_AI PASS R02_hp_alone_does_not_delay_walking
+PARTY_AI PASS R03_hp1_surrounded_fights_without_returning
+PARTY_AI PASS R03_no_legal_action_waits_without_returning
+PARTY_AI R04 leader target=2 round=1
+PARTY_AI R04 companion target=1 round=1
+PARTY_AI R04 leader target=2 round=2
+PARTY_AI PASS R04_both_allies_attack_their_own_enemy_in_one_round
+PARTY_AI PASS R05_one_enemy_faints_other_fight_continues
+PARTY_AI PASS R06_leader_retreat_does_not_cancel_companion_combat
+PARTY_AI PASS R06_separated_combat_state_roundtrips
+PARTY_AI PASS R07_R08_owner_and_damage_survive_restore
+PARTY_AI PASS R08_navigation_matches_uninterrupted_execution
+PARTY_AI PASS R10_keyed_completion_is_actor_action_and_run_specific
+PARTY_AI FAIL R11_mdes7_pending_hit_finishes_before_party_upgrade: trailing exploration bytes
+PARTY_AI PASS R12_party_greets_and_passes_a_friendly_corridor
+PARTY_AI PASS R13_recovery_decision_refreshes_room_visibility
+PARTY_AI PASS R14_exhausted_old_probe_budget_keeps_exploring
+PARTY_AI PASS R15_companion_ignores_distant_threat
+PARTY_AI PASS R16_shortest_paths_prefer_axes_and_preserve_corners
+PARTY_AI PASS R17_companion_return_is_straight_or_a_legal_shortest_detour
+PARTY_AI R18 HP5 1000 1400 1800 2200
+PARTY_AI R18 HP1 1000 1400 1800 2200
+PARTY_AI PASS R18_chasing_enemy_shares_hp1_hp5_walking_interval
+PARTY_AI PASS R19_separated_companion_returns_instead_of_hunting
+PARTY_AI PASS R19_local_player_combat_gets_support
+PARTY_AI PASS R19_idle_room_enemy_does_not_trigger_hunt
+PARTY_AI PASS R20_cached_path_suffix_matches_a_fresh_search
+PARTY_AI PASS R21_legacy_exhausted_budget_resumes_reachable_goals
+PARTY_AI PASS R22_legacy_cornered_combat_does_not_cancel_before_attack
+PARTY_AI R23 seedA=340 seedB=1041 rawEqual=0 translatedEqual=0
+PARTY_AI PASS R23_translated_floor_shape_is_not_reused
+PARTY_AI PASS R24_next_day_remembers_the_previous_floor_shape
+PARTY_AI PASS R25_layout_memory_is_bounded_and_restored
+PARTY_AI R26 room rectangles checked=1269 seeds=512
+PARTY_AI PASS R26_generated_room_rectangles_do_not_overlap
+PARTY_AI PASS R27_combat_turn_order_player_partner_three_enemies
+PARTY_AI PASS R28_low_hp_leader_supports_fighting_companion
+PARTY_AI PASS R29_room_completion_requires_actual_screen_coverage
+PARTY_AI PASS R30_walking_into_contact_preserves_combat_order
+PARTY_AI FAIL R31_mdes8_pending_attack_migrates_to_ordered_turns: party snapshot block length mismatch
+PARTY_AI SUMMARY failures=2 cases=34
+
+      Start 19: pet_entry_social_scene_tests
+19/29 Test #19: pet_entry_social_scene_tests .....   Passed    5.56 sec
+      Start 20: pet_navigation_recovery_tests
+20/29 Test #20: pet_navigation_recovery_tests ....***Failed    0.15 sec
+0 player=102 enemy=76 life=Explore
+1 player=125 enemy=77 life=Explore
+2 player=102 enemy=100 life=Explore
+3 player=101 enemy=77 life=Explore
+4 player=101 enemy=77 life=Combat
+persisted repeat: from=77 ordinary=102 detour=54 run=900 floor=0 (no return)
+trailing exploration bytes
+
+      Start 21: pet_camera_tests
+21/29 Test #21: pet_camera_tests .................   Passed    4.26 sec
+      Start 22: pet_movement_tests
+22/29 Test #22: pet_movement_tests ...............   Passed    1.20 sec
+      Start 23: pet_survival_tests
+23/29 Test #23: pet_survival_tests ...............***Failed    0.09 sec
+trailing exploration bytes
+
+      Start 24: pet_revision_tests
+24/29 Test #24: pet_revision_tests ...............***Failed    0.05 sec
+trailing exploration bytes
+
+      Start 25: pet_improvement_tests
+25/29 Test #25: pet_improvement_tests ............***Failed    0.03 sec
+writer not MDES17
+
+      Start 26: pet_gameplay_tests
+26/29 Test #26: pet_gameplay_tests ...............   Passed   39.67 sec
+      Start 27: pet_exploration_tests
+27/29 Test #27: pet_exploration_tests ............   Passed   54.46 sec
+      Start 28: pet_core_tests
+28/29 Test #28: pet_core_tests ...................   Passed    3.63 sec
+      Start 29: pet_package_playback
+29/29 Test #29: pet_package_playback .............   Passed    0.01 sec
+
+55% tests passed, 13 tests failed out of 29
+
+Total Test time (real) = 167.05 sec
+
+The following tests FAILED:
+	  3 - pet_gameplay_notice_tests (Failed)
+	  8 - pet_event_stock_tests (Failed)
+	 11 - pet_npc_character_tests (Failed)
+	 12 - pet_variety_state_tests (Failed)
+	 13 - pet_character_scene_tests (Failed)
+	 15 - pet_dialogue_portrait_tests (Failed)
+	 16 - pet_package_transition_tests (Failed)
+	 17 - pet_companion_tests (Failed)
+	 18 - pet_party_ai_followup (Failed)
+	 20 - pet_navigation_recovery_tests (Failed)
+	 23 - pet_survival_tests (Failed)
+	 24 - pet_revision_tests (Failed)
+	 25 - pet_improvement_tests (Failed)
+Errors while running CTest

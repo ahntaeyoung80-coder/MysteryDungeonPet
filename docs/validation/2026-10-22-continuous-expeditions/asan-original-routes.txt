@@ -1,0 +1,18 @@
+8 routes, 161 selected logical floors, original NPC/context references and 3 sidepaths passed
+RUN-D014 revisit=0 transition/snapshot lifecycle passed
+RUN-D014 revisit=1 transition/snapshot lifecycle passed
+RUN-D017 revisit=0 transition/snapshot lifecycle passed
+RUN-D017 revisit=1 transition/snapshot lifecycle passed
+RUN-D001 revisit=0 transition/snapshot lifecycle passed
+RUN-D001 revisit=1 transition/snapshot lifecycle passed
+RUN-D004 revisit=0 transition/snapshot lifecycle passed
+RUN-D004 revisit=1 transition/snapshot lifecycle passed
+RUN-D021 revisit=0 transition/snapshot lifecycle passed
+RUN-D021 revisit=1 transition/snapshot lifecycle passed
+RUN-D035 revisit=0 transition/snapshot lifecycle passed
+RUN-D035 revisit=1 transition/snapshot lifecycle passed
+RUN-D041 revisit=0 transition/snapshot lifecycle passed
+RUN-D041 revisit=1 transition/snapshot lifecycle passed
+ARC-M07 revisit=0 transition/snapshot lifecycle passed
+ARC-M07 revisit=1 transition/snapshot lifecycle passed
+all 3 sidepaths return to the same ground and retain forward route/save state

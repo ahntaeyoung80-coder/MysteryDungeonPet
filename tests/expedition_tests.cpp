@@ -63,7 +63,7 @@ ExplorationPackage packageAt(const std::filesystem::path& root,unsigned id) {
     return loadExplorationPackage(root/"assets/original/exploration"/("dungeon-"+std::to_string(id))/"exploration.mdpe");
 }
 Explorer original(const ExplorationPackage& p) {
-    Explorer e(9300,41,p.assetVersion,p.floors,{0,0,0,0},{},p.expedition);e.enableGameplay(1000);return e;
+    Explorer e(9300,41,p.assetVersion,p.floors,{0,0,0,0},{},p.expedition);e.enableGameplay(1000);if(e.state().expedition.entryPending)e.advanceGameplay(1000);return e;
 }
 void settle(Explorer& e) {
     unsigned limit=0;
@@ -98,12 +98,13 @@ void references(const std::filesystem::path& root) {
     for(auto id:{9U,11U,13U})validateNpcCoverage(npcs,packageAt(root,id).floors);
     std::cout<<"8 routes, "<<floors<<" selected logical floors, original NPC/context references and 3 sidepaths passed\n";
 }
-void routes(const std::filesystem::path& root) {
+void routes(const std::filesystem::path& root,unsigned only=0) {
     for(auto id:roots)for(bool revisit:{false,true}) {
+        if(only && only!=id)continue;
         const auto p=packageAt(root,id);auto e=original(p);check(e.setExpeditionRevisit(revisit),"cannot select revisit before first fixed room");
         unsigned count=0;
         while(!e.state().completed) {
-            settle(e);check(++count<=p.floors.size(),"route looped without terminal completion");
+            settle(e);if(++count>p.floors.size())throw std::runtime_error("route looped id="+std::to_string(id)+" floor="+std::to_string(e.state().floorIndex)+" life="+lifeName(e.state().gameplay.life)+" beat="+std::to_string(unsigned(e.state().gameplay.sceneBeat))+" target="+std::to_string(e.state().target));
             check(e.state().gameplay.life==LifePhase::Explore && !e.state().gameplay.meals && !e.state().variety.completedExplorations,"intermediate segment executed final lifecycle");
             if(e.state().expedition.floors[e.state().floorIndex].fixedFloorId) {
                 const auto& f=e.state().expedition.floors[e.state().floorIndex];const auto& source=revisit && f.revisitFixedFloorId?f.revisitSpawns:f.fixedSpawns;
@@ -163,7 +164,13 @@ void fixtures(const std::filesystem::path& root,const std::filesystem::path& out
 }
 }
 int main(int argc,char** argv){try{
+    if(argc==6 && std::string(argv[1])=="--rebase") {
+        const auto p=packageAt(argv[2],unsigned(std::stoul(argv[3])));Explorer e(loadSnapshot(argv[4],p.assetVersion));
+        const auto now=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+        const auto then=e.state().gameplay.phaseStartedMs;e.shiftPausedClocks(now>then?now-then:0,then);saveSnapshot(argv[5],e.state());return 0;
+    }
     if(argc>=3 && std::string(argv[1])=="--references"){references(argv[2]);return 0;}
+    if(argc==4 && std::string(argv[1])=="--route"){routes(argv[2],unsigned(std::stoul(argv[3])));return 0;}
     if(argc>=3 && std::string(argv[1])=="--branches"){branches(argv[2]);return 0;}
     if(argc>=3 && std::string(argv[1])=="--packages"){references(argv[2]);routes(argv[2]);branches(argv[2]);return 0;}
     if(argc==4 && std::string(argv[1])=="--fixtures"){fixtures(argv[2],argv[3]);return 0;}

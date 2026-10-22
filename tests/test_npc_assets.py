@@ -3,6 +3,8 @@ import hashlib
 import json
 from pathlib import Path
 import unittest
+import os
+import subprocess
 from tools.prepare_dialogue_portraits import body_identity
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,11 +24,14 @@ class NpcAssetTests(unittest.TestCase):
         cls.catalogue = json.loads((GAMEPLAY/'npcs/catalogue.json').read_text())
         cls.audit = json.loads((GAMEPLAY/'portraits/provenance.json').read_text())['portraits']
         cls.atlas = Image.open(GAMEPLAY/'portraits/atlas.png').convert('RGBA')
-        cls.columns = sorted({a['bodyMdIndex'] for a in cls.audit})
+        inspector=Path(os.environ.get('PET_PACKAGE_INSPECT',ROOT/'build/expedition/pet_package_inspect'))
+        package=json.loads(subprocess.check_output([str(inspector),str(GAMEPLAY/'portraits/portraits.mdpa')],text=True))
+        cls.rects={c['id']:[f['rect'] for f in c['rows'][0]] for c in package['clips']}
 
     def test_selected_md_body_sources_and_original_talk_groups(self):
         expected={16,83,102,126,191,193,237,240,293,341,342,369,383,384,425,434,437,25,85,125,128,172,180,181,230,337,438,439,440,511,352}
-        self.assertEqual({c['mdIndex'] for c in self.catalogue['characters']},expected)
+        self.assertTrue(expected.issubset({c['mdIndex'] for c in self.catalogue['characters']}))
+        self.assertEqual(len(self.catalogue['characters']),127)
         for c in self.catalogue['characters']:
             record=self.md.entries[c['mdIndex']]
             self.assertEqual(c['speciesId'],record.national_pokedex_number)
@@ -59,14 +64,14 @@ class NpcAssetTests(unittest.TestCase):
                 self.assertEqual(audit['actualExpression'],actual)
                 self.assertEqual(audit['kaoIndex'],c['kaoIndex'])
                 expected=self.kao.get(c['kaoIndex'],actual*2).get().convert('RGBA').tobytes()
-                x=self.columns.index(c['mdIndex'])*40
-                image=self.atlas.crop((x,mood*40,x+40,mood*40+40))
+                x,y,w,h=self.rects[c['mdIndex']][mood]
+                image=self.atlas.crop((x,y,x+w,y+h))
                 self.assertEqual(image.tobytes(),expected,(c['mdIndex'],mood))
 
     def test_new_wan_audits_and_existing_body_reuse(self):
         new=[c for c in self.catalogue['characters'] if c['verification']]
-        self.assertEqual(len(new),26)
-        self.assertEqual(sum(c['verification']['comparedFrames'] for c in new),5378)
+        self.assertEqual(len(new),95)
+        self.assertEqual(sum(c['verification']['comparedFrames'] for c in new),19232)
         for c in new:
             proof=json.loads((GAMEPLAY/Path(c['bodyManifest']).parent/'provenance.json').read_text())
             self.assertEqual(proof['verification']['status'],'pass')
@@ -77,7 +82,7 @@ class NpcAssetTests(unittest.TestCase):
             for clip in proof['missingSceneClips']:
                 self.assertIn(clip,('22','33'))
         reused={c['mdIndex']:c['bodyManifest'] for c in self.catalogue['characters'] if not c['verification']}
-        self.assertEqual(set(reused),{25,383,384,425,438})
+        self.assertTrue({25,383,384,425,438}.issubset(reused))
         self.assertEqual({md:reused[md] for md in (383,384,425)},{383:'actors/asset-2/asset.mdpa',384:'actors/asset-3/asset.mdpa',425:'starters/bodies/305/asset.mdpa'})
         visitors={c['visitorActorId']:c['mdIndex'] for c in self.catalogue['characters'] if c.get('visitorActorId')}
         self.assertEqual(visitors,{113:352,115:369,124:434})

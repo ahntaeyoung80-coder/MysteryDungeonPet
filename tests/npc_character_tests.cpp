@@ -66,7 +66,7 @@ int main(int argc,char** argv) {try {
         }
         return 0;
     }
-    check(catalogue.characters.size()==31,"NPC selection count changed without coverage review");
+    check(catalogue.characters.size()==127,"NPC selection count changed without coverage review");
     validateNpcCoverage(catalogue,package.floors);
     validateNpcCoverage(catalogue,loadExplorationPackage(root.parent_path()/"exploration/dungeon-18/exploration.mdpe").floors);
     validateNpcCoverage(catalogue,loadExplorationPackage(root.parent_path()/"exploration/dungeon-0/exploration.mdpe").floors);

@@ -14,7 +14,7 @@ int main(){try {
     const auto maps=loadEventRegistry(root/"gameplay/events/contexts.mder");
     const auto npcs=loadNpcCatalogue(root/"gameplay/npcs/characters.mdnc");
     const auto extra=loadExplorationPackage(root/"exploration/dungeon-18/exploration.mdpe");
-    check(maps.maps.size()==2 && maps.floors.size()==16 && extra.floors.size()==9,"selected event map/floor count");
+    check(maps.maps.size()==8 && maps.floors.size()==160 && extra.floors.size()==9,"selected event map/floor count");
     validateNpcCoverage(npcs,extra.floors);
     bool shop=false,house=false,warp=false;
     for(const auto& f:maps.floors) {
@@ -35,7 +35,7 @@ int main(){try {
     check(!commitOranShare(s),"berry transferred before actual result");
     unsigned steps=0;while(eventActive(s) && steps++<80){Explorer e(decodeSnapshot(encodeSnapshot(s),p.assetVersion));e.advanceGameplay(nextGameplayDeadline(s),ActorCompletion{true,true,true},c);s=e.state();}
     check(steps<80 && s.gameplay.oran==2 && stockQuantity(s,0,109)==4 && s.variety.committed.size()==1,"sharing double debit or changed unrelated inventory");
-    const auto encoded=encodeSnapshot(s);check(encoded[4]==17,"stock schema not versioned");const auto restored=decodeSnapshot(encoded,p.assetVersion);
+    const auto encoded=encodeSnapshot(s);check(encoded[4]==18,"stock schema not versioned");const auto restored=decodeSnapshot(encoded,p.assetVersion);
     check(restored.gameplay.oran==2 && stockQuantity(restored,0,109)==4,"stock restore lost current quantities");
     s=eventFixture(p);s.gameplay.oran=1;check(startVarietyEvent(s,VarietyEvent::TiredExplorer,1000,c,1) && s.variety.event.variant=="E01.encourage" && s.variety.event.reservations.empty(),"last recovery berry offered");
     s=eventFixture(p);s.gameplay.companion.oran=2;check(startVarietyEvent(s,VarietyEvent::TiredExplorer,1000,c,1) && s.variety.event.variant=="E01.share_b" && reservedQuantity(s,kCompanionActorId,70)==1,"wrong stock owner reserved");

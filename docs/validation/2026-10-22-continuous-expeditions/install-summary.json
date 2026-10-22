@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "files": 899,
+  "assetBytes": 32556941,
+  "installedBytes": 35195357,
+  "exeSha256": "3a8fce50034a233a38e05c274fe836cc0dece81c9f80d6462dc453bd20d1dde3",
+  "sourceBuildRootInstallExeMatch": true,
+  "romIncluded": false
+}

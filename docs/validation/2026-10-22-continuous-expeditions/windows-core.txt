@@ -1,0 +1,1 @@
+expedition minimal transition, shelter, fixed boss, terminal return and snapshot replay passed

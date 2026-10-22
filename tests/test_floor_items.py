@@ -20,7 +20,7 @@ class FloorItemTests(unittest.TestCase):
     def test_every_item_id_uses_its_original_record_palette_and_pixels(self):
         audit = json.loads((ITEMS/'provenance.json').read_text())
         self.assertEqual([r['itemId'] for r in audit['items']], selected_ids(ROOT))
-        self.assertEqual((len(audit['items']), audit['uniqueSprites']), (114, 31))
+        self.assertEqual((len(audit['items']), audit['uniqueSprites']), (156, 39))
         rom = NintendoDSRom.fromFile(str(ROOT/'assets/original/source/user-supplied.nds'))
         records = FileType.ITEM_P.deserialize(rom.getFileByName('BALANCE/item_p.bin')).item_list
         pack = FileType.DUNGEON_BIN.deserialize(rom.getFileByName('DUNGEON/dungeon.bin'), get_ppmdu_config_for_rom(rom))

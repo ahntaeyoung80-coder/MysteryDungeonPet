@@ -69,7 +69,7 @@ int main(){try {
     }
     // Real MDES16 shape: the new bounded extension is absent, rather than version bytes relabelled alone.
     {auto s=base;queueGameplayNotice(s,NoticeKind::Pickup,70);updateGameplayNotices(s,1000);auto bytes=encodeSnapshot(s);
-     detail::Reader r(bytes);r.offset=bytes.size()-8;const auto size=r.u32();bytes.erase(bytes.end()-8-size,bytes.end()-4);bytes[4]=16;
+     while(bytes[4]>16){detail::Reader r(bytes);r.offset=bytes.size()-8;const auto size=r.u32();bytes.erase(bytes.end()-8-size,bytes.end()-4);--bytes[4];}
      std::uint32_t crc=0xffffffffU;for(std::size_t i=0;i<bytes.size()-4;++i){crc^=bytes[i];for(unsigned bit=0;bit<8;++bit)crc=(crc>>1)^((crc&1)?0xedb88320U:0);}
      crc=~crc;for(unsigned i=0;i<4;++i)bytes[bytes.size()-4+i]=std::uint8_t(crc>>(i*8));
      check(decodeSnapshot(bytes,s.assetVersion).variety.notices.empty(),"MDES16 import invents notices");

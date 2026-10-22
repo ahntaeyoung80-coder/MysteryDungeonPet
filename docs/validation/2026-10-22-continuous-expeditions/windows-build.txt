@@ -1,0 +1,15 @@
+[1/2] Building CXX object CMakeFiles/MysteryDungeonPet.dir/src/windows/main.cpp.obj
+/workspace/MysteryDungeonPet/src/windows/main.cpp: In member function ‘void {anonymous}::App::traceMovement(int64_t, bool)’:
+/workspace/MysteryDungeonPet/src/windows/main.cpp:376:13: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  376 |             if(!firstActor)movementTrace_ << ';';firstActor=false;
+      |             ^~
+/workspace/MysteryDungeonPet/src/windows/main.cpp:376:50: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  376 |             if(!firstActor)movementTrace_ << ';';firstActor=false;
+      |                                                  ^~~~~~~~~~
+/workspace/MysteryDungeonPet/src/windows/main.cpp:388:13: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  388 |             if(!firstMove)movementTrace_ << ';';firstMove=false;
+      |             ^~
+/workspace/MysteryDungeonPet/src/windows/main.cpp:388:49: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  388 |             if(!firstMove)movementTrace_ << ';';firstMove=false;
+      |                                                 ^~~~~~~~~
+[2/2] Linking CXX executable MysteryDungeonPet.exe

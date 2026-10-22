@@ -3,6 +3,8 @@ import hashlib
 import json
 from pathlib import Path
 import unittest
+import os
+import subprocess
 from tools.prepare_dialogue_portraits import body_identity
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,11 +21,13 @@ class CharacterAssetTests(unittest.TestCase):
         cls.kao = FileType.KAO.deserialize(cls.rom.getFileByName('FONT/kaomado.kao'))
         cls.atlas = Image.open(GAMEPLAY/'portraits/atlas.png').convert('RGBA')
         cls.audit = json.loads((GAMEPLAY/'portraits/provenance.json').read_text())['portraits']
-        cls.columns = sorted({p['bodyMdIndex'] for p in cls.audit})
+        inspector=Path(os.environ.get('PET_PACKAGE_INSPECT',ROOT/'build/expedition/pet_package_inspect'))
+        package=json.loads(subprocess.check_output([str(inspector),str(GAMEPLAY/'portraits/portraits.mdpa')],text=True))
+        cls.rects={c['id']:[f['rect'] for f in c['rows'][0]] for c in package['clips']}
 
     def face(self, md, expression=0):
-        left = self.columns.index(md)*40
-        return self.atlas.crop((left, expression*40, left+40, expression*40+40))
+        x,y,w,h=self.rects[md][expression]
+        return self.atlas.crop((x,y,x+w,y+h))
 
     def test_exact_npc_species_pixels_not_only_self_consistent_metadata(self):
         expected = self.kao.get(382, 0).get().convert('RGBA').tobytes()

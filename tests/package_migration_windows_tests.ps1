@@ -4,7 +4,7 @@ $Exe=(Resolve-Path $Exe).Path
 $Tests=(Resolve-Path $Tests).Path
 $Inspector=(Resolve-Path $Inspector).Path
 $OldPackage=(Resolve-Path 'assets/original/exploration/dungeon-0/exploration.mdpe').Path
-$NewPackage=(Resolve-Path 'assets/original/exploration/dungeon-15/exploration.mdpe').Path
+$NewPackage=(Resolve-Path 'assets/original/exploration/dungeon-14/exploration.mdpe').Path
 $Output=[IO.Path]::GetFullPath($Output)
 $Fixtures=Join-Path $Output 'fixtures'
 New-Item -ItemType Directory -Force $Output|Out-Null
@@ -42,13 +42,13 @@ try {
  Launch 'legacy-ready' 12
  $After=Inspect $NewPackage "$Fixtures/legacy-ready.mdes"
  $After|ConvertTo-Json -Depth 4|Set-Content "$Output/legacy-ready-after.json"
- if($After.runId -ne ($Before.runId+1) -or $After.day -ne $Before.day -or $After.floorCount -ne 7 -or
-    $After.dungeonId -ne 15 -or $After.meals -ne $Before.meals){
-  throw 'guild startup did not enter the new seven-floor run exactly once without adding a day'
+ if($After.runId -ne ($Before.runId+1) -or $After.day -ne $Before.day -or $After.floorCount -ne 16 -or
+    $After.dungeonId -ne 14 -or $After.meals -ne $Before.meals){
+  throw 'guild startup did not enter the new sixteen-floor expedition exactly once without adding a day'
  }
  foreach($Key in $Before.inventoryKeys){if($After.inventoryKeys -notcontains $Key){throw 'legacy morning inventory lost'}}
  @{status='pass';activeLegacy='progress retained during guild alarm; old run abandoned on departure';
-   newRun='new run, same day; seven original floors; meal/inventory retained';
+   newRun='new run, same day; sixteen original expedition floors; meal/inventory retained';
    actualWindows11='pending'}|ConvertTo-Json|Set-Content "$Output/summary.json"
  Get-Content -Raw "$Output/summary.json"
 } catch {

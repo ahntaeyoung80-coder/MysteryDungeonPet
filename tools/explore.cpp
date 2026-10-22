@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
             for (int i = 0; i < pet::kTiles; ++i) std::cout << (i ? "," : "") << chunks[i];
             std::cout << "]}\n"; return 0;
         }
-        auto explorer = pet::Explorer(seed + 1, seed, package.assetVersion, package.floors);
+        auto explorer = pet::Explorer(seed + 1, seed, package.assetVersion, package.floors,pet::SpawnPolicy{}, {},package.expedition);
         const std::filesystem::path statePath = argc >= 4 ? argv[3] : "";
         if (!statePath.empty() && std::filesystem::exists(statePath))
             explorer = pet::Explorer(pet::loadSnapshot(statePath, package.assetVersion));

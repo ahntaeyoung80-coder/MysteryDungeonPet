@@ -1,0 +1,7 @@
+Test project /workspace/MysteryDungeonPet/build/expedition-asan
+    Start 1: pet_expedition_tests
+1/1 Test #1: pet_expedition_tests .............   Passed    0.12 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.12 sec

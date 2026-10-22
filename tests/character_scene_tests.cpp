@@ -94,7 +94,7 @@ int main(int argc,char** argv){try {
     std::filesystem::remove(profile);
     Surface atlas(portraits.width,portraits.height);for(unsigned y=0;y<atlas.height;++y)for(unsigned x=0;x<atlas.width;++x){const auto i=(y*atlas.width+x)*4;atlas.pixels[i]=x/40+1;atlas.pixels[i+1]=y/40+1;atlas.pixels[i+3]=255;}
     Surface frame(56,56),screen(200,200);
-    for(unsigned emotion=0;emotion<14;++emotion){screen.clear();dialoguePortraitOverlay(screen,atlas,portraits,{PortraitRole::Player,0,PortraitEmotion(emotion)},cast,frame);check(screen.pixels[(96*200+16)*4+1]==emotion+1,"expression resolver always drew normal face");}
+    for(unsigned emotion=0;emotion<14;++emotion){screen.clear();dialoguePortraitOverlay(screen,atlas,portraits,{PortraitRole::Player,0,PortraitEmotion(emotion)},cast,frame);check(screen.pixels[(96*200+16)*4+1]==unsigned(portraits.frames(cast.actor(PortraitRole::Player).portraitClip,0)[emotion].rect.y/40+1),"expression resolver always drew normal face");}
     const auto package=loadExplorationPackage(root.parent_path()/"exploration/dungeon-0/exploration.mdpe");
     auto s=social(package,1000);Explorer e(s);e.advanceGameplay(1000);check(dialogueDirection(e.state(),0)==6 && dialogueDirection(e.state(),kCompanionActorId)==2,"companion not facing player");
     const int offsets[]{24,25,1,-23,-24,-25,-1,23};

@@ -1,0 +1,82 @@
+[
+  {
+    "case": "default",
+    "exitCode": 0,
+    "seconds": 6.217,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "stop-14",
+    "exitCode": 0,
+    "seconds": 7.193,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "stop-17",
+    "exitCode": 0,
+    "seconds": 7.182,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "stop-41",
+    "exitCode": 0,
+    "seconds": 7.209,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "stop-8",
+    "exitCode": 0,
+    "seconds": 7.233,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "boss-14",
+    "exitCode": 0,
+    "seconds": 9.212,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "boss-17",
+    "exitCode": 0,
+    "seconds": 9.23,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "boss-41",
+    "exitCode": 0,
+    "seconds": 9.203,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "ending-14",
+    "exitCode": 0,
+    "seconds": 18.19,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  },
+  {
+    "case": "ending-41",
+    "exitCode": 0,
+    "seconds": 18.207,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  }
+]

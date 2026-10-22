@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 $Exe = (Resolve-Path $Exe).Path
 $Output = [IO.Path]::GetFullPath($Output)
 $Inspector = (Resolve-Path $Inspector).Path
-$SevenPackage = (Resolve-Path 'assets/original/exploration/dungeon-15/exploration.mdpe').Path
+$DefaultPackage = (Resolve-Path 'assets/original/exploration/dungeon-14/exploration.mdpe').Path
 New-Item -ItemType Directory -Force $Output | Out-Null
 $Data = Join-Path $env:LOCALAPPDATA 'MysteryDungeonPet'
 New-Item -ItemType Directory -Force $Data | Out-Null
@@ -82,9 +82,9 @@ try {
         $Events | Set-Content "$Output/launch-$Run-events.txt"
         Copy-Item $Metrics "$Output/launch-$Run.csv"
         Copy-Item $Snapshot "$Output/launch-$Run.mdes"
-        $State = & $Inspector --inspect $SevenPackage $Snapshot | ConvertFrom-Json
-        if ($LASTEXITCODE -ne 0 -or $State.floorCount -ne 7 -or $State.dungeonId -ne 15) {
-            throw 'default launch did not create/restore the original seven-floor package'
+        $State = & $Inspector --inspect $DefaultPackage $Snapshot | ConvertFrom-Json
+        if ($LASTEXITCODE -ne 0 -or $State.floorCount -ne 16 -or $State.dungeonId -ne 14) {
+            throw 'default launch did not create/restore the original sixteen-floor expedition'
         }
         $State | ConvertTo-Json -Depth 4 | Set-Content "$Output/launch-$Run-state.json"
         $Joined = $Events -join "`n"

@@ -99,9 +99,9 @@ void portraits() {
     player.role=PortraitRole::Player;partner.role=PortraitRole::Partner;swapped.actors[0]=player;swapped.actors[1]=partner;
     validateDialogueActor(player,loadPackage(folder/player.bodyManifest),p);validateDialogueActor(partner,loadPackage(folder/partner.bodyManifest),p);
     Surface screen(200,200);dialoguePortraitOverlay(screen,atlas,p,{PortraitRole::Player,0},swapped,frame);
-    check(screen.pixels[(96*200+16)*4]==2 && swapped.label(PortraitRole::Player)=="나 · 파이리","player replacement retained former portrait/name");
+    check(screen.pixels[(96*200+16)*4]==unsigned(p.frames(player.portraitClip,0).front().rect.x/40+1) && swapped.label(PortraitRole::Player)=="나 · 파이리","player replacement retained former portrait/name");
     screen.clear();dialoguePortraitOverlay(screen,atlas,p,{PortraitRole::Partner,kCompanionActorId},swapped,frame);
-    check(screen.pixels[(96*200+144)*4]==1 && swapped.label(PortraitRole::Partner)=="동료 · 이상해씨","partner replacement retained former portrait/name");
+    check(screen.pixels[(96*200+144)*4]==unsigned(p.frames(partner.portraitClip,0).front().rect.x/40+1) && swapped.label(PortraitRole::Partner)=="동료 · 이상해씨","partner replacement retained former portrait/name");
     bool rejected=false;try{validateDialogueActor(player,loadPackage(folder/partner.bodyManifest),p);}catch(const std::exception&){rejected=true;}
     check(rejected,"mismatched body/portrait binding accepted");
     auto relabelled=loadPackage(folder/partner.bodyManifest);relabelled.assetKey=player.bodyAssetKey;rejected=false;

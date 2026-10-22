@@ -1,6 +1,7 @@
 """자동 후보인 새 맵·사건 문맥·종결 장소를 보유 원작에서 다시 대조한다."""
 from pathlib import Path
 import tempfile
+import json
 import unittest
 from tools.mdpet.b1 import build
 from tools.prepare_event_contexts import prepare as prepare_contexts
@@ -24,12 +25,25 @@ class EventAssetsTests(unittest.TestCase):
                     self.assertEqual(file.read_bytes(), (out / file.name).read_bytes(), file.name)
 
     def test_original_special_context_weights_reproduce(self):
-        with tempfile.TemporaryDirectory() as directory:
-            out = Path(directory)
-            report = prepare_contexts(ROOT, out)
-            self.assertEqual((report['maps'], report['floors']), (2, 16))
-            for name in ('contexts.mder', 'provenance.json'):
-                self.assertEqual((out / name).read_bytes(), (GAME / 'events' / name).read_bytes())
+        from ndspy.rom import NintendoDSRom
+        from skytemple_files.common.types.file_types import FileType
+        from skytemple_files.common.util import get_ppmdu_config_for_rom,get_binary_from_rom
+        from skytemple_files.hardcoded.dungeons import HardcodedDungeons
+        from tools.mdpet.b1 import load_catalogue
+        from tools.mdpet.catalogue import build_floor
+        rom=NintendoDSRom.fromFile(str(ROOT/'assets/original/source/user-supplied.nds'))
+        config=get_ppmdu_config_for_rom(rom)
+        definitions=HardcodedDungeons.get_dungeon_list(get_binary_from_rom(rom,config.bin_sections.arm9),config)
+        mappa=FileType.MAPPA_BIN.deserialize(rom.getFileByName('BALANCE/mappa_s.bin'))
+        a=load_catalogue(ROOT/'assets/original/a1-original-package.zip')
+        retained=json.loads((GAME/'events/provenance.json').read_text())['floors']
+        self.assertEqual(len(retained),160)
+        for p in retained:
+            key=p['key'];dungeon=key['dungeonId']
+            actual=build_floor(config.game_edition,dungeon,key['localFloor'],definitions[dungeon],mappa.floor_lists,
+                               a['pokemon'],a['items'],{int(k):v for k,v in a['itemCategoryMembers'].items()})
+            for field in ('key','tilesetId','groupFloor','rawLayout','monsters','itemContexts','traps'):
+                self.assertEqual(actual[field],p[field],(dungeon,key['localFloor'],field))
 
     def test_verified18_to19_completion_reproduces_and_keeps15(self):
         with tempfile.TemporaryDirectory() as directory:

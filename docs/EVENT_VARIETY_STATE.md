@@ -4,7 +4,7 @@
 
 ## 상태와 저장
 
-MDES17은1~16의 읽기를 유지한다. 기존11 payload 뒤12 variety,13 현재 재고,14 이동 임무,15 상품/전투 기여,16 휴일,17 획득/처치 안내 block을 순서대로 추가하고 block 길이·전체 CRC를 검사한다. MDPE1은 유지한다. MDLC1 문답, MDER1 맵 문맥, MDHR1 통행 경로, MDHS2 Float 바인딩은 별도 선택 자산이다.
+MDES17은1~16의 읽기를 유지한다. 기존11 payload 뒤12 variety,13 현재 재고,14 이동 임무,15 상품/전투 기여,16 휴일,17 획득/처치 안내 block을 순서대로 추가하고 block 길이·전체 CRC를 검사한다. MDES18은원정/연결부/분기/재방문결과block을길이·CRC와함께추가한다. MDPE1/2를읽고새원정은MDPE2를사용한다. MDLC1 문답, MDER1 맵 문맥, MDHR1 통행 경로, MDHS2 Float 바인딩은 별도 선택 자산이다.
 
 VarietyState는 문답1개·주요 사건1개·일정·독립 event/dialogue/schedule RNG·최근 문답·확정 결과·현재 재고·휴일을 보관한다. 사건 identity는 type/run/day/floor/trigger, 결과 키는 event:type:run:day:floor:trigger:result다. instance는 플레이어0/동료 sentinel/실제 population ID이며 휴일 고정 배우만 kHolidayActorId를 쓴다. 원본 MD/species/KAO/actor ID와 혼용하지 않는다.
 
@@ -20,7 +20,7 @@ E02는 실제 세 번째 배우의 계단 인접 도착, E08은 원작 warp6 양
 
 ## 자동 후보와 하루
 
-검증한 던전15(7층)→16 Steam Cave Peak,18(9층)→19 Amp Clearing만 기본 다음 탐험일 후보이며 현재 맵을 피한다. 원작 출현/아이템 비중은 변경하지 않는다.후속 사용자 지시로 해안 동굴0을 포함한 모든 지원 맵에서 탐험 사건9종을 허용한다. 원작 chance/함정 값은 보관하되 사건 가능 여부의 맵 제한으로 사용하지 않는다. 완료 이동16회부터32회 간격으로 한 번만 후보를 평가하고 층당1/run당2를 넘지 않는다. MH는 모든 지원 맵의 방 첫 진입당5%, 워프 후보는1/11 뒤 공통834/10000이다. 상점/MH는 현재 층의 원작 별도 상품/종 비중을 쓰고 문맥이 없으면 그 층의 floorItems/normalFriends를 쓴다. 맵 선택은15·18 교대로 유지하며 [확률 문서](EVENT_PROBABILITIES.md)에 구분한다.
+현재원정후보와사건허용범위는[연속원정계약](CONTINUOUS_EXPEDITIONS.md)과[확률문서](EVENT_PROBABILITIES.md)를따른다. 기존문답·재고·기회당확률·층당1/run당2상한은유지하며,원정중간구간에서는run을새로만들지않아사건상한을초기화하지않는다.
 
 기본 실행은 길드 아침에서 중단 사건·대화·예약을 취소하되 같은 날 목적지/맵·확정 결과·누적 재고를 유지한다. 휴일 방문 완료 후 식사가 아직 미완료면 기존 ReturnHome/저녁을 먼저 이어 중복 귀가/식사 생략을 막는다. 명시 --explore는 임무/문답/휴일의 실제 단계를 복원한다. Ready에서 새 Explorer로 일정/RNG/재고를 넘기고 같은 날의 pending package 교체는 보류한다. 식사/날짜/방문 결과는 같은 날 한 번만 확정한다.
 

@@ -1,0 +1,66 @@
+3100871154 NPC cache bodies=1 decoded=1
+3100896734 exploration snapshot=restored day=1 runId=9300
+3100904201 initial session unknown; render paused OS=0
+3100908081 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+3100908122 mode=automatic-exploration
+3100908141 select clip=7 direction=0 loop=1
+3100908168 render_pause
+3100908839 show
+3100974426 render_resume (not user activity)
+3100974474 session=8
+3100981071 party actor=0 target=0 action=1 round=24 event=21 damage=0
+3100981112 party actor=4294967294 target=0 action=2 round=24 event=29 damage=0
+3100981131 party actor=1 target=0 action=3 round=24 event=23 damage=0
+3101383442 expedition=RUN-D041 segment=43 localFloor=0 ground=none outcome=0
+3101383518 party actor=0 target=1 action=4 round=25 event=11 damage=1
+3101383546 life=Combat combat=PlayerAttack day=1 hearts=5
+3101838471 finite finished assetKey=rom:EoS_NA:md:1
+3101846392 party actor=1 target=0 action=4 round=25 event=13 damage=1
+3102006605 expedition=RUN-D041 segment=43 localFloor=0 ground=none outcome=0
+3102006690 party actor=4294967294 target=0 action=6 round=25 event=29 damage=0
+3102006716 life=Explore combat=PlayerAttack day=1 hearts=5
+3102408710 expedition=RUN-D041 segment=43 localFloor=0 ground=none outcome=0
+3102408783 party actor=1 target=0 action=7 round=25 event=12 damage=1
+3102408803 life=Combat combat=EnemyAttack day=1 hearts=5
+3102870446 party actor=0 target=1 action=7 round=25 event=13 damage=1
+3103024624 finite finished assetKey=rom:EoS_NA:md:1
+3103031457 party actor=0 target=1 action=9 round=26 event=11 damage=1
+3103485259 finite finished assetKey=rom:EoS_NA:md:1
+3103492107 party actor=1 target=0 action=9 round=26 event=16 damage=1
+3103654010 expedition=RUN-D041 segment=43 localFloor=0 ground=none outcome=0
+3103654082 party actor=1 target=0 action=10 round=26 event=17 damage=0
+3103654102 party actor=0 target=0 action=12 round=27 event=21 damage=0
+3103654120 party actor=4294967294 target=0 action=13 round=27 event=29 damage=0
+3103654171 life=Explore combat=PlayerAttack day=1 hearts=4
+3104056112 party actor=0 target=0 action=14 round=28 event=21 damage=0
+3104056204 party actor=4294967294 target=0 action=15 round=28 event=29 damage=0
+3104456436 party actor=0 target=0 action=16 round=29 event=21 damage=0
+3104456499 party actor=4294967294 target=0 action=17 round=29 event=29 damage=0
+3104858306 party actor=0 target=0 action=18 round=30 event=21 damage=0
+3104858378 party actor=4294967294 target=0 action=19 round=30 event=29 damage=0
+3105261578 party actor=0 target=0 action=20 round=31 event=21 damage=0
+3105261638 party actor=4294967294 target=0 action=21 round=31 event=29 damage=0
+3105664889 party actor=0 target=0 action=22 round=32 event=21 damage=0
+3105664953 party actor=4294967294 target=0 action=23 round=32 event=29 damage=0
+3106066869 party actor=0 target=0 action=24 round=33 event=21 damage=0
+3106066930 party actor=4294967294 target=0 action=25 round=33 event=29 damage=0
+3106471821 party actor=0 target=0 action=26 round=34 event=21 damage=0
+3106471885 party actor=4294967294 target=0 action=27 round=34 event=29 damage=0
+3106870512 party actor=0 target=0 action=28 round=35 event=21 damage=0
+3106870574 party actor=4294967294 target=0 action=29 round=35 event=29 damage=0
+3107272659 party actor=0 target=0 action=30 round=36 event=21 damage=0
+3107272721 party actor=4294967294 target=0 action=31 round=36 event=29 damage=0
+3107675051 party actor=0 target=0 action=32 round=37 event=21 damage=0
+3107675129 party actor=4294967294 target=0 action=33 round=37 event=29 damage=0
+3108077117 party actor=0 target=0 action=34 round=38 event=21 damage=0
+3108077198 party actor=4294967294 target=0 action=35 round=38 event=29 damage=0
+3108480487 party actor=0 target=0 action=36 round=39 event=21 damage=0
+3108480549 party actor=4294967294 target=0 action=37 round=39 event=29 damage=0
+3108883508 party actor=0 target=0 action=38 round=40 event=21 damage=0
+3108883590 party actor=4294967294 target=0 action=39 round=40 event=29 damage=0
+3109286338 party actor=0 target=0 action=40 round=41 event=21 damage=0
+3109286402 party actor=4294967294 target=0 action=41 round=41 event=29 damage=0
+3109687374 expedition=RUN-D041 segment=43 localFloor=0 ground=none outcome=0
+3109687442 select clip=7 direction=6 loop=1
+3109687462 life=Explore combat=PlayerAttack day=1 hearts=4 sceneBeat=13 dialogueStage=0
+3109911819 exit submissions=533 decodes=14 switches=0

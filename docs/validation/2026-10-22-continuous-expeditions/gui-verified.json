@@ -1,0 +1,240 @@
+{
+  "environment": "Wine 10 + Xvfb; synthetic WTS unlock injected; native Windows11/OS lock-power remain pending",
+  "cases": [
+    {
+      "case": "default",
+      "exitCode": 0,
+      "seconds": 11.365,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 459,
+      "submissions": 237,
+      "sceneBeats": [
+        8,
+        9,
+        12,
+        15,
+        18,
+        19
+      ],
+      "floors": [
+        0
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "stop-14",
+      "exitCode": 0,
+      "seconds": 12.366,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 796,
+      "submissions": 415,
+      "sceneBeats": [
+        11,
+        26,
+        27
+      ],
+      "floors": [
+        7,
+        8
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "stop-17",
+      "exitCode": 0,
+      "seconds": 7.182,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 790,
+      "submissions": 395,
+      "sceneBeats": [
+        11,
+        26,
+        27
+      ],
+      "floors": [
+        9,
+        10
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "stop-41",
+      "exitCode": 0,
+      "seconds": 7.209,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 773,
+      "submissions": 385,
+      "sceneBeats": [
+        11,
+        26,
+        27
+      ],
+      "floors": [
+        12,
+        13
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "stop-8",
+      "exitCode": 0,
+      "seconds": 7.233,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 779,
+      "submissions": 386,
+      "sceneBeats": [
+        11,
+        26,
+        27
+      ],
+      "floors": [
+        0
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "boss-14",
+      "exitCode": 0,
+      "seconds": 9.212,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 1066,
+      "submissions": 565,
+      "sceneBeats": [
+        0,
+        13,
+        20
+      ],
+      "floors": [
+        15
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "boss-17",
+      "exitCode": 0,
+      "seconds": 9.23,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 1371,
+      "submissions": 652,
+      "sceneBeats": [
+        0
+      ],
+      "floors": [
+        19
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "boss-41",
+      "exitCode": 0,
+      "seconds": 9.203,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 1036,
+      "submissions": 533,
+      "sceneBeats": [
+        0,
+        13
+      ],
+      "floors": [
+        23
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "ending-14",
+      "exitCode": 0,
+      "seconds": 18.19,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 2000,
+      "submissions": 973,
+      "sceneBeats": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "floors": [
+        15
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "ending-41",
+      "exitCode": 0,
+      "seconds": 18.207,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 1890,
+      "submissions": 840,
+      "sceneBeats": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "floors": [
+        23
+      ],
+      "status": "pass"
+    },
+    {
+      "case": "installed",
+      "exitCode": 0,
+      "seconds": 11.377,
+      "fatal": false,
+      "csv": true,
+      "syntheticUnlockExit": 0,
+      "traceRows": 467,
+      "submissions": 245,
+      "sceneBeats": [
+        8,
+        9,
+        12,
+        15,
+        18,
+        19
+      ],
+      "floors": [
+        0
+      ],
+      "status": "pass"
+    }
+  ]
+}

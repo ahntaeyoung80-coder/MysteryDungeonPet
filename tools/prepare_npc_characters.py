@@ -37,9 +37,11 @@ def prepare(root, output, selection_path=None):
             raise ValueError('shared compatibility actor ROM mismatch')
         shared[src['spriteIndex']] = path
     # Reuse already verified original NPC bodies when widening the selected maps.
+    existing_proofs = {}
     existing = gameplay/'npcs/catalogue.json'
     if existing.exists():
         for row in json.loads(existing.read_text())['characters']:
+            existing_proofs[row['mdIndex']] = row.get('verification')
             src, _, _, _ = body_identity(gameplay/row['bodyManifest'])
             if src['romHash'] != before:
                 raise ValueError('existing NPC body ROM mismatch')
@@ -66,7 +68,7 @@ def prepare(root, output, selection_path=None):
             if not 0 <= kao_index < kao.n_entries() or kao.get(kao_index, 0) is None:
                 raise ValueError('selected NPC has no verified Normal portrait')
             mask = sum(1 << i for i in range(14) if kao.get(kao_index, i*2))
-            verification = None
+            verification = existing_proofs.get(index)
             if sprite not in shared:
                 dest = temporary/'npcs/bodies'/str(sprite)
                 verification = prepare_body(root, dest, index)
@@ -115,7 +117,7 @@ def prepare(root, output, selection_path=None):
         (temporary/'npcs/CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; original ROM NPC bodies and portraits\n')
         if before != digest(source):
             raise ValueError('ROM changed')
-    return {'romUnchanged':True,'characters':len(entries),'newBodyPackages':len(list((output/'npcs/bodies').iterdir())),
+    return {'romUnchanged':True,'characters':len(entries),'newBodyPackages':len(list((output/'npcs/bodies').glob('*'))),
             'comparedFrames':sum((e['verification'] or {}).get('comparedFrames',0) for e in entries)}
 
 

@@ -1,0 +1,10 @@
+[
+  {
+    "case": "installed",
+    "exitCode": 0,
+    "seconds": 11.377,
+    "fatal": false,
+    "csv": true,
+    "syntheticUnlockExit": 0
+  }
+]

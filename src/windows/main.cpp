@@ -273,6 +273,7 @@ class App {
     bool loop_;
     size_t frame_ = 0;
     std::optional<int64_t> nextFrameDeadline_;
+    std::set<std::string> traceExpeditionImages_;
     bool finalSampled_ = false,traceCompletionImage_=false,traceDeathImage_=false,traceCharacterImagePending_=false;
     std::wstring submittedText_,submittedHud_;
     unsigned submittedFade_=UINT_MAX,submittedTitleOpacity_=UINT_MAX;
@@ -348,9 +349,9 @@ class App {
     void traceMovement(int64_t now,bool submitted) {
         if(!movementTrace_ || !explorer_) return;
         const auto& state=explorer_->state();const auto& g=state.gameplay;const bool dungeon=dungeonScene(g);
-        const auto scene=completionDestination()?endingPosition():dungeon?raster(playerMotion_.sample(now)):currentPlayback().scenePosition;
-        const auto world=dungeon && !completionDestination()?playerMotion_.sample(now):WorldPoint{double(scene.x),double(scene.y)};
-        const auto camera=completionDestination()?endingCamera():dungeon?cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_)):homeCamera(now);
+        const auto scene=currentExpeditionStop()?expeditionPosition():completionDestination()?endingPosition():dungeon?raster(playerMotion_.sample(now)):currentPlayback().scenePosition;
+        const auto world=dungeon && !completionDestination() && !currentExpeditionStop()?playerMotion_.sample(now):WorldPoint{double(scene.x),double(scene.y)};
+        const auto camera=currentExpeditionStop()?expeditionCamera():completionDestination()?endingCamera():dungeon?cameraFor(world,kWidth*24,kHeight*24,int((size_+scale_-1)/scale_)):homeCamera(now);
         uint64_t hash=14695981039346656037ULL,light=0;unsigned opaque=0;
         const auto* pixels=submitted_?static_cast<const std::uint8_t*>(dib_->bits):surface_.pixels.data();
         for(size_t i=0;i<surface_.pixels.size();++i) {hash^=pixels[i];hash*=1099511628211ULL;if(i%4==3){if(pixels[i]==255) ++opaque;}else light+=pixels[i];}
@@ -431,6 +432,8 @@ class App {
         }
         if(submitted && traceCharacterImagePending_){traceImage("-characters.bmp");traceCharacterImagePending_=false;}
         if(submitted && !traceDeathImage_ && g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk && textReady){traceImage("-defeat-dialogue.bmp");traceDeathImage_=true;}
+        if(submitted && currentExpeditionStop() && g.sceneBeat==SceneBeat::ExpeditionRest && traceExpeditionImages_.insert(currentExpeditionStop()->groundId).second)traceImage(("-rest-"+currentExpeditionStop()->groundId+".bmp").c_str());
+        if(submitted && state.expedition.enabled() && state.expedition.floors[state.floorIndex].fixedFloorId && !completionScene(g) && !expeditionScene(state) && traceExpeditionImages_.insert("boss:"+std::to_string(state.floorIndex)).second)traceImage(("-boss-"+std::to_string(state.floors[state.floorIndex].dungeonId)+".bmp").c_str());
         if(submitted && !traceCompletionImage_ && g.sceneBeat==SceneBeat::CompletionText && utcMs()>=g.phaseStartedMs+1500){traceImage("-completion.bmp");traceCompletionImage_=true;}
         if(submitted && !traceAlarmImage_ && g.sceneBeat==SceneBeat::WakeDelay && textReady){traceImage("-alarm.bmp");traceAlarmImage_=true;}
         if(submitted && textReady && (gameplayText(g).find(L"오랭열매")==0) && traceVarietyImages_.insert("full-heal").second)traceImage("-full-heal.bmp");

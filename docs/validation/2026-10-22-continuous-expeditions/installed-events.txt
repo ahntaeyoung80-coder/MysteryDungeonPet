@@ -1,0 +1,36 @@
+3317787383 NPC cache bodies=1 decoded=1
+3317806990 startup=guild-morning exploration-goal=discarded
+3317809402 exploration snapshot=new day=1 runId=3317775352
+3317819122 initial session unknown; render paused OS=0
+3317836435 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+3317836465 mode=automatic-exploration
+3317836493 select clip=13 direction=2 loop=0
+3317836521 render_pause
+3317837138 show
+3317889214 render_resume (not user activity)
+3317889248 session=8
+3317889290 guild room=PlayerRoom characters=2 objectCount=0
+3318614750 expedition=RUN-D014 segment=14 localFloor=0 ground=none outcome=4
+3318614816 select clip=13 direction=2 loop=0
+3318614843 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=18 dialogueStage=0
+3318618428 guild room=PlayerRoom characters=3 objectCount=0
+3319417453 expedition=RUN-D014 segment=14 localFloor=0 ground=none outcome=4
+3319417512 select clip=13 direction=2 loop=0
+3319417532 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=15 dialogueStage=0
+3319417559 guild room=PlayerRoom characters=3 objectCount=0
+3321420494 expedition=RUN-D014 segment=14 localFloor=0 ground=none outcome=4
+3321420550 select clip=13 direction=2 loop=0
+3321420569 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=19 dialogueStage=0
+3321420595 guild room=PlayerRoom characters=3 objectCount=0
+3322224898 expedition=RUN-D014 segment=14 localFloor=0 ground=none outcome=4
+3322224968 select clip=14 direction=2 loop=0
+3322224989 life=Wake combat=PlayerTurn day=1 hearts=5 sceneBeat=8 dialogueStage=0
+3322225014 guild room=PlayerRoom characters=2 objectCount=0
+3322915107 guild partner wake finished
+3322920440 finite finished assetKey=rom:EoS_NA:md:1
+3322926294 expedition=RUN-D014 segment=14 localFloor=0 ground=none outcome=4
+3322926330 select clip=22 direction=6 loop=0
+3322926351 life=Ready combat=PlayerTurn day=1 hearts=5 sceneBeat=9 dialogueStage=0
+3322926376 guild room=PlayerRoom characters=2 objectCount=0
+3323255022 finite finished assetKey=rom:EoS_NA:md:1
+3323826178 exit submissions=245 decodes=14 switches=0

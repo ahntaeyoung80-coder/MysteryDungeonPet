@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "scope": "8 selected expeditions, 22 unique segments, 161 route-relative logical floors; sidepaths9/11/13; 10 original grounds",
+  "sourceBeforeTask": "5aed626d835e8849511ff3ae349a5400e13127aa",
+  "stageCommits": [
+    "08f5e74",
+    "eefc304",
+    "a60d975"
+  ],
+  "asan": {
+    "uniqueCtestCases": 29,
+    "allPassedAfterTargetedFixes": true,
+    "initialFailuresPreserved": true,
+    "fullSuiteRepeated": false,
+    "originalRoutesFirstAndRevisit": 16,
+    "sidepaths": 3
+  },
+  "python": {
+    "tests": 16,
+    "status": "pass",
+    "originalNpcBodiesComparedFrames": 19232
+  },
+  "windows": {
+    "environment": "Wine10/Xvfb with synthetic WTS unlock; local Wine bootstrap registration corrected",
+    "coreAndGdiTests": 2,
+    "renderedGuiCases": 11,
+    "allExitZeroAndRendered": true,
+    "nativeWindows11LockPowerLongPerformance": "pending"
+  },
+  "limitations": [
+    "Only the explicitly selected 8 routes; other investigated routes and unresolved puzzle links excluded",
+    "Fixed room connected terrain selected within 22x22 cells; outside corridors clipped; static palettes and existing 2-hit pet combat",
+    "Transition fixtures force stairs/enemy completion and do not establish natural full-route victories",
+    "35,195,357-byte selected install exceeds provisional 20,000,000-byte target"
+  ],
+  "evidence": [
+    "gui-verified.json",
+    "install-summary.json",
+    "asan-original-routes.txt",
+    "python-assets.txt",
+    "python-characters.txt"
+  ]
+}

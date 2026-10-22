@@ -1,0 +1,11 @@
+Test project /workspace/MysteryDungeonPet/build/expedition-asan
+    Start  3: pet_gameplay_notice_tests
+1/3 Test  #3: pet_gameplay_notice_tests ........   Passed    0.86 sec
+    Start  8: pet_event_stock_tests
+2/3 Test  #8: pet_event_stock_tests ............   Passed    0.08 sec
+    Start 13: pet_character_scene_tests
+3/3 Test #13: pet_character_scene_tests ........   Passed    0.32 sec
+
+100% tests passed out of 3
+
+Total Test time (real) =   1.26 sec

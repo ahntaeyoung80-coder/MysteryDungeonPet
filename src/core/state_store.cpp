@@ -189,7 +189,9 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u32(static_cast<unsigned>(v.notices.size()));
     for(const auto& notice:v.notices){w.u32(static_cast<unsigned>(notice.kind));w.u32(notice.item);w.u64(notice.startedMs);w.u64(notice.deadlineMs);}
     w.u32(static_cast<unsigned>(w.bytes.size()-noticeStart));
+    const auto expeditionStart=w.bytes.size();
     detail::writeExpedition(w,s.expedition);
+    w.u32(static_cast<unsigned>(w.bytes.size()-expeditionStart));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -403,7 +405,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         for(unsigned i=0;i<count;++i){GameplayNotice notice;notice.kind=NoticeKind(r.count(3));notice.item=r.count(65535);notice.startedMs=r.u64();notice.deadlineMs=r.u64();s.variety.notices.push_back(notice);}
         const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("notice snapshot block length mismatch");
     }
-    if(schema>=18)s.expedition=detail::readExpedition(r);
+    if(schema>=18){const auto start=r.offset;s.expedition=detail::readExpedition(r);const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("expedition snapshot block length mismatch");}
     r.u32(); r.end();
     discardStaleEntityGoal(s);
     validateState(s);

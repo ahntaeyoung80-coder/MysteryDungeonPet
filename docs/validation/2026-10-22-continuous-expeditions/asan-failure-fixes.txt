@@ -1,0 +1,43 @@
+Test project /workspace/MysteryDungeonPet/build/expedition-asan
+      Start  3: pet_gameplay_notice_tests
+ 1/13 Test  #3: pet_gameplay_notice_tests ........***Failed    0.88 sec
+trailing exploration bytes
+
+      Start  8: pet_event_stock_tests
+ 2/13 Test  #8: pet_event_stock_tests ............***Failed    0.07 sec
+stock schema not versioned
+
+      Start 11: pet_npc_character_tests
+ 3/13 Test #11: pet_npc_character_tests ..........   Passed    0.79 sec
+      Start 12: pet_variety_state_tests
+ 4/13 Test #12: pet_variety_state_tests ..........   Passed    0.14 sec
+      Start 13: pet_character_scene_tests
+ 5/13 Test #13: pet_character_scene_tests ........***Failed    0.13 sec
+expression resolver always drew normal face
+
+      Start 15: pet_dialogue_portrait_tests
+ 6/13 Test #15: pet_dialogue_portrait_tests ......   Passed    0.10 sec
+      Start 16: pet_package_transition_tests
+ 7/13 Test #16: pet_package_transition_tests .....   Passed    3.05 sec
+      Start 17: pet_companion_tests
+ 8/13 Test #17: pet_companion_tests ..............   Passed   47.83 sec
+      Start 18: pet_party_ai_followup
+ 9/13 Test #18: pet_party_ai_followup ............   Passed    2.71 sec
+      Start 20: pet_navigation_recovery_tests
+10/13 Test #20: pet_navigation_recovery_tests ....   Passed    4.10 sec
+      Start 23: pet_survival_tests
+11/13 Test #23: pet_survival_tests ...............   Passed    0.09 sec
+      Start 24: pet_revision_tests
+12/13 Test #24: pet_revision_tests ...............   Passed    0.06 sec
+      Start 25: pet_improvement_tests
+13/13 Test #25: pet_improvement_tests ............   Passed    0.05 sec
+
+77% tests passed, 3 tests failed out of 13
+
+Total Test time (real) =  60.01 sec
+
+The following tests FAILED:
+	  3 - pet_gameplay_notice_tests (Failed)
+	  8 - pet_event_stock_tests (Failed)
+	 13 - pet_character_scene_tests (Failed)
+Errors while running CTest
