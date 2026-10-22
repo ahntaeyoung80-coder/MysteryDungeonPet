@@ -11,6 +11,7 @@ struct ExplorationPackage {
     std::string assetVersion, romHash;
     std::vector<FloorProfile> floors;
     std::vector<Tileset> tilesets;
+    ExpeditionState expedition;
     const Tileset& tileset(std::uint32_t id) const;
 };
 ExplorationPackage loadExplorationPackage(const std::filesystem::path&);

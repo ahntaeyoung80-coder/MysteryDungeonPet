@@ -113,7 +113,7 @@ constexpr std::uint32_t MOVE_REGULAR_ATTACK = 355, ITEM_ORAN_BERRY = 70;
 enum class LifePhase : std::uint8_t { Explore, Pose, ReturnHome, Emotion, Eat, Sleep, Wake, Ready, Combat, Death, Dialogue };
 enum class CombatPhase : std::uint8_t { PlayerTurn, PlayerAttack, EnemyHurt, EnemyTurn, EnemyAttack, PlayerHurt, BerryText, Faint, Victory, Defeat, PlayerFaint,
     CompanionTurn, CompanionAttack, CompanionHurt, CompanionFaint, PlayerApproach, CompanionApproach, CompanionBerryText };
-enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit, ExplorationBerryText, AlarmEnter, AlarmLeave, CompletionFadeIn, CompletionWalk, CompletionPose, CompletionText, CompletionFadeOut };
+enum class SceneBeat : std::uint8_t { None, DiningPan, DiningExit, BedFace, BedLay, BedFadeOut, NightFadeIn, Sleeping, Waking, MorningFace, MorningFadeOut, ExploreFadeIn, BedFadeIn, FloorFadeOut, FloorFadeIn, WakeDelay, RoomExit, ExplorationBerryText, AlarmEnter, AlarmLeave, CompletionFadeIn, CompletionWalk, CompletionPose, CompletionText, CompletionFadeOut, ExpeditionFadeIn, ExpeditionRest, ExpeditionFadeOut };
 enum class DialogueStage : std::uint8_t { Player, Npc };
 enum class DeathStage : std::uint8_t { FadeOut, Blackout, PartnerTalk };
 struct ActorFinished {
@@ -255,7 +255,7 @@ public:
     static constexpr std::uint32_t kPoseTimeout = 8;
     Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVersion,
              std::vector<FloorProfile> floors, SpawnPolicy policy = {},
-             std::vector<std::uint64_t> recentLayouts = {});
+             std::vector<std::uint64_t> recentLayouts = {}, ExpeditionState expedition = {});
     explicit Explorer(ExplorationState state);
     const ExplorationState& state() const { return state_; }
     Event advance(bool poseFinished = false); // one tile/action per event/deadline
@@ -268,7 +268,7 @@ public:
     void enableScreenExploration(std::uint32_t viewportSize);
     void observeViewport(int cameraX,int cameraY);
     bool roomFullyShown(int room) const;
-    void setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors);
+    void setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors,ExpeditionState expedition = {});
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
     GameplayUpdate resetExploration(std::uint64_t utcMs);
     bool canResetExploration() const;
@@ -284,6 +284,7 @@ private:
     GameplayUpdate advanceCatalogueGameplay(std::uint64_t,ActorCompletion,const DialogueCatalogue&,const EventRegistry*,const HolidayRegistry*);
     ExplorationState state_;
     std::string nextRunAssetVersion_;
+    ExpeditionState nextRunExpedition_;
     std::vector<FloorProfile> nextRunFloors_; // launch policy; reapplied when an old save is restored
     std::vector<int> path_;
     std::size_t pathIndex_ = 0;
@@ -291,6 +292,7 @@ private:
     bool retreatProgress_ = false;
     std::vector<std::uint64_t> recentLayouts() const;
     void enterFloor();
+    void populateFixedFloor();
     void plan();
     Event moveTo(int tile);
     int detourTile(unsigned repetitions, std::uint64_t signature);

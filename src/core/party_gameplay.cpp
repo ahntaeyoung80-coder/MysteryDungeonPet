@@ -544,7 +544,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     for(unsigned transition=0;transition<4;++transition) {
         if(!g.hearts || !g.companion.hearts)break;
         if(g.partyPhase==PartyPhase::Idle) {
-            if(!eventBattle(s) && s.position==s.world.stairs && (lowHealth() || roomFullyShown(s.world.room[s.position])) && g.companionIntent!=CompanionIntent::Engage &&
+            if(!eventBattle(s) && !fixedBattlePending(s) && s.position==s.world.stairs && (lowHealth() || roomFullyShown(s.world.room[s.position])) && g.companionIntent!=CompanionIntent::Engage &&
                canAttack(s.world,s.position,g.companion.tile)) {
                 invalidate();g.movement={};g.companion.movement={};
                 g.walkStartedMs=g.companion.walkStartedMs=0;

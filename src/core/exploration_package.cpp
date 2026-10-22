@@ -11,7 +11,9 @@ const Tileset& ExplorationPackage::tileset(std::uint32_t id) const {
 ExplorationPackage loadExplorationPackage(const std::filesystem::path& path) {
     const auto bytes = readFile(path, detail::kFileLimit);
     detail::Reader r(bytes);
-    if (r.u32() != 0x4550444d || r.u32() != 1) throw std::runtime_error("unknown exploration package schema");
+    if (r.u32() != 0x4550444d) throw std::runtime_error("unknown exploration package schema");
+    const auto schema=r.count(2);
+    if(schema<1)throw std::runtime_error("unknown exploration package schema");
     ExplorationPackage p;
     p.assetVersion = r.str(); p.romHash = r.str(); p.floors = detail::readProfiles(r);
     const auto n = r.count(170);
@@ -29,9 +31,10 @@ ExplorationPackage loadExplorationPackage(const std::filesystem::path& path) {
         }
         p.tilesets.push_back(std::move(t));
     }
+    if(schema>=2)p.expedition=detail::readExpedition(r);
     r.end();
     // Validate profiles with the same runtime state invariants used by restoration.
-    Explorer checked(1, 1, p.assetVersion, p.floors);
+    Explorer checked(1, 1, p.assetVersion, p.floors,{}, {},p.expedition);
     (void)checked;
     if (p.romHash.size() != 64 || p.assetVersion.size() != 64)
         throw std::runtime_error("invalid exploration provenance hash");

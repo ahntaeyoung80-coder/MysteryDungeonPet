@@ -218,8 +218,8 @@ unsigned gameplayFadeOpacity(const GameplayState& g,std::uint64_t now) {
     const auto elapsed=now>g.phaseStartedMs?now-g.phaseStartedMs:0;
     if(g.life==LifePhase::Death)return g.deathStage==DeathStage::PartnerTalk?0:g.deathStage==DeathStage::Blackout?255:unsigned(std::min<std::uint64_t>(255,elapsed*255/750));
     if(g.life==LifePhase::ReturnHome)return unsigned(g.fadeInOnly?(elapsed>=750?0:(750-elapsed)*255/750):g.homeScene?(elapsed>=1500?0:std::min<std::uint64_t>(255,(1500-elapsed)*255/750)):std::min<std::uint64_t>(255,elapsed*255/750));
-    const bool out=g.sceneBeat==SceneBeat::CompletionFadeOut || g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::FloorFadeOut;
-    const bool in=g.sceneBeat==SceneBeat::CompletionFadeIn || g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::ExploreFadeIn || g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::FloorFadeIn;
+    const bool out=g.sceneBeat==SceneBeat::ExpeditionFadeOut || g.sceneBeat==SceneBeat::CompletionFadeOut || g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::FloorFadeOut;
+    const bool in=g.sceneBeat==SceneBeat::ExpeditionFadeIn || g.sceneBeat==SceneBeat::CompletionFadeIn || g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::ExploreFadeIn || g.sceneBeat==SceneBeat::BedFadeIn || g.sceneBeat==SceneBeat::FloorFadeIn;
     if(!out && !in)return 0;
     const auto duration=(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn)?kFloorFadeMs:750;
     return unsigned(out?std::min<std::uint64_t>(255,elapsed*255/duration):elapsed>=duration?0:(duration-elapsed)*255/duration);

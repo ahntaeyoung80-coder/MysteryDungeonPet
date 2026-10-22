@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(17); // MDES17 persists committed pickup/victory notices.
+    w.u32(0x5345444d); w.u32(18); // MDES18 appends original expedition/segment/connector progress.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -189,6 +189,7 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u32(static_cast<unsigned>(v.notices.size()));
     for(const auto& notice:v.notices){w.u32(static_cast<unsigned>(notice.kind));w.u32(notice.item);w.u64(notice.startedMs);w.u64(notice.deadlineMs);}
     w.u32(static_cast<unsigned>(w.bytes.size()-noticeStart));
+    detail::writeExpedition(w,s.expedition);
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -197,7 +198,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 17) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 18) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -259,7 +260,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         s.visitedRooms=r.count(7);s.stalledActions=r.count(Explorer::kFloorStepLimit+kTiles+1);s.targetFailures=r.u32();
         s.knownStairs=static_cast<int>(r.count(kTiles))-1;s.targetInstance=r.count(kTiles);
         auto& g=s.gameplay;g.actionRound=r.u64();g.playerActionRound=r.u64();g.playerDirection=r.count(7);
-        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(schema>=11?2:1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=10?24:schema>=9?19:schema>=5?17:schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
+        g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(schema>=11?2:1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=18?27:schema>=10?24:schema>=9?19:schema>=5?17:schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
         for(auto& e:s.population.entities) {
             e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
             e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();
@@ -402,6 +403,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         for(unsigned i=0;i<count;++i){GameplayNotice notice;notice.kind=NoticeKind(r.count(3));notice.item=r.count(65535);notice.startedMs=r.u64();notice.deadlineMs=r.u64();s.variety.notices.push_back(notice);}
         const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("notice snapshot block length mismatch");
     }
+    if(schema>=18)s.expedition=detail::readExpedition(r);
     r.u32(); r.end();
     discardStaleEntityGoal(s);
     validateState(s);

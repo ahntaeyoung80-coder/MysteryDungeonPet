@@ -55,6 +55,12 @@ const ExpeditionStop* expeditionStop(const ExplorationState& s) {
     const auto& stops=e.entryPending?e.entryStops:e.floors.at(s.floorIndex).stops;
     return e.stopIndex<stops.size()?&stops[e.stopIndex]:nullptr;
 }
+bool expeditionScene(const ExplorationState& s) {
+    return s.gameplay.sceneBeat>=SceneBeat::ExpeditionFadeIn && s.gameplay.sceneBeat<=SceneBeat::ExpeditionFadeOut;
+}
+ExpeditionState freshExpedition(ExpeditionState e) {
+    e.stopIndex=0;e.entryPending=!e.entryStops.empty();e.outcome=ExpeditionOutcome::None;return e;
+}
 void validateExpedition(const ExplorationState& s) {
     validateFloorSequence(s.floors,s.expedition);
     if(!s.expedition.enabled())return;
@@ -63,6 +69,7 @@ void validateExpedition(const ExplorationState& s) {
     require(!e.stopIndex || expeditionStop(s),"invalid expedition stop index");
     require(e.outcome!=ExpeditionOutcome::Success || s.completed,"successful expedition without terminal clear");
     require(!s.completed || e.outcome==ExpeditionOutcome::Success,"terminal clear without expedition success");
+    if(expeditionScene(s))require(expeditionStop(s) && s.gameplay.enabled && s.gameplay.life==LifePhase::Explore && s.phase==Phase::Explore && !s.gameplay.homeScene && !s.gameplay.movement.actionId && s.target==-1,"invalid expedition presentation");
 }
 namespace detail {
 void writeExpedition(Writer& w,const ExpeditionState& e) {

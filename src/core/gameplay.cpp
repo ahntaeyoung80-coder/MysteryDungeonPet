@@ -122,6 +122,14 @@ AttackRoll rollBasicAttack(Rng& rng, bool player) {
 }
 void Explorer::assignRelationships() {
     state_.gameplay.hostile.clear();
+    if(state_.expedition.enabled() && state_.expedition.floors.at(state_.floorIndex).fixedFloorId) {
+        const auto& spawns=state_.expedition.floors[state_.floorIndex].fixedSpawns;
+        for(const auto& e:state_.population.entities)if(e.kind==EntityKind::Friend) {
+            const auto& source=spawns.at(e.instanceId-1);
+            if(source.spawnType!=7 && source.spawnType!=10)state_.gameplay.hostile.push_back(e.instanceId);
+        }
+        return;
+    }
     for (const auto& e : state_.population.entities)
         if (e.kind == EntityKind::Friend && !e.done && state_.rng.bounded(4) != 0)
             state_.gameplay.hostile.push_back(e.instanceId);
@@ -166,6 +174,8 @@ GameplayUpdate Explorer::beginReturn(std::uint64_t now, bool defeated) {
     state_.phase = Phase::Home;
     auto& g = state_.gameplay;
     if(companionDialogue(g))g.enemyInstance=0;
+    if(state_.expedition.enabled() && state_.expedition.outcome!=ExpeditionOutcome::Success)
+        state_.expedition.outcome=defeated?ExpeditionOutcome::Defeat:ExpeditionOutcome::VoluntaryReturn;
     g.life = LifePhase::ReturnHome; g.defeated = defeated; g.homeScene = false;g.sceneBeat=SceneBeat::None;g.fadeInOnly=false;g.walkStartedMs=0;
     g.companion.walkStartedMs=0;
     g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
@@ -234,6 +244,40 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         g.combat = phase; g.phaseStartedMs = now; g.deadlineMs = now + duration;
         return GameplayUpdate{event, {}};
     };
+    if(expeditionScene(state_)) {
+        if(now<g.deadlineMs)return {};
+        auto& e=state_.expedition;
+        if(g.sceneBeat==SceneBeat::ExpeditionFadeIn) {
+            g.sceneBeat=SceneBeat::ExpeditionRest;g.phaseStartedMs=now;g.deadlineMs=now+4000;
+            return {GameplayEvent::Explore,{}};
+        }
+        if(g.sceneBeat==SceneBeat::ExpeditionRest) {
+            g.sceneBeat=SceneBeat::ExpeditionFadeOut;g.phaseStartedMs=now;g.deadlineMs=now+750;
+            return {GameplayEvent::Explore,{}};
+        }
+        const auto& stops=e.entryPending?e.entryStops:e.floors[state_.floorIndex].stops;
+        if(e.stopIndex+1<stops.size()) {
+            ++e.stopIndex;g.sceneBeat=SceneBeat::ExpeditionFadeIn;g.phaseStartedMs=now;g.deadlineMs=now+750;
+            return {GameplayEvent::Explore,{}};
+        }
+        e.stopIndex=0;
+        if(e.entryPending) {
+            e.entryPending=false;g.sceneBeat=SceneBeat::ExploreFadeIn;g.phaseStartedMs=now;g.deadlineMs=now+3000;
+            return {GameplayEvent::Explore,{}};
+        }
+        // Commit the pending stairs only after every ground in this link finished.
+        g.sceneBeat=SceneBeat::None;const auto event=advance();
+        if(event.kind!=EventKind::FloorChanged)throw std::logic_error("expedition link did not advance");
+        g.sceneBeat=SceneBeat::FloorFadeIn;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
+        return {GameplayEvent::FloorChanged,event.onceKey};
+    }
+    if(state_.expedition.enabled() && state_.expedition.entryPending && g.life==LifePhase::Explore &&
+       (g.sceneBeat==SceneBeat::ExploreFadeIn || g.sceneBeat==SceneBeat::None)) {
+        invalidate();g.movement={};g.companion.movement={};g.walkStartedMs=g.companion.walkStartedMs=0;
+        g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
+        g.sceneBeat=SceneBeat::ExpeditionFadeIn;g.phaseStartedMs=now;g.deadlineMs=now+750;
+        return {GameplayEvent::Explore,{}};
+    }
     if(g.life==LifePhase::Death) {
         if(now<g.deadlineMs) return {};
         if(g.deathStage==DeathStage::PartnerTalk) {
@@ -251,6 +295,10 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         if(now<g.deadlineMs) return {};
         if(g.sceneBeat==SceneBeat::FloorFadeIn) {
             g.sceneBeat=SceneBeat::None;g.phaseStartedMs=g.deadlineMs=now;
+            return {GameplayEvent::Explore,{}};
+        }
+        if(state_.expedition.enabled() && !state_.expedition.floors[state_.floorIndex].stops.empty()) {
+            state_.expedition.stopIndex=0;g.sceneBeat=SceneBeat::ExpeditionFadeIn;g.phaseStartedMs=now;g.deadlineMs=now+750;
             return {GameplayEvent::Explore,{}};
         }
         g.sceneBeat=SceneBeat::None;
@@ -413,9 +461,10 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         const bool changePackage=!sameScheduledDay && !nextRunFloors_.empty();
         Explorer next(state_.runId+1,state_.rng.state,
             changePackage?nextRunAssetVersion_:state_.assetVersion,
-            changePackage?nextRunFloors_:state_.floors,state_.spawnPolicy,recentLayouts());
+            changePackage?nextRunFloors_:state_.floors,state_.spawnPolicy,recentLayouts(),
+            changePackage?nextRunExpedition_:freshExpedition(state_.expedition));
         // Keep a deferred package upgrade available until the scheduled day ends.
-        if(!changePackage && !nextRunFloors_.empty())next.setNextRunPackage(nextRunAssetVersion_,nextRunFloors_);
+        if(!changePackage && !nextRunFloors_.empty())next.setNextRunPackage(nextRunAssetVersion_,nextRunFloors_,nextRunExpedition_);
         next.state_.inventory=inventory;
         if(state_.screenExploration)next.enableScreenExploration(state_.viewportSize);
         for(const auto& entry:inventory) next.state_.onceKeys.insert(entry.onceKey);
@@ -773,7 +822,7 @@ bool Explorer::beginCompanionDialogue(std::uint64_t now) {
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;
     retreatProgress_=false;
-    if(state_.position==state_.world.stairs && (lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {
+    if(!fixedBattlePending(state_) && state_.position==state_.world.stairs && (lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {
         invalidate();g.movement={};g.walkStartedMs=0;
         g.sceneBeat=SceneBeat::FloorFadeOut;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
         return {};

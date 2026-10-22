@@ -35,6 +35,8 @@ void validateExpedition(const ExplorationState&);
 void validateFloorSequence(const std::vector<FloorProfile>&,const ExpeditionState&);
 bool fixedBattlePending(const ExplorationState&);
 const ExpeditionStop* expeditionStop(const ExplorationState&);
+bool expeditionScene(const ExplorationState&);
+ExpeditionState freshExpedition(ExpeditionState);
 namespace detail {
 struct Reader;struct Writer;
 void writeExpedition(Writer&,const ExpeditionState&);

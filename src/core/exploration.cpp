@@ -305,7 +305,7 @@ Population populate(const World& world, const FloorProfile& profile, Rng& rng,
 }
 EncounterAction encounterPolicy(const Entity&) { return EncounterAction::Greet; }
 Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVersion,
-                   std::vector<FloorProfile> floors, SpawnPolicy policy,std::vector<uint64_t> recentLayouts) {
+                   std::vector<FloorProfile> floors, SpawnPolicy policy,std::vector<uint64_t> recentLayouts,ExpeditionState expedition) {
     require(!floors.empty() && floors.size() <= 128, "invalid floor count");
     validatePolicy(policy);
     for (const auto& p : floors) validateProfile(p);
@@ -314,6 +314,8 @@ Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVer
     state_.rng.state = seed;
     state_.assetVersion = std::move(assetVersion);
     state_.floors = std::move(floors);
+    state_.expedition=std::move(expedition);
+    validateFloorSequence(state_.floors,state_.expedition);
     state_.spawnPolicy = policy;
     require(recentLayouts.size()<=kRecentLayoutLimit,"recent layout input exceeds bound");
     std::set<uint64_t> unique;
@@ -324,15 +326,11 @@ Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVer
     enterFloor();
     validateState(state_);
 }
-void Explorer::setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors) {
+void Explorer::setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors,ExpeditionState expedition) {
     require(!assetVersion.empty() && assetVersion.size()<=256,"invalid next-run asset version");
-    require(!floors.empty() && floors.size()<=128,"invalid next-run floor count");
-    for(size_t i=0;i<floors.size();++i) {
-        validateProfile(floors[i]);
-        require(floors[i].edition==floors[0].edition && floors[i].dungeonId==floors[0].dungeonId &&
-                floors[i].localFloor==i,"next-run floors are not a complete dungeon");
-    }
-    nextRunAssetVersion_=std::move(assetVersion);nextRunFloors_=std::move(floors);
+    validateFloorSequence(floors,expedition);
+    for(const auto& floor:floors)validateProfile(floor);
+    nextRunAssetVersion_=std::move(assetVersion);nextRunFloors_=std::move(floors);nextRunExpedition_=std::move(expedition);
 }
 bool discardStaleEntityGoal(ExplorationState& s,bool movingFriend) {
     if(s.goalKind!=GoalKind::Friend && s.goalKind!=GoalKind::Item)return false;
@@ -420,6 +418,7 @@ void Explorer::enterFloor() {
     }
     state_.population = populate(state_.world, state_.floors[state_.floorIndex],
                                  state_.rng, state_.spawnPolicy,entryExclusion);
+    if(state_.expedition.enabled() && state_.expedition.floors.at(state_.floorIndex).fixedFloorId)populateFixedFloor();
     state_.position = state_.world.start;
     state_.visited.fill(0);state_.screenSeen.fill(0);
     state_.visited[state_.position] = 1;
@@ -434,6 +433,26 @@ void Explorer::enterFloor() {
     state_.gameplay.partyActions.clear();state_.gameplay.partyPlaybacks.clear();state_.gameplay.partyPhase=PartyPhase::Idle;
     state_.gameplay.companionIntent=CompanionIntent::Follow;state_.gameplay.companionTarget=0;
     if (state_.gameplay.enabled) {if(state_.gameplay.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");++state_.gameplay.actionRound;assignRelationships();}
+}
+void Explorer::populateFixedFloor() {
+    const auto& source=state_.expedition.floors.at(state_.floorIndex).fixedSpawns;
+    state_.population={};
+    Mask used{};used[state_.world.start]=used[state_.world.stairs]=1;
+    if(state_.gameplay.companion.enabled)used[state_.gameplay.companion.tile]=1;
+    // Keep source identity/order in the manifest. The pet retains its small generated
+    // rooms; map original fixed-room coordinates to the nearest distinct free tile.
+    for(const auto& spawn:source) {
+        int best=-1,score=INT32_MAX;
+        const int x=std::clamp(int(spawn.x),2,kWidth-3),y=std::clamp(int(spawn.y),2,kHeight-3);
+        for(int tile=0;tile<kTiles;++tile)if(state_.world.walkable(tile) && !used[tile]) {
+            const int candidate=std::abs(tile%kWidth-x)+std::abs(tile/kWidth-y);
+            if(candidate<score){best=tile;score=candidate;}
+        }
+        require(best>=0,"fixed spawn exceeds available floor space");used[best]=1;
+        Entity e;e.instanceId=static_cast<unsigned>(state_.population.entities.size()+1);
+        e.originalId=spawn.md?spawn.md:spawn.item;e.kind=spawn.md?EntityKind::Friend:EntityKind::Item;e.tile=best;
+        state_.population.entities.push_back(e);
+    }
 }
 void Explorer::setBlocked(int tile, bool value) {
     require(state_.world.walkable(tile) && tile != state_.position, "invalid blocker tile");
@@ -693,6 +712,16 @@ void Explorer::reevaluateStairs() {
     } else {state_.target=previousTarget;state_.goalKind=GoalKind::Stairs;} // Keep the existing stairs route/cache.
 }
 void Explorer::plan() {
+    if(fixedBattlePending(state_)) {
+        invalidate();const auto search=bfs(state_.world,state_.position,playerOccupancy());int best=kTiles+1;
+        for(const auto& e:state_.population.entities)if(!e.done && e.visible &&
+            std::find(state_.gameplay.hostile.begin(),state_.gameplay.hostile.end(),e.instanceId)!=state_.gameplay.hostile.end())
+            for(int tile=0;tile<kTiles;++tile)if(canAttack(state_.world,tile,e.tile) && search.distance[tile]>=0 && search.distance[tile]<best) {
+                best=search.distance[tile];state_.target=tile;state_.goalKind=GoalKind::Auxiliary;
+            }
+        return;
+    }
+
     auto occupied=playerOccupancy();
     // A discovered staircase is not a shortcut through unfinished exploration.
     if(state_.position!=state_.world.stairs) occupied[state_.world.stairs]=1;
@@ -804,6 +833,7 @@ Event Explorer::advance(bool poseFinished) {
             break;
         }
     } else if (state_.goalKind == GoalKind::Stairs) {
+        if(fixedBattlePending(state_)){invalidate();return {};}
         const auto transitionKey = key("stairs");
         state_.onceKeys.insert(transitionKey);
         if (state_.floorIndex + 1 < state_.floors.size()) {
@@ -813,6 +843,7 @@ Event Explorer::advance(bool poseFinished) {
         }
         const auto clearKey = key("clear");
         state_.completed = true;
+        if(state_.expedition.enabled())state_.expedition.outcome=ExpeditionOutcome::Success;
         state_.phase = Phase::Pose;
         state_.poseSteps = 0;
         if (state_.onceKeys.insert(clearKey).second) event = {EventKind::Pose, clearKey, 0};
@@ -828,9 +859,9 @@ void validateState(const ExplorationState& s) {
     validatePartyState(s);
     (void)layoutMemory(g);
     require(g.navigationHistory.size()<=32,"navigation history exceeds bound");
-    require(static_cast<unsigned>(g.deathStage)<=2 && static_cast<unsigned>(g.sceneBeat)<=24 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
+    require(static_cast<unsigned>(g.deathStage)<=2 && static_cast<unsigned>(g.sceneBeat)<=27 && static_cast<unsigned>(g.dialogueStage)<=1,"invalid death stage");
     if(g.deathStage==DeathStage::PartnerTalk)require(g.life==LifePhase::Death,"death dialogue outside defeat");
-    if(g.sceneBeat>=SceneBeat::CompletionFadeIn)
+    if(g.sceneBeat>=SceneBeat::CompletionFadeIn && g.sceneBeat<=SceneBeat::CompletionFadeOut)
         require(completionScene(g) && s.completed && !g.homeScene,"invalid completion scene");
     if(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn) {
         require(g.enabled && g.life==LifePhase::Explore && !g.homeScene && s.target==-1 && !g.movement.actionId,"invalid floor presentation");
@@ -876,12 +907,8 @@ void validateState(const ExplorationState& s) {
     require(s.runId != 0 && !s.floors.empty() && s.floors.size() <= 128 &&
             s.floorIndex < s.floors.size(), "invalid run/floor");
     validatePolicy(s.spawnPolicy);
-    for (std::size_t i = 0; i < s.floors.size(); ++i) {
-        const auto& p = s.floors[i];
-        validateProfile(p);
-        require(p.edition == s.floors[0].edition && p.dungeonId == s.floors[0].dungeonId &&
-                p.localFloor == i, "floor sequence is not a complete dungeon");
-    }
+    for(const auto& p:s.floors)validateProfile(p);
+    validateExpedition(s);
     validateWorld(s.world);
     require(static_cast<unsigned>(s.survivalFirst)<=2,"invalid survival discovery order");
     require(s.knownStairs==-1 || (s.knownStairs==s.world.stairs && s.discovered[s.world.stairs]),"invalid remembered stairs");
