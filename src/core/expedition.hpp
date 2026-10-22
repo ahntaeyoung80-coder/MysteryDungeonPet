@@ -1,0 +1,43 @@
+#pragma once
+#include <cstdint>
+#include <string>
+#include <vector>
+
+namespace pet {
+struct FixedSpawn {
+    std::uint32_t md=0,item=0,quantity=0,x=0,y=0,spawnType=0;
+};
+struct ExpeditionStop {
+    std::string groundId,assetFile;
+    std::uint32_t width=0,height=0,playerX=0,playerY=0,partnerX=0,partnerY=0;
+    bool storage=false;
+};
+struct ExpeditionFloor {
+    std::uint32_t dungeonId=0,localFloor=0,fixedFloorId=0;
+    std::vector<FixedSpawn> fixedSpawns;
+    std::string exitLink;
+    std::vector<ExpeditionStop> stops;
+};
+enum class ExpeditionOutcome : std::uint8_t { None, Success, VoluntaryReturn, Defeat, Interrupted };
+struct ExpeditionState {
+    std::string routeId,name;
+    std::vector<ExpeditionFloor> floors;
+    std::vector<ExpeditionStop> entryStops;
+    std::vector<std::uint32_t> branches;
+    bool revisit=false,entryPending=false;
+    std::uint32_t stopIndex=0;
+    ExpeditionOutcome outcome=ExpeditionOutcome::None;
+    bool enabled() const { return !routeId.empty(); }
+};
+struct ExplorationState;
+struct FloorProfile;
+void validateExpedition(const ExplorationState&);
+void validateFloorSequence(const std::vector<FloorProfile>&,const ExpeditionState&);
+bool fixedBattlePending(const ExplorationState&);
+const ExpeditionStop* expeditionStop(const ExplorationState&);
+namespace detail {
+struct Reader;struct Writer;
+void writeExpedition(Writer&,const ExpeditionState&);
+ExpeditionState readExpedition(Reader&);
+}
+}

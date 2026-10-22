@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/variety_state.hpp"
+#include "core/expedition.hpp"
 #include <array>
 #include <cstdint>
 #include <filesystem>
@@ -241,6 +242,7 @@ struct ExplorationState {
     GoalKind goalKind = GoalKind::None;
     GameplayState gameplay;
     VarietyState variety;
+    ExpeditionState expedition;
 };
 std::uint64_t navigationFingerprint(const ExplorationState&);
 void validatePartyState(const ExplorationState&);

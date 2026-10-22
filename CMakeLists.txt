@@ -12,6 +12,7 @@ endif()
 add_library(pet_core src/core/gameplay_notice.cpp src/core/holiday_scene.cpp src/core/event_combat.cpp src/core/event_missions.cpp src/core/event_movement.cpp src/core/event_registry.cpp src/core/event_runtime.cpp src/core/dialogue_catalogue.cpp src/core/package.cpp src/core/animator.cpp src/core/surface.cpp
   src/core/exploration.cpp src/core/gameplay.cpp src/core/party_gameplay.cpp src/core/gameplay_scene.cpp src/core/guild_scene.cpp src/core/completion_scene.cpp src/core/character_selection.cpp src/core/npc_characters.cpp src/core/state_store.cpp src/core/variety_state.cpp src/core/exploration_package.cpp)
 target_include_directories(pet_core PUBLIC src)
+target_sources(pet_core PRIVATE src/core/expedition.cpp)
 include(CTest)
 if(BUILD_TESTING)
   add_executable(pet_all_map_event_tests tests/all_map_event_tests.cpp)
