@@ -70,7 +70,8 @@ def prepare(root, output, cast_path=None, characters_path=None, expressions=Fals
     config = {'schemaVersion': 1, 'actors': [{'role': a['role'], 'bodyManifest': a['bodyManifest']} for a in actors]}
     if expressions:
         characters = {md: {'characterId': f"rom:{before}:{catalogue['edition']}:md:{md}", 'bodyMdIndex': md, 'kaoIndex': row['kaoIndex']} for md,row in known.items()}
-    atlas = Image.new('RGBA', (40 * len(characters), 560 if expressions else 40))
+    atlas = Image.new('RGBA', (1280, 40*((len(characters)*(14 if expressions else 1)+31)//32)))
+    portrait_cells = {}
     supplements = {}
     supplement_root = root / 'assets/original/source/portrait-supplements'
     supplement_manifest = supplement_root / 'manifest.json'
@@ -97,17 +98,22 @@ def prepare(root, output, cast_path=None, characters_path=None, expressions=Fals
             if supplement: actual = expression
             if image.size != (40, 40):
                 raise ValueError('unexpected original portrait dimensions')
-            atlas.paste(image, (column*40, expression*40))
+            pixels = image.tobytes()
+            if pixels not in portrait_cells:
+                cell = len(portrait_cells); portrait_cells[pixels] = cell
+                atlas.paste(image, (cell%32*40, cell//32*40))
+            cell = portrait_cells[pixels]
             metadata = {'characterId': character['characterId'], 'bodyMdIndex': md,
                         'kaoIndex': index, 'expression': expression, 'actualExpression': actual,
                         'rgbaSha256': digest(image.tobytes()), 'portraitSource': supplement if supplement else 'original ROM'}
             audit.append(metadata)
-            frames.append({'rect': [column*40, expression*40, 40, 40], 'anchor': [0,0], 'shadow': [0,0],
+            frames.append({'rect': [cell%32*40, cell//32*40, 40, 40], 'anchor': [0,0], 'shadow': [0,0],
                            'ticks': 1, 'markers': [], 'sourceMetadata': json.dumps(metadata, sort_keys=True)})
         clips.append({'id': md, 'name': f'MD{md}', 'sourceMetadata': character['characterId'], 'rows': [frames]})
     if digest(source.read_bytes()) != before:
         raise ValueError('ROM changed')
     output.mkdir(parents=True)
+    atlas = atlas.crop((0,0,1280,40*((len(portrait_cells)+31)//32)))
     atlas.save(output / 'atlas.png')
     png = (output / 'atlas.png').read_bytes()
     provenance = {'romSha256': before, 'sourcePath': 'FONT/kaomado.kao',

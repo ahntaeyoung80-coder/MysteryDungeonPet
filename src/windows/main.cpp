@@ -38,6 +38,7 @@ constexpr UINT TrayMessage = WM_APP + 1;
 constexpr UINT ClipBase = 100, DirectionBase = 500;
 constexpr UINT Loop = 600, Finite = 601, Stop = 602, Hide = 603, Top = 604;
 constexpr UINT Scale1 = 610, Scale2 = 611, Scale3 = 612, Background = 620, Reload = 623, Quit = 624;
+constexpr UINT ExpeditionRevisit=626, ExpeditionBranchBase=700;
 constexpr UINT ResetExploration = 625, PlayerCharacterBase=1000, PartnerCharacterBase=1100;
 constexpr unsigned PhysicalSize = 200;
 const GUID SessionDisplayGuid{0x2b84c20e, 0xad23, 0x4ddf, {0x93, 0xdb, 0x05, 0xff, 0xbd, 0x7e, 0xfc, 0xa5}};
@@ -165,7 +166,7 @@ Options options() {
     // an explicit --explore still wins over their legacy --package selector.
     if (o.exploration.empty() && !animationTest) {
         o.defaultExploration=true;
-        o.exploration = runtimePath(L"assets/exploration/dungeon-15/exploration.mdpe",L"assets/original/exploration/dungeon-15/exploration.mdpe");
+        o.exploration = runtimePath(L"assets/exploration/dungeon-14/exploration.mdpe",L"assets/original/exploration/dungeon-14/exploration.mdpe");
     }
     if (!o.scale) throw std::runtime_error("scale must be 1..8");
     if (!o.exploration.empty() && (o.validate || o.scenario != L"manual"))
@@ -205,6 +206,9 @@ class App {
     std::size_t appleFrame_=0;
     std::optional<Surface> dialoguePanel_,portraitFrame_;
     CompletionRegistry completionRegistry_;
+    std::optional<Assets> expeditionGround_;
+    std::string expeditionGroundId_;
+    std::map<unsigned,ExplorationPackage> expeditionBranches_;
     std::map<std::uint32_t,Assets> completionAssets_;
     std::vector<GuildRoom> guildRooms_;
     std::map<std::string, Assets> guildAssets_;
@@ -303,9 +307,32 @@ class App {
         if(g.sceneBeat==SceneBeat::RoomExit || g.sceneBeat==SceneBeat::MorningFadeOut) {const auto p=bedroomExitCamera(g,utcMs());center={double(p.x),double(p.y)};}
         return cameraFor(center,room.width,room.height,int((size_+scale_-1)/scale_));
     }
+    const ExpeditionStop* currentExpeditionStop() const {
+        return explorer_ && expeditionScene(explorer_->state())?expeditionStop(explorer_->state()):nullptr;
+    }
+    Point expeditionPosition(bool partner=false) const {
+        const auto* stop=currentExpeditionStop();
+        return {int(partner?stop->partnerX:stop->playerX),int(partner?stop->partnerY:stop->playerY)};
+    }
+    Point expeditionCamera() const {
+        const auto* stop=currentExpeditionStop();const auto a=expeditionPosition(),b=expeditionPosition(true);
+        return cameraFor({double(a.x+b.x)/2,double(a.y+b.y)/2-24},stop->width,stop->height,int((size_+scale_-1)/scale_));
+    }
+    void stageExpeditionGround(const ExplorationState& state) {
+        const auto* stop=expeditionScene(state)?expeditionStop(state):nullptr;
+        if(!stop){expeditionGround_.reset();expeditionGroundId_.clear();return;}
+        if(expeditionGroundId_==stop->groundId)return;
+        auto asset=Assets::load(options_.gameplayAssets/L"expeditions"/stop->assetFile);
+        const auto& frame=asset.package.frames(0,0).front();
+        if(frame.rect.x || frame.rect.y || frame.rect.w!=int(stop->width) || frame.rect.h!=int(stop->height))throw std::runtime_error("expedition ground dimensions mismatch");
+        decodes_+=asset.decoded?1:0;expeditionGround_=std::move(asset);expeditionGroundId_=stop->groundId;
+    }
     const CompletionDestination* completionDestination() const {
         if(!explorer_ || !completionScene(explorer_->state().gameplay))return nullptr;
-        return completionRegistry_.destination(explorer_->state().floors[explorer_->state().floorIndex].dungeonId);
+        const auto id=explorer_->state().floors[explorer_->state().floorIndex].dungeonId;
+        if(const auto* direct=completionRegistry_.destination(id))return direct;
+        for(const auto& d:completionRegistry_.destinations)if(d.terminalId==id)return &d;
+        return nullptr;
     }
     Point endingPosition(bool partner=false) const {
         return completionPosition(*completionDestination(),explorer_->state().gameplay,utcMs(),partner);
@@ -516,7 +543,7 @@ class App {
         Point scene{int32_t(size_ / (2 * scale_)), int32_t(size_ / (2 * scale_))};
         if (explorer_ && dungeonScene(explorer_->state().gameplay)) {
             const int tile = explorer_->state().position;
-            scene = completionDestination()?endingPosition():raster(playerMotion_.sample(presentationNow_));
+            scene = currentExpeditionStop()?expeditionPosition():completionDestination()?endingPosition():raster(playerMotion_.sample(presentationNow_));
             (void)tile;
         } else if (explorer_ && !guildRooms_.empty()) {
             scene = guildRooms_[bedroomScene(explorer_->state().gameplay) ? 1 : 0].player().position;
@@ -609,6 +636,16 @@ class App {
         add(Scale1, L"Scale 1", scale_ == 1); add(Scale2, L"Scale 2", scale_ == 2); add(Scale3, L"Scale 3", scale_ == 3);
         if (!explorer_) { add(Background, L"Test background", backgroundOn_); add(Reload, L"Reload package"); }
         if(explorer_) AppendMenuW(menu,MF_STRING|(explorer_->canResetExploration()?0:MF_GRAYED),ResetExploration,L"Reset 탐험 (귀가)");
+        if(explorer_ && explorer_->state().expedition.enabled()) {
+            const auto& state=explorer_->state();bool canRevisit=!state.completed;
+            for(unsigned i=0;i<=state.floorIndex;++i)if(state.expedition.floors[i].fixedFloorId)canRevisit=false;
+            AppendMenuW(menu,MF_STRING|(canRevisit?0:MF_GRAYED)|(state.expedition.revisit?MF_CHECKED:0),ExpeditionRevisit,L"재방문 경로");
+            for(const auto& branch:expeditionBranches_)if(explorer_->canTakeExpeditionBranch(branch.first)) {
+                const auto label=wide(branch.second.expedition.name)+L" 들렀다 오기";
+                AppendMenuW(menu,MF_STRING,ExpeditionBranchBase+branch.first,label.c_str());
+            }
+        }
+
         if(explorer_) {
             const auto selection=characterSelection();
             for(auto role:{PortraitRole::Player,PortraitRole::Partner}) {
@@ -676,6 +713,25 @@ class App {
         }
     }
     void command(UINT id) {
+        if(explorer_ && id>=ExpeditionBranchBase && id<ExpeditionBranchBase+200) {
+            const auto found=expeditionBranches_.find(id-ExpeditionBranchBase);
+            if(found==expeditionBranches_.end())return;
+            auto candidate=*explorer_;
+            if(candidate.takeExpeditionBranch(found->second.floors,found->second.expedition,utcMs())) {
+                auto npcs=stageNpcAssets(candidate.state());saveRunSnapshot(options_.snapshot,candidate.state());
+                *explorer_=std::move(candidate);commitNpcAssets(std::move(npcs));completion_={};poseFinished_=false;
+                playerMotion_.reset(tilePoint(explorer_->state().position));companionMotion_.reset(tilePoint(explorer_->state().gameplay.companion.tile));
+                chunkVersion_=0;exploreDeadline_=nowUs();dirty_=true;log("expedition branch selected dungeon="+std::to_string(found->first));
+            }
+            return;
+        }
+        if(explorer_ && id==ExpeditionRevisit) {
+            auto candidate=*explorer_;if(candidate.setExpeditionRevisit(!candidate.state().expedition.revisit)) {
+                saveRunSnapshot(options_.snapshot,candidate.state());*explorer_=std::move(candidate);dirty_=true;log("expedition revisit="+std::to_string(explorer_->state().expedition.revisit));
+            }
+            return;
+        }
+
         if(explorer_ && ((id>=PlayerCharacterBase && id<PlayerCharacterBase+100) || (id>=PartnerCharacterBase && id<PartnerCharacterBase+100))) {
             const auto role=id>=PartnerCharacterBase?PortraitRole::Partner:PortraitRole::Player;
             const auto ids=characterCatalogue_.menu(role);const auto index=id-(role==PortraitRole::Player?PlayerCharacterBase:PartnerCharacterBase);
@@ -1047,7 +1103,7 @@ class App {
         if(options_.defaultExploration && before.life==LifePhase::Ready && before.sceneBeat==SceneBeat::MorningFadeOut && utcMs()>=before.deadlineMs &&
            !before.onceKeys.count("guild-start:"+std::to_string(candidate.state().runId)) && !pendingDefaultPackage_) {
             std::vector<unsigned> ids;for(const auto& entry:explorationPool_)ids.push_back(entry.first);
-            const auto selected=candidate.chooseNextDungeon(ids);const auto& next=explorationPool_.at(selected);candidate.setNextRunPackage(next.assetVersion,next.floors);
+            const auto selected=candidate.chooseNextDungeon(ids);const auto& next=explorationPool_.at(selected);candidate.setNextRunPackage(next.assetVersion,next.floors,next.expedition);
         }
         const auto event = candidate.advanceGameplay(utcMs(), completion_,dialogueCatalogue_,&eventRegistry_,&holidayRegistry_);
         poseFinished_ = false; completion_={};
@@ -1067,6 +1123,7 @@ class App {
         if(changePackage)nextTiles=loadExplorationTiles(*nextPackage,explorationRoot_/std::filesystem::path("dungeon-"+std::to_string(nextPackage->floors.front().dungeonId)));
         auto nextNpcs=stageNpcAssets(candidate.state());
         auto nextHoliday=stageHolidayAssets(candidate.state());
+        stageExpeditionGround(candidate.state());
         saveRunSnapshot(options_.snapshot, candidate.state());
         commitNpcAssets(std::move(nextNpcs));
         if(nextHoliday){decodes_+=nextHoliday->decodes;holidayAssets_=std::move(*nextHoliday);}
@@ -1078,6 +1135,10 @@ class App {
             log("default exploration upgraded at new run floors="+std::to_string(explorer_->state().floors.size()));
         }
         const auto& g = explorer_->state().gameplay;
+        if(explorer_->state().expedition.enabled() && (oldBeat!=g.sceneBeat || oldLife!=g.life || event.event==GameplayEvent::FloorChanged)) {
+            const auto& state=explorer_->state();const auto* stop=expeditionScene(state)?expeditionStop(state):nullptr;
+            log("expedition="+state.expedition.routeId+" segment="+std::to_string(state.floors[state.floorIndex].dungeonId)+" localFloor="+std::to_string(state.floors[state.floorIndex].localFloor)+" ground="+(stop?stop->groundId:std::string("none"))+" outcome="+std::to_string(unsigned(state.expedition.outcome)));
+        }
         const bool newFloor=event.event==GameplayEvent::FloorChanged || (event.event==GameplayEvent::Explore && oldLife==LifePhase::Ready);
         if(g.companion.enabled) {
             if(newFloor || !oldCompanion.enabled || event.event==GameplayEvent::Warp) companionMotion_.reset(tilePoint(g.companion.tile));
@@ -1330,6 +1391,9 @@ class App {
         Point camera{0, 0};
         if(explorer_ && explorer_->state().variety.holiday.active) {
             addHolidayLayers(layers,camera,utcMs());
+        } else if(currentExpeditionStop()) {
+            const auto& frame=expeditionGround_->package.frames(0,0).front();camera=expeditionCamera();
+            layers.push_back({expeditionGround_->atlas.get(),frame.rect,frame.anchor,{0,0}});
         } else if(completionDestination()) {
             const auto& background=completionAssets_.at(completionDestination()->dungeonId);
             const auto& frame=background.package.frames(0,0).front();camera=endingCamera();
@@ -1338,24 +1402,19 @@ class App {
             const auto& state = explorer_->state();
             const auto tileId = state.floors[state.floorIndex].tilesetId;
             const auto& tileAssets = tiles_.at(tileId);
-            if (chunkVersion_ != state.world.version || chunkSeed_ != state.mapSeed) {
-                chunks_ = chunkGrid(state.world, explorationPackage_->tileset(tileId));
-                chunkVersion_ = state.world.version;
-                chunkSeed_ = state.mapSeed;
-            }
             camera = cameraFor(playerMotion_.sample(now),kWidth*24,kHeight*24,int((size_+scale_-1)/scale_));
-            layers.push_back({&dungeonBackdrop_, {0, 0, 200, 200}, {0, 0}, camera});
-            auto visible = [&](Point p, int size) {
-                return p.x + size >= camera.x && p.y + size >= camera.y &&
-                       p.x < camera.x + int(size_ / scale_) + 1 && p.y < camera.y + int(size_ / scale_) + 1;
-            };
-            const auto& frames = tileAssets.package.frames(0, 0);
-            for (int tile = 0; tile < kTiles; ++tile) {
-                const Point p{tile % kWidth * 24, tile / kWidth * 24};
-                if (visible(p, 24)) layers.push_back({tileAssets.atlas.get(), frames[chunks_[tile]].rect, {0, 0}, p});
+            auto visible = [&](Point p,int size){return p.x+size>=camera.x && p.y+size>=camera.y && p.x<camera.x+int(size_/scale_)+1 && p.y<camera.y+int(size_/scale_)+1;};
+            const auto& frames=tileAssets.package.frames(0,0);
+            if(tileId>=170) {
+                const auto& floor=state.expedition.floors.at(state.floorIndex);
+                layers.push_back({tileAssets.atlas.get(),frames.front().rect,{0,0},{-floor.backgroundX,-floor.backgroundY}});
+            } else {
+                if(chunkVersion_!=state.world.version || chunkSeed_!=state.mapSeed){chunks_=chunkGrid(state.world,explorationPackage_->tileset(tileId));chunkVersion_=state.world.version;chunkSeed_=state.mapSeed;}
+                layers.push_back({&dungeonBackdrop_,{0,0,200,200},{0,0},camera});
+                for(int tile=0;tile<kTiles;++tile){const Point p{tile%kWidth*24,tile/kWidth*24};if(visible(p,24))layers.push_back({tileAssets.atlas.get(),frames[chunks_[tile]].rect,{0,0},p});}
             }
             const Point stairPos=raster(tilePoint(state.world.stairs));
-            if(visible({stairPos.x-12,stairPos.y-12},24)) addProp(layers,1,stairPos);
+            if(!fixedBattlePending(state) && visible({stairPos.x-12,stairPos.y-12},24))addProp(layers,1,stairPos);
             const auto& event=state.variety.event;
             if(event.objectTile>=0 && !event.carrying && event.id.type==VarietyEvent::LostProperty)addProp(layers,4,raster(tilePoint(event.objectTile)));
             if(event.sourceTile>=0 && event.id.type==VarietyEvent::Reunion)addProp(layers,5,raster(tilePoint(event.sourceTile)));
@@ -1417,7 +1476,7 @@ class App {
             const auto& p=explorer_->state().gameplay.companion;
             if(p.enabled && !p.hidden) {
                 const auto& f=companionAssets_->package.frames(companionClip_,companionDirection_)[companionFrame_];
-                layers.push_back({companionAssets_->atlas.get(),f.rect,f.anchor,completionDestination()?endingPosition(true):raster(companionMotion_.sample(now))});
+                layers.push_back({companionAssets_->atlas.get(),f.rect,f.anchor,currentExpeditionStop()?expeditionPosition(true):completionDestination()?endingPosition(true):raster(companionMotion_.sample(now))});
             }
         }
         if(playerLayer)layers.push_back(*playerLayer); // player wins any sprite overlap
@@ -1449,7 +1508,7 @@ class App {
         BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
         winCheck(UpdateLayeredWindow(window_, nullptr, &position, &size, dib_->dc, &source, 0, &blend, ULW_ALPHA) != 0, "UpdateLayeredWindow");
         ++submissions_; submitted_ = true;
-        if(explorer_ && explorer_->state().screenExploration && !completionScene(explorer_->state().gameplay)) {
+        if(explorer_ && explorer_->state().screenExploration && !completionScene(explorer_->state().gameplay) && !expeditionScene(explorer_->state())) {
             explorer_->enableScreenExploration((size_+scale_-1)/scale_);
             explorer_->observeViewport(camera.x,camera.y);
         } submittedText_=std::move(overlayText);submittedHud_=hud;submittedFade_=fade;submittedTitleOpacity_=titleOpacity;
@@ -1512,10 +1571,14 @@ public:
             if(completionRegistry_.romHash!=explorationPackage_->romHash)throw std::runtime_error("completion/exploration ROM mismatch");
             if(options_.defaultExploration)for(const auto& choice:eventRegistry_.maps) {
                 auto package=loadExplorationPackage(explorationRoot_/choice.packageFile);
-                if(package.assetVersion!=choice.assetVersion || package.romHash!=eventRegistry_.romHash || !completionRegistry_.destination(choice.dungeon))throw std::runtime_error("unverified daily map route");
+                if(package.assetVersion!=choice.assetVersion || package.romHash!=eventRegistry_.romHash || (!package.expedition.enabled() && !completionRegistry_.destination(choice.dungeon)))throw std::runtime_error("unverified daily map route");
                 validateNpcCoverage(npcCatalogue_,package.floors);
                 for(const auto& floor:eventRegistry_.floors)if(floor.dungeon==choice.dungeon)for(const auto& weight:floor.monsterHouse)if(weight.value)(void)npcCatalogue_.select(weight.originalId);
                 explorationPool_.emplace(choice.dungeon,std::move(package));
+            }
+            for(unsigned id:{9U,11U,13U}) {
+                const auto path=explorationRoot_/std::filesystem::path("dungeon-"+std::to_string(id))/L"exploration.mdpe";
+                if(std::filesystem::exists(path)){auto branch=loadExplorationPackage(path);if(branch.romHash!=eventRegistry_.romHash)throw std::runtime_error("sidepath ROM mismatch");validateNpcCoverage(npcCatalogue_,branch.floors);expeditionBranches_.emplace(id,std::move(branch));}
             }
             for(const auto& destination:completionRegistry_.destinations) {
                 auto asset=Assets::load(options_.gameplayAssets / L"completion" / destination.assetFile);
@@ -1539,20 +1602,25 @@ public:
                         } catch(const std::runtime_error& candidateError){if(std::string(candidateError.what())!="snapshot asset version mismatch")throw;}
                     }
                     if(!known) {
-                    const auto legacyPath=runtimePath(L"assets/exploration/dungeon-0/exploration.mdpe",L"assets/original/exploration/dungeon-0/exploration.mdpe");
-                    auto legacyPackage=loadExplorationPackage(legacyPath);
-                    auto legacyState=loadSnapshot(options_.snapshot,legacyPackage.assetVersion);
-                    if(legacyState.floors.size()!=3)throw std::runtime_error("unsupported legacy default floor count");
-                    explorer_=std::make_unique<Explorer>(std::move(legacyState));
-                    pendingDefaultPackage_=std::move(explorationPackage_);
-                    explorationPackage_=std::move(legacyPackage);explorationDirectory=legacyPath.parent_path();
-                    explorer_->setNextRunPackage(pendingDefaultPackage_->assetVersion,pendingDefaultPackage_->floors);
-                    log("legacy default three-floor run preserved; next new run uses seven floors");
+                        for(unsigned id:{15U,18U,0U}) {
+                            const auto legacyPath=explorationRoot_/std::filesystem::path("dungeon-"+std::to_string(id))/L"exploration.mdpe";
+                            auto legacyPackage=loadExplorationPackage(legacyPath);
+                            try {
+                                auto legacyState=loadSnapshot(options_.snapshot,legacyPackage.assetVersion);
+                                explorer_=std::make_unique<Explorer>(std::move(legacyState));
+                                pendingDefaultPackage_=std::move(explorationPackage_);explorationPackage_=std::move(legacyPackage);
+                                explorationDirectory=legacyPath.parent_path();
+                                explorer_->setNextRunPackage(pendingDefaultPackage_->assetVersion,pendingDefaultPackage_->floors,pendingDefaultPackage_->expedition);
+                                known=true;log("legacy exploration preserved; full expedition starts on next scheduled day");break;
+                            }catch(const std::runtime_error& candidateError){if(std::string(candidateError.what())!="snapshot asset version mismatch")throw;}
+                        }
+                        if(!known)throw std::runtime_error("snapshot asset version mismatch");
                     }
+
                 }
             } else {
                 explorer_ = std::make_unique<Explorer>(static_cast<uint64_t>(nowUs()), options_.seed,
-                            explorationPackage_->assetVersion, explorationPackage_->floors);
+                            explorationPackage_->assetVersion, explorationPackage_->floors,SpawnPolicy{}, std::vector<uint64_t>{},explorationPackage_->expedition);
                 saveRunSnapshot(options_.snapshot, explorer_->state());
             }
             validateNpcCoverage(npcCatalogue_,explorer_->state().floors);
@@ -1582,6 +1650,7 @@ public:
             }
             explorer_->restoreHolidayClock(utcMs());
             explorer_->restoreDialogue(dialogueCatalogue_,utcMs());
+            stageExpeditionGround(explorer_->state());
             if(auto holiday=stageHolidayAssets(explorer_->state())){decodes_+=holiday->decodes;holidayAssets_=std::move(*holiday);}
             if(explorer_->state().gameplay.companion.enabled)companionMotion_.reset(tilePoint(explorer_->state().gameplay.companion.tile));
             restoreMovement(nowUs());
@@ -1701,7 +1770,7 @@ public:
                    g.sceneBeat==SceneBeat::DiningExit || g.sceneBeat==SceneBeat::BedFadeOut || g.sceneBeat==SceneBeat::BedFadeIn ||
                    g.sceneBeat==SceneBeat::NightFadeIn || g.sceneBeat==SceneBeat::MorningFadeOut || g.sceneBeat==SceneBeat::ExploreFadeIn ||
                    g.life==LifePhase::Eat || g.sceneBeat==SceneBeat::AlarmEnter || g.sceneBeat==SceneBeat::AlarmLeave ||
-                   completionScene(g) || g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn || g.sceneBeat==SceneBeat::RoomExit) deadline=std::min(deadline,now+16667);
+                   completionScene(g) || expeditionScene(explorer_->state()) || g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn || g.sceneBeat==SceneBeat::RoomExit) deadline=std::min(deadline,now+16667);
                 if(auto cameraDeadline=guildCamera_.nextDeadline(now)) deadline=std::min(deadline,*cameraDeadline);
                 if(auto d=companionMotion_.nextDeadline(now)) deadline=std::min(deadline,*d);
                 if(auto motionDeadline=playerMotion_.nextDeadline(now)) deadline=std::min(deadline,*motionDeadline);

@@ -280,6 +280,9 @@ public:
     void restoreHolidayClock(std::uint64_t utcMs);
     GameplayUpdate returnFromHoliday(std::uint64_t utcMs);
     std::uint32_t chooseNextDungeon(const std::vector<std::uint32_t>&);
+    bool canTakeExpeditionBranch(std::uint32_t dungeon) const;
+    bool takeExpeditionBranch(std::vector<FloorProfile>,ExpeditionState,std::uint64_t now);
+    bool setExpeditionRevisit(bool);
 private:
     GameplayUpdate advanceCatalogueGameplay(std::uint64_t,ActorCompletion,const DialogueCatalogue&,const EventRegistry*,const HolidayRegistry*);
     ExplorationState state_;

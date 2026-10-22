@@ -123,7 +123,8 @@ AttackRoll rollBasicAttack(Rng& rng, bool player) {
 void Explorer::assignRelationships() {
     state_.gameplay.hostile.clear();
     if(state_.expedition.enabled() && state_.expedition.floors.at(state_.floorIndex).fixedFloorId) {
-        const auto& spawns=state_.expedition.floors[state_.floorIndex].fixedSpawns;
+        const auto& floor=state_.expedition.floors[state_.floorIndex];
+        const auto& spawns=state_.expedition.revisit && floor.revisitFixedFloorId?floor.revisitSpawns:floor.fixedSpawns;
         for(const auto& e:state_.population.entities)if(e.kind==EntityKind::Friend) {
             const auto& source=spawns.at(e.instanceId-1);
             if(source.spawnType!=7 && source.spawnType!=10)state_.gameplay.hostile.push_back(e.instanceId);
@@ -146,6 +147,7 @@ void Explorer::enableGameplay(std::uint64_t now) {
     else { g.phaseStartedMs = now; g.deadlineMs = now; }
 }
 void Explorer::startGuildMorning(std::uint64_t now) {
+    if(state_.expedition.enabled() && !state_.completed && state_.phase==Phase::Explore)state_.expedition.outcome=ExpeditionOutcome::Interrupted;
     state_.variety.notices.clear();
     enableGameplay(now);
     cancelVariety(state_);
@@ -268,7 +270,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         // Commit the pending stairs only after every ground in this link finished.
         g.sceneBeat=SceneBeat::None;const auto event=advance();
         if(event.kind!=EventKind::FloorChanged)throw std::logic_error("expedition link did not advance");
-        g.sceneBeat=SceneBeat::FloorFadeIn;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
+        g.sceneBeat=state_.expedition.enabled() && state_.floors[state_.floorIndex].localFloor==0?SceneBeat::ExploreFadeIn:SceneBeat::FloorFadeIn;g.phaseStartedMs=now;g.deadlineMs=now+(g.sceneBeat==SceneBeat::ExploreFadeIn?3000:kFloorFadeMs);
         return {GameplayEvent::FloorChanged,event.onceKey};
     }
     if(state_.expedition.enabled() && state_.expedition.entryPending && g.life==LifePhase::Explore &&
@@ -310,7 +312,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             return {GameplayEvent::Pose,event.onceKey};
         }
         if(event.kind!=EventKind::FloorChanged) throw std::logic_error("stairs transition did not advance");
-        g.sceneBeat=SceneBeat::FloorFadeIn;g.deadlineMs=now+kFloorFadeMs;
+        g.sceneBeat=state_.expedition.enabled() && state_.floors[state_.floorIndex].localFloor==0?SceneBeat::ExploreFadeIn:SceneBeat::FloorFadeIn;g.deadlineMs=now+(g.sceneBeat==SceneBeat::ExploreFadeIn?3000:kFloorFadeMs);
         return {GameplayEvent::FloorChanged,event.onceKey};
     }
     if(g.life==LifePhase::Explore && g.sceneBeat==SceneBeat::ExplorationBerryText) {

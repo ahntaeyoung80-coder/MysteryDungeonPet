@@ -13,7 +13,7 @@ const EventFloorFacts* EventRegistry::floor(const ExplorationState& s) const {
 }
 EventRegistry loadEventRegistry(const std::filesystem::path& path) {
     const auto bytes=readFile(path,1024*1024);detail::Reader r(bytes);EventRegistry result;
-    if(r.u32()!=0x5245444d || r.u32()!=1)throw std::runtime_error("unknown event map registry");result.romHash=r.str();
+    if(r.u32()!=0x5245444d)throw std::runtime_error("unknown event map registry");const auto schema=r.count(2);if(!schema)throw std::runtime_error("unknown event map registry");result.romHash=r.str();
     if(result.romHash.size()!=64)throw std::runtime_error("invalid event ROM identity");
     const auto count=r.count(8);std::set<unsigned> maps;
     for(unsigned i=0;i<count;++i) {
@@ -21,10 +21,10 @@ EventRegistry loadEventRegistry(const std::filesystem::path& path) {
         if(!maps.insert(m.dungeon).second || m.packageFile!="dungeon-"+std::to_string(m.dungeon)+"/exploration.mdpe" || m.assetVersion.size()!=64)throw std::runtime_error("invalid selected map binding");
         result.maps.push_back(std::move(m));
     }
-    const auto n=r.count(128);std::set<std::pair<unsigned,unsigned>> floors;
+    const auto n=r.count(schema>=2?2048:128);std::set<std::pair<unsigned,unsigned>> floors;
     for(unsigned i=0;i<n;++i) {
         EventFloorFacts f;f.dungeon=r.count(65535);f.floor=r.count(127);f.shopChance=r.count(100);f.monsterHouseChance=r.count(100);f.trapDensity=r.count(255);
-        if(!maps.count(f.dungeon) || !floors.insert({f.dungeon,f.floor}).second)throw std::runtime_error("invalid event floor binding");
+        if((schema==1 && !maps.count(f.dungeon)) || !floors.insert({f.dungeon,f.floor}).second)throw std::runtime_error("invalid event floor binding");
         f.monsterHouse=weights(r);f.traps=weights(r);f.shopItems=items(r);f.monsterHouseItems=items(r);result.floors.push_back(std::move(f));
     }
     r.end();return result;

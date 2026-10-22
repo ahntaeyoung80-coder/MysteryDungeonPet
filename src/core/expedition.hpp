@@ -13,8 +13,11 @@ struct ExpeditionStop {
     bool storage=false;
 };
 struct ExpeditionFloor {
-    std::uint32_t dungeonId=0,localFloor=0,fixedFloorId=0;
-    std::vector<FixedSpawn> fixedSpawns;
+    std::uint32_t dungeonId=0,localFloor=0,fixedFloorId=0,revisitFixedFloorId=0;
+    std::vector<FixedSpawn> fixedSpawns,revisitSpawns;
+    std::vector<std::uint32_t> fixedTiles;
+    std::uint32_t fixedStart=0,fixedExit=0;
+    int backgroundX=0,backgroundY=0;
     std::string exitLink;
     std::vector<ExpeditionStop> stops;
 };

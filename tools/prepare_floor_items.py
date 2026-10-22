@@ -12,12 +12,12 @@ def selected_ids(root):
     floors += [p for p in load_catalogue(root/'assets/original/a1-original-package.zip')['floors'] if p['key']['dungeonId'] == 0]
     result = set()
     for p in floors:
-        context = next(c for c in p['itemContexts'] if c['context'] == 'floor_items')
-        categories = {c['originalId'] for c in context['categories']['entries'] if c['relativeWeight']}
-        for category in context['conditionalItems']:
-            if category['categoryId'] in categories:
-                result.update(row['originalId'] for row in category['entries'] if row['relativeWeight'])
-        result.update(g['recordIndex'] for g in context['guaranteed'])
+        for context in (c for c in p['itemContexts'] if c['context'] in ('floor_items','shop_items','monster_house_items')):
+            categories = {c['originalId'] for c in context['categories']['entries'] if c['relativeWeight']}
+            for category in context['conditionalItems']:
+                if category['categoryId'] in categories:
+                    result.update(row['originalId'] for row in category['entries'] if row['relativeWeight'])
+            result.update(g['recordIndex'] for g in context['guaranteed'])
     # Historic exported GUI saves used these real item records as generic items.
     # Keep their own graphics without adding them to any spawn distribution.
     return sorted(result | {10, 11})

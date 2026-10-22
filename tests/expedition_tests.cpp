@@ -1,5 +1,8 @@
 #include "core/exploration_package.hpp"
 #include "core/exploration_io.hpp"
+#include "core/npc_characters.hpp"
+#include "core/event_registry.hpp"
+#include <chrono>
 #include <iostream>
 #include <stdexcept>
 using namespace pet;
@@ -22,7 +25,7 @@ Explorer fixture() {
 void stairs(Explorer& e) {
     auto s=e.state();s.position=s.world.stairs;s.visited[s.position]=1;s.discovered=s.world.terrain;
     s.target=s.world.stairs;s.goalKind=GoalKind::Stairs;s.targetInstance=0;
-    s.gameplay.sceneBeat=SceneBeat::None;s.gameplay.movement={};e=Explorer(std::move(s));
+    s.gameplay.sceneBeat=SceneBeat::None;s.gameplay.deadlineMs=s.gameplay.phaseStartedMs;s.gameplay.movement={};e=Explorer(std::move(s));
 }
 void replay(Explorer& e,std::uint64_t now) {
     Explorer restored(decodeSnapshot(encodeSnapshot(e.state()),e.state().assetVersion));
@@ -55,5 +58,114 @@ void quick() {
     bool rejected=false;try{Explorer invalid(broken);}catch(const std::exception&){rejected=true;}
     check(rejected,"broken expedition binding accepted");
 }
+const std::vector<unsigned> roots{14,17,1,4,21,35,41,8};
+ExplorationPackage packageAt(const std::filesystem::path& root,unsigned id) {
+    return loadExplorationPackage(root/"assets/original/exploration"/("dungeon-"+std::to_string(id))/"exploration.mdpe");
 }
-int main(){try{quick();std::cout<<"expedition minimal transition, shelter, fixed boss, terminal return and snapshot replay passed\n";}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+Explorer original(const ExplorationPackage& p) {
+    Explorer e(9300,41,p.assetVersion,p.floors,{0,0,0,0},{},p.expedition);e.enableGameplay(1000);return e;
+}
+void settle(Explorer& e) {
+    unsigned limit=0;
+    while(e.state().gameplay.sceneBeat!=SceneBeat::None && e.state().gameplay.life==LifePhase::Explore) {
+        check(++limit<64,"ground/transition did not terminate");replay(e,e.state().gameplay.deadlineMs);
+    }
+}
+void finishFixedForTransitionTest(Explorer& e) {
+    auto s=e.state();
+    for(auto& actor:s.population.entities)if(!actor.done) {
+        check(actor.kind==EntityKind::Friend,"unexpected fixed item in selected transition fixture");
+        actor.done=true;actor.remainingHits=0;s.onceKeys.insert("greet:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(actor.instanceId));
+    }
+    s.target=-1;s.goalKind=GoalKind::None;s.targetInstance=0;s.gameplay.movement={};s.gameplay.partyActions.clear();s.gameplay.partyPlaybacks.clear();
+    e=Explorer(std::move(s));
+}
+void references(const std::filesystem::path& root) {
+    const auto npcs=loadNpcCatalogue(root/"assets/original/gameplay/npcs/characters.mdnc");
+    const auto maps=loadEventRegistry(root/"assets/original/gameplay/events/contexts.mder");
+    check(maps.maps.size()==8,"automatic pool includes unselected/test/branch maps");
+    unsigned floors=0;
+    for(auto id:roots) {
+        const auto p=packageAt(root,id);check(p.expedition.enabled() && p.floors.front().dungeonId==id,"selected route identity mismatch");
+        check(p.romHash==maps.romHash && p.romHash==npcs.romHash,"original asset identities differ");validateNpcCoverage(npcs,p.floors);
+        for(unsigned f=0;f<p.floors.size();++f) {
+            auto s=original(p).state();s.floorIndex=f;
+            check(maps.floor(s)!=nullptr,"segment event contexts missing");
+            for(const auto* rows:{&p.expedition.floors[f].fixedSpawns,&p.expedition.floors[f].revisitSpawns})for(const auto& spawn:*rows)if(spawn.md)(void)npcs.select(spawn.md);
+        }
+        floors+=unsigned(p.floors.size());
+    }
+    for(auto id:{9U,11U,13U})validateNpcCoverage(npcs,packageAt(root,id).floors);
+    std::cout<<"8 routes, "<<floors<<" selected logical floors, original NPC/context references and 3 sidepaths passed\n";
+}
+void routes(const std::filesystem::path& root) {
+    for(auto id:roots)for(bool revisit:{false,true}) {
+        const auto p=packageAt(root,id);auto e=original(p);check(e.setExpeditionRevisit(revisit),"cannot select revisit before first fixed room");
+        unsigned count=0;
+        while(!e.state().completed) {
+            settle(e);check(++count<=p.floors.size(),"route looped without terminal completion");
+            check(e.state().gameplay.life==LifePhase::Explore && !e.state().gameplay.meals && !e.state().variety.completedExplorations,"intermediate segment executed final lifecycle");
+            if(e.state().expedition.floors[e.state().floorIndex].fixedFloorId) {
+                const auto& f=e.state().expedition.floors[e.state().floorIndex];const auto& source=revisit && f.revisitFixedFloorId?f.revisitSpawns:f.fixedSpawns;
+                check(e.state().population.entities.size()==source.size(),"fixed encounter population differs from original placement");
+                for(unsigned i=0;i<source.size();++i)check(e.state().population.entities[i].originalId==source[i].md,"fixed/revisit boss MD changed");
+                finishFixedForTransitionTest(e);
+            }
+            stairs(e);replay(e,e.state().gameplay.deadlineMs+1);replay(e,e.state().gameplay.deadlineMs);
+        }
+        check(count==p.floors.size(),"route skipped an original floor/segment");
+        for(unsigned i=0;i<8 && e.state().gameplay.life==LifePhase::Pose;++i)replay(e,e.state().gameplay.deadlineMs);
+        replay(e,e.state().gameplay.deadlineMs);
+        check(e.state().gameplay.life==LifePhase::Eat && e.state().gameplay.meals==1 && e.state().variety.completedExplorations==1,"terminal lifecycle was omitted/duplicated");
+        std::cout<<p.expedition.routeId<<" revisit="<<revisit<<" transition/snapshot lifecycle passed\n";
+    }
+}
+void branches(const std::filesystem::path& root) {
+    auto e=original(packageAt(root,8));
+    for(unsigned step=0;step<400 && e.state().expedition.branches.size()<3;++step) {
+        if(e.state().gameplay.sceneBeat==SceneBeat::ExpeditionRest) {
+            for(unsigned id:{9U,11U,13U})if(e.canTakeExpeditionBranch(id)) {
+                const auto p=packageAt(root,id);const auto ground=expeditionStop(e.state())->groundId;
+                check(e.takeExpeditionBranch(p.floors,p.expedition,e.state().gameplay.phaseStartedMs+1),"sidepath selection failed");
+                check(!e.canTakeExpeditionBranch(id) && expeditionStop(e.state())->groundId==ground,"branch duplicated or changed its anchor ground");
+                Explorer restored(decodeSnapshot(encodeSnapshot(e.state()),e.state().assetVersion));
+                check(restored.state().expedition.branches==e.state().expedition.branches,"sidepath state not restored");
+            }
+        }
+        if(e.state().gameplay.sceneBeat!=SceneBeat::None){replay(e,e.state().gameplay.deadlineMs);continue;}
+        stairs(e);replay(e,e.state().gameplay.deadlineMs+1);
+    }
+    check(e.state().expedition.branches==std::vector<unsigned>({9,11,13}),"sidepaths were offered at the wrong junctions");
+    check(e.state().floors.size()==65 && !e.state().completed && e.state().gameplay.meals==0,"sidepath returned to guild or skipped route");
+    std::cout<<"all 3 sidepaths return to the same ground and retain forward route/save state\n";
+}
+void fixtures(const std::filesystem::path& root,const std::filesystem::path& out) {
+    std::filesystem::create_directories(out);
+    const auto now=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    for(unsigned id:{14U,17U,41U,8U}) {
+        auto p=packageAt(root,id);auto e=original(p);
+        bool savedStop=false;
+        while(!e.state().completed) {
+            if(expeditionScene(e.state()) && !savedStop) {
+                auto s=e.state();s.gameplay.sceneBeat=SceneBeat::ExpeditionRest;s.gameplay.phaseStartedMs=now;s.gameplay.deadlineMs=now+4000;
+                saveSnapshot(out/("stop-"+std::to_string(id)+".mdes"),s);savedStop=true;
+            }
+            settle(e);
+            if(e.state().expedition.floors[e.state().floorIndex].fixedFloorId) {
+                auto s=e.state();s.gameplay.phaseStartedMs=s.gameplay.deadlineMs=now;
+                saveSnapshot(out/("boss-"+std::to_string(id)+".mdes"),s);finishFixedForTransitionTest(e);
+            }
+            stairs(e);replay(e,e.state().gameplay.deadlineMs+1);replay(e,e.state().gameplay.deadlineMs);
+        }
+        auto s=e.state();s.gameplay.phaseStartedMs=now;s.gameplay.deadlineMs=now+750;
+        saveSnapshot(out/("ending-"+std::to_string(id)+".mdes"),s);
+    }
+}
+}
+int main(int argc,char** argv){try{
+    if(argc>=3 && std::string(argv[1])=="--references"){references(argv[2]);return 0;}
+    if(argc>=3 && std::string(argv[1])=="--branches"){branches(argv[2]);return 0;}
+    if(argc>=3 && std::string(argv[1])=="--packages"){references(argv[2]);routes(argv[2]);branches(argv[2]);return 0;}
+    if(argc==4 && std::string(argv[1])=="--fixtures"){fixtures(argv[2],argv[3]);return 0;}
+    quick();std::cout<<"expedition minimal transition, shelter, fixed boss, terminal return and snapshot replay passed\n";
+}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

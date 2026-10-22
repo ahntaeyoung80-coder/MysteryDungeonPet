@@ -10,6 +10,15 @@ std::wstring explorationTitle(const ExplorationState& s) {
     if(s.gameplay.life!=LifePhase::Explore || s.gameplay.sceneBeat!=SceneBeat::ExploreFadeIn ||
        s.variety.schedule.destination==DayDestination::Town || s.variety.schedule.destination==DayDestination::HotSpring)return {};
     const auto dungeon=s.floors[s.floorIndex].dungeonId;
+    switch(dungeon) {
+    case 1:return L"해안 동굴";case 2:return L"해안 동굴 깊은 곳";case 4:return L"삐죽삐죽 산";case 5:return L"삐죽삐죽 산 정상";
+    case 8:return L"울퉁불퉁 해안";case 9:return L"옆길";case 10:return L"뿔산";case 11:return L"바윗길";
+    case 12:return L"안개의 숲";case 13:return L"숲길";case 14:return L"열수의 동굴";case 16:return L"열수의 동굴 정상";
+    case 17:return L"일렉트릭 평원";case 19:return L"일렉트릭 평원 끝";case 21:return L"유사 동굴";case 22:return L"유사 동굴 깊은 곳";case 23:return L"유사 동굴 최심부";
+    case 35:return L"바닷가 동굴";case 36:return L"바닷가 동굴 깊은 곳";case 37:return L"바닷가 동굴 최심부";
+    case 41:return L"시한의 탑";case 42:return L"시한의 탑 최상부";case 43:return L"시한의 탑 정상";
+    default:break;
+    }
     return dungeon==0?L"해안 동굴":dungeon==15?L"열수의 동굴 상층":dungeon==18?L"일렉트릭 평원 깊은 곳":L"미지의 던전";
 }
 unsigned explorationTitleOpacity(const ExplorationState& s,std::uint64_t now) {
@@ -37,6 +46,7 @@ DialogueLine gameplayDialogue(const GameplayState& g) {
     return {};
 }
 std::wstring gameplayText(const GameplayState& g) {
+    if(g.sceneBeat==SceneBeat::ExpeditionRest)return L"잠시 숨을 고르고\n다음 구간으로 나아가자.";
     if(g.sceneBeat==SceneBeat::CompletionText && completionScene(g))return L"탐험을 성공적으로 마쳤다";
     if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매를 먹었다!\n하트가 모두 회복됐다!";
     const auto line=gameplayDialogue(g);if(line.id)return line.text;

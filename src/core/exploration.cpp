@@ -396,7 +396,19 @@ void Explorer::enterFloor() {
     }
     const auto recent=layoutMemory(state_.gameplay);
     bool accepted=false;
-    for(unsigned attempt=0;attempt<128;++attempt) {
+    if(state_.expedition.enabled()) {
+        const auto& f=state_.expedition.floors.at(state_.floorIndex);
+        if(!f.fixedTiles.empty()) {
+            World w;w.room.fill(-1);w.version=static_cast<uint64_t>(state_.floorIndex)+1;
+            for(auto t:f.fixedTiles)w.terrain[t]=1;
+            w.start=f.fixedStart;w.stairs=f.fixedExit;w.centers={w.start,w.stairs};
+            const auto reach=bfs(w,w.start);const int split=std::max(1,reach.distance[w.stairs]/2);
+            for(auto t:f.fixedTiles)w.room[t]=reach.distance[t]<split?0:1;
+            w.room[w.start]=0;w.room[w.stairs]=1;validateWorld(w);
+            state_.mapSeed=state_.rng.state;state_.world=std::move(w);accepted=true;
+        }
+    }
+    for(unsigned attempt=0;attempt<128 && !accepted;++attempt) {
         const auto mapSeed=state_.rng.state;
         auto world=generate(state_.rng,static_cast<std::uint64_t>(state_.floorIndex)+1);
         const auto key=layoutKey(state_.runId,world);
@@ -435,7 +447,8 @@ void Explorer::enterFloor() {
     if (state_.gameplay.enabled) {if(state_.gameplay.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");++state_.gameplay.actionRound;assignRelationships();}
 }
 void Explorer::populateFixedFloor() {
-    const auto& source=state_.expedition.floors.at(state_.floorIndex).fixedSpawns;
+    const auto& floor=state_.expedition.floors.at(state_.floorIndex);
+    const auto& source=state_.expedition.revisit && floor.revisitFixedFloorId?floor.revisitSpawns:floor.fixedSpawns;
     state_.population={};
     Mask used{};used[state_.world.start]=used[state_.world.stairs]=1;
     if(state_.gameplay.companion.enabled)used[state_.gameplay.companion.tile]=1;
@@ -443,7 +456,7 @@ void Explorer::populateFixedFloor() {
     // rooms; map original fixed-room coordinates to the nearest distinct free tile.
     for(const auto& spawn:source) {
         int best=-1,score=INT32_MAX;
-        const int x=std::clamp(int(spawn.x),2,kWidth-3),y=std::clamp(int(spawn.y),2,kHeight-3);
+        const int x=std::clamp(int(spawn.x)+(floor.fixedTiles.empty()?0:1),1,kWidth-2),y=std::clamp(int(spawn.y)+(floor.fixedTiles.empty()?0:1),1,kHeight-2);
         for(int tile=0;tile<kTiles;++tile)if(state_.world.walkable(tile) && !used[tile]) {
             const int candidate=std::abs(tile%kWidth-x)+std::abs(tile/kWidth-y);
             if(candidate<score){best=tile;score=candidate;}
@@ -790,7 +803,7 @@ Event Explorer::advance(bool poseFinished) {
     // Resolve the next step from the same current decision in continuous play.
     // The standalone explorer retains its across-step path cache.
     if(state_.gameplay.enabled) invalidate(false);
-    if(state_.position==state_.world.stairs && (lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {invalidate();state_.target=state_.world.stairs;state_.goalKind=GoalKind::Stairs;}
+    if(!fixedBattlePending(state_) && state_.position==state_.world.stairs && (lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {invalidate();state_.target=state_.world.stairs;state_.goalKind=GoalKind::Stairs;}
     else for(unsigned attempt=0;attempt<4;++attempt) {
         if(state_.target>=0 && state_.position==state_.target) {
             if(state_.goalKind==GoalKind::Item || state_.goalKind==GoalKind::Friend) break;

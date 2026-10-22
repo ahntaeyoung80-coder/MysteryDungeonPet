@@ -49,6 +49,8 @@ def catalogue(root):
                 row = {'dungeonId': dungeon, 'localFloor': floor['localFloor0'], 'name': m['name'],
                        'physicalId': floor['physicalId'], 'fixedFloorId': fid,
                        'fixedSpawns': fixed[fid]['spawns'] if fid else [],
+                       'revisitFixedFloorId': fixed[fid]['overrideFixedFloorId'] if fid else 0,
+                       'revisitSpawns': fixed.get(fixed[fid]['overrideFixedFloorId'], {}).get('spawns', []) if fid else [],
                        'profile': dict(p, key={'edition': p['edition'], 'dungeonId': dungeon, 'localFloor': floor['localFloor0']}),
                        'exitLink': '', 'groundIds': []}
                 if link and floor['localFloor0']+1 == m['declaredFloors']:
@@ -90,11 +92,15 @@ def write_plan(plan, stops):
             for n in (*s['size'], *s['player'], *s['partner'], int(s.get('storage', False))): w.u32(n)
     w.string(plan['id']); w.string(plan['name']); w.u32(len(plan['floors']))
     for f in plan['floors']:
-        for n in (f['dungeonId'], f['localFloor'], f['fixedFloorId']): w.u32(n)
-        spawns = [s for s in f['fixedSpawns'] if s['mdIndex'] or s['itemId']]
-        w.u32(len(spawns))
-        for s in spawns:
-            for n in (s['mdIndex'], s['itemId'], s['quantity'], s['x'], s['y'], s['spawnType']): w.u32(n)
+        for n in (f['dungeonId'], f['localFloor'], f['fixedFloorId'], f.get('revisitFixedFloorId', 0)): w.u32(n)
+        for field in ('fixedSpawns', 'revisitSpawns'):
+            spawns = [s for s in f.get(field, []) if s['mdIndex'] or s['itemId']]
+            w.u32(len(spawns))
+            for s in spawns:
+                for n in (s['mdIndex'], s['itemId'], s['quantity'], s['x'], s['y'], s['spawnType']): w.u32(n)
+        tiles=f.get('fixedTiles',[]);w.u32(len(tiles))
+        for tile in tiles:w.u32(tile)
+        for value in (f.get('fixedStart',0),f.get('fixedExit',0),f.get('backgroundX',0)+4096,f.get('backgroundY',0)+4096):w.u32(value)
         w.string(f['exitLink']); write_stops(f['groundIds'])
     write_stops(plan['entryGroundIds'])
     for n in (0, 0, bool(plan['entryGroundIds']), 0, 0): w.u32(n)

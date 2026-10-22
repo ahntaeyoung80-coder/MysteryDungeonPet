@@ -20,7 +20,7 @@ ExplorationPackage loadExplorationPackage(const std::filesystem::path& path) {
     std::set<std::uint32_t> ids;
     for (std::uint32_t i = 0; i < n; ++i) {
         Tileset t;
-        t.id = r.count(169); t.chunkCount = r.count(4096); t.packageFile = r.str();
+        t.id = r.count(schema>=2?198:169); t.chunkCount = r.count(4096); t.packageFile = r.str();
         const std::filesystem::path name(t.packageFile);
         if (!ids.insert(t.id).second || !t.chunkCount || t.packageFile.empty() ||
             name.has_parent_path() || t.packageFile.find('\\') != std::string::npos ||

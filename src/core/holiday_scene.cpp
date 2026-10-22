@@ -146,7 +146,7 @@ GameplayUpdate Explorer::returnFromHoliday(std::uint64_t now){
 }
 void Explorer::restoreHolidayClock(std::uint64_t now){restoreHolidayClocks(state_,now);}
 std::uint32_t Explorer::chooseNextDungeon(const std::vector<std::uint32_t>& ids) {
-    std::vector<unsigned> candidates;const auto current=state_.floors.front().dungeonId;
+    std::vector<unsigned> candidates;const auto current=state_.expedition.routeId=="ARC-M07"?8U:state_.floors.front().dungeonId;
     for(auto id:ids)if(id!=current)candidates.push_back(id);
     if(candidates.empty())candidates=ids;
     require(!candidates.empty(),"empty verified map pool");

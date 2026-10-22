@@ -29,9 +29,54 @@
       "displayName": "피카츄"
     },
     {
+      "mdIndex": 28,
+      "kaoIndex": 27,
+      "displayName": "Sandslash"
+    },
+    {
+      "mdIndex": 30,
+      "kaoIndex": 29,
+      "displayName": "Nidorina"
+    },
+    {
+      "mdIndex": 33,
+      "kaoIndex": 32,
+      "displayName": "Nidorino"
+    },
+    {
+      "mdIndex": 41,
+      "kaoIndex": 40,
+      "displayName": "Zubat"
+    },
+    {
+      "mdIndex": 47,
+      "kaoIndex": 46,
+      "displayName": "Parasect"
+    },
+    {
+      "mdIndex": 49,
+      "kaoIndex": 48,
+      "displayName": "Venomoth"
+    },
+    {
       "mdIndex": 52,
       "kaoIndex": 51,
       "displayName": "나옹"
+    },
+    {
+      "mdIndex": 66,
+      "kaoIndex": 65,
+      "displayName": "Machop"
+    },
+    {
+      "mdIndex": 72,
+      "kaoIndex": 71,
+      "displayName": "Tentacool"
+    },
+    {
+      "mdIndex": 74,
+      "kaoIndex": 73,
+      "displayName": "Geodude"
     },
     {
       "mdIndex": 83,
@@ -39,14 +84,59 @@
       "displayName": "파오리"
     },
     {
+      "mdIndex": 84,
+      "kaoIndex": 83,
+      "displayName": "Doduo"
+    },
+    {
       "mdIndex": 85,
       "kaoIndex": 84,
       "displayName": "두트리오"
     },
     {
+      "mdIndex": 86,
+      "kaoIndex": 85,
+      "displayName": "Seel"
+    },
+    {
+      "mdIndex": 87,
+      "kaoIndex": 86,
+      "displayName": "Dewgong"
+    },
+    {
+      "mdIndex": 90,
+      "kaoIndex": 89,
+      "displayName": "Shellder"
+    },
+    {
+      "mdIndex": 96,
+      "kaoIndex": 95,
+      "displayName": "Drowzee"
+    },
+    {
+      "mdIndex": 98,
+      "kaoIndex": 97,
+      "displayName": "Krabby"
+    },
+    {
+      "mdIndex": 99,
+      "kaoIndex": 98,
+      "displayName": "Kingler"
+    },
+    {
       "mdIndex": 102,
       "kaoIndex": 101,
       "displayName": "아라리"
+    },
+    {
+      "mdIndex": 109,
+      "kaoIndex": 108,
+      "displayName": "Koffing"
+    },
+    {
+      "mdIndex": 120,
+      "kaoIndex": 119,
+      "displayName": "Staryu"
     },
     {
       "mdIndex": 125,
@@ -59,9 +149,59 @@
       "displayName": "마그마"
     },
     {
+      "mdIndex": 127,
+      "kaoIndex": 126,
+      "displayName": "Pinsir"
+    },
+    {
       "mdIndex": 128,
       "kaoIndex": 127,
       "displayName": "켄타로스"
+    },
+    {
+      "mdIndex": 137,
+      "kaoIndex": 136,
+      "displayName": "Porygon"
+    },
+    {
+      "mdIndex": 138,
+      "kaoIndex": 137,
+      "displayName": "Omanyte"
+    },
+    {
+      "mdIndex": 139,
+      "kaoIndex": 138,
+      "displayName": "Omastar"
+    },
+    {
+      "mdIndex": 140,
+      "kaoIndex": 139,
+      "displayName": "Kabuto"
+    },
+    {
+      "mdIndex": 141,
+      "kaoIndex": 140,
+      "displayName": "Kabutops"
+    },
+    {
+      "mdIndex": 142,
+      "kaoIndex": 141,
+      "displayName": "Aerodactyl"
+    },
+    {
+      "mdIndex": 145,
+      "kaoIndex": 144,
+      "displayName": "Zapdos"
+    },
+    {
+      "mdIndex": 147,
+      "kaoIndex": 146,
+      "displayName": "Dratini"
+    },
+    {
+      "mdIndex": 148,
+      "kaoIndex": 147,
+      "displayName": "Dragonair"
     },
     {
       "mdIndex": 152,
@@ -79,9 +219,39 @@
       "displayName": "리아코"
     },
     {
+      "mdIndex": 163,
+      "kaoIndex": 162,
+      "displayName": "Hoothoot"
+    },
+    {
+      "mdIndex": 164,
+      "kaoIndex": 163,
+      "displayName": "Noctowl"
+    },
+    {
+      "mdIndex": 167,
+      "kaoIndex": 166,
+      "displayName": "Spinarak"
+    },
+    {
+      "mdIndex": 168,
+      "kaoIndex": 167,
+      "displayName": "Ariados"
+    },
+    {
       "mdIndex": 172,
       "kaoIndex": 171,
       "displayName": "피츄"
+    },
+    {
+      "mdIndex": 177,
+      "kaoIndex": 176,
+      "displayName": "Natu"
+    },
+    {
+      "mdIndex": 179,
+      "kaoIndex": 178,
+      "displayName": "Mareep"
     },
     {
       "mdIndex": 180,
@@ -92,6 +262,11 @@
       "mdIndex": 181,
       "kaoIndex": 180,
       "displayName": "전룡"
+    },
+    {
+      "mdIndex": 188,
+      "kaoIndex": 187,
+      "displayName": "Skiploom"
     },
     {
       "mdIndex": 191,
@@ -109,6 +284,21 @@
       "displayName": "키링키"
     },
     {
+      "mdIndex": 231,
+      "kaoIndex": 230,
+      "displayName": "Pineco"
+    },
+    {
+      "mdIndex": 233,
+      "kaoIndex": 232,
+      "displayName": "Dunsparce"
+    },
+    {
+      "mdIndex": 236,
+      "kaoIndex": 235,
+      "displayName": "Snubbull"
+    },
+    {
       "mdIndex": 237,
       "kaoIndex": 236,
       "displayName": "그랑블루"
@@ -119,9 +309,64 @@
       "displayName": "단단지"
     },
     {
+      "mdIndex": 245,
+      "kaoIndex": 244,
+      "displayName": "Slugma"
+    },
+    {
+      "mdIndex": 247,
+      "kaoIndex": 246,
+      "displayName": "Swinub"
+    },
+    {
+      "mdIndex": 249,
+      "kaoIndex": 248,
+      "displayName": "Corsola"
+    },
+    {
+      "mdIndex": 255,
+      "kaoIndex": 254,
+      "displayName": "Houndour"
+    },
+    {
       "mdIndex": 258,
       "kaoIndex": 257,
       "displayName": "코코리"
+    },
+    {
+      "mdIndex": 260,
+      "kaoIndex": 259,
+      "displayName": "Porygon2"
+    },
+    {
+      "mdIndex": 261,
+      "kaoIndex": 260,
+      "displayName": "Stantler"
+    },
+    {
+      "mdIndex": 262,
+      "kaoIndex": 261,
+      "displayName": "Smeargle"
+    },
+    {
+      "mdIndex": 266,
+      "kaoIndex": 265,
+      "displayName": "Elekid"
+    },
+    {
+      "mdIndex": 267,
+      "kaoIndex": 266,
+      "displayName": "Magby"
+    },
+    {
+      "mdIndex": 274,
+      "kaoIndex": 273,
+      "displayName": "Pupitar"
+    },
+    {
+      "mdIndex": 275,
+      "kaoIndex": 274,
+      "displayName": "Tyranitar"
     },
     {
       "mdIndex": 280,
@@ -139,9 +384,59 @@
       "displayName": "물짱이"
     },
     {
+      "mdIndex": 291,
+      "kaoIndex": 290,
+      "displayName": "Zigzagoon"
+    },
+    {
+      "mdIndex": 292,
+      "kaoIndex": 291,
+      "displayName": "Linoone"
+    },
+    {
       "mdIndex": 293,
       "kaoIndex": 292,
       "displayName": "개무소"
+    },
+    {
+      "mdIndex": 295,
+      "kaoIndex": 294,
+      "displayName": "Beautifly"
+    },
+    {
+      "mdIndex": 296,
+      "kaoIndex": 295,
+      "displayName": "Cascoon"
+    },
+    {
+      "mdIndex": 306,
+      "kaoIndex": 305,
+      "displayName": "Wingull"
+    },
+    {
+      "mdIndex": 307,
+      "kaoIndex": 306,
+      "displayName": "Pelipper"
+    },
+    {
+      "mdIndex": 313,
+      "kaoIndex": 312,
+      "displayName": "Shroomish"
+    },
+    {
+      "mdIndex": 314,
+      "kaoIndex": 313,
+      "displayName": "Breloom"
+    },
+    {
+      "mdIndex": 318,
+      "kaoIndex": 317,
+      "displayName": "Nincada"
+    },
+    {
+      "mdIndex": 319,
+      "kaoIndex": 318,
+      "displayName": "Ninjask"
     },
     {
       "mdIndex": 322,
@@ -149,9 +444,29 @@
       "displayName": "노공룡"
     },
     {
+      "mdIndex": 331,
+      "kaoIndex": 330,
+      "displayName": "Mawile"
+    },
+    {
       "mdIndex": 337,
       "kaoIndex": 336,
       "displayName": "썬더라이"
+    },
+    {
+      "mdIndex": 338,
+      "kaoIndex": 337,
+      "displayName": "Manectric"
+    },
+    {
+      "mdIndex": 339,
+      "kaoIndex": 338,
+      "displayName": "Plusle"
+    },
+    {
+      "mdIndex": 340,
+      "kaoIndex": 339,
+      "displayName": "Minun"
     },
     {
       "mdIndex": 341,
@@ -164,9 +479,29 @@
       "displayName": "네오비트"
     },
     {
+      "mdIndex": 350,
+      "kaoIndex": 349,
+      "displayName": "Numel"
+    },
+    {
       "mdIndex": 352,
       "kaoIndex": 351,
       "displayName": "코터스"
+    },
+    {
+      "mdIndex": 357,
+      "kaoIndex": 356,
+      "displayName": "Vibrava"
+    },
+    {
+      "mdIndex": 365,
+      "kaoIndex": 364,
+      "displayName": "Lunatone"
+    },
+    {
+      "mdIndex": 366,
+      "kaoIndex": 365,
+      "displayName": "Solrock"
     },
     {
       "mdIndex": 369,
@@ -184,6 +519,51 @@
       "displayName": "켈리몬"
     },
     {
+      "mdIndex": 395,
+      "kaoIndex": 394,
+      "displayName": "Spheal"
+    },
+    {
+      "mdIndex": 396,
+      "kaoIndex": 395,
+      "displayName": "Sealeo"
+    },
+    {
+      "mdIndex": 397,
+      "kaoIndex": 396,
+      "displayName": "Walrein"
+    },
+    {
+      "mdIndex": 405,
+      "kaoIndex": 404,
+      "displayName": "Salamence"
+    },
+    {
+      "mdIndex": 408,
+      "kaoIndex": 407,
+      "displayName": "Metagross"
+    },
+    {
+      "mdIndex": 415,
+      "kaoIndex": 414,
+      "displayName": "Groudon"
+    },
+    {
+      "mdIndex": 419,
+      "kaoIndex": 418,
+      "displayName": "Deoxys Attack"
+    },
+    {
+      "mdIndex": 420,
+      "kaoIndex": 419,
+      "displayName": "Deoxys Defense"
+    },
+    {
+      "mdIndex": 421,
+      "kaoIndex": 420,
+      "displayName": "Deoxys Speed"
+    },
+    {
       "mdIndex": 422,
       "kaoIndex": 421,
       "displayName": "모부기"
@@ -199,9 +579,19 @@
       "displayName": "팽도리"
     },
     {
+      "mdIndex": 431,
+      "kaoIndex": 430,
+      "displayName": "Starly"
+    },
+    {
       "mdIndex": 434,
       "kaoIndex": 433,
       "displayName": "비버니"
+    },
+    {
+      "mdIndex": 436,
+      "kaoIndex": 435,
+      "displayName": "Kricketot"
     },
     {
       "mdIndex": 437,
@@ -224,6 +614,51 @@
       "displayName": "렌트라"
     },
     {
+      "mdIndex": 456,
+      "kaoIndex": 455,
+      "displayName": "Pachirisu"
+    },
+    {
+      "mdIndex": 459,
+      "kaoIndex": 458,
+      "displayName": "Cherubi"
+    },
+    {
+      "mdIndex": 462,
+      "kaoIndex": 461,
+      "displayName": "Shellos East"
+    },
+    {
+      "mdIndex": 464,
+      "kaoIndex": 463,
+      "displayName": "Gastrodon East"
+    },
+    {
+      "mdIndex": 465,
+      "kaoIndex": 464,
+      "displayName": "Gastrodon West"
+    },
+    {
+      "mdIndex": 469,
+      "kaoIndex": 468,
+      "displayName": "Buneary"
+    },
+    {
+      "mdIndex": 478,
+      "kaoIndex": 477,
+      "displayName": "Bronzor"
+    },
+    {
+      "mdIndex": 479,
+      "kaoIndex": 478,
+      "displayName": "Bronzong"
+    },
+    {
+      "mdIndex": 480,
+      "kaoIndex": 479,
+      "displayName": "Bonsly"
+    },
+    {
       "mdIndex": 488,
       "kaoIndex": 487,
       "displayName": "먹고자"
@@ -234,9 +669,49 @@
       "displayName": "리오르"
     },
     {
+      "mdIndex": 491,
+      "kaoIndex": 490,
+      "displayName": "Hippopotas"
+    },
+    {
+      "mdIndex": 493,
+      "kaoIndex": 492,
+      "displayName": "Skorupi"
+    },
+    {
       "mdIndex": 511,
       "kaoIndex": 510,
       "displayName": "메가자리"
+    },
+    {
+      "mdIndex": 516,
+      "kaoIndex": 515,
+      "displayName": "Porygon Z"
+    },
+    {
+      "mdIndex": 522,
+      "kaoIndex": 521,
+      "displayName": "Uxie"
+    },
+    {
+      "mdIndex": 523,
+      "kaoIndex": 522,
+      "displayName": "Mesprit"
+    },
+    {
+      "mdIndex": 524,
+      "kaoIndex": 523,
+      "displayName": "Azelf"
+    },
+    {
+      "mdIndex": 525,
+      "kaoIndex": 524,
+      "displayName": "Dialga"
+    },
+    {
+      "mdIndex": 552,
+      "kaoIndex": 551,
+      "displayName": "Primal Dialga"
     },
     {
       "mdIndex": 601,

@@ -65,6 +65,7 @@ std::uint64_t drawVariety(VarietyState& v,VarietyRandomStream stream,std::uint64
     Rng rng{*state};const auto value=rng.bounded(bound);*state=rng.state;return value;
 }
 bool canStartVariety(const ExplorationState& s,std::uint64_t now) {
+    if(s.expedition.enabled() && s.expedition.floors.at(s.floorIndex).fixedFloorId)return false;
     const auto& g=s.gameplay;
     return !varietyBusy(s.variety) && s.phase==Phase::Explore && g.enabled && g.life==LifePhase::Explore &&
         g.sceneBeat==SceneBeat::None && g.hearts>kLowHp && (!g.companion.enabled || g.companion.hearts>kLowHp) &&

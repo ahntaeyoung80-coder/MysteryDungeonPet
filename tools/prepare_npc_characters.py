@@ -9,7 +9,7 @@ from tools.prepare_dialogue_portraits import prepare as prepare_portraits, body_
 from tools.mdpet.common import staging
 
 
-def prepare(root, output):
+def prepare(root, output, selection_path=None):
     from ndspy.rom import NintendoDSRom
     from skytemple_files.common.types.file_types import FileType
     source = root/'assets/original/source/user-supplied.nds'
@@ -20,7 +20,7 @@ def prepare(root, output):
     kao = FileType.KAO.deserialize(rom.getFileByName('FONT/kaomado.kao'))
     talk = FileType.TBL_TALK.deserialize(rom.getFileByName('MESSAGE/tbl_talk.tlk'))
     gameplay = root/'assets/original/gameplay'
-    selection = json.loads((gameplay/'npcs/selection.json').read_text())
+    selection = json.loads((selection_path or gameplay/'npcs/selection.json').read_text())
     if selection['schemaVersion'] != 1:
         raise ValueError('unsupported NPC selection')
     starter = json.loads((gameplay/'starters/catalogue.json').read_text())
@@ -36,6 +36,14 @@ def prepare(root, output):
         if src['romHash'] != before:
             raise ValueError('shared compatibility actor ROM mismatch')
         shared[src['spriteIndex']] = path
+    # Reuse already verified original NPC bodies when widening the selected maps.
+    existing = gameplay/'npcs/catalogue.json'
+    if existing.exists():
+        for row in json.loads(existing.read_text())['characters']:
+            src, _, _, _ = body_identity(gameplay/row['bodyManifest'])
+            if src['romHash'] != before:
+                raise ValueError('existing NPC body ROM mismatch')
+            shared[src['spriteIndex']] = row['bodyManifest']
     supplement_masks = {}
     supplement_root = root/'assets/original/source/portrait-supplements'
     for entry in json.loads((supplement_root/'manifest.json').read_text())['files']:
@@ -64,7 +72,7 @@ def prepare(root, output):
                 verification = prepare_body(root, dest, index)
                 shared[sprite] = f'npcs/bodies/{sprite}/asset.mdpa'
             manifest = shared[sprite]
-            path = temporary/manifest if manifest.startswith('npcs/') else gameplay/manifest
+            path = temporary/manifest if (temporary/manifest).is_file() else gameplay/manifest
             src, key, body_hash, _ = body_identity(path)
             if src['spriteIndex'] != sprite or src['nationalDex'] != record.national_pokedex_number or src['romHash'] != before:
                 raise ValueError('shared body source does not match logical MD sprite/species')
@@ -101,7 +109,7 @@ def prepare(root, output):
         (temporary/'npcs/characters.mdnc').write_bytes(data)
         (temporary/'npcs/selection.json').write_text(json.dumps(selection,ensure_ascii=False,indent=2)+'\n')
         audit={'schemaVersion':1,'romSha256':before,'characters':entries,
-               'scope':'dungeon 15 normal union, dungeon 18 normal/MH union, dungeon 0 legacy union, guild visitors, explicit legacy Kecleon actors',
+               'scope':selection.get('scope','selected dungeon normal/MH/fixed union, legacy actors and guild visitors'),
                'portraitMapping':'explicit KAO rows; original Normal fallback; no role/relationship-based body substitute'}
         (temporary/'npcs/catalogue.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n')
         (temporary/'npcs/CREDITS.txt').write_text('Nintendo / Pokémon / CHUNSOFT; original ROM NPC bodies and portraits\n')
