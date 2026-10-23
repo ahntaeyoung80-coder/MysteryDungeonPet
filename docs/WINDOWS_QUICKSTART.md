@@ -33,6 +33,10 @@
 
 우클릭 메뉴는 Hide·Always on top·Scale1..3·**Reset 탐험 (귀가)**·Exit다. 탐험/전투/대화 중 Reset하면 두 배우의 확정 HP·열매와 획득품을 보존하고 귀가한 뒤 다음날 탐험으로 이어간다. 직전 상태는 저장 경로 뒤의 `.reset-backup`에 보존한다. 이미 귀가/생활 중이면 비활성화한다. [상세 원인·사용법·검증](NAVIGATION_RECOVERY.md)을 따른다. 원작 방향/animation 진단은 `MysteryDungeonPet.exe --diagnostics`로 실행한다. 새 실행 시작은 `--new-run`을 명시한다.
 
+## 실사용 점검 자료 수집
+
+앱을 Exit로 종료하고 저장소 루트의 **QualityCheck.cmd**를 더블클릭한다. 별도의 PowerShell 명령 입력 없이30분 관측과15초 재실행을 진행하고 결과 ZIP 경로를 표시한다. 기존 모험과 다른 임시 저장으로 실행한다. 결과는 `%LOCALAPPDATA%\MysteryDungeonPet\quality-results`에 남으며 ZIP을 전달하면 종료 원인·자원 추이·복원을 분석할 수 있다. 이 수집기의 실제 Windows 실행 검증은 아직 남아 있다. [수집 항목과 잠금/절전/DPI 점검](QUALITY_CHECK.md).
+
 ## 개발자 갱신과 검사
 
 제품 수정 시 개발자가 EXE도 함께 갱신한다. Windows의 MSVC/CMake/Python 환경에서는 `powershell -ExecutionPolicy Bypass -File tools/update_windows_runtime.ps1`을 실행해 루트 EXE와 `windows-runtime.json`을 생성한다. Linux 교차 빌드는 `tools/check_windows_runtime.py --refresh-from <EXE> --compiler <설명>`으로 같은 기록을 생성한다. ZIP 단계는 없다.

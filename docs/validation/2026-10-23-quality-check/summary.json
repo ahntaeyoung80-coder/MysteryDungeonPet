@@ -1,0 +1,546 @@
+{
+  "product_exe_sha256": "bcf3ac8e16b7a8915576a0bb90038e3250e8b681183f10655b5f1cb74704b73e",
+  "product_logic_unchanged_from": "7cc790c",
+  "gameplay": {
+    "cases": 40,
+    "team_clears": 15,
+    "team_samples": 32,
+    "solo_clears": 0,
+    "solo_samples": 8,
+    "routes": [
+      {
+        "root": 1,
+        "name": "해안 동굴",
+        "floors": 5,
+        "team_samples": 4,
+        "team_clears": 4,
+        "team_boss_arrivals": 4,
+        "team_defeats_in_boss_room": 0,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          168.25,
+          189.0
+        ],
+        "max_revisited_moves_without_progress": 9,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 17
+      },
+      {
+        "root": 4,
+        "name": "삐죽삐죽 산",
+        "floors": 10,
+        "team_samples": 4,
+        "team_clears": 3,
+        "team_boss_arrivals": 4,
+        "team_defeats_in_boss_room": 1,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          342.5,
+          419.0
+        ],
+        "max_revisited_moves_without_progress": 23,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 38
+      },
+      {
+        "root": 8,
+        "name": "길드 대원정",
+        "floors": 50,
+        "team_samples": 4,
+        "team_clears": 0,
+        "team_boss_arrivals": 1,
+        "team_defeats_in_boss_room": 1,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          183.25,
+          1759.25
+        ],
+        "max_revisited_moves_without_progress": 29,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 100
+      },
+      {
+        "root": 14,
+        "name": "열수의 동굴",
+        "floors": 16,
+        "team_samples": 4,
+        "team_clears": 2,
+        "team_boss_arrivals": 2,
+        "team_defeats_in_boss_room": 0,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          177.5,
+          652.75
+        ],
+        "max_revisited_moves_without_progress": 27,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 45
+      },
+      {
+        "root": 17,
+        "name": "일렉트릭 평원",
+        "floors": 20,
+        "team_samples": 4,
+        "team_clears": 0,
+        "team_boss_arrivals": 2,
+        "team_defeats_in_boss_room": 2,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          177.5,
+          792.5
+        ],
+        "max_revisited_moves_without_progress": 27,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 54
+      },
+      {
+        "root": 21,
+        "name": "유사 동굴",
+        "floors": 21,
+        "team_samples": 4,
+        "team_clears": 3,
+        "team_boss_arrivals": 3,
+        "team_defeats_in_boss_room": 0,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          177.5,
+          709.5
+        ],
+        "max_revisited_moves_without_progress": 22,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 57
+      },
+      {
+        "root": 35,
+        "name": "바닷가 동굴",
+        "floors": 15,
+        "team_samples": 4,
+        "team_clears": 0,
+        "team_boss_arrivals": 3,
+        "team_defeats_in_boss_room": 3,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          183.25,
+          534.5
+        ],
+        "max_revisited_moves_without_progress": 22,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 41
+      },
+      {
+        "root": 41,
+        "name": "시한의 탑",
+        "floors": 24,
+        "team_samples": 4,
+        "team_clears": 3,
+        "team_boss_arrivals": 3,
+        "team_defeats_in_boss_room": 0,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          177.5,
+          788.75
+        ],
+        "max_revisited_moves_without_progress": 22,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 62
+      }
+    ],
+    "scope": "virtual 250ms clock, finite completions after 600ms; these are not rendered wall times or population win probabilities"
+  },
+  "actual_process": {
+    "wine": true,
+    "requested_seconds": 1800,
+    "detailed_trace": false,
+    "synthetic_unlock": true,
+    "exit": 0,
+    "seconds": 1801.78,
+    "helper_failures": 0
+  },
+  "resources": {
+    "environment": "wine",
+    "duration_seconds": 1800.0,
+    "samples": 1799,
+    "warmup_seconds": 60,
+    "active_cpu_observed_seconds": 1739.9538,
+    "cpu_one_core_average_percent": 12.051464238929215,
+    "cpu_one_core_p95_percent": 17.9978,
+    "cpu_one_core_max_percent": 32.9946,
+    "counters": {
+      "working_set_bytes": {
+        "max": 56205312.0,
+        "first_window_mean": 47521382.4,
+        "last_window_mean": 53411840.0,
+        "last": 53411840.0,
+        "available": true
+      },
+      "private_bytes": {
+        "max": 0.0,
+        "first_window_mean": 0.0,
+        "last_window_mean": 0.0,
+        "last": 0.0,
+        "available": false
+      },
+      "process_handles": {
+        "max": 0.0,
+        "first_window_mean": 0.0,
+        "last_window_mean": 0.0,
+        "last": 0.0,
+        "available": false
+      },
+      "gdi_objects": {
+        "max": 0.0,
+        "first_window_mean": 0.0,
+        "last_window_mean": 0.0,
+        "last": 0.0,
+        "available": false
+      },
+      "decode_count": {
+        "max": 125.0,
+        "first_window_mean": 20.366666666666667,
+        "last_window_mean": 123.8688524590164,
+        "last": 125.0,
+        "available": true
+      }
+    },
+    "sample_gaps_over_5_seconds": [],
+    "max_unpaused_no_submission_seconds": 1.0,
+    "performance_targets": {
+      "cpu_one_core_1_percent": null,
+      "working_set_30MB": null,
+      "private_30MB": null
+    },
+    "target_scope": "native Windows required"
+  },
+  "snapshot_sampling": {
+    "samples": 156,
+    "first_seconds": 149.43997967700125,
+    "last_seconds": 1793.310507743001,
+    "max_player_oran": 1,
+    "max_partner_oran": 1,
+    "runs": [
+      {
+        "run": 48168037237,
+        "first": {
+          "elapsed_seconds": 149.43997967700125,
+          "run": 48168037237,
+          "day": 1,
+          "meals": 0,
+          "root": 35,
+          "floor": 4,
+          "life": 0,
+          "scene": 0,
+          "position": 368,
+          "hp": 4,
+          "partner_hp": 4,
+          "oran": 1,
+          "partner_oran": 0,
+          "inventory": 19,
+          "round": 235,
+          "outcome": 0,
+          "completed": false,
+          "event": 0
+        },
+        "last": {
+          "elapsed_seconds": 308.2489040060027,
+          "run": 48168037237,
+          "day": 1,
+          "meals": 1,
+          "root": 35,
+          "floor": 9,
+          "life": 6,
+          "scene": 19,
+          "position": 197,
+          "hp": 0,
+          "partner_hp": 5,
+          "oran": 0,
+          "partner_oran": 0,
+          "inventory": 33,
+          "round": 456,
+          "outcome": 3,
+          "completed": false,
+          "event": 0
+        }
+      },
+      {
+        "run": 48168037238,
+        "first": {
+          "elapsed_seconds": 318.83846930800064,
+          "run": 48168037238,
+          "day": 2,
+          "meals": 1,
+          "root": 17,
+          "floor": 0,
+          "life": 0,
+          "scene": 0,
+          "position": 340,
+          "hp": 5,
+          "partner_hp": 5,
+          "oran": 0,
+          "partner_oran": 0,
+          "inventory": 34,
+          "round": 6,
+          "outcome": 0,
+          "completed": false,
+          "event": 0
+        },
+        "last": {
+          "elapsed_seconds": 839.0809574049999,
+          "run": 48168037238,
+          "day": 2,
+          "meals": 2,
+          "root": 17,
+          "floor": 19,
+          "life": 6,
+          "scene": 12,
+          "position": 177,
+          "hp": 4,
+          "partner_hp": 0,
+          "oran": 0,
+          "partner_oran": 0,
+          "inventory": 103,
+          "round": 815,
+          "outcome": 3,
+          "completed": false,
+          "event": 4
+        }
+      },
+      {
+        "run": 48168037239,
+        "first": {
+          "elapsed_seconds": 849.7225531229997,
+          "run": 48168037239,
+          "day": 3,
+          "meals": 2,
+          "root": 41,
+          "floor": 0,
+          "life": 0,
+          "scene": 11,
+          "position": 392,
+          "hp": 5,
+          "partner_hp": 5,
+          "oran": 0,
+          "partner_oran": 0,
+          "inventory": 103,
+          "round": 1,
+          "outcome": 0,
+          "completed": false,
+          "event": 4
+        },
+        "last": {
+          "elapsed_seconds": 1475.4115709559992,
+          "run": 48168037239,
+          "day": 3,
+          "meals": 3,
+          "root": 41,
+          "floor": 23,
+          "life": 7,
+          "scene": 9,
+          "position": 175,
+          "hp": 0,
+          "partner_hp": 5,
+          "oran": 0,
+          "partner_oran": 0,
+          "inventory": 186,
+          "round": 1023,
+          "outcome": 3,
+          "completed": false,
+          "event": 4
+        }
+      },
+      {
+        "run": 48168037240,
+        "first": {
+          "elapsed_seconds": 1486.0001320169977,
+          "run": 48168037240,
+          "day": 4,
+          "meals": 3,
+          "root": 1,
+          "floor": 0,
+          "life": 0,
+          "scene": 0,
+          "position": 413,
+          "hp": 4,
+          "partner_hp": 5,
+          "oran": 1,
+          "partner_oran": 0,
+          "inventory": 187,
+          "round": 5,
+          "outcome": 0,
+          "completed": false,
+          "event": 4
+        },
+        "last": {
+          "elapsed_seconds": 1623.7038757850023,
+          "run": 48168037240,
+          "day": 4,
+          "meals": 4,
+          "root": 1,
+          "floor": 4,
+          "life": 7,
+          "scene": 16,
+          "position": 77,
+          "hp": 0,
+          "partner_hp": 4,
+          "oran": 0,
+          "partner_oran": 0,
+          "inventory": 200,
+          "round": 185,
+          "outcome": 3,
+          "completed": false,
+          "event": 4
+        }
+      },
+      {
+        "run": 48168037241,
+        "first": {
+          "elapsed_seconds": 1634.2802468640002,
+          "run": 48168037241,
+          "day": 5,
+          "meals": 4,
+          "root": 21,
+          "floor": 0,
+          "life": 0,
+          "scene": 0,
+          "position": 317,
+          "hp": 5,
+          "partner_hp": 5,
+          "oran": 1,
+          "partner_oran": 0,
+          "inventory": 202,
+          "round": 15,
+          "outcome": 0,
+          "completed": false,
+          "event": 4
+        },
+        "last": {
+          "elapsed_seconds": 1793.310507743001,
+          "run": 48168037241,
+          "day": 5,
+          "meals": 4,
+          "root": 21,
+          "floor": 7,
+          "life": 8,
+          "scene": 0,
+          "position": 452,
+          "hp": 5,
+          "partner_hp": 4,
+          "oran": 0,
+          "partner_oran": 0,
+          "inventory": 228,
+          "round": 276,
+          "outcome": 0,
+          "completed": false,
+          "event": 4
+        }
+      }
+    ]
+  },
+  "native_windows": "unverified",
+  "native_collector_execution": "unverified",
+  "remote_ci": "not awaited; background after push",
+  "final_snapshot": {
+    "run": 48168037241,
+    "day": 5,
+    "meals": 4,
+    "root": 21,
+    "floor": 7,
+    "life": 0,
+    "scene": 0,
+    "position": 403,
+    "hp": 4,
+    "partner_hp": 3,
+    "oran": 0,
+    "partner_oran": 0,
+    "inventory": 231,
+    "round": 289,
+    "outcome": 0,
+    "completed": false,
+    "event": 4
+  },
+  "relaunch": {
+    "process": {
+      "wine": true,
+      "requested_seconds": 20,
+      "detailed_trace": false,
+      "synthetic_unlock": true,
+      "exit": 0,
+      "seconds": 21.97,
+      "helper_failures": 0
+    },
+    "comparison": {
+      "pass": true,
+      "day": 5,
+      "meals": 4,
+      "prior_items_preserved": 231,
+      "after_items": 232,
+      "before_oran": [
+        0,
+        0
+      ],
+      "after_oran": [
+        1,
+        0
+      ]
+    },
+    "before": {
+      "run": 48168037241,
+      "day": 5,
+      "meals": 4,
+      "root": 21,
+      "floor": 7,
+      "life": 0,
+      "scene": 0,
+      "position": 403,
+      "hp": 4,
+      "partner_hp": 3,
+      "oran": 0,
+      "partner_oran": 0,
+      "inventory": 231,
+      "round": 289,
+      "outcome": 0,
+      "completed": false,
+      "event": 4
+    },
+    "first_sample": {
+      "elapsed_seconds": 11.283789051005442,
+      "run": 48168037242,
+      "day": 5,
+      "meals": 4,
+      "root": 4,
+      "floor": 0,
+      "life": 0,
+      "scene": 11,
+      "position": 159,
+      "hp": 5,
+      "partner_hp": 5,
+      "oran": 0,
+      "partner_oran": 0,
+      "inventory": 231,
+      "round": 1,
+      "outcome": 0,
+      "completed": false,
+      "event": 4
+    },
+    "after": {
+      "run": 48168037242,
+      "day": 5,
+      "meals": 4,
+      "root": 4,
+      "floor": 0,
+      "life": 0,
+      "scene": 0,
+      "position": 371,
+      "hp": 5,
+      "partner_hp": 5,
+      "oran": 1,
+      "partner_oran": 0,
+      "inventory": 232,
+      "round": 15,
+      "outcome": 0,
+      "completed": false,
+      "event": 4
+    },
+    "pickup_once_key": "pickup:48168037242:0:2"
+  },
+  "actual_new_fatal_lines": 0
+}

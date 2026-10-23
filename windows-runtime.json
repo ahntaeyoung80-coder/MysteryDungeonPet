@@ -1,8 +1,8 @@
 {
-  "compiler": "MinGW GCC 14.2-posix x64 Release/static; finite faint and routed-event cleanup verified",
+  "compiler": "MinGW GCC 14.2-posix x64 Release/static; unchanged product 7cc790c, quality collector installation metadata",
   "exe_sha256": "bcf3ac8e16b7a8915576a0bb90038e3250e8b681183f10655b5f1cb74704b73e",
   "inputs": {
-    "CMakeLists.txt": "b19335286162458eaf78220b96bfaa507f6930c88771c356f6d5596ec38ca9c9",
+    "CMakeLists.txt": "8f9038574152b3a8a95af8e10a802ebc86a184e21ddedcd2041129d914c4a146",
     "cmake/mingw.cmake": "bc88b295b39dcf7a6fe314cb4f9b3ec108b2cadde35bc5f861a4e8a2139672ae",
     "src/core/animator.cpp": "1f2605364ffe6e7bae3b040b68be4df40c18e8bb4b1bc266c7f3ecedf68896d7",
     "src/core/animator.hpp": "a4d233307701ecf25326f5a1672503221b73870915cc10e66c711054a458ed53",

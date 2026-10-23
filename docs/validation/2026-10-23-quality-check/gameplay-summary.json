@@ -1,0 +1,148 @@
+{
+  "gameplay": {
+    "cases": 40,
+    "team_clears": 15,
+    "team_samples": 32,
+    "solo_clears": 0,
+    "solo_samples": 8,
+    "routes": [
+      {
+        "root": 1,
+        "name": "해안 동굴",
+        "floors": 5,
+        "team_samples": 4,
+        "team_clears": 4,
+        "team_boss_arrivals": 4,
+        "team_defeats_in_boss_room": 0,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          168.25,
+          189.0
+        ],
+        "max_revisited_moves_without_progress": 9,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 17
+      },
+      {
+        "root": 4,
+        "name": "삐죽삐죽 산",
+        "floors": 10,
+        "team_samples": 4,
+        "team_clears": 3,
+        "team_boss_arrivals": 4,
+        "team_defeats_in_boss_room": 1,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          342.5,
+          419.0
+        ],
+        "max_revisited_moves_without_progress": 23,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 38
+      },
+      {
+        "root": 8,
+        "name": "길드 대원정",
+        "floors": 50,
+        "team_samples": 4,
+        "team_clears": 0,
+        "team_boss_arrivals": 1,
+        "team_defeats_in_boss_room": 1,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          183.25,
+          1759.25
+        ],
+        "max_revisited_moves_without_progress": 29,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 100
+      },
+      {
+        "root": 14,
+        "name": "열수의 동굴",
+        "floors": 16,
+        "team_samples": 4,
+        "team_clears": 2,
+        "team_boss_arrivals": 2,
+        "team_defeats_in_boss_room": 0,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          177.5,
+          652.75
+        ],
+        "max_revisited_moves_without_progress": 27,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 45
+      },
+      {
+        "root": 17,
+        "name": "일렉트릭 평원",
+        "floors": 20,
+        "team_samples": 4,
+        "team_clears": 0,
+        "team_boss_arrivals": 2,
+        "team_defeats_in_boss_room": 2,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          177.5,
+          792.5
+        ],
+        "max_revisited_moves_without_progress": 27,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 54
+      },
+      {
+        "root": 21,
+        "name": "유사 동굴",
+        "floors": 21,
+        "team_samples": 4,
+        "team_clears": 3,
+        "team_boss_arrivals": 3,
+        "team_defeats_in_boss_room": 0,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          177.5,
+          709.5
+        ],
+        "max_revisited_moves_without_progress": 22,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 57
+      },
+      {
+        "root": 35,
+        "name": "바닷가 동굴",
+        "floors": 15,
+        "team_samples": 4,
+        "team_clears": 0,
+        "team_boss_arrivals": 3,
+        "team_defeats_in_boss_room": 3,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          183.25,
+          534.5
+        ],
+        "max_revisited_moves_without_progress": 22,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 41
+      },
+      {
+        "root": 41,
+        "name": "시한의 탑",
+        "floors": 24,
+        "team_samples": 4,
+        "team_clears": 3,
+        "team_boss_arrivals": 3,
+        "team_defeats_in_boss_room": 0,
+        "solo_seed41_clear": false,
+        "approximate_virtual_seconds_range": [
+          177.5,
+          788.75
+        ],
+        "max_revisited_moves_without_progress": 22,
+        "max_quiet_update_ms": 1750,
+        "berries_used": 62
+      }
+    ],
+    "scope": "virtual 250ms clock, finite completions after 600ms; these are not rendered wall times or population win probabilities"
+  }
+}

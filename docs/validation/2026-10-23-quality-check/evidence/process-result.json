@@ -1,0 +1,9 @@
+{
+  "wine": true,
+  "requested_seconds": 1800,
+  "detailed_trace": false,
+  "synthetic_unlock": true,
+  "exit": 0,
+  "seconds": 1801.78,
+  "helper_failures": 0
+}

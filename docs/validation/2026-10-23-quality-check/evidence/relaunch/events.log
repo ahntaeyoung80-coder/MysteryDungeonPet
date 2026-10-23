@@ -1,0 +1,126 @@
+49976757203 NPC cache bodies=2 decoded=2
+49976784205 startup exploration selected dungeon=4
+49976784337 startup=guild-morning exploration-goal=discarded
+49976787637 exploration snapshot=restored day=5 runId=48168037241
+49976799896 initial session unknown; render paused OS=0
+49976821689 start assetKey=rom:EoS_NA:md:1 atlasSha256=608f8d486fae2b2f3daed25b75917c76ffcd7ab2890bf9563253148976a3b744 testTimingHz=60
+49976821805 mode=automatic-exploration
+49976821956 select clip=13 direction=2 loop=0
+49976822004 render_pause
+49976822288 desktop state=3
+49976823575 show
+49976839860 render_resume (not user activity)
+49976839928 session=8
+49976839976 guild room=PlayerRoom characters=2 objectCount=0
+49977581008 expedition=RUN-D021 segment=21 localFloor=7 ground=none outcome=4
+49977581144 select clip=13 direction=2 loop=0
+49977581201 life=Wake combat=PlayerAttack day=5 hearts=5 sceneBeat=18 dialogueStage=0
+49977584340 guild room=PlayerRoom characters=3 objectCount=0
+49977822811 desktop state=1
+49978375684 expedition=RUN-D021 segment=21 localFloor=7 ground=none outcome=4
+49978375796 select clip=13 direction=2 loop=0
+49978375832 life=Wake combat=PlayerAttack day=5 hearts=5 sceneBeat=15 dialogueStage=0
+49978375873 guild room=PlayerRoom characters=3 objectCount=0
+49978963482 session=8
+49980384250 expedition=RUN-D021 segment=21 localFloor=7 ground=none outcome=4
+49980384348 select clip=13 direction=2 loop=0
+49980384382 life=Wake combat=PlayerAttack day=5 hearts=5 sceneBeat=19 dialogueStage=0
+49980384422 guild room=PlayerRoom characters=3 objectCount=0
+49981144718 session=8
+49981183301 expedition=RUN-D021 segment=21 localFloor=7 ground=none outcome=4
+49981183395 select clip=14 direction=2 loop=0
+49981183430 life=Wake combat=PlayerAttack day=5 hearts=5 sceneBeat=8 dialogueStage=0
+49981183467 guild room=PlayerRoom characters=2 objectCount=0
+49981873577 guild partner wake finished
+49981878759 finite finished assetKey=rom:EoS_NA:md:1
+49981885912 expedition=RUN-D021 segment=21 localFloor=7 ground=none outcome=4
+49981885985 select clip=22 direction=6 loop=0
+49981886060 life=Ready combat=PlayerAttack day=5 hearts=5 sceneBeat=9 dialogueStage=0
+49981886107 guild room=PlayerRoom characters=2 objectCount=0
+49982214081 finite finished assetKey=rom:EoS_NA:md:1
+49983259050 session=8
+49983489934 expedition=RUN-D021 segment=21 localFloor=7 ground=none outcome=4
+49983490252 select clip=0 direction=6 loop=1
+49983490307 life=Ready combat=PlayerAttack day=5 hearts=5 sceneBeat=16 dialogueStage=0
+49983490350 guild room=PlayerRoom characters=2 objectCount=0
+49985384184 session=8
+49985549165 select clip=7 direction=6 loop=1
+49985686052 expedition=RUN-D021 segment=21 localFloor=7 ground=none outcome=4
+49985686110 select clip=7 direction=6 loop=1
+49985686124 life=Ready combat=PlayerAttack day=5 hearts=5 sceneBeat=10 dialogueStage=0
+49985686138 guild room=PlayerRoom characters=2 objectCount=0
+49986459397 NPC cache bodies=2 decoded=2
+49986459665 default exploration upgraded at new run floors=10
+49986459707 expedition=RUN-D004 segment=4 localFloor=0 ground=none outcome=0
+49986459739 select clip=7 direction=6 loop=1
+49986459763 life=Explore combat=PlayerTurn day=5 hearts=5 sceneBeat=11 dialogueStage=0
+49987519739 session=8
+49989440101 expedition=RUN-D004 segment=4 localFloor=0 ground=none outcome=0
+49989445357 expedition=RUN-D004 segment=4 localFloor=0 ground=none outcome=0
+49989445424 select clip=7 direction=6 loop=1
+49989445452 life=Dialogue combat=PlayerTurn day=5 hearts=5 sceneBeat=0 dialogueStage=1
+49989649650 session=8
+49991105994 expedition=RUN-D004 segment=4 localFloor=0 ground=none outcome=0
+49991106086 life=Explore combat=PlayerTurn day=5 hearts=5
+49991113051 party actor=5 target=0 action=3 round=1 event=23 damage=0
+49991113106 party actor=6 target=0 action=4 round=1 event=23 damage=0
+49991511921 party actor=0 target=0 action=5 round=2 event=21 damage=0
+49991511977 party actor=4294967294 target=0 action=6 round=2 event=29 damage=0
+49991511989 party actor=5 target=0 action=7 round=2 event=23 damage=0
+49991511999 party actor=6 target=0 action=8 round=2 event=23 damage=0
+49991824976 session=8
+49991914393 party actor=0 target=0 action=9 round=3 event=21 damage=0
+49991915010 party actor=4294967294 target=0 action=10 round=3 event=29 damage=0
+49991915040 party actor=5 target=0 action=11 round=3 event=23 damage=0
+49991915063 party actor=6 target=0 action=12 round=3 event=23 damage=0
+49992318678 party actor=0 target=0 action=13 round=4 event=21 damage=0
+49992318774 party actor=4294967294 target=0 action=14 round=4 event=29 damage=0
+49992318800 party actor=5 target=0 action=15 round=4 event=23 damage=0
+49992318858 party actor=6 target=0 action=16 round=4 event=23 damage=0
+49992713459 gameplay onceKey=pickup:48168037242:0:2
+49992713527 party actor=0 target=70 action=17 round=5 event=20 damage=0
+49992713552 party actor=5 target=0 action=19 round=5 event=23 damage=0
+49992713573 party actor=6 target=0 action=20 round=5 event=23 damage=0
+49993115064 party actor=0 target=0 action=21 round=6 event=21 damage=0
+49993115302 party actor=4294967294 target=0 action=22 round=6 event=29 damage=0
+49993115350 party actor=5 target=0 action=23 round=6 event=23 damage=0
+49993115381 party actor=6 target=0 action=24 round=6 event=23 damage=0
+49993525878 party actor=0 target=0 action=25 round=7 event=21 damage=0
+49993525998 party actor=4294967294 target=0 action=26 round=7 event=29 damage=0
+49993526046 party actor=5 target=0 action=27 round=7 event=23 damage=0
+49993526077 party actor=6 target=0 action=28 round=7 event=23 damage=0
+49993922960 party actor=0 target=0 action=29 round=8 event=21 damage=0
+49993923023 party actor=4294967294 target=0 action=30 round=8 event=29 damage=0
+49993923040 party actor=5 target=0 action=31 round=8 event=23 damage=0
+49993923055 party actor=6 target=0 action=32 round=8 event=23 damage=0
+49993957545 session=8
+49994330376 party actor=0 target=0 action=33 round=9 event=21 damage=0
+49994330437 party actor=4294967294 target=0 action=34 round=9 event=29 damage=0
+49994330451 party actor=5 target=0 action=35 round=9 event=23 damage=0
+49994330462 party actor=6 target=0 action=36 round=9 event=23 damage=0
+49994729335 party actor=0 target=0 action=37 round=10 event=21 damage=0
+49994729398 party actor=4294967294 target=0 action=38 round=10 event=29 damage=0
+49994729413 party actor=5 target=0 action=39 round=10 event=23 damage=0
+49994729423 party actor=6 target=0 action=40 round=10 event=23 damage=0
+49995129185 party actor=0 target=0 action=41 round=11 event=21 damage=0
+49995129239 party actor=4294967294 target=0 action=42 round=11 event=29 damage=0
+49995129252 party actor=5 target=0 action=43 round=11 event=23 damage=0
+49995129262 party actor=6 target=0 action=44 round=11 event=23 damage=0
+49995530659 party actor=0 target=0 action=45 round=12 event=21 damage=0
+49995530859 party actor=4294967294 target=0 action=46 round=12 event=29 damage=0
+49995530878 party actor=5 target=0 action=47 round=12 event=23 damage=0
+49995530889 party actor=6 target=0 action=48 round=12 event=23 damage=0
+49995929692 party actor=0 target=0 action=49 round=13 event=21 damage=0
+49995929885 party actor=4294967294 target=0 action=50 round=13 event=29 damage=0
+49995929915 party actor=5 target=0 action=51 round=13 event=23 damage=0
+49995929927 party actor=6 target=0 action=52 round=13 event=23 damage=0
+49996102565 session=8
+49996329529 party actor=0 target=0 action=53 round=14 event=21 damage=0
+49996329580 party actor=4294967294 target=0 action=54 round=14 event=29 damage=0
+49996329592 party actor=5 target=0 action=55 round=14 event=23 damage=0
+49996329602 party actor=6 target=0 action=56 round=14 event=23 damage=0
+49996732828 party actor=0 target=0 action=57 round=15 event=21 damage=0
+49996732947 party actor=4294967294 target=0 action=58 round=15 event=29 damage=0
+49996732990 party actor=5 target=0 action=59 round=15 event=23 damage=0
+49996733078 party actor=6 target=0 action=60 round=15 event=23 damage=0
+49996820520 exit submissions=1167 decodes=20 switches=0
