@@ -1,6 +1,6 @@
 {
-  "compiler": "MinGW GCC14.2-posix x64 Release/static; lifecycle audit; Wine10/Xvfb verified",
-  "exe_sha256": "727667e8873ef1aeceb82aa03bbd59a93638b436b1a7db25d26102d27ea74fb2",
+  "compiler": "MinGW GCC 14.2-posix x64 Release/static; item reaction review Wine10/Xvfb verified",
+  "exe_sha256": "ab64a7c246879cbace690d4adcebd547ab1542f7246231f571399c810f947538",
   "inputs": {
     "CMakeLists.txt": "dc9f59a1c3ad298e3ef915ca54eab075647343ca06a3060461c840ad9101f240",
     "cmake/mingw.cmake": "bc88b295b39dcf7a6fe314cb4f9b3ec108b2cadde35bc5f861a4e8a2139672ae",
@@ -36,7 +36,7 @@
     "src/core/guild_scene.hpp": "b8e3ac30f953993ddc12e7622dd116427b488a7f8a6758439e16ebbdcef118e1",
     "src/core/holiday_scene.cpp": "65d3a0a3493727c2c6cd65a9f52b5c7865513e7f24c89e5ed1bb4e209d8e28cc",
     "src/core/holiday_scene.hpp": "daf5e86240ca02c9fb7095b1bc4b35b6bd60152cd04ab6b43b838fc400697852",
-    "src/core/item_comments.inc": "f84b7bd2c8ae8ce34885fa727155905c49f9fa378b7e605e7670177d4a1701da",
+    "src/core/item_comments.inc": "0bd28f9a7f17b588f5638f3c45212bd0f91581227160e82d6e4dbae735bae802",
     "src/core/item_names.inc": "76d413b45800ea1ce23b390f23a20b4a4ab2ee27160e807229f4f4d00e39aa2a",
     "src/core/motion.hpp": "832571e6a9cf1f87fc902dd707f84ace8642031230720de15dad61f69e4d0508",
     "src/core/npc_characters.cpp": "5dc70dbfcc31f00bac1a65d5b344f7cfea2b22ada7d03c58ca06e983f4d80edd",
@@ -181,7 +181,7 @@
     "assets/original/gameplay/completion/provenance.json": "a96413eecb5684dafc7b84ef2ec517d78d1d7a77d1be442ee90b7957f562b62e",
     "assets/original/gameplay/dialogue/catalogue.json": "a604b1db7c073e40050c98c79f80b93d1f2fc2d30f732acbb3f1fae1acca5361",
     "assets/original/gameplay/dialogue/catalogue.mdlc": "08ce5fb20871ec5d8e4d5f7ba46972c84d191215b9ee8406e0d1c953b5614d89",
-    "assets/original/gameplay/dialogue/item_comments.json": "eaf4fc36bb7a5a8f97f8b8b94eba4713c7e828fbcb10c2b6a203c2141944a0d6",
+    "assets/original/gameplay/dialogue/item_comments.json": "cc40bd18996a016b16f25248f7d35d762948d4529b14186bbc6f68c6263f4c6d",
     "assets/original/gameplay/effects/CREDITS.txt": "e308cac52a522285df4d75c2ada75ad10f039ce10a0291f729b5f4216b809118",
     "assets/original/gameplay/effects/apple.mdpa": "cc5792197ea55e7101cce9a048ce6889e65bcd00fffb02de0288d6d2ce7def2f",
     "assets/original/gameplay/effects/atlas.png": "010152dcd90c797a702ef8dff751b78ea5e54d8e4e1d28857f6d06e2517326d2",

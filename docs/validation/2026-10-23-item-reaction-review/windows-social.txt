@@ -1,0 +1,14 @@
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+boss friendship -> center clear -> return 1 passed
+boss friendship -> center clear -> return 4 passed
+boss friendship -> center clear -> return 8 passed
+boss friendship -> center clear -> return 14 passed
+boss friendship -> center clear -> return 17 passed
+boss friendship -> center clear -> return 21 passed
+boss friendship -> center clear -> return 35 passed
+boss friendship -> center clear -> return 41 passed

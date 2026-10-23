@@ -28,6 +28,10 @@ catalogueVersion12의128묶음·165발화, 아이템156개·468반응을 문서�
 
 [작업·시간·실패/보정 기록](docs/logs/2026-10-23-script-lifecycle-audit.md) · [최종 검증](docs/validation/2026-10-23-script-lifecycle-audit/summary.json).
 
+## 아이템 반응 재점검·장시간 검증 진행
+
+반응468개를 전수 검토하고90개 아이템246문장을 보완했다. 아이템 효과 발동을 약속하지 않고 같은 이름/보관 표현 반복을 줄였다. [판정](docs/dialogue/ITEM_REACTION_REVIEW.md), [관련 검사와 실제 EXE](docs/validation/2026-10-23-item-reaction-review/summary.json). 다음 단계는 여러 날 자연 탐험·저장 복원·소비·보스/귀가의 반복 검증이며 아직 완료로 판정하지 않았다.
+
 ## 다음 작업 / 남은 범위
 
 현재 요청의 문서·실행 반영·흐름 감사/확인된 버그 수정은 완료했다. 다음 제품 작업은 사용자 Windows11에서 잠금·절전·DPI·장기 성능을 확인하고 PC 활동 기반 생활 정책·전체 지원 감사·용량 최적화를 진행하는 것이다. 선택 설치물은 잠정20MB 목표를 초과한다. 전체 원정 자연 전투 승리·미선택 경로·미확정 퍼즐·동적 팔레트 지원 완료를 의미하지 않는다. [실행 안내](docs/WINDOWS_QUICKSTART.md).

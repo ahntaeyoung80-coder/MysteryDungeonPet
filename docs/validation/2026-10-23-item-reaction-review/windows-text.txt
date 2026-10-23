@@ -1,0 +1,1 @@
+seven Korean text scenes/three HUD labels have opaque GDI ink; silent player has none

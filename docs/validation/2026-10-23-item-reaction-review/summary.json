@@ -1,0 +1,91 @@
+{
+  "items_reviewed": 156,
+  "reactions_reviewed": 468,
+  "items_changed": 90,
+  "lines_changed": 246,
+  "exact_duplicate_lines": 0,
+  "python": {
+    "passed": 10,
+    "seconds": 0.027
+  },
+  "native_asan_ubsan": {
+    "passed": 2,
+    "seconds": 11.55
+  },
+  "windows_pe": {
+    "passed": 2,
+    "tests": [
+      "social_feedback",
+      "text_overlay"
+    ]
+  },
+  "gui": [
+    {
+      "case": "pickup-orb",
+      "exit": 0,
+      "seconds": 9.83,
+      "traceRows": 1150,
+      "submissions": 609,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "2",
+          "11",
+          "0",
+          "3"
+        ]
+      ],
+      "dialogueContexts": [],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "0",
+          "14"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-notice-1-314.bmp",
+        "trace-notice-3-314.bmp",
+        "trace-last.bmp"
+      ]
+    }
+  ],
+  "runtime_sha256": "ab64a7c246879cbace690d4adcebd547ab1542f7246231f571399c810f947538",
+  "runtime_build_root_install_equal": true,
+  "limitations": [
+    "Wine10/Xvfb, synthetic WTS unlock, substitute Korean font; native Windows11 unverified",
+    "Long play loop verification is the following stage; this stage does not claim it passed"
+  ]
+}
