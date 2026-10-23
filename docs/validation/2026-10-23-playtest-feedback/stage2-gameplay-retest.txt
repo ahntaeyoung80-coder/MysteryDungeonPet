@@ -1,0 +1,7 @@
+Test project /workspace/MysteryDungeonPet/build/playtest-asan
+    Start 28: pet_gameplay_tests
+1/1 Test #28: pet_gameplay_tests ...............   Passed   24.39 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =  24.39 sec

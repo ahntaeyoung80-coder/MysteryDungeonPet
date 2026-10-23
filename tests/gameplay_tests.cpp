@@ -209,9 +209,9 @@ int main(int argc, char** argv) {
         next(dead);check(dead.state().gameplay.deathStage==DeathStage::Blackout,"opaque blackout missing");
         next(dead);homePipeline(dead,true);
         pass(6,"three enemy normal hits -> defeat -> return -> expression -> meal -> sleep -> wake");
-        auto enemyCrit = encounter(); advance(enemyCrit,1000); forceRoll(enemyCrit,true,false,false); next(enemyCrit); enemyTurn(enemyCrit,true,true);
-        check(enemyCrit.state().gameplay.hearts == kMaxHp-2 && enemyCrit.state().gameplay.damage == 2, "enemy critical not two hearts");
-        pass(7,"enemy critical removes two hearts");
+        auto enemyCrit = encounter(); advance(enemyCrit,1000); forceRoll(enemyCrit,true,false,false); next(enemyCrit); enemyTurn(enemyCrit,true,false);
+        check(enemyCrit.state().gameplay.hearts == kMaxHp-1 && enemyCrit.state().gameplay.damage == 1, "enemy hit exceeded one heart");
+        pass(7,"enemy hits remove one heart without criticals");
 
         auto berries = empty(); s = berries.state(); s.gameplay.hearts = 1;
         const auto search = bfs(s.world,s.position);
@@ -274,7 +274,7 @@ int main(int argc, char** argv) {
             playerHits+=p.hit; enemyHits+=e.hit; playerCrits+=p.critical; enemyCrits+=e.critical;
         }
         check(playerHits > 79000 && playerHits < 81000 && enemyHits > 79000 && enemyHits < 81000, "shared hit probability differs");
-        check(playerCrits > 15000 && playerCrits < 17000 && enemyCrits > 3500 && enemyCrits < 4500, "critical probability differs");
+        check(playerCrits > 15000 && playerCrits < 17000 && enemyCrits == 0, "critical probability differs");
         unsigned hostile=0,total=0;
         for (unsigned seed=1;seed<=1000;++seed) { Explorer e(seed,seed,"ratio",fixtureProfiles(1)); e.enableGameplay(1000); hostile+=static_cast<unsigned>(e.state().gameplay.hostile.size()); total+=2; }
         check(hostile > 1400 && hostile < 1600 && total == 2000, "relationship ratio differs from 3:1");

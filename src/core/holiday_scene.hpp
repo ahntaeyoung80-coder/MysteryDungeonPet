@@ -19,4 +19,5 @@ bool advanceHoliday(ExplorationState&,const DialogueCatalogue&,const HolidayRegi
 void checkpointHoliday(ExplorationState&,std::uint64_t now);
 void restoreHolidayClocks(ExplorationState&,std::uint64_t now);
 std::size_t holidayFrame(const Package&,unsigned clip,unsigned direction,std::uint64_t elapsedMs);
+std::uint32_t chooseDungeon(VarietyState&,const std::vector<std::uint32_t>& ids,std::uint32_t current=0);
 } // namespace pet

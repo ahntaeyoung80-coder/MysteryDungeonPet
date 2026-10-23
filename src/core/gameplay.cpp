@@ -115,7 +115,8 @@ AttackRoll rollBasicAttack(Rng& rng, bool player) {
     AttackRoll result;
     result.hit = rng.bounded(100) < 80;
     if (result.hit) {
-        result.critical = rng.bounded(100) < (player ? 20U : 5U);
+        const auto criticalRoll = rng.bounded(100); // Keep the existing RNG draw cadence.
+        result.critical = player && criticalRoll < 20U;
         result.damage = result.critical ? 2 : 1;
     }
     return result;

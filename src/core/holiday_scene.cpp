@@ -145,11 +145,14 @@ GameplayUpdate Explorer::returnFromHoliday(std::uint64_t now){
     return beginReturn(now,false);
 }
 void Explorer::restoreHolidayClock(std::uint64_t now){restoreHolidayClocks(state_,now);}
-std::uint32_t Explorer::chooseNextDungeon(const std::vector<std::uint32_t>& ids) {
-    std::vector<unsigned> candidates;const auto current=state_.expedition.routeId=="ARC-M07"?8U:state_.floors.front().dungeonId;
+std::uint32_t chooseDungeon(VarietyState& variety,const std::vector<std::uint32_t>& ids,std::uint32_t current) {
+    std::vector<unsigned> candidates;
     for(auto id:ids)if(id!=current)candidates.push_back(id);
     if(candidates.empty())candidates=ids;
     require(!candidates.empty(),"empty verified map pool");
-    return candidates[drawVariety(state_.variety,VarietyRandomStream::Schedule,candidates.size())];
+    return candidates[drawVariety(variety,VarietyRandomStream::Schedule,candidates.size())];
+}
+std::uint32_t Explorer::chooseNextDungeon(const std::vector<std::uint32_t>& ids) {
+    return chooseDungeon(state_.variety,ids,state_.expedition.routeId=="ARC-M07"?8U:state_.floors.front().dungeonId);
 }
 } // namespace pet

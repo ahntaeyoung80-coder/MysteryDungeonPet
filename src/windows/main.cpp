@@ -1622,8 +1622,20 @@ public:
 
                 }
             } else {
-                explorer_ = std::make_unique<Explorer>(static_cast<uint64_t>(nowUs()), options_.seed,
+                const auto runId=static_cast<uint64_t>(nowUs());
+                auto initialVariety=initialVarietyState(runId,options_.seed,1);
+                if(options_.defaultExploration) {
+                    std::vector<unsigned> ids;for(const auto& entry:explorationPool_)ids.push_back(entry.first);
+                    const auto selected=chooseDungeon(initialVariety,ids);
+                    explorationPackage_=explorationPool_.at(selected);
+                    explorationDirectory=explorationRoot_/std::filesystem::path("dungeon-"+std::to_string(selected));
+                    initialVariety.schedule.day=1;initialVariety.schedule.destination=DayDestination::Exploration;initialVariety.schedule.dungeon=selected;
+                    log("initial exploration selected dungeon="+std::to_string(selected));
+                }
+                explorer_ = std::make_unique<Explorer>(runId, options_.seed,
                             explorationPackage_->assetVersion, explorationPackage_->floors,SpawnPolicy{}, std::vector<uint64_t>{},explorationPackage_->expedition);
+                auto selectedState=explorer_->state();selectedState.variety=std::move(initialVariety);
+                explorer_=std::make_unique<Explorer>(std::move(selectedState));
                 saveRunSnapshot(options_.snapshot, explorer_->state());
             }
             validateNpcCoverage(npcCatalogue_,explorer_->state().floors);

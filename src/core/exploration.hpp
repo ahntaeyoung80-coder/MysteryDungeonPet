@@ -211,7 +211,7 @@ bool gameplayLoop(const GameplayState&);
 bool holdGameplayPose(const GameplayState&);
 std::uint32_t companionClip(const GameplayState&);
 bool companionLoop(const GameplayState&);
-// Shared attack roll: both sides hit 80%; only critical chance differs.
+// Both sides hit 80%; only the player/companion can critically hit (20%).
 struct AttackRoll { bool hit = false, critical = false; std::uint32_t damage = 0; };
 AttackRoll rollBasicAttack(Rng&, bool player);
 enum class SurvivalFirst : std::uint8_t { None, Oran, Stairs };

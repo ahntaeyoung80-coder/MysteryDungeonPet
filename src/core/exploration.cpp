@@ -428,7 +428,14 @@ void Explorer::enterFloor() {
         entryExclusion[partner.tile]=1;partner.movement={};partner.walkStartedMs=0;partner.hidden=false;
         partner.direction=directionBetween(partner.tile,state_.world.start);partner.actionRound=state_.gameplay.actionRound;
     }
-    state_.population = populate(state_.world, state_.floors[state_.floorIndex],
+    auto profile=state_.floors[state_.floorIndex];
+    // Product supply policy, separate from the unmodified original distributions.
+    // Respect explicit no-item fixtures and preserve the original fixed rooms.
+    if(state_.expedition.enabled() && !state_.expedition.floors[state_.floorIndex].fixedFloorId &&
+       state_.spawnPolicy.itemRequest && state_.spawnPolicy.itemBudget &&
+       std::find(profile.guaranteed.begin(),profile.guaranteed.end(),ITEM_ORAN_BERRY)==profile.guaranteed.end())
+        profile.guaranteed.insert(profile.guaranteed.begin(),ITEM_ORAN_BERRY);
+    state_.population = populate(state_.world, profile,
                                  state_.rng, state_.spawnPolicy,entryExclusion);
     if(state_.expedition.enabled() && state_.expedition.floors.at(state_.floorIndex).fixedFloorId)populateFixedFloor();
     state_.position = state_.world.start;
