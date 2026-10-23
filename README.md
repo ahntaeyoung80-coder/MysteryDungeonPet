@@ -6,7 +6,7 @@
 
 ## 실행
 
-실행 중인 앱을 **Exit**로 종료하고 `work` 브랜치를 pull한 뒤, 저장소 루트의 **MysteryDungeonPet.exe**를 실행한다. 일반 실행은 길드 아침에서 동료의 밝은 인사 후 함께 출발한다. 첫 원정은 8개 후보에서, 일반 재실행은 현재와 다른 후보에서 무작위로 고른다. 초상화와 한 줄 상태창을 상시 표시한다. 휴일 방문을 마치고 식사 전에 종료했다면 남은 저녁을 먼저 잇는다. 누적 진행은 유지하고 이전 탐험의 위치·목표는 재개하지 않는다. 자세한 실행·저장·진단 방법은 [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다.
+실행 중인 앱을 **Exit**로 종료하고 `work` 브랜치를 pull한 뒤, 저장소 루트의 **MysteryDungeonPet.exe**를 실행한다. 일반 실행은 길드 아침에서 동료의 밝은 인사 후 함께 출발한다. 첫 원정은 8개 후보에서, 일반 재실행은 현재와 다른 후보에서 무작위로 고른다. 2줄 상태창을 표시하며 초상화는 실제 발화 중에만 나타난다. 노공룡의 기상 외침과 동료의 출발 인사를 사용한다. 휴일 방문을 마치고 식사 전에 종료했다면 남은 저녁을 먼저 잇는다. 누적 진행은 유지하고 이전 탐험의 위치·목표는 재개하지 않는다. 자세한 실행·저장·진단 방법은 [Windows 실행 안내](docs/WINDOWS_QUICKSTART.md)를 따른다.
 
 ## 개발 현황
 
@@ -20,7 +20,10 @@
 - [개발 맥락·주요 이력](docs/PROJECT_HISTORY.md)
 - [동료 AI 후속 작업 계획](docs/PARTY_AI_WORK_PLAN.md)
 - [다양성 확장용 원작 맵·출현·아이템·에셋 자료](docs/research/2026-10-20-variety-original-data.md)
-- [상황별 대사 초안·말투·감정·초상화 분류](docs/research/2026-10-20-variety-dialogue-catalogue.md)
+- [현재 대화 대본·새 후보 32개](docs/dialogue/SPOKEN_SCRIPT.md)
+- [상태·알림·아이템 이름과 반응](docs/dialogue/DISPLAY_TEXT.md)
+- [오랭열매 사용 검증](docs/dialogue/ORAN_AUDIT.md)
+- [이전 상황별 대사 초안·말투·감정·초상화 분류](docs/research/2026-10-20-variety-dialogue-catalogue.md)
 - [탐험·휴일 이벤트 10종 명세와 원작 리소스](docs/research/2026-10-21-ten-events.md)
 - [이벤트 대사 120문장·화자·감정 연결](docs/research/2026-10-21-ten-event-dialogues.md)
 - [다양성·이벤트 구현 순서와 검증 계획](docs/plans/2026-10-21-event-variety-implementation.md)

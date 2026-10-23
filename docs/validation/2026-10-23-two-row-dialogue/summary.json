@@ -1,0 +1,285 @@
+{
+  "catalogueVersion": 9,
+  "bundles": 112,
+  "utterances": 133,
+  "pagesPerUtterance": 1,
+  "draftCandidatesNotApplied": 32,
+  "itemNamesAndComments": 156,
+  "nativeCoreTests": {
+    "count": 5,
+    "result": "passed",
+    "names": [
+      "persistent_ui",
+      "playtest_balance",
+      "gameplay_notice",
+      "dialogue_catalogue",
+      "dialogue_portrait"
+    ]
+  },
+  "pythonCatalogueTests": {
+    "count": 6,
+    "result": "passed"
+  },
+  "windowsWineTests": [
+    "pet_text_overlay_tests.exe passed; includes actual second-row GDI ink and 156 item acquisition measurements",
+    "pet_dialogue_catalogue_tests.exe passed"
+  ],
+  "finiteStock": {
+    "paths": [
+      "legacy",
+      "independent party"
+    ],
+    "initialPlayer": 3,
+    "initialCompanion": 3,
+    "totalConsumed": 6,
+    "remaining": 0,
+    "fourthInjuryHeals": 0,
+    "restoreEveryUpdate": true
+  },
+  "gui": [
+    {
+      "case": "status",
+      "exit": 0,
+      "seconds": 9.59,
+      "traceRows": 348,
+      "submissions": 170,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "morning",
+      "exit": 0,
+      "seconds": 9.29,
+      "traceRows": 1112,
+      "submissions": 580,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "1",
+          "51",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-morning-greeting.bmp",
+        "trace-map-title.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "alarm",
+      "exit": 0,
+      "seconds": 9.2,
+      "traceRows": 994,
+      "submissions": 561,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "1",
+          "51",
+          "0"
+        ],
+        [
+          "4",
+          "1",
+          "41",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-morning-greeting.bmp",
+        "trace-last.bmp",
+        "trace-alarm.bmp"
+      ]
+    },
+    {
+      "case": "wounded-npc",
+      "exit": 0,
+      "seconds": 9.24,
+      "traceRows": 1013,
+      "submissions": 533,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "22",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-npc-reply.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "pickup-orb",
+      "exit": 0,
+      "seconds": 9.24,
+      "traceRows": 1150,
+      "submissions": 609,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "2",
+          "11",
+          "0",
+          "3"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-notice-1-314.bmp",
+        "trace-notice-3-314.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "heal",
+      "exit": 0,
+      "seconds": 9.24,
+      "traceRows": 982,
+      "submissions": 506,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-full-heal.bmp",
+        "trace-last.bmp"
+      ]
+    }
+  ],
+  "exeSha256": "13adae57b3c1d1ccef2fcb0f19b63a94bbf16d78cb790a47d4e2385f9de24883",
+  "buildRootInstallExeEqual": true,
+  "installedCatalogueEqual": true,
+  "limitations": [
+    "Original user berry incident was not reconstructed from its actual save/trace",
+    "Wine10/Xvfb with synthetic WTS unlock is not actual Windows 11",
+    "Remote CI not observed"
+  ]
+}

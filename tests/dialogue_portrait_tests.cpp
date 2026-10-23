@@ -71,7 +71,7 @@ void portraits() {
     g.enemyInstance=kCompanionActorId;roles=dialoguePortraits(g);
     check(roles.speaker==PortraitRole::Partner && roles.actorId==kCompanionActorId,"companion confused with NPC instance");
     for(const auto scene:{SceneBeat::BedFace,SceneBeat::MorningFace}){g.life=scene==SceneBeat::BedFace?LifePhase::Sleep:LifePhase::Ready;g.sceneBeat=scene;check(dialoguePortraits(g).speaker==PortraitRole::Partner,"bed/morning partner speaker absent");}
-    g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::WakeDelay;check(dialoguePortraits(g).speaker==PortraitRole::Partner,"bright partner wake speaker absent");
+    g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::WakeDelay;check(dialoguePortraits(g).speaker==PortraitRole::Alarm,"Loudred wake speaker absent");
     for(const auto scene:{SceneBeat::Waking,SceneBeat::RoomExit,SceneBeat::FloorFadeOut,SceneBeat::None}){g.sceneBeat=scene;check(dialoguePortraits(g).speaker==PortraitRole::None,"portrait leaked outside dialogue");}
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
     const auto folder=root/"assets/original/gameplay";
@@ -88,12 +88,12 @@ void portraits() {
         Surface screen(200,200);dialoguePortraitOverlay(screen,atlas,p,{role,0},cast,frame);
         const unsigned left=role==PortraitRole::Player?8:136,other=role==PortraitRole::Player?144:16;
         const auto& rect=p.frames(cast.actor(role).portraitClip,0).front().rect;
-        check(screen.pixels[(112*200+left+8)*4]==unsigned(rect.x/40+1),"speaker did not resolve its character portrait");
-        check(screen.pixels[(116*200+other)*4+3]==0,"listener portrait remained visible");
+        check(screen.pixels[(96*200+left+8)*4]==unsigned(rect.x/40+1),"speaker did not resolve its character portrait");
+        check(screen.pixels[(100*200+other)*4+3]==0,"listener portrait remained visible");
         check(screen.pixels[(130*200+100)*4+3]==0,"removed nameplate still occupies screen");
         for(const auto sample:std::vector<std::array<unsigned,3>>{{0,0,2},{8,0,3},{48,0,4},{0,8,5},{48,8,6},{0,48,7},{8,48,8},{48,48,9}})
-            check(screen.pixels[((104+sample[1])*200+left+sample[0])*4]==sample[2],"portrait did not use original dialogue corner/edge tiles");
-        check(screen.pixels[(160*200+8)*4+3]==0,"portrait overwrote dialogue text");screen.validatePbgra();
+            check(screen.pixels[((88+sample[1])*200+left+sample[0])*4]==sample[2],"portrait did not use original dialogue corner/edge tiles");
+        check(screen.pixels[(144*200+8)*4+3]==0,"portrait overwrote dialogue text");screen.validatePbgra();
     }
     auto swapped=cast;auto player=cast.actor(PortraitRole::Partner),partner=cast.actor(PortraitRole::Player);
     player.role=PortraitRole::Player;partner.role=PortraitRole::Partner;swapped.actors[0]=player;swapped.actors[1]=partner;

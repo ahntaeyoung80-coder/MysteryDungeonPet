@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 8,
+  "catalogueVersion": 9,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -445,11 +445,11 @@
         {
           "id": "wake.alarm.01.1",
           "legacyId": 41,
-          "speaker": 2,
+          "speaker": 4,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1200,
-          "text": "좋은 아침! 잘 잤어? 오늘도 함께야!"
+          "text": "좋은 아침이다아! 다들 일어날 시간이다아!"
         }
       ]
     },
@@ -463,11 +463,11 @@
         {
           "id": "wake.alarm.02.1",
           "legacyId": 41,
-          "speaker": 2,
+          "speaker": 4,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1200,
-          "text": "아침이다! 푹 잤어? 기분 좋은 하루가 될 거야!"
+          "text": "아침이다아! 오늘도 힘차게 시작하자아!"
         }
       ]
     },
@@ -481,11 +481,11 @@
         {
           "id": "wake.alarm.03.1",
           "legacyId": 41,
-          "speaker": 2,
+          "speaker": 4,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1200,
-          "text": "잘 잤지? 좋은 아침! 오늘도 힘내자!"
+          "text": "기상이다아! 햇살이 벌써 들어왔다아!"
         }
       ]
     },
@@ -499,11 +499,11 @@
         {
           "id": "wake.alarm.04.1",
           "legacyId": 41,
-          "speaker": 2,
+          "speaker": 4,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1200,
-          "text": "일어났구나! 반가워. 오늘도 잘 부탁해!"
+          "text": "잘 잤나아! 아침 인사부터 크게 해 보자아!"
         }
       ]
     },
@@ -517,11 +517,11 @@
         {
           "id": "wake.alarm.05.1",
           "legacyId": 41,
-          "speaker": 2,
+          "speaker": 4,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1200,
-          "text": "좋은 아침! 천천히 기지개부터 켜자."
+          "text": "일어나라아! 맛있는 아침이 기다린다아!"
         }
       ]
     },
@@ -535,11 +535,11 @@
         {
           "id": "wake.alarm.06.1",
           "legacyId": 41,
-          "speaker": 2,
+          "speaker": 4,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1200,
-          "text": "상쾌한 아침이야! 같이 하루를 시작하자!"
+          "text": "새날이 밝았다아! 이불 속 친구들도 일어나라아!"
         }
       ]
     },
@@ -553,11 +553,11 @@
         {
           "id": "wake.alarm.07.1",
           "legacyId": 41,
-          "speaker": 2,
+          "speaker": 4,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1200,
-          "text": "잘 잤어? 네가 일어나길 기다렸어!"
+          "text": "좋은 아침이다아! 쭉 기지개를 켜 보자아!"
         }
       ]
     },
@@ -571,11 +571,11 @@
         {
           "id": "wake.alarm.08.1",
           "legacyId": 41,
-          "speaker": 2,
+          "speaker": 4,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1200,
-          "text": "좋은 아침! 오늘은 어떤 모험을 하게 될까?"
+          "text": "아침이다아! 준비되면 식당에서 만나자아!"
         }
       ]
     },

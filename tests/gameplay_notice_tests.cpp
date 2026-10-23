@@ -80,6 +80,29 @@ int main(){try {
         auto saved=roundTrip(live.state());Explorer resumed(saved);resumed.advanceGameplay(1100,ActorCompletion{},catalogue);
         check(resumed.state().gameplay.hearts==kMaxHp && !resumed.state().gameplay.oran,"heal replay changed HP/stock");
     }
+    // Repeated injuries across saved action boundaries cannot refill a finite stock.
+    for(bool independent:{false,true}) {
+        auto saved=base;saved.gameplay.oran=saved.gameplay.companion.oran=3;
+        unsigned heals=0;
+        for(unsigned injury=0;injury<4;++injury) {
+            auto s=saved;auto& g=s.gameplay;g.independentParty=independent;
+            g.hearts=g.companion.hearts=1;g.life=LifePhase::Explore;g.sceneBeat=SceneBeat::None;
+            g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
+            g.movement=g.companion.movement={};g.walkStartedMs=g.companion.walkStartedMs=0;
+            ++g.actionRound;g.phaseStartedMs=g.deadlineMs=1000+injury*10000;
+            s.position=100;g.companion.tile=99;s.visited[s.position]=1;
+            s.target=-1;s.goalKind=GoalKind::None;s.targetInstance=0;
+            const auto before=g.oran+g.companion.oran;Explorer live(roundTrip(s));
+            for(unsigned tick=0;tick<12;++tick) {
+                live.advanceGameplay(g.deadlineMs+tick*250,ActorCompletion{true,true,true},catalogue);
+                live=Explorer(roundTrip(live.state()));
+            }
+            saved=live.state();const auto after=saved.gameplay.oran+saved.gameplay.companion.oran;
+            check(after<=before,"restored injury refilled berries");heals+=before-after;
+            if(injury==3)check(saved.gameplay.hearts==1 && saved.gameplay.companion.hearts==1,"empty stock still heals");
+        }
+        check(heals==6 && !saved.gameplay.oran && !saved.gameplay.companion.oran,"finite six-berry stock not exhausted exactly once");
+    }
     // Real MDES16 shape: the new bounded extension is absent, rather than version bytes relabelled alone.
     {auto s=base;queueGameplayNotice(s,NoticeKind::Pickup,70);updateGameplayNotices(s,1000);auto bytes=encodeSnapshot(s);
      while(bytes[4]>16){detail::Reader r(bytes);r.offset=bytes.size()-8;const auto size=r.u32();bytes.erase(bytes.end()-8-size,bytes.end()-4);--bytes[4];}

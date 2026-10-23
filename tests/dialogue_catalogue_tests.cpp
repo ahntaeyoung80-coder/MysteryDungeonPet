@@ -67,6 +67,9 @@ int main(int argc,char** argv){try {
             std::filesystem::create_directories(argv[2]);saveSnapshot(std::filesystem::path(argv[2])/(context+".mdes"),e.state());
         }
     }
+    auto alarm=scene(package,"wake.alarm");alarm.gameplay.companion.enabled=false;
+    Explorer wake(alarm);wake.advanceGameplay(1000,ActorCompletion{},c);
+    check(cataloguePortraits(wake.state(),c).speaker==PortraitRole::Alarm,"Loudred wake-up call missing without companion");
     auto s=scene(package,"defeat.player");s.gameplay.companion.enabled=false;
     Explorer solo(s);solo.advanceGameplay(1000,ActorCompletion{true,true,true},c);
     check(!solo.state().variety.dialogue.active && catalogueText(solo.state(),c).empty() && cataloguePortraits(solo.state(),c).speaker==PortraitRole::None,"absent solo partner spoke");

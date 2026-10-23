@@ -24,15 +24,16 @@ int main() {try {
         Surface surface(200,200);gameplayOverlay(surface,g,0);
         std::memcpy(bits,surface.pixels.data(),surface.pixels.size());
         renderer.draw(dc,bits,200,gameplayText(g),scene==5);
-        const auto* p=static_cast<const uint8_t*>(bits);unsigned ink=0;
+        const auto* p=static_cast<const uint8_t*>(bits);unsigned ink=0,secondRowInk=0;
         for(unsigned y=0;y<200;++y) for(unsigned x=0;x<200;++x) {
             const auto offset=(y*200+x)*4;
             if(p[offset+2]>100 && p[offset+2]>surface.pixels[offset+2]) {
                 if(p[offset+3]!=255) throw std::runtime_error("text ink invisible to layered window");
-                if(scene!=5 && (x<8 || x>=192 || y<168 || y>=186)) throw std::runtime_error("text outside box");
-                ++ink;
+                if(scene!=5 && (x<8 || x>=192 || y<152 || y>=186)) throw std::runtime_error("text outside box");
+                ++ink;if(y>=168)++secondRowInk;
             }
         }
+        if(scene==0 && secondRowInk<20)throw std::runtime_error("second text row has no ink");
         if(ink<50) throw std::runtime_error("text missing from actual GDI raster");
     }
     for(const auto& label:{L"1F",L"7F",L"128F"}) {
@@ -48,7 +49,7 @@ int main() {try {
         }
         if(ink<10)throw std::runtime_error("floor HUD ink missing");
     }
-    const auto compact=CreateFontW(-9,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
+    const auto compact=CreateFontW(-12,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
         OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,NONANTIALIASED_QUALITY,DEFAULT_PITCH,L"Malgun Gothic");
     const auto oldFont=SelectObject(dc,compact);
     WORD hangul=0xffff;
@@ -56,9 +57,9 @@ int main() {try {
         throw std::runtime_error("Korean glyph unavailable in the selected test font");
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original/gameplay/items/items.mdpa";
     for(const auto& clip:loadPackage(root).clips) {
-        const auto text=itemDisplayName(clip.id)+L"을 주웠다.";SIZE extent{};
-        if(!GetTextExtentPoint32W(dc,text.c_str(),int(text.size()),&extent) || extent.cx>168)
-            throw std::runtime_error("selected item acquisition cannot fit a single row without truncation");
+        const auto text=itemDisplayName(clip.id)+L"을 주웠다.";RECT box{0,0,168,32};
+        if(!DrawTextW(dc,text.c_str(),-1,&box,DT_CALCRECT|DT_WORDBREAK|DT_NOPREFIX) || box.bottom>32 || box.right>168)
+            throw std::runtime_error("selected item acquisition exceeds two rows");
     }
     SelectObject(dc,oldFont);DeleteObject(compact);
     SelectObject(dc,previous);DeleteObject(bitmap);DeleteDC(dc);

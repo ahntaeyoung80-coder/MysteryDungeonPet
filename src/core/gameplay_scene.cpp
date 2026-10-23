@@ -41,23 +41,20 @@ DialogueLine gameplayDialogue(const GameplayState& g) {
         DialogueLine{21,Role::None,Mood::Normal,L"가볍게 인사를 건넸다."}:
         DialogueLine{22,Role::Friendly,Mood::Worried,L"조심해서 다녀와!"};
     if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return {31,Role::Partner,Mood::Happy,L"잘 자! 좋은 꿈 꿔!"};
-    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)return {41,Role::Partner,Mood::Happy,L"좋은 아침! 잘 잤어?"};
+    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)return {41,Role::Alarm,Mood::Happy,L"좋은 아침이다아! 일어날 시간이다아!"};
     if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)return {51,Role::Partner,Mood::Happy,L"오늘도 즐겁게 탐험하자!"};
     return {};
 }
 std::wstring gameplayText(const GameplayState& g) {
     if(g.sceneBeat==SceneBeat::ExpeditionRest)return L"잠시 쉬고 다음 구간으로!";
     if(g.sceneBeat==SceneBeat::CompletionText && completionScene(g))return L"탐험을 성공적으로 마쳤다";
-    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매로 하트를 모두 회복!";
+    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매로 하트를 모두 회복!\n내 열매 "+std::to_wstring(g.oran)+L"개 / 동료 "+std::to_wstring(g.companion.oran)+L"개";
     const auto line=gameplayDialogue(g);if(line.id)return line.text;
     if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return L"눈앞이 깜깜해졌다";
     return {};
 }
-DialoguePortraits idlePortrait(const GameplayState& g) {
-    if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return {};
-    if(g.companion.enabled && g.homeScene && (g.life==LifePhase::Wake || g.life==LifePhase::Ready))
-        return {PortraitRole::Partner,kCompanionActorId,PortraitEmotion::Happy};
-    return {PortraitRole::Player,0,PortraitEmotion::Normal};
+DialoguePortraits idlePortrait(const GameplayState&) {
+    return {}; // Portraits belong to a speaking actor, never idle status.
 }
 std::wstring desktopStatusText(const GameplayState& g,DesktopState desktop) {
     if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return {};
@@ -95,7 +92,7 @@ std::size_t loopFrameAt(const Package& p,std::uint32_t clip,std::uint64_t elapse
     return frames.size()-1;
 }
 Surface originalDialoguePanel(const Surface& atlas,const Package& package) {
-    return originalWindowPanel(atlas,package,184,32);
+    return originalWindowPanel(atlas,package,184,48);
 }
 Surface originalWindowPanel(const Surface& atlas,const Package& package,unsigned width,unsigned height) {
     if(width<24 || height<24 || width>200 || height>200 || width%8 || height%8)
@@ -165,8 +162,8 @@ void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& pack
         }
     };
     const bool player=portraits.speaker==PortraitRole::Player;const unsigned left=player?8:136;
-    blit(frame,{0,0,int32_t(frame.width),int32_t(frame.height)},left,104);
-    blit(atlas,rect,left+8,112);
+    blit(frame,{0,0,int32_t(frame.width),int32_t(frame.height)},left,88);
+    blit(atlas,rect,left+8,96);
 }
 bool guildAppleVisible(const GameplayState& g) {
     return g.homeScene && !bedroomScene(g);
@@ -227,11 +224,11 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const
     }
     const bool visible=g.life!=LifePhase::Death || g.deathStage!=DeathStage::Blackout;
     if(!panel && visible)
-        for(unsigned y=160;y<192;++y)for(unsigned x=8;x<192;++x)pixel(x,y,40,30,20);
+        for(unsigned y=144;y<192;++y)for(unsigned x=8;x<192;++x)pixel(x,y,40,30,20);
     if(panel && visible) {
-        for(unsigned y=0;y<panel->height && y+160<s.height;++y)
+        for(unsigned y=0;y<panel->height && y+144<s.height;++y)
             for(unsigned x=0;x<panel->width && x+8<s.width;++x) {
-                const auto src=(y*panel->width+x)*4,dst=((y+160)*s.width+x+8)*4;
+                const auto src=(y*panel->width+x)*4,dst=((y+144)*s.width+x+8)*4;
                 const auto inv=255-panel->pixels[src+3];
                 for(unsigned ch=0;ch<4;++ch)s.pixels[dst+ch]=uint8_t(panel->pixels[src+ch]+(s.pixels[dst+ch]*inv+127)/255);
             }
