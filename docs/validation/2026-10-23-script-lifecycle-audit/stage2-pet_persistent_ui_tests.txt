@@ -1,0 +1,1 @@
+persistent two-row viewport, hidden idle portraits, observed desktop status and blackout precedence pass

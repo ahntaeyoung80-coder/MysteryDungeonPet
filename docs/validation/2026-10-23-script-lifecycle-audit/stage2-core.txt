@@ -1,0 +1,67 @@
+Start testing: Oct 23 10:28 UTC
+----------------------------------------------------------
+1/35 Testing: pet_persistent_ui_tests
+1/35 Test: pet_persistent_ui_tests
+Command: "/workspace/MysteryDungeonPet/build/audit/pet_persistent_ui_tests"
+Directory: /workspace/MysteryDungeonPet/build/audit
+"pet_persistent_ui_tests" start time: Oct 23 10:28 UTC
+Output:
+----------------------------------------------------------
+persistent two-row viewport, hidden idle portraits, observed desktop status and blackout precedence pass
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"pet_persistent_ui_tests" end time: Oct 23 10:28 UTC
+"pet_persistent_ui_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/35 Testing: pet_gameplay_notice_tests
+9/35 Test: pet_gameplay_notice_tests
+Command: "/workspace/MysteryDungeonPet/build/audit/pet_gameplay_notice_tests"
+Directory: /workspace/MysteryDungeonPet/build/audit
+"pet_gameplay_notice_tests" start time: Oct 23 10:28 UTC
+Output:
+----------------------------------------------------------
+named real pickups, KO boundary/once, full Oran text, 233/1000 comments, safety/RNG isolation, pause/restore/MDES16 migration pass
+<end of output>
+Test time =   0.57 sec
+----------------------------------------------------------
+Test Passed.
+"pet_gameplay_notice_tests" end time: Oct 23 10:28 UTC
+"pet_gameplay_notice_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/35 Testing: pet_dialogue_catalogue_tests
+16/35 Test: pet_dialogue_catalogue_tests
+Command: "/workspace/MysteryDungeonPet/build/audit/pet_dialogue_catalogue_tests"
+Directory: /workspace/MysteryDungeonPet/build/audit
+"pet_dialogue_catalogue_tests" start time: Oct 23 10:28 UTC
+Output:
+----------------------------------------------------------
+56 bundles / seven contexts: quiet-player dialogue, dedicated RNG, repeat avoidance, reveal/read, restore, eligibility and finite cleanup pass
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"pet_dialogue_catalogue_tests" end time: Oct 23 10:28 UTC
+"pet_dialogue_catalogue_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/35 Testing: pet_dialogue_portrait_tests
+21/35 Test: pet_dialogue_portrait_tests
+Command: "/workspace/MysteryDungeonPet/build/audit/pet_dialogue_portrait_tests"
+Directory: /workspace/MysteryDungeonPet/build/audit
+"pet_dialogue_portrait_tests" start time: Oct 23 10:28 UTC
+Output:
+----------------------------------------------------------
+NPC/partner/bed/wake portraits, speaker/layout/clipping, safe party chat, completion ownership, save/restore and exploration resume pass
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"pet_dialogue_portrait_tests" end time: Oct 23 10:28 UTC
+"pet_dialogue_portrait_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 23 10:28 UTC

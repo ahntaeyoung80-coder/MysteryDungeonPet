@@ -6,6 +6,12 @@ void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message)
 int main(){try {
     GameplayState g;g.enabled=true;
     check(gameplayText(g).empty() && idlePortrait(g).speaker==PortraitRole::None,"quiet exploration gained an idle portrait");
+    g.life=LifePhase::Dialogue;g.dialogueStage=DialogueStage::Player;
+    for(auto listener:{1U,kCompanionActorId}) {
+        g.enemyInstance=listener;
+        check(gameplayText(g).empty() && gameplayDialogue(g).speaker==PortraitRole::None,"silent player gained fallback narration");
+    }
+    g.life=LifePhase::Explore;g.enemyInstance=0;
     Surface screen(200,200);gameplayOverlay(screen,g,0,nullptr,false,false);
     check(screen.pixels[(144*200+8)*4+3]==255 && screen.pixels[(191*200+191)*4+3]==255,"persistent two-row panel missing");
     check(screen.pixels[(143*200+8)*4+3]==0 && screen.pixels[(192*200+8)*4+3]==0,"two-row panel bounds differ");

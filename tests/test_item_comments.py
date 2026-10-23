@@ -1,5 +1,6 @@
 import copy
 import json
+import re
 from pathlib import Path
 import unittest
 from tools.compile_item_comments import compile_comments
@@ -19,3 +20,11 @@ class ItemCommentsTests(unittest.TestCase):
             source=copy.deepcopy(self.source)
             source['items'][0]['lines'][1]=source['items'][0]['lines'][0] if change=='duplicate' else '아'*100
             with self.assertRaises(ValueError):compile_comments(source)
+
+    def test_review_document_matches_names_and_all_reactions(self):
+        script=(ROOT/'docs/dialogue/DISPLAY_TEXT.md').read_text()
+        rows={int(key):[cell.strip() for cell in cells.split('|')]
+              for key,cells in re.findall(r'^\| ITEM-(\d+) \| (.+) \|$',script,re.M)}
+        self.assertEqual(set(rows),{item['id'] for item in self.source['items']})
+        for item in self.source['items']:
+            self.assertEqual(rows[item['id']],[item['name']]+item['lines'])

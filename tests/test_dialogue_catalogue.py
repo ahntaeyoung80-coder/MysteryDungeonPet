@@ -1,5 +1,6 @@
 import copy
 import json
+import re
 from pathlib import Path
 import unittest
 from tools.compile_dialogue_catalogue import compile_catalogue, pages
@@ -14,6 +15,15 @@ class DialogueCatalogueTests(unittest.TestCase):
     def test_compilation_is_reproducible(self):
         self.assertEqual(compile_catalogue(self.source), (ROOT / 'assets/original/gameplay/dialogue/catalogue.mdlc').read_bytes())
         self.assertEqual(sum(not b['context'].startswith('event.') and not b['context'].startswith('boss.') for b in self.source['bundles']), 56)
+
+    def test_complete_script_matches_runtime_and_every_turn_fits_one_page(self):
+        script = (ROOT / 'docs/dialogue/SPOKEN_SCRIPT.md').read_text()
+        rows = dict(re.findall(r'^\| ([A-Za-z0-9_.]+) \| [^|]+ \| [^|]+ \| ([^|]+) \|$', script, re.M))
+        lines = [line for bundle in self.source['bundles'] for line in bundle['lines']]
+        self.assertEqual(set(rows), {line['id'] for line in lines})
+        for line in lines:
+            self.assertEqual(rows[line['id']], line['text'])
+            self.assertEqual(len(pages(line['text'])), 1, line['id'])
 
     def test_long_korean_pages_fit_two_lines_and_keep_text(self):
         text = '가나다라마바사아자차카타파하' * 10

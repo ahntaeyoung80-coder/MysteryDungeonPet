@@ -32,17 +32,17 @@ bool partyHealing(const GameplayState& g) {
 DialogueLine gameplayDialogue(const GameplayState& g) {
     using Role=PortraitRole;using Mood=PortraitEmotion;
     if(g.life==LifePhase::Death && g.deathStage==DeathStage::PartnerTalk)
-        return g.companion.hearts?DialogueLine{101,Role::Partner,Mood::Worried,L"괜찮아? 무리하지 말고 돌아가자!"}:
-            DialogueLine{102,Role::Partner,Mood::Sad,L"미안... 더는 못 걷겠어. 돌아가자."};
+        return g.companion.hearts?DialogueLine{101,Role::Partner,Mood::Worried,L"내 말 들려? 움직이지 말고 쉬어."}:
+            DialogueLine{102,Role::Partner,Mood::Sad,L"미안… 다리에 힘이 안 들어가."};
     if(companionDialogue(g))return g.dialogueStage==DialogueStage::Player?
-        DialogueLine{11,Role::None,Mood::Normal,L"조용히 고개를 끄덕였다."}:
-        DialogueLine{12,Role::Partner,Mood::Happy,L"물론이지! 함께라면 든든해."};
+        DialogueLine{}:
+        DialogueLine{12,Role::Partner,Mood::Normal,L"발소리가 울리네. 꽤 넓은 곳인가 봐."};
     if(g.life==LifePhase::Dialogue)return g.dialogueStage==DialogueStage::Player?
-        DialogueLine{21,Role::None,Mood::Normal,L"가볍게 인사를 건넸다."}:
-        DialogueLine{22,Role::Friendly,Mood::Worried,L"조심해서 다녀와!"};
-    if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return {31,Role::Partner,Mood::Happy,L"잘 자! 좋은 꿈 꿔!"};
-    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)return {41,Role::Alarm,Mood::Happy,L"좋은 아침이다아! 일어날 시간이다아!"};
-    if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)return {51,Role::Partner,Mood::Happy,L"오늘도 즐겁게 탐험하자!"};
+        DialogueLine{}:
+        DialogueLine{22,Role::Friendly,Mood::Happy,L"오, 탐험대구나! 반가워."};
+    if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return {31,Role::Partner,Mood::Happy,L"하암… 눈이 저절로 감겨. 잘 자!"};
+    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)return {41,Role::Alarm,Mood::Happy,L"아침이다아! 다들 기상이다아!"};
+    if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)return {51,Role::Partner,Mood::Happy,L"좋은 아침! 오늘 길도 기대된다."};
     return {};
 }
 std::wstring gameplayText(const GameplayState& g) {
