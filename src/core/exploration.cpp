@@ -326,11 +326,12 @@ Explorer::Explorer(std::uint64_t runId, std::uint64_t seed, std::string assetVer
     enterFloor();
     validateState(state_);
 }
-void Explorer::setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors,ExpeditionState expedition) {
+void Explorer::setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors,ExpeditionState expedition,bool atLaunch) {
     require(!assetVersion.empty() && assetVersion.size()<=256,"invalid next-run asset version");
     validateFloorSequence(floors,expedition);
     for(const auto& floor:floors)validateProfile(floor);
     nextRunAssetVersion_=std::move(assetVersion);nextRunFloors_=std::move(floors);nextRunExpedition_=std::move(expedition);
+    nextRunAtLaunch_=atLaunch;
 }
 bool discardStaleEntityGoal(ExplorationState& s,bool movingFriend) {
     if(s.goalKind!=GoalKind::Friend && s.goalKind!=GoalKind::Item)return false;

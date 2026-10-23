@@ -29,6 +29,18 @@ int main(){try {
         check(restored.inventory.size()==1 && restored.inventory[0].onceKey==key && restored.onceKeys.count(key),"historical inventory lost on new day/restore");
         Explorer imported(restored);imported.startGuildMorning(100000);
         check(imported.state().inventory[0].onceKey==key,"normal startup discarded historical stock");
+        auto launch=restored;launch.gameplay.day=launch.variety.schedule.day=2;
+        launch.variety.schedule.destination=DayDestination::Exploration;launch.variety.schedule.dungeon=0;
+        Explorer restarted(launch);restarted.startGuildMorning(200000);
+        const auto oldMeals=restarted.state().gameplay.meals;
+        restarted.setNextRunPackage("launch-route",fixtureProfiles(3),{},true);
+        for(unsigned step=0;step<100 && restarted.state().gameplay.life!=LifePhase::Explore;++step) {
+            restarted.advanceGameplay(restarted.state().gameplay.deadlineMs,true);
+            (void)encodeSnapshot(restarted.state());
+        }
+        check(restarted.state().assetVersion=="launch-route" && restarted.state().floors.size()==3 &&
+              restarted.state().gameplay.day==2 && restarted.state().gameplay.meals==oldMeals &&
+              restarted.state().inventory[0].onceKey==key,"random startup route lost the date, meals or historical inventory");
         rejected(restored,"pickup:999:128:1");
         rejected(restored,"pickup:0:23:1");
         rejected(restored,"pickup:999:23:0");

@@ -1,0 +1,115 @@
+[
+  {
+    "case": "morning",
+    "exit": 0,
+    "seconds": 9.55,
+    "traceRows": 983,
+    "submissions": 521,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-map-title.bmp",
+      "trace-last.bmp"
+    ]
+  },
+  {
+    "case": "wounded-npc",
+    "exit": 0,
+    "seconds": 9.24,
+    "traceRows": 921,
+    "submissions": 474,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "3",
+        "0",
+        "22",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-npc-reply.bmp",
+      "trace-last.bmp"
+    ]
+  },
+  {
+    "case": "pickup-orb",
+    "exit": 0,
+    "seconds": 9.24,
+    "traceRows": 1133,
+    "submissions": 579,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "2",
+        "11",
+        "0",
+        "3"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-notice-1-314.bmp",
+      "trace-notice-3-314.bmp",
+      "trace-last.bmp"
+    ]
+  }
+]

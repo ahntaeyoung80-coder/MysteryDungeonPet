@@ -95,6 +95,9 @@ try {
         }
         $State | ConvertTo-Json -Depth 4 | Set-Content "$Output/launch-$Run-state.json"
         $Joined = $Events -join "`n"
+        if ($Run -eq 1 -and $Joined -notmatch 'startup exploration selected dungeon=(1|4|8|14|17|21|35|41)\b') {
+            throw 'restored normal launch did not choose a new starting expedition'
+        }
         if ($Joined -notmatch 'mode=automatic-exploration') { throw 'default launch did not own Explorer' }
         if ($Joined -notmatch 'startup=guild-morning exploration-goal=discarded') { throw 'default launch did not start in the guild' }
         $Expected = if ($Run -eq 0) { 'new' } else { 'restored' }

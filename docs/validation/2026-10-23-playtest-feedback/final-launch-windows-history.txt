@@ -1,0 +1,1 @@
+long-to-short next-day inventory, partner/solo, startup/restore and malformed historical keys pass

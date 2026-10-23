@@ -22,7 +22,14 @@
       "elapsedSeconds": 1063.0
     },
     "5": {
-      "started": "2026-10-23T02:13:29.785008+00:00"
+      "started": "2026-10-23T02:13:29.785008+00:00",
+      "finishedLocalVerification": "2026-10-23T02:27:10.372830+00:00",
+      "elapsedSecondsToLocalVerification": 820.6,
+      "finishedFinalLocalVerification": "2026-10-23T02:42:43.130674+00:00",
+      "elapsedSecondsFinalLocal": 1753.3
     }
-  }
+  },
+  "elapsedMeasuredSecondsToLocalVerification": 2894.0,
+  "initialInspectionBeforeTiming": "not separately measured",
+  "elapsedMeasuredSecondsFinalLocal": 3826.7
 }

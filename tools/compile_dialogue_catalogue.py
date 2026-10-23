@@ -16,15 +16,21 @@ def pages(text):
     if not text or len(text) > 1024 or any(ord(c) < 32 or 0xD800 <= ord(c) <= 0xDFFF or ord(c) > 0xFFFF for c in text):
         raise ValueError('unsupported/empty dialogue text')
     lines, line, units = [], '', 0
-    for char in text:
-        width = 1 if ord(char) < 128 else 2
-        if units + width > 26:
-            lines.append(line.rstrip())
+    for word in text.split():
+        width = sum(1 if ord(c) < 128 else 2 for c in word)
+        if line and units + 1 + width > 26:
+            lines.append(line)
             line, units = '', 0
-        if not line and char == ' ':
-            continue
-        line += char
-        units += width
+        if line:
+            line += ' '
+            units += 1
+        for char in word:
+            width = 1 if ord(char) < 128 else 2
+            if units + width > 26:
+                lines.append(line)
+                line, units = '', 0
+            line += char
+            units += width
     if line:
         lines.append(line.rstrip())
     return lines

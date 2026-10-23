@@ -1,0 +1,178 @@
+[
+  {
+    "case": "default-new",
+    "exit": 0,
+    "seconds": 24.8,
+    "traceRows": 2431,
+    "submissions": 1202,
+    "helpers": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "1",
+        "0",
+        "0",
+        "2"
+      ],
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "41",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-notice-2-0.bmp",
+      "trace-first.bmp",
+      "trace-notice-1-135.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-map-title.bmp",
+      "trace-last.bmp",
+      "trace-alarm.bmp"
+    ],
+    "state": {
+      "runId": 5364627125,
+      "day": 1,
+      "life": "Explore",
+      "player": 179,
+      "floorCount": 24,
+      "dungeonId": 41,
+      "hostileCount": 2,
+      "inventory": 1,
+      "meals": 0,
+      "oran": 0,
+      "companionOran": 0,
+      "rngState": "2148698493663666686",
+      "companionEnabled": 1,
+      "companion": 180,
+      "playerHp": 5,
+      "companionHp": 5,
+      "inventoryKeys": [
+        "pickup:5364627125:0:4"
+      ]
+    }
+  },
+  {
+    "case": "default-restore",
+    "exit": 0,
+    "seconds": 24.31,
+    "traceRows": 2513,
+    "submissions": 1197,
+    "helpers": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "41",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-notice-1-70.bmp",
+      "trace-first.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-notice-1-183.bmp",
+      "trace-map-title.bmp",
+      "trace-last.bmp",
+      "trace-alarm.bmp"
+    ],
+    "state": {
+      "runId": 5364627126,
+      "day": 1,
+      "life": "Explore",
+      "player": 211,
+      "floorCount": 16,
+      "dungeonId": 14,
+      "hostileCount": 2,
+      "inventory": 3,
+      "meals": 0,
+      "oran": 1,
+      "companionOran": 0,
+      "rngState": "11100747932625521948",
+      "companionEnabled": 1,
+      "companion": 210,
+      "playerHp": 4,
+      "companionHp": 5,
+      "inventoryKeys": [
+        "pickup:5364627125:0:4",
+        "pickup:5364627126:0:2",
+        "pickup:5364627126:0:3"
+      ]
+    }
+  }
+]

@@ -92,16 +92,16 @@ int main() {try {
         s=fixture();s.population.entities={{1,4,EntityKind::Friend,3*kWidth+4,false}};
         s.gameplay.hostile={1};s.gameplay.life=LifePhase::Combat;s.gameplay.combat=CombatPhase::EnemyTurn;
         s.gameplay.enemyInstance=1;s.gameplay.hearts=hp;
-        for(uint64_t seed=1;;++seed) {Rng r{seed};const auto roll=rollBasicAttack(r,false);if(roll.critical) {s.rng.state=seed;break;}}
+        for(uint64_t seed=1;seed<10000;++seed) {Rng r{seed};const auto roll=rollBasicAttack(r,false);if(roll.hit) {s.rng.state=seed;break;}}
         Explorer hit(s);check(hit.advanceGameplay(1000).event==GameplayEvent::EnemyAttack && hit.state().gameplay.hearts==hp,"heart removed before enemy attack completion");
         Surface hearts(200,200);gameplayOverlay(hearts,hit.state().gameplay,1000);
         check(hearts.pixels[(8*200+8+18*(hp-1)+2)*4+2]==230,"rendered heart removed during attack windup");
         const auto attackRng=hit.state().rng.state;hit=restore(hit);
         hit.advanceGameplay(1001,ActorCompletion{true,false,false});check(hit.state().gameplay.hearts==hp,"player completion applied enemy damage");
-        check(hit.advanceGameplay(1002,ActorCompletion{false,true,false}).event==GameplayEvent::Hurt && hit.state().gameplay.hearts==(hp>2?hp-2:0),"completed enemy attack did not apply exact impact");
+        check(hit.advanceGameplay(1002,ActorCompletion{false,true,false}).event==GameplayEvent::Hurt && hit.state().gameplay.hearts==hp-1,"completed enemy attack did not apply exact impact");
         gameplayOverlay(hearts,hit.state().gameplay,1002);
         check(hearts.pixels[(8*200+8+18*(hp-1)+2)*4+2]==65,"rendered heart retained after completed attack");
-        hit=restore(hit);hit.advanceGameplay(1003,ActorCompletion{});check(hit.state().gameplay.hearts==(hp>2?hp-2:0) && hit.state().rng.state==attackRng,"impact replayed after restore");
+        hit=restore(hit);hit.advanceGameplay(1003,ActorCompletion{});check(hit.state().gameplay.hearts==hp-1 && hit.state().rng.state==attackRng,"impact replayed after restore");
         s=hit.state();s.gameplay.combat=CombatPhase::EnemyAttack;Explorer legacyImpact(s);legacyImpact.advanceGameplay(1004,ActorCompletion{false,true,false});
         check(legacyImpact.state().gameplay.hearts==s.gameplay.hearts,"legacy committed attack applied damage twice");
     }

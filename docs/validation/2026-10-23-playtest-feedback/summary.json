@@ -1,0 +1,63 @@
+{
+  "scope": "all requested playtest changes; source, dialogue assets and Windows executable",
+  "stages": {
+    "crash": "complete",
+    "balanceAndFirstSchedule": "complete, including a fresh choice on restored normal launches without advancing the date",
+    "namesAndDialogue": "complete",
+    "persistentUi": "complete",
+    "runtimeAndIntegration": "all local verification complete; remote publication pending"
+  },
+  "core": {
+    "uniqueCases": 32,
+    "initialPassed": 31,
+    "terminatedOldEnemyCriticalSeedSearch": 1,
+    "targetedRetestPassed": 1,
+    "asanUbsan": true,
+    "fullSuiteRepeated": false,
+    "launchPolicyRelatedRetests": 5,
+    "paginationRelatedRetests": 6
+  },
+  "python": {
+    "uniqueCases": 51,
+    "initialPassed": 49,
+    "initialBuildExecutionRaceErrors": 1,
+    "targetedRetestPassed": 1,
+    "wordBoundaryAdditionalCase": 1,
+    "catalogueRetestPassed": 5
+  },
+  "windows": {
+    "wineVersion": "10.0",
+    "coreAndGdiChecks": 2,
+    "renderedGuiCases": 12,
+    "allExitZeroWithSubmissions": true,
+    "syntheticWtsUnlock": true,
+    "nativeWindows11": "pending",
+    "renderedGuiRuns": 18,
+    "finalTargetedReruns": 6,
+    "latestInstalledRun": true
+  },
+  "fixRegression": {
+    "historicalInventoryTransitions": 64,
+    "passed": 64,
+    "naturalFullRouteVictory": false
+  },
+  "dialogue": {
+    "generalBundles": 56,
+    "allBundles": 112,
+    "playerSpokenLines": 0,
+    "selectedItemNames": 156
+  },
+  "runtime": {
+    "selectedAssets": 899,
+    "assetBytes": 32562610,
+    "exeBytes": 2408448,
+    "sha256": "5693ddd552f912e8a39b83be2bd6533c737b530474c5b235c4c244b0ab043785",
+    "buildRootInstallMatch": true,
+    "allSelectedAssetBytesMatch": true
+  },
+  "limits": [
+    "Wine uses NanumGothic as a test substitute; shipped font remains Malgun Gothic",
+    "Native Windows11 lock/power/DPI and long-duration performance remain pending",
+    "Selected install still exceeds provisional 20MB goal"
+  ]
+}

@@ -1677,6 +1677,13 @@ public:
             if(options_.defaultExploration) {
                 explorer_->enableScreenExploration((size_+scale_-1)/scale_);
                 explorer_->startGuildMorning(utcMs());
+                if(restoring && explorer_->state().gameplay.life==LifePhase::Wake &&
+                   (explorer_->state().variety.schedule.destination==DayDestination::Exploration || explorer_->state().variety.schedule.destination==DayDestination::Unassigned)) {
+                    std::vector<unsigned> ids;for(const auto& entry:explorationPool_)ids.push_back(entry.first);
+                    const auto selected=explorer_->chooseNextDungeon(ids);const auto& next=explorationPool_.at(selected);
+                    explorer_->setNextRunPackage(next.assetVersion,next.floors,next.expedition,true);
+                    log("startup exploration selected dungeon="+std::to_string(selected));
+                }
                 log("startup=guild-morning exploration-goal=discarded");
             }
             explorer_->restoreHolidayClock(utcMs());

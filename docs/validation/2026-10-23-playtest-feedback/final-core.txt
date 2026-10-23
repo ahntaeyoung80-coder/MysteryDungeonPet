@@ -1,0 +1,74 @@
+Test project /workspace/MysteryDungeonPet/build/playtest-asan
+      Start  1: pet_persistent_ui_tests
+ 1/32 Test  #1: pet_persistent_ui_tests ..........   Passed    0.01 sec
+      Start  2: pet_playtest_balance_tests
+ 2/32 Test  #2: pet_playtest_balance_tests .......   Passed    0.09 sec
+      Start  3: pet_history_transition_tests
+ 3/32 Test  #3: pet_history_transition_tests .....   Passed    0.06 sec
+      Start  4: pet_expedition_tests
+ 4/32 Test  #4: pet_expedition_tests .............   Passed    0.08 sec
+      Start  5: pet_all_map_event_tests
+ 5/32 Test  #5: pet_all_map_event_tests ..........   Passed    3.33 sec
+      Start  6: pet_gameplay_notice_tests
+ 6/32 Test  #6: pet_gameplay_notice_tests ........   Passed    0.65 sec
+      Start  7: pet_feedback_regression_tests
+ 7/32 Test  #7: pet_feedback_regression_tests ....   Passed    0.10 sec
+      Start  8: pet_holiday_scene_tests
+ 8/32 Test  #8: pet_holiday_scene_tests ..........   Passed    0.22 sec
+      Start  9: pet_event_combat_tests
+ 9/32 Test  #9: pet_event_combat_tests ...........   Passed    0.25 sec
+      Start 10: pet_event_movement_tests
+10/32 Test #10: pet_event_movement_tests .........   Passed    0.13 sec
+      Start 11: pet_event_stock_tests
+11/32 Test #11: pet_event_stock_tests ............   Passed    0.07 sec
+      Start 12: pet_event_runtime_tests
+12/32 Test #12: pet_event_runtime_tests ..........   Passed    0.08 sec
+      Start 13: pet_dialogue_catalogue_tests
+13/32 Test #13: pet_dialogue_catalogue_tests .....   Passed    0.08 sec
+      Start 14: pet_npc_character_tests
+14/32 Test #14: pet_npc_character_tests ..........   Passed    0.57 sec
+      Start 15: pet_variety_state_tests
+15/32 Test #15: pet_variety_state_tests ..........   Passed    0.11 sec
+      Start 16: pet_character_scene_tests
+16/32 Test #16: pet_character_scene_tests ........   Passed    0.23 sec
+      Start 17: pet_completion_scene_tests
+17/32 Test #17: pet_completion_scene_tests .......   Passed    0.40 sec
+      Start 18: pet_dialogue_portrait_tests
+18/32 Test #18: pet_dialogue_portrait_tests ......   Passed    0.08 sec
+      Start 19: pet_package_transition_tests
+19/32 Test #19: pet_package_transition_tests .....   Passed    1.85 sec
+      Start 20: pet_companion_tests
+20/32 Test #20: pet_companion_tests ..............   Passed   29.77 sec
+      Start 21: pet_party_ai_followup
+21/32 Test #21: pet_party_ai_followup ............   Passed    1.70 sec
+      Start 22: pet_entry_social_scene_tests
+22/32 Test #22: pet_entry_social_scene_tests .....   Passed    3.52 sec
+      Start 23: pet_navigation_recovery_tests
+23/32 Test #23: pet_navigation_recovery_tests ....   Passed    2.91 sec
+      Start 24: pet_camera_tests
+24/32 Test #24: pet_camera_tests .................   Passed    2.45 sec
+      Start 25: pet_movement_tests
+25/32 Test #25: pet_movement_tests ...............   Passed    0.73 sec
+      Start 26: pet_survival_tests
+26/32 Test #26: pet_survival_tests ...............Subprocess terminated***Exception: 204.29 sec
+
+      Start 27: pet_revision_tests
+27/32 Test #27: pet_revision_tests ...............   Passed    0.05 sec
+      Start 28: pet_improvement_tests
+28/32 Test #28: pet_improvement_tests ............   Passed    0.09 sec
+      Start 29: pet_gameplay_tests
+29/32 Test #29: pet_gameplay_tests ...............   Passed   24.53 sec
+      Start 30: pet_exploration_tests
+30/32 Test #30: pet_exploration_tests ............   Passed   35.98 sec
+      Start 31: pet_core_tests
+31/32 Test #31: pet_core_tests ...................   Passed    7.97 sec
+      Start 32: pet_package_playback
+32/32 Test #32: pet_package_playback .............   Passed    0.01 sec
+
+97% tests passed, 1 tests failed out of 32
+
+Total Test time (real) = 322.39 sec
+
+The following tests FAILED:
+	 26 - pet_survival_tests (Subprocess terminated)
+Errors while running CTest

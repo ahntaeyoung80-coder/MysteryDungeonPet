@@ -36,6 +36,12 @@ class DialogueCatalogueTests(unittest.TestCase):
             self.assertGreaterEqual(len(choices), 8)
             self.assertEqual(len({b['lines'][0]['text'] for b in choices}), len(choices))
 
+    def test_page_boundary_keeps_short_korean_words_together(self):
+        text = '서두를 것 없어. 천천히 둘러봐!'
+        result = pages(text)
+        self.assertEqual(' '.join(result), text)
+        self.assertTrue(any('둘러봐!' in page for page in result))
+
     def test_invalid_conditions_actors_ids_and_emotions_are_rejected(self):
         for field, value in [('context', 'not.implemented'), ('condition', 'future.success'), ('style', 'official.personality'), ('weight', 0)]:
             bad = copy.deepcopy(self.source); bad['bundles'][0][field] = value

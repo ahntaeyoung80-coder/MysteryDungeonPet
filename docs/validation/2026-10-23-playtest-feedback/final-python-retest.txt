@@ -1,0 +1,6 @@
+test_native_autotile_matches_skytemple_drawer (tests.test_b1.B1BridgeTests.test_native_autotile_matches_skytemple_drawer) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 4.967s
+
+OK

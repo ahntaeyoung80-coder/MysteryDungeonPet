@@ -461,7 +461,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         const auto nextDay=previous.day+(previous.onceKeys.count("guild-start:"+std::to_string(state_.runId))?0:1);
         const bool sameScheduledDay=nextDay==state_.variety.schedule.day &&
             state_.variety.schedule.destination==DayDestination::Exploration;
-        const bool changePackage=!sameScheduledDay && !nextRunFloors_.empty();
+        const bool changePackage=!nextRunFloors_.empty() && (!sameScheduledDay || nextRunAtLaunch_);
         Explorer next(state_.runId+1,state_.rng.state,
             changePackage?nextRunAssetVersion_:state_.assetVersion,
             changePackage?nextRunFloors_:state_.floors,state_.spawnPolicy,recentLayouts(),
@@ -485,6 +485,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
                 schedule.destination=variety.lastHoliday==DayDestination::Town?DayDestination::HotSpring:DayDestination::Town;schedule.dungeon=0;
             } else {schedule.destination=DayDestination::Exploration;schedule.dungeon=next.state_.floors.front().dungeonId;}
         }
+        if(schedule.destination==DayDestination::Exploration)schedule.dungeon=next.state_.floors.front().dungeonId;
         next.state_.gameplay.meals=previous.meals;next.state_.gameplay.oran=previous.oran;
         next.state_.gameplay.phaseStartedMs=now;next.state_.gameplay.deadlineMs=now+3000;
         next.state_.gameplay.sceneBeat=SceneBeat::ExploreFadeIn;

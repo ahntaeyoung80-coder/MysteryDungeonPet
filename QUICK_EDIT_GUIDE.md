@@ -37,6 +37,8 @@
   - [7.2 수정 후 EXE 갱신](#72-수정-후-exe-갱신)
   - [7.3 검사·GitHub 반영·되돌리기](#73-검사github-반영되돌리기)
 
+> 2026-10-23: 현재 대사 편집·한 줄 상시 패널·아이템 반응·회복 공급은 [최신 수정 위치](docs/PLAYTEST_FEEDBACK.md)를 따른다. 아래 이전 수치보다 최신 문서와 소스가 우선한다.
+
 ## 1. 빠른 위치 찾기
 
 ### 1.1 자주 바꾸는 항목
@@ -140,11 +142,11 @@
 | 글자 크기 | `CreateFontW(-13` → `CreateFontW(-15`로 바꾸면 더 커진다. 음수 부호를 유지한다. |
 | 글꼴 | `L"Malgun Gothic"`를 설치된 한글 글꼴 이름으로 바꾼다. |
 | 글자 색 | `SetTextColor(dc,RGB(255,255,255))`의 세 값 변경 |
-| 일반 문구 위치 | `RECT{12,154,188,188}`의 경계 변경 |
+| 일반 문구 위치 | `RECT{16,168,184,184}`의 경계 변경 |
 | 검정 화면 문구 위치 | `RECT{8,80,192,130}`의 경계 변경 |
-| 정렬·줄바꿈 | `DT_CENTER`, `DT_WORDBREAK`가 가운데 정렬·자동 줄바꿈을 담당 |
+| 정렬·줄바꿈 | 일반 본문은 `DT_SINGLELINE`, `DT_LEFT`이며 긴 이름은 글꼴 크기를 맞춘다. `DT_WORDBREAK`는 검정 화면 문구에만 사용 |
 
-**상자 배경:** [src/core/gameplay_scene.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/gameplay_scene.cpp)의 `gameplayOverlay`에서 `pixel(x,y,40,30,20)`을 찾는다. 일반 상자 범위는 x=8~191, y=150~189다. 열매 상자와 인사 상자의 분기가 따로 있으므로 함께 바꾼다.
+**상자 배경:** [src/core/gameplay_scene.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/gameplay_scene.cpp)의 `gameplayOverlay`에서 `pixel(x,y,40,30,20)`을 찾는다. 일반 상자 범위는 x=8~191, y=160~191다. 열매 상자와 인사 상자의 분기가 따로 있으므로 함께 바꾼다.
 
 상자를 이동·확대하면 `text_overlay.cpp`의 `RECT`와 아래쪽 alpha 보정 반복문의 범위도 같은 영역으로 맞춘다. `GdiFlush()`와 alpha `255` 보정은 글자가 투명하게 사라지는 문제를 막는 부분이므로 유지한다.
 
@@ -226,7 +228,7 @@ const std::array<Point,2> path{{start,{partner?80:104,184}}};
 | 최대 HP / 도주 HP | [src/core/exploration.hpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/exploration.hpp) / `kMaxHp`, `kLowHp` | 5 / 2. 기존 저장·하트 배치·검사에도 영향을 준다. |
 | 열매 사용 조건 | [src/core/gameplay.cpp](https://github.com/ahntaeyoung80-coder/MysteryDungeonPet/blob/work/src/core/gameplay.cpp) / `g.hearts+2 <= kMaxHp`, `g.hearts+2<=kMaxHp` | 최소 2칸 손실. 전투와 탐험 두 곳을 같이 변경한다. |
 | 열매 회복량 | `CombatPhase::PlayerTurn`의 `g.hearts + 2`, `scheduleDungeon`의 `g.hearts+=2` | 두 곳의 HP 상한 처리와 3.1의 회복 문구도 맞춘다. |
-| 명중 / 급소 확률 | `rollBasicAttack` | 명중 `< 80`, 플레이어 급소 `20U`, 적 급소 `5U` |
+| 명중 / 급소 확률 | `rollBasicAttack` | 명중 `< 80`, 플레이어 급소 `20U`, 적 급소 없음 |
 | 일반 / 급소 피해 | `result.damage = result.critical ? 2 : 1` | 1 / 2. 저장 검증의 피해 상한도 2이므로 크게 바꾸면 별도 수정 필요. |
 | 우호·적 배정 비율 | `assignRelationships`, `rng.bounded(4) != 0` | 현재 우호 약 1/4, 적 약 3/4 |
 

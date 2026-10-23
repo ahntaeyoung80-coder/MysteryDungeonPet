@@ -1,0 +1,71 @@
+[
+  {
+    "case": "default-new",
+    "exit": 0,
+    "seconds": 24.39,
+    "traceRows": 2479,
+    "submissions": 1255,
+    "helpers": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "1",
+        "0",
+        "0",
+        "2"
+      ],
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "41",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-notice-1-107.bmp",
+      "trace-notice-2-0.bmp",
+      "trace-first.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-map-title.bmp",
+      "trace-last.bmp",
+      "trace-alarm.bmp"
+    ]
+  }
+]

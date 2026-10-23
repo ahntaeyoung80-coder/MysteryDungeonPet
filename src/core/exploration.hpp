@@ -268,7 +268,7 @@ public:
     void enableScreenExploration(std::uint32_t viewportSize);
     void observeViewport(int cameraX,int cameraY);
     bool roomFullyShown(int room) const;
-    void setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors,ExpeditionState expedition = {});
+    void setNextRunPackage(std::string assetVersion,std::vector<FloorProfile> floors,ExpeditionState expedition = {},bool atLaunch=false);
     void shiftPausedClocks(std::uint64_t deltaMs,std::uint64_t pausedAtMs);
     GameplayUpdate resetExploration(std::uint64_t utcMs);
     bool canResetExploration() const;
@@ -289,6 +289,7 @@ private:
     std::string nextRunAssetVersion_;
     ExpeditionState nextRunExpedition_;
     std::vector<FloorProfile> nextRunFloors_; // launch policy; reapplied when an old save is restored
+    bool nextRunAtLaunch_=false;
     std::vector<int> path_;
     std::size_t pathIndex_ = 0;
     std::uint64_t cachedWorld_ = 0, cachedOccupancy_ = 0, bfsCalls_ = 0;

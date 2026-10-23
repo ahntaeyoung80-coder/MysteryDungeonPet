@@ -1,0 +1,15 @@
+Test project /workspace/MysteryDungeonPet/build/playtest-asan
+    Start  2: pet_playtest_balance_tests
+1/5 Test  #2: pet_playtest_balance_tests .......   Passed    0.10 sec
+    Start  3: pet_history_transition_tests
+2/5 Test  #3: pet_history_transition_tests .....   Passed    0.09 sec
+    Start  8: pet_holiday_scene_tests
+3/5 Test  #8: pet_holiday_scene_tests ..........   Passed    0.23 sec
+    Start 19: pet_package_transition_tests
+4/5 Test #19: pet_package_transition_tests .....   Passed    2.14 sec
+    Start 29: pet_gameplay_tests
+5/5 Test #29: pet_gameplay_tests ...............   Passed   25.45 sec
+
+100% tests passed out of 5
+
+Total Test time (real) =  28.01 sec
