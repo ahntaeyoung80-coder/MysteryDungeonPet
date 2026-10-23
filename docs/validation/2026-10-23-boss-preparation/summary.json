@@ -238,5 +238,12 @@
     "Wine10/Xvfb, synthetic WTS unlock, substitute Korean font; not native Windows11",
     "Eight expedition entries use controlled stairs fixtures; not eight natural complete victories",
     "Remote CI completion is unconfirmed"
-  ]
+  ],
+  "remote": {
+    "product_commit": "4b8ff1f60221488ad82a45a3c4ea6cfdb67c32bd",
+    "branch": "work",
+    "head_fetch_ahead": 0,
+    "head_fetch_behind": 0,
+    "ci": "unconfirmed"
+  }
 }

@@ -29,7 +29,7 @@ B-1/B-2의 8개 연속 원정에 사용자 플레이테스트 수정 5단계를 
 
 코어 ASan/UBSan 32개 고유 검사와 Python 51개를 최초 실패/중단 항목 보정 후 모두 통과했다. 누적 이력의 원정 전환 64건, Windows x64 Release/static EXE의 Wine10/Xvfb 코어·GDI 2개와 화면 12건을 확인했다. 화면 검사에는 기본 실행·같은 날 복원·설치본 입장이 포함된다. 합성 WTS 해제와 검사 환경의 한글 대체 글꼴을 사용했으며 실제 Windows 11 검증이 아니다. [근거](docs/validation/2026-10-23-playtest-feedback/summary.json).
 
-보스4하트·입장 경고8개·MDES20과 루트 EXE를 갱신했다. 관련 코어7개·Python6개·Windows PE의 입구16경우·Wine 화면2건을 통과했다. build/root/install EXE가 일치한다. 이전 보스의 피해와 처치 상태를 보존한다. 원격 반영 기록은 [작업 로그](docs/logs/2026-10-23-boss-preparation.md), [최신 검증](docs/validation/2026-10-23-boss-preparation/summary.json)을 따른다. 원격 CI 결과와 실제 Windows11은 미확인이다.
+제품 `4b8ff1f`의 보스4하트·입장 경고8개·MDES20과 루트 EXE를 `work`에 반영하고 명시 fetch 일치를 확인했다. 관련 코어7개·Python6개·Windows PE의 입구16경우·Wine 화면2건을 통과했다. build/root/install EXE가 일치한다. 이전 보스의 피해와 처치 상태를 보존한다. 원격 반영 기록은 [작업 로그](docs/logs/2026-10-23-boss-preparation.md), [최신 검증](docs/validation/2026-10-23-boss-preparation/summary.json)을 따른다. 원격 CI 결과와 실제 Windows11은 미확인이다.
 
 ## 다음 작업 / 남은 범위
 
