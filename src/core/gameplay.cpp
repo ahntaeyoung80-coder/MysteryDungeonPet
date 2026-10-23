@@ -621,11 +621,11 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             if (now < g.deadlineMs) return {};
             return life(LifePhase::Explore, GameplayEvent::Explore, 350);
         case CombatPhase::PlayerFaint:
-            if(!completed.player) return {};
+            if(!finiteDone) return {};
             invalidate();state_.phase=Phase::Home;g.playerHidden=true;g.deathStage=DeathStage::PartnerTalk;
             return life(LifePhase::Death,GameplayEvent::CombatDefeat,2400);
         case CombatPhase::CompanionFaint:
-            if(!completed.partner) return {};
+            if(!finiteDone) return {};
             invalidate();state_.phase=Phase::Home;g.companion.hidden=true;g.deathStage=DeathStage::PartnerTalk;
             return life(LifePhase::Death,GameplayEvent::CombatDefeat,2400);
         case CombatPhase::Defeat:

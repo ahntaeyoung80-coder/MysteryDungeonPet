@@ -1,0 +1,59 @@
+run 10821 floor 38 phase 1656750 deadline 1658275 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 1 bundle npc.greet.01 deadline 1658275
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 0
+actor 6 ar 1699 done 0
+before tick 5425 now 1657000
+run 10821 floor 38 phase 1656750 deadline 1658275 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 1 bundle npc.greet.01 deadline 1658275
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 0
+actor 6 ar 1699 done 0
+before tick 5426 now 1657250
+run 10821 floor 38 phase 1656750 deadline 1658275 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 1 bundle npc.greet.01 deadline 1658275
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 0
+actor 6 ar 1699 done 0
+before tick 5427 now 1657500
+run 10821 floor 38 phase 1656750 deadline 1658275 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 1 bundle npc.greet.01 deadline 1658275
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 0
+actor 6 ar 1699 done 0
+before tick 5428 now 1657750
+run 10821 floor 38 phase 1656750 deadline 1658275 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 1 bundle npc.greet.01 deadline 1658275
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 0
+actor 6 ar 1699 done 0
+before tick 5429 now 1658000
+run 10821 floor 38 phase 1656750 deadline 1658275 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 1 bundle npc.greet.01 deadline 1658275
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 0
+actor 6 ar 1699 done 0
+before tick 5430 now 1658250
+run 10821 floor 38 phase 1656750 deadline 1658275 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 1 bundle npc.greet.01 deadline 1658275
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 0
+actor 6 ar 1699 done 0
+before tick 5431 now 1658500
+run 10821 floor 38 phase 1656750 deadline 1658275 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 1 bundle npc.greet.01 deadline 1658275
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 0
+actor 6 ar 1699 done 0
+before tick 5432 now 1658750
+run 10821 floor 38 phase 1658500 deadline 1658500 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 6 d 0 bundle  deadline 0
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 1
+actor 6 ar 1699 done 0
+before tick 5433 now 1659000
+run 10821 floor 38 phase 1658750 deadline 1659150 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 1 d 0 bundle  deadline 0
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 1
+actor 6 ar 1699 done 0
+before tick 5434 now 1659250
+run 10821 floor 38 phase 1658750 deadline 1659150 round 1700 pround 1700 cround 1699 nextId 5392 party 1 event 1 d 0 bundle  deadline 0
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 1
+actor 6 ar 1699 done 0
+INVALID invalid party action
+run 10821 floor 38 phase 1659250 deadline 1659650 round 1701 pround 1701 cround 1701 nextId 5392 party 1 event 1 d 0 bundle  deadline 0
+action 5391 actor 0 round 1700 time 1656750->1656750 kind 0 finished 1
+actor 5 ar 1699 done 1
+actor 6 ar 1699 done 0

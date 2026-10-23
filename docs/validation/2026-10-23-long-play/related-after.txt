@@ -1,0 +1,13 @@
+Test project /workspace/MysteryDungeonPet/build/playtest-asan
+    Start  2: pet_lifecycle_audit_tests
+1/4 Test  #2: pet_lifecycle_audit_tests ........   Passed    0.33 sec
+    Start 14: pet_event_combat_tests
+2/4 Test #14: pet_event_combat_tests ...........   Passed    1.17 sec
+    Start 25: pet_companion_tests
+3/4 Test #25: pet_companion_tests ..............   Passed   69.03 sec
+    Start 34: pet_gameplay_tests
+4/4 Test #34: pet_gameplay_tests ...............   Passed   31.24 sec
+
+100% tests passed out of 4
+
+Total Test time (real) = 101.77 sec

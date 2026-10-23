@@ -1,19 +1,31 @@
 #include "core/event_runtime.hpp"
 #include "event_test_fixture.hpp"
 #include <algorithm>
+#include <chrono>
 #include <iostream>
 #include <stdexcept>
 using namespace pet;
 void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
-int main(){try {
+int main(int argc,char** argv){try {
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original";
     const auto p=loadExplorationPackage(root/"exploration/dungeon-15/exploration.mdpe");
     const auto extra=loadExplorationPackage(root/"exploration/dungeon-18/exploration.mdpe");
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");const auto maps=loadEventRegistry(root/"gameplay/events/contexts.mder");
-    for(auto type:{VarietyEvent::LostPokemon,VarietyEvent::LostProperty,VarietyEvent::Reunion}) {
+    for(bool completedTurn:{false,true})for(auto type:{VarietyEvent::LostPokemon,VarietyEvent::LostProperty,VarietyEvent::Reunion}) {
         auto s=eventFixture(type==VarietyEvent::Reunion?extra:p);const auto rng=s.rng.state;const auto inventory=s.inventory.size();
         const auto beforePlayer=s.position,beforePartner=s.gameplay.companion.tile;
+        if(completedTurn) {
+            auto& g=s.gameplay;g.independentParty=true;g.partyPhase=PartyPhase::Allies;g.playerActionRound=g.actionRound;g.nextPartyId=2;
+            g.partyActions={{1,g.actionRound,1000,1000,0,0,0,PartyActionKind::Wait,false,false,true}};
+            s=decodeSnapshot(encodeSnapshot(s),s.assetVersion);
+        }
         check(startVarietyEvent(s,type,1000,c,1,&maps),"movement event could not start");
+        if(argc==3 && std::string(argv[1])=="--fixtures" && completedTurn && type==VarietyEvent::LostProperty) {
+            std::filesystem::create_directories(argv[2]);Explorer prepared(s);
+            const auto now=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+            prepared.shiftPausedClocks(now-1000,1000);
+            saveSnapshot(std::filesystem::path(argv[2])/"movement-event.mdes",prepared.state());
+        }
         if(type==VarietyEvent::Reunion)check((s.position!=beforePlayer)!=(s.gameplay.companion.tile!=beforePartner),"warp moved both/no actors");
         const auto eventId=eventKey(s.variety.event.id);unsigned steps=0;bool propertySeen=false,ownerTalk=false;
         while(eventActive(s) && steps++<150) {

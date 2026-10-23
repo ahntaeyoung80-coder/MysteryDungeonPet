@@ -1,0 +1,4 @@
+PROGRESS 1-2-0 tick=5000 run=10121 day=1 floor=35 life=8 scene=0 combat=1 pos=189 hp=4/5 steps=12 event=9 dialogue=
+FAIL 1-2-0: berry use did not debit exactly one slot; run=10121 day=1 floor=35 life=0 scene=0 combat=12 pos=113 hp=5/5 steps=27 event=9 dialogue=
+{"case":"1-2-0","root":1,"mode":2,"seed":41,"missing_completions":false,"passed":false,"counts":{"ticks":5148,"restores":1801,"pauses":5,"days":0,"floors":35,"berries":31,"pickups":137,"attacks":175,"boss_entries":0,"boss_talks":0,"preparations":0,"returns":0,"holidays":0,"max_snapshot_bytes":113701,"max_inventory":138,"max_journal":764}}
+{"cases":1,"failures":1,"seconds":61.5463,"totals":{"ticks":5148,"restores":1801,"pauses":5,"days":0,"floors":35,"berries":31,"pickups":137,"attacks":175,"boss_entries":0,"boss_talks":0,"preparations":0,"returns":0,"holidays":0,"max_snapshot_bytes":113701,"max_inventory":138,"max_journal":764}}

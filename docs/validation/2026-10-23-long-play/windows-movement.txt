@@ -1,0 +1,1 @@
+E02/E06/E08: physical finite routes, snapshots at every boundary, exact owner, unspendable property, shared map-independent warp/single target and actual reunion pass

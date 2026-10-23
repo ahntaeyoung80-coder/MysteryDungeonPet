@@ -1,0 +1,7 @@
+PASS solo body completion
+PASS missing/late body completion
+PASS fallback dialogue completion
+PASS restored full morning/evening/next day
+PASS share/exchange replay
+FAIL lost player/partner faint completion: lost faint completion blocked defeat
+69 checks, 1 failures

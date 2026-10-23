@@ -1,0 +1,13 @@
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+wine: failed to open L"C:\\windows\\system32\\winedevice.exe": c0000135
+PASS solo body completion
+PASS missing/late body completion
+PASS fallback dialogue completion
+PASS restored full morning/evening/next day
+PASS share/exchange replay
+PASS lost player/partner faint completion
+75 checks, 0 failures

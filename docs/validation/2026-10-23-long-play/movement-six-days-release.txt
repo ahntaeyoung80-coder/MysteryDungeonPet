@@ -1,0 +1,5 @@
+PROGRESS 8-2-0 tick=5000 run=10821 day=1 floor=35 life=0 scene=0 combat=4 pos=189 hp=5/5 steps=12 event=5 dialogue=
+PROGRESS 8-2-0 tick=10000 run=10823 day=3 floor=14 life=0 scene=0 combat=1 pos=377 hp=5/5 steps=52 event=6 dialogue=
+PROGRESS 8-2-0 tick=15000 run=10826 day=6 floor=0 life=0 scene=0 combat=0 pos=306 hp=5/5 steps=29 event=6 dialogue=
+{"case":"8-2-0","root":8,"mode":2,"seed":41,"missing_completions":false,"passed":true,"seconds":39.5373,"counts":{"ticks":16785,"restores":6558,"pauses":16,"days":6,"floors":105,"berries":98,"pickups":398,"attacks":635,"boss_entries":3,"boss_talks":1,"preparations":3,"returns":6,"holidays":0,"max_snapshot_bytes":123169,"max_inventory":398,"max_journal":1046}}
+{"cases":1,"failures":0,"seconds":39.5375,"totals":{"ticks":16785,"restores":6558,"pauses":16,"days":6,"floors":105,"berries":98,"pickups":398,"attacks":635,"boss_entries":3,"boss_talks":1,"preparations":3,"returns":6,"holidays":0,"max_snapshot_bytes":123169,"max_inventory":398,"max_journal":1046}}

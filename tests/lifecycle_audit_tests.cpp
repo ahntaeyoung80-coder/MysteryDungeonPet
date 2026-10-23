@@ -77,6 +77,28 @@ void fullDay() {
         check(e.state().runId==run && e.state().gameplay.day==2,"same tick committed another new day");
     }
 }
+void lostFaintCompletion() {
+    const auto assets=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original";
+    const auto p=loadExplorationPackage(assets/"exploration/dungeon-15/exploration.mdpe");
+    for(bool partner:{false,true}) {
+        auto s=eventFixture(p);auto& g=s.gameplay;
+        if(!partner)g.companion={};
+        g.independentParty=false;g.life=LifePhase::Combat;
+        g.combat=partner?CombatPhase::CompanionFaint:CombatPhase::PlayerFaint;
+        g.enemyInstance=1;g.enemyHits=2;g.hostile={1};
+        if(partner)g.companion.hearts=0;else g.hearts=0;
+        g.phaseStartedMs=1000;g.deadlineMs=6000;
+        Explorer e(s);e.advanceGameplay(5999,ActorCompletion{});
+        check(e.state().gameplay.life==LifePhase::Combat,"faint timeout skipped finite animation interval");
+        e=restore(e);const auto stock=e.state().gameplay.oran+e.state().gameplay.companion.oran;
+        const auto inventory=e.state().inventory.size();
+        e.advanceGameplay(6000,ActorCompletion{});
+        check(e.state().gameplay.life==LifePhase::Death && e.state().phase==Phase::Home,"lost faint completion blocked defeat");
+        check(e.state().gameplay.oran+e.state().gameplay.companion.oran==stock && e.state().inventory.size()==inventory,"faint fallback changed stock");
+        e=restore(e);e.advanceGameplay(6001,ActorCompletion{});
+        check(e.state().gameplay.life==LifePhase::Death,"duplicate faint timeout advanced twice");
+    }
+}
 void repeatedCommit() {
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original";
     const auto p=loadExplorationPackage(root/"exploration/dungeon-15/exploration.mdpe");
@@ -112,6 +134,7 @@ int main(int argc,char** argv){
     scenario("fallback dialogue completion",lostDialogueCompletion);
     scenario("restored full morning/evening/next day",fullDay);
     scenario("share/exchange replay",repeatedCommit);
+    scenario("lost player/partner faint completion",lostFaintCompletion);
     if(!failures && argc==3 && std::string(argv[1])=="--fixtures") {
         const auto root=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original";
         const auto p=loadExplorationPackage(root/"exploration/dungeon-15/exploration.mdpe");

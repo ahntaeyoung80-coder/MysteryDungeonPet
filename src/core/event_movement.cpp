@@ -46,7 +46,11 @@ EventRoute advanceEventRoute(ExplorationState& s,std::uint32_t leader,int target
         }
     };
     choose(0);if(best.empty())return EventRoute::Blocked;
-    if(g.actionRound==UINT64_MAX)return EventRoute::Blocked;++g.actionRound;
+    if(g.actionRound==UINT64_MAX || !g.partyPlaybacks.empty() ||
+       std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;}))return EventRoute::Blocked;
+    // This also handles an event restored after entry with its old, completed turn.
+    g.partyActions.clear();g.partyPhase=PartyPhase::Idle;
+    ++g.actionRound;
     for(std::size_t i=0;i<ids.size();++i)if(best[i]!=old[i]) {
         const unsigned dir=directionBetween(old[i],best[i]);MoveRecord move{g.actionRound,now,400,dir,old[i],best[i]};
         if(ids[i]==0){s.position=best[i];s.visited[best[i]]=1;s.discovered[best[i]]=1;g.playerDirection=dir;g.movement=move;g.walkStartedMs=now;g.playerActionRound=g.actionRound;++s.floorSteps;}
