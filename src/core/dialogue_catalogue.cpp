@@ -28,7 +28,7 @@ std::wstring decodeText(const std::string& text) {
         result.push_back(static_cast<wchar_t>(value));
     }
     unsigned rows=1,width=0;
-    for(auto c:result){if(c=='\n'){++rows;width=0;}else width+=c<128?1:2;require(width<=26 && rows<=2,"dialogue page exceeds text box");}
+    for(auto c:result){if(c=='\n'){++rows;width=0;}else width+=c<128?1:2;require(width<=26 && rows<=1,"dialogue page exceeds text box");}
     require(!result.empty(),"empty dialogue page");return result;
 }
 std::uint32_t actor(const ExplorationState& s,PortraitRole role) {
@@ -116,14 +116,14 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
         for(unsigned j=0;j<n;++j){CatalogueLine l;l.id=r.str();l.display.id=r.u32();l.display.speaker=PortraitRole(r.count(4));l.listener=PortraitRole(r.count(4));l.display.emotion=PortraitEmotion(r.count(13));l.holdMs=r.count(5000);l.display.text=decodeText(r.str());
             require(identity(l.id) && lines.insert(l.id).second && l.holdMs>=700,"invalid catalogue line");
             const auto p=l.display.speaker,q=l.listener;const auto id=l.display.id;
-            const bool valid=b.context=="companion.checkin"?((id==11 && p==PortraitRole::Player && q==PortraitRole::Partner)||(id==12 && p==PortraitRole::Partner && q==PortraitRole::Player)):
-                b.context=="npc.greet"?((id==21 && p==PortraitRole::Player && q==PortraitRole::Friendly)||(id==22 && p==PortraitRole::Friendly && q==PortraitRole::Player)):
-                b.context=="wake.alarm"?(id==41 && p==PortraitRole::Alarm && q==PortraitRole::Player):
-                b.context=="sleep.greet"?(id==31 && p==PortraitRole::Player && q==PortraitRole::Partner):
-                b.context=="morning.depart"?(id==51 && p==PortraitRole::Player && q==PortraitRole::Partner):
+            const bool valid=b.context=="companion.checkin"?(id==12 && p==PortraitRole::Partner && q==PortraitRole::Player):
+                b.context=="npc.greet"?(id==22 && p==PortraitRole::Friendly && q==PortraitRole::Player):
+                b.context=="wake.alarm"?(id==41 && p==PortraitRole::Partner && q==PortraitRole::Player):
+                b.context=="sleep.greet"?(id==31 && p==PortraitRole::Partner && q==PortraitRole::Player):
+                b.context=="morning.depart"?(id==51 && p==PortraitRole::Partner && q==PortraitRole::Player):
                 (id==(b.context=="defeat.player"?101U:102U) && p==PortraitRole::Partner && q==PortraitRole::Player);
             require(event?(p<PortraitRole::Alarm && q>PortraitRole::None && q<PortraitRole::Alarm && p!=q && l.display.id>=1000):valid,"context speaker identity mismatch");b.lines.push_back(std::move(l));}
-        require(event || b.lines.front().display.speaker==((b.context=="wake.alarm")?PortraitRole::Alarm:(b.context=="defeat.player" || b.context=="defeat.partner")?PortraitRole::Partner:PortraitRole::Player),"invalid initial speaker");
+        require(event || b.lines.front().display.speaker==(b.context=="npc.greet"?PortraitRole::Friendly:PortraitRole::Partner),"invalid initial speaker");
         if(b.context=="companion.checkin" || b.context=="npc.greet") {
             require(b.lines.back().display.speaker!=PortraitRole::Player,"dialogue response missing");bool replied=false;
             for(const auto& l:b.lines){if(l.display.speaker!=PortraitRole::Player)replied=true;else require(!replied,"question after response");}
@@ -149,8 +149,7 @@ bool dialogueEligible(const ExplorationState& s,const std::string& context) {
     const auto& g=s.gameplay;
     if(context=="companion.checkin")return safePair(s) && g.companion.enabled && canAttack(s.world,s.position,g.companion.tile);
     if(context=="npc.greet")return safePair(s,false) && actorExists(s,PortraitRole::Friendly) && std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && canAttack(s.world,s.position,e.tile);});
-    if(context=="wake.alarm")return g.homeScene;
-    if(context=="sleep.greet" || context=="morning.depart")return g.homeScene && g.companion.enabled;
+    if(context=="wake.alarm" || context=="sleep.greet" || context=="morning.depart")return g.homeScene && g.companion.enabled;
     if(context=="defeat.player")return g.companion.enabled && g.companion.hearts && !g.hearts;
     if(context=="defeat.partner")return g.companion.enabled && !g.companion.hearts && g.hearts;
     return false;

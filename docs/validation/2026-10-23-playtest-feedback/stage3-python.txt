@@ -1,0 +1,9 @@
+test_compilation_is_reproducible (tests.test_dialogue_catalogue.DialogueCatalogueTests.test_compilation_is_reproducible) ... ok
+test_invalid_conditions_actors_ids_and_emotions_are_rejected (tests.test_dialogue_catalogue.DialogueCatalogueTests.test_invalid_conditions_actors_ids_and_emotions_are_rejected) ... ok
+test_long_korean_pages_fit_one_line_and_keep_text (tests.test_dialogue_catalogue.DialogueCatalogueTests.test_long_korean_pages_fit_one_line_and_keep_text) ... ok
+test_mornings_are_bright_partner_lines_and_player_is_quiet (tests.test_dialogue_catalogue.DialogueCatalogueTests.test_mornings_are_bright_partner_lines_and_player_is_quiet) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.062s
+
+OK

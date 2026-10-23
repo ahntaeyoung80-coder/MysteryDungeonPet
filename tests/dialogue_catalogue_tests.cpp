@@ -34,7 +34,7 @@ int main(int argc,char** argv){try {
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");
     const auto package=loadExplorationPackage(root/"exploration/dungeon-15/exploration.mdpe");
     const std::vector<std::string> contexts{"companion.checkin","npc.greet","sleep.greet","wake.alarm","morning.depart","defeat.player","defeat.partner"};
-    check(std::count_if(c.bundles.begin(),c.bundles.end(),[](const auto& b){return b.context.rfind("event.",0)!=0;})==24,"catalogue selection count");
+    check(std::count_if(c.bundles.begin(),c.bundles.end(),[](const auto& b){return b.context.rfind("event.",0)!=0;})==56,"catalogue selection count");
     for(const auto& context:contexts) {
         auto s=scene(package,context);const auto mapRng=s.rng.state,eventRng=s.variety.eventRng;
         Explorer e(s);e.advanceGameplay(1000,ActorCompletion{true,true,true},c);
@@ -82,5 +82,5 @@ int main(int argc,char** argv){try {
     empty.advanceGameplay(1000,ActorCompletion{true,true,true},none);check(!empty.state().variety.dialogue.active && empty.state().variety.dialogueRng==emptyDraw,"empty candidates drew RNG");
     auto system=scene(package,"companion.checkin");system.gameplay.enemyInstance=0;system.gameplay.life=LifePhase::Pose;system.gameplay.sceneBeat=SceneBeat::CompletionText;
     check(catalogueText(system,c)==L"탐험을 성공적으로 마쳤다" && cataloguePortraits(system,c).speaker==PortraitRole::None,"mandatory system completion changed");
-    std::cout<<"24 bundles / seven contexts: atomic pairs, dedicated RNG, repeat avoidance, reveal/read, restore, eligibility and finite cleanup pass\n";
+    std::cout<<"56 bundles / seven contexts: quiet-player dialogue, dedicated RNG, repeat avoidance, reveal/read, restore, eligibility and finite cleanup pass\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

@@ -12,8 +12,13 @@ int main(){try {
     const auto package=loadExplorationPackage(root/"exploration/dungeon-15/exploration.mdpe");
     const auto catalogue=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");
     auto base=eventFixture(package);base.population.entities.clear();base.gameplay.independentParty=true;
-    // All floor item identities have names fitting the actual two-row text box.
-    for(unsigned dungeon:{0U,15U,18U})for(const auto& floor:loadExplorationPackage(root/"exploration"/("dungeon-"+std::to_string(dungeon))/"exploration.mdpe").floors)
+    // Every selected item, including newly selected expeditions, has a product name.
+    for(const auto& clip:loadPackage(root/"gameplay/items/items.mdpa").clips) {
+        const auto name=itemDisplayName(clip.id);
+        check(name!=L"이름 모를 도구" && name.find(L"#")==std::wstring::npos,"selected item lacks a real display name");
+    }
+    // All floor item identities have names fitting the dialogue row.
+    for(unsigned dungeon:{0U,15U,18U,1U,4U,8U,14U,17U,21U,35U,41U})for(const auto& floor:loadExplorationPackage(root/"exploration"/("dungeon-"+std::to_string(dungeon))/"exploration.mdpe").floors)
         for(const auto& category:floor.floorItems)if(category.weight)for(const auto& item:category.items)if(item.value){
             const auto name=itemDisplayName(item.originalId);check(name.rfind(L"아이템 #",0)!=0,"spawnable item missing name");
             unsigned width=0;for(auto c:name)width+=c<128?1:2;check(width<=26,"item name overflows dialogue row");}
@@ -24,7 +29,7 @@ int main(){try {
         check(update.event==GameplayEvent::Pickup && live.state().inventory.size()==1,"actual pickup boundary not reached");
         const auto& notice=live.state().variety.notices.front();
         check(notice.kind==NoticeKind::Pickup && notice.item==item,"notice differs from acquired item");
-        check(catalogueText(live.state(),catalogue)==itemDisplayName(item)+L"\n획득했다!","pickup has no named text box");
+        check(catalogueText(live.state(),catalogue).find(itemDisplayName(item))==0 && catalogueText(live.state(),catalogue).find(L"주웠다.")!=std::wstring::npos && catalogueText(live.state(),catalogue).find(L"\n")==std::wstring::npos,"pickup has no named text box");
         auto saved=roundTrip(live.state());const auto count=saved.variety.notices.size();const auto stock=stockQuantity(saved,0,item)+stockQuantity(saved,kCompanionActorId,item);
         restoreGameplayNoticeClock(saved,50000);check(activeGameplayNotice(saved) && saved.variety.notices.size()==count,"notice lost on resume");
         Explorer resumed(saved);resumed.advanceGameplay(50000,ActorCompletion{},catalogue);
@@ -36,13 +41,21 @@ int main(){try {
      check(roundTrip(paused.state()).variety.notices.front().deadlineMs==original+10000,"pause loses notice reading time");
      s.gameplay.life=LifePhase::Dialogue;s.gameplay.enemyInstance=kCompanionActorId;updateGameplayNotices(s,1100);
      check(!activeGameplayNotice(s) && !s.variety.notices.front().startedMs,"notice overlaps conversation");}
+    for(unsigned item:{70U,109U,110U,111U,73U,105U,183U,362U,314U,318U,330U,312U,188U,119U,17U,69U,1U}) {
+        auto s=base;queueGameplayNotice(s,NoticeKind::ItemComment,item);updateGameplayNotices(s,1000);
+        check(!gameplayNoticeText(s).empty() && gameplayNoticeText(s).find(L"\n")==std::wstring::npos,"item reaction missing or multiline");
+        const auto face=gameplayNoticePortraits(s);
+        check(face.speaker==PortraitRole::Partner,"item reaction lacks companion speaker");
+        if(item==314 || item==318 || item==330 || item==312)check(face.emotion==PortraitEmotion::Inspired,"orb reaction does not have sparkling eyes");
+        if(item==111 || item==105)check(face.emotion==PortraitEmotion::Worried,"suspicious item has cheerful reaction");
+    }
     unsigned comments=0;
     for(unsigned seed=0;seed<1000;++seed) {
         auto s=base;s.variety.dialogueRng=seed;const auto world=s.rng.state,event=s.variety.eventRng;
         queueGameplayNotice(s,NoticeKind::Pickup,70);updateGameplayNotices(s,1000);
         if(s.variety.notices.size()==2) {
             ++comments;const auto deadline=s.variety.notices.front().deadlineMs;updateGameplayNotices(s,deadline);
-            check(cataloguePortraits(s,catalogue).speaker==PortraitRole::Partner && catalogueText(s,catalogue).find(L"하트를 모두")!=std::wstring::npos,"item comment has wrong speaker/content");
+            check(cataloguePortraits(s,catalogue).speaker==PortraitRole::Partner && catalogueText(s,catalogue).find(L"지치면")!=std::wstring::npos,"item comment has wrong speaker/content");
             check(roundTrip(s).variety.notices.front().kind==NoticeKind::ItemComment,"comment choice not persisted");
             s.population.entities={{1,237,EntityKind::Friend,101,false}};s.gameplay.hostile={1};updateGameplayNotices(s,deadline+1);
             check(s.variety.notices.empty(),"optional comment interrupts nearby combat");

@@ -65,13 +65,13 @@ void safeBoundaries() {
 }
 void portraits() {
     auto g=fixture().gameplay;g.life=LifePhase::Dialogue;g.enemyInstance=17;
-    auto roles=dialoguePortraits(g);check(roles.speaker==PortraitRole::Player && roles.actorId==0,"player speaker identity missing");
+    auto roles=dialoguePortraits(g);check(roles.speaker==PortraitRole::None,"silent player gesture gained a portrait");
     g.dialogueStage=DialogueStage::Npc;roles=dialoguePortraits(g);
     check(roles.speaker==PortraitRole::Friendly && roles.actorId==17,"NPC speaker instance missing");
     g.enemyInstance=kCompanionActorId;roles=dialoguePortraits(g);
     check(roles.speaker==PortraitRole::Partner && roles.actorId==kCompanionActorId,"companion confused with NPC instance");
-    for(const auto scene:{SceneBeat::BedFace,SceneBeat::MorningFace}){g.life=scene==SceneBeat::BedFace?LifePhase::Sleep:LifePhase::Ready;g.sceneBeat=scene;check(dialoguePortraits(g).speaker==PortraitRole::Player,"bed/morning speaker absent");}
-    g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::WakeDelay;check(dialoguePortraits(g).speaker==PortraitRole::Alarm,"wake alarm speaker absent");
+    for(const auto scene:{SceneBeat::BedFace,SceneBeat::MorningFace}){g.life=scene==SceneBeat::BedFace?LifePhase::Sleep:LifePhase::Ready;g.sceneBeat=scene;check(dialoguePortraits(g).speaker==PortraitRole::Partner,"bed/morning partner speaker absent");}
+    g.life=LifePhase::Wake;g.sceneBeat=SceneBeat::WakeDelay;check(dialoguePortraits(g).speaker==PortraitRole::Partner,"bright partner wake speaker absent");
     for(const auto scene:{SceneBeat::Waking,SceneBeat::RoomExit,SceneBeat::FloorFadeOut,SceneBeat::None}){g.sceneBeat=scene;check(dialoguePortraits(g).speaker==PortraitRole::None,"portrait leaked outside dialogue");}
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
     const auto folder=root/"assets/original/gameplay";

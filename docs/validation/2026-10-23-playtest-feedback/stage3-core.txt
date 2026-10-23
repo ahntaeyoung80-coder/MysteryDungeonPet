@@ -1,0 +1,13 @@
+Test project /workspace/MysteryDungeonPet/build/playtest-asan
+    Start  5: pet_gameplay_notice_tests
+1/4 Test  #5: pet_gameplay_notice_tests ........   Passed    0.65 sec
+    Start 12: pet_dialogue_catalogue_tests
+2/4 Test #12: pet_dialogue_catalogue_tests .....   Passed    0.09 sec
+    Start 17: pet_dialogue_portrait_tests
+3/4 Test #17: pet_dialogue_portrait_tests ......   Passed    0.08 sec
+    Start 21: pet_entry_social_scene_tests
+4/4 Test #21: pet_entry_social_scene_tests .....   Passed    8.08 sec
+
+100% tests passed out of 4
+
+Total Test time (real) =   8.91 sec

@@ -13,17 +13,28 @@ class DialogueCatalogueTests(unittest.TestCase):
 
     def test_compilation_is_reproducible(self):
         self.assertEqual(compile_catalogue(self.source), (ROOT / 'assets/original/gameplay/dialogue/catalogue.mdlc').read_bytes())
-        self.assertEqual(sum(not b['context'].startswith('event.') for b in self.source['bundles']), 24)
+        self.assertEqual(sum(not b['context'].startswith('event.') for b in self.source['bundles']), 56)
 
-    def test_long_korean_pages_fit_two_lines_and_keep_text(self):
+    def test_long_korean_pages_fit_one_line_and_keep_text(self):
         text = '가나다라마바사아자차카타파하' * 10
         result = pages(text)
         self.assertGreater(len(result), 1)
         self.assertEqual(''.join(p.replace('\n', '') for p in result), text)
         for page in result:
-            self.assertLessEqual(len(page.split('\n')), 2)
+            self.assertLessEqual(len(page.split('\n')), 1)
             for row in page.split('\n'):
                 self.assertLessEqual(sum(1 if ord(c) < 128 else 2 for c in row), 26)
+
+    def test_mornings_are_bright_partner_lines_and_player_is_quiet(self):
+        for bundle in self.source['bundles']:
+            for line in bundle['lines']:
+                self.assertNotEqual(line['speaker'], 1, bundle['id'])
+                if bundle['context'] in ('wake.alarm', 'morning.depart'):
+                    self.assertEqual((line['speaker'], line['listener'], line['emotion']), (2, 1, 1))
+        for context in ('companion.checkin', 'npc.greet', 'sleep.greet', 'wake.alarm', 'morning.depart'):
+            choices = [b for b in self.source['bundles'] if b['context'] == context]
+            self.assertGreaterEqual(len(choices), 8)
+            self.assertEqual(len({b['lines'][0]['text'] for b in choices}), len(choices))
 
     def test_invalid_conditions_actors_ids_and_emotions_are_rejected(self):
         for field, value in [('context', 'not.implemented'), ('condition', 'future.success'), ('style', 'official.personality'), ('weight', 0)]:

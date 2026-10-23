@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 6,
+  "catalogueVersion": 7,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -12,21 +12,12 @@
       "lines": [
         {
           "id": "companion.checkin.01.1",
-          "legacyId": 11,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "잘 따라오고 있지?"
-        },
-        {
-          "id": "companion.checkin.01.2",
           "legacyId": 12,
           "speaker": 2,
           "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "응! 바로 뒤에 있어."
+          "holdMs": 1200,
+          "text": "잠깐 숨을 돌릴까? 함께라서 든든해."
         }
       ]
     },
@@ -39,21 +30,12 @@
       "lines": [
         {
           "id": "companion.checkin.02.1",
-          "legacyId": 11,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "잠깐 숨을 고르고 갈까?"
-        },
-        {
-          "id": "companion.checkin.02.2",
           "legacyId": 12,
           "speaker": 2,
           "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "좋아. 서두를 필요는 없지."
+          "holdMs": 1200,
+          "text": "네 옆은 언제나 안심이 돼. 천천히 가자!"
         }
       ]
     },
@@ -66,21 +48,12 @@
       "lines": [
         {
           "id": "companion.checkin.03.1",
-          "legacyId": 11,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 9,
-          "holdMs": 1000,
-          "text": "앞으로도 함께 가자."
-        },
-        {
-          "id": "companion.checkin.03.2",
           "legacyId": 12,
           "speaker": 2,
           "listener": 1,
-          "emotion": 9,
-          "holdMs": 1000,
-          "text": "물론이지. 나도 힘낼게!"
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "발밑도 살피면서 가자. 내가 함께할게."
         }
       ]
     },
@@ -93,21 +66,12 @@
       "lines": [
         {
           "id": "companion.checkin.04.1",
-          "legacyId": 11,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "여기까지 오느라 수고했어."
-        },
-        {
-          "id": "companion.checkin.04.2",
           "legacyId": 12,
           "speaker": 2,
           "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "너도! 같이 와서 든든해."
+          "holdMs": 1200,
+          "text": "좋은 걸 발견하면 같이 나누자!"
         }
       ]
     },
@@ -120,21 +84,66 @@
       "lines": [
         {
           "id": "companion.checkin.05.1",
-          "legacyId": 11,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "주변도 살피면서 가자."
-        },
-        {
-          "id": "companion.checkin.05.2",
           "legacyId": 12,
           "speaker": 2,
           "listener": 1,
-          "emotion": 9,
-          "holdMs": 1000,
-          "text": "알겠어. 뒤쪽은 내가 볼게."
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "한 걸음씩 가면 돼. 서두르지 말자."
+        }
+      ]
+    },
+    {
+      "id": "companion.checkin.06",
+      "context": "companion.checkin",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "companion.checkin",
+      "lines": [
+        {
+          "id": "companion.checkin.06.1",
+          "legacyId": 12,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "피곤하면 잠깐 쉬자. 기다려 줄게."
+        }
+      ]
+    },
+    {
+      "id": "companion.checkin.07",
+      "context": "companion.checkin",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "companion.checkin",
+      "lines": [
+        {
+          "id": "companion.checkin.07.1",
+          "legacyId": 12,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "우리 꽤 멀리 왔네! 앞으로도 함께야."
+        }
+      ]
+    },
+    {
+      "id": "companion.checkin.08",
+      "context": "companion.checkin",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "companion.checkin",
+      "lines": [
+        {
+          "id": "companion.checkin.08.1",
+          "legacyId": 12,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "이 길 끝에는 뭐가 있을까? 기대돼!"
         }
       ]
     },
@@ -147,21 +156,12 @@
       "lines": [
         {
           "id": "npc.greet.01.1",
-          "legacyId": 21,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "안녕! 탐험 중이야?"
-        },
-        {
-          "id": "npc.greet.01.2",
           "legacyId": 22,
           "speaker": 3,
           "listener": 1,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "응. 너희도 조심해서 다녀와."
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "반가워! 오늘도 즐겁게 탐험해!"
         }
       ]
     },
@@ -174,21 +174,12 @@
       "lines": [
         {
           "id": "npc.greet.02.1",
-          "legacyId": 21,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "잠깐 인사해도 될까?"
-        },
-        {
-          "id": "npc.greet.02.2",
           "legacyId": 22,
           "speaker": 3,
           "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "물론이지. 만나서 반가워!"
+          "holdMs": 1200,
+          "text": "이 앞은 조심해. 무사히 다녀와!"
         }
       ]
     },
@@ -201,21 +192,12 @@
       "lines": [
         {
           "id": "npc.greet.03.1",
-          "legacyId": 21,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "여기서 만나니 반갑다!"
-        },
-        {
-          "id": "npc.greet.03.2",
           "legacyId": 22,
           "speaker": 3,
           "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "나도 반가워. 무사히 다녀와!"
+          "holdMs": 1200,
+          "text": "둘이 함께라니 든든하겠네!"
         }
       ]
     },
@@ -228,21 +210,84 @@
       "lines": [
         {
           "id": "npc.greet.04.1",
-          "legacyId": 21,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "탐험은 순조로워?"
-        },
-        {
-          "id": "npc.greet.04.2",
           "legacyId": 22,
           "speaker": 3,
           "listener": 1,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "천천히 둘러보고 있어. 너희도 조심해."
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "좋은 도구를 찾으면 잘 챙겨 둬."
+        }
+      ]
+    },
+    {
+      "id": "npc.greet.05",
+      "context": "npc.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "npc.greet",
+      "lines": [
+        {
+          "id": "npc.greet.05.1",
+          "legacyId": 22,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "서두를 것 없어. 천천히 둘러봐!"
+        }
+      ]
+    },
+    {
+      "id": "npc.greet.06",
+      "context": "npc.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "npc.greet",
+      "lines": [
+        {
+          "id": "npc.greet.06.1",
+          "legacyId": 22,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "안녕! 길에서 만나니 반갑다!"
+        }
+      ]
+    },
+    {
+      "id": "npc.greet.07",
+      "context": "npc.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "npc.greet",
+      "lines": [
+        {
+          "id": "npc.greet.07.1",
+          "legacyId": 22,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "계단을 찾으면 길도 기억해 둬."
+        }
+      ]
+    },
+    {
+      "id": "npc.greet.08",
+      "context": "npc.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "npc.greet",
+      "lines": [
+        {
+          "id": "npc.greet.08.1",
+          "legacyId": 22,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "지칠 땐 쉬어 가. 탐험은 내일도 할 수 있어."
         }
       ]
     },
@@ -256,11 +301,11 @@
         {
           "id": "sleep.greet.01.1",
           "legacyId": 31,
-          "speaker": 1,
-          "listener": 2,
+          "speaker": 2,
+          "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "오늘도 수고했어. 잘 자!"
+          "holdMs": 1200,
+          "text": "오늘도 수고했어. 푹 자고 내일 만나!"
         }
       ]
     },
@@ -274,11 +319,11 @@
         {
           "id": "sleep.greet.02.1",
           "legacyId": 31,
-          "speaker": 1,
-          "listener": 2,
+          "speaker": 2,
+          "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "푹 쉬고 내일 또 힘내자."
+          "holdMs": 1200,
+          "text": "함께여서 즐거웠어. 좋은 꿈 꿔!"
         }
       ]
     },
@@ -292,11 +337,101 @@
         {
           "id": "sleep.greet.03.1",
           "legacyId": 31,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "이제 눈 좀 붙이자."
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "따뜻하게 덮고 자. 내일도 함께야!"
+        }
+      ]
+    },
+    {
+      "id": "sleep.greet.04",
+      "context": "sleep.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "sleep.greet",
+      "lines": [
+        {
+          "id": "sleep.greet.04.1",
+          "legacyId": 31,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "이제 푹 쉬자. 잘 자!"
+        }
+      ]
+    },
+    {
+      "id": "sleep.greet.05",
+      "context": "sleep.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "sleep.greet",
+      "lines": [
+        {
+          "id": "sleep.greet.05.1",
+          "legacyId": 31,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "오늘 발견한 건 내일 또 이야기하자. 잘 자!"
+        }
+      ]
+    },
+    {
+      "id": "sleep.greet.06",
+      "context": "sleep.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "sleep.greet",
+      "lines": [
+        {
+          "id": "sleep.greet.06.1",
+          "legacyId": 31,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "옆에 있어 줘서 고마워. 편히 자!"
+        }
+      ]
+    },
+    {
+      "id": "sleep.greet.07",
+      "context": "sleep.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "sleep.greet",
+      "lines": [
+        {
+          "id": "sleep.greet.07.1",
+          "legacyId": 31,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "내일은 또 무슨 일이 있을까? 잘 자!"
+        }
+      ]
+    },
+    {
+      "id": "sleep.greet.08",
+      "context": "sleep.greet",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "sleep.greet",
+      "lines": [
+        {
+          "id": "sleep.greet.08.1",
+          "legacyId": 31,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "오늘은 여기까지! 푹 쉬고 힘내자."
         }
       ]
     },
@@ -310,11 +445,11 @@
         {
           "id": "wake.alarm.01.1",
           "legacyId": 41,
-          "speaker": 4,
+          "speaker": 2,
           "listener": 1,
-          "emotion": 7,
-          "holdMs": 1000,
-          "text": "아침이다아아! 일어나라아아!"
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "좋은 아침! 잘 잤어? 오늘도 함께야!"
         }
       ]
     },
@@ -328,11 +463,11 @@
         {
           "id": "wake.alarm.02.1",
           "legacyId": 41,
-          "speaker": 4,
+          "speaker": 2,
           "listener": 1,
-          "emotion": 7,
-          "holdMs": 1000,
-          "text": "기상이다아아! 모두 일어나아아!"
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "아침이다! 푹 잤어? 기분 좋은 하루가 될 거야!"
         }
       ]
     },
@@ -346,11 +481,101 @@
         {
           "id": "wake.alarm.03.1",
           "legacyId": 41,
-          "speaker": 4,
+          "speaker": 2,
           "listener": 1,
-          "emotion": 7,
-          "holdMs": 1000,
-          "text": "일어나아아! 하루가 시작됐다아아!"
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "잘 잤지? 좋은 아침! 오늘도 힘내자!"
+        }
+      ]
+    },
+    {
+      "id": "wake.alarm.04",
+      "context": "wake.alarm",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "wake.alarm",
+      "lines": [
+        {
+          "id": "wake.alarm.04.1",
+          "legacyId": 41,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "일어났구나! 반가워. 오늘도 잘 부탁해!"
+        }
+      ]
+    },
+    {
+      "id": "wake.alarm.05",
+      "context": "wake.alarm",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "wake.alarm",
+      "lines": [
+        {
+          "id": "wake.alarm.05.1",
+          "legacyId": 41,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "좋은 아침! 천천히 기지개부터 켜자."
+        }
+      ]
+    },
+    {
+      "id": "wake.alarm.06",
+      "context": "wake.alarm",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "wake.alarm",
+      "lines": [
+        {
+          "id": "wake.alarm.06.1",
+          "legacyId": 41,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "상쾌한 아침이야! 같이 하루를 시작하자!"
+        }
+      ]
+    },
+    {
+      "id": "wake.alarm.07",
+      "context": "wake.alarm",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "wake.alarm",
+      "lines": [
+        {
+          "id": "wake.alarm.07.1",
+          "legacyId": 41,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "잘 잤어? 네가 일어나길 기다렸어!"
+        }
+      ]
+    },
+    {
+      "id": "wake.alarm.08",
+      "context": "wake.alarm",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "wake.alarm",
+      "lines": [
+        {
+          "id": "wake.alarm.08.1",
+          "legacyId": 41,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "좋은 아침! 오늘은 어떤 모험을 하게 될까?"
         }
       ]
     },
@@ -364,11 +589,11 @@
         {
           "id": "morning.depart.01.1",
           "legacyId": 51,
-          "speaker": 1,
-          "listener": 2,
+          "speaker": 2,
+          "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "좋은 아침! 오늘도 잘 부탁해."
+          "holdMs": 1200,
+          "text": "좋은 아침! 준비됐으면 함께 가자!"
         }
       ]
     },
@@ -382,11 +607,11 @@
         {
           "id": "morning.depart.02.1",
           "legacyId": 51,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 9,
-          "holdMs": 1000,
-          "text": "준비됐어? 함께 출발하자."
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "오늘도 즐겁게 탐험하자! 내가 곁에 있을게."
         }
       ]
     },
@@ -400,11 +625,101 @@
         {
           "id": "morning.depart.03.1",
           "legacyId": 51,
-          "speaker": 1,
-          "listener": 2,
+          "speaker": 2,
+          "listener": 1,
           "emotion": 1,
-          "holdMs": 1000,
-          "text": "오늘도 천천히 힘내 보자."
+          "holdMs": 1200,
+          "text": "자, 출발해 볼까? 좋은 하루가 될 거야!"
+        }
+      ]
+    },
+    {
+      "id": "morning.depart.04",
+      "context": "morning.depart",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "morning.depart",
+      "lines": [
+        {
+          "id": "morning.depart.04.1",
+          "legacyId": 51,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "같이 가자! 오늘도 잘 부탁해!"
+        }
+      ]
+    },
+    {
+      "id": "morning.depart.05",
+      "context": "morning.depart",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "morning.depart",
+      "lines": [
+        {
+          "id": "morning.depart.05.1",
+          "legacyId": 51,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "오늘은 어떤 길일까? 정말 기대돼!"
+        }
+      ]
+    },
+    {
+      "id": "morning.depart.06",
+      "context": "morning.depart",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "morning.depart",
+      "lines": [
+        {
+          "id": "morning.depart.06.1",
+          "legacyId": 51,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "든든하게 쉬었으니 천천히 가 보자!"
+        }
+      ]
+    },
+    {
+      "id": "morning.depart.07",
+      "context": "morning.depart",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "morning.depart",
+      "lines": [
+        {
+          "id": "morning.depart.07.1",
+          "legacyId": 51,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "밖에서 재미있는 걸 발견하면 좋겠다!"
+        }
+      ]
+    },
+    {
+      "id": "morning.depart.08",
+      "context": "morning.depart",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "morning.depart",
+      "lines": [
+        {
+          "id": "morning.depart.08.1",
+          "legacyId": 51,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1200,
+          "text": "오늘도 함께라서 기뻐! 힘내서 가자!"
         }
       ]
     },
@@ -421,8 +736,8 @@
           "speaker": 2,
           "listener": 1,
           "emotion": 4,
-          "holdMs": 1000,
-          "text": "괜찮아? 내가 옆에 있어!"
+          "holdMs": 1200,
+          "text": "괜찮아? 내가 옆에 있어. 돌아가서 쉬자."
         }
       ]
     },
@@ -439,8 +754,8 @@
           "speaker": 2,
           "listener": 1,
           "emotion": 4,
-          "holdMs": 1000,
-          "text": "더는 무리하지 마. 돌아가자."
+          "holdMs": 1200,
+          "text": "많이 지쳤구나. 오늘은 여기까지 하자."
         }
       ]
     },
@@ -456,9 +771,99 @@
           "legacyId": 101,
           "speaker": 2,
           "listener": 1,
-          "emotion": 7,
-          "holdMs": 1000,
-          "text": "정신 차려! 함께 돌아가야지!"
+          "emotion": 4,
+          "holdMs": 1200,
+          "text": "무리하지 마. 함께 돌아가면 돼."
+        }
+      ]
+    },
+    {
+      "id": "defeat.player.04",
+      "context": "defeat.player",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.player",
+      "lines": [
+        {
+          "id": "defeat.player.04.1",
+          "legacyId": 101,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1200,
+          "text": "이제 안전한 곳으로 돌아가자. 곁에 있을게."
+        }
+      ]
+    },
+    {
+      "id": "defeat.player.05",
+      "context": "defeat.player",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.player",
+      "lines": [
+        {
+          "id": "defeat.player.05.1",
+          "legacyId": 101,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1200,
+          "text": "탐험은 다음에도 할 수 있어. 지금은 쉬자."
+        }
+      ]
+    },
+    {
+      "id": "defeat.player.06",
+      "context": "defeat.player",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.player",
+      "lines": [
+        {
+          "id": "defeat.player.06.1",
+          "legacyId": 101,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1200,
+          "text": "걱정 마. 집으로 돌아가서 기운을 차리자."
+        }
+      ]
+    },
+    {
+      "id": "defeat.player.07",
+      "context": "defeat.player",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.player",
+      "lines": [
+        {
+          "id": "defeat.player.07.1",
+          "legacyId": 101,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1200,
+          "text": "잘 버텼어. 남은 건 돌아가서 생각하자."
+        }
+      ]
+    },
+    {
+      "id": "defeat.player.08",
+      "context": "defeat.player",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.player",
+      "lines": [
+        {
+          "id": "defeat.player.08.1",
+          "legacyId": 101,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1200,
+          "text": "네가 먼저야. 오늘은 푹 쉬자."
         }
       ]
     },
@@ -474,9 +879,9 @@
           "legacyId": 102,
           "speaker": 2,
           "listener": 1,
-          "emotion": 2,
-          "holdMs": 1000,
-          "text": "미안... 조금 쉬어야겠어."
+          "emotion": 5,
+          "holdMs": 1200,
+          "text": "미안, 조금 지쳤어. 돌아가서 쉬어도 될까?"
         }
       ]
     },
@@ -492,9 +897,9 @@
           "legacyId": 102,
           "speaker": 2,
           "listener": 1,
-          "emotion": 13,
-          "holdMs": 1000,
-          "text": "더는 발이 안 움직여... 돌아가자."
+          "emotion": 5,
+          "holdMs": 1200,
+          "text": "발에 힘이 안 들어가네. 오늘은 돌아가자."
         }
       ]
     },
@@ -511,8 +916,98 @@
           "speaker": 2,
           "listener": 1,
           "emotion": 5,
-          "holdMs": 1000,
-          "text": "미안해. 여기까지가 한계야..."
+          "holdMs": 1200,
+          "text": "여기까지 함께해 줘서 고마워. 쉬어야겠어."
+        }
+      ]
+    },
+    {
+      "id": "defeat.partner.04",
+      "context": "defeat.partner",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.partner",
+      "lines": [
+        {
+          "id": "defeat.partner.04.1",
+          "legacyId": 102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 5,
+          "holdMs": 1200,
+          "text": "잠깐 기대도 될까? 돌아가면 괜찮을 거야."
+        }
+      ]
+    },
+    {
+      "id": "defeat.partner.05",
+      "context": "defeat.partner",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.partner",
+      "lines": [
+        {
+          "id": "defeat.partner.05.1",
+          "legacyId": 102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 5,
+          "holdMs": 1200,
+          "text": "오늘은 더 걷기 어렵겠어. 다음에 다시 오자."
+        }
+      ]
+    },
+    {
+      "id": "defeat.partner.06",
+      "context": "defeat.partner",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.partner",
+      "lines": [
+        {
+          "id": "defeat.partner.06.1",
+          "legacyId": 102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 5,
+          "holdMs": 1200,
+          "text": "무리해서 미안해. 함께 돌아가 줘."
+        }
+      ]
+    },
+    {
+      "id": "defeat.partner.07",
+      "context": "defeat.partner",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.partner",
+      "lines": [
+        {
+          "id": "defeat.partner.07.1",
+          "legacyId": 102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 5,
+          "holdMs": 1200,
+          "text": "조금만 쉬면 괜찮아질 거야. 집으로 가자."
+        }
+      ]
+    },
+    {
+      "id": "defeat.partner.08",
+      "context": "defeat.partner",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "defeat.partner",
+      "lines": [
+        {
+          "id": "defeat.partner.08.1",
+          "legacyId": 102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 5,
+          "holdMs": 1200,
+          "text": "더 힘내고 싶지만 오늘은 여기까지 하자."
         }
       ]
     },
@@ -531,15 +1026,6 @@
           "emotion": 4,
           "holdMs": 1000,
           "text": "잠깐 숨을 돌려야겠어."
-        },
-        {
-          "id": "E01.encourage.02",
-          "legacyId": 1241,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "지금은 물건을 나누기 어렵겠어."
         },
         {
           "id": "E01.encourage.03",
@@ -578,22 +1064,13 @@
       "weight": 1,
       "lines": [
         {
-          "id": "E05.view_a.01",
-          "legacyId": 1260,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "여긴 잠깐 멈춰도 좋겠다."
-        },
-        {
           "id": "E05.view_a.02",
           "legacyId": 1261,
           "speaker": 2,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1000,
-          "text": "응. 주변도 천천히 보자."
+          "text": "주변도 천천히 보자."
         }
       ]
     },
@@ -605,22 +1082,13 @@
       "weight": 1,
       "lines": [
         {
-          "id": "E05.view_a.03",
-          "legacyId": 1270,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 11,
-          "holdMs": 1000,
-          "text": "함께 와서 더 기억에 남을 것 같아."
-        },
-        {
           "id": "E05.view_a.04",
           "legacyId": 1271,
           "speaker": 2,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1000,
-          "text": "나도 그래. 이제 가 볼까?"
+          "text": "함께 보니 더 좋다! 이제 가 볼까?"
         }
       ]
     },
@@ -639,15 +1107,6 @@
           "emotion": 11,
           "holdMs": 1000,
           "text": "이런 곳도 있었구나."
-        },
-        {
-          "id": "E05.view_b.02",
-          "legacyId": 1281,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "서두르기만 하면 놓쳤겠지."
         }
       ]
     },
@@ -666,15 +1125,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "오늘 본 건 기억해 둘게."
-        },
-        {
-          "id": "E05.view_b.04",
-          "legacyId": 1291,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "좋아. 다시 함께 가자."
         }
       ]
     },
@@ -695,22 +1145,13 @@
           "text": "어라? 여기서 다 만나네!"
         },
         {
-          "id": "E09.bidoof.02",
-          "legacyId": 1301,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "탐험하러 나온 거야?"
-        },
-        {
           "id": "E09.bidoof.03",
           "legacyId": 1302,
           "speaker": 3,
           "listener": 1,
           "emotion": 0,
           "holdMs": 1000,
-          "text": "응! 서로 무리하지 말고 다녀오자."
+          "text": "서로 무리하지 말고 다녀오자."
         }
       ]
     },
@@ -747,15 +1188,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "여기까지 왔구나! 잘 지내고 있지?"
-        },
-        {
-          "id": "E09.corphish.02",
-          "legacyId": 1321,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "응. 함께 돌아다니는 중이야."
         },
         {
           "id": "E09.corphish.03",
@@ -803,15 +1235,6 @@
           "text": "휴... 조금 지쳤어."
         },
         {
-          "id": "E01.share_a.02",
-          "legacyId": 2341,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "괜찮아? 이 열매를 나눠 줄게."
-        },
-        {
           "id": "E01.share_a.03",
           "legacyId": 2342,
           "speaker": 2,
@@ -839,15 +1262,6 @@
           "text": "고마워. 덕분에 마음이 놓여."
         },
         {
-          "id": "E01.share_a.05",
-          "legacyId": 2351,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "무리하지 말고 다녀와."
-        },
-        {
           "id": "E01.share_a.06",
           "legacyId": 2352,
           "speaker": 3,
@@ -866,22 +1280,13 @@
       "weight": 1,
       "lines": [
         {
-          "id": "E01.share_b.01",
-          "legacyId": 2360,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "많이 지쳐 보여. 잠깐 쉬는 게 어때?"
-        },
-        {
           "id": "E01.share_b.02",
           "legacyId": 2361,
           "speaker": 3,
           "listener": 1,
           "emotion": 0,
           "holdMs": 1000,
-          "text": "응... 조금만 쉬려고."
+          "text": "조금만 쉬어 가려고."
         },
         {
           "id": "E01.share_b.03",
@@ -929,15 +1334,6 @@
           "text": "저기... 계단으로 가는 길을 모르겠어."
         },
         {
-          "id": "E02.escort_a.02",
-          "legacyId": 4381,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "우리와 같이 가자."
-        },
-        {
           "id": "E02.escort_a.03",
           "legacyId": 4382,
           "speaker": 2,
@@ -965,15 +1361,6 @@
           "text": "여기까지 데려다줘서 고마워!"
         },
         {
-          "id": "E02.escort_a.05",
-          "legacyId": 4391,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "이제 조심해서 가."
-        },
-        {
           "id": "E02.escort_a.06",
           "legacyId": 4392,
           "speaker": 2,
@@ -999,15 +1386,6 @@
           "emotion": 4,
           "holdMs": 1000,
           "text": "길을 잘못 든 것 같아."
-        },
-        {
-          "id": "E02.escort_b.02",
-          "legacyId": 4401,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 9,
-          "holdMs": 1000,
-          "text": "계단까지는 함께 가 줄게."
         }
       ]
     },
@@ -1053,15 +1431,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "누군가 잃어버린 물건을 발견했다."
-        },
-        {
-          "id": "E06.return_a.02",
-          "legacyId": 4421,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "주인이 근처에 있을까?"
         }
       ]
     },
@@ -1080,15 +1449,6 @@
           "emotion": 12,
           "holdMs": 1000,
           "text": "그거, 내가 잃어버린 물건이야!"
-        },
-        {
-          "id": "E06.return_a.04",
-          "legacyId": 4431,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "찾고 있었구나. 돌려줄게."
         }
       ]
     },
@@ -1127,15 +1487,6 @@
       "weight": 1,
       "lines": [
         {
-          "id": "E06.return_b.01",
-          "legacyId": 4450,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "누가 떨어뜨린 모양이야."
-        },
-        {
           "id": "E06.return_b.02",
           "legacyId": 4451,
           "speaker": 2,
@@ -1161,15 +1512,6 @@
           "emotion": 4,
           "holdMs": 1000,
           "text": "혹시 내 물건을 못 봤어?"
-        },
-        {
-          "id": "E06.return_b.04",
-          "legacyId": 4461,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "이 물건이 맞지? 여기 있어."
         }
       ]
     },
@@ -1188,15 +1530,6 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "맞아! 찾아줘서 고마워."
-        },
-        {
-          "id": "E06.return_b.06",
-          "legacyId": 4471,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "다음에는 잘 챙겨 둬."
         }
       ]
     },
@@ -1226,31 +1559,13 @@
       "weight": 1,
       "lines": [
         {
-          "id": "E08.reunion_a.02",
-          "legacyId": 4490,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "찾았다! 괜찮아?"
-        },
-        {
           "id": "E08.reunion_a.03",
           "legacyId": 4491,
           "speaker": 2,
           "listener": 1,
           "emotion": 1,
           "holdMs": 1000,
-          "text": "응. 다시 만나서 다행이야."
-        },
-        {
-          "id": "E08.reunion_a.04",
-          "legacyId": 4492,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "다음엔 발밑도 더 살피자."
+          "text": "다시 만나서 다행이야."
         },
         {
           "id": "E08.reunion_a.05",
@@ -1298,15 +1613,6 @@
           "text": "휴, 어디로 갔나 했어."
         },
         {
-          "id": "E08.reunion_b.03",
-          "legacyId": 4511,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "나도 찾고 있었어. 무사해서 다행이야."
-        },
-        {
           "id": "E08.reunion_b.04",
           "legacyId": 4512,
           "speaker": 2,
@@ -1314,15 +1620,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "이제 다시 길을 찾아보자."
-        },
-        {
-          "id": "E08.reunion_b.05",
-          "legacyId": 4513,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 9,
-          "holdMs": 1000,
-          "text": "응. 천천히 함께 가자."
         }
       ]
     },
@@ -1336,24 +1633,6 @@
         {
           "id": "E03.trade_a.01",
           "legacyId": 6520,
-          "speaker": 3,
-          "listener": 1,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "오랭열매 1개를 사과 3개와 교환해."
-        },
-        {
-          "id": "E03.trade_a.02",
-          "legacyId": 6521,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "사과 3개를 오랭열매 1개로 바꿀게."
-        },
-        {
-          "id": "E03.trade_a.03",
-          "legacyId": 6522,
           "speaker": 3,
           "listener": 1,
           "emotion": 0,
@@ -1377,15 +1656,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "교환은 끝났어. 잘 챙겨 둬!"
-        },
-        {
-          "id": "E03.trade_a.05",
-          "legacyId": 6531,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "고마워. 잘 쓸게."
         },
         {
           "id": "E03.trade_a.06",
@@ -1413,15 +1683,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "구경만 하고 가도 좋아."
-        },
-        {
-          "id": "E03.browse.02",
-          "legacyId": 6541,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "오늘은 어떤 물건이 있나 볼게."
         }
       ]
     },
@@ -1467,15 +1728,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "오랭열매 1개를 사과 3개와 교환해."
-        },
-        {
-          "id": "E03.trade_b.02",
-          "legacyId": 6561,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "사과 3개를 오랭열매 1개로 바꿀게."
         }
       ]
     },
@@ -1523,15 +1775,6 @@
           "text": "몬스터 하우스다!"
         },
         {
-          "id": "E04.house_a.02",
-          "legacyId": 6581,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 12,
-          "holdMs": 1000,
-          "text": "조심해! 둘러싸이지 말자."
-        },
-        {
           "id": "E04.house_a.03",
           "legacyId": 6582,
           "speaker": 2,
@@ -1550,15 +1793,6 @@
       "weight": 1,
       "lines": [
         {
-          "id": "E04.house_a.04",
-          "legacyId": 6590,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "휴... 이제 잠잠해졌네."
-        },
-        {
           "id": "E04.house_a.05",
           "legacyId": 6591,
           "speaker": 2,
@@ -1566,15 +1800,6 @@
           "emotion": 9,
           "holdMs": 1000,
           "text": "주변을 살피고 움직이자."
-        },
-        {
-          "id": "E04.house_a.06",
-          "legacyId": 6592,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "좋아. 천천히 가자."
         }
       ]
     },
@@ -1585,15 +1810,6 @@
       "style": "neutral",
       "weight": 1,
       "lines": [
-        {
-          "id": "E04.house_b.01",
-          "legacyId": 6600,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 12,
-          "holdMs": 1000,
-          "text": "갑자기 나타났어!"
-        },
         {
           "id": "E04.house_b.02",
           "legacyId": 6601,
@@ -1620,15 +1836,6 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "잘 버텼어!"
-        },
-        {
-          "id": "E04.house_b.04",
-          "legacyId": 6611,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 4,
-          "holdMs": 1000,
-          "text": "아직 방심하지 말자."
         }
       ]
     },
@@ -1647,15 +1854,6 @@
           "emotion": 4,
           "holdMs": 1000,
           "text": "혼자서는 버거워... 도와줘!"
-        },
-        {
-          "id": "E07.assist_a.02",
-          "legacyId": 6621,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 9,
-          "holdMs": 1000,
-          "text": "함께 상대하자!"
         },
         {
           "id": "E07.assist_a.03",
@@ -1685,15 +1883,6 @@
           "text": "덕분에 버텼어. 정말 고마워."
         },
         {
-          "id": "E07.assist_a.05",
-          "legacyId": 6631,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "무사해서 다행이야."
-        },
-        {
           "id": "E07.assist_a.06",
           "legacyId": 6632,
           "speaker": 2,
@@ -1719,15 +1908,6 @@
           "emotion": 4,
           "holdMs": 1000,
           "text": "잠깐만 힘을 빌려줄래?"
-        },
-        {
-          "id": "E07.assist_b.02",
-          "legacyId": 6641,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 9,
-          "holdMs": 1000,
-          "text": "좋아. 힘을 합치자."
         },
         {
           "id": "E07.assist_b.03",
@@ -1784,15 +1964,6 @@
       "weight": 1,
       "lines": [
         {
-          "id": "E10.town_a.01",
-          "legacyId": 8660,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "오늘은 탐험을 쉬고 마을에 가 볼까?"
-        },
-        {
           "id": "E10.town_a.02",
           "legacyId": 8661,
           "speaker": 2,
@@ -1818,15 +1989,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "반가워. 오늘은 쉬는 날이구나."
-        },
-        {
-          "id": "E10.town_a.04",
-          "legacyId": 8671,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 0,
-          "holdMs": 1000,
-          "text": "응. 잠깐 산책하러 왔어."
         }
       ]
     },
@@ -1845,15 +2007,6 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "서두르지 않으니 한결 편안해."
-        },
-        {
-          "id": "E10.town_a.06",
-          "legacyId": 8681,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "이제 돌아가서 푹 쉬자."
         }
       ]
     },
@@ -1872,15 +2025,6 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "오늘은 마을에서 쉬어 가는 거지?"
-        },
-        {
-          "id": "E10.town_b.02",
-          "legacyId": 8691,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "응. 가끔은 이런 날도 좋겠지."
         }
       ]
     },
@@ -1928,15 +2072,6 @@
       "weight": 1,
       "lines": [
         {
-          "id": "E10.spring_a.01",
-          "legacyId": 8720,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "오늘은 온천에서 쉬어 가자."
-        },
-        {
           "id": "E10.spring_a.02",
           "legacyId": 8721,
           "speaker": 2,
@@ -1980,15 +2115,6 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "따뜻해서 몸이 풀리는 것 같아."
-        },
-        {
-          "id": "E10.spring_a.05",
-          "legacyId": 8741,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "응. 오늘은 천천히 쉬자."
         }
       ]
     },
@@ -2025,15 +2151,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "편히 쉬다 가게. 좋은 날이구먼."
-        },
-        {
-          "id": "E10.spring_b.02",
-          "legacyId": 8761,
-          "speaker": 1,
-          "listener": 3,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "오늘은 푹 쉬려고 왔어."
         }
       ]
     },
@@ -2052,15 +2169,6 @@
           "emotion": 0,
           "holdMs": 1000,
           "text": "가만히 있으니 마음도 차분해지네."
-        },
-        {
-          "id": "E10.spring_b.04",
-          "legacyId": 8771,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "함께 와서 더 좋은 것 같아."
         }
       ]
     },
@@ -2079,15 +2187,6 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "이제 돌아갈까? 잘 쉬었어."
-        },
-        {
-          "id": "E10.spring_b.06",
-          "legacyId": 8781,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "응. 내일은 또 내일의 하루를 보내자."
         }
       ]
     },
@@ -2098,15 +2197,6 @@
       "style": "neutral",
       "weight": 1,
       "lines": [
-        {
-          "id": "E10.spring_b.morning.01",
-          "legacyId": 8991,
-          "speaker": 1,
-          "listener": 2,
-          "emotion": 1,
-          "holdMs": 1000,
-          "text": "오늘은 온천에서 천천히 쉬자."
-        },
         {
           "id": "E10.spring_b.morning.02",
           "legacyId": 8992,

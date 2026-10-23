@@ -35,14 +35,14 @@ DialogueLine gameplayDialogue(const GameplayState& g) {
         return g.companion.hearts?DialogueLine{101,Role::Partner,Mood::Worried,L"괜찮아? 무리하지 말고 돌아가자!"}:
             DialogueLine{102,Role::Partner,Mood::Sad,L"미안... 더는 못 걷겠어. 돌아가자."};
     if(companionDialogue(g))return g.dialogueStage==DialogueStage::Player?
-        DialogueLine{11,Role::Player,Mood::Worried,L"잘 따라오고 있지? 잠깐 쉬어 가자."}:
+        DialogueLine{11,Role::None,Mood::Normal,L"조용히 고개를 끄덕였다."}:
         DialogueLine{12,Role::Partner,Mood::Happy,L"물론이지! 함께라면 든든해."};
     if(g.life==LifePhase::Dialogue)return g.dialogueStage==DialogueStage::Player?
-        DialogueLine{21,Role::Player,Mood::Happy,L"안녕! 같이 탐험하자."}:
+        DialogueLine{21,Role::None,Mood::Normal,L"가볍게 인사를 건넸다."}:
         DialogueLine{22,Role::Friendly,Mood::Worried,L"조심해서 다녀와!"};
-    if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return {31,Role::Player,Mood::Happy,L"잘 자! 내일도 같이 탐험하자."};
-    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)return {41,Role::Alarm,Mood::Shouting,L"일어나아아! 아침이다아아!"};
-    if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)return {51,Role::Player,Mood::Happy,L"좋은 아침! 함께 출발하자."};
+    if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return {31,Role::Partner,Mood::Happy,L"잘 자! 좋은 꿈 꿔!"};
+    if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)return {41,Role::Partner,Mood::Happy,L"좋은 아침! 잘 잤어?"};
+    if(g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)return {51,Role::Partner,Mood::Happy,L"오늘도 즐겁게 탐험하자!"};
     return {};
 }
 std::wstring gameplayText(const GameplayState& g) {
