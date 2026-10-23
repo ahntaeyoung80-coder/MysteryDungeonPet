@@ -187,6 +187,21 @@ void validateVarietyState(const ExplorationState& s) {
         require(key==eventKey(id)+":"+key.substr(start),"noncanonical event commit key");
     }
 }
+void normalizeOranHoldings(ExplorationState& s) {
+    // Import legacy stacks without accepting counts outside the old valid bound.
+    auto& g=s.gameplay;
+    if(g.oran<=kMaxStock)g.oran=std::min(g.oran,kOranCapacity);
+    if(g.companion.oran<=kMaxStock)g.companion.oran=std::min(g.companion.oran,kOranCapacity);
+}
+bool canReceiveOran(const ExplorationState& s) {
+    return s.gameplay.oran<kOranCapacity ||
+        (s.gameplay.companion.enabled && s.gameplay.companion.oran<kOranCapacity);
+}
+bool receiveOran(ExplorationState& s) {
+    auto& g=s.gameplay;auto& p=g.companion;
+    if(p.enabled && !p.oran && (g.oran || p.hearts<g.hearts))return changeStock(s,kCompanionActorId,ITEM_ORAN_BERRY,1);
+    return changeStock(s,0,ITEM_ORAN_BERRY,1);
+}
 std::uint32_t stockQuantity(const ExplorationState& s,std::uint32_t owner,std::uint32_t item) {
     if(owner!=0 && owner!=kCompanionActorId)return 0;
     if(item==ITEM_ORAN_BERRY)return owner==0?s.gameplay.oran:s.gameplay.companion.oran;
@@ -199,7 +214,7 @@ std::uint32_t reservedQuantity(const ExplorationState& s,std::uint32_t owner,std
 bool changeStock(ExplorationState& s,std::uint32_t owner,std::uint32_t item,int delta) {
     if((owner!=0 && owner!=kCompanionActorId) || !item || item>65535)return false;
     const auto count=stockQuantity(s,owner,item);const auto next=std::int64_t(count)+delta;
-    if(next<reservedQuantity(s,owner,item) || next>kMaxStock)return false;
+    if(next<reservedQuantity(s,owner,item) || next>(item==ITEM_ORAN_BERRY?kOranCapacity:kMaxStock))return false;
     if(item==ITEM_ORAN_BERRY){(owner==0?s.gameplay.oran:s.gameplay.companion.oran)=unsigned(next);return true;}
     auto& rows=s.variety.stock;const auto i=std::find_if(rows.begin(),rows.end(),[&](const auto& x){return x.owner==owner && x.item==item;});
     if(i==rows.end()){if(next && rows.size()<512)rows.push_back({owner,item,unsigned(next)});else if(next)return false;}

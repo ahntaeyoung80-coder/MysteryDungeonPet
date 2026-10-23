@@ -59,8 +59,8 @@ bool startVarietyEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,c
             std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),a.instanceId)==s.gameplay.hostile.end();});
         if(i==s.population.entities.end() || !c.find("E01.encourage.intro"))return false;
         selectedActor=i->instanceId;variant="E01.encourage";
-        if(s.gameplay.oran>=2 && c.find("E01.share_a.intro")){variant="E01.share_a";share=true;}
-        else if(s.gameplay.companion.oran>=2 && c.find("E01.share_b.intro")){variant="E01.share_b";shareOwner=kCompanionActorId;share=true;}
+        if(s.gameplay.oran && s.gameplay.companion.oran && s.gameplay.hearts>=s.gameplay.companion.hearts && c.find("E01.share_a.intro")){variant="E01.share_a";share=true;}
+        else if(s.gameplay.oran && s.gameplay.companion.oran && c.find("E01.share_b.intro")){variant="E01.share_b";shareOwner=kCompanionActorId;share=true;}
     } else {
         const auto count=std::count_if(s.population.entities.begin(),s.population.entities.end(),[](const auto& a){return a.kind==EntityKind::Friend && a.visible && !a.done;});
         const auto mask=occupied(s);int spawn=-1;
@@ -152,7 +152,8 @@ bool commitOranShare(ExplorationState& s) {
     if(e.id.type!=VarietyEvent::TiredExplorer || e.progress!=EventProgress::Result ||
        s.variety.committed.count(eventKey(e.id)+":shared") || e.reservations.size()!=1 || e.actors.empty())return false;
     const auto reserved=e.reservations.front();const auto* npc=entity(s,e.actors.front());
-    if(reserved.item!=ITEM_ORAN_BERRY || reserved.quantity!=1 || stockQuantity(s,reserved.owner,reserved.item)<2 || !npc ||
+    if(reserved.item!=ITEM_ORAN_BERRY || reserved.quantity!=1 || stockQuantity(s,reserved.owner,reserved.item)<1 ||
+       stockQuantity(s,reserved.owner==0?kCompanionActorId:0,ITEM_ORAN_BERRY)<1 || !npc ||
        !npc->visible || npc->done || !canAttack(s.world,s.position,npc->tile) || s.gameplay.hearts<=kLowHp || s.gameplay.companion.hearts<=kLowHp)return false;
     auto candidate=s;candidate.variety.event.reservations.clear();
     if(!changeStock(candidate,reserved.owner,reserved.item,-1) || !commitVarietyResult(candidate,"shared"))return false;

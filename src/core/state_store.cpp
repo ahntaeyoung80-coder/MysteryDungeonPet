@@ -407,6 +407,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     }
     if(schema>=18){const auto start=r.offset;s.expedition=detail::readExpedition(r);const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("expedition snapshot block length mismatch");}
     r.u32(); r.end();
+    normalizeOranHoldings(s);
     discardStaleEntityGoal(s);
     validateState(s);
     return s;

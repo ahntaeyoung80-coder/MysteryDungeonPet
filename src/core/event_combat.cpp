@@ -40,7 +40,7 @@ bool startCombatEvent(ExplorationState& s,VarietyEvent type,std::uint64_t now,co
         for(unsigned i=0;i<7;++i){const auto item=sampleItem(candidate,shopItems);if(item)e.goods.push_back({item,1});}
         if(e.goods.empty())return false;
         const bool oran=std::any_of(e.goods.begin(),e.goods.end(),[](const auto& x){return x.item==ITEM_ORAN_BERRY;});
-        if(oran && stockQuantity(candidate,0,109)>=3 && g.oran<kMaxStock) {
+        if(oran && stockQuantity(candidate,0,109)>=3 && g.oran<kOranCapacity) {
             e.variant="E03.trade_a";e.task=EventTask::Trade;e.item=ITEM_ORAN_BERRY;e.quantity=1;e.reservations={{0,109,3}};
         } else {e.variant="E03.browse";e.item=e.goods.front().item;e.quantity=1;}
     } else {
@@ -63,7 +63,7 @@ bool commitShopExchange(ExplorationState& s) {
     const auto& e=s.variety.event;
     if(e.id.type!=VarietyEvent::Shop || e.task!=EventTask::Trade || e.progress!=EventProgress::Result || e.item!=ITEM_ORAN_BERRY || e.quantity!=1 ||
        e.reservations.size()!=1 || e.reservations[0].owner!=0 || e.reservations[0].item!=109 || e.reservations[0].quantity!=3 ||
-       stockQuantity(s,0,109)<3 || s.gameplay.oran>=kMaxStock || s.variety.committed.count(eventKey(e.id)+":exchanged"))return false;
+       stockQuantity(s,0,109)<3 || s.gameplay.oran>=kOranCapacity || s.variety.committed.count(eventKey(e.id)+":exchanged"))return false;
     auto candidate=s;auto& next=candidate.variety.event;
     const auto good=std::find_if(next.goods.begin(),next.goods.end(),[](const auto& x){return x.item==ITEM_ORAN_BERRY && x.quantity;});if(good==next.goods.end())return false;
     next.reservations.clear();if(!changeStock(candidate,0,109,-3) || !changeStock(candidate,0,ITEM_ORAN_BERRY,1))return false;

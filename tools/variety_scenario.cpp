@@ -15,9 +15,10 @@ int main(int argc,char** argv){try {
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");const auto maps=loadEventRegistry(root/"gameplay/events/contexts.mder");
     const auto now=std::uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
     auto s=eventFixture(p);s.gameplay.phaseStartedMs=s.gameplay.deadlineMs=now;
-    if(name=="pickup" || name=="pickup-comment" || name=="pickup-apple" || name=="pickup-tm" || name=="pickup-orb") {
+    if(name=="pickup" || name=="pickup-comment" || name=="pickup-apple" || name=="pickup-tm" || name=="pickup-orb" || name=="berry-full" || name=="berry-slot") {
         s.position=125;s.visited[s.position]=1;s.gameplay.companion.tile=124;
         s.population.entities={{1,name=="pickup-apple"?109U:name=="pickup-tm"?188U:name=="pickup-orb"?314U:70U,EntityKind::Item,s.position,false}};s.target=s.position;s.targetInstance=1;s.goalKind=GoalKind::Item;s.gameplay.independentParty=true;
+        if(name=="berry-full" || name=="berry-slot") {s.gameplay.oran=1;s.gameplay.companion.oran=name=="berry-full"?1:0;}
         for(unsigned seed=0;seed<100;++seed){auto probe=s.variety;probe.dialogueRng=seed;const bool comment=drawVariety(probe,VarietyRandomStream::Dialogue,5)==0;if(comment==(name=="pickup-comment" || name=="pickup-orb")){s.variety.dialogueRng=seed;break;}}
     } else if(name=="status") {
         s.population.entities.clear();s.gameplay.deadlineMs=now+8000;
@@ -69,8 +70,8 @@ int main(int argc,char** argv){try {
         s.target=-1;s.targetInstance=0;s.goalKind=GoalKind::None;s.gameplay.enabled=true;s.gameplay.life=LifePhase::Explore;s.gameplay.sceneBeat=SceneBeat::FloorFadeOut;s.gameplay.phaseStartedMs=now;s.gameplay.deadlineMs=now+500;
     } else {
         const auto type=name=="share"?VarietyEvent::TiredExplorer:name=="trade"?VarietyEvent::Shop:VarietyEvent(std::stoul(name.substr(1)));
-        if(type==VarietyEvent::MonsterHouse || type==VarietyEvent::JointBattle){s.rng.state=42;s.gameplay.oran=s.gameplay.companion.oran=5;}
-        if(name=="share")s.gameplay.oran=2;
+        if(type==VarietyEvent::MonsterHouse || type==VarietyEvent::JointBattle){s.rng.state=42;s.gameplay.oran=s.gameplay.companion.oran=1;}
+        if(name=="share")s.gameplay.oran=s.gameplay.companion.oran=1;
         bool started=false;
         for(unsigned seed=0;seed<64 && !started;++seed) {
             auto candidate=s;candidate.variety.eventRng=seed;if(name=="trade")changeStock(candidate,0,109,3);

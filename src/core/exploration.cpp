@@ -334,6 +334,10 @@ void Explorer::setNextRunPackage(std::string assetVersion,std::vector<FloorProfi
     nextRunAtLaunch_=atLaunch;
 }
 bool discardStaleEntityGoal(ExplorationState& s,bool movingFriend) {
+    if(s.gameplay.enabled && s.goalKind==GoalKind::Item && !canReceiveOran(s) &&
+       std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==s.targetInstance && e.originalId==ITEM_ORAN_BERRY;})) {
+        s.target=-1;s.goalKind=GoalKind::None;s.targetInstance=0;return true;
+    }
     if(s.goalKind!=GoalKind::Friend && s.goalKind!=GoalKind::Item)return false;
     // Check only the disposable entity route. World, journals and combat still
     // undergo the full validator, including when importing an older save.
@@ -355,6 +359,8 @@ bool discardStaleEntityGoal(ExplorationState& s,bool movingFriend) {
     s.target=-1;s.goalKind=GoalKind::None;s.targetInstance=0;return true;
 }
 Explorer::Explorer(ExplorationState state) : state_(std::move(state)) {
+    normalizeOranHoldings(state_);
+    if(state_.goalKind==GoalKind::Item && !canReceiveOran(state_))discardStaleEntityGoal(state_);
     validateState(state_);
     if (state_.target != -1 && (!state_.gameplay.enabled || state_.gameplay.life == LifePhase::Explore)) {
         auto occupied=playerOccupancy();if(state_.goalKind!=GoalKind::Stairs) occupied[state_.world.stairs]=1;
@@ -665,7 +671,8 @@ bool Explorer::selectPriority(const Search& search,bool items,bool frontiers) {
     if(!state_.gameplay.enabled && (state_.floorSteps>=kFloorStepLimit || state_.stalledActions>=kTiles*2)) return false;
     int best=3*(kTiles+1);
     if(items) for(const auto& e:state_.population.entities) {
-        if(e.kind!=EntityKind::Item || e.done || !e.visible || !state_.discovered[e.tile] || state_.failedTargets[e.tile]>=3) continue;
+        if(e.kind!=EntityKind::Item || e.done || !e.visible || !state_.discovered[e.tile] || state_.failedTargets[e.tile]>=3 ||
+           (state_.gameplay.enabled && e.originalId==ITEM_ORAN_BERRY && !canReceiveOran(state_))) continue;
         const int distance=search.distance[e.tile];
         const int priority=state_.gameplay.enabled && state_.gameplay.hearts<kMaxHp && !state_.gameplay.oran && e.originalId==ITEM_ORAN_BERRY?0:1;
         const int score=priority*(kTiles+1)+distance;
@@ -704,7 +711,7 @@ bool Explorer::selectSurvival(const Search& search) {
     if(state_.survivalFirst==SurvivalFirst::Stairs && stairs()) return true;
     int best=kTiles+1;
     for(const auto& e:state_.population.entities) if(e.kind==EntityKind::Item && e.originalId==ITEM_ORAN_BERRY &&
-        !e.done && e.visible && state_.discovered[e.tile] && state_.failedTargets[e.tile]<3 && search.distance[e.tile]>=0 && search.distance[e.tile]<best) {
+        !e.done && e.visible && (!state_.gameplay.enabled || canReceiveOran(state_)) && state_.discovered[e.tile] && state_.failedTargets[e.tile]<3 && search.distance[e.tile]>=0 && search.distance[e.tile]<best) {
         best=search.distance[e.tile];state_.target=e.tile;state_.goalKind=GoalKind::Item;state_.targetInstance=e.instanceId;
     }
     if(state_.target>=0) {path_=search.pathTo(state_.target);return true;}
@@ -850,11 +857,15 @@ Event Explorer::advance(bool poseFinished) {
         for (auto& entity : state_.population.entities) {
             if (entity.instanceId != state_.targetInstance || entity.done) continue;
             const bool item = entity.kind == EntityKind::Item;
+            if(item && entity.originalId==ITEM_ORAN_BERRY && state_.gameplay.enabled && !canReceiveOran(state_)) {
+                invalidate();return {};
+            }
             if (!item) (void)encounterPolicy(entity);
             const auto onceKey = key(item ? "pickup" : "greet", entity.instanceId);
             if (state_.onceKeys.insert(onceKey).second) {
                 if (item) {state_.inventory.push_back({onceKey, entity.originalId});
-                    if(entity.originalId!=ITEM_ORAN_BERRY)(void)changeStock(state_,0,entity.originalId,1);}
+                    if(entity.originalId==ITEM_ORAN_BERRY) {if(state_.gameplay.enabled)(void)receiveOran(state_);}
+                    else (void)changeStock(state_,0,entity.originalId,1);}
                 event = {item ? EventKind::Pickup : EventKind::Greeting, onceKey, entity.originalId};
             }
             entity.done = true;
@@ -900,7 +911,7 @@ void validateState(const ExplorationState& s) {
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
     require(g.walkStartedMs<=g.phaseStartedMs,"invalid saved walking clock");
     require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 17 &&
-            g.hearts <= kMaxHp && g.oran <= kMaxStock && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
+            g.hearts <= kMaxHp && g.oran <= kOranCapacity && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
     if(g.life==LifePhase::Dialogue) {
         if(companionDialogue(g)) require(g.companion.enabled && !g.companion.hidden && g.companion.hearts>0 &&
@@ -947,7 +958,7 @@ void validateState(const ExplorationState& s) {
     };
     validateMove(g.movement,s.position);for(const auto& e:s.population.entities) validateMove(e.movement,e.tile);
     const auto& partner=g.companion;
-    require(partner.hearts<=kMaxHp && partner.oran<=kMaxStock && partner.direction<8 && partner.actionRound<=g.actionRound &&
+    require(partner.hearts<=kMaxHp && partner.oran<=kOranCapacity && partner.direction<8 && partner.actionRound<=g.actionRound &&
         partner.walkStartedMs<=g.phaseStartedMs,"invalid companion stats/clock");
     if(partner.enabled) {
         require(g.enabled && s.world.walkable(partner.tile) && !s.blocked[partner.tile] && partner.tile!=s.position,"invalid companion tile");

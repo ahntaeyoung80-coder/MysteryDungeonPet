@@ -82,9 +82,9 @@ int main(){try {
     }
     // Repeated injuries across saved action boundaries cannot refill a finite stock.
     for(bool independent:{false,true}) {
-        auto saved=base;saved.gameplay.oran=saved.gameplay.companion.oran=3;
+        auto saved=base;saved.gameplay.oran=saved.gameplay.companion.oran=1;
         unsigned heals=0;
-        for(unsigned injury=0;injury<4;++injury) {
+        for(unsigned injury=0;injury<2;++injury) {
             auto s=saved;auto& g=s.gameplay;g.independentParty=independent;
             g.hearts=g.companion.hearts=1;g.life=LifePhase::Explore;g.sceneBeat=SceneBeat::None;
             g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
@@ -99,9 +99,9 @@ int main(){try {
             }
             saved=live.state();const auto after=saved.gameplay.oran+saved.gameplay.companion.oran;
             check(after<=before,"restored injury refilled berries");heals+=before-after;
-            if(injury==3)check(saved.gameplay.hearts==1 && saved.gameplay.companion.hearts==1,"empty stock still heals");
+            if(injury==1)check(saved.gameplay.hearts==1 && saved.gameplay.companion.hearts==1,"empty stock still heals");
         }
-        check(heals==6 && !saved.gameplay.oran && !saved.gameplay.companion.oran,"finite six-berry stock not exhausted exactly once");
+        check(heals==2 && !saved.gameplay.oran && !saved.gameplay.companion.oran,"finite two-berry stock not exhausted exactly once");
     }
     // Real MDES16 shape: the new bounded extension is absent, rather than version bytes relabelled alone.
     {auto s=base;queueGameplayNotice(s,NoticeKind::Pickup,70);updateGameplayNotices(s,1000);auto bytes=encodeSnapshot(s);

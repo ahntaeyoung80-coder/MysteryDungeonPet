@@ -50,6 +50,7 @@ struct RecentDialogue {
     std::uint64_t eligibleAfter=0;
 };
 constexpr std::uint32_t kMaxStock=99;
+constexpr std::uint32_t kOranCapacity=1;
 struct StockEntry {std::uint32_t owner=0,item=0,quantity=0;};
 enum class DayDestination : std::uint32_t { Unassigned, Exploration, Town, HotSpring };
 enum class HolidayBeat : std::uint32_t { None, Morning, PathWalk, PathFade, WestWalk, WestVisit, WestExit, WestFade,
@@ -104,6 +105,9 @@ bool reconcileDialogue(ExplorationState&, std::uint32_t catalogueVersion,
                        const std::string& bundle, const std::vector<std::string>& lineIds);
 std::uint32_t stockQuantity(const ExplorationState&,std::uint32_t owner,std::uint32_t item);
 std::uint32_t reservedQuantity(const ExplorationState&,std::uint32_t owner,std::uint32_t item);
+void normalizeOranHoldings(ExplorationState&);
+bool canReceiveOran(const ExplorationState&);
+bool receiveOran(ExplorationState&);
 bool changeStock(ExplorationState&,std::uint32_t owner,std::uint32_t item,int delta);
 bool eventBattle(const ExplorationState&);
 bool partyAlly(const ExplorationState&,std::uint32_t actor);

@@ -482,11 +482,6 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         }
         if(step.kind==EventKind::Pickup) {
             const auto action=start(0,PartyActionKind::Wait,0,400);
-            if(step.originalId==ITEM_ORAN_BERRY) {
-                auto& p=g.companion;
-                if(!p.oran && (g.oran || p.hearts<g.hearts))++p.oran;
-                else if(g.oran<kMaxStock)++g.oran;
-            }
             queueGameplayNotice(s,NoticeKind::Pickup,step.originalId);
             event(GameplayEvent::Pickup,0,step.originalId,action);result.onceKey=step.onceKey;return;
         }

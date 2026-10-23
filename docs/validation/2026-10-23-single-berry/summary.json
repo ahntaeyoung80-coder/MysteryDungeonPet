@@ -1,0 +1,184 @@
+{
+  "capacityPerActor": 1,
+  "nativeCoreUniqueTests": 8,
+  "initialResults": "7 passed; event_combat old five-berry guaranteed-victory fixture failed after a valid withdrawal",
+  "correctiveRun": "event_combat updated to one-berry victory/withdrawal scenarios; passed 0.44s",
+  "nativeInitialSeconds": 3.08,
+  "windowsWineTests": [
+    "berry_capacity passed",
+    "gameplay_notice passed"
+  ],
+  "migration": "MDES18 player99/companion2 -> 1/1; original invalid100 rejected; 0 remains0",
+  "pickupMatrix": "8 actual legacy/independent-party x 0/1 holder combinations; full party leaves floor berry; no duplicate on restore",
+  "consumption": "one per actor -> total2 uses -> empty stock cannot heal",
+  "gui": [
+    {
+      "case": "berry-full",
+      "exit": 0,
+      "seconds": 9.92,
+      "traceRows": 1161,
+      "submissions": 606,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "1",
+          "1"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-last.bmp"
+      ],
+      "finalSnapshot": {
+        "event": 0,
+        "progress": 0,
+        "commits": 0,
+        "holiday": 0,
+        "beat": 0,
+        "day": 1,
+        "meals": 0,
+        "oran": 1,
+        "apples": 0,
+        "life": 0,
+        "floor": 1,
+        "completed": 0,
+        "inventory": 0,
+        "playerHp": 5,
+        "companionHp": 5,
+        "companionOran": 1,
+        "notices": 0
+      }
+    },
+    {
+      "case": "berry-slot",
+      "exit": 0,
+      "seconds": 9.24,
+      "traceRows": 1145,
+      "submissions": 589,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "stocks": [
+        [
+          "1",
+          "1"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-notice-1-70.bmp",
+        "trace-first.bmp",
+        "trace-last.bmp"
+      ],
+      "finalSnapshot": {
+        "event": 0,
+        "progress": 0,
+        "commits": 0,
+        "holiday": 0,
+        "beat": 0,
+        "day": 1,
+        "meals": 0,
+        "oran": 1,
+        "apples": 0,
+        "life": 0,
+        "floor": 1,
+        "completed": 0,
+        "inventory": 1,
+        "playerHp": 5,
+        "companionHp": 5,
+        "companionOran": 1,
+        "notices": 0
+      }
+    },
+    {
+      "case": "heal",
+      "exit": 0,
+      "seconds": 9.24,
+      "traceRows": 1007,
+      "submissions": 517,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-full-heal.bmp",
+        "trace-last.bmp"
+      ],
+      "finalSnapshot": {
+        "event": 0,
+        "progress": 0,
+        "commits": 0,
+        "holiday": 0,
+        "beat": 0,
+        "day": 1,
+        "meals": 0,
+        "oran": 0,
+        "apples": 0,
+        "life": 0,
+        "floor": 1,
+        "completed": 0,
+        "inventory": 0,
+        "playerHp": 5,
+        "companionHp": 5,
+        "companionOran": 0,
+        "notices": 0
+      }
+    }
+  ],
+  "exeSha256": "cf997b82b4e282e8d9a9c7b6d1ae9bc3fa44bb8bcd5ccf1c56ca8b5031b28aea",
+  "buildRootInstallExeEqual": true,
+  "remoteCI": "not observed",
+  "limits": [
+    "Wine10/Xvfb with synthetic WTS unlock, not actual Windows 11",
+    "No entire-core or full Python rerun"
+  ]
+}
