@@ -18,49 +18,27 @@ bool canDisplay(const ExplorationState& s) {
         g.sceneBeat==SceneBeat::None && (g.life==LifePhase::Explore || g.life==LifePhase::Combat) && gameplayText(g).empty();
 }
 std::wstring text(const GameplayNotice& n) {
-    if(n.kind==NoticeKind::Victory)return L"적을 쓰러뜨렸다!";
+    if(n.kind==NoticeKind::Victory)return {};
     const auto name=itemDisplayName(n.item);
     if(n.kind==NoticeKind::Pickup) {
         const auto last=name.back();
         const bool consonant=last>=0xac00 && last<=0xd7a3 && (last-0xac00)%28!=0;
         return name+(consonant?L"을 주웠다.":L"를 주웠다.");
     }
-    if(n.item==ITEM_ORAN_BERRY)return L"지치면 이 열매를 먹자!";
-    if(n.item==109)return L"사과네! 배고플 때 먹자.";
-    if(n.item==110)return L"커다란 사과! 든든하겠다.";
-    if(n.item==111)return L"이건 먹기 전에 살펴보자.";
-    if(n.item==73)return L"만약을 위해 잘 챙겨 두자.";
-    if(n.item==105 || n.item==117)return L"닮았어도 다른 도구야!";
-    if(n.item==183)return L"돈이네! 차곡차곡 모으자.";
-    if(n.item==362)return L"기술을 연결하는 상자래!";
-    if(n.item>=300 && n.item<=361) {
-        if(n.item==330)return L"돌아갈 때 쓸 수 있겠어!";
-        if(n.item==318 || n.item==331 || n.item==332)return L"숨은 길도 보이려나?";
-        if(n.item==314)return L"어디로 워프하게 될까?";
-        return name+(n.item%2?L"! 정말 신기하다!":L"! 반짝반짝해.");
-    }
-    if(n.item>=188 && n.item<=276) {
-        const auto colon=name.find(L": ");
-        return (colon==std::wstring::npos?name:name.substr(colon+2))+L"! 배워 보고 싶다.";
-    }
-    if(n.item>=119 && n.item<=137)return name+L"! 무슨 맛일까?";
-    if(n.item>=13 && n.item<=50)return name+L", 잘 어울리겠다!";
-    if(n.item>=69 && n.item<=108)return name+L", 효과가 궁금해.";
-    if(n.item<=11)return name+L"! 멀리서 써 보자.";
-    return name+L"! 잘 챙겨 두자.";
+    return itemCommentText(n.item,n.variant);
 }
 PortraitEmotion itemMood(unsigned item) {
     if((item>=300 && item<=361) || (item>=188 && item<=276) || item==362)return PortraitEmotion::Inspired;
     if(item==111 || item==105 || item==117)return PortraitEmotion::Worried;
     return item==183?PortraitEmotion::Joyous:PortraitEmotion::Happy;
 }
-void append(ExplorationState& s,NoticeKind kind,unsigned item) {
+void append(ExplorationState& s,NoticeKind kind,unsigned item,unsigned variant=0) {
     auto& queue=s.variety.notices;
     if(queue.size()==64) {
         const auto comment=std::find_if(queue.begin(),queue.end(),[](const auto& n){return n.kind==NoticeKind::ItemComment;});
         queue.erase(comment==queue.end()?queue.begin():comment);
     }
-    queue.push_back({kind,item,0,0});
+    queue.push_back({kind,item,0,0,variant});
 }
 }
 std::wstring itemDisplayName(std::uint32_t item) {
@@ -69,15 +47,32 @@ std::wstring itemDisplayName(std::uint32_t item) {
     default:return L"이름 모를 도구";
     }
 }
+std::wstring itemCommentText(std::uint32_t item,std::uint32_t variant) {
+    switch(item) {
+#include "core/item_comments.inc"
+    default:return L"이건 뭘까? 자세히 보고 싶어.";
+    }
+}
 void queueGameplayNotice(ExplorationState& s,NoticeKind kind,unsigned item) {
-    append(s,kind,item);
-    // Once per acquisition, on the dialogue stream. Rendering never draws RNG.
-    if(kind==NoticeKind::Pickup && safeComment(s) && drawVariety(s.variety,VarietyRandomStream::Dialogue,5)==0)
-        append(s,NoticeKind::ItemComment,item);
+    if(kind==NoticeKind::Victory)return;
+    if(kind!=NoticeKind::ItemComment)append(s,kind,item);
+    if(kind==NoticeKind::ItemComment || (kind==NoticeKind::Pickup && safeComment(s) && drawVariety(s.variety,VarietyRandomStream::Dialogue,5)==0)) {
+        const auto context="item."+std::to_string(item);
+        auto recent=std::find_if(s.variety.recent.begin(),s.variety.recent.end(),[&](const auto& r){return r.context==context;});
+        unsigned variant=drawVariety(s.variety,VarietyRandomStream::Dialogue,recent==s.variety.recent.end()?3:2);
+        if(recent!=s.variety.recent.end()) {
+            const auto previous=unsigned(recent->bundle.back()-'0');if(variant>=previous)++variant;
+            recent->bundle="v"+std::to_string(variant);
+        } else {
+            if(s.variety.recent.size()==64)s.variety.recent.erase(s.variety.recent.begin());
+            s.variety.recent.push_back({context,"v"+std::to_string(variant),0});
+        }
+        append(s,NoticeKind::ItemComment,item,variant);
+    }
 }
 const GameplayNotice* activeGameplayNotice(const ExplorationState& s) {
     const auto& q=s.variety.notices;
-    return !q.empty() && q.front().startedMs && canDisplay(s) &&
+    return !q.empty() && q.front().kind!=NoticeKind::Victory && q.front().startedMs && canDisplay(s) &&
         (q.front().kind!=NoticeKind::ItemComment || safeComment(s))?&q.front():nullptr;
 }
 std::wstring gameplayNoticeText(const ExplorationState& s) {const auto* n=activeGameplayNotice(s);return n?text(*n):std::wstring{};}
@@ -92,6 +87,7 @@ DialoguePortraits gameplayNoticePortraits(const ExplorationState& s) {
 }
 void updateGameplayNotices(ExplorationState& s,std::uint64_t now) {
     auto& q=s.variety.notices;
+    q.erase(std::remove_if(q.begin(),q.end(),[](const auto& n){return n.kind==NoticeKind::Victory;}),q.end());
     if(s.phase!=Phase::Explore || s.gameplay.life==LifePhase::Death || s.gameplay.homeScene){q.clear();return;}
     if(!q.empty() && q.front().startedMs && now>=q.front().deadlineMs)q.erase(q.begin());
     // Optional comments are discarded when danger or another conversation takes priority.

@@ -72,6 +72,7 @@ struct GameplayNotice {
     NoticeKind kind=NoticeKind::Pickup;
     std::uint32_t item=0;
     std::uint64_t startedMs=0,deadlineMs=0;
+    std::uint32_t variant=0;
 };
 struct VarietyState {
     std::uint64_t eventRng=0, dialogueRng=0, scheduleRng=0;
@@ -108,6 +109,8 @@ std::uint32_t reservedQuantity(const ExplorationState&,std::uint32_t owner,std::
 void normalizeOranHoldings(ExplorationState&);
 bool canReceiveOran(const ExplorationState&);
 bool receiveOran(ExplorationState&);
+bool canUseOran(const ExplorationState&,std::uint32_t actor);
+bool consumeOran(ExplorationState&,std::uint32_t actor);
 bool changeStock(ExplorationState&,std::uint32_t owner,std::uint32_t item,int delta);
 bool eventBattle(const ExplorationState&);
 bool partyAlly(const ExplorationState&,std::uint32_t actor);

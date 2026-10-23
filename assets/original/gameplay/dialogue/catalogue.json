@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 9,
+  "catalogueVersion": 10,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -2205,6 +2205,294 @@
           "emotion": 1,
           "holdMs": 1000,
           "text": "좋아. 서두르지 말고 다녀오자."
+        }
+      ]
+    },
+    {
+      "id": "boss.befriend.01",
+      "context": "boss.befriend",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.befriend",
+      "lines": [
+        {
+          "id": "boss.befriend.01.1",
+          "legacyId": 1101,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "실력 좋네! 이제 그만 싸우자."
+        },
+        {
+          "id": "boss.befriend.01.2",
+          "legacyId": 1102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "응! 다음엔 친구로 만나자."
+        },
+        {
+          "id": "boss.befriend.01.3",
+          "legacyId": 1103,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "좋아! 조심해서 돌아가."
+        }
+      ]
+    },
+    {
+      "id": "boss.befriend.02",
+      "context": "boss.befriend",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.befriend",
+      "lines": [
+        {
+          "id": "boss.befriend.02.1",
+          "legacyId": 1101,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "정말 잘 싸우는구나!"
+        },
+        {
+          "id": "boss.befriend.02.2",
+          "legacyId": 1102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "너도 멋졌어! 친구가 되자."
+        },
+        {
+          "id": "boss.befriend.02.3",
+          "legacyId": 1103,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "좋아! 다음에 또 보자."
+        }
+      ]
+    },
+    {
+      "id": "boss.befriend.03",
+      "context": "boss.befriend",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.befriend",
+      "lines": [
+        {
+          "id": "boss.befriend.03.1",
+          "legacyId": 1101,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "휴, 대단한 팀이네."
+        },
+        {
+          "id": "boss.befriend.03.2",
+          "legacyId": 1102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "이제 서로 도와주면 어때?"
+        },
+        {
+          "id": "boss.befriend.03.3",
+          "legacyId": 1103,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "마음에 들어. 우린 친구야!"
+        }
+      ]
+    },
+    {
+      "id": "boss.befriend.04",
+      "context": "boss.befriend",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.befriend",
+      "lines": [
+        {
+          "id": "boss.befriend.04.1",
+          "legacyId": 1101,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "너희 실력, 인정할게!"
+        },
+        {
+          "id": "boss.befriend.04.2",
+          "legacyId": 1102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "고마워! 이제 사이좋게 지내자."
+        },
+        {
+          "id": "boss.befriend.04.3",
+          "legacyId": 1103,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "그래! 무사히 돌아가."
+        }
+      ]
+    },
+    {
+      "id": "boss.befriend.05",
+      "context": "boss.befriend",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.befriend",
+      "lines": [
+        {
+          "id": "boss.befriend.05.1",
+          "legacyId": 1101,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "내가 너희를 오해했나 봐."
+        },
+        {
+          "id": "boss.befriend.05.2",
+          "legacyId": 1102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "괜찮아. 이제 친구가 됐잖아!"
+        },
+        {
+          "id": "boss.befriend.05.3",
+          "legacyId": 1103,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "고마워. 다시 만나자."
+        }
+      ]
+    },
+    {
+      "id": "boss.befriend.06",
+      "context": "boss.befriend",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.befriend",
+      "lines": [
+        {
+          "id": "boss.befriend.06.1",
+          "legacyId": 1101,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "이렇게 열심히 싸우다니!"
+        },
+        {
+          "id": "boss.befriend.06.2",
+          "legacyId": 1102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "다음엔 싸움 말고 얘기하자."
+        },
+        {
+          "id": "boss.befriend.06.3",
+          "legacyId": 1103,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "좋지! 기다리고 있을게."
+        }
+      ]
+    },
+    {
+      "id": "boss.befriend.07",
+      "context": "boss.befriend",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.befriend",
+      "lines": [
+        {
+          "id": "boss.befriend.07.1",
+          "legacyId": 1101,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "멋진 승부였어!"
+        },
+        {
+          "id": "boss.befriend.07.2",
+          "legacyId": 1102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "우리, 친구가 될 수 있겠지?"
+        },
+        {
+          "id": "boss.befriend.07.3",
+          "legacyId": 1103,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "물론이지! 만나서 반가웠어."
+        }
+      ]
+    },
+    {
+      "id": "boss.befriend.08",
+      "context": "boss.befriend",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.befriend",
+      "lines": [
+        {
+          "id": "boss.befriend.08.1",
+          "legacyId": 1101,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "너희와 겨뤄서 즐거웠어."
+        },
+        {
+          "id": "boss.befriend.08.2",
+          "legacyId": 1102,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "우리도 그래! 다음에 또 보자."
+        },
+        {
+          "id": "boss.befriend.08.3",
+          "legacyId": 1103,
+          "speaker": 3,
+          "listener": 1,
+          "emotion": 1,
+          "holdMs": 1400,
+          "text": "그래, 친구들! 조심히 가!"
         }
       ]
     }

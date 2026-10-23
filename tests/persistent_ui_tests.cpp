@@ -19,7 +19,7 @@ int main(){try {
         check(p.speaker==PortraitRole::None,"morning idle portrait remains visible");
     }
     g.homeScene=false;g.life=LifePhase::Combat;
-    check(desktopStatusText(g,DesktopState::Active).find(L"전투")!=std::wstring::npos,"combat status mislabeled");
+    check(desktopStatusText(g,DesktopState::Active)==L"PC 사용 중","PC status still includes current action");
     g.life=LifePhase::Death;g.deathStage=DeathStage::Blackout;
     check(idlePortrait(g).speaker==PortraitRole::None && desktopStatusText(g,DesktopState::Active).empty(),"persistent UI leaked onto blackout");
     std::cout<<"persistent two-row viewport, hidden idle portraits, observed desktop status and blackout precedence pass\n";return 0;

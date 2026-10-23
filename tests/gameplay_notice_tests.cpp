@@ -55,7 +55,7 @@ int main(){try {
         queueGameplayNotice(s,NoticeKind::Pickup,70);updateGameplayNotices(s,1000);
         if(s.variety.notices.size()==2) {
             ++comments;const auto deadline=s.variety.notices.front().deadlineMs;updateGameplayNotices(s,deadline);
-            check(cataloguePortraits(s,catalogue).speaker==PortraitRole::Partner && catalogueText(s,catalogue).find(L"지치면")!=std::wstring::npos,"item comment has wrong speaker/content");
+            check(cataloguePortraits(s,catalogue).speaker==PortraitRole::Partner && catalogueText(s,catalogue)==itemCommentText(70,s.variety.notices.front().variant),"item comment has wrong speaker/content");
             check(roundTrip(s).variety.notices.front().kind==NoticeKind::ItemComment,"comment choice not persisted");
             s.population.entities={{1,237,EntityKind::Friend,101,false}};s.gameplay.hostile={1};updateGameplayNotices(s,deadline+1);
             check(s.variety.notices.empty(),"optional comment interrupts nearby combat");
@@ -69,14 +69,14 @@ int main(){try {
      Explorer live(s);live.advanceGameplay(1500,ActorCompletion{},catalogue);
      check(live.state().variety.notices.empty(),"victory reported before faint ends");
      live.advanceGameplay(2000,ActorCompletion{},catalogue);
-     check(live.state().population.entities[0].done && live.state().variety.notices.size()==1 && live.state().variety.notices.front().kind==NoticeKind::Victory,"finished KO missing notice");
-     check(catalogueText(live.state(),catalogue)==L"적을 쓰러뜨렸다!","victory text missing");
+     check(live.state().population.entities[0].done && live.state().variety.notices.empty(),"finished KO missing notice");
+     check(catalogueText(live.state(),catalogue).find(L"쓰러뜨렸다")==std::wstring::npos,"victory announcement remains");
      auto saved=roundTrip(live.state());Explorer resumed(saved);resumed.advanceGameplay(2000,ActorCompletion{},catalogue);
-     check(resumed.state().variety.notices.size()==1,"restored faint duplicated notice");}
+     check(resumed.state().variety.notices.empty(),"restored faint announced victory");}
     for(unsigned hp:{1U,2U,3U}) {
         auto s=base;s.gameplay.hearts=hp;s.gameplay.oran=1;Explorer live(s);live.advanceGameplay(1000,ActorCompletion{},catalogue);
         check(live.state().gameplay.hearts==kMaxHp && !live.state().gameplay.oran,"Oran not full in one action");
-        check(catalogueText(live.state(),catalogue).find(L"모두 회복")!=std::wstring::npos && catalogueText(live.state(),catalogue).find(L"2하트")==std::wstring::npos,"stale partial-heal text");
+        check(catalogueText(live.state(),catalogue)==L"오랭열매를 먹었다.","stale partial-heal text");
         auto saved=roundTrip(live.state());Explorer resumed(saved);resumed.advanceGameplay(1100,ActorCompletion{},catalogue);
         check(resumed.state().gameplay.hearts==kMaxHp && !resumed.state().gameplay.oran,"heal replay changed HP/stock");
     }

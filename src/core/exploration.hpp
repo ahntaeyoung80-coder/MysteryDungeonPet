@@ -314,6 +314,7 @@ private:
     std::uint32_t enemyTargetActor(const Entity&) const;
     int patrolTile(const Entity&,std::uint64_t now) const;
     int combatApproach(const Entity&,bool companion) const;
+    bool beginBossDialogue(std::uint64_t now);
     GameplayUpdate healCompanion(std::uint64_t now);
     bool selectSurvival(const Search&);
     Mask playerOccupancy() const;

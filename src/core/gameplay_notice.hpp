@@ -1,6 +1,7 @@
 #pragma once
 #include "core/gameplay_scene.hpp"
 namespace pet {
+std::wstring itemCommentText(std::uint32_t item,std::uint32_t variant);
 std::wstring itemDisplayName(std::uint32_t item);
 void queueGameplayNotice(ExplorationState&,NoticeKind,std::uint32_t item);
 void updateGameplayNotices(ExplorationState&,std::uint64_t now);

@@ -122,6 +122,7 @@ void validateVarietyState(const ExplorationState& s) {
     require(v.notices.size()<=64,"notice queue exceeds limit");
     for(std::size_t i=0;i<v.notices.size();++i) {
         const auto& n=v.notices[i];
+        require(n.variant<3,"invalid notice variation");
         require(n.kind>=NoticeKind::Pickup && n.kind<=NoticeKind::ItemComment && (n.kind==NoticeKind::Victory?n.item==0:n.item>0 && n.item<=65535),"invalid notice identity");
         require((!n.startedMs && !n.deadlineMs) || (i==0 && n.startedMs>0 && n.deadlineMs>n.startedMs && n.deadlineMs-n.startedMs<=10000),"invalid notice clock");
     }
@@ -201,6 +202,19 @@ bool receiveOran(ExplorationState& s) {
     auto& g=s.gameplay;auto& p=g.companion;
     if(p.enabled && !p.oran && (g.oran || p.hearts<g.hearts))return changeStock(s,kCompanionActorId,ITEM_ORAN_BERRY,1);
     return changeStock(s,0,ITEM_ORAN_BERRY,1);
+}
+bool canUseOran(const ExplorationState& s,std::uint32_t actor) {
+    const auto& g=s.gameplay;
+    if(actor!=0 && (actor!=kCompanionActorId || !g.companion.enabled))return false;
+    return g.oran || (g.companion.enabled && g.companion.oran);
+}
+bool consumeOran(ExplorationState& s,std::uint32_t actor) {
+    if(!canUseOran(s,actor))return false;
+    auto& g=s.gameplay;
+    auto& own=actor==0?g.oran:g.companion.oran;
+    auto& other=actor==0?g.companion.oran:g.oran;
+    if(own)--own;else --other;
+    return true;
 }
 std::uint32_t stockQuantity(const ExplorationState& s,std::uint32_t owner,std::uint32_t item) {
     if(owner!=0 && owner!=kCompanionActorId)return 0;

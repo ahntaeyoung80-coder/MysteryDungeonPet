@@ -25,8 +25,10 @@ int main(int argc,char** argv){try {
     } else if(name=="ko") {
         auto& g=s.gameplay;g.independentParty=true;g.hostile={1};s.population.entities[0].remainingHits=0;
         g.partyPlaybacks={{1,g.actionRound,now,now+500,1,33,6}};g.nextPartyId=2;
-    } else if(name=="heal") {
+    } else if(name=="heal" || name=="heal-team-player" || name=="heal-team-partner") {
         s.population.entities.clear();s.gameplay.hearts=s.gameplay.companion.hearts=1;s.gameplay.oran=s.gameplay.companion.oran=1;
+        if(name=="heal-team-player"){s.gameplay.oran=0;s.gameplay.companion.hearts=5;}
+        if(name=="heal-team-partner"){s.gameplay.companion.oran=0;s.gameplay.hearts=5;}
     } else if(name=="patrol") {
         s.position=105;s.visited[s.position]=1;s.gameplay.companion.tile=104;s.gameplay.independentParty=true;
         s.population.entities={{1,237,EntityKind::Friend,132,false},{2,83,EntityKind::Friend,156,false},{3,109,EntityKind::Item,195,false}};s.gameplay.hostile={1};

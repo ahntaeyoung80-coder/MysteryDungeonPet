@@ -34,7 +34,7 @@ int main(int argc,char** argv){try {
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");
     const auto package=loadExplorationPackage(root/"exploration/dungeon-15/exploration.mdpe");
     const std::vector<std::string> contexts{"companion.checkin","npc.greet","sleep.greet","wake.alarm","morning.depart","defeat.player","defeat.partner"};
-    check(std::count_if(c.bundles.begin(),c.bundles.end(),[](const auto& b){return b.context.rfind("event.",0)!=0;})==56,"catalogue selection count");
+    check(std::count_if(c.bundles.begin(),c.bundles.end(),[](const auto& b){return b.context.rfind("event.",0)!=0 && b.context!="boss.befriend";})==56,"catalogue selection count");
     for(const auto& context:contexts) {
         auto s=scene(package,context);const auto mapRng=s.rng.state,eventRng=s.variety.eventRng;
         Explorer e(s);e.advanceGameplay(1000,ActorCompletion{true,true,true},c);

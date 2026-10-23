@@ -48,6 +48,48 @@ void validateFloorSequence(const std::vector<FloorProfile>& floors,const Expedit
 bool terminalFloor(const ExplorationState& s) {
     return s.expedition.enabled() && s.floorIndex+1==s.floors.size();
 }
+std::string bossDialogueKey(const ExplorationState& s) {
+    return "boss-talk:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex);
+}
+bool bossConversation(const ExplorationState& s) {
+    return terminalFloor(s) && s.gameplay.life==LifePhase::Dialogue && s.gameplay.onceKeys.count(bossDialogueKey(s));
+}
+bool bossFriendship(const ExplorationState& s) {
+    return s.gameplay.onceKeys.count(bossDialogueKey(s)+":friends")!=0;
+}
+bool Explorer::beginBossDialogue(std::uint64_t now) {
+    auto& s=state_;auto& g=s.gameplay;
+    if(!g.enabled || g.homeScene || g.sceneBeat!=SceneBeat::None ||
+       (g.life!=LifePhase::Explore && !(g.independentParty && g.life==LifePhase::Combat)) ||
+       !terminalFloor(s) || !s.expedition.floors.at(s.floorIndex).fixedFloorId ||
+       fixedBattlePending(s) || bossFriendship(s) || !g.partyPlaybacks.empty() ||
+       std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;}))return false;
+    const auto boss=std::find_if(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){
+        return e.kind==EntityKind::Friend && e.done && e.visible &&
+            std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end();
+    });
+    if(boss==s.population.entities.end())return false;
+    g.enemyInstance=boss->instanceId;
+    Mask occupied=s.blocked;occupied[s.position]=1;occupied[floorExitTile(s)]=1;if(g.companion.enabled)occupied[g.companion.tile]=1;
+    for(const auto& e:s.population.entities)if(e.kind==EntityKind::Friend && !e.done)occupied[e.tile]=1;
+    for(auto& e:s.population.entities)if(e.kind==EntityKind::Friend && e.done && e.visible &&
+        std::find(g.hostile.begin(),g.hostile.end(),e.instanceId)!=g.hostile.end()) {
+        if(occupied[e.tile]) {
+            const auto reach=bfs(s.world,e.tile);int tile=-1;
+            for(int t=0;t<kTiles;++t)if(!occupied[t] && reach.distance[t]>=0 &&
+                (tile<0 || reach.distance[t]<reach.distance[tile]))tile=t;
+            require(tile>=0,"no room for recovered boss");e.tile=tile;
+        }
+        occupied[e.tile]=1;e.movement={};e.direction=directionBetween(e.tile,s.position);
+    }
+    g.hostile.clear();g.onceKeys.insert(bossDialogueKey(s));
+    g.partyActions.clear();g.partyPlaybacks.clear();g.partyPhase=PartyPhase::Idle;
+    g.movement=g.companion.movement={};g.walkStartedMs=g.companion.walkStartedMs=0;
+    g.playerDirection=directionBetween(s.position,boss->tile);
+    g.companion.direction=directionBetween(g.companion.tile,boss->tile);
+    g.life=LifePhase::Dialogue;g.dialogueStage=DialogueStage::Npc;g.phaseStartedMs=now;g.deadlineMs=now+1600;
+    invalidate();++s.occupancyVersion;return true;
+}
 int floorExitTile(const ExplorationState& s) {
     if(!terminalFloor(s))return s.world.stairs;
     // Use the room's actual bounds, not the padded 24x24 rendering grid.

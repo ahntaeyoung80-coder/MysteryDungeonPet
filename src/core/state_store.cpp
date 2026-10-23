@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(18); // MDES18 appends original expedition/segment/connector progress.
+    w.u32(0x5345444d); w.u32(19); // MDES19 appends the chosen item-comment variants.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -192,6 +192,10 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     const auto expeditionStart=w.bytes.size();
     detail::writeExpedition(w,s.expedition);
     w.u32(static_cast<unsigned>(w.bytes.size()-expeditionStart));
+    const auto variantStart=w.bytes.size();
+    w.u32(static_cast<unsigned>(v.notices.size()));
+    for(const auto& notice:v.notices)w.u32(notice.variant);
+    w.u32(static_cast<unsigned>(w.bytes.size()-variantStart));
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -200,7 +204,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 18) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 19) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -406,6 +410,12 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("notice snapshot block length mismatch");
     }
     if(schema>=18){const auto start=r.offset;s.expedition=detail::readExpedition(r);const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("expedition snapshot block length mismatch");}
+    if(schema>=19) {
+        const auto start=r.offset;const auto count=r.count(64);
+        if(count!=s.variety.notices.size())throw std::runtime_error("notice variant count mismatch");
+        for(auto& notice:s.variety.notices)notice.variant=r.count(2);
+        const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("notice variant block length mismatch");
+    }
     r.u32(); r.end();
     normalizeOranHoldings(s);
     discardStaleEntityGoal(s);

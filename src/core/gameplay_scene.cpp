@@ -48,7 +48,7 @@ DialogueLine gameplayDialogue(const GameplayState& g) {
 std::wstring gameplayText(const GameplayState& g) {
     if(g.sceneBeat==SceneBeat::ExpeditionRest)return L"잠시 쉬고 다음 구간으로!";
     if(g.sceneBeat==SceneBeat::CompletionText && completionScene(g))return L"탐험을 성공적으로 마쳤다";
-    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매로 하트를 모두 회복!\n내 열매 "+std::to_wstring(g.oran)+L"개 / 동료 "+std::to_wstring(g.companion.oran)+L"개";
+    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매를 먹었다.";
     const auto line=gameplayDialogue(g);if(line.id)return line.text;
     if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return L"눈앞이 깜깜해졌다";
     return {};
@@ -61,10 +61,7 @@ std::wstring desktopStatusText(const GameplayState& g,DesktopState desktop) {
     const auto pc=desktop==DesktopState::Active?L"PC 사용 중":desktop==DesktopState::Idle?L"PC 쉬는 중":
         desktop==DesktopState::Locked?L"PC 잠금":desktop==DesktopState::DisplayOff?L"화면 꺼짐":
         desktop==DesktopState::Suspended?L"PC 절전":L"PC 확인 중";
-    const auto action=g.life==LifePhase::Sleep?L"수면":g.life==LifePhase::Wake?L"기상":g.life==LifePhase::Ready?L"출발 준비":
-        g.life==LifePhase::Eat?L"식사":g.life==LifePhase::ReturnHome?L"귀가":g.life==LifePhase::Combat?L"전투":
-        g.life==LifePhase::Dialogue?L"대화":g.life==LifePhase::Death?L"휴식":g.life==LifePhase::Pose?L"탐험 완료":L"탐험";
-    return std::wstring(pc)+L" · "+action;
+    return pc;
 }
 unsigned dialogueDirection(const ExplorationState& s,std::uint32_t actor) {
     const auto& g=s.gameplay;

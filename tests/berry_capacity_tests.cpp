@@ -45,7 +45,10 @@ int main(){try {
      check(changeStock(s,0,109,3) && stockQuantity(s,0,109)==3,"berry limit changed apples");}
     // Import genuine MDES18 legacy field values, keeping its checksum valid.
     const auto ownOffset=stockOffset(base,false),partnerOffset=stockOffset(base,true);
-    auto bytes=encodeSnapshot(base);bytes[ownOffset]=99;bytes[partnerOffset]=2;crc(bytes);
+    auto bytes=encodeSnapshot(base);
+    // Drop the MDES19 variant extension to exercise an actual MDES18 import.
+    bytes.erase(bytes.end()-12,bytes.end()-4);bytes[4]=18;
+    bytes[ownOffset]=99;bytes[partnerOffset]=2;crc(bytes);
     const auto imported=decodeSnapshot(bytes,p.assetVersion);
     check(imported.gameplay.oran==1 && imported.gameplay.companion.oran==1 && imported.runId==base.runId,"legacy stacks not normalized on load");
     check(decodeSnapshot(encodeSnapshot(imported),p.assetVersion).gameplay.oran==1,"normalized save not stable");

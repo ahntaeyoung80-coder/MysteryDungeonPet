@@ -387,6 +387,12 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         if(!completed.enemy) return {};
         auto& e=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){return x.instanceId==g.enemyInstance;});
         const auto once=key("greet",e.instanceId);e.done=true;state_.onceKeys.insert(once);
+        if(bossConversation(state_)) {
+            g.onceKeys.erase(bossDialogueKey(state_));g.onceKeys.insert(bossDialogueKey(state_)+":friends");
+            for(const auto& actor:state_.population.entities)if(actor.kind==EntityKind::Friend && actor.done)
+                g.onceKeys.insert("boss-friend:"+std::to_string(actor.originalId));
+            g.enemyInstance=0;invalidate();
+        }
         if(state_.goalKind==GoalKind::Friend) invalidate();
         return life(LifePhase::Explore,GameplayEvent::Explore,0);
     }
@@ -472,6 +478,7 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         if(state_.screenExploration)next.enableScreenExploration(state_.viewportSize);
         for(const auto& entry:inventory) next.state_.onceKeys.insert(entry.onceKey);
         next.state_.gameplay.enabled=true;next.state_.gameplay.day=nextDay;
+        for(const auto& once:previous.onceKeys)if(once.rfind("boss-friend:",0)==0)next.state_.gameplay.onceKeys.insert(once);
         cancelVariety(state_);
         next.state_.variety=state_.variety;
         if(next.state_.variety.schedule.day!=next.state_.gameplay.day) {
@@ -513,8 +520,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             }
             const auto once = "turn:" + std::to_string(state_.runId) + ":" + std::to_string(state_.floorIndex) + ":" + std::to_string(g.enemyInstance) + ":" + std::to_string(++g.turn);
             if (!g.onceKeys.insert(once).second) throw std::logic_error("duplicate combat turn");
-            if (g.oran && g.hearts>0 && g.hearts+2<=kMaxHp) {
-                --g.oran; g.hearts = kMaxHp;
+            if (canUseOran(state_,0) && g.hearts>0 && g.hearts+2<=kMaxHp) {
+                (void)consumeOran(state_,0); g.hearts = kMaxHp;
                 auto update = combat(CombatPhase::BerryText, GameplayEvent::UseOranBerry, 2000); update.onceKey = once;
                 return update;
             }
@@ -540,8 +547,8 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             partner.actionRound=g.actionRound;partner.walkStartedMs=0;
             const auto once="companion-turn:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.enemyInstance)+":"+std::to_string(g.actionRound);
             if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate companion turn");
-            if(partner.oran && partner.hearts>0 && partner.hearts+2<=kMaxHp) {
-                --partner.oran;partner.hearts=kMaxHp;
+            if(canUseOran(state_,kCompanionActorId) && partner.hearts>0 && partner.hearts+2<=kMaxHp) {
+                (void)consumeOran(state_,kCompanionActorId);partner.hearts=kMaxHp;
                 auto update=combat(CombatPhase::CompanionBerryText,GameplayEvent::UseOranBerry,2000);update.onceKey=once;update.actorId=kCompanionActorId;return update;
             }
             if(mustRetreat()) return afterCombatAction(now);
@@ -784,8 +791,8 @@ int Explorer::combatApproach(const Entity& enemy,bool partner) const {
 }
 GameplayUpdate Explorer::healCompanion(std::uint64_t now) {
     auto& g=state_.gameplay;auto& p=g.companion;
-    if(!p.enabled || !p.hearts || !p.oran || p.hearts+2>kMaxHp || p.actionRound==g.actionRound) return {};
-    --p.oran;p.hearts=kMaxHp;p.actionRound=g.actionRound;p.walkStartedMs=0;
+    if(!p.enabled || !p.hearts || !canUseOran(state_,kCompanionActorId) || p.hearts+2>kMaxHp || p.actionRound==g.actionRound) return {};
+    (void)consumeOran(state_,kCompanionActorId);p.hearts=kMaxHp;p.actionRound=g.actionRound;p.walkStartedMs=0;
     const auto once="companion-heal:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.actionRound);
     if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate companion berry use");
     invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+2000;
@@ -826,6 +833,7 @@ bool Explorer::beginCompanionDialogue(std::uint64_t now) {
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;
     retreatProgress_=false;
+    if(beginBossDialogue(now))return {GameplayEvent::DialogueNpc,{}};
     if(!fixedBattlePending(state_) && state_.position==floorExitTile(state_) && (terminalFloor(state_) || lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {
         invalidate();g.movement={};g.walkStartedMs=0;
         g.sceneBeat=SceneBeat::FloorFadeOut;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
@@ -893,8 +901,8 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
         if(g.actionRound==UINT64_MAX) throw std::runtime_error("action round exhausted");
         ++g.actionRound;
     }
-    if(g.oran && g.hearts>0 && g.hearts+2<=kMaxHp && g.playerActionRound!=g.actionRound) {
-        --g.oran;g.hearts=kMaxHp;g.playerActionRound=g.actionRound;g.walkStartedMs=0;
+    if(canUseOran(state_,0) && g.hearts>0 && g.hearts+2<=kMaxHp && g.playerActionRound!=g.actionRound) {
+        (void)consumeOran(state_,0);g.hearts=kMaxHp;g.playerActionRound=g.actionRound;g.walkStartedMs=0;
         const auto once="heal:"+std::to_string(state_.runId)+":"+std::to_string(state_.floorIndex)+":"+std::to_string(g.actionRound);
         if(!g.onceKeys.insert(once).second) throw std::logic_error("duplicate exploration berry use");
         invalidate();g.sceneBeat=SceneBeat::ExplorationBerryText;g.phaseStartedMs=now;g.deadlineMs=now+2000;

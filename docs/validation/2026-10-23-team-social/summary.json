@@ -1,0 +1,517 @@
+{
+  "coreUniqueTests": 12,
+  "result": "passed after event-combat fixture corrections; existing passing checks reused",
+  "initialCoreRun": {
+    "count": 9,
+    "passed": 8,
+    "failed": "event_combat expected a withdrawal among three full-health supplied fixtures; sharing now wins all"
+  },
+  "compatibilityRun": [
+    "core passed 7.72s",
+    "companion passed 32.74s"
+  ],
+  "finalFocusedRuns": [
+    "event_combat passed 0.56s with wounded/no-supply retreat case and victory action checks",
+    "social_feedback, berry_capacity, package_transition passed 13.30s after friendship persistence and actual MDES18 import checks"
+  ],
+  "pythonTests": 8,
+  "windowsWineTests": [
+    "social_feedback passed; repeated after friendship persistence",
+    "text_overlay passed"
+  ],
+  "dialogue": {
+    "catalogueVersion": 10,
+    "bundles": 120,
+    "utterances": 157,
+    "bossFriendshipBundles": 8,
+    "itemIds": 156,
+    "itemReactionVariants": 468,
+    "maxPagesPerUtterance": 1
+  },
+  "saveSchema": 19,
+  "oldSaveSupport": "MDES1 through18; notice variants default0; tested real MDES18 stack normalization",
+  "friendship": "all eight terminal post-faint fixtures: NPC/partner conversation -> friend commit -> center clear -> one return -> next day retains species record",
+  "guiInitial": [
+    {
+      "case": "status",
+      "exit": 0,
+      "seconds": 9.9,
+      "traceRows": 399,
+      "submissions": 193,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "dialogueContexts": [],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "ko",
+      "exit": 0,
+      "seconds": 9.25,
+      "traceRows": 1187,
+      "submissions": 632,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "dialogueContexts": [],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "0",
+          "14"
+        ],
+        [
+          "8",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "heal-team-player",
+      "exit": 0,
+      "seconds": 9.24,
+      "traceRows": 959,
+      "submissions": 511,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "dialogueContexts": [],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "0",
+          "14"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-full-heal.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "heal-team-partner",
+      "exit": 0,
+      "seconds": 9.29,
+      "traceRows": 1013,
+      "submissions": 532,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "dialogueContexts": [],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "0",
+          "14"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-full-heal.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "pickup-orb",
+      "exit": 0,
+      "seconds": 9.29,
+      "traceRows": 1137,
+      "submissions": 613,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "2",
+          "11",
+          "0",
+          "3"
+        ]
+      ],
+      "dialogueContexts": [],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "0",
+          "14"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-first.bmp",
+        "trace-notice-1-314.bmp",
+        "trace-notice-3-314.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "boss-talk",
+      "exit": 0,
+      "seconds": 27.35,
+      "traceRows": 5689,
+      "submissions": 1146,
+      "helpers": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "1",
+          "1102",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "1101",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "1103",
+          "0"
+        ]
+      ],
+      "dialogueContexts": [
+        "boss.befriend.02"
+      ],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "1",
+          "20"
+        ],
+        [
+          "1",
+          "21"
+        ],
+        [
+          "1",
+          "22"
+        ],
+        [
+          "1",
+          "23"
+        ],
+        [
+          "1",
+          "24"
+        ],
+        [
+          "10",
+          "0"
+        ],
+        [
+          "2",
+          "0"
+        ],
+        [
+          "4",
+          "1"
+        ],
+        [
+          "5",
+          "2"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-boss-16.bmp",
+        "trace-first.bmp",
+        "trace-npc-reply.bmp",
+        "trace-completion.bmp",
+        "trace-last.bmp"
+      ]
+    }
+  ],
+  "guiFinalBoss": [
+    {
+      "case": "boss-talk",
+      "exit": 0,
+      "seconds": 28.21,
+      "traceRows": 5779,
+      "submissions": 1166,
+      "helpers": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "1",
+          "1102",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "1101",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "1103",
+          "0"
+        ]
+      ],
+      "dialogueContexts": [
+        "boss.befriend.02"
+      ],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "1",
+          "20"
+        ],
+        [
+          "1",
+          "21"
+        ],
+        [
+          "1",
+          "22"
+        ],
+        [
+          "1",
+          "23"
+        ],
+        [
+          "1",
+          "24"
+        ],
+        [
+          "10",
+          "0"
+        ],
+        [
+          "2",
+          "0"
+        ],
+        [
+          "4",
+          "1"
+        ],
+        [
+          "5",
+          "2"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-boss-16.bmp",
+        "trace-first.bmp",
+        "trace-npc-reply.bmp",
+        "trace-completion.bmp",
+        "trace-last.bmp"
+      ]
+    }
+  ],
+  "finalBossSpeciesRecorded": 415,
+  "exeSha256": "2e0a4ec82d65d05834d998b57ae02d067802280faf09b327133b390c0df3f1c5",
+  "buildRootInstallExeEqual": true,
+  "limits": [
+    "Wine10/Xvfb with synthetic WTS unlock, not native Windows11",
+    "Post-battle fixtures finish all bosses except the final faint playback; not full natural victories through all eight expeditions",
+    "Entire core/Python suites not repeated; remote CI not observed"
+  ]
+}

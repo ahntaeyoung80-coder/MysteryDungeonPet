@@ -30,9 +30,10 @@ int main(){try {
     finishVarietyEvent(s);s.gameplay.deadlineMs=s.gameplay.phaseStartedMs;
     s=decodeSnapshot(encodeSnapshot(s),s.assetVersion);
     bool victoryObserved=false,withdrawObserved=false;
-    for(unsigned seed:{42U,1U,7U})for(auto type:{VarietyEvent::MonsterHouse,VarietyEvent::JointBattle}) {
-        s=eventFixture(p);s.rng.state=seed;s.gameplay.oran=s.gameplay.companion.oran=1;
+    for(unsigned seed:{42U,1U,7U,99U})for(auto type:{VarietyEvent::MonsterHouse,VarietyEvent::JointBattle}) {
+        s=eventFixture(p);s.rng.state=seed;s.gameplay.oran=s.gameplay.companion.oran=seed==99?0:1;
         check(startVarietyEvent(s,type,1000,c,1,&maps),"battle event could not start");
+        if(seed==99)s.gameplay.hearts=3;
         const auto opponents=s.variety.event.opponents;const auto key=eventKey(s.variety.event.id);const auto helper=type==VarietyEvent::JointBattle?1U:0U;
         unsigned steps=0,helperAttacks=0,allyAttacks=0;std::uint64_t now=1000;
         while(eventActive(s) && steps++<250) {
@@ -54,8 +55,9 @@ int main(){try {
             ((s.gameplay.hearts<=kLowHp && !s.gameplay.oran) || (s.gameplay.companion.hearts<=kLowHp && !s.gameplay.companion.oran));
         check(steps<250 && (victory || withdrew),"battle did not finish victory or safe empty-stock withdrawal");
         check(s.gameplay.oran<=1 && s.gameplay.companion.oran<=1,"battle exceeded single berry capacity");
+        std::cout<<"seed="<<seed<<" type="<<unsigned(type)<<" victory="<<victory<<" withdrew="<<withdrew<<" hp="<<s.gameplay.hearts<<","<<s.gameplay.companion.hearts<<"\n";
         victoryObserved|=victory;withdrawObserved|=withdrew;
-        check(allyAttacks>0 && (!helper || helperAttacks>0),"joint helper did not use independent action");
+        check(withdrew || (allyAttacks>0 && (!helper || helperAttacks>0)),"joint helper did not use independent action");
         check(s.phase==Phase::Explore && s.gameplay.companion.enabled && s.inventory.empty(),"event fight replaced permanent party or returned home");
     }
     check(victoryObserved && withdrawObserved,"single-berry fixtures did not exercise victory and withdrawal");

@@ -46,7 +46,7 @@ void quick() {
     replay(e,10501);stairs(e);replay(e,10502);
     check(!e.state().completed && e.state().gameplay.sceneBeat!=SceneBeat::FloorFadeOut,"boss could be skipped by stairs");
     auto s=e.state();s.target=-1;s.goalKind=GoalKind::None;s.population.entities[0].done=true;
-    s.onceKeys.insert("greet:9200:2:1");e=Explorer(std::move(s));stairs(e);
+    s.onceKeys.insert("greet:9200:2:1");s.gameplay.onceKeys.insert(bossDialogueKey(s)+":friends");e=Explorer(std::move(s));stairs(e);
     replay(e,11000);replay(e,12000);
     check(e.state().completed && e.state().expedition.outcome==ExpeditionOutcome::Success,"final segment did not complete expedition");
     for(unsigned beat=0;beat<8 && e.state().gameplay.life==LifePhase::Pose;++beat)replay(e,e.state().gameplay.deadlineMs);
@@ -77,6 +77,7 @@ void finishFixedForTransitionTest(Explorer& e) {
         check(actor.kind==EntityKind::Friend,"unexpected fixed item in selected transition fixture");
         actor.done=true;actor.remainingHits=0;s.onceKeys.insert("greet:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+std::to_string(actor.instanceId));
     }
+    if(terminalFloor(s))s.gameplay.onceKeys.insert(bossDialogueKey(s)+":friends");
     s.target=-1;s.goalKind=GoalKind::None;s.targetInstance=0;s.gameplay.movement={};s.gameplay.partyActions.clear();s.gameplay.partyPlaybacks.clear();
     e=Explorer(std::move(s));
 }

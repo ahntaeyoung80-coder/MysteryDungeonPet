@@ -512,8 +512,8 @@ bool Explorer::mustRetreat() const {
     // that decision so restoring PlayerTurn cannot restart the retreat loop.
     if(g.life==LifePhase::Combat &&
        g.onceKeys.count("cornered:"+key("combat",g.enemyInstance)))return false;
-    return (g.hearts<=kLowHp && !g.oran) ||
-        (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp && !g.companion.oran);
+    return (g.hearts<=kLowHp && !canUseOran(state_,0)) ||
+        (!g.independentParty && g.companion.enabled && g.companion.hearts<=kLowHp && !canUseOran(state_,kCompanionActorId));
 }
 Mask Explorer::occupancy(bool playerPath) const {
     auto mask=state_.blocked;
@@ -916,7 +916,7 @@ void validateState(const ExplorationState& s) {
     if(g.life==LifePhase::Dialogue) {
         if(companionDialogue(g)) require(g.companion.enabled && !g.companion.hidden && g.companion.hearts>0 &&
             canAttack(s.world,s.position,g.companion.tile),"invalid companion dialogue owner");
-        else require(std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && e.kind==EntityKind::Friend && !e.done;}),"invalid dialogue owner");
+        else require(std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && e.kind==EntityKind::Friend && (!e.done || bossConversation(s));}),"invalid dialogue owner");
     }
     require(g.enemyInstance<=kTiles || companionDialogue(g),"companion actor id outside dialogue");
     if (g.enabled) {

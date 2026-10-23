@@ -27,7 +27,7 @@
 
 ## 데이터·저장·호환
 
-MDPE2는기존FloorProfile과타일목록뒤에원정배열·원작연결부·고정층정보를추가한다. MDES18은같은원정계획과현재floorIndex/stopIndex/입구상태/분기선택/재방문/결과를기존snapshot에추가하고block길이와CRC를검사한다. MDPE1과MDES1~17을계속읽는다. 기존0/15/18기본저장은같은날일정/획득/재고를보존하고새일정에서원정풀로이행한다. 명시--explore는같은구간·쉼터를복원한다.
+MDPE2는기존FloorProfile과타일목록뒤에원정배열·원작연결부·고정층정보를추가한다. MDES18은같은원정계획과현재floorIndex/stopIndex/입구상태/분기선택/재방문/결과를기존snapshot에추가하고block길이와CRC를검사한다. 후속 MDES19는 선택된 아이템 반응 번호를 덧붙이고 MDPE1과MDES1~18을계속읽는다. 기존0/15/18기본저장은같은날일정/획득/재고를보존하고새일정에서원정풀로이행한다. 명시--explore는같은구간·쉼터를복원한다.
 
 구간마다원작dungeonId/localFloor/groupFloor를유지한다. 일반/MH적분포와바닥/상점/MH아이템의종류→아이템조건부분포를분리한다. 고정층은원본MD와spawnType의적대/우호를사용하며무작위일반후보로대체하지않는다. 고정층에서는임의사건을시작하지않는다. 원정중간에는run/사건상한/재고를초기화하지않는다.
 
@@ -43,3 +43,5 @@ python -m tools.expedition_assets --out local/expedition-assets
 변환은보존한원작ROM과조사해시를대조하고읽기전후ROM불변을확인한다. 준비한exploration/gameplay를선택자산에반영한뒤현재NPCselection으로tools.prepare_npc_characters를실행하고기존몸체를재사용한다. tools.prepare_floor_items는현재선택문맥의156record/39그림을준비한다. 초상화는같은RGBA를공유하며화자/표정의rect와원작픽셀을보존한다. 자세한실제명령/검사결과는작업로그에남긴다.
 
 개발용검사는pet_expedition_tests의--references/--packages/--branches로분리돼있다. 최종전환검사의강제계단/기절fixture는상태기계와중복방지검사용이며원정전체의자연플레이승리를대신하지않는다. 실제EXE에서는별도로쉼터·보스전·완료장면을확인한다. Wine에서합성잠금해제메시지를주입한GUI검사를실제Windows11잠금·절전검증으로보고하지않는다.
+
+최종 보스 전투 후에는 대표 보스와 대화하고 친구 기록을 남긴 뒤 중앙 목표·클리어·귀가로 진행한다. 여러 보스는 전원 적대를 해제하며, 보스가 없는 재방문층은 기존 중앙 클리어를 유지한다. 친구 기록은 다음 날에도 보존하되 재방문 전투 자체를 없애는 정책 변경은 하지 않는다.

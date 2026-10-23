@@ -43,7 +43,7 @@ bool actorExists(const ExplorationState& s,PortraitRole role) {
     if(role!=PortraitRole::Friendly)return false;
     if(s.variety.holiday.active)return true;
     return std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return
-        e.instanceId==actor(s,role) && e.kind==EntityKind::Friend && e.visible && !e.done &&
+        e.instanceId==actor(s,role) && e.kind==EntityKind::Friend && e.visible && (!e.done || bossConversation(s)) &&
         std::find(s.gameplay.hostile.begin(),s.gameplay.hostile.end(),e.instanceId)==s.gameplay.hostile.end();});
 }
 bool safePair(const ExplorationState& s,bool healthy=true) {
@@ -109,7 +109,7 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
     const auto count=r.count(128);require(count>0,"empty dialogue catalogue");std::set<std::string> ids,lines;
     for(unsigned i=0;i<count;++i) {
         DialogueBundle b;b.id=r.str();b.context=r.str();b.weight=r.count(100);
-        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart","event.E02.intro","event.E02.success","event.E06.pickup","event.E06.owner","event.E06.success","event.E08.separated","event.E08.reunion","event.E03.intro","event.E03.success","event.E04.intro","event.E04.victory","event.E07.intro","event.E07.victory","event.E10.morning","event.E10.visit","event.E10.bath","event.E10.depart"};
+        const std::set<std::string> eventContexts{"event.E01.intro","event.E01.success","event.E05.view","event.E05.depart","event.E09.intro","event.E09.depart","event.E02.intro","event.E02.success","event.E06.pickup","event.E06.owner","event.E06.success","event.E08.separated","event.E08.reunion","event.E03.intro","event.E03.success","event.E04.intro","event.E04.victory","event.E07.intro","event.E07.victory","event.E10.morning","event.E10.visit","event.E10.bath","event.E10.depart","boss.befriend"};
         const bool event=eventContexts.count(b.context)!=0;
         require(identity(b.id) && ids.insert(b.id).second && (event || std::find(contexts.begin(),contexts.end(),b.context)!=contexts.end()) && b.weight,"invalid dialogue bundle");
         const auto n=r.count(32);require(n>0,"empty dialogue bundle");
@@ -135,6 +135,7 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
 std::string dialogueContext(const ExplorationState& s) {
     if(eventActive(s) && s.variety.dialogue.active)return s.variety.dialogue.context;
     const auto& g=s.gameplay;
+    if(bossConversation(s))return "boss.befriend";
     if(g.life==LifePhase::Dialogue)return companionDialogue(g)?"companion.checkin":"npc.greet";
     if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return "sleep.greet";
     if(g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay)return "wake.alarm";
@@ -147,6 +148,7 @@ bool dialogueEligible(const ExplorationState& s,const std::string& context) {
     if(s.variety.holiday.active)return s.gameplay.companion.enabled;
     if(eventActive(s))return safePair(s) && s.gameplay.companion.enabled;
     const auto& g=s.gameplay;
+    if(context=="boss.befriend")return bossConversation(s) && !fixedBattlePending(s);
     if(context=="companion.checkin")return safePair(s) && g.companion.enabled && canAttack(s.world,s.position,g.companion.tile);
     if(context=="npc.greet")return safePair(s,false) && actorExists(s,PortraitRole::Friendly) && std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && canAttack(s.world,s.position,e.tile);});
     if(context=="wake.alarm")return g.homeScene;
@@ -242,7 +244,7 @@ GameplayUpdate Explorer::advanceCatalogueGameplay(std::uint64_t now,ActorComplet
             if(!startDialogueBundle(s,c,event.variant+".victory",now)){cancelVariety(s);g.deadlineMs=now;}
             return update;
         }
-        if(settled && (now>=event.deadlineMs || (g.hearts<=kLowHp && !g.oran) || (g.companion.hearts<=kLowHp && !g.companion.oran))) {
+        if(settled && (now>=event.deadlineMs || (g.hearts<=kLowHp && !canUseOran(s,0)) || (g.companion.hearts<=kLowHp && !canUseOran(s,kCompanionActorId)))) {
             g.partyActions.clear();g.partyPhase=PartyPhase::Idle;cancelVariety(s);g.life=LifePhase::Explore;g.deadlineMs=now;invalidate();
         }
         return update;

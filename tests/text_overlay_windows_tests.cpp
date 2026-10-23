@@ -33,7 +33,7 @@ int main() {try {
                 ++ink;if(y>=168)++secondRowInk;
             }
         }
-        if(scene==0 && secondRowInk<20)throw std::runtime_error("second text row has no ink");
+        if(scene==0 && secondRowInk!=0)throw std::runtime_error("short berry text unnecessarily uses two rows");
         if(ink<50) throw std::runtime_error("text missing from actual GDI raster");
     }
     for(const auto& label:{L"1F",L"7F",L"128F"}) {

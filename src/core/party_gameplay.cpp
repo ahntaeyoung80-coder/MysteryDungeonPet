@@ -201,10 +201,11 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     for(auto& a:g.partyActions) if(!a.finished && a.kind!=PartyActionKind::Attack && now>=a.deadlineMs) {
         a.finished=true;changed=true;
     }
+    if(!eventBattle(s) && beginBossDialogue(now)) {result.event=GameplayEvent::DialogueNpc;return result;}
     if(eventBattle(s) && g.partyPlaybacks.empty() && std::none_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;})) {
         const auto& owned=s.variety.event;
         const bool ended=std::all_of(owned.opponents.begin(),owned.opponents.end(),[&](auto id){const auto* a=entity(id);return a && a->done;});
-        const bool withdraw=now>=owned.deadlineMs || (g.hearts<=kLowHp && !g.oran) || (g.companion.hearts<=kLowHp && !g.companion.oran);
+        const bool withdraw=now>=owned.deadlineMs || (g.hearts<=kLowHp && !canUseOran(s,0)) || (g.companion.hearts<=kLowHp && !canUseOran(s,kCompanionActorId));
         if(ended || withdraw){g.life=LifePhase::Explore;g.phaseStartedMs=g.deadlineMs=now;return result;}
     }
     auto available=[&](uint32_t actor) {
@@ -271,9 +272,8 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     };
     auto heal=[&](uint32_t actor) {
         auto& hp=actor==0?g.hearts:g.companion.hearts;
-        auto& berry=actor==0?g.oran:g.companion.oran;
-        if(!berry || !hp || hp+2>kMaxHp)return false;
-        --berry;hp=kMaxHp;const auto action=start(actor,PartyActionKind::Berry,0,2000);
+        if(!canUseOran(s,actor) || !hp || hp+2>kMaxHp)return false;
+        (void)consumeOran(s,actor);hp=kMaxHp;const auto action=start(actor,PartyActionKind::Berry,0,2000);
         const auto once="party-heal:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex)+":"+
             std::to_string(g.actionRound)+":"+std::to_string(actor);
         if(!g.onceKeys.insert(once).second)throw std::logic_error("duplicate party heal");
