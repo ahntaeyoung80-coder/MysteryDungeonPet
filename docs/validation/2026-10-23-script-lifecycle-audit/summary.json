@@ -1,0 +1,149 @@
+{
+  "dateKST": "2026-10-23",
+  "productCommit": "08504b7b03aed2ad6c509fd75c70f7246256a439",
+  "catalogueVersion": 12,
+  "bundles": 128,
+  "spokenTurns": 165,
+  "playerTurns": 0,
+  "itemNames": 156,
+  "itemReactions": 468,
+  "pythonPassed": 10,
+  "nativeUniquePassed": 17,
+  "lifecycleChecks": 67,
+  "asanUbsanLifecyclePassed": true,
+  "windowsPeCorePassed": 3,
+  "gdiPassed": true,
+  "exeSha256": "727667e8873ef1aeceb82aa03bbd59a93638b436b1a7db25d26102d27ea74fb2",
+  "buildRootInstallByteIdentical": true,
+  "installedDialogueAssetsIdentical": true,
+  "nativeWindows11Verified": false,
+  "remoteCiResult": "unconfirmed; combined status returned no statuses",
+  "installedGui": [
+    {
+      "case": "installed-new",
+      "exit": 0,
+      "seconds": 20.31,
+      "submitted": 992,
+      "bundles": [
+        "morning.depart.01",
+        "wake.alarm.08"
+      ],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "11"
+        ],
+        [
+          "6",
+          "12"
+        ],
+        [
+          "6",
+          "15"
+        ],
+        [
+          "6",
+          "18"
+        ],
+        [
+          "6",
+          "19"
+        ],
+        [
+          "6",
+          "8"
+        ],
+        [
+          "7",
+          "10"
+        ],
+        [
+          "7",
+          "16"
+        ],
+        [
+          "7",
+          "9"
+        ],
+        [
+          "8",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-last.bmp",
+        "trace-first.bmp",
+        "trace-morning-greeting.bmp",
+        "trace-middle.bmp",
+        "trace-alarm.bmp",
+        "trace-map-title.bmp"
+      ]
+    },
+    {
+      "case": "installed-resume",
+      "exit": 0,
+      "seconds": 20.09,
+      "submitted": 1041,
+      "bundles": [
+        "morning.depart.02",
+        "wake.alarm.04"
+      ],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "11"
+        ],
+        [
+          "6",
+          "12"
+        ],
+        [
+          "6",
+          "15"
+        ],
+        [
+          "6",
+          "18"
+        ],
+        [
+          "6",
+          "19"
+        ],
+        [
+          "6",
+          "8"
+        ],
+        [
+          "7",
+          "10"
+        ],
+        [
+          "7",
+          "16"
+        ],
+        [
+          "7",
+          "9"
+        ]
+      ],
+      "images": [
+        "trace-last.bmp",
+        "trace-first.bmp",
+        "trace-notice-1-109.bmp",
+        "trace-morning-greeting.bmp",
+        "trace-middle.bmp",
+        "trace-notice-1-70.bmp",
+        "trace-alarm.bmp",
+        "trace-map-title.bmp"
+      ]
+    }
+  ]
+}
