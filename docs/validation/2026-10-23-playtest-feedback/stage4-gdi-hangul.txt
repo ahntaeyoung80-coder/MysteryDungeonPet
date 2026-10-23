@@ -1,0 +1,1 @@
+eight Korean text scenes and three map/floor HUD labels have visible opaque GDI ink

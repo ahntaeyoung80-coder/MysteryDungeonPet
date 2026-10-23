@@ -21,6 +21,9 @@ enum class PortraitRole : std::uint32_t { None=0, Player=1, Partner=2, Friendly=
 enum class PortraitEmotion : std::uint32_t { Normal, Happy, Pain, Angry, Worried, Sad, Crying, Shouting, Teary, Determined, Joyous, Inspired, Surprised, Dizzy };
 // A role/instance selects the speaker. Character identity and portrait IDs come from the cast.
 struct DialoguePortraits { PortraitRole speaker=PortraitRole::None;std::uint32_t actorId=0;PortraitEmotion emotion=PortraitEmotion::Normal; };
+enum class DesktopState { Unknown, Active, Idle, Locked, DisplayOff, Suspended };
+DialoguePortraits idlePortrait(const GameplayState&);
+std::wstring desktopStatusText(const GameplayState&,DesktopState);
 struct DialogueActor {
     PortraitRole role=PortraitRole::None;
     std::uint32_t portraitClip=0;

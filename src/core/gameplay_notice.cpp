@@ -37,14 +37,17 @@ std::wstring text(const GameplayNotice& n) {
         if(n.item==330)return L"돌아갈 때 쓸 수 있겠어!";
         if(n.item==318 || n.item==331 || n.item==332)return L"숨은 길도 보이려나?";
         if(n.item==314)return L"어디로 워프하게 될까?";
-        return n.item%2?L"이 구슬, 정말 신기하다!":L"반짝이는 구슬! 예쁘다!";
+        return name+(n.item%2?L"! 정말 신기하다!":L"! 반짝반짝해.");
     }
-    if(n.item>=188 && n.item<=276)return n.item%2?L"어떤 기술을 배울까?":L"새로운 기술이라니 멋져!";
-    if(n.item>=119 && n.item<=137)return n.item%2?L"이 구미는 무슨 맛일까?":L"알록달록한 구미네!";
-    if(n.item>=13 && n.item<=50)return n.item%2?L"잘 어울리는 장비겠어!":L"어떤 힘이 숨어 있을까?";
-    if(n.item>=69 && n.item<=108)return L"효과를 살피고 써 보자.";
-    if(n.item<=11)return L"멀리서도 쓸 수 있겠어!";
-    return L"탐험에 도움이 되겠지!";
+    if(n.item>=188 && n.item<=276) {
+        const auto colon=name.find(L": ");
+        return (colon==std::wstring::npos?name:name.substr(colon+2))+L"! 배워 보고 싶다.";
+    }
+    if(n.item>=119 && n.item<=137)return name+L"! 무슨 맛일까?";
+    if(n.item>=13 && n.item<=50)return name+L", 잘 어울리겠다!";
+    if(n.item>=69 && n.item<=108)return name+L", 효과가 궁금해.";
+    if(n.item<=11)return name+L"! 멀리서 써 보자.";
+    return name+L"! 잘 챙겨 두자.";
 }
 PortraitEmotion itemMood(unsigned item) {
     if((item>=300 && item<=361) || (item>=188 && item<=276) || item==362)return PortraitEmotion::Inspired;

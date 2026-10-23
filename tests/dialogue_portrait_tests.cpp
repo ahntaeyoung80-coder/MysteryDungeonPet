@@ -88,20 +88,20 @@ void portraits() {
         Surface screen(200,200);dialoguePortraitOverlay(screen,atlas,p,{role,0},cast,frame);
         const unsigned left=role==PortraitRole::Player?8:136,other=role==PortraitRole::Player?144:16;
         const auto& rect=p.frames(cast.actor(role).portraitClip,0).front().rect;
-        check(screen.pixels[(96*200+left+8)*4]==unsigned(rect.x/40+1),"speaker did not resolve its character portrait");
-        check(screen.pixels[(100*200+other)*4+3]==0,"listener portrait remained visible");
+        check(screen.pixels[(112*200+left+8)*4]==unsigned(rect.x/40+1),"speaker did not resolve its character portrait");
+        check(screen.pixels[(116*200+other)*4+3]==0,"listener portrait remained visible");
         check(screen.pixels[(130*200+100)*4+3]==0,"removed nameplate still occupies screen");
         for(const auto sample:std::vector<std::array<unsigned,3>>{{0,0,2},{8,0,3},{48,0,4},{0,8,5},{48,8,6},{0,48,7},{8,48,8},{48,48,9}})
-            check(screen.pixels[((88+sample[1])*200+left+sample[0])*4]==sample[2],"portrait did not use original dialogue corner/edge tiles");
-        check(screen.pixels[(144*200+8)*4+3]==0,"portrait overwrote dialogue text");screen.validatePbgra();
+            check(screen.pixels[((104+sample[1])*200+left+sample[0])*4]==sample[2],"portrait did not use original dialogue corner/edge tiles");
+        check(screen.pixels[(160*200+8)*4+3]==0,"portrait overwrote dialogue text");screen.validatePbgra();
     }
     auto swapped=cast;auto player=cast.actor(PortraitRole::Partner),partner=cast.actor(PortraitRole::Player);
     player.role=PortraitRole::Player;partner.role=PortraitRole::Partner;swapped.actors[0]=player;swapped.actors[1]=partner;
     validateDialogueActor(player,loadPackage(folder/player.bodyManifest),p);validateDialogueActor(partner,loadPackage(folder/partner.bodyManifest),p);
     Surface screen(200,200);dialoguePortraitOverlay(screen,atlas,p,{PortraitRole::Player,0},swapped,frame);
-    check(screen.pixels[(96*200+16)*4]==unsigned(p.frames(player.portraitClip,0).front().rect.x/40+1) && swapped.label(PortraitRole::Player)=="나 · 파이리","player replacement retained former portrait/name");
+    check(screen.pixels[(112*200+16)*4]==unsigned(p.frames(player.portraitClip,0).front().rect.x/40+1) && swapped.label(PortraitRole::Player)=="나 · 파이리","player replacement retained former portrait/name");
     screen.clear();dialoguePortraitOverlay(screen,atlas,p,{PortraitRole::Partner,kCompanionActorId},swapped,frame);
-    check(screen.pixels[(96*200+144)*4]==unsigned(p.frames(partner.portraitClip,0).front().rect.x/40+1) && swapped.label(PortraitRole::Partner)=="동료 · 이상해씨","partner replacement retained former portrait/name");
+    check(screen.pixels[(112*200+144)*4]==unsigned(p.frames(partner.portraitClip,0).front().rect.x/40+1) && swapped.label(PortraitRole::Partner)=="동료 · 이상해씨","partner replacement retained former portrait/name");
     bool rejected=false;try{validateDialogueActor(player,loadPackage(folder/partner.bodyManifest),p);}catch(const std::exception&){rejected=true;}
     check(rejected,"mismatched body/portrait binding accepted");
     auto relabelled=loadPackage(folder/partner.bodyManifest);relabelled.assetKey=player.bodyAssetKey;rejected=false;

@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 $Exe = (Resolve-Path $Exe).Path
 $Output = [IO.Path]::GetFullPath($Output)
 $Inspector = (Resolve-Path $Inspector).Path
-$DefaultPackage = (Resolve-Path 'assets/original/exploration/dungeon-14/exploration.mdpe').Path
+$DefaultPackage = $null
 New-Item -ItemType Directory -Force $Output | Out-Null
 $Data = Join-Path $env:LOCALAPPDATA 'MysteryDungeonPet'
 New-Item -ItemType Directory -Force $Data | Out-Null
@@ -82,9 +82,16 @@ try {
         $Events | Set-Content "$Output/launch-$Run-events.txt"
         Copy-Item $Metrics "$Output/launch-$Run.csv"
         Copy-Item $Snapshot "$Output/launch-$Run.mdes"
+        if ($Run -eq 0) {
+            $Choice = [regex]::Match(($Events -join "`n"), 'initial exploration selected dungeon=(1|4|8|14|17|21|35|41)\b')
+            if (-not $Choice.Success) { throw 'first launch did not select from the eight verified expeditions' }
+            $SelectedDungeon = [int]$Choice.Groups[1].Value
+            $ExpectedFloors = @{ 1=5; 4=10; 8=50; 14=16; 17=20; 21=21; 35=15; 41=24 }
+            $DefaultPackage = (Resolve-Path ("assets/original/exploration/dungeon-" + $SelectedDungeon + "/exploration.mdpe")).Path
+        }
         $State = & $Inspector --inspect $DefaultPackage $Snapshot | ConvertFrom-Json
-        if ($LASTEXITCODE -ne 0 -or $State.floorCount -ne 16 -or $State.dungeonId -ne 14) {
-            throw 'default launch did not create/restore the original sixteen-floor expedition'
+        if ($LASTEXITCODE -ne 0 -or $State.floorCount -ne $ExpectedFloors[$SelectedDungeon] -or $State.dungeonId -ne $SelectedDungeon) {
+            throw 'default launch did not create/restore the selected original expedition'
         }
         $State | ConvertTo-Json -Depth 4 | Set-Content "$Output/launch-$Run-state.json"
         $Joined = $Events -join "`n"

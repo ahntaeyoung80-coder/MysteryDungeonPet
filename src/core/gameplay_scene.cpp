@@ -46,12 +46,28 @@ DialogueLine gameplayDialogue(const GameplayState& g) {
     return {};
 }
 std::wstring gameplayText(const GameplayState& g) {
-    if(g.sceneBeat==SceneBeat::ExpeditionRest)return L"잠시 숨을 고르고\n다음 구간으로 나아가자.";
+    if(g.sceneBeat==SceneBeat::ExpeditionRest)return L"잠시 쉬고 다음 구간으로!";
     if(g.sceneBeat==SceneBeat::CompletionText && completionScene(g))return L"탐험을 성공적으로 마쳤다";
-    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매를 먹었다!\n하트가 모두 회복됐다!";
+    if(partyHealing(g) || (g.life==LifePhase::Combat && (g.combat==CombatPhase::BerryText || g.combat==CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText)return L"오랭열매로 하트를 모두 회복!";
     const auto line=gameplayDialogue(g);if(line.id)return line.text;
     if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return L"눈앞이 깜깜해졌다";
     return {};
+}
+DialoguePortraits idlePortrait(const GameplayState& g) {
+    if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return {};
+    if(g.companion.enabled && g.homeScene && (g.life==LifePhase::Wake || g.life==LifePhase::Ready))
+        return {PortraitRole::Partner,kCompanionActorId,PortraitEmotion::Happy};
+    return {PortraitRole::Player,0,PortraitEmotion::Normal};
+}
+std::wstring desktopStatusText(const GameplayState& g,DesktopState desktop) {
+    if(g.life==LifePhase::Death && g.deathStage==DeathStage::Blackout)return {};
+    const auto pc=desktop==DesktopState::Active?L"PC 사용 중":desktop==DesktopState::Idle?L"PC 쉬는 중":
+        desktop==DesktopState::Locked?L"PC 잠금":desktop==DesktopState::DisplayOff?L"화면 꺼짐":
+        desktop==DesktopState::Suspended?L"PC 절전":L"PC 확인 중";
+    const auto action=g.life==LifePhase::Sleep?L"수면":g.life==LifePhase::Wake?L"기상":g.life==LifePhase::Ready?L"출발 준비":
+        g.life==LifePhase::Eat?L"식사":g.life==LifePhase::ReturnHome?L"귀가":g.life==LifePhase::Combat?L"전투":
+        g.life==LifePhase::Dialogue?L"대화":g.life==LifePhase::Death?L"휴식":g.life==LifePhase::Pose?L"탐험 완료":L"탐험";
+    return std::wstring(pc)+L" · "+action;
 }
 unsigned dialogueDirection(const ExplorationState& s,std::uint32_t actor) {
     const auto& g=s.gameplay;
@@ -79,7 +95,7 @@ std::size_t loopFrameAt(const Package& p,std::uint32_t clip,std::uint64_t elapse
     return frames.size()-1;
 }
 Surface originalDialoguePanel(const Surface& atlas,const Package& package) {
-    return originalWindowPanel(atlas,package,184,48);
+    return originalWindowPanel(atlas,package,184,32);
 }
 Surface originalWindowPanel(const Surface& atlas,const Package& package,unsigned width,unsigned height) {
     if(width<24 || height<24 || width>200 || height>200 || width%8 || height%8)
@@ -149,8 +165,8 @@ void dialoguePortraitOverlay(Surface& s,const Surface& atlas,const Package& pack
         }
     };
     const bool player=portraits.speaker==PortraitRole::Player;const unsigned left=player?8:136;
-    blit(frame,{0,0,int32_t(frame.width),int32_t(frame.height)},left,88);
-    blit(atlas,rect,left+8,96);
+    blit(frame,{0,0,int32_t(frame.width),int32_t(frame.height)},left,104);
+    blit(atlas,rect,left+8,112);
 }
 bool guildAppleVisible(const GameplayState& g) {
     return g.homeScene && !bedroomScene(g);
@@ -196,7 +212,7 @@ BedroomExitSample loudredAlarm(Point original,const GameplayState& g,std::uint64
     if(g.sceneBeat==SceneBeat::AlarmLeave)return {{original.x-int32_t(48*elapsed/800),original.y},6,elapsed==800};
     return {original,2,false};
 }
-void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const Surface* panel,bool includeFade,bool includeHud,bool hasDialogue) {
+void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const Surface* panel,bool includeFade,bool includeHud,bool /*hasDialogue*/) {
     auto pixel = [&](unsigned x, unsigned y, unsigned blue, unsigned green, unsigned red) {
         if (x >= s.width || y >= s.height) return;
         const auto i = (y * s.width + x) * 4;
@@ -209,15 +225,13 @@ void gameplayOverlay(Surface& s, const GameplayState& g, std::uint64_t now,const
             if (heart[y][x] == '1') for(unsigned yy=0;yy<2;++yy) for(unsigned xx=0;xx<2;++xx)
                 pixel(8 + 18*h + 2*x+xx,8+2*y+yy,35,35,h<g.hearts?230:65);
     }
-    if (!panel && (partyHealing(g) || (g.life == LifePhase::Combat && (g.combat == CombatPhase::BerryText || g.combat == CombatPhase::CompanionBerryText)) || g.sceneBeat==SceneBeat::ExplorationBerryText))
-        for (unsigned y = 150; y < std::min(190U, s.height); ++y)
-            for (unsigned x = 8; x < std::min(192U, s.width); ++x) pixel(x, y, 40, 30, 20);
-    if(!panel && (g.life==LifePhase::Dialogue || (g.life==LifePhase::Wake && g.sceneBeat==SceneBeat::WakeDelay) || (g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace) || (g.life==LifePhase::Ready && g.sceneBeat==SceneBeat::MorningFace)))
-        for(unsigned y=150;y<190;++y) for(unsigned x=8;x<192;++x) pixel(x,y,40,30,20);
-    if(panel && (g.life!=LifePhase::Death || g.deathStage==DeathStage::PartnerTalk) && (hasDialogue || !gameplayText(g).empty())) {
-        for(unsigned y=0;y<panel->height && y+144<s.height;++y)
+    const bool visible=g.life!=LifePhase::Death || g.deathStage!=DeathStage::Blackout;
+    if(!panel && visible)
+        for(unsigned y=160;y<192;++y)for(unsigned x=8;x<192;++x)pixel(x,y,40,30,20);
+    if(panel && visible) {
+        for(unsigned y=0;y<panel->height && y+160<s.height;++y)
             for(unsigned x=0;x<panel->width && x+8<s.width;++x) {
-                const auto src=(y*panel->width+x)*4,dst=((y+144)*s.width+x+8)*4;
+                const auto src=(y*panel->width+x)*4,dst=((y+160)*s.width+x+8)*4;
                 const auto inv=255-panel->pixels[src+3];
                 for(unsigned ch=0;ch<4;++ch)s.pixels[dst+ch]=uint8_t(panel->pixels[src+ch]+(s.pixels[dst+ch]*inv+127)/255);
             }

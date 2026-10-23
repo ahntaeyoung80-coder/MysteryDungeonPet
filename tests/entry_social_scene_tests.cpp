@@ -111,7 +111,7 @@ void scenes(){
  const auto ui=loadPackage(root/"assets/original/gameplay/ui/ui.mdpa");Surface atlas(144,8);
  for(unsigned y=0;y<8;++y)for(unsigned x=0;x<144;++x){auto i=(y*144+x)*4;atlas.pixels[i]=x/8;atlas.pixels[i+3]=255;}
  const auto panel=originalDialoguePanel(atlas,ui);
- for(const auto v:std::vector<std::array<unsigned,3>>{{0,0,2},{8,0,3},{176,0,4},{0,8,5},{8,8,1},{176,8,6},{0,40,7},{8,40,8},{176,40,9}})
+ for(const auto v:std::vector<std::array<unsigned,3>>{{0,0,2},{8,0,3},{176,0,4},{0,8,5},{8,8,1},{176,8,6},{0,24,7},{8,24,8},{176,24,9}})
   check(panel.pixels[(v[1]*184+v[0])*4]==v[2],"dialogue border tile position changed");
  auto meal=s.gameplay;meal.homeScene=true;
  for(auto phase:{LifePhase::ReturnHome,LifePhase::Emotion,LifePhase::Eat}){meal.life=phase;meal.sceneBeat=SceneBeat::None;check(guildAppleVisible(meal),"apple appeared only after meal started");}

@@ -266,6 +266,8 @@ class App {
     HPOWERNOTIFY power_ = nullptr;
     bool session_ = false, tray_ = false, hidden_ = false, locked_ = false, displayOff_ = false, suspended_ = false, paused_ = false;
     bool topmost_ = true, backgroundOn_ = false, dragging_ = false, dirty_ = true, submitted_ = false, running_ = true;
+    DesktopState desktopState_=DesktopState::Unknown;
+    int64_t desktopDeadline_=0;
     POINT dragCursor_{}, dragWindow_{};
     uint32_t clip_;
     unsigned direction_, scale_;
@@ -400,7 +402,7 @@ class App {
             bedroomExit(partner->cue->position,g,utcMs(),true).position:partner->cue->position;
         movementTrace_ << ',' << partnerPoint.x << ',' << partnerPoint.y << ',' << (partner==guildLive_.end()?-1:int(partner->direction))
             << ',' << guildAppleVisible(g) << ',' << appleFrame_;
-        const auto portrait=cataloguePortraits(state,dialogueCatalogue_);
+        const auto portrait=currentPortrait();
         const auto* selected=selectedDialogue(state,dialogueCatalogue_);const auto line=selected?selected->display:DialogueLine{};
         movementTrace_<<','<<dialogueCast_.actor(PortraitRole::Player).portraitClip<<','<<dialogueCast_.actor(PortraitRole::Partner).portraitClip
             <<','<<unsigned(portrait.speaker)<<','<<unsigned(portrait.emotion)<<','<<line.id<<','<<gameplayFadeOpacity(g,utcMs());
@@ -423,7 +425,7 @@ class App {
                 <<','<<sample.playerDirection<<','<<sample.partnerDirection<<','<<(sample.bathing?20:sample.moving?0:7)<<','<<sample.bathing<<','<<holidayFade(state,utcMs());
         } else movementTrace_<<",,0,0,0,0,0,0,0,0,0";
         const auto* notice=activeGameplayNotice(state);
-        movementTrace_<<','<<(notice?unsigned(notice->kind):0)<<','<<(notice?notice->item:0)<<','<<(notice?notice->deadlineMs:0)<<'\n';
+        movementTrace_<<','<<(notice?unsigned(notice->kind):0)<<','<<(notice?notice->item:0)<<','<<(notice?notice->deadlineMs:0)<<','<<unsigned(desktopState_)<<'\n';
         const bool textReady=!catalogueText(state,dialogueCatalogue_).empty() && revealedCatalogueText(state,dialogueCatalogue_,utcMs())==catalogueText(state,dialogueCatalogue_);
         if(submitted && (h.active || (eventActive(state) && textReady))) {
             const auto key=h.active?"holiday-"+std::to_string(unsigned(h.beat))+(textReady?"-"+state.variety.dialogue.lineId:""):
@@ -995,7 +997,20 @@ class App {
         auto portrait=cataloguePortraits(explorer_->state(),dialogueCatalogue_);
         if(portrait.speaker==PortraitRole::Friendly)
             portrait.emotion=npcEmotion(npcCatalogue_.forActor(explorer_->state(),portrait.actorId),portrait.emotion);
-        return portrait;
+        return portrait.speaker==PortraitRole::None?idlePortrait(explorer_->state().gameplay):portrait;
+    }
+    void updateDesktopState(int64_t now) {
+        if(now<desktopDeadline_)return;
+        LASTINPUTINFO input{};input.cbSize=sizeof(input);
+        const auto state=suspended_?DesktopState::Suspended:displayOff_?DesktopState::DisplayOff:locked_?DesktopState::Locked:
+            !GetLastInputInfo(&input)?DesktopState::Unknown:DWORD(GetTickCount()-input.dwTime)>=60000?DesktopState::Idle:DesktopState::Active;
+        if(state!=desktopState_){desktopState_=state;dirty_=true;log("desktop state="+std::to_string(unsigned(state)));}
+        desktopDeadline_=now+1000000;
+    }
+    std::wstring displayText() const {
+        if(!explorer_)return {};
+        const auto text=revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs());
+        return text.empty()?desktopStatusText(explorer_->state().gameplay,desktopState_):text;
     }
     uint32_t npcClip(uint32_t requested,const Assets& source) const {
         const auto& clips=source.package.clips;
@@ -1293,6 +1308,7 @@ class App {
     void render(int64_t now) {
         presentationNow_=now;
         synchronizePause(now);
+        if(explorer_)updateDesktopState(now);
         if (blocked()) return;
         syncPartyActors(now);
         const auto playerPoint=raster(playerMotion_.sample(now));
@@ -1387,7 +1403,7 @@ class App {
         if(explorer_ && (explorer_->state().gameplay.sceneBeat==SceneBeat::BedFace || explorer_->state().gameplay.sceneBeat==SceneBeat::MorningFace) && utcMs()<explorer_->state().gameplay.deadlineMs)poseFinished_=false;
         if(partyRendering())poseFinished_=!completion_.actions.empty();
         (void)playerFinished;
-        if(explorer_ && revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs())!=submittedText_)dirty_=true;
+        if(explorer_ && displayText()!=submittedText_)dirty_=true;
         if (!dirty_) {traceMovement(now,false);return;}
         std::vector<Layer> layers;
         std::optional<Layer> playerLayer;
@@ -1488,7 +1504,7 @@ class App {
         if (explorer_) gameplayOverlay(surface_, explorer_->state().gameplay, utcMs(),dialoguePanel_?&*dialoguePanel_:nullptr,false,!explorer_->state().variety.holiday.active,selectedDialogue(explorer_->state(),dialogueCatalogue_)!=nullptr || activeGameplayNotice(explorer_->state())!=nullptr);
         const auto speaker=explorer_?currentPortrait():DialoguePortraits{};
         if(explorer_ && portraitAssets_) dialoguePortraitOverlay(surface_,*portraitAssets_->atlas,portraitAssets_->package,speaker,dialogueCast_,*portraitFrame_,npcSpeaker(speaker));
-        std::wstring overlayText=explorer_?revealedCatalogueText(explorer_->state(),dialogueCatalogue_,utcMs()):std::wstring{};
+        std::wstring overlayText=displayText();
         const auto hud=mapHud();
         const auto fade=explorer_?(explorer_->state().variety.holiday.active?holidayFade(explorer_->state(),utcMs()):gameplayFadeOpacity(explorer_->state().gameplay,utcMs())):0;
         const auto titleOpacity=explorer_?explorationTitleOpacity(explorer_->state(),utcMs()):0;
@@ -1535,7 +1551,7 @@ public:
         if(!options_.movementTrace.empty()) {
             movementTrace_.open(options_.movementTrace,std::ios::trunc);
             if(!movementTrace_) throw std::runtime_error("cannot open movement trace");
-            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies,dialogue_bundle,dialogue_line,dialogue_deadline_ms,event_type,event_progress,event_variant,holiday_beat,holiday_scene,holiday_player_x,holiday_player_y,holiday_partner_x,holiday_partner_y,holiday_player_direction,holiday_partner_direction,holiday_clip,bathing,holiday_fade,notice_kind,notice_item,notice_deadline_ms\n";
+            movementTrace_ << "elapsed_us,action_id,started_ms,duration_ms,from_tile,to_tile,world_x,world_y,scene_x,scene_y,camera_x,camera_y,direction,clip,frame_index,scale,moving,opaque_pixels,surface_hash,submitted,marker_count,life,scene_beat,utc_ms,walk_started_ms,floor,entry_tile,stairs_tile,player_tile,entry_entities,holding_pose,partner_clip,partner_frame,rgb_sum,companion_enabled,companion_tile,companion_world_x,companion_world_y,companion_clip,companion_frame,companion_moving,player_hp,companion_hp,round,player_round,companion_round,enemy_targets_companion,combat,independent_party,party_phase,player_party_action,companion_party_action,actor_states,companion_started_ms,companion_duration_ms,actor_movements,guild_alarm_x,guild_alarm_y,guild_alarm_clip,guild_alarm_direction,room_shown_tiles,room_total_tiles,guild_partner_x,guild_partner_y,guild_partner_direction,guild_apple_visible,guild_apple_frame,player_character,partner_character,speaker,emotion,line_id,fade_opacity,speaker_md,actual_emotion,npc_bindings,npc_cache_bodies,dialogue_bundle,dialogue_line,dialogue_deadline_ms,event_type,event_progress,event_variant,holiday_beat,holiday_scene,holiday_player_x,holiday_player_y,holiday_partner_x,holiday_partner_y,holiday_player_direction,holiday_partner_direction,holiday_clip,bathing,holiday_fade,notice_kind,notice_item,notice_deadline_ms,desktop_state\n";
         }
         events_.open(directory_ / L"events.log", std::ios::app);
         if (!events_) throw std::runtime_error("cannot open event log");
@@ -1775,6 +1791,7 @@ public:
             if (sessionRetry_) deadline = std::min(deadline, sessionRetry_);
             if (scenarioDeadline_) deadline = std::min(deadline, scenarioDeadline_);
             if (explorer_ && !blocked()) {
+                deadline=std::min(deadline,desktopDeadline_);
                 if(explorer_->state().variety.holiday.active)deadline=std::min(deadline,now+16667);
                 const auto& g=explorer_->state().gameplay;
                 // A finite NPC idle can outlast the text's minimum duration.

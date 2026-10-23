@@ -9,8 +9,11 @@ TextOverlay::TextOverlay():font_(CreateFontW(-12,0,0,0,FW_NORMAL,FALSE,FALSE,FAL
     hudFont_=CreateFontW(-11,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
         OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,NONANTIALIASED_QUALITY,DEFAULT_PITCH,L"Malgun Gothic");
     if(!font_ || !hudFont_) throw std::runtime_error("text font creation failed");
+    for(unsigned i=0;i<3;++i)compactFonts_[i]=CreateFontW(-11+int(i),0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
+        OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,NONANTIALIASED_QUALITY,DEFAULT_PITCH,L"Malgun Gothic");
+    if(!compactFonts_[0] || !compactFonts_[1] || !compactFonts_[2])throw std::runtime_error("compact text font creation failed");
 }
-TextOverlay::~TextOverlay() {DeleteObject(font_);DeleteObject(hudFont_);}
+TextOverlay::~TextOverlay() {DeleteObject(font_);DeleteObject(hudFont_);for(auto font:compactFonts_)DeleteObject(font);}
 void TextOverlay::drawMapTitle(HDC dc,void* bits,unsigned size,const std::wstring& text,unsigned opacity) const {
     if(text.empty() || !opacity)return;
     auto* pixels=static_cast<std::uint8_t*>(bits);std::vector<std::uint8_t> original(pixels,pixels+size*size*4);
@@ -43,16 +46,24 @@ void TextOverlay::draw(HDC dc,void* bits,unsigned size,const std::wstring& text,
     if(text.empty()) return;
     const auto oldFont=SelectObject(dc,font_);
     SetBkMode(dc,TRANSPARENT);SetTextColor(dc,RGB(0,0,0));
-    RECT rect=blackout?RECT{8,80,192,130}:RECT{16,152,184,184};
+    RECT rect=blackout?RECT{8,80,192,130}:RECT{16,168,184,184};
+    if(!blackout) {
+        SIZE measured{};GetTextExtentPoint32W(dc,text.c_str(),int(text.size()),&measured);
+        for(auto font:compactFonts_) {
+            if(measured.cx<=rect.right-rect.left)break;
+            SelectObject(dc,font);GetTextExtentPoint32W(dc,text.c_str(),int(text.size()),&measured);
+        }
+    }
+    const auto flags=DT_NOPREFIX|(blackout?(DT_CENTER|DT_WORDBREAK):(DT_LEFT|DT_SINGLELINE|DT_VCENTER|DT_END_ELLIPSIS));
     auto shadow=rect;OffsetRect(&shadow,1,1);
-    DrawTextW(dc,text.c_str(),-1,&shadow,(blackout?DT_CENTER:DT_LEFT)|DT_WORDBREAK|DT_NOPREFIX);
+    DrawTextW(dc,text.c_str(),-1,&shadow,flags);
     SetTextColor(dc,RGB(255,255,255));
-    const auto height=DrawTextW(dc,text.c_str(),-1,&rect,(blackout?DT_CENTER:DT_LEFT)|DT_WORDBREAK|DT_NOPREFIX);
+    const auto height=DrawTextW(dc,text.c_str(),-1,&rect,flags);
     // GDI batches writes and clears DIB alpha. Flush before repairing alpha for ULW_ALPHA.
     const auto flushed=GdiFlush();SelectObject(dc,oldFont);
     if(!height || !flushed) throw std::runtime_error("text rasterization failed");
     auto* pixels=static_cast<std::uint8_t*>(bits);
-    for(unsigned y=blackout?0:150;y<std::min(size,blackout?size:190U);++y)
+    for(unsigned y=blackout?0:160;y<std::min(size,blackout?size:192U);++y)
         for(unsigned x=blackout?0:8;x<std::min(size,blackout?size:192U);++x) pixels[(y*size+x)*4+3]=255;
 }
 }

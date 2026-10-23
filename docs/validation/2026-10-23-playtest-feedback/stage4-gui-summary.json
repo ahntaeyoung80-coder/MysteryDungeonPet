@@ -1,0 +1,321 @@
+[
+  {
+    "case": "status",
+    "exit": 0,
+    "seconds": 9.74,
+    "traceRows": 380,
+    "submissions": 183,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-last.bmp"
+    ]
+  },
+  {
+    "case": "morning",
+    "exit": 0,
+    "seconds": 9.31,
+    "traceRows": 1021,
+    "submissions": 576,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-map-title.bmp",
+      "trace-last.bmp"
+    ]
+  },
+  {
+    "case": "alarm",
+    "exit": 0,
+    "seconds": 9.3,
+    "traceRows": 556,
+    "submissions": 266,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "41",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-last.bmp",
+      "trace-alarm.bmp"
+    ]
+  },
+  {
+    "case": "wounded-npc",
+    "exit": 0,
+    "seconds": 9.44,
+    "traceRows": 639,
+    "submissions": 465,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "3",
+        "0",
+        "22",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-npc-reply.bmp",
+      "trace-last.bmp"
+    ]
+  },
+  {
+    "case": "pickup-tm",
+    "exit": 0,
+    "seconds": 9.86,
+    "traceRows": 727,
+    "submissions": 493,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0",
+        "1"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-notice-1-188.bmp",
+      "trace-last.bmp"
+    ]
+  },
+  {
+    "case": "pickup-orb",
+    "exit": 0,
+    "seconds": 9.87,
+    "traceRows": 732,
+    "submissions": 514,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "2",
+        "11",
+        "0",
+        "3"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-notice-1-314.bmp",
+      "trace-notice-3-314.bmp",
+      "trace-last.bmp"
+    ]
+  },
+  {
+    "case": "heal",
+    "exit": 0,
+    "seconds": 9.87,
+    "traceRows": 622,
+    "submissions": 433,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-full-heal.bmp",
+      "trace-last.bmp"
+    ]
+  },
+  {
+    "case": "default-new",
+    "exit": 0,
+    "seconds": 9.91,
+    "traceRows": 449,
+    "submissions": 265,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "41",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-last.bmp",
+      "trace-alarm.bmp"
+    ]
+  },
+  {
+    "case": "default-restore",
+    "exit": 0,
+    "seconds": 9.9,
+    "traceRows": 429,
+    "submissions": 256,
+    "helpers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "41",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-last.bmp",
+      "trace-alarm.bmp"
+    ]
+  }
+]

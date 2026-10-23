@@ -113,8 +113,8 @@ int main(int argc,char** argv) {try {
     for(const auto& c:catalogue.characters) {
         screen.clear();dialoguePortraitOverlay(screen,atlas,faces,{PortraitRole::Friendly,1,npcEmotion(c,PortraitEmotion::Happy)},cast,frame,&c.actor);
         const auto& rect=faces.frames(c.id,0)[unsigned(npcEmotion(c,PortraitEmotion::Happy))].rect;
-        check(screen.pixels[(96*200+144)*4]==rect.x/40+1,"actual NPC instance drew fixed Friendly cast");
-        check(screen.pixels[(96*200+16)*4+3]==0 && screen.pixels[(130*200+100)*4+3]==0,"listener/nameplate leaked");
+        check(screen.pixels[(112*200+144)*4]==rect.x/40+1,"actual NPC instance drew fixed Friendly cast");
+        check(screen.pixels[(112*200+16)*4+3]==0 && screen.pixels[(130*200+100)*4+3]==0,"listener/nameplate leaked");
     }
     auto bytes=readFile(root/"npcs/characters.mdnc",128*1024);
     const auto file=std::filesystem::temp_directory_path()/"mdpet-invalid-npc.mdnc";

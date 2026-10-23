@@ -1,0 +1,114 @@
+[
+  {
+    "case": "default-new",
+    "exit": 0,
+    "seconds": 24.75,
+    "traceRows": 2499,
+    "submissions": 1312,
+    "helpers": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "41",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-rest-GND-L055-D25P11A.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-map-title.bmp",
+      "trace-last.bmp",
+      "trace-alarm.bmp"
+    ]
+  },
+  {
+    "case": "default-restore",
+    "exit": 0,
+    "seconds": 24.28,
+    "traceRows": 2421,
+    "submissions": 1213,
+    "helpers": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "portraits": [
+      [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "41",
+        "0"
+      ],
+      [
+        "2",
+        "1",
+        "51",
+        "0"
+      ]
+    ],
+    "images": [
+      "trace-middle.bmp",
+      "trace-first.bmp",
+      "trace-rest-GND-L055-D25P11A.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-map-title.bmp",
+      "trace-last.bmp",
+      "trace-alarm.bmp"
+    ]
+  }
+]

@@ -15,10 +15,12 @@ int main(int argc,char** argv){try {
     const auto c=loadDialogueCatalogue(root/"gameplay/dialogue/catalogue.mdlc");const auto maps=loadEventRegistry(root/"gameplay/events/contexts.mder");
     const auto now=std::uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
     auto s=eventFixture(p);s.gameplay.phaseStartedMs=s.gameplay.deadlineMs=now;
-    if(name=="pickup" || name=="pickup-comment" || name=="pickup-apple" || name=="pickup-tm") {
+    if(name=="pickup" || name=="pickup-comment" || name=="pickup-apple" || name=="pickup-tm" || name=="pickup-orb") {
         s.position=125;s.visited[s.position]=1;s.gameplay.companion.tile=124;
-        s.population.entities={{1,name=="pickup-apple"?109U:name=="pickup-tm"?188U:70U,EntityKind::Item,s.position,false}};s.target=s.position;s.targetInstance=1;s.goalKind=GoalKind::Item;s.gameplay.independentParty=true;
-        for(unsigned seed=0;seed<100;++seed){auto probe=s.variety;probe.dialogueRng=seed;const bool comment=drawVariety(probe,VarietyRandomStream::Dialogue,5)==0;if(comment==(name=="pickup-comment")){s.variety.dialogueRng=seed;break;}}
+        s.population.entities={{1,name=="pickup-apple"?109U:name=="pickup-tm"?188U:name=="pickup-orb"?314U:70U,EntityKind::Item,s.position,false}};s.target=s.position;s.targetInstance=1;s.goalKind=GoalKind::Item;s.gameplay.independentParty=true;
+        for(unsigned seed=0;seed<100;++seed){auto probe=s.variety;probe.dialogueRng=seed;const bool comment=drawVariety(probe,VarietyRandomStream::Dialogue,5)==0;if(comment==(name=="pickup-comment" || name=="pickup-orb")){s.variety.dialogueRng=seed;break;}}
+    } else if(name=="status") {
+        s.population.entities.clear();s.gameplay.deadlineMs=now+8000;
     } else if(name=="ko") {
         auto& g=s.gameplay;g.independentParty=true;g.hostile={1};s.population.entities[0].remainingHits=0;
         g.partyPlaybacks={{1,g.actionRound,now,now+500,1,33,6}};g.nextPartyId=2;

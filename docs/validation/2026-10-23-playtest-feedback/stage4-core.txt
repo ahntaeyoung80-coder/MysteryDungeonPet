@@ -1,0 +1,15 @@
+Test project /workspace/MysteryDungeonPet/build/playtest-asan
+    Start  1: pet_persistent_ui_tests
+1/5 Test  #1: pet_persistent_ui_tests ..........   Passed    0.01 sec
+    Start 14: pet_npc_character_tests
+2/5 Test #14: pet_npc_character_tests ..........   Passed    0.55 sec
+    Start 16: pet_character_scene_tests
+3/5 Test #16: pet_character_scene_tests ........   Passed    0.24 sec
+    Start 18: pet_dialogue_portrait_tests
+4/5 Test #18: pet_dialogue_portrait_tests ......   Passed    0.09 sec
+    Start 22: pet_entry_social_scene_tests
+5/5 Test #22: pet_entry_social_scene_tests .....   Passed    3.51 sec
+
+100% tests passed out of 5
+
+Total Test time (real) =   4.40 sec

@@ -1,5 +1,6 @@
 #include "windows/text_overlay.hpp"
 #include "core/gameplay_scene.hpp"
+#include "core/gameplay_notice.hpp"
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
@@ -28,7 +29,7 @@ int main() {try {
             const auto offset=(y*200+x)*4;
             if(p[offset+2]>100 && p[offset+2]>surface.pixels[offset+2]) {
                 if(p[offset+3]!=255) throw std::runtime_error("text ink invisible to layered window");
-                if(scene!=5 && (x<8 || x>=192 || y<150 || y>=190)) throw std::runtime_error("text outside box");
+                if(scene!=5 && (x<8 || x>=192 || y<168 || y>=186)) throw std::runtime_error("text outside box");
                 ++ink;
             }
         }
@@ -47,6 +48,19 @@ int main() {try {
         }
         if(ink<10)throw std::runtime_error("floor HUD ink missing");
     }
+    const auto compact=CreateFontW(-9,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
+        OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,NONANTIALIASED_QUALITY,DEFAULT_PITCH,L"Malgun Gothic");
+    const auto oldFont=SelectObject(dc,compact);
+    WORD hangul=0xffff;
+    if(GetGlyphIndicesW(dc,L"좋",1,&hangul,GGI_MARK_NONEXISTING_GLYPHS)==GDI_ERROR || hangul==0xffff)
+        throw std::runtime_error("Korean glyph unavailable in the selected test font");
+    const auto root=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/original/gameplay/items/items.mdpa";
+    for(const auto& clip:loadPackage(root).clips) {
+        const auto text=itemDisplayName(clip.id)+L"을 주웠다.";SIZE extent{};
+        if(!GetTextExtentPoint32W(dc,text.c_str(),int(text.size()),&extent) || extent.cx>168)
+            throw std::runtime_error("selected item acquisition cannot fit a single row without truncation");
+    }
+    SelectObject(dc,oldFont);DeleteObject(compact);
     SelectObject(dc,previous);DeleteObject(bitmap);DeleteDC(dc);
     std::cout<<"eight Korean text scenes and three map/floor HUD labels have visible opaque GDI ink\n";
 } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}}

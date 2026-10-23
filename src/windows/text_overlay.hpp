@@ -4,6 +4,7 @@
 namespace pet {
 class TextOverlay {
     HFONT font_,hudFont_;
+    HFONT compactFonts_[3]{};
 public:
     TextOverlay();
     ~TextOverlay();
