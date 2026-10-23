@@ -711,7 +711,7 @@ bool Explorer::selectSurvival(const Search& search) {
     return stairs();
 }
 void Explorer::reevaluateStairs() {
-    if(lowHealth()) return;
+    if(lowHealth() || terminalFloor(state_)) return;
     if(state_.goalKind!=GoalKind::Stairs || state_.position==state_.world.stairs) return;
     const bool items=std::any_of(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& e) {
         return e.kind==EntityKind::Item && !e.done && e.visible && state_.discovered[e.tile] && state_.failedTargets[e.tile]<3;
@@ -740,6 +740,13 @@ void Explorer::plan() {
             for(int tile=0;tile<kTiles;++tile)if(canAttack(state_.world,tile,e.tile) && search.distance[tile]>=0 && search.distance[tile]<best) {
                 best=search.distance[tile];state_.target=tile;state_.goalKind=GoalKind::Auxiliary;
             }
+        return;
+    }
+
+    if(terminalFloor(state_)) {
+        invalidate();state_.target=floorExitTile(state_);state_.goalKind=GoalKind::Stairs;
+        path_=bfs(state_.world,state_.position,playerOccupancy()).pathTo(state_.target);++bfsCalls_;
+        cachedWorld_=state_.world.version;cachedOccupancy_=state_.occupancyVersion;
         return;
     }
 
@@ -805,13 +812,13 @@ Event Explorer::advance(bool poseFinished) {
         return {};
     }
     discover();
-    if(lowHealth()) plan();
+    if(lowHealth() || (terminalFloor(state_) && !fixedBattlePending(state_))) {invalidate();plan();}
     reevaluateStairs();
     // Runtime paths are transient and are rebuilt by snapshot construction.
     // Resolve the next step from the same current decision in continuous play.
     // The standalone explorer retains its across-step path cache.
     if(state_.gameplay.enabled) invalidate(false);
-    if(!fixedBattlePending(state_) && state_.position==state_.world.stairs && (lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {invalidate();state_.target=state_.world.stairs;state_.goalKind=GoalKind::Stairs;}
+    if(!fixedBattlePending(state_) && state_.position==floorExitTile(state_) && (terminalFloor(state_) || lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {invalidate();state_.target=floorExitTile(state_);state_.goalKind=GoalKind::Stairs;}
     else for(unsigned attempt=0;attempt<4;++attempt) {
         if(state_.target>=0 && state_.position==state_.target) {
             if(state_.goalKind==GoalKind::Item || state_.goalKind==GoalKind::Friend) break;
@@ -886,7 +893,7 @@ void validateState(const ExplorationState& s) {
         require(completionScene(g) && s.completed && !g.homeScene,"invalid completion scene");
     if(g.sceneBeat==SceneBeat::FloorFadeOut || g.sceneBeat==SceneBeat::FloorFadeIn) {
         require(g.enabled && g.life==LifePhase::Explore && !g.homeScene && s.target==-1 && !g.movement.actionId,"invalid floor presentation");
-        require(g.sceneBeat==SceneBeat::FloorFadeOut ? s.position==s.world.stairs : (s.floorIndex>0 && s.position==s.world.start),"invalid floor transition position");
+        require(g.sceneBeat==SceneBeat::FloorFadeOut ? (s.position==s.world.stairs || s.position==floorExitTile(s)) : (s.floorIndex>0 && s.position==s.world.start),"invalid floor transition position");
     }
     if(g.sceneBeat==SceneBeat::WakeDelay || g.sceneBeat==SceneBeat::AlarmEnter || g.sceneBeat==SceneBeat::AlarmLeave) require(g.life==LifePhase::Wake && g.homeScene,"invalid wake delay");
     if(g.sceneBeat==SceneBeat::RoomExit) require(g.life==LifePhase::Ready && g.homeScene,"invalid bedroom exit");
@@ -962,7 +969,7 @@ void validateState(const ExplorationState& s) {
     if (s.target != -1) {
         require(s.phase == Phase::Explore && s.world.walkable(s.target) &&
                 bfs(s.world, s.position).distance[s.target] >= 0, "invalid goal tile");
-        if (s.goalKind == GoalKind::Stairs) require(s.target == s.world.stairs, "invalid stairs goal");
+        if (s.goalKind == GoalKind::Stairs) require(s.target == s.world.stairs || s.target == floorExitTile(s), "invalid stairs goal");
         if (s.goalKind == GoalKind::Item || s.goalKind == GoalKind::Friend)
             require(std::any_of(s.population.entities.begin(), s.population.entities.end(), [&](const auto& e) {
                 return e.instanceId==s.targetInstance && e.visible && (e.kind==EntityKind::Item ? e.tile==s.target : canAttack(s.world,s.target,e.tile)) && !e.done &&
@@ -984,7 +991,7 @@ void validateState(const ExplorationState& s) {
     if (s.completed) {
         require(s.floorIndex + 1 == s.floors.size() && s.phase != Phase::Explore,
                 "invalid completed phase");
-        require(s.position == s.world.stairs, "clear away from stairs");
+        require(s.position == s.world.stairs || s.position == floorExitTile(s), "clear away from exit");
         expected.insert(prefix("stairs", s.floorIndex, 0));
         expected.insert(prefix("clear", s.floorIndex, 0));
     } else require(s.phase != Phase::Pose, "pose without clear");

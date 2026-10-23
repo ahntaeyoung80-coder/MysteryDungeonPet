@@ -23,8 +23,8 @@ Explorer fixture() {
     e.enableGameplay(1000);return e;
 }
 void stairs(Explorer& e) {
-    auto s=e.state();s.position=s.world.stairs;s.visited[s.position]=1;s.discovered=s.world.terrain;
-    s.target=s.world.stairs;s.goalKind=GoalKind::Stairs;s.targetInstance=0;
+    auto s=e.state();s.position=floorExitTile(s);s.visited[s.position]=1;s.discovered=s.world.terrain;
+    s.target=s.position;s.goalKind=GoalKind::Stairs;s.targetInstance=0;
     s.gameplay.sceneBeat=SceneBeat::None;s.gameplay.deadlineMs=s.gameplay.phaseStartedMs;s.gameplay.movement={};e=Explorer(std::move(s));
 }
 void replay(Explorer& e,std::uint64_t now) {
@@ -79,6 +79,42 @@ void finishFixedForTransitionTest(Explorer& e) {
     }
     s.target=-1;s.goalKind=GoalKind::None;s.targetInstance=0;s.gameplay.movement={};s.gameplay.partyActions.clear();s.gameplay.partyPlaybacks.clear();
     e=Explorer(std::move(s));
+}
+void terminalWalk(const std::filesystem::path& root,const std::filesystem::path& out={}) {
+    for(auto id:roots)for(bool party:{false,true}) {
+        auto e=original(packageAt(root,id));
+        while(e.state().floorIndex+1<e.state().floors.size()) {
+            settle(e);finishFixedForTransitionTest(e);stairs(e);
+            replay(e,e.state().gameplay.deadlineMs+1);replay(e,e.state().gameplay.deadlineMs);
+        }
+        settle(e);finishFixedForTransitionTest(e);
+        if(party)e.enableCompanion();
+        // Reproduce an existing terminal save still aiming at the old exit,
+        // with exhausted target retries and remembered stairs.
+        auto stale=e.state();stale.target=stale.world.stairs;stale.goalKind=GoalKind::Stairs;
+        stale.discovered=stale.world.terrain;stale.knownStairs=stale.world.stairs;
+        stale.failedTargets[stale.world.stairs]=3;
+        e=Explorer(decodeSnapshot(encodeSnapshot(stale),stale.assetVersion));
+        const int center=floorExitTile(e.state()),start=e.state().position;
+        check(center!=start,"terminal objective coincides with entrance");
+        if(!out.empty() && id==14 && party) {
+            std::filesystem::create_directories(out);
+            const auto now=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            const auto then=e.state().gameplay.phaseStartedMs;e.shiftPausedClocks(now>then?now-then:0,then);
+            saveSnapshot(out/"terminal-walk-14.mdes",e.state());
+        }
+        auto now=e.state().gameplay.deadlineMs;
+        for(unsigned tick=0;tick<3000 && !e.state().completed;++tick) {
+            now+=250;replay(e,now);
+        }
+        check(e.state().completed && e.state().position==center,"natural terminal walk did not clear at center");
+        check(e.state().floorSteps>0,"terminal clear teleported instead of walking");
+        for(unsigned beat=0;beat<8 && e.state().gameplay.life==LifePhase::Pose;++beat)replay(e,e.state().gameplay.deadlineMs);
+        check(e.state().gameplay.life==LifePhase::ReturnHome && e.state().variety.completedExplorations==1,"center clear did not return exactly once");
+        replay(e,e.state().gameplay.deadlineMs);
+        check(e.state().gameplay.life==LifePhase::Eat && e.state().gameplay.meals==1,"center return did not start meal");
+        std::cout<<"terminal center walk "<<id<<" party="<<party<<" passed\n";
+    }
 }
 void references(const std::filesystem::path& root) {
     const auto npcs=loadNpcCatalogue(root/"assets/original/gameplay/npcs/characters.mdnc");
@@ -169,6 +205,7 @@ int main(int argc,char** argv){try{
         const auto now=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
         const auto then=e.state().gameplay.phaseStartedMs;e.shiftPausedClocks(now>then?now-then:0,then);saveSnapshot(argv[5],e.state());return 0;
     }
+    if(argc>=3 && std::string(argv[1])=="--terminal-walk"){terminalWalk(argv[2],argc>3?argv[3]:std::filesystem::path{});return 0;}
     if(argc>=3 && std::string(argv[1])=="--references"){references(argv[2]);return 0;}
     if(argc==4 && std::string(argv[1])=="--route"){routes(argv[2],unsigned(std::stoul(argv[3])));return 0;}
     if(argc>=3 && std::string(argv[1])=="--branches"){branches(argv[2]);return 0;}

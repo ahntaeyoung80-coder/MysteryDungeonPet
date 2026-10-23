@@ -37,6 +37,8 @@ struct FloorProfile;
 void validateExpedition(const ExplorationState&);
 void validateFloorSequence(const std::vector<FloorProfile>&,const ExpeditionState&);
 bool fixedBattlePending(const ExplorationState&);
+bool terminalFloor(const ExplorationState&);
+int floorExitTile(const ExplorationState&);
 const ExpeditionStop* expeditionStop(const ExplorationState&);
 bool expeditionScene(const ExplorationState&);
 ExpeditionState freshExpedition(ExpeditionState);

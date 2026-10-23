@@ -1,0 +1,118 @@
+{
+  "nativeRegression": "8 expeditions x solo/independent companion, real terminal walking and snapshot replay; bosses marked defeated in fixture",
+  "windowsCore": "pet_expedition_tests.exe passed under Wine 10",
+  "gui": {
+    "exit": 0,
+    "seconds": 36.53,
+    "traceRows": 3674,
+    "lifeSceneSequence": [
+      [
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "13"
+      ],
+      [
+        "1",
+        "20"
+      ],
+      [
+        "1",
+        "21"
+      ],
+      [
+        "1",
+        "22"
+      ],
+      [
+        "1",
+        "23"
+      ],
+      [
+        "1",
+        "24"
+      ],
+      [
+        "2",
+        "0"
+      ],
+      [
+        "4",
+        "1"
+      ],
+      [
+        "5",
+        "2"
+      ],
+      [
+        "5",
+        "6"
+      ],
+      [
+        "5",
+        "3"
+      ],
+      [
+        "5",
+        "4"
+      ],
+      [
+        "5",
+        "7"
+      ],
+      [
+        "5",
+        "5"
+      ],
+      [
+        "6",
+        "12"
+      ],
+      [
+        "6",
+        "18"
+      ],
+      [
+        "6",
+        "15"
+      ],
+      [
+        "6",
+        "19"
+      ],
+      [
+        "6",
+        "8"
+      ],
+      [
+        "7",
+        "9"
+      ],
+      [
+        "7",
+        "16"
+      ],
+      [
+        "7",
+        "10"
+      ],
+      [
+        "0",
+        "11"
+      ]
+    ],
+    "centerTile": "225",
+    "oldExitTile": "363",
+    "finalRunId": 9301,
+    "finalDay": 2,
+    "finalMeals": 1
+  },
+  "runtimeSha256": "9256ee0efd7b6d7e916ca1c53cbf8d2f35b993b53c3082e356447783d470492e",
+  "limitations": [
+    "Wine10/Xvfb with synthetic WTS unlock, not actual Windows 11",
+    "Natural boss victories are outside this targeted post-battle navigation test",
+    "Remote CI result not observed"
+  ]
+}

@@ -45,6 +45,26 @@ void validateFloorSequence(const std::vector<FloorProfile>& floors,const Expedit
     for(auto branch:expedition.branches)require(branch && branch<=191 && branches.insert(branch).second,"invalid expedition branch history");
     require(static_cast<unsigned>(expedition.outcome)<=4,"invalid expedition outcome");
 }
+bool terminalFloor(const ExplorationState& s) {
+    return s.expedition.enabled() && s.floorIndex+1==s.floors.size();
+}
+int floorExitTile(const ExplorationState& s) {
+    if(!terminalFloor(s))return s.world.stairs;
+    // Use the room's actual bounds, not the padded 24x24 rendering grid.
+    int left=kWidth,right=0,top=kHeight,bottom=0;
+    for(int t=0;t<kTiles;++t)if(s.world.walkable(t)) {
+        left=std::min(left,t%kWidth);right=std::max(right,t%kWidth);
+        top=std::min(top,t/kWidth);bottom=std::max(bottom,t/kWidth);
+    }
+    const auto reach=bfs(s.world,s.world.start);
+    int best=s.world.stairs,score=kTiles*kTiles;
+    for(int t=0;t<kTiles;++t)if(reach.distance[t]>=0) {
+        const int dx=2*(t%kWidth)-left-right,dy=2*(t/kWidth)-top-bottom;
+        const int distance=dx*dx+dy*dy;
+        if(distance<score){best=t;score=distance;}
+    }
+    return best;
+}
 bool fixedBattlePending(const ExplorationState& s) {
     if(!s.expedition.enabled() || !s.expedition.floors.at(s.floorIndex).fixedFloorId)return false;
     return std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e) {

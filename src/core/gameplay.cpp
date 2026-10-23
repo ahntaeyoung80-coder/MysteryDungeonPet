@@ -826,7 +826,7 @@ bool Explorer::beginCompanionDialogue(std::uint64_t now) {
 GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     auto& g=state_.gameplay;
     retreatProgress_=false;
-    if(!fixedBattlePending(state_) && state_.position==state_.world.stairs && (lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {
+    if(!fixedBattlePending(state_) && state_.position==floorExitTile(state_) && (terminalFloor(state_) || lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {
         invalidate();g.movement={};g.walkStartedMs=0;
         g.sceneBeat=SceneBeat::FloorFadeOut;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
         return {};

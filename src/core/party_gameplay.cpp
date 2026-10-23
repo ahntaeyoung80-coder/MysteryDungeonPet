@@ -417,7 +417,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         if(adjacent && g.hearts>kLowHp) {
             start(0,PartyActionKind::Attack,adjacent,5000);return;
         }
-        if(s.position==s.world.stairs && (lowHealth() || roomFullyShown(s.world.room[s.position]))) {start(0,PartyActionKind::Wait,0,400);return;}
+        if(s.position==floorExitTile(s) && (terminalFloor(s) || lowHealth() || roomFullyShown(s.world.room[s.position]))) {start(0,PartyActionKind::Wait,0,400);return;}
         // Actor action rights affect occupancy. Rebuild at the decision boundary
         // so an in-memory path and a restored path cannot use different rounds.
         if(s.knownStairs>=0)s.failedTargets[s.knownStairs]=0;
@@ -544,7 +544,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
     for(unsigned transition=0;transition<4;++transition) {
         if(!g.hearts || !g.companion.hearts)break;
         if(g.partyPhase==PartyPhase::Idle) {
-            if(!eventBattle(s) && !fixedBattlePending(s) && s.position==s.world.stairs && (lowHealth() || roomFullyShown(s.world.room[s.position])) && g.companionIntent!=CompanionIntent::Engage &&
+            if(!eventBattle(s) && !fixedBattlePending(s) && s.position==floorExitTile(s) && (terminalFloor(s) || lowHealth() || roomFullyShown(s.world.room[s.position])) && g.companionIntent!=CompanionIntent::Engage &&
                canAttack(s.world,s.position,g.companion.tile)) {
                 invalidate();g.movement={};g.companion.movement={};
                 g.walkStartedMs=g.companion.walkStartedMs=0;
