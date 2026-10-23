@@ -27,7 +27,7 @@ B-1/B-2의 8개 연속 원정에 사용자 플레이테스트 수정 5단계를 
 
 코어 ASan/UBSan 32개 고유 검사와 Python 51개를 최초 실패/중단 항목 보정 후 모두 통과했다. 누적 이력의 원정 전환 64건, Windows x64 Release/static EXE의 Wine10/Xvfb 코어·GDI 2개와 화면 12건을 확인했다. 화면 검사에는 기본 실행·같은 날 복원·설치본 입장이 포함된다. 합성 WTS 해제와 검사 환경의 한글 대체 글꼴을 사용했으며 실제 Windows 11 검증이 아니다. [근거](docs/validation/2026-10-23-playtest-feedback/summary.json).
 
-최신 제품 커밋 `89e45b3`의 소스·카탈로그·루트 EXE·manifest·검토 문서를 `work`에 push하고 명시 fetch 일치를 확인했다. build/root/install EXE와 설치 카탈로그가 일치한다. 원격 CI 결과는 미확인이다. 이전 전체 검사 근거는 [플레이테스트 검증](docs/validation/2026-10-23-playtest-feedback/summary.json), 최신 관련 검사는 [2줄 UI 검증](docs/validation/2026-10-23-two-row-dialogue/summary.json)을 따른다.
+최신 제품 커밋 `c1ed142`의 각자 열매1개 소스·루트 EXE·manifest·검증 문서를 `work`에 push하고 명시 fetch 일치를 확인했다. build/root/install EXE와 설치 카탈로그가 일치한다. 원격 CI 결과는 미확인이다. 이전 전체 검사 근거는 [플레이테스트 검증](docs/validation/2026-10-23-playtest-feedback/summary.json), 2줄 UI는 [기존 화면 검증](docs/validation/2026-10-23-two-row-dialogue/summary.json), 최신 한도1 규칙은 [소지·소모 검증](docs/validation/2026-10-23-single-berry/summary.json)을 따른다.
 
 ## 다음 작업 / 남은 범위
 
