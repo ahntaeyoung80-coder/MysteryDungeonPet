@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogueVersion": 10,
+  "catalogueVersion": 11,
   "provenance": "직접 작성한 한국어 대사; 원작 인용·공식 번역 아님. docs/research/2026-10-20-variety-dialogue-catalogue.md 초안을 실행용으로 검증.",
   "bundles": [
     {
@@ -2493,6 +2493,150 @@
           "emotion": 1,
           "holdMs": 1400,
           "text": "그래, 친구들! 조심히 가!"
+        }
+      ]
+    },
+    {
+      "id": "boss.prepare.01",
+      "context": "boss.prepare",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.prepare",
+      "lines": [
+        {
+          "id": "boss.prepare.01.1",
+          "legacyId": 1201,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1600,
+          "text": "이 앞은 느낌이 달라. 준비하고 가자."
+        }
+      ]
+    },
+    {
+      "id": "boss.prepare.02",
+      "context": "boss.prepare",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.prepare",
+      "lines": [
+        {
+          "id": "boss.prepare.02.1",
+          "legacyId": 1201,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1600,
+          "text": "저 안에 누가 있는 것 같아. 조심하자."
+        }
+      ]
+    },
+    {
+      "id": "boss.prepare.03",
+      "context": "boss.prepare",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.prepare",
+      "lines": [
+        {
+          "id": "boss.prepare.03.1",
+          "legacyId": 1201,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1600,
+          "text": "잠깐, 열매는 챙겼지? 준비하고 가자."
+        }
+      ]
+    },
+    {
+      "id": "boss.prepare.04",
+      "context": "boss.prepare",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.prepare",
+      "lines": [
+        {
+          "id": "boss.prepare.04.1",
+          "legacyId": 1201,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1600,
+          "text": "공기가 팽팽해. 마음 단단히 먹자."
+        }
+      ]
+    },
+    {
+      "id": "boss.prepare.05",
+      "context": "boss.prepare",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.prepare",
+      "lines": [
+        {
+          "id": "boss.prepare.05.1",
+          "legacyId": 1201,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1600,
+          "text": "조용해서 더 신경 쓰여. 같이 들어가자."
+        }
+      ]
+    },
+    {
+      "id": "boss.prepare.06",
+      "context": "boss.prepare",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.prepare",
+      "lines": [
+        {
+          "id": "boss.prepare.06.1",
+          "legacyId": 1201,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1600,
+          "text": "이 앞은 만만치 않겠어. 준비는 됐어?"
+        }
+      ]
+    },
+    {
+      "id": "boss.prepare.07",
+      "context": "boss.prepare",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.prepare",
+      "lines": [
+        {
+          "id": "boss.prepare.07.1",
+          "legacyId": 1201,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 4,
+          "holdMs": 1600,
+          "text": "준비를 단단히 하자. 내가 곁에 있을게."
+        }
+      ]
+    },
+    {
+      "id": "boss.prepare.08",
+      "context": "boss.prepare",
+      "style": "neutral",
+      "weight": 1,
+      "condition": "boss.prepare",
+      "lines": [
+        {
+          "id": "boss.prepare.08.1",
+          "legacyId": 1201,
+          "speaker": 2,
+          "listener": 1,
+          "emotion": 9,
+          "holdMs": 1600,
+          "text": "저 앞에서 기척이 나. 조심해서 가자."
         }
       ]
     }

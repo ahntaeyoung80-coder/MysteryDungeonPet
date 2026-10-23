@@ -1,0 +1,242 @@
+{
+  "date": "2026-10-23",
+  "native": {
+    "configuration": "ASan/UBSan Debug",
+    "passed": 7,
+    "seconds": 18.76,
+    "log": "related-tests.txt"
+  },
+  "python": {
+    "passed": 6,
+    "seconds": 0.016
+  },
+  "windows_pe": {
+    "test": "pet_boss_preparation_tests",
+    "passed": true,
+    "entry_cases": 16
+  },
+  "gui": [
+    {
+      "case": "boss-prepare",
+      "exit": 0,
+      "seconds": 35.66,
+      "traceRows": 6168,
+      "submissions": 1566,
+      "helpers": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "1",
+          "1102",
+          "0"
+        ],
+        [
+          "2",
+          "4",
+          "1201",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "1101",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "1103",
+          "0"
+        ]
+      ],
+      "dialogueContexts": [
+        "boss.befriend.05",
+        "boss.prepare.07"
+      ],
+      "lifeScenes": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "11"
+        ],
+        [
+          "0",
+          "13"
+        ],
+        [
+          "1",
+          "20"
+        ],
+        [
+          "1",
+          "21"
+        ],
+        [
+          "1",
+          "22"
+        ],
+        [
+          "1",
+          "23"
+        ],
+        [
+          "1",
+          "24"
+        ],
+        [
+          "10",
+          "0"
+        ],
+        [
+          "2",
+          "0"
+        ],
+        [
+          "4",
+          "1"
+        ],
+        [
+          "8",
+          "0"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-boss-16.bmp",
+        "trace-first.bmp",
+        "trace-npc-reply.bmp",
+        "trace-companion-reply.bmp",
+        "trace-map-title.bmp",
+        "trace-completion.bmp",
+        "trace-last.bmp"
+      ]
+    },
+    {
+      "case": "boss-resume",
+      "exit": 0,
+      "seconds": 9.3,
+      "traceRows": 1001,
+      "submissions": 436,
+      "helpers": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "portraits": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "1",
+          "31",
+          "0"
+        ]
+      ],
+      "dialogueContexts": [
+        "sleep.greet.06"
+      ],
+      "lifeScenes": [
+        [
+          "4",
+          "1"
+        ],
+        [
+          "5",
+          "2"
+        ],
+        [
+          "5",
+          "3"
+        ],
+        [
+          "5",
+          "4"
+        ],
+        [
+          "5",
+          "5"
+        ],
+        [
+          "5",
+          "6"
+        ],
+        [
+          "5",
+          "7"
+        ],
+        [
+          "6",
+          "12"
+        ],
+        [
+          "6",
+          "18"
+        ]
+      ],
+      "stocks": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "images": [
+        "trace-middle.bmp",
+        "trace-boss-16.bmp",
+        "trace-first.bmp",
+        "trace-bed-greeting.bmp",
+        "trace-last.bmp"
+      ]
+    }
+  ],
+  "runtime_sha256": "c2ea5e120646e00249d3deb04700f576a96f04b27d38502b9c1efcfbfa9092f8",
+  "runtime_build_root_install_equal": true,
+  "images": [
+    "boss-warning.png",
+    "boss-entry.png",
+    "boss-completion.png"
+  ],
+  "limits": [
+    "Wine10/Xvfb, synthetic WTS unlock, substitute Korean font; not native Windows11",
+    "Eight expedition entries use controlled stairs fixtures; not eight natural complete victories",
+    "Remote CI completion is unconfirmed"
+  ]
+}

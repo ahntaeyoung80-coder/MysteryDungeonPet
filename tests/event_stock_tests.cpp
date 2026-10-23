@@ -35,7 +35,7 @@ int main(){try {
     check(!commitOranShare(s),"berry transferred before actual result");
     unsigned steps=0;while(eventActive(s) && steps++<80){Explorer e(decodeSnapshot(encodeSnapshot(s),p.assetVersion));e.advanceGameplay(nextGameplayDeadline(s),ActorCompletion{true,true,true},c);s=e.state();}
     check(steps<80 && s.gameplay.oran==0 && s.gameplay.companion.oran==1 && stockQuantity(s,0,109)==4 && s.variety.committed.size()==1,"sharing double debit or changed unrelated inventory");
-    const auto encoded=encodeSnapshot(s);check(encoded[4]==19,"stock schema not versioned");const auto restored=decodeSnapshot(encoded,p.assetVersion);
+    const auto encoded=encodeSnapshot(s);check(encoded[4]==20,"stock schema not versioned");const auto restored=decodeSnapshot(encoded,p.assetVersion);
     check(restored.gameplay.oran==0 && restored.gameplay.companion.oran==1 && stockQuantity(restored,0,109)==4,"stock restore lost current quantities");
     s=eventFixture(p);s.gameplay.oran=1;check(startVarietyEvent(s,VarietyEvent::TiredExplorer,1000,c,1) && s.variety.event.variant=="E01.encourage" && s.variety.event.reservations.empty(),"last recovery berry offered");
     s=eventFixture(p);s.gameplay.oran=s.gameplay.companion.oran=1;s.gameplay.hearts=4;check(startVarietyEvent(s,VarietyEvent::TiredExplorer,1000,c,1) && s.variety.event.variant=="E01.share_b" && reservedQuantity(s,kCompanionActorId,70)==1,"wrong stock owner reserved");

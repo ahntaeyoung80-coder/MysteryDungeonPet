@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import struct
 
-ROLES = {'companion.checkin': [(2, 1, 12)], 'npc.greet': [(3, 1, 22)],
+ROLES = {'boss.prepare': [(2, 1, 1201)], 'companion.checkin': [(2, 1, 12)], 'npc.greet': [(3, 1, 22)],
          'sleep.greet': [(2, 1, 31)], 'wake.alarm': [(4, 1, 41)], 'morning.depart': [(2, 1, 51)],
          'defeat.player': [(2, 1, 101)], 'defeat.partner': [(2, 1, 102)]}
 EVENT_CONTEXTS = {'event.E01.intro', 'event.E01.success', 'event.E05.view', 'event.E05.depart',

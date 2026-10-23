@@ -1,0 +1,19 @@
+Test project /workspace/MysteryDungeonPet/build/playtest-asan
+    Start  2: pet_boss_preparation_tests
+1/7 Test  #2: pet_boss_preparation_tests .......   Passed    1.48 sec
+    Start  3: pet_social_feedback_tests
+2/7 Test  #3: pet_social_feedback_tests ........   Passed    9.82 sec
+    Start  4: pet_berry_capacity_tests
+3/7 Test  #4: pet_berry_capacity_tests .........   Passed    0.06 sec
+    Start  7: pet_expedition_tests
+4/7 Test  #7: pet_expedition_tests .............   Passed    0.09 sec
+    Start 16: pet_dialogue_catalogue_tests
+5/7 Test #16: pet_dialogue_catalogue_tests .....   Passed    0.07 sec
+    Start 18: pet_variety_state_tests
+6/7 Test #18: pet_variety_state_tests ..........   Passed    0.11 sec
+    Start 34: pet_core_tests
+7/7 Test #34: pet_core_tests ...................   Passed    7.14 sec
+
+100% tests passed out of 7
+
+Total Test time (real) =  18.76 sec

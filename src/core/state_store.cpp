@@ -79,7 +79,7 @@ std::uint32_t checksum(const std::vector<std::uint8_t>& bytes, std::size_t end) 
 std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     validateState(s);
     detail::Writer w;
-    w.u32(0x5345444d); w.u32(19); // MDES19 appends the chosen item-comment variants.
+    w.u32(0x5345444d); w.u32(20); // MDES20 records the four-heart boss policy.
     w.str(s.assetVersion); w.u64(s.runId); w.u64(s.mapSeed); w.u64(s.rng.state);
     detail::writeProfiles(w, s.floors);
     w.u32(s.spawnPolicy.itemRequest); w.u32(s.spawnPolicy.friendRequest);
@@ -196,6 +196,7 @@ std::vector<std::uint8_t> encodeSnapshot(const ExplorationState& s) {
     w.u32(static_cast<unsigned>(v.notices.size()));
     for(const auto& notice:v.notices)w.u32(notice.variant);
     w.u32(static_cast<unsigned>(w.bytes.size()-variantStart));
+    w.u32(kBossMaxHp);w.u32(4);
     w.u32(checksum(w.bytes, w.bytes.size()));
     if (w.bytes.size() > detail::kFileLimit) throw std::runtime_error("snapshot exceeds byte limit");
     return w.bytes;
@@ -204,7 +205,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
     detail::Reader r(bytes);
     if (r.u32() != 0x5345444d) throw std::runtime_error("unknown snapshot magic");
     const auto schema = r.u32();
-    if (schema < 1 || schema > 19) throw std::runtime_error("unknown snapshot schema");
+    if (schema < 1 || schema > 20) throw std::runtime_error("unknown snapshot schema");
     if (bytes.size() < 12) throw std::runtime_error("truncated snapshot");
     detail::Reader tail(bytes); tail.offset = bytes.size() - 4;
     if (tail.u32() != checksum(bytes, bytes.size() - 4)) throw std::runtime_error("snapshot checksum mismatch");
@@ -250,7 +251,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         auto& g = s.gameplay;
         g.enabled = r.boolean(); g.defeated = r.boolean(); g.homeScene = r.boolean();
         g.life = static_cast<LifePhase>(r.count(schema>=3?10:8)); g.combat = static_cast<CombatPhase>(r.count(schema>=7?17:schema>=3?10:9));
-        g.hearts = r.count(schema>=3?kMaxHp:3); g.oran = r.count(schema>=13?kMaxStock:1); g.enemyHits = r.count(2); g.enemyInstance = r.u32(); g.turn = r.u32();
+        g.hearts = r.count(schema>=3?kMaxHp:3); g.oran = r.count(schema>=13?kMaxStock:1); g.enemyHits = r.count(schema>=20?kBossMaxHp:2); g.enemyInstance = r.u32(); g.turn = r.u32();
         if(g.enemyInstance>kTiles && g.enemyInstance!=kCompanionActorId)throw std::runtime_error("invalid dialogue/combat actor id");
         g.damage = r.count(2); g.meals = r.u32(); g.day = r.u32(); g.hit = r.boolean(); g.critical = r.boolean();
         g.phaseStartedMs = r.u64(); g.deadlineMs = r.u64();
@@ -269,7 +270,7 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         g.playerHidden=r.boolean();g.fadeInOnly=r.boolean();g.deathStage=static_cast<DeathStage>(r.count(schema>=11?2:1));g.sceneBeat=static_cast<SceneBeat>(r.count(schema>=18?27:schema>=10?24:schema>=9?19:schema>=5?17:schema>=4?16:12));g.dialogueStage=static_cast<DialogueStage>(r.count(1));
         for(auto& e:s.population.entities) {
             e.tracking=static_cast<Tracking>(r.count(1));e.lastSeen=static_cast<int>(r.count(kTiles))-1;e.chaseTarget=static_cast<int>(r.count(kTiles))-1;
-            e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(2);e.actionRound=r.u64();
+            e.blockedTurns=r.count(3);e.direction=r.count(7);e.remainingHits=r.count(schema>=20?kBossMaxHp:2);e.actionRound=r.u64();
             e.visible=r.boolean();
         }
         g.walkStartedMs=r.u64();g.movement=detail::readMove(r);
@@ -416,7 +417,9 @@ ExplorationState decodeSnapshot(const std::vector<std::uint8_t>& bytes, const st
         for(auto& notice:s.variety.notices)notice.variant=r.count(2);
         const auto length=r.u32();if(length!=r.offset-start-4)throw std::runtime_error("notice variant block length mismatch");
     }
+    if(schema>=20 && (r.u32()!=kBossMaxHp || r.u32()!=4))throw std::runtime_error("invalid boss health policy block");
     r.u32(); r.end();
+    if(schema<20)migrateBossHealth(s);
     normalizeOranHoldings(s);
     discardStaleEntityGoal(s);
     validateState(s);

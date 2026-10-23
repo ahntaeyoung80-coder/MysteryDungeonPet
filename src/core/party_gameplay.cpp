@@ -541,6 +541,7 @@ GameplayUpdate Explorer::advanceParty(uint64_t now,const ActorCompletion& comple
         if(g.partyPhase==PartyPhase::Idle) {
             if(!eventBattle(s) && !fixedBattlePending(s) && s.position==floorExitTile(s) && (terminalFloor(s) || lowHealth() || roomFullyShown(s.world.room[s.position])) && g.companionIntent!=CompanionIntent::Engage &&
                canAttack(s.world,s.position,g.companion.tile)) {
+                if(beginBossPreparation(now)){result.event=GameplayEvent::DialogueNpc;return result;}
                 invalidate();g.movement={};g.companion.movement={};
                 g.walkStartedMs=g.companion.walkStartedMs=0;
                 g.partyActions.clear();g.partyPlaybacks.clear();

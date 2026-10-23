@@ -478,6 +478,7 @@ void Explorer::populateFixedFloor() {
         require(best>=0,"fixed spawn exceeds available floor space");used[best]=1;
         Entity e;e.instanceId=static_cast<unsigned>(state_.population.entities.size()+1);
         e.originalId=spawn.md?spawn.md:spawn.item;e.kind=spawn.md?EntityKind::Friend:EntityKind::Item;e.tile=best;
+        if(spawn.md && spawn.spawnType!=7 && spawn.spawnType!=10)e.remainingHits=kBossMaxHp;
         state_.population.entities.push_back(e);
     }
 }
@@ -911,7 +912,7 @@ void validateState(const ExplorationState& s) {
     require(g.actionRound>0 && g.playerActionRound<=g.actionRound && g.playerDirection<8,"invalid action round");
     require(g.walkStartedMs<=g.phaseStartedMs,"invalid saved walking clock");
     require(static_cast<unsigned>(g.life) <= 10 && static_cast<unsigned>(g.combat) <= 17 &&
-            g.hearts <= kMaxHp && g.oran <= kOranCapacity && g.enemyHits <= 2 && g.damage <= 2 && g.day > 0 &&
+            g.hearts <= kMaxHp && g.oran <= kOranCapacity && g.enemyHits <= kBossMaxHp && g.damage <= 2 && g.day > 0 &&
             g.hostile.size() <= kTiles && g.onceKeys.size() <= 4096, "invalid gameplay state");
     if(g.life==LifePhase::Dialogue) {
         if(companionDialogue(g)) require(g.companion.enabled && !g.companion.hidden && g.companion.hearts>0 &&
@@ -1018,7 +1019,7 @@ void validateState(const ExplorationState& s) {
                 static_cast<unsigned>(e.kind) <= 1, "invalid entity");
         if(liveActor) occupied[e.tile]=1;
         if(e.kind==EntityKind::Item) itemOccupied[e.tile]=1;
-        require(static_cast<unsigned>(e.tracking)<=1 && e.direction<8 && e.remainingHits<=2 && e.actionRound<=g.actionRound &&
+        require(static_cast<unsigned>(e.tracking)<=1 && e.direction<8 && e.remainingHits<=(isBossEntity(s,e)?kBossMaxHp:2) && e.actionRound<=g.actionRound &&
             e.blockedTurns<=3 && (e.lastSeen==-1||s.world.walkable(e.lastSeen)) && (e.chaseTarget==-1||s.world.walkable(e.chaseTarget)),"invalid actor tracking");
         const auto onceKey = prefix(e.kind == EntityKind::Item ? "pickup" : "greet",
                                    s.floorIndex, e.instanceId);

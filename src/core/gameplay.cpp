@@ -381,6 +381,9 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
         }
         if(companionDialogue(g)) {
             if(!completed.partner) return {};
+            if(bossPreparation(state_)) {
+                const auto key=bossPreparationKey(state_);g.onceKeys.erase(key);g.onceKeys.insert(key+":done");
+            }
             g.enemyInstance=0;
             return life(LifePhase::Explore,GameplayEvent::Explore,0);
         }
@@ -835,6 +838,7 @@ GameplayUpdate Explorer::scheduleDungeon(std::uint64_t now) {
     retreatProgress_=false;
     if(beginBossDialogue(now))return {GameplayEvent::DialogueNpc,{}};
     if(!fixedBattlePending(state_) && state_.position==floorExitTile(state_) && (terminalFloor(state_) || lowHealth() || roomFullyShown(state_.world.room[state_.position]))) {
+        if(beginBossPreparation(now))return {GameplayEvent::DialogueNpc,{}};
         invalidate();g.movement={};g.walkStartedMs=0;
         g.sceneBeat=SceneBeat::FloorFadeOut;g.phaseStartedMs=now;g.deadlineMs=now+kFloorFadeMs;
         return {};

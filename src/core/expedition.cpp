@@ -45,6 +45,47 @@ void validateFloorSequence(const std::vector<FloorProfile>& floors,const Expedit
     for(auto branch:expedition.branches)require(branch && branch<=191 && branches.insert(branch).second,"invalid expedition branch history");
     require(static_cast<unsigned>(expedition.outcome)<=4,"invalid expedition outcome");
 }
+bool isBossEntity(const ExplorationState& s,const Entity& e) {
+    if(!s.expedition.enabled() || s.floorIndex>=s.expedition.floors.size() || e.kind!=EntityKind::Friend)return false;
+    const auto& f=s.expedition.floors[s.floorIndex];
+    if(!f.fixedFloorId || !e.instanceId)return false;
+    const auto& spawns=s.expedition.revisit && f.revisitFixedFloorId?f.revisitSpawns:f.fixedSpawns;
+    if(e.instanceId>spawns.size())return false;
+    const auto& source=spawns[e.instanceId-1];
+    return source.md==e.originalId && source.spawnType!=7 && source.spawnType!=10;
+}
+void migrateBossHealth(ExplorationState& s) {
+    for(auto& e:s.population.entities)if(isBossEntity(s,e) && !e.done && e.remainingHits) {
+        e.remainingHits+=kBossMaxHp-2;
+        if(s.gameplay.enemyInstance==e.instanceId)s.gameplay.enemyHits=e.remainingHits;
+    }
+}
+bool upcomingBoss(const ExplorationState& s) {
+    if(!s.expedition.enabled() || s.floorIndex+1>=s.expedition.floors.size())return false;
+    const auto& f=s.expedition.floors[s.floorIndex+1];
+    if(!f.fixedFloorId)return false;
+    const auto& spawns=s.expedition.revisit && f.revisitFixedFloorId?f.revisitSpawns:f.fixedSpawns;
+    return std::any_of(spawns.begin(),spawns.end(),[](const auto& e){return e.md && e.spawnType!=7 && e.spawnType!=10;});
+}
+std::string bossPreparationKey(const ExplorationState& s) {
+    return "boss-prepare:"+std::to_string(s.runId)+":"+std::to_string(s.floorIndex+1);
+}
+bool bossPreparation(const ExplorationState& s) {
+    return companionDialogue(s.gameplay) && s.gameplay.onceKeys.count(bossPreparationKey(s));
+}
+bool Explorer::beginBossPreparation(std::uint64_t now) {
+    auto& s=state_;auto& g=s.gameplay;
+    const auto key=bossPreparationKey(s);
+    if(!upcomingBoss(s) || !g.companion.enabled || !g.hearts || !g.companion.hearts ||
+       g.onceKeys.count(key+":done") || !canAttack(s.world,s.position,g.companion.tile) ||
+       !g.partyPlaybacks.empty() || std::any_of(g.partyActions.begin(),g.partyActions.end(),[](const auto& a){return !a.finished;}))return false;
+    g.onceKeys.insert(key);invalidate();
+    g.movement=g.companion.movement={};g.walkStartedMs=g.companion.walkStartedMs=0;
+    g.partyActions.clear();g.partyPhase=PartyPhase::Idle;
+    g.enemyInstance=kCompanionActorId;g.life=LifePhase::Dialogue;g.dialogueStage=DialogueStage::Npc;
+    g.playerDirection=directionBetween(s.position,g.companion.tile);g.companion.direction=directionBetween(g.companion.tile,s.position);
+    g.phaseStartedMs=now;g.deadlineMs=now+1800;return true;
+}
 bool terminalFloor(const ExplorationState& s) {
     return s.expedition.enabled() && s.floorIndex+1==s.floors.size();
 }

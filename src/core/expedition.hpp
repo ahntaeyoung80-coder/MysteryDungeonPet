@@ -33,9 +33,16 @@ struct ExpeditionState {
     bool enabled() const { return !routeId.empty(); }
 };
 struct ExplorationState;
+struct Entity;
+constexpr std::uint32_t kBossMaxHp=4;
 struct FloorProfile;
 void validateExpedition(const ExplorationState&);
 void validateFloorSequence(const std::vector<FloorProfile>&,const ExpeditionState&);
+bool isBossEntity(const ExplorationState&,const Entity&);
+bool upcomingBoss(const ExplorationState&);
+bool bossPreparation(const ExplorationState&);
+std::string bossPreparationKey(const ExplorationState&);
+void migrateBossHealth(ExplorationState&);
 bool fixedBattlePending(const ExplorationState&);
 bool terminalFloor(const ExplorationState&);
 bool bossConversation(const ExplorationState&);

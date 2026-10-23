@@ -13,7 +13,7 @@ bool identity(const std::string& s) {
     return !s.empty() && s.size()<=128 && std::all_of(s.begin(),s.end(),[](unsigned char c){return
         (c>='a' && c<='z') || (c>='A' && c<='Z') || (c>='0' && c<='9') || c=='.' || c=='_' || c=='-';});
 }
-const std::vector<std::string> contexts{"companion.checkin","npc.greet","sleep.greet","wake.alarm","morning.depart","defeat.player","defeat.partner"};
+const std::vector<std::string> contexts{"companion.checkin","npc.greet","sleep.greet","wake.alarm","morning.depart","defeat.player","defeat.partner","boss.prepare"};
 std::wstring decodeText(const std::string& text) {
     std::wstring result;
     for(std::size_t i=0;i<text.size();) {
@@ -116,7 +116,8 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
         for(unsigned j=0;j<n;++j){CatalogueLine l;l.id=r.str();l.display.id=r.u32();l.display.speaker=PortraitRole(r.count(4));l.listener=PortraitRole(r.count(4));l.display.emotion=PortraitEmotion(r.count(13));l.holdMs=r.count(5000);l.display.text=decodeText(r.str());
             require(identity(l.id) && lines.insert(l.id).second && l.holdMs>=700,"invalid catalogue line");
             const auto p=l.display.speaker,q=l.listener;const auto id=l.display.id;
-            const bool valid=b.context=="companion.checkin"?(id==12 && p==PortraitRole::Partner && q==PortraitRole::Player):
+            const bool valid=b.context=="boss.prepare"?(id==1201 && p==PortraitRole::Partner && q==PortraitRole::Player):
+                b.context=="companion.checkin"?(id==12 && p==PortraitRole::Partner && q==PortraitRole::Player):
                 b.context=="npc.greet"?(id==22 && p==PortraitRole::Friendly && q==PortraitRole::Player):
                 b.context=="wake.alarm"?(id==41 && p==PortraitRole::Alarm && q==PortraitRole::Player):
                 b.context=="sleep.greet"?(id==31 && p==PortraitRole::Partner && q==PortraitRole::Player):
@@ -135,6 +136,7 @@ DialogueCatalogue loadDialogueCatalogue(const std::filesystem::path& path) {
 std::string dialogueContext(const ExplorationState& s) {
     if(eventActive(s) && s.variety.dialogue.active)return s.variety.dialogue.context;
     const auto& g=s.gameplay;
+    if(bossPreparation(s))return "boss.prepare";
     if(bossConversation(s))return "boss.befriend";
     if(g.life==LifePhase::Dialogue)return companionDialogue(g)?"companion.checkin":"npc.greet";
     if(g.life==LifePhase::Sleep && g.sceneBeat==SceneBeat::BedFace)return "sleep.greet";
@@ -148,6 +150,7 @@ bool dialogueEligible(const ExplorationState& s,const std::string& context) {
     if(s.variety.holiday.active)return s.gameplay.companion.enabled;
     if(eventActive(s))return safePair(s) && s.gameplay.companion.enabled;
     const auto& g=s.gameplay;
+    if(context=="boss.prepare")return bossPreparation(s) && g.companion.enabled;
     if(context=="boss.befriend")return bossConversation(s) && !fixedBattlePending(s);
     if(context=="companion.checkin")return safePair(s) && g.companion.enabled && canAttack(s.world,s.position,g.companion.tile);
     if(context=="npc.greet")return safePair(s,false) && actorExists(s,PortraitRole::Friendly) && std::any_of(s.population.entities.begin(),s.population.entities.end(),[&](const auto& e){return e.instanceId==g.enemyInstance && canAttack(s.world,s.position,e.tile);});

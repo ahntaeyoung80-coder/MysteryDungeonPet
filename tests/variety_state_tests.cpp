@@ -155,7 +155,7 @@ void mealsAndDays() {
 }
 void malformedAndLegacy() {
     const auto valid=active();auto bytes=encodeSnapshot(valid);
-    check(bytes[4]==19,"new schema missing");
+    check(bytes[4]==20,"new schema missing");
     for(std::size_t size=0;size<bytes.size();size+=std::max<std::size_t>(1,bytes.size()/37)) {
         auto truncated=bytes;truncated.resize(size);
         rejects([&]{decodeSnapshot(truncated,"variety");},"truncation accepted");
