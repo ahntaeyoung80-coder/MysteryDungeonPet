@@ -105,7 +105,9 @@ void homePipeline(pet::Explorer& e, bool defeat) {
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::Waking && gameplayClip(e.state().gameplay)==14,"Wake14 daylight missing");
     const auto oldDay=e.state().gameplay.day;const auto oldHearts=e.state().gameplay.hearts;
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{false,true,true});check(e.state().gameplay.life==LifePhase::Wake,"other actor finished player Wake");
-    e.advanceGameplay(e.state().gameplay.phaseStartedMs+2,ActorCompletion{true,false,false});check(e.state().gameplay.life==LifePhase::Wake,"partner Wake skipped");
+    if(e.state().gameplay.companion.enabled) {
+        e.advanceGameplay(e.state().gameplay.phaseStartedMs+2,ActorCompletion{true,false,false});check(e.state().gameplay.life==LifePhase::Wake,"partner Wake skipped");
+    }
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+3,ActorCompletion{true,false,true});check(e.state().gameplay.sceneBeat==SceneBeat::MorningFace && gameplayClip(e.state().gameplay)==22,"morning greeting missing");
     e.advanceGameplay(e.state().gameplay.phaseStartedMs+1,ActorCompletion{true,false,false});check(e.state().gameplay.sceneBeat==SceneBeat::MorningFace,"greeting did not wait for partner");
     next(e);check(e.state().gameplay.sceneBeat==SceneBeat::RoomExit && gameplayClip(e.state().gameplay)==0,"greeting did not lead to Walk0 exit");

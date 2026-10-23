@@ -1,0 +1,152 @@
+[
+  {
+    "case": "solo-night",
+    "exit": 0,
+    "seconds": 25.49,
+    "submitted": 1363,
+    "bundles": [
+      "wake.alarm.05"
+    ],
+    "lifeScenes": [
+      [
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "11"
+      ],
+      [
+        "5",
+        "5"
+      ],
+      [
+        "5",
+        "7"
+      ],
+      [
+        "6",
+        "12"
+      ],
+      [
+        "6",
+        "15"
+      ],
+      [
+        "6",
+        "18"
+      ],
+      [
+        "6",
+        "19"
+      ],
+      [
+        "6",
+        "8"
+      ],
+      [
+        "7",
+        "10"
+      ],
+      [
+        "7",
+        "16"
+      ],
+      [
+        "7",
+        "9"
+      ]
+    ],
+    "images": [
+      "trace-last.bmp",
+      "trace-first.bmp",
+      "trace-middle.bmp",
+      "trace-alarm.bmp",
+      "trace-map-title.bmp"
+    ],
+    "finalState": {
+      "day": 2,
+      "meals": 1,
+      "life": 0,
+      "scene": 0
+    }
+  },
+  {
+    "case": "pair-night",
+    "exit": 0,
+    "seconds": 25.86,
+    "submitted": 1452,
+    "bundles": [
+      "morning.depart.04",
+      "wake.alarm.05"
+    ],
+    "lifeScenes": [
+      [
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "11"
+      ],
+      [
+        "0",
+        "13"
+      ],
+      [
+        "5",
+        "5"
+      ],
+      [
+        "5",
+        "7"
+      ],
+      [
+        "6",
+        "12"
+      ],
+      [
+        "6",
+        "15"
+      ],
+      [
+        "6",
+        "18"
+      ],
+      [
+        "6",
+        "19"
+      ],
+      [
+        "6",
+        "8"
+      ],
+      [
+        "7",
+        "10"
+      ],
+      [
+        "7",
+        "16"
+      ],
+      [
+        "7",
+        "9"
+      ]
+    ],
+    "images": [
+      "trace-last.bmp",
+      "trace-first.bmp",
+      "trace-morning-greeting.bmp",
+      "trace-middle.bmp",
+      "trace-alarm.bmp",
+      "trace-map-title.bmp"
+    ],
+    "finalState": {
+      "day": 2,
+      "meals": 1,
+      "life": 0,
+      "scene": 13
+    }
+  }
+]

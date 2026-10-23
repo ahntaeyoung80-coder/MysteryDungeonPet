@@ -1,0 +1,9 @@
+PASS solo body completion
+PASS missing/late body completion
+PASS fallback dialogue completion
+PASS restored full morning/evening/next day
+PASS share/exchange replay
+67 checks, 0 failures
+text missing from actual GDI raster
+X connection to :99 broken (explicit kill or server shutdown).
+X connection to :99 broken (explicit kill or server shutdown).

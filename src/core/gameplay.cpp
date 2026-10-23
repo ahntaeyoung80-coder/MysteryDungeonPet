@@ -239,6 +239,10 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
     const bool partnerOwner=g.life==LifePhase::Combat && (g.combat==CombatPhase::CompanionAttack || g.combat==CombatPhase::CompanionHurt || g.combat==CombatPhase::CompanionFaint);
     const bool finished=enemyOwner?completed.enemy:partnerOwner?completed.partner:completed.player;
     const bool finiteDone=finished || now>=g.deadlineMs;
+    const bool bodiesDone=completed.player && (!g.companion.enabled || completed.partner);
+    // Presentation callbacks may be unavailable after restore or an unsupported clip.
+    // Preserve the minimum scene/read duration, then give presentation a finite grace.
+    const bool completionExpired=now>=g.deadlineMs && now-g.deadlineMs>=kFiniteTimeoutMs;
     auto life = [&](LifePhase phase, GameplayEvent event, std::uint64_t duration) {
         g.life = phase; g.phaseStartedMs = now; g.deadlineMs = now + duration;
         return GameplayUpdate{event, {}};
@@ -375,19 +379,19 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
     if(g.life==LifePhase::Dialogue) {
         if(now<g.deadlineMs) return {};
         if(g.dialogueStage==DialogueStage::Player) {
-            if(!completed.player) return {};
+            if(!completed.player && !completionExpired) return {};
             g.dialogueStage=DialogueStage::Npc;g.phaseStartedMs=now;g.deadlineMs=now+(companionDialogue(g)?kDialogueMs:1200);
             return {GameplayEvent::DialogueNpc,{}};
         }
         if(companionDialogue(g)) {
-            if(!completed.partner) return {};
+            if(!completed.partner && !completionExpired) return {};
             if(bossPreparation(state_)) {
                 const auto key=bossPreparationKey(state_);g.onceKeys.erase(key);g.onceKeys.insert(key+":done");
             }
             g.enemyInstance=0;
             return life(LifePhase::Explore,GameplayEvent::Explore,0);
         }
-        if(!completed.enemy) return {};
+        if(!completed.enemy && !completionExpired) return {};
         auto& e=*std::find_if(state_.population.entities.begin(),state_.population.entities.end(),[&](const auto& x){return x.instanceId==g.enemyInstance;});
         const auto once=key("greet",e.instanceId);e.done=true;state_.onceKeys.insert(once);
         if(bossConversation(state_)) {
@@ -417,13 +421,13 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             if(now<g.deadlineMs) return {};
             g.sceneBeat=SceneBeat::BedFace;return life(LifePhase::Sleep,GameplayEvent::Sleep,kBedGreetingMs);
         case SceneBeat::BedFace:
-            if(now<g.deadlineMs || !(completed.player&&completed.partner)) return {};
+            if(now<g.deadlineMs || (!bodiesDone && !completionExpired)) return {};
             g.sceneBeat=SceneBeat::BedLay;return life(LifePhase::Sleep,GameplayEvent::Sleep,400);
         case SceneBeat::BedLay:
-            if(now<g.deadlineMs || !(completed.player&&completed.partner)) return {};
+            if(now<g.deadlineMs || (!bodiesDone && !completionExpired)) return {};
             g.sceneBeat=SceneBeat::Sleeping;return life(LifePhase::Sleep,GameplayEvent::Sleep,kFiniteTimeoutMs);
         case SceneBeat::Sleeping: case SceneBeat::None:
-            if(!(completed.player&&completed.partner) && now<g.deadlineMs) return {};
+            if(!bodiesDone && now<g.deadlineMs) return {};
             g.sceneBeat=SceneBeat::BedFadeOut;return life(LifePhase::Sleep,GameplayEvent::Sleep,kFadeMs);
         case SceneBeat::BedFadeOut:
             if(now<g.deadlineMs) return {};
@@ -449,18 +453,18 @@ GameplayUpdate Explorer::advanceGameplay(std::uint64_t now, ActorCompletion comp
             if(now<g.deadlineMs) return {};
             g.sceneBeat=SceneBeat::Waking;return life(LifePhase::Wake,GameplayEvent::Wake,kFiniteTimeoutMs);
         }
-        if(!(completed.player&&completed.partner)) return {};
+        if(!bodiesDone && now<g.deadlineMs) return {};
         g.sceneBeat=SceneBeat::MorningFace;
         return life(LifePhase::Ready,GameplayEvent::Ready,kDialogueMs);
     }
     if(g.life==LifePhase::Ready) {
-        if(g.sceneBeat==SceneBeat::MorningFace && (now<g.deadlineMs || !(completed.player&&completed.partner))) return {};
+        if(g.sceneBeat==SceneBeat::MorningFace && (now<g.deadlineMs || (!bodiesDone && !completionExpired))) return {};
         if(g.sceneBeat!=SceneBeat::RoomExit && g.sceneBeat!=SceneBeat::MorningFadeOut) { // Resume old morning saves through the exit.
             g.sceneBeat=SceneBeat::RoomExit;g.playerDirection=0;
             return life(LifePhase::Ready,GameplayEvent::Ready,kRoomExitMs);
         }
         if(g.sceneBeat==SceneBeat::RoomExit) {
-            if(now<g.deadlineMs || !completed.player || (g.companion.enabled && !completed.partner)) return {};
+            if(now<g.deadlineMs || (!bodiesDone && !completionExpired)) return {};
             g.sceneBeat=SceneBeat::MorningFadeOut;
             return life(LifePhase::Ready,GameplayEvent::Ready,kFadeMs);
         }

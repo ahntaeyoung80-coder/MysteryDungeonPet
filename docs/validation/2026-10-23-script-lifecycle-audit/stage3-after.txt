@@ -1,0 +1,6 @@
+PASS solo body completion
+PASS missing/late body completion
+PASS fallback dialogue completion
+PASS restored full morning/evening/next day
+PASS share/exchange replay
+67 checks, 0 failures

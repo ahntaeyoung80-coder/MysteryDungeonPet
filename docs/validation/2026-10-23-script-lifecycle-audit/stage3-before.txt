@@ -1,0 +1,6 @@
+FAIL solo body completion: absent partner blocked completed solo body
+FAIL missing/late body completion: late restored scene waits forever for body completion
+FAIL fallback dialogue completion: fallback dialogue has no finite escape
+FAIL restored full morning/evening/next day: fresh morning did not start same-day exploration
+PASS share/exchange replay
+14 checks, 4 failures

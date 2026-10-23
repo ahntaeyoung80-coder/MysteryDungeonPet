@@ -34,7 +34,9 @@ int main() {try {
             }
         }
         if(scene==0 && secondRowInk!=0)throw std::runtime_error("short berry text unnecessarily uses two rows");
-        if(ink<50) throw std::runtime_error("text missing from actual GDI raster");
+        if(scene==1) {
+            if(ink)throw std::runtime_error("silent player gained GDI text ink");
+        } else if(ink<50) throw std::runtime_error("text missing from actual GDI raster");
     }
     for(const auto& label:{L"1F",L"7F",L"128F"}) {
         std::memset(bits,0,200*200*4);renderer.drawMapHud(dc,bits,200,label);
@@ -63,5 +65,5 @@ int main() {try {
     }
     SelectObject(dc,oldFont);DeleteObject(compact);
     SelectObject(dc,previous);DeleteObject(bitmap);DeleteDC(dc);
-    std::cout<<"eight Korean text scenes and three map/floor HUD labels have visible opaque GDI ink\n";
+    std::cout<<"seven Korean text scenes/three HUD labels have opaque GDI ink; silent player has none\n";
 } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}}

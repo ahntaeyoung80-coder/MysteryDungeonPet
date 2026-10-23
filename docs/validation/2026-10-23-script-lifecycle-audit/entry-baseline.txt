@@ -1,0 +1,4 @@
+floor entry/layout regression pass
+friendly priority/dialogue regression pass
+scene: dialogue border tile position changed
+bedtime facing/slow original poses/reading interval/owner/pause/restore pass
