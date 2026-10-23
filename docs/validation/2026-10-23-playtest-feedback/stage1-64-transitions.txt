@@ -1,0 +1,73 @@
+VALID_SOURCE from=14 historical_after_transition_floor=14
+PASS 14 -> 14 day=2 floor=0
+PASS 14 -> 17 day=2 floor=0
+PASS 14 -> 1 day=2 floor=0
+PASS 14 -> 4 day=2 floor=0
+PASS 14 -> 21 day=2 floor=0
+PASS 14 -> 35 day=2 floor=0
+PASS 14 -> 41 day=2 floor=0
+PASS 14 -> 8 day=2 floor=0
+VALID_SOURCE from=17 historical_after_transition_floor=18
+PASS 17 -> 14 day=2 floor=0
+PASS 17 -> 17 day=2 floor=0
+PASS 17 -> 1 day=2 floor=0
+PASS 17 -> 4 day=2 floor=0
+PASS 17 -> 21 day=2 floor=0
+PASS 17 -> 35 day=2 floor=0
+PASS 17 -> 41 day=2 floor=0
+PASS 17 -> 8 day=2 floor=0
+VALID_SOURCE from=1 historical_after_transition_floor=3
+PASS 1 -> 14 day=2 floor=0
+PASS 1 -> 17 day=2 floor=0
+PASS 1 -> 1 day=2 floor=0
+PASS 1 -> 4 day=2 floor=0
+PASS 1 -> 21 day=2 floor=0
+PASS 1 -> 35 day=2 floor=0
+PASS 1 -> 41 day=2 floor=0
+PASS 1 -> 8 day=2 floor=0
+VALID_SOURCE from=4 historical_after_transition_floor=8
+PASS 4 -> 14 day=2 floor=0
+PASS 4 -> 17 day=2 floor=0
+PASS 4 -> 1 day=2 floor=0
+PASS 4 -> 4 day=2 floor=0
+PASS 4 -> 21 day=2 floor=0
+PASS 4 -> 35 day=2 floor=0
+PASS 4 -> 41 day=2 floor=0
+PASS 4 -> 8 day=2 floor=0
+VALID_SOURCE from=21 historical_after_transition_floor=19
+PASS 21 -> 14 day=2 floor=0
+PASS 21 -> 17 day=2 floor=0
+PASS 21 -> 1 day=2 floor=0
+PASS 21 -> 4 day=2 floor=0
+PASS 21 -> 21 day=2 floor=0
+PASS 21 -> 35 day=2 floor=0
+PASS 21 -> 41 day=2 floor=0
+PASS 21 -> 8 day=2 floor=0
+VALID_SOURCE from=35 historical_after_transition_floor=13
+PASS 35 -> 14 day=2 floor=0
+PASS 35 -> 17 day=2 floor=0
+PASS 35 -> 1 day=2 floor=0
+PASS 35 -> 4 day=2 floor=0
+PASS 35 -> 21 day=2 floor=0
+PASS 35 -> 35 day=2 floor=0
+PASS 35 -> 41 day=2 floor=0
+PASS 35 -> 8 day=2 floor=0
+VALID_SOURCE from=41 historical_after_transition_floor=22
+PASS 41 -> 14 day=2 floor=0
+PASS 41 -> 17 day=2 floor=0
+PASS 41 -> 1 day=2 floor=0
+PASS 41 -> 4 day=2 floor=0
+PASS 41 -> 21 day=2 floor=0
+PASS 41 -> 35 day=2 floor=0
+PASS 41 -> 41 day=2 floor=0
+PASS 41 -> 8 day=2 floor=0
+VALID_SOURCE from=8 historical_after_transition_floor=48
+PASS 8 -> 14 day=2 floor=0
+PASS 8 -> 17 day=2 floor=0
+PASS 8 -> 1 day=2 floor=0
+PASS 8 -> 4 day=2 floor=0
+PASS 8 -> 21 day=2 floor=0
+PASS 8 -> 35 day=2 floor=0
+PASS 8 -> 41 day=2 floor=0
+PASS 8 -> 8 day=2 floor=0
+TOTAL pass=64 fail=0

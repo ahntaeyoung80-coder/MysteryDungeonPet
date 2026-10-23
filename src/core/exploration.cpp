@@ -1029,7 +1029,9 @@ void validateState(const ExplorationState& s) {
         };
         const auto run=parse(a + 1, b);
         if(run<s.runId && action=="pickup" && inventoryKeys.count(onceKey)) {
-            require(run>0 && parse(b+1,c)<s.floors.size() && parse(c+1,onceKey.size())>0 && parse(c+1,onceKey.size())<=kTiles,"invalid historical pickup");
+            // Historical pickups belong to an earlier expedition. Its floor count
+            // is not the current route's size; retain the format's global bound.
+            require(run>0 && parse(b+1,c)<128 && parse(c+1,onceKey.size())>0 && parse(c+1,onceKey.size())<=kTiles,"invalid historical pickup");
             continue;
         }
         require(run == s.runId, "journal run mismatch");

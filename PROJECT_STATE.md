@@ -1,6 +1,6 @@
 # 현재 상태
 
-기준: 2026-10-22 KST. 개발·실행 기준 브랜치 `work`.
+기준: 2026-10-23 KST. 개발·실행 기준 브랜치 `work`.
 
 ## 현재 단계
 
@@ -20,6 +20,10 @@ B-1/B-2 자율 탐험과 사건 다양화에 이어 **채택한 8개 원작 연�
 코어 ASan/UBSan29개를 실패 항목 수정 후 모두 통과했다. 원작8원정의 첫 방문/재방문16경로와3우회로, 관련 Python16개 검사를 통과했다. Windows x64 Release/static EXE의 Wine10/Xvfb 화면10개 시나리오와 설치본1개에서 실제 렌더 제출을 확인했다. 합성 WTS 잠금 해제 메시지를 사용했으며 실제 OS 잠금 검증으로 간주하지 않는다. 전환 fixture의 강제 계단/기절은 자연 플레이 승리 검증과 구별한다. [최종 근거](docs/validation/2026-10-22-continuous-expeditions/summary.json).
 
 소스·필요 자산·루트 EXE/hash를 함께 준비했고 build/root/install EXE가 일치한다. 선택 설치물899자산·총35,195,357bytes이며 ROM은 포함하지 않는다. 잠정20MB 목표를 초과하므로 용량 최적화는 남아 있다. 제품 커밋8e74f65를work에push하고명시fetch로로컬/원격일치를확인했다. 자동CI run39714163951은실행중이며통과로표시하지않는다. [원격기록](docs/validation/2026-10-22-continuous-expeditions/remote-verification.json).
+
+## 진행 중
+
+사용자 플레이테스트 전체 수정1~5단계 진행 중. 첫 단계는 누적 아이템 기록의 층을 새 원정 층수와 비교해 기상 후 종료되는 버그 수정이다. 소스·자산·EXE 최종 반영 전이며 기존 EXE를 새 수정 완료로 간주하지 않는다. [작업 로그](docs/logs/2026-10-23-playtest-feedback.md).
 
 ## 다음 작업 / 남은 범위
 

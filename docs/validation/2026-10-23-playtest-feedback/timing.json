@@ -1,0 +1,13 @@
+{
+  "started": "2026-10-23T01:38:56.412336+00:00",
+  "stages": {
+    "1": {
+      "finished": "2026-10-23T01:41:19.757755+00:00",
+      "elapsedSinceTimingStartSeconds": 143.3,
+      "includesToolBootstrap": true
+    },
+    "2": {
+      "started": "2026-10-23T01:41:19.757755+00:00"
+    }
+  }
+}
