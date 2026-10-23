@@ -5,7 +5,7 @@
     "balanceAndFirstSchedule": "complete, including a fresh choice on restored normal launches without advancing the date",
     "namesAndDialogue": "complete",
     "persistentUi": "complete",
-    "runtimeAndIntegration": "all local verification complete; remote publication pending"
+    "runtimeAndIntegration": "complete and published to work"
   },
   "core": {
     "uniqueCases": 32,
@@ -34,7 +34,8 @@
     "nativeWindows11": "pending",
     "renderedGuiRuns": 18,
     "finalTargetedReruns": 6,
-    "latestInstalledRun": true
+    "latestInstalledRun": true,
+    "ciNativeWindowsConclusion": "not observed"
   },
   "fixRegression": {
     "historicalInventoryTransitions": 64,
@@ -59,5 +60,7 @@
     "Wine uses NanumGothic as a test substitute; shipped font remains Malgun Gothic",
     "Native Windows11 lock/power/DPI and long-duration performance remain pending",
     "Selected install still exceeds provisional 20MB goal"
-  ]
+  ],
+  "productCommit": "a056eb0246ac9fb7e832736bf168f4944f1a1b46",
+  "remoteVerified": true
 }

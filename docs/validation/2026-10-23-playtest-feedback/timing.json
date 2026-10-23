@@ -31,5 +31,7 @@
   },
   "elapsedMeasuredSecondsToLocalVerification": 2894.0,
   "initialInspectionBeforeTiming": "not separately measured",
-  "elapsedMeasuredSecondsFinalLocal": 3826.7
+  "elapsedMeasuredSecondsFinalLocal": 3826.7,
+  "publishedAt": "2026-10-23T02:44:56.828274+00:00",
+  "elapsedMeasuredSecondsThroughPublication": 3960.4
 }

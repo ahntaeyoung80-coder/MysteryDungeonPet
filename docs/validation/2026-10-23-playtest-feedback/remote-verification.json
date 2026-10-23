@@ -1,0 +1,14 @@
+{
+  "verifiedAt": "2026-10-23T02:44:56.828274+00:00",
+  "remote": "origin",
+  "branch": "work",
+  "productCommit": "a056eb0246ac9fb7e832736bf168f4944f1a1b46",
+  "explicitFetchedCommit": "a056eb0246ac9fb7e832736bf168f4944f1a1b46",
+  "matches": true,
+  "documentationFollowupOnly": true,
+  "ci": {
+    "combinedCommitStatuses": [],
+    "actionsAndNativeWindowsConclusion": "not observed; not marked as passed"
+  },
+  "exeSha256": "5693ddd552f912e8a39b83be2bd6533c737b530474c5b235c4c244b0ab043785"
+}
