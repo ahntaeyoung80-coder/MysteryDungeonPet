@@ -2420,5 +2420,13 @@
       "companionOran": 0,
       "notices": 0
     }
+  },
+  "remote": {
+    "product_commit": "7cc790c572b58d3010e93359bcf43db626d90e93",
+    "item_review_commit": "cb0cdf8",
+    "branch": "work",
+    "head_fetch_ahead": 0,
+    "head_fetch_behind": 0,
+    "ci": "unconfirmed"
   }
 }
